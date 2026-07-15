@@ -1,52 +1,133 @@
 # Architecture Decision Records (ADR)
 
-This directory holds the Architecture Decision Records for AIOS. This file
-establishes the ADR framework only — no decisions have been recorded yet.
-
 ## Purpose
 
-An ADR captures a significant, durable architectural decision: the context
-that prompted it, the alternatives considered, the decision made, and its
+This document defines how Architecture Decision Records (ADRs) operate
+within AIOS: their required structure, their lifecycle, and the validation
+and supersession discipline that governs them.
+
+This document does not define why ADR authority exists. That authority —
+who may propose, who may approve, what an ADR may and may not change, and
+how delegation works — is defined exclusively in Engineering Constitution
+§3 (Decision-Making Process). This document never restates that authority;
+it only describes the mechanics that operate beneath it.
+
+An ADR captures a significant, durable architectural decision: its
+context, the alternatives considered, the decision made, and its
 consequences. The goal is that the reasoning behind a structural choice in
-AIOS survives long after the discussion that produced it — this repository
-is meant to be read and extended over many years, by people and agents who
-were not present for the original conversation.
+AIOS survives long after the discussion that produced it.
+
+## Authority
+
+ADR authority — proposal rights, approval rights, delegation, and
+non-delegable decisions — is governed exclusively by Engineering
+Constitution §3. This document does not restate that content. See
+Constitution §3.1–§3.4.
+
+The relationship among AIOS's governance artifacts, including the ADR
+Framework's place beneath the Constitution and the Canonical Domain Model,
+is governed exclusively by Engineering Constitution §4 (Governance
+Artifact Relationship).
 
 ## When an ADR Is Required
 
-An ADR is required whenever a proposed change would:
+What an ADR may change is defined in Constitution §3.4. This document
+adds only the following procedural trigger, which the Constitution does
+not itself state:
 
-- Add, remove, or redefine a canonical entity in the Domain Model
-- Change a relationship, ownership rule, lifecycle rule, or invariant
-  stated in the Domain Model
-- Promote a concept out of the Architectural Backlog into the canonical
-  model
-- Establish a new cross-Department architectural convention
-- Reverse or materially reinterpret a prior ADR
+- An ADR is required to reverse or materially reinterpret a prior ADR
+  (see Supersession and Deprecation, below).
 
-An ADR is **not** required for implementation-level decisions that stay
-within the bounds of the existing Domain Model and prior ADRs — those are
-left to engineer or agent discretion.
+An ADR is not required for implementation-tier work within already-approved
+Capabilities, or for Knowledge additions made through the governed-review
+promotion pipeline.
 
-## Relationship to the Engineering Constitution
+## ADR Lifecycle
 
-The Engineering Constitution (planned — see `docs/constitution/`) will be
-the highest-authority governance document of AIOS, and will formalize the
-Decision-Making Process that governs how ADRs are proposed, reviewed, and
-approved. Until the Constitution is drafted and ratified, ADRs are governed
-directly by System Architect approval. Once the Constitution exists, this
-document will be updated to defer to it rather than duplicate it.
+An ADR moves through the following states:
 
-## Decision Authority Levels
+- **Proposed** — drafted and submitted by any contributor. Not yet binding.
+- **Under Review** — the approving authority is evaluating it. May return
+  to Proposed for revision.
+- **Approved** — accepted by the approving authority. Binding and active
+  immediately.
+- **Rejected** — declined. Terminal; retained permanently as record.
+- **Superseded** — a later, separately approved ADR explicitly replaces
+  this one's decision.
+- **Deprecated** — the decision no longer applies because its context
+  ceased to exist, without a replacement decision existing.
 
-- **Constitutional-level** — changes to the Engineering Constitution
-  itself. Always requires System Architect approval.
-- **Architectural-level** — changes to the Canonical Domain Model or other
-  durable architectural conventions. Requires an ADR and System Architect
-  approval.
-- **Implementation-level** — decisions made within the bounds of the
-  existing Domain Model and approved ADRs. Engineer or agent discretion; no
-  ADR required.
+Archived is not a distinct state. Every terminal state (Rejected,
+Superseded, Deprecated) is retained indefinitely as permanent record.
+
+## ADR Structure
+
+Every ADR contains:
+
+- **Metadata** — including a unique identifier. (The identifier's format,
+  naming convention, and storage location are not defined by this
+  document.)
+- **Context** — why this is being considered now.
+- **Problem Statement** — the specific gap or need being addressed.
+- **Decision** — what was decided, stated precisely enough to be checked
+  against later.
+- **Alternatives Considered** — what else was evaluated and why it wasn't
+  chosen.
+- **Consequences** — what changes as a result, including any Domain Model
+  edit the decision requires.
+- **Validation** — how the decision was checked before approval (see
+  Validation Model, below).
+- **Approval Record** — who approved the ADR and under what authority
+  (direct Architect, or a named delegation scope), and when.
+- **Status History** — a chronological record of every lifecycle
+  transition.
+
+## Validation Model
+
+Every Architectural Tier ADR requires:
+
+- **Authority validation** — confirms the proposer and approver each have
+  valid standing for this ADR under Constitution §3.
+- **Boundary validation** — confirms the ADR does not reach into
+  Constitutional Tier territory, does not introduce a technology,
+  language, framework, or infrastructure decision, and does not exceed
+  what Constitution §3.2 permits to be delegated.
+- **Contradiction check** — confirms the ADR does not conflict with any
+  prior Approved ADR that is not already Superseded or Deprecated.
+
+An ADR affecting the Canonical Domain Model additionally requires:
+
+- **Semantic integrity validation** — confirms the ADR is consistent with
+  existing Domain Model content and does not itself reproduce entity,
+  relationship, or invariant text.
+- **Entity/relationship/invariant impact review** — the ADR explicitly
+  enumerates which Domain Model entities, relationships, or invariants it
+  affects.
+
+## Supersession and Deprecation
+
+The authority required to supersede or deprecate an ADR must be equal to
+or higher than the authority that approved the original ADR.
+
+- A delegate-approved ADR may be superseded or deprecated by that same
+  scoped delegate, or by the Architect.
+- An Architect-approved ADR may be superseded or deprecated by the
+  Architect only.
+- An ADR affecting the Canonical Domain Model may be superseded or
+  deprecated by the Architect only, regardless of who approved it
+  originally, consistent with Domain Model changes being non-delegable
+  under Constitution §3.2.
+
+## Delegation Documentation
+
+A grant of architectural-tier approval authority to a delegate
+(Constitution §3.2) requires durable governance documentation of its
+scope, the delegate, and the date granted or revoked.
+
+A delegation grant is not an ADR and does not require one. It is a direct
+exercise of authority the Constitution already grants, not an
+architectural-tier decision subject to the trigger rules above. A
+delegation grant does not introduce a Canonical Domain Model entity.
 
 ## Status
 
