@@ -207,8 +207,8 @@ other entity's continued existence.
   technology, or APIs — those are separate, later artifacts that will be
   projections of this model, not extensions to it.
 - Changes to this model follow the same governance discipline as the rest
-  of AIOS: this document is subject to the Constitution's future Amendment
-  Process once ratified.
+  of AIOS: this document is subject to the Constitution's Amendment
+  Process.
 
 ---
 
