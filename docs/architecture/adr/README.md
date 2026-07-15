@@ -29,6 +29,26 @@ Framework's place beneath the Constitution and the Canonical Domain Model,
 is governed exclusively by Engineering Constitution §4 (Governance
 Artifact Relationship).
 
+## ADR Framework Ownership
+
+Changes to this document are governed by content ownership, not by a
+single uniform process:
+
+- **Procedural mechanics** — lifecycle, structure, validation,
+  identifiers, storage conventions, and supersession/deprecation
+  mechanics — are owned by this document and may be updated through
+  direct Architect-approved documentation changes.
+- **Constitution authority content** — decision authority, tiers,
+  delegation boundaries, and approval rights — remains exclusively
+  governed by the Engineering Constitution and is never redefined by
+  this document; it appears here only by reference.
+- **Architectural decisions that use the ADR process** continue to
+  follow the normal ADR mechanism defined elsewhere in this document,
+  unaffected by how this document itself is maintained.
+
+This preserves the distinction stated in Purpose, above: this document
+defines how ADRs operate, not why ADR authority exists.
+
 ## When an ADR Is Required
 
 What an ADR may change is defined in Constitution §3.4. This document
@@ -66,8 +86,8 @@ Every ADR contains:
 
 - **Metadata** — including a unique identifier. Identifiers use
   zero-padded sequential numbering (ADR-0001, ADR-0002, …), assigned by
-  the approving authority when an ADR enters Under Review. Naming
-  convention and storage location remain undefined by this document.
+  the approving authority when an ADR enters Under Review. Filename and
+  storage location follow the ADR Storage convention, below.
 - **Context** — why this is being considered now.
 - **Problem Statement** — the specific gap or need being addressed.
 - **Decision** — what was decided, stated precisely enough to be checked
@@ -82,6 +102,16 @@ Every ADR contains:
   (direct Architect, or a named delegation scope), and when.
 - **Status History** — a chronological record of every lifecycle
   transition.
+
+## ADR Storage
+
+Approved ADRs are stored under `docs/architecture/adr/decisions/`, one
+file per ADR, named by its identifier alone: `ADR-0001.md`,
+`ADR-0002.md`, and so on. No descriptive slug, metadata suffix, or
+additional filename convention is used.
+
+This defines repository organization only. It implies no tooling,
+generation mechanism, or storage technology.
 
 ## Validation Model
 
