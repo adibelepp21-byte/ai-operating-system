@@ -162,4 +162,6 @@ delegation grant does not introduce a Canonical Domain Model entity.
 
 ## Status
 
-No ADRs have been created yet.
+ADR-0001 has been approved. Approved ADRs are stored under
+`docs/architecture/adr/decisions/`, per the ADR Storage convention,
+above.
