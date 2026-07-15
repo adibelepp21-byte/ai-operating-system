@@ -38,14 +38,15 @@ full, ratified semantic foundation this system is built on.
 
 ## Governance
 
-AIOS is governed as a long-term engineering project, not a single
-deliverable. Structural changes to the domain model require an Architecture
-Decision Record (ADR) — see `docs/architecture/adr/README.md`. A formal
-Engineering Constitution is planned — see `docs/constitution/README.md`.
+AIOS is governed by the ratified Engineering Constitution v1.0 — see
+`docs/constitution/engineering-constitution-v1.md`. Structural changes to
+the domain model require an Architecture Decision Record (ADR) — see
+`docs/architecture/adr/README.md`.
 
 ## Documentation
 
-- `docs/constitution/` — the planned Engineering Constitution (governance)
+- `docs/constitution/` — the ratified Engineering Constitution v1.0
+  (governance)
 - `docs/architecture/domain-model/` — the Canonical Domain Model (semantic
   foundation)
 - `docs/architecture/adr/` — Architecture Decision Records

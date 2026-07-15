@@ -1,5 +1,4 @@
 # Engineering Constitution
 
-The Engineering Constitution is planned as the highest governance document
-of AIOS. It will formalize principles, invariants, decision authority, and
-operating rules.
+The Engineering Constitution is the highest governance document of AIOS.
+See `engineering-constitution-v1.md` for the ratified v1.0 text.
