@@ -260,8 +260,8 @@ Deferred concepts. Not canonical entities in v1.0.
   accepted changes (Agent Definition/Instance split, Trace/Memory boundary
   resolution, Capability dependency governance) and defers six concepts to
   the Architectural Backlog.
-- **Serves as**: the semantic foundation the Engineering Constitution will
-  formalize into governance language, and the reference vocabulary for all
+- **Serves as**: the semantic foundation the Engineering Constitution has
+  formalized into governance language, and the reference vocabulary for all
   future ADRs, RFCs, and eventual repository architecture.
 - **Future changes**: per architect constraint, any modification to this
   model must be proposed through an Architecture Decision Record (ADR).
