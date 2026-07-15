@@ -64,9 +64,10 @@ Superseded, Deprecated) is retained indefinitely as permanent record.
 
 Every ADR contains:
 
-- **Metadata** — including a unique identifier. (The identifier's format,
-  naming convention, and storage location are not defined by this
-  document.)
+- **Metadata** — including a unique identifier. Identifiers use
+  zero-padded sequential numbering (ADR-0001, ADR-0002, …), assigned by
+  the approving authority when an ADR enters Under Review. Naming
+  convention and storage location remain undefined by this document.
 - **Context** — why this is being considered now.
 - **Problem Statement** — the specific gap or need being addressed.
 - **Decision** — what was decided, stated precisely enough to be checked
