@@ -163,6 +163,13 @@ The Architect has approved the following:
   category label would risk implying a broader scope than this
   Convention actually holds. The specific name and path remain
   undefined, below.
+- **Framework relationship — general principle.** Future Skill,
+  Workflow, Runtime, and Tool Frameworks, once created, shall inherit
+  this Convention's decisions by citation rather than by restatement,
+  wherever this Convention already defines the canonical rule. This is a
+  procedural principle only; it does not define how any specific future
+  Framework applies it, and Framework-specific application remains
+  deferred until a real Framework proposal exists (see Section 10).
 
 ### Not Yet Defined
 
@@ -171,8 +178,16 @@ This document still does not establish:
 - The specific directory name or repository path for the unified
   execution-entity directory. The naming approach itself is resolved
   (see Resolved, above); the literal name and path are not.
-- Naming or identifier conventions for instances of these entities.
-- Cross-reference syntax between these entities.
+- A shared naming convention for instances of these entities.
+  Intentionally deferred: this decision is coupled with the
+  still-undecided identifier convention, below, and deciding one without
+  the other risks an inconsistent outcome.
+- An identifier convention and cross-reference syntax for these
+  entities. Deferred pending future operational evidence and/or the
+  first real entity Framework proposal, consistent with Constitution §8.
+- How any specific future Skill, Workflow, Runtime, or Tool Framework
+  applies the citation-only principle recorded above. Deferred until a
+  real Framework proposal exists.
 
 These remain open, tracked in Section 10, pending dedicated future
 Architect decisions. This document's role is limited to establishing that
@@ -183,15 +198,21 @@ such decisions, once made, are recorded here.
 1. **Repository organization specifics.** Within the approved unified
    execution-entity directory, its approved convention-derived naming
    approach, and its approved flat, Runtime-distinguished internal
-   organization model (see Section 9), what specific directory name,
-   repository path, naming convention, identifier convention, and
-   cross-reference approach apply.
-2. **Relationship to individual entity Frameworks.** How individual
-   Skill, Workflow, Runtime, and Tool Frameworks, once created, would
-   relate to this document's shared convention — for example, whether
-   they reference it directly or restate portions of it. This question
-   does not address whether or when such Frameworks are built; that is
-   separate planning work outside this document's scope.
+   organization model (see Section 9), the following remain open: (a)
+   the specific directory name and repository path; (b) a shared naming
+   convention for instances of these entities — intentionally deferred
+   because it is coupled with the still-undecided identifier convention,
+   below; (c) an identifier convention and cross-reference syntax —
+   deferred pending future operational evidence and/or the first real
+   entity Framework proposal.
+2. **Framework-specific application of the citation-only principle.**
+   The general principle that future Skill, Workflow, Runtime, and Tool
+   Frameworks inherit this Convention's decisions by citation rather
+   than restatement is resolved (see Section 9). How any specific future
+   Framework applies that principle in practice remains open, deferred
+   until a real Framework proposal exists. This question does not
+   address whether or when such Frameworks are built; that is separate
+   planning work outside this document's scope.
 
 ## 11. Explicit Exclusions
 
@@ -219,11 +240,13 @@ This document establishes governance boundary and responsibility scope.
 The repository organization approach — a unified execution-entity
 directory — Runtime's differentiated treatment within that approach, the
 internal organization model (a flat, Runtime-distinguished structure),
-and the directory/path naming approach (convention-derived) have been
-resolved (see Section 9).
+the directory/path naming approach (convention-derived), and the general
+Framework relationship principle (citation rather than restatement) have
+been resolved (see Section 9).
 
 The specific directory name, repository path, instance naming
-convention, identifier convention, and cross-reference syntax remain
+convention, identifier convention, cross-reference syntax, and the
+Framework-specific application of the citation-only principle remain
 undefined (see Section 10).
 
 No Skill, Workflow, Runtime, or Tool instance currently exists in the
