@@ -36,6 +36,8 @@ Department and Capability instances are recorded under
 docs/architecture/organization/
   README.md                    — this document
   agent-definitions.md         — the Agent Definition Framework
+  execution-artifact-repository.md — the Execution Artifact Repository
+                                      Convention
   <department-slug>/
     README.md                  — that Department's definition
     capabilities/
@@ -50,6 +52,12 @@ recorded as an individual file within that Department's `capabilities/`
 subdirectory, and each Agent Definition that Department owns is recorded
 as an individual file within that Department's `agent-definitions/`
 subdirectory, per the Agent Definition Framework.
+
+Skill, Workflow, Runtime, and Tool instances are governed by a separate
+repository convention, recorded in the Execution Artifact Repository
+Convention, since these entities are owned centrally rather than by any
+single Department and therefore do not fit this document's
+Department-nested projection.
 
 ## Naming Convention
 
