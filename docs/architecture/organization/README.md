@@ -87,4 +87,8 @@ Boundaries, which exclude repository layout from its authority.
 
 ## Status
 
-No Department or Capability instances have been created yet.
+One Department, Platform, has been created, owning one Capability,
+Governance Artifact Integrity. Both were established by
+[ADR-0003](../adr/decisions/ADR-0003.md) and are recorded per the
+Repository Structure convention, above, at
+`docs/architecture/organization/platform/`.
