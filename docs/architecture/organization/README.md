@@ -35,16 +35,21 @@ Department and Capability instances are recorded under
 ```
 docs/architecture/organization/
   README.md                    — this document
+  agent-definitions.md         — the Agent Definition Framework
   <department-slug>/
     README.md                  — that Department's definition
     capabilities/
       <capability-slug>.md
+    agent-definitions/
+      <agent-definition-slug>.md
 ```
 
 Each Department is recorded in its own subdirectory, containing a
 `README.md` that defines it. Each Capability that Department owns is
 recorded as an individual file within that Department's `capabilities/`
-subdirectory.
+subdirectory, and each Agent Definition that Department owns is recorded
+as an individual file within that Department's `agent-definitions/`
+subdirectory, per the Agent Definition Framework.
 
 ## Naming Convention
 
@@ -57,9 +62,9 @@ named "Architecture" is recorded at `architecture/`; a Capability named
 ## Identifier Policy
 
 Departments and Capabilities do not use synthetic sequential identifiers.
-The Canonical Domain Model defines a Capability as "a stable, named,
-outcome-oriented contract" — the name is the identifier. A Department's
-name and a Capability's name serve as their stable, citable identity.
+Per the Canonical Domain Model's own Capability entry (§2), a Capability
+is a named contract — the name is the identifier. A Department's name
+and a Capability's name serve as their stable, citable identity.
 
 Department names are unique across the Organization. Capability names
 are unique across the Organization as a clarity default, even though
