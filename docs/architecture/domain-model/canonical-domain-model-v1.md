@@ -140,6 +140,7 @@ meaningful, stable statement.
 | Agent Definition | Versioned; created/deprecated at Department discretion within Capability governance. Its version is bound to the Capability contract version it implements. |
 | Agent Instance | Fastest-changing lifecycle in the model, by design: spawned, active, terminated — no governance overhead per instance. |
 | Skill / Tool | Versioned independently; may evolve as long as the interface is preserved. Because AI-implemented Skills can drift behaviorally without an interface change, Skill/Tool version changes that alter behavior materially should be documented at promotion time, not just interface-checked. |
+| Runtime | Versioned independently; evolved through governed revisions, with compatibility boundaries preserved where applicable; behavioral drift is documented at change time. |
 | Knowledge | Versioned; revised/superseded via review; not casually deleted — audit trail matters. |
 | Memory | Has an explicit retention window. Promote or expire. Expiry does not compromise any Trace that already referenced it (§6.1). |
 | Trace | Append-only. Never mutated. Retained per policy. |
