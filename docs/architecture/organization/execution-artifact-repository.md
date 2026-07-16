@@ -115,32 +115,50 @@ paraphrase what these entities are; it only establishes where and how
 artifacts representing them are recorded, once that convention is
 decided.
 
-## 9. Governance Boundary — What This Document Does Not Yet Define
+## 9. Governance Boundary — Resolved and Remaining Decisions
 
-This document explicitly does not yet establish:
+### Resolved
 
-- Directory structure or repository location for Skill, Workflow,
-  Runtime, or Tool instances.
+The Architect has approved the following:
+
+- **Repository organization approach.** Skill, Workflow, Runtime, and
+  Tool instances are organized within a single, unified execution-entity
+  directory, rather than separate directories per entity or another
+  structural approach.
+- **Runtime treatment.** Runtime receives differentiated treatment within
+  this shared convention. Runtime remains one of the four entities
+  governed by this document and is recorded within the same unified
+  directory as Skill, Workflow, and Tool; its treatment must not
+  represent or imply that Runtime participates in the
+  Workflow-contains-Skill or Skill-invokes-Tool compositional
+  relationships (Domain Model §4), which it does not share. Runtime
+  hosts Agent Instance (§4) — a relationship structurally distinct from
+  composition.
+
+### Not Yet Defined
+
+This document still does not establish:
+
+- The specific directory name or repository path for the unified
+  execution-entity directory.
+- Any internal subdirectory structure, including how Runtime's approved
+  differentiated treatment is structurally expressed.
 - Naming or identifier conventions for instances of these entities.
 - Cross-reference syntax between these entities.
-- Any distinction in treatment between Runtime and Skill/Workflow/Tool.
 
-These remain open, tracked in Section 10, pending a dedicated future
-Architect decision. This document's role is limited to establishing that
-such a decision, once made, is recorded here.
+These remain open, tracked in Section 10, pending dedicated future
+Architect decisions. This document's role is limited to establishing that
+such decisions, once made, are recorded here.
 
 ## 10. Open Questions
 
-1. **Repository organization.** How Skill, Workflow, Runtime, and Tool
-   instances are organized and referenced as repository artifacts —
-   including their location, internal structure, and the cross-reference
-   approach between them.
-2. **Runtime's relationship to this convention.** Whether Runtime's lack
-   of compositional relationship to Skill, Workflow, and Tool warrants
-   different treatment within whatever repository organization is
-   eventually chosen, or whether uniform treatment across all four
-   remains correct.
-3. **Relationship to individual entity Frameworks.** How individual
+1. **Repository organization specifics.** Within the approved unified
+   execution-entity directory (see Section 9), what directory name,
+   repository path, and internal subdirectory structure apply —
+   including how Runtime's approved differentiated treatment is
+   structurally expressed — and what cross-reference approach applies
+   between these entities.
+2. **Relationship to individual entity Frameworks.** How individual
    Skill, Workflow, Runtime, and Tool Frameworks, once created, would
    relate to this document's shared convention — for example, whether
    they reference it directly or restate portions of it. This question
@@ -168,7 +186,15 @@ This document does not, and may never:
 
 ## 12. Status
 
-This document establishes governance boundary and responsibility scope
-only. No storage structure, naming convention, or reference syntax has
-been defined. No Skill, Workflow, Runtime, or Tool instance currently
-exists in the repository.
+This document establishes governance boundary and responsibility scope.
+
+The repository organization approach — a unified execution-entity
+directory — and Runtime's differentiated treatment within that approach
+have been resolved (see Section 9).
+
+The specific directory name, repository path, internal subdirectory
+organization, instance naming convention, identifier convention, and
+cross-reference syntax remain undefined (see Section 10).
+
+No Skill, Workflow, Runtime, or Tool instance currently exists in the
+repository.
