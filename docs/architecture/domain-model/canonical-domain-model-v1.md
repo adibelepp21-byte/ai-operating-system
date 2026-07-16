@@ -230,8 +230,11 @@ This model deliberately does **not** include:
 - **Message / Event** as an entity for Agent-to-Agent communication —
   collaboration is required to route through Workflow, Knowledge, or
   scoped Memory; no direct channel exists.
-- **Session** as a first-class entity — represented as a scope attribute
-  on Memory and Trace.
+- **Session** as a first-class entity — not modeled. Represented as a
+  scope attribute on Memory, and reflected within Trace only indirectly
+  and conditionally — through whatever scoped content Trace has already
+  captured from Memory at write-time, per §6.1 — not as an independent,
+  separately-declared Trace field.
 - Any resolution, in either direction, of whether Runtime should
   ultimately be an attribute rather than an entity — retained as an entity
   for v1.0 pending future evidence it needs independent governance.
