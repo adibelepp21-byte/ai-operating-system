@@ -110,11 +110,13 @@ differently; see below.
   authorized to do, per §2.
 - **Permitted Skills** — Agent Definition is permitted to use only the
   Skills it specifies, per the specifies relationship in Domain Model
-  §4. The Domain Model states no minimum count for this field. Whether
-  an empty set is a valid declaration is not settled by ratified text —
-  see Open Architectural Questions.
+  §4. Per Domain Model §7 invariant 15, Permitted Skills may contain
+  zero entries; an empty declaration is a valid architectural state, and
+  no minimum cardinality is required.
 - **Permitted Workflows** — same treatment as Skills, per the same §4
-  relationship.
+  relationship. Per Domain Model §7 invariant 15, Permitted Workflows
+  may contain zero entries; an empty declaration is a valid
+  architectural state, and no minimum cardinality is required.
 - **Runtime Requirements** — stated only in the abstract. Per Domain
   Model §8, Runtime and Tool are the only entities permitted to name
   specific technology, vendors, or models; this field may never do so.
@@ -143,7 +145,10 @@ Model, and must be clearly distinguished from the mandatory fields above:
 - **Skill / Workflow reference validation** — provisional only. No Skill
   or Workflow Framework or storage convention exists yet; this check is
   aspirational until those are built, and its absence is not a defect in
-  this framework.
+  this framework. Per Domain Model §7 invariant 15, zero Skills, zero
+  Workflows, or any combination of declared and undeclared Skills and
+  Workflows is a valid state; once this validation becomes operative, it
+  must recognize this as compliant, not flag it as incomplete.
 - **Version validation** — the documented version correctly indicates
   which Capability state it aligns with, per the convention in Section
   11.
@@ -263,11 +268,11 @@ a silently-assumed answer:
 4. **Department transfer.** Whether an existing Agent Definition's
    owning Department can ever change outside of version evolution. The
    Domain Model does not address this.
-5. **Minimum Skill/Workflow count.** Whether an Agent Definition may
-   validly specify zero Skills or zero Workflows. The Domain Model
-   states no minimum for either, unlike Capability's explicit "at least
-   one" (invariant 2), but does not affirmatively state that zero is
-   acceptable either.
+5. **Minimum Skill/Workflow count.** Resolved by ADR-0007 — see Domain
+   Model §7 invariant 15. An Agent Definition may specify zero or more
+   Skills and zero or more Workflows; no minimum cardinality is required
+   for either.
 
-Any of these, if resolved, would require a Canonical Domain Model
-Architecture Decision Record — never a change to this framework alone.
+Any of the remaining open questions above, if resolved, would require a
+Canonical Domain Model Architecture Decision Record — never a change to
+this framework alone.

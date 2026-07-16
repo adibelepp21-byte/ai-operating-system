@@ -189,6 +189,10 @@ other entity's continued existence.
     outside of a shared Workflow, Knowledge, or scoped Memory.
 14. A Capability with zero active Agent Definitions implementing it is an
     invalid steady state and must be flagged for governance review.
+15. An Agent Definition may specify zero or more Skills and zero or more
+    Workflows. An empty Skill declaration, an empty Workflow declaration,
+    or both empty declarations represent a valid architectural state. No
+    minimum cardinality is required for either relationship.
 
 ---
 
