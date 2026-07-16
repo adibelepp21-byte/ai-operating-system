@@ -134,15 +134,27 @@ The Architect has approved the following:
   relationships (Domain Model §4), which it does not share. Runtime
   hosts Agent Instance (§4) — a relationship structurally distinct from
   composition.
+- **Internal organization model.** Within the unified execution-entity
+  directory, the internal organization follows a Runtime-distinguished
+  model: Skill, Workflow, and Tool are structurally grouped together,
+  reflecting the Workflow-contains-Skill and Skill-invokes-Tool
+  relationships (Domain Model §4) that connect them. Runtime receives a
+  structurally distinguishable placement within the same unified
+  directory, giving the Runtime treatment decision above expression in
+  the repository structure itself. This placement does not constitute a
+  separate top-level repository convention, and does not imply Runtime's
+  participation in the Workflow/Skill/Tool compositional relationships.
 
 ### Not Yet Defined
 
 This document still does not establish:
 
 - The specific directory name or repository path for the unified
-  execution-entity directory.
-- Any internal subdirectory structure, including how Runtime's approved
-  differentiated treatment is structurally expressed.
+  execution-entity directory, or for Runtime's distinguished placement
+  within it.
+- The concrete implementation of the internal organization model above
+  (for example, specific subdirectory depth or shape) — only the model
+  itself has been decided, not its concrete form.
 - Naming or identifier conventions for instances of these entities.
 - Cross-reference syntax between these entities.
 
@@ -153,11 +165,10 @@ such decisions, once made, are recorded here.
 ## 10. Open Questions
 
 1. **Repository organization specifics.** Within the approved unified
-   execution-entity directory (see Section 9), what directory name,
-   repository path, and internal subdirectory structure apply —
-   including how Runtime's approved differentiated treatment is
-   structurally expressed — and what cross-reference approach applies
-   between these entities.
+   execution-entity directory and its approved Runtime-distinguished
+   internal organization model (see Section 9), what directory name,
+   repository path, and concrete subdirectory implementation apply, and
+   what cross-reference approach applies between these entities.
 2. **Relationship to individual entity Frameworks.** How individual
    Skill, Workflow, Runtime, and Tool Frameworks, once created, would
    relate to this document's shared convention — for example, whether
@@ -189,11 +200,12 @@ This document does not, and may never:
 This document establishes governance boundary and responsibility scope.
 
 The repository organization approach — a unified execution-entity
-directory — and Runtime's differentiated treatment within that approach
-have been resolved (see Section 9).
+directory — Runtime's differentiated treatment within that approach, and
+the internal organization model (Runtime-distinguished, see Section 9)
+have been resolved.
 
-The specific directory name, repository path, internal subdirectory
-organization, instance naming convention, identifier convention, and
+The specific directory name, repository path, concrete subdirectory
+implementation, instance naming convention, identifier convention, and
 cross-reference syntax remain undefined (see Section 10).
 
 No Skill, Workflow, Runtime, or Tool instance currently exists in the
