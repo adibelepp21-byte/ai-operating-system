@@ -136,25 +136,41 @@ The Architect has approved the following:
   composition.
 - **Internal organization model.** Within the unified execution-entity
   directory, the internal organization follows a Runtime-distinguished
-  model: Skill, Workflow, and Tool are structurally grouped together,
-  reflecting the Workflow-contains-Skill and Skill-invokes-Tool
-  relationships (Domain Model §4) that connect them. Runtime receives a
-  structurally distinguishable placement within the same unified
-  directory, giving the Runtime treatment decision above expression in
-  the repository structure itself. This placement does not constitute a
-  separate top-level repository convention, and does not imply Runtime's
-  participation in the Workflow/Skill/Tool compositional relationships.
+  model, implemented as a flat, sibling-level structure: Skill, Workflow,
+  Tool, and Runtime each occupy a direct sibling position within the
+  unified directory, with no additional nesting depth introduced for any
+  of the four. Skill, Workflow, and Tool are structurally grouped as
+  siblings, reflecting the Workflow-contains-Skill and Skill-invokes-Tool
+  relationships (Domain Model §4) that connect them. Runtime is likewise
+  a direct sibling, distinguished from the other three through labeling
+  rather than through nesting depth, giving the Runtime treatment
+  decision above expression in the repository structure itself. This
+  placement does not constitute a separate top-level repository
+  convention, and does not imply Runtime's participation in the
+  Workflow/Skill/Tool compositional relationships. A depth-nested
+  alternative, which would have grouped Skill, Workflow, and Tool one
+  level deeper than Runtime, was considered and rejected due to the risk
+  of implying a containment hierarchy the Domain Model does not
+  establish at that granularity.
+- **Directory/path naming approach.** The unified execution-entity
+  directory's name and repository path shall be derived from this
+  document's own vocabulary and scope (Section 2), rather than directly
+  reusing Canonical Domain Model category terminology. A Domain-Model-derived
+  naming approach was considered and rejected: the Domain Model's own
+  "Execution" category (§1) comprises six entities (Agent Definition,
+  Agent Instance, Skill, Workflow, Tool, and Runtime), while this
+  document governs exactly four; a name drawn directly from that
+  category label would risk implying a broader scope than this
+  Convention actually holds. The specific name and path remain
+  undefined, below.
 
 ### Not Yet Defined
 
 This document still does not establish:
 
 - The specific directory name or repository path for the unified
-  execution-entity directory, or for Runtime's distinguished placement
-  within it.
-- The concrete implementation of the internal organization model above
-  (for example, specific subdirectory depth or shape) — only the model
-  itself has been decided, not its concrete form.
+  execution-entity directory. The naming approach itself is resolved
+  (see Resolved, above); the literal name and path are not.
 - Naming or identifier conventions for instances of these entities.
 - Cross-reference syntax between these entities.
 
@@ -165,10 +181,11 @@ such decisions, once made, are recorded here.
 ## 10. Open Questions
 
 1. **Repository organization specifics.** Within the approved unified
-   execution-entity directory and its approved Runtime-distinguished
-   internal organization model (see Section 9), what directory name,
-   repository path, and concrete subdirectory implementation apply, and
-   what cross-reference approach applies between these entities.
+   execution-entity directory, its approved convention-derived naming
+   approach, and its approved flat, Runtime-distinguished internal
+   organization model (see Section 9), what specific directory name,
+   repository path, naming convention, identifier convention, and
+   cross-reference approach apply.
 2. **Relationship to individual entity Frameworks.** How individual
    Skill, Workflow, Runtime, and Tool Frameworks, once created, would
    relate to this document's shared convention — for example, whether
@@ -200,13 +217,14 @@ This document does not, and may never:
 This document establishes governance boundary and responsibility scope.
 
 The repository organization approach — a unified execution-entity
-directory — Runtime's differentiated treatment within that approach, and
-the internal organization model (Runtime-distinguished, see Section 9)
-have been resolved.
+directory — Runtime's differentiated treatment within that approach, the
+internal organization model (a flat, Runtime-distinguished structure),
+and the directory/path naming approach (convention-derived) have been
+resolved (see Section 9).
 
-The specific directory name, repository path, concrete subdirectory
-implementation, instance naming convention, identifier convention, and
-cross-reference syntax remain undefined (see Section 10).
+The specific directory name, repository path, instance naming
+convention, identifier convention, and cross-reference syntax remain
+undefined (see Section 10).
 
 No Skill, Workflow, Runtime, or Tool instance currently exists in the
 repository.
