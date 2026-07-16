@@ -61,22 +61,26 @@ Model semantics, or ADR approval.
 
 ## Permitted Skills
 
-Unresolved / provisional. No Skill entity, Skill Framework, or Skill
-storage convention exists yet in AIOS. Per Agent Definition Framework §10,
-Skill reference validation is aspirational until such a framework exists,
-and its absence is not treated as a defect. This field is therefore left
+None declared. No Skill entity, Skill Framework, or Skill storage
+convention exists yet in AIOS. Per Agent Definition Framework §10, Skill
+reference validation is aspirational until such a framework exists, and
+its absence is not treated as a defect. This field is therefore left
 unpopulated rather than naming placeholder Skills that would have no
-governed definition behind them. Whether an unpopulated declaration here
-is a permanently valid state, or must eventually be populated, is not
-settled — see Agent Definition Framework Open Architectural Question 5
-(minimum Skill/Workflow count).
+governed definition behind them. Per Canonical Domain Model §7 invariant
+15, an empty Skill declaration is a valid architectural state and no
+minimum Skill cardinality is required; this question, previously tracked
+as Agent Definition Framework Open Architectural Question 5, is resolved
+by [ADR-0007](../../../adr/decisions/ADR-0007.md).
 
 ## Permitted Workflows
 
-Unresolved / provisional, for the same reason and under the same
-constraint as Permitted Skills, above. No Workflow entity, Workflow
-Framework, or Workflow storage convention exists yet. This field is left
-unpopulated rather than naming placeholder Workflows.
+None declared, for the same reason as Permitted Skills, above: no
+Workflow entity, Workflow Framework, or Workflow storage convention
+exists yet. Per Canonical Domain Model §7 invariant 15, an empty
+Workflow declaration is likewise a valid architectural state and no
+minimum Workflow cardinality is required; this question, previously
+tracked as Agent Definition Framework Open Architectural Question 5, is
+resolved by [ADR-0007](../../../adr/decisions/ADR-0007.md).
 
 ## Runtime Requirements
 
