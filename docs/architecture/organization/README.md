@@ -41,6 +41,7 @@ docs/architecture/organization/
   skill-framework.md           — the Skill Framework
   workflow-framework.md        — the Workflow Framework
   runtime-framework.md         — the Runtime Framework
+  tool-framework.md            — the Tool Framework
   <department-slug>/
     README.md                  — that Department's definition
     capabilities/

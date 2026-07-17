@@ -100,13 +100,18 @@ Organization Framework itself absorbing this document's content.
 
 The Agent Definition Framework's own Reference Conventions (§12)
 previously treated Skill and Workflow as name-only references, noting
-neither had its own framework or storage convention yet. Skill and
-Workflow Frameworks have since been ratified, and Agent Definition
-Framework §12 (and separately, §10) has since been synchronized to
-reflect each — as separate, direct Architect-approved documentation
-changes to that Framework, not performed by this document. This
-document's own repository convention (directory name, path, naming, and
-identifier/cross-reference syntax) remains undecided (see Section 10).
+neither had its own framework or storage convention yet. Skill,
+Workflow, and Runtime Frameworks have since been ratified, and Agent
+Definition Framework §12 (and separately, §10) has since been
+synchronized to reflect each — as separate, direct Architect-approved
+documentation changes to that Framework, not performed by this document.
+The Tool Framework has also since been ratified; Agent Definition
+Framework has no direct relationship to Tool and requires no
+corresponding synchronization, consistent with Agent Definition
+Framework §15's own exclusion of any direct Agent-Definition-to-Tool
+relationship. This document's own repository convention (directory
+name, path, naming, and identifier/cross-reference syntax) remains
+undecided (see Section 10).
 
 ## 8. Governed Entities
 
@@ -184,8 +189,8 @@ The Architect has approved the following:
   were a direct citation. This records no new authority; it documents,
   for future Framework authors, the discipline already demonstrated by
   the Organization Framework, the Agent Definition Framework, this
-  Convention, the Skill Framework, the Workflow Framework, and the
-  Runtime Framework.
+  Convention, the Skill Framework, the Workflow Framework, the Runtime
+  Framework, and the Tool Framework.
 
 ### Not Yet Defined
 
@@ -201,14 +206,15 @@ This document still does not establish:
 - An identifier convention and cross-reference syntax for these
   entities. Deferred pending future operational evidence and/or the
   first real entity Framework proposal, consistent with Constitution §8.
-- How any specific future Tool Framework applies the citation-only
-  principle recorded above. The Skill Framework's, Workflow Framework's,
-  and Runtime Framework's ratifications each provided triggering
-  evidence this item anticipated, and the general citation discipline is
-  now documented in Section 9's "Citation discipline for future
-  Frameworks" entry, demonstrated in practice by all three. This item
-  remains open only insofar as a Tool Framework has not yet been created
-  to confirm the general discipline holds for it in practice.
+- How specific Frameworks apply the citation-only principle recorded
+  above. The Skill Framework's, Workflow Framework's, Runtime
+  Framework's, and Tool Framework's ratifications have each demonstrated
+  the general citation discipline documented in Section 9's "Citation
+  discipline for future Frameworks" entry, closing this verification
+  condition for all four entities this document governs. This closure
+  is separate from, and does not resolve, the directory name, repository
+  path, naming convention, and identifier/cross-reference syntax items
+  above, which remain open.
 
 These remain open, tracked in Section 10, pending dedicated future
 Architect decisions. This document's role is limited to establishing that

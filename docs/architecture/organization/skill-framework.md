@@ -93,7 +93,7 @@ Any resolution of the above, in any direction, would require action outside this
 ## 14. Reference Conventions
 
 - **Skill** (self-reference, e.g. from another Skill document) — Until EARC resolves a formal identifier and cross-reference convention (Section 13, item 3), this framework provisionally references a Skill by name only. This is not a final identifier decision and does not establish a naming or identifier convention on this framework's own authority; it is a placeholder representation pending EARC's decision, which this framework inherits once made rather than anticipating or substituting for.
-- **Tool** — reference by name only. No Tool Framework exists yet; this is a known, deliberate limitation, consistent with the same treatment the Agent Definition Framework applies to Skill and Workflow today.
+- **Tool** — reference by name only. A Tool Framework now exists (see `tool-framework.md`); this framework's own reference to Tool remains name-only pending the same EARC identifier and cross-reference decisions (Section 13, item 3) that govern this framework's other provisional references, not because no Tool Framework exists.
 - **Workflow** — reference by name only, for the same reason.
 - **Agent Definition** — reference by name and link to its Agent Definition Framework entry, where the reverse (Agent Definition → Skill) reference already exists per Agent Definition Framework §12.
 
