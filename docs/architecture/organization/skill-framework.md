@@ -34,7 +34,7 @@ This framework does not itself decide, and does not attempt to decide, the speci
 
 ## 7. Relationship to the Agent Definition Framework
 
-The Agent Definition Framework treats Skill as a name-only reference (Agent Definition Framework §12), explicitly noting this as "a known, deliberate limitation, not an oversight." This framework's creation is the anticipated event that framework referenced. Once this document is ratified, the Agent Definition Framework's §12 will require its own synchronization pass to strengthen that reference — that synchronization is future work and is not performed by this document.
+The Agent Definition Framework treats Skill as a name-only reference (Agent Definition Framework §12), explicitly noting this as "a known, deliberate limitation, not an oversight." This framework's creation was the anticipated event that framework referenced. Agent Definition Framework §12 has since been synchronized to cite this Framework by name; that synchronization was carried out as a separate, direct Architect-approved documentation change to Agent Definition Framework, not performed by this document.
 
 Agent Definition Framework §15 Open Architectural Question 3 (scope of "permissions") remains open. This framework does not resolve it, and no content below should be read as taking a position on whether Agent Definition permissions ever extend beyond Skill/Workflow authorization.
 
@@ -86,7 +86,7 @@ The following are known, unresolved matters this framework does not — and may 
 1. **"Promotion" terminology ambiguity.** Domain Model §6 requires that behaviorally-material Skill/Tool changes be "documented at promotion time." Domain Model §7 invariant 8 separately governs a distinct, specific "promotion" process for Memory becoming Knowledge, through governed review, never automatic. Whether the Skill/Tool lifecycle's use of "promotion time" refers to the same concept, a deliberately reused but distinct term, or an unrelated word choice, is not addressed anywhere in the ratified corpus. This framework uses the term only in citation of Domain Model §6's own language and takes no position on this question.
 2. **Agent Definition Framework §15 Q3 — scope of "permissions."** Whether Agent Definition's declared permissions ever extend beyond Skill/Workflow authorization remains an open question belonging to the Agent Definition Framework and, ultimately, to the Domain Model. This framework's Permitted Invocation Context field (Section 8) describes only what invokes a given Skill; it does not address or resolve the broader permissions-scope question.
 3. **EARC repository-location decisions.** The specific directory name, repository path, instance naming convention, and identifier/cross-reference syntax for Skill instances remain undefined, per EARC §9–§10. This framework does not decide them. Resolving them requires a separate EARC amendment — a distinct governance decision outside this document's scope.
-4. **Agent Definition Framework §12 synchronization.** This framework's creation is the event that Agent Definition Framework §12 anticipated (per §7, above). Updating Agent Definition Framework §12 to reflect this framework's existence is future work, not performed here.
+4. **Agent Definition Framework §12 synchronization.** This framework's creation was the event that Agent Definition Framework §12 anticipated (per §7, above). Agent Definition Framework §12 has since been updated to reflect this framework's existence, through a separate, direct Architect-approved documentation change to that document — not performed by, or recorded as an amendment within, this document.
 
 Any resolution of the above, in any direction, would require action outside this document — an ADR for items touching Domain Model semantics (Constitution §3.4, §5), or a separate Architect-approved amendment for items belonging to EARC or the Agent Definition Framework.
 
@@ -123,6 +123,6 @@ This framework does not, and may never:
 
 Ratified as an AIOS Principle Document. Approved by the System Architect.
 
-Required safeguards remain active per the ratification authorization: EARC's open items (directory name, path, naming convention, identifier/cross-reference syntax) remain unresolved; the Agent Definition Framework §12 synchronization pass remains future work, not yet performed; the "promotion" terminology ambiguity (Section 13, item 1) remains unresolved; Agent Definition Framework §15 Q3 (Section 13, item 2) remains open.
+Required safeguards remain active per the ratification authorization: EARC's open items (directory name, path, naming convention, identifier/cross-reference syntax) remain unresolved; the Agent Definition Framework §12 synchronization pass has since been completed, as a separate documentation change to that Framework, not by this document; the "promotion" terminology ambiguity (Section 13, item 1) remains unresolved; Agent Definition Framework §15 Q3 (Section 13, item 2) remains open.
 
 No Skill instance currently exists in the repository.

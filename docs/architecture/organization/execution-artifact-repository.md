@@ -98,13 +98,15 @@ Organization Framework itself absorbing this document's content.
 
 ## 7. Relationship to the Agent Definition Framework
 
-The Agent Definition Framework's own Reference Conventions (§12) currently
-treat Skill and Workflow as name-only references, noting neither has its
-own framework or storage convention yet. Once this document's repository
-convention is decided, and separately once individual Skill and Workflow
-Frameworks exist, the Agent Definition Framework's §12 will require its
-own synchronization pass. That synchronization is future work and is not
-performed by this document.
+The Agent Definition Framework's own Reference Conventions (§12)
+previously treated Skill and Workflow as name-only references, noting
+neither had its own framework or storage convention yet. Skill and
+Workflow Frameworks have since been ratified, and Agent Definition
+Framework §12 (and separately, §10) has since been synchronized to
+reflect each — as separate, direct Architect-approved documentation
+changes to that Framework, not performed by this document. This
+document's own repository convention (directory name, path, naming, and
+identifier/cross-reference syntax) remains undecided (see Section 10).
 
 ## 8. Governed Entities
 
