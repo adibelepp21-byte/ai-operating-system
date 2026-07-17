@@ -151,12 +151,15 @@ Model, and must be clearly distinguished from the mandatory fields above:
   those EARC decisions. Per Domain Model §7 invariant 15, zero Skills is
   a valid state; once this validation becomes operative, it must
   recognize this as compliant, not flag it as incomplete.
-- **Workflow reference validation** — provisional only. No Workflow
-  Framework or storage convention exists yet; this check is aspirational
-  until those are built, and its absence is not a defect in this
-  framework. Per Domain Model §7 invariant 15, zero Workflows is a valid
-  state; once this validation becomes operative, it must recognize this
-  as compliant, not flag it as incomplete.
+- **Workflow reference validation** — a Workflow Framework now exists
+  (see `workflow-framework.md`), but instance-level validation remains
+  provisional: no Workflow instances exist yet, and the storage,
+  identifier, and naming conventions such validation would depend on
+  remain governed by EARC and unresolved (EARC §9–§10). This check's
+  absence is not a defect in this framework, and nothing here resolves
+  those EARC decisions. Per Domain Model §7 invariant 15, zero Workflows
+  is a valid state; once this validation becomes operative, it must
+  recognize this as compliant, not flag it as incomplete.
 - **Version validation** — the documented version correctly indicates
   which Capability state it aligns with, per the convention in Section
   11.
@@ -198,10 +201,12 @@ discrete, individually-superseding records the way ADRs are.
   undefined pending the Execution Artifact Repository Convention (EARC
   §9–§10); no Skill instances currently exist. This treatment may be
   strengthened once those EARC decisions are made.
-- **Workflow** — reference by name only. No Workflow Framework or
-  storage convention exists yet; this is a known, deliberate limitation,
-  not an oversight, and may be strengthened later if such a framework is
-  created.
+- **Workflow** — reference by name only. A Workflow Framework now exists
+  (see `workflow-framework.md`), but individual Workflow instance
+  storage location, naming convention, and identifier/cross-reference
+  syntax remain undefined pending the Execution Artifact Repository
+  Convention (EARC §9–§10); no Workflow instances currently exist. This
+  treatment may be strengthened once those EARC decisions are made.
 - **Runtime** — described only as an abstract requirement. Never a
   specific technology, vendor, or model name, per Domain Model §8 and
   Constitution §6.2.

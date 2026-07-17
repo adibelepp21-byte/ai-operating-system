@@ -182,7 +182,7 @@ The Architect has approved the following:
   were a direct citation. This records no new authority; it documents,
   for future Framework authors, the discipline already demonstrated by
   the Organization Framework, the Agent Definition Framework, this
-  Convention, and the Skill Framework.
+  Convention, the Skill Framework, and the Workflow Framework.
 
 ### Not Yet Defined
 
@@ -198,15 +198,15 @@ This document still does not establish:
 - An identifier convention and cross-reference syntax for these
   entities. Deferred pending future operational evidence and/or the
   first real entity Framework proposal, consistent with Constitution §8.
-- How any specific future Workflow, Runtime, or Tool Framework applies
-  the citation-only principle recorded above. The Skill Framework's
-  ratification provided the triggering evidence this item anticipated,
-  and the general citation discipline is now documented in Section 9's
-  "Citation discipline for future Frameworks" entry. Each future
-  Framework must still follow that principle; this item remains open
-  only insofar as Workflow, Runtime, and Tool Frameworks have not yet
-  been created to confirm the general discipline holds for them in
-  practice.
+- How any specific future Runtime or Tool Framework applies the
+  citation-only principle recorded above. The Skill Framework's and
+  Workflow Framework's ratifications each provided triggering evidence
+  this item anticipated, and the general citation discipline is now
+  documented in Section 9's "Citation discipline for future Frameworks"
+  entry, demonstrated in practice by both. Each future Framework must
+  still follow that principle; this item remains open only insofar as
+  Runtime and Tool Frameworks have not yet been created to confirm the
+  general discipline holds for them in practice.
 
 These remain open, tracked in Section 10, pending dedicated future
 Architect decisions. This document's role is limited to establishing that
