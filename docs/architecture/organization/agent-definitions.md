@@ -142,13 +142,21 @@ Model, and must be clearly distinguished from the mandatory fields above:
   and is owned by a real Department. Whether it must be the same
   Department that owns the Agent Definition is an open question — see
   Section 15.
-- **Skill / Workflow reference validation** — provisional only. No Skill
-  or Workflow Framework or storage convention exists yet; this check is
-  aspirational until those are built, and its absence is not a defect in
-  this framework. Per Domain Model §7 invariant 15, zero Skills, zero
-  Workflows, or any combination of declared and undeclared Skills and
-  Workflows is a valid state; once this validation becomes operative, it
-  must recognize this as compliant, not flag it as incomplete.
+- **Skill reference validation** — a Skill Framework now exists (see
+  `skill-framework.md`), but instance-level validation remains
+  provisional: no Skill instances exist yet, and the storage,
+  identifier, and naming conventions such validation would depend on
+  remain governed by EARC and unresolved (EARC §9–§10). This check's
+  absence is not a defect in this framework, and nothing here resolves
+  those EARC decisions. Per Domain Model §7 invariant 15, zero Skills is
+  a valid state; once this validation becomes operative, it must
+  recognize this as compliant, not flag it as incomplete.
+- **Workflow reference validation** — provisional only. No Workflow
+  Framework or storage convention exists yet; this check is aspirational
+  until those are built, and its absence is not a defect in this
+  framework. Per Domain Model §7 invariant 15, zero Workflows is a valid
+  state; once this validation becomes operative, it must recognize this
+  as compliant, not flag it as incomplete.
 - **Version validation** — the documented version correctly indicates
   which Capability state it aligns with, per the convention in Section
   11.
