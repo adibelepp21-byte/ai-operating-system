@@ -184,10 +184,16 @@ discrete, individually-superseding records the way ADRs are.
   Framework entry.
 - **Capability** — reference by name and link to its Capability file
   under the owning Department's `capabilities/` directory.
-- **Skill / Workflow** — reference by name only. Neither entity has its
-  own framework or storage convention yet; this is a known, deliberate
-  limitation, not an oversight, and may be strengthened later if such
-  frameworks are created.
+- **Skill** — reference by name only. A Skill Framework now exists (see
+  `skill-framework.md`), but individual Skill instance storage location,
+  naming convention, and identifier/cross-reference syntax remain
+  undefined pending the Execution Artifact Repository Convention (EARC
+  §9–§10); no Skill instances currently exist. This treatment may be
+  strengthened once those EARC decisions are made.
+- **Workflow** — reference by name only. No Workflow Framework or
+  storage convention exists yet; this is a known, deliberate limitation,
+  not an oversight, and may be strengthened later if such a framework is
+  created.
 - **Runtime** — described only as an abstract requirement. Never a
   specific technology, vendor, or model name, per Domain Model §8 and
   Constitution §6.2.
