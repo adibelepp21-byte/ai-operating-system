@@ -170,6 +170,19 @@ The Architect has approved the following:
   procedural principle only; it does not define how any specific future
   Framework applies it, and Framework-specific application remains
   deferred until a real Framework proposal exists (see Section 10).
+- **Citation discipline for future Frameworks.** Any future Skill,
+  Workflow, Runtime, or Tool Framework, and any other future Principle
+  Document, satisfies Constitution §6.2 invariant 3 by citing — never
+  restating or paraphrasing — the Constitution, the Canonical Domain
+  Model, and any other Principle Document wherever it relies on content
+  those documents already establish. Where a Framework's own field or
+  requirement is grounded only inferentially, rather than by direct
+  textual enumeration in the Domain Model, the Framework should say so
+  explicitly, rather than presenting an inferential grounding as if it
+  were a direct citation. This records no new authority; it documents,
+  for future Framework authors, the discipline already demonstrated by
+  the Organization Framework, the Agent Definition Framework, this
+  Convention, and the Skill Framework.
 
 ### Not Yet Defined
 
@@ -185,9 +198,15 @@ This document still does not establish:
 - An identifier convention and cross-reference syntax for these
   entities. Deferred pending future operational evidence and/or the
   first real entity Framework proposal, consistent with Constitution §8.
-- How any specific future Skill, Workflow, Runtime, or Tool Framework
-  applies the citation-only principle recorded above. Deferred until a
-  real Framework proposal exists.
+- How any specific future Workflow, Runtime, or Tool Framework applies
+  the citation-only principle recorded above. The Skill Framework's
+  ratification provided the triggering evidence this item anticipated,
+  and the general citation discipline is now documented in Section 9's
+  "Citation discipline for future Frameworks" entry. Each future
+  Framework must still follow that principle; this item remains open
+  only insofar as Workflow, Runtime, and Tool Frameworks have not yet
+  been created to confirm the general discipline holds for them in
+  practice.
 
 These remain open, tracked in Section 10, pending dedicated future
 Architect decisions. This document's role is limited to establishing that
