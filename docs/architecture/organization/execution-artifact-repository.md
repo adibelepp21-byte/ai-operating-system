@@ -76,7 +76,7 @@ that content anywhere. It references the Domain Model only as
 justification for grouping these four entities as one governance
 question: they share an identical Ownership Rule category (§5, "owned
 centrally"), a shared Lifecycle Rule governance pattern (§6, established
-across ADR-0004, ADR-0005, and ADR-0007), and direct compositional
+across ADR-0004 and ADR-0005), and direct compositional
 relationships among themselves (§4). Where this document requires a fact
 about these entities, it cites the Domain Model section that already
 establishes it; it does not independently assert Domain Model semantics.
@@ -233,13 +233,16 @@ such decisions, once made, are recorded here.
    deferred pending future operational evidence and/or the first real
    entity Framework proposal.
 2. **Framework-specific application of the citation-only principle.**
-   The general principle that future Skill, Workflow, Runtime, and Tool
+   The general principle that Skill, Workflow, Runtime, and Tool
    Frameworks inherit this Convention's decisions by citation rather
-   than restatement is resolved (see Section 9). How any specific future
-   Framework applies that principle in practice remains open, deferred
-   until a real Framework proposal exists. This question does not
-   address whether or when such Frameworks are built; that is separate
-   planning work outside this document's scope.
+   than restatement is resolved (see Section 9). Skill Framework,
+   Workflow Framework, Runtime Framework, and Tool Framework have each
+   since been ratified and have each demonstrated this principle in
+   practice, closing this specific verification question (see Section
+   9's "Citation discipline for future Frameworks" entry). This closure
+   does not resolve, and is separate from, Open Question 1 above
+   (directory name, repository path, naming convention, and identifier
+   convention), which remain open.
 
 ## 11. Explicit Exclusions
 
