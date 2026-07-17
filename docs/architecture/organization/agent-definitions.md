@@ -160,6 +160,15 @@ Model, and must be clearly distinguished from the mandatory fields above:
   those EARC decisions. Per Domain Model §7 invariant 15, zero Workflows
   is a valid state; once this validation becomes operative, it must
   recognize this as compliant, not flag it as incomplete.
+- **Runtime reference validation** — a Runtime Framework now exists (see
+  `runtime-framework.md`). This document's own Runtime Requirements
+  field (Section 8) remains an abstract description rather than a
+  reference to a specific Runtime instance; no Runtime instances
+  currently exist, and the storage, identifier, and naming conventions
+  any future instance-level reference would depend on remain governed by
+  EARC and unresolved (EARC §9–§10). This check's absence is not a
+  defect in this framework, and nothing here resolves those EARC
+  decisions.
 - **Version validation** — the documented version correctly indicates
   which Capability state it aligns with, per the convention in Section
   11.
@@ -207,8 +216,11 @@ discrete, individually-superseding records the way ADRs are.
   syntax remain undefined pending the Execution Artifact Repository
   Convention (EARC §9–§10); no Workflow instances currently exist. This
   treatment may be strengthened once those EARC decisions are made.
-- **Runtime** — described only as an abstract requirement. Never a
-  specific technology, vendor, or model name, per Domain Model §8 and
+- **Runtime** — described only as an abstract requirement. A Runtime
+  Framework now exists (see `runtime-framework.md`), governing how
+  Runtime itself is documented; this entry's own abstract-only treatment
+  is unchanged by that Framework's existence. Never a specific
+  technology, vendor, or model name, per Domain Model §8 and
   Constitution §6.2.
 
 ## 13. Storage Convention

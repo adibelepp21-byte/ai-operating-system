@@ -38,6 +38,9 @@ docs/architecture/organization/
   agent-definitions.md         — the Agent Definition Framework
   execution-artifact-repository.md — the Execution Artifact Repository
                                       Convention
+  skill-framework.md           — the Skill Framework
+  workflow-framework.md        — the Workflow Framework
+  runtime-framework.md         — the Runtime Framework
   <department-slug>/
     README.md                  — that Department's definition
     capabilities/
