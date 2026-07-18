@@ -30,7 +30,7 @@ The Canonical Domain Model is the sole semantic authority for what a Skill is, i
 
 Skill is one of four entities governed by the Execution Artifact Repository Convention's (EARC) shared repository-location boundary (EARC §2). This framework inherits, rather than duplicates, EARC's resolved decisions: the unified execution-entity directory, Skill's sibling grouping with Workflow and Tool, and the general Framework-relationship citation principle (EARC §9).
 
-This framework does not itself decide, and does not attempt to decide, the specific directory name, repository path, instance naming convention, or identifier and cross-reference syntax that EARC leaves open (EARC §9, §10). Those remain separate governance decisions belonging exclusively to EARC. Where this document must refer to a Skill instance's storage location, it does so only in the abstract, pending those decisions.
+This framework does not itself decide, and does not attempt to decide, EARC's own repository-location convention; that convention belongs exclusively to EARC. Per EARC §9, Skill instances are identified by a stable, human-readable canonical key and recorded within the unified execution-entity directory, named `execution-catalog`, organized by a symmetric grouping labeled by governed entity. The literal format of the canonical key remains open (EARC §9, "Not Yet Defined"). Where this document must refer to a Skill instance's storage location or identity in concrete terms, it does so only in the abstract, pending that remaining decision.
 
 ## 7. Relationship to the Agent Definition Framework
 
@@ -85,21 +85,21 @@ The following are known, unresolved matters this framework does not — and may 
 
 1. **"Promotion" terminology ambiguity.** Domain Model §6 requires that behaviorally-material Skill/Tool changes be "documented at promotion time." Domain Model §7 invariant 8 separately governs a distinct, specific "promotion" process for Memory becoming Knowledge, through governed review, never automatic. Whether the Skill/Tool lifecycle's use of "promotion time" refers to the same concept, a deliberately reused but distinct term, or an unrelated word choice, is not addressed anywhere in the ratified corpus. This framework uses the term only in citation of Domain Model §6's own language and takes no position on this question.
 2. **Agent Definition Framework §15 Q3 — scope of "permissions."** Whether Agent Definition's declared permissions ever extend beyond Skill/Workflow authorization remains an open question belonging to the Agent Definition Framework and, ultimately, to the Domain Model. This framework's Permitted Invocation Context field (Section 8) describes only what invokes a given Skill; it does not address or resolve the broader permissions-scope question.
-3. **EARC repository-location decisions.** The specific directory name, repository path, instance naming convention, and identifier/cross-reference syntax for Skill instances remain undefined, per EARC §9–§10. This framework does not decide them. Resolving them requires a separate EARC amendment — a distinct governance decision outside this document's scope.
+3. **EARC repository-location decisions.** The canonical identifier model, reference model, directory name (`execution-catalog`), and internal organization model for Skill instances have been resolved by EARC (EARC §9). The literal format of the canonical key remains undefined, per EARC §9, "Not Yet Defined." This framework does not decide it. Resolving it requires a separate EARC amendment — a distinct governance decision outside this document's scope.
 4. **Agent Definition Framework §12 synchronization.** This framework's creation was the event that Agent Definition Framework §12 anticipated (per §7, above). Agent Definition Framework §12 has since been updated to reflect this framework's existence, through a separate, direct Architect-approved documentation change to that document — not performed by, or recorded as an amendment within, this document.
 
 Any resolution of the above, in any direction, would require action outside this document — an ADR for items touching Domain Model semantics (Constitution §3.4, §5), or a separate Architect-approved amendment for items belonging to EARC or the Agent Definition Framework.
 
 ## 14. Reference Conventions
 
-- **Skill** (self-reference, e.g. from another Skill document) — Until EARC resolves a formal identifier and cross-reference convention (Section 13, item 3), this framework provisionally references a Skill by name only. This is not a final identifier decision and does not establish a naming or identifier convention on this framework's own authority; it is a placeholder representation pending EARC's decision, which this framework inherits once made rather than anticipating or substituting for.
-- **Tool** — reference by name only. A Tool Framework now exists (see `tool-framework.md`); this framework's own reference to Tool remains name-only pending the same EARC identifier and cross-reference decisions (Section 13, item 3) that govern this framework's other provisional references, not because no Tool Framework exists.
-- **Workflow** — reference by name only, for the same reason.
+- **Skill** (self-reference, e.g. from another Skill document) — Per EARC's Canonical Identifier Model and Reference Model (EARC §9), a Skill is referenced by its canonical key, which is the authoritative reference identity; a relative Markdown link to its current repository location may additionally be included as a navigation convenience. This framework does not itself define the canonical key's literal format or resolution mechanism; it inherits EARC's decision rather than anticipating or substituting for it.
+- **Tool** — reference by canonical key, per EARC's Reference Model (EARC §9), consistent with this framework's own Skill self-reference convention above. A Tool Framework exists (see `tool-framework.md`).
+- **Workflow** — reference by canonical key, for the same reason.
 - **Agent Definition** — reference by name and link to its Agent Definition Framework entry, where the reverse (Agent Definition → Skill) reference already exists per Agent Definition Framework §12.
 
 ## 15. Storage Convention
 
-The specific repository path and file-naming convention for individual Skill instances are not defined here. They remain governed by the Execution Artifact Repository Convention, once EARC's own open items (directory name, path, naming, identifier convention) are resolved (see Section 13, item 3). This framework does not select or imply an instance storage location.
+Individual Skill instances are recorded within the unified execution-entity directory, named `execution-catalog`, organized by a symmetric grouping labeled by governed entity, per EARC §9. The specific file-naming convention for individual Skill instances is not defined here and remains governed by the Execution Artifact Repository Convention, pending resolution of the canonical key's literal format (see Section 13, item 3). This framework does not select or imply an instance storage location beyond what EARC has resolved.
 
 This framework document itself is recorded at `docs/architecture/organization/skill-framework.md`, a sibling to the Organization Framework, the Agent Definition Framework, and the Execution Artifact Repository Convention, consistent with the existing placement of Principle Documents within that directory.
 
@@ -123,6 +123,6 @@ This framework does not, and may never:
 
 Ratified as an AIOS Principle Document. Approved by the System Architect.
 
-Required safeguards remain active per the ratification authorization: EARC's open items (directory name, path, naming convention, identifier/cross-reference syntax) remain unresolved; the Agent Definition Framework §12 synchronization pass has since been completed, as a separate documentation change to that Framework, not by this document; the "promotion" terminology ambiguity (Section 13, item 1) remains unresolved; Agent Definition Framework §15 Q3 (Section 13, item 2) remains open.
+Required safeguards remain active per the ratification authorization: EARC's canonical identifier model, reference model, directory name, and internal organization model have since been resolved (EARC §9); the literal format of the canonical key remains unresolved; the Agent Definition Framework §12 synchronization pass has since been completed, as a separate documentation change to that Framework, not by this document; the "promotion" terminology ambiguity (Section 13, item 1) remains unresolved; Agent Definition Framework §15 Q3 (Section 13, item 2) remains open.
 
 No Skill instance currently exists in the repository.

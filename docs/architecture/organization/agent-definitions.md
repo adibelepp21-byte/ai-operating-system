@@ -144,31 +144,34 @@ Model, and must be clearly distinguished from the mandatory fields above:
   Section 15.
 - **Skill reference validation** — a Skill Framework now exists (see
   `skill-framework.md`), but instance-level validation remains
-  provisional: no Skill instances exist yet, and the storage,
-  identifier, and naming conventions such validation would depend on
-  remain governed by EARC and unresolved (EARC §9–§10). This check's
-  absence is not a defect in this framework, and nothing here resolves
-  those EARC decisions. Per Domain Model §7 invariant 15, zero Skills is
+  provisional: no Skill instances exist yet, and the storage and
+  identifier conventions such validation would depend on — resolved in
+  principle by EARC (EARC §9) — await only the literal canonical-key
+  format, which remains undefined. This check's absence is not a defect
+  in this framework, and nothing here resolves that remaining EARC
+  decision. Per Domain Model §7 invariant 15, zero Skills is
   a valid state; once this validation becomes operative, it must
   recognize this as compliant, not flag it as incomplete.
 - **Workflow reference validation** — a Workflow Framework now exists
   (see `workflow-framework.md`), but instance-level validation remains
-  provisional: no Workflow instances exist yet, and the storage,
-  identifier, and naming conventions such validation would depend on
-  remain governed by EARC and unresolved (EARC §9–§10). This check's
-  absence is not a defect in this framework, and nothing here resolves
-  those EARC decisions. Per Domain Model §7 invariant 15, zero Workflows
+  provisional: no Workflow instances exist yet, and the storage and
+  identifier conventions such validation would depend on — resolved in
+  principle by EARC (EARC §9) — await only the literal canonical-key
+  format, which remains undefined. This check's absence is not a defect
+  in this framework, and nothing here resolves that remaining EARC
+  decision. Per Domain Model §7 invariant 15, zero Workflows
   is a valid state; once this validation becomes operative, it must
   recognize this as compliant, not flag it as incomplete.
 - **Runtime reference validation** — a Runtime Framework now exists (see
   `runtime-framework.md`). This document's own Runtime Requirements
   field (Section 8) remains an abstract description rather than a
   reference to a specific Runtime instance; no Runtime instances
-  currently exist, and the storage, identifier, and naming conventions
-  any future instance-level reference would depend on remain governed by
-  EARC and unresolved (EARC §9–§10). This check's absence is not a
-  defect in this framework, and nothing here resolves those EARC
-  decisions.
+  currently exist, and the storage and identifier conventions
+  any future instance-level reference would depend on — resolved in
+  principle by EARC (EARC §9) — await only the literal canonical-key
+  format, which remains undefined. This check's absence is not a
+  defect in this framework, and nothing here resolves that remaining
+  EARC decision.
 - **Version validation** — the documented version correctly indicates
   which Capability state it aligns with, per the convention in Section
   11.
@@ -204,18 +207,18 @@ discrete, individually-superseding records the way ADRs are.
   Framework entry.
 - **Capability** — reference by name and link to its Capability file
   under the owning Department's `capabilities/` directory.
-- **Skill** — reference by name only. A Skill Framework now exists (see
-  `skill-framework.md`), but individual Skill instance storage location,
-  naming convention, and identifier/cross-reference syntax remain
-  undefined pending the Execution Artifact Repository Convention (EARC
-  §9–§10); no Skill instances currently exist. This treatment may be
-  strengthened once those EARC decisions are made.
-- **Workflow** — reference by name only. A Workflow Framework now exists
-  (see `workflow-framework.md`), but individual Workflow instance
-  storage location, naming convention, and identifier/cross-reference
-  syntax remain undefined pending the Execution Artifact Repository
-  Convention (EARC §9–§10); no Workflow instances currently exist. This
-  treatment may be strengthened once those EARC decisions are made.
+- **Skill** — reference by canonical key, per EARC's Reference Model
+  (EARC §9), consistent with the Skill Framework's own reference
+  convention (Skill Framework §14). A Skill Framework now exists (see
+  `skill-framework.md`); no Skill instances currently exist. The literal
+  format of the canonical key remains undefined pending a separate EARC
+  amendment (EARC §9, "Not Yet Defined").
+- **Workflow** — reference by canonical key, per EARC's Reference Model
+  (EARC §9), consistent with the Workflow Framework's own reference
+  convention (Workflow Framework §14). A Workflow Framework now exists
+  (see `workflow-framework.md`); no Workflow instances currently exist.
+  The literal format of the canonical key remains undefined pending a
+  separate EARC amendment (EARC §9, "Not Yet Defined").
 - **Runtime** — described only as an abstract requirement. A Runtime
   Framework now exists (see `runtime-framework.md`), governing how
   Runtime itself is documented; this entry's own abstract-only treatment

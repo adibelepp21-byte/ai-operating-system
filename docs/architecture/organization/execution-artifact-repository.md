@@ -6,14 +6,16 @@ This document establishes the governance boundary and responsibility scope
 for how Skill, Workflow, Runtime, and Tool instances are recorded within
 AIOS as repository artifacts.
 
-This document does not yet define directory structure, naming convention,
-or reference syntax for these instances. Those remain open, pending a
-separate Architect decision evaluating the option space already identified
-in the Architecture Discovery Report for this question. This document
-establishes only that the shared repository-location convention for these
-four entities, once decided, belongs here — rather than in the
-Organization Framework, or independently invented by each entity's
-eventual individual Framework.
+This document defines the shared repository-location convention for
+these four entities. Directory structure, naming convention, and
+reference syntax have since been resolved (see Section 9), following
+the option-space evaluation originally identified in the Architecture
+Discovery Report for this question. The literal canonical-key format
+and the complete repository path beyond the directory name remain open,
+pending a separate, future Architect decision. This document establishes
+that the shared repository-location convention for these four entities
+belongs here — rather than in the Organization Framework, or
+independently invented by each entity's eventual individual Framework.
 
 ## 2. Scope
 
@@ -109,9 +111,11 @@ The Tool Framework has also since been ratified; Agent Definition
 Framework has no direct relationship to Tool and requires no
 corresponding synchronization, consistent with Agent Definition
 Framework §15's own exclusion of any direct Agent-Definition-to-Tool
-relationship. This document's own repository convention (directory
-name, path, naming, and identifier/cross-reference syntax) remains
-undecided (see Section 10).
+relationship. This document's own repository convention — directory
+name, canonical identifier model, and reference syntax — has since been
+resolved (see Section 9); the literal canonical-key format and the
+complete repository path beyond the directory name remain undecided
+(see Section 10).
 
 ## 8. Governed Entities
 
@@ -143,22 +147,28 @@ The Architect has approved the following:
   composition.
 - **Internal organization model.** Within the unified execution-entity
   directory, the internal organization follows a Runtime-distinguished
-  model, implemented as a flat, sibling-level structure: Skill, Workflow,
-  Tool, and Runtime each occupy a direct sibling position within the
-  unified directory, with no additional nesting depth introduced for any
-  of the four. Skill, Workflow, and Tool are structurally grouped as
+  model: Skill, Workflow, Tool, and Runtime instances are organized
+  using a symmetric grouping, labeled by which of the four governed
+  entities — Skill, Workflow, Runtime, or Tool — each instance
+  represents, with one grouping level applied identically and
+  simultaneously to all four, and no one of the four nested more deeply
+  than another. Skill, Workflow, and Tool are structurally grouped as
   siblings, reflecting the Workflow-contains-Skill and Skill-invokes-Tool
   relationships (Domain Model §4) that connect them. Runtime is likewise
-  a direct sibling, distinguished from the other three through labeling
-  rather than through nesting depth, giving the Runtime treatment
-  decision above expression in the repository structure itself. This
-  placement does not constitute a separate top-level repository
-  convention, and does not imply Runtime's participation in the
-  Workflow/Skill/Tool compositional relationships. A depth-nested
+  a direct sibling grouping, distinguished from the other three through
+  its own label rather than through any difference in nesting depth,
+  giving the Runtime treatment decision above expression in the
+  repository structure itself. This placement does not constitute a
+  separate top-level repository convention, and does not imply Runtime's
+  participation in the Workflow/Skill/Tool compositional relationships,
+  nor does it introduce, redefine, or imply any Domain Model entity
+  relationship, hierarchy, or containment structure. A depth-nested
   alternative, which would have grouped Skill, Workflow, and Tool one
   level deeper than Runtime, was considered and rejected due to the risk
   of implying a containment hierarchy the Domain Model does not
-  establish at that granularity.
+  establish at that granularity; the governing concern remains
+  asymmetric nesting that would imply such a hierarchy, not the presence
+  of a grouping level applied symmetrically to all four.
 - **Directory/path naming approach.** The unified execution-entity
   directory's name and repository path shall be derived from this
   document's own vocabulary and scope (Section 2), rather than directly
@@ -168,8 +178,40 @@ The Architect has approved the following:
   Agent Instance, Skill, Workflow, Tool, and Runtime), while this
   document governs exactly four; a name drawn directly from that
   category label would risk implying a broader scope than this
-  Convention actually holds. The specific name and path remain
-  undefined, below.
+  Convention actually holds. The specific name is resolved below; the
+  complete repository path beyond that name remains undefined.
+- **Directory name.** The unified execution-entity directory is named
+  `execution-catalog`, consistent with this document's own
+  EARC-vocabulary-derived naming approach and selected over alternative
+  EARC-vocabulary-consistent candidates on the basis of semantic
+  precision, scalability, governance consistency, ambiguity risk, and
+  implementation friendliness. This name does not reuse, and is not
+  derived from, Canonical Domain Model category terminology.
+- **Canonical identifier model.** Each Skill, Workflow, Runtime, and Tool
+  instance is identified by a stable, human-readable canonical key that
+  remains fixed for the life of the instance, independent of its Display
+  Name and its repository location. The canonical key is a
+  documentation-level representation and citation mechanism only; it
+  does not define, redefine, or substitute for entity identity or entity
+  continuity, which remain governed exclusively by the Canonical Domain
+  Model (§6). Canonical key uniqueness is scoped separately for each of
+  the four governed entities — Skill, Workflow, Runtime, and Tool — such
+  that uniqueness is required within each entity's own set of instances,
+  not across all four collectively. Section 2 directly establishes that
+  these four entities, individually named, are this document's governed
+  scope; scoping canonical-key uniqueness to each of them separately is
+  an architectural approach inferred from that governed-entity
+  structure, not a requirement directly enumerated by Section 2 itself.
+  The literal format of the canonical key is deferred to a separate,
+  later amendment-level decision (see "Not Yet Defined," below).
+- **Reference model.** The canonical key is the authoritative reference
+  identity for citing a Skill, Workflow, Runtime, or Tool instance from
+  another document. A relative Markdown link to the instance's current
+  repository location may additionally be included as a navigation
+  convenience; such a link is derived from, and subordinate to, the
+  canonical key, never the source of truth for identity. The mechanism
+  by which a canonical key is resolved to a repository location is not a
+  governance concern of this document.
 - **Framework relationship — general principle.** Future Skill,
   Workflow, Runtime, and Tool Frameworks, once created, shall inherit
   this Convention's decisions by citation rather than by restatement,
@@ -196,42 +238,32 @@ The Architect has approved the following:
 
 This document still does not establish:
 
-- The specific directory name or repository path for the unified
-  execution-entity directory. The naming approach itself is resolved
-  (see Resolved, above); the literal name and path are not.
-- A shared naming convention for instances of these entities.
-  Intentionally deferred: this decision is coupled with the
-  still-undecided identifier convention, below, and deciding one without
-  the other risks an inconsistent outcome.
-- An identifier convention and cross-reference syntax for these
-  entities. Deferred pending future operational evidence and/or the
-  first real entity Framework proposal, consistent with Constitution §8.
+- The literal format of the canonical key established above ("Canonical
+  identifier model"). Deferred to a separate, later amendment-level
+  decision, pending future operational evidence and/or the first real
+  entity Framework proposal, consistent with Constitution §8.
 - How specific Frameworks apply the citation-only principle recorded
   above. The Skill Framework's, Workflow Framework's, Runtime
   Framework's, and Tool Framework's ratifications have each demonstrated
   the general citation discipline documented in Section 9's "Citation
   discipline for future Frameworks" entry, closing this verification
   condition for all four entities this document governs. This closure
-  is separate from, and does not resolve, the directory name, repository
-  path, naming convention, and identifier/cross-reference syntax items
-  above, which remain open.
+  is separate from, and does not resolve, the literal canonical-key
+  format item above, which remains open.
 
-These remain open, tracked in Section 10, pending dedicated future
-Architect decisions. This document's role is limited to establishing that
-such decisions, once made, are recorded here.
+This remains open, tracked in Section 10, pending a dedicated future
+Architect decision. This document's role is limited to establishing that
+such a decision, once made, is recorded here.
 
 ## 10. Open Questions
 
-1. **Repository organization specifics.** Within the approved unified
-   execution-entity directory, its approved convention-derived naming
-   approach, and its approved flat, Runtime-distinguished internal
-   organization model (see Section 9), the following remain open: (a)
-   the specific directory name and repository path; (b) a shared naming
-   convention for instances of these entities — intentionally deferred
-   because it is coupled with the still-undecided identifier convention,
-   below; (c) an identifier convention and cross-reference syntax —
-   deferred pending future operational evidence and/or the first real
-   entity Framework proposal.
+1. **Repository organization specifics — CLOSED.** The specific
+   directory name (`execution-catalog`), the canonical identifier model,
+   the reference model, and the internal organization model (a symmetric
+   grouping labeled by governed entity) have been resolved (see Section
+   9, "Resolved," above). This closure does not resolve the literal
+   format of the canonical key, which remains open, tracked in Section 9
+   ("Not Yet Defined").
 2. **Framework-specific application of the citation-only principle.**
    The general principle that Skill, Workflow, Runtime, and Tool
    Frameworks inherit this Convention's decisions by citation rather
@@ -252,8 +284,9 @@ This document does not, and may never:
   Model entity, relationship, ownership rule, or lifecycle rule.
 - Create new governance authority, invariants, or lifecycle states beyond
   those already ratified.
-- Select or implement a storage structure, naming convention, or
-  reference syntax. These remain open per Section 10.
+- Select or implement the literal canonical-key format or the complete
+  repository path beyond the directory name resolved in Section 9.
+  These remain open per Section 10.
 - Modify the Organization Framework's existing Department-nested
   convention for Capability or Agent Definition instances.
 - Create a Skill Framework, Workflow Framework, Runtime Framework, Tool
@@ -268,16 +301,17 @@ This document does not, and may never:
 This document establishes governance boundary and responsibility scope.
 
 The repository organization approach — a unified execution-entity
-directory — Runtime's differentiated treatment within that approach, the
-internal organization model (a flat, Runtime-distinguished structure),
-the directory/path naming approach (convention-derived), and the general
-Framework relationship principle (citation rather than restatement) have
-been resolved (see Section 9).
+directory, named `execution-catalog` — Runtime's differentiated
+treatment within that approach, the internal organization model (a
+symmetric grouping labeled by governed entity), the directory/path
+naming approach (convention-derived), the canonical identifier model,
+the reference model, and the general Framework relationship principle
+(citation rather than restatement) have been resolved (see Section 9).
 
-The specific directory name, repository path, instance naming
-convention, identifier convention, cross-reference syntax, and the
-Framework-specific application of the citation-only principle remain
-undefined (see Section 10).
+The literal format of the canonical key and the complete repository
+path beyond the directory name remain undefined (see Section 10). The
+Framework-specific application of the citation-only principle has
+separately been closed (see Section 10, Open Question 2).
 
 No Skill, Workflow, Runtime, or Tool instance currently exists in the
 repository.
