@@ -144,34 +144,43 @@ Model, and must be clearly distinguished from the mandatory fields above:
   Section 15.
 - **Skill reference validation** — a Skill Framework now exists (see
   `skill-framework.md`), but instance-level validation remains
-  provisional: no Skill instances exist yet, and the storage and
-  identifier conventions such validation would depend on — resolved in
-  principle by EARC (EARC §9) — await only the literal canonical-key
-  format, which remains undefined. This check's absence is not a defect
-  in this framework, and nothing here resolves that remaining EARC
-  decision. Per Domain Model §7 invariant 15, zero Skills is
+  provisional: no Skill instances exist yet. The storage and identifier
+  conventions such validation would depend on are now fully resolved by
+  EARC (EARC §9, as amended by EARC Amendment v1.1) — canonical key
+  format `skill.<stable-name-slug>` and repository path
+  `docs/architecture/organization/execution-catalog/skill/`; only slug
+  normalization rules and filename conventions remain deferred to a
+  separate, later instance-convention decision. This check's absence is
+  not a defect in this framework, and nothing here resolves that
+  remaining decision. Per Domain Model §7 invariant 15, zero Skills is
   a valid state; once this validation becomes operative, it must
   recognize this as compliant, not flag it as incomplete.
 - **Workflow reference validation** — a Workflow Framework now exists
   (see `workflow-framework.md`), but instance-level validation remains
-  provisional: no Workflow instances exist yet, and the storage and
-  identifier conventions such validation would depend on — resolved in
-  principle by EARC (EARC §9) — await only the literal canonical-key
-  format, which remains undefined. This check's absence is not a defect
-  in this framework, and nothing here resolves that remaining EARC
-  decision. Per Domain Model §7 invariant 15, zero Workflows
+  provisional: no Workflow instances exist yet. The storage and
+  identifier conventions such validation would depend on are now fully
+  resolved by EARC (EARC §9, as amended by EARC Amendment v1.1) —
+  canonical key format `workflow.<stable-name-slug>` and repository path
+  `docs/architecture/organization/execution-catalog/workflow/`; only
+  slug normalization rules and filename conventions remain deferred to
+  a separate, later instance-convention decision. This check's absence
+  is not a defect in this framework, and nothing here resolves that
+  remaining decision. Per Domain Model §7 invariant 15, zero Workflows
   is a valid state; once this validation becomes operative, it must
   recognize this as compliant, not flag it as incomplete.
 - **Runtime reference validation** — a Runtime Framework now exists (see
   `runtime-framework.md`). This document's own Runtime Requirements
   field (Section 8) remains an abstract description rather than a
   reference to a specific Runtime instance; no Runtime instances
-  currently exist, and the storage and identifier conventions
-  any future instance-level reference would depend on — resolved in
-  principle by EARC (EARC §9) — await only the literal canonical-key
-  format, which remains undefined. This check's absence is not a
-  defect in this framework, and nothing here resolves that remaining
-  EARC decision.
+  currently exist. The storage and identifier conventions any future
+  instance-level reference would depend on are now fully resolved by
+  EARC (EARC §9, as amended by EARC Amendment v1.1) — canonical key
+  format `runtime.<stable-name-slug>` and repository path
+  `docs/architecture/organization/execution-catalog/runtime/`; only
+  slug normalization rules and filename conventions remain deferred to
+  a separate, later instance-convention decision. This check's absence
+  is not a defect in this framework, and nothing here resolves that
+  remaining decision.
 - **Version validation** — the documented version correctly indicates
   which Capability state it aligns with, per the convention in Section
   11.
@@ -207,18 +216,21 @@ discrete, individually-superseding records the way ADRs are.
   Framework entry.
 - **Capability** — reference by name and link to its Capability file
   under the owning Department's `capabilities/` directory.
-- **Skill** — reference by canonical key, per EARC's Reference Model
-  (EARC §9), consistent with the Skill Framework's own reference
-  convention (Skill Framework §14). A Skill Framework now exists (see
-  `skill-framework.md`); no Skill instances currently exist. The literal
-  format of the canonical key remains undefined pending a separate EARC
-  amendment (EARC §9, "Not Yet Defined").
-- **Workflow** — reference by canonical key, per EARC's Reference Model
-  (EARC §9), consistent with the Workflow Framework's own reference
-  convention (Workflow Framework §14). A Workflow Framework now exists
-  (see `workflow-framework.md`); no Workflow instances currently exist.
-  The literal format of the canonical key remains undefined pending a
-  separate EARC amendment (EARC §9, "Not Yet Defined").
+- **Skill** — reference by canonical key (`skill.<stable-name-slug>`),
+  per EARC's Reference Model and canonical key format (EARC §9, as
+  amended by EARC Amendment v1.1), consistent with the Skill Framework's
+  own reference convention (Skill Framework §14). A Skill Framework now
+  exists (see `skill-framework.md`); no Skill instances currently exist.
+  Slug normalization rules and filename conventions remain deferred to
+  a separate, later instance-convention decision.
+- **Workflow** — reference by canonical key (`workflow.<stable-name-slug>`),
+  per EARC's Reference Model and canonical key format (EARC §9, as
+  amended by EARC Amendment v1.1), consistent with the Workflow
+  Framework's own reference convention (Workflow Framework §14). A
+  Workflow Framework now exists (see `workflow-framework.md`); no
+  Workflow instances currently exist. Slug normalization rules and
+  filename conventions remain deferred to a separate, later
+  instance-convention decision.
 - **Runtime** — described only as an abstract requirement. A Runtime
   Framework now exists (see `runtime-framework.md`), governing how
   Runtime itself is documented; this entry's own abstract-only treatment

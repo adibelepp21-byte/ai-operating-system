@@ -10,9 +10,9 @@ This document defines the shared repository-location convention for
 these four entities. Directory structure, naming convention, and
 reference syntax have since been resolved (see Section 9), following
 the option-space evaluation originally identified in the Architecture
-Discovery Report for this question. The literal canonical-key format
-and the complete repository path beyond the directory name remain open,
-pending a separate, future Architect decision. This document establishes
+Discovery Report for this question. The literal canonical-key format and the complete repository path
+beyond the directory name have since been resolved (see Section 9).
+This document establishes
 that the shared repository-location convention for these four entities
 belongs here — rather than in the Organization Framework, or
 independently invented by each entity's eventual individual Framework.
@@ -64,10 +64,10 @@ separately from, and are not affected by, this document's content.
 ## 4. Relationship to the Constitution
 
 This document defines and alters no Constitutional authority. Any content
-in this document — including its still-pending repository convention —
-remains bound absolutely by Constitution §6.2 invariant 1's prohibition on
-technology, language, framework, or infrastructure decisions in governance
-documents.
+in this document — including its resolved repository convention and any
+future amendment to it — remains bound absolutely by Constitution §6.2
+invariant 1's prohibition on technology, language, framework, or
+infrastructure decisions in governance documents.
 
 ## 5. Relationship to the Canonical Domain Model
 
@@ -112,10 +112,9 @@ Framework has no direct relationship to Tool and requires no
 corresponding synchronization, consistent with Agent Definition
 Framework §15's own exclusion of any direct Agent-Definition-to-Tool
 relationship. This document's own repository convention — directory
-name, canonical identifier model, and reference syntax — has since been
-resolved (see Section 9); the literal canonical-key format and the
-complete repository path beyond the directory name remain undecided
-(see Section 10).
+name, canonical identifier model, reference syntax, canonical key
+format, and repository path — has since been fully resolved (see
+Section 9).
 
 ## 8. Governed Entities
 
@@ -178,8 +177,8 @@ The Architect has approved the following:
   Agent Instance, Skill, Workflow, Tool, and Runtime), while this
   document governs exactly four; a name drawn directly from that
   category label would risk implying a broader scope than this
-  Convention actually holds. The specific name is resolved below; the
-  complete repository path beyond that name remains undefined.
+  Convention actually holds. The specific name and the complete
+  repository path are both resolved below.
 - **Directory name.** The unified execution-entity directory is named
   `execution-catalog`, consistent with this document's own
   EARC-vocabulary-derived naming approach and selected over alternative
@@ -212,6 +211,51 @@ The Architect has approved the following:
   canonical key, never the source of truth for identity. The mechanism
   by which a canonical key is resolved to a repository location is not a
   governance concern of this document.
+- **Canonical key format.** The canonical key for a Skill, Workflow,
+  Runtime, or Tool instance takes the form `<entity-type>.<stable-name-slug>`,
+  where `<entity-type>` is one of the entities currently governed by
+  this document (§2) — `skill`, `workflow`, `runtime`, or `tool` — and
+  `<stable-name-slug>` is a stable, human-readable label for the
+  instance. Examples: `skill.example-skill`, `workflow.example-workflow`,
+  `runtime.example-runtime`, `tool.example-tool`. This format is
+  independent of its Display Name, independent of its repository
+  location, and independent of its filename; it is a documentation
+  reference identity only and does not define, redefine, or substitute
+  for the entity identity the Canonical Domain Model establishes (§6).
+  Canonical key stability is not the same as, and is never proof of,
+  entity identity continuity: a canonical key may be retained across a
+  documented change to the instance only to the extent that change
+  constitutes interface-preserving evolution of the same entity, as
+  Domain Model §6 defines it; a change that Domain Model §6 treats as
+  producing a distinct entity is outside this format's stability
+  guarantee, and this document takes no position on when that threshold
+  is crossed — that determination remains exclusively the Canonical
+  Domain Model's. Slug normalization rules and filename rules are not
+  established by this format and remain a separate, later
+  instance-convention decision.
+- **Repository path.** The unified execution-entity directory (named
+  `execution-catalog`, per the Directory name decision above) is
+  located at `docs/architecture/organization/execution-catalog/`.
+  Within it, the symmetric, governed-entity-labeled grouping already
+  established (see Internal organization model, above) takes the form
+  of one subdirectory per governed entity — `skill/`, `workflow/`,
+  `runtime/`, `tool/` — applied identically and simultaneously to all
+  four, consistent with, and not a modification of, that grouping
+  decision. This placement does not introduce, redefine, or imply any
+  Domain Model entity hierarchy, and does not change Skill, Workflow,
+  Runtime, or Tool ownership as established by Domain Model §5.
+  Physical containment within `docs/architecture/organization/` does
+  not grant the Organization Framework ownership, authority, or
+  governance over Skill, Workflow, Runtime, or Tool instances; does not
+  place `execution-catalog` under Department governance; and does not
+  create a parent-child governance relationship between the
+  Organization Framework and this document. Repository containment is
+  not governance ownership and does not establish a Domain Model
+  relationship. EARC's own authority over the repository convention for
+  these four entities (§2, §3) is unchanged by sharing a parent
+  directory with the Organization Framework's own document;
+  Organization Framework's authority remains limited to Department
+  structure, per its own scope.
 - **Framework relationship — general principle.** Future Skill,
   Workflow, Runtime, and Tool Frameworks, once created, shall inherit
   this Convention's decisions by citation rather than by restatement,
@@ -236,34 +280,35 @@ The Architect has approved the following:
 
 ### Not Yet Defined
 
-This document still does not establish:
+No unresolved item remains among the repository convention decisions
+addressed by this amendment — the canonical identifier model, reference
+model, directory name, repository path, canonical key format, and
+internal organization model are each resolved (see Section 9,
+"Resolved," above, as amended). This does not foreclose this document
+ever containing a future open item; it reflects only the current state
+of the decisions tracked in this section as of this amendment. The
+Framework-specific application of the citation-only principle recorded
+above was separately closed in a prior amendment: the Skill Framework's,
+Workflow Framework's, Runtime Framework's, and Tool Framework's
+ratifications have each demonstrated the general citation discipline
+documented in this section's "Citation discipline for future
+Frameworks" entry (see Section 10, Open Question 2).
 
-- The literal format of the canonical key established above ("Canonical
-  identifier model"). Deferred to a separate, later amendment-level
-  decision, pending future operational evidence and/or the first real
-  entity Framework proposal, consistent with Constitution §8.
-- How specific Frameworks apply the citation-only principle recorded
-  above. The Skill Framework's, Workflow Framework's, Runtime
-  Framework's, and Tool Framework's ratifications have each demonstrated
-  the general citation discipline documented in Section 9's "Citation
-  discipline for future Frameworks" entry, closing this verification
-  condition for all four entities this document governs. This closure
-  is separate from, and does not resolve, the literal canonical-key
-  format item above, which remains open.
-
-This remains open, tracked in Section 10, pending a dedicated future
-Architect decision. This document's role is limited to establishing that
-such a decision, once made, is recorded here.
+Slug normalization rules and filename conventions for canonical keys
+remain a separate, later instance-convention decision, not established
+by this document (see Section 11).
 
 ## 10. Open Questions
 
 1. **Repository organization specifics — CLOSED.** The specific
-   directory name (`execution-catalog`), the canonical identifier model,
-   the reference model, and the internal organization model (a symmetric
-   grouping labeled by governed entity) have been resolved (see Section
-   9, "Resolved," above). This closure does not resolve the literal
-   format of the canonical key, which remains open, tracked in Section 9
-   ("Not Yet Defined").
+   directory name (`execution-catalog`), the complete repository path
+   (`docs/architecture/organization/execution-catalog/`), the canonical
+   identifier model, the canonical key format, the reference model, and
+   the internal organization model (a symmetric grouping labeled by
+   governed entity, expressed as one subdirectory per entity —
+   `skill/`, `workflow/`, `runtime/`, `tool/`) have all been resolved
+   (see Section 9, "Resolved," above). No item remains open under this
+   question.
 2. **Framework-specific application of the citation-only principle.**
    The general principle that Skill, Workflow, Runtime, and Tool
    Frameworks inherit this Convention's decisions by citation rather
@@ -272,9 +317,8 @@ such a decision, once made, is recorded here.
    since been ratified and have each demonstrated this principle in
    practice, closing this specific verification question (see Section
    9's "Citation discipline for future Frameworks" entry). This closure
-   does not resolve, and is separate from, Open Question 1 above
-   (directory name, repository path, naming convention, and identifier
-   convention), which remain open.
+   is separate from Open Question 1 above, which has itself since been
+   closed (see item 1).
 
 ## 11. Explicit Exclusions
 
@@ -284,9 +328,9 @@ This document does not, and may never:
   Model entity, relationship, ownership rule, or lifecycle rule.
 - Create new governance authority, invariants, or lifecycle states beyond
   those already ratified.
-- Select or implement the literal canonical-key format or the complete
-  repository path beyond the directory name resolved in Section 9.
-  These remain open per Section 10.
+- Select or implement slug normalization rules or filename conventions
+  for canonical keys. These remain open, deferred to a separate, later
+  instance-convention decision (see Section 9).
 - Modify the Organization Framework's existing Department-nested
   convention for Capability or Agent Definition instances.
 - Create a Skill Framework, Workflow Framework, Runtime Framework, Tool
@@ -305,13 +349,15 @@ directory, named `execution-catalog` — Runtime's differentiated
 treatment within that approach, the internal organization model (a
 symmetric grouping labeled by governed entity), the directory/path
 naming approach (convention-derived), the canonical identifier model,
-the reference model, and the general Framework relationship principle
-(citation rather than restatement) have been resolved (see Section 9).
+the canonical key format, the reference model, the repository path,
+and the general Framework relationship principle (citation rather than
+restatement) have all been resolved (see Section 9).
 
-The literal format of the canonical key and the complete repository
-path beyond the directory name remain undefined (see Section 10). The
-Framework-specific application of the citation-only principle has
-separately been closed (see Section 10, Open Question 2).
+The Framework-specific application of the citation-only principle has
+separately been closed (see Section 10, Open Question 2). Slug
+normalization rules and filename conventions for canonical keys remain
+a separate, later instance-convention decision, not yet defined (see
+Section 9, Section 11).
 
 No Skill, Workflow, Runtime, or Tool instance currently exists in the
 repository.
