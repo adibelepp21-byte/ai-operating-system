@@ -38,6 +38,8 @@ governs.
 - Department and Capability instances — `docs/architecture/organization/<department-slug>/`; a populated example exists at `docs/architecture/organization/platform/`
 - Agent Definition instances — `docs/architecture/organization/<department-slug>/agent-definitions/`; a populated example exists at `docs/architecture/organization/platform/agent-definitions/`
 - Skill, Workflow, Runtime, and Tool instances — governed by EARC §9; unified directory named `execution-catalog`; complete repository path not yet finalized (see Section 6, below); no instance currently exists
+- Governance Decision Register (permanent, append-only history of governance decisions that are not ADRs — principally Constitutional Tier decisions, which the ADR Framework's Validation Model excludes from the ADR instrument) — `docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md`; current entries: GDR-0001 (Founder Decision G1′, Corpus Relationship), GDR-0002 (Gate 4 Certification, Phase 4)
+- Superseded governance artifacts (retained as historical record, never deleted) — `docs/governance/AIOS_FOUNDER_DECISION_G1_PRIME_RATIFICATION_v1.0.md`, the original standalone recording of G1′, superseded by GDR-0001
 
 ## 4. Governance Tier Map
 
