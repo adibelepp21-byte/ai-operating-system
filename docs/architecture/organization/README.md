@@ -99,8 +99,11 @@ Boundaries, which exclude repository layout from its authority.
 
 ## Status
 
-One Department, Platform, has been created, owning one Capability,
-Governance Artifact Integrity. Both were established by
-[ADR-0003](../adr/decisions/ADR-0003.md) and are recorded per the
-Repository Structure convention, above, at
-`docs/architecture/organization/platform/`.
+Two Departments have been created. Platform, established by
+[ADR-0003](../adr/decisions/ADR-0003.md), owns one Capability,
+Governance Artifact Integrity. Engineering, established by
+[ADR-0008](../adr/decisions/ADR-0008.md), owns two Capabilities,
+Engineering Intelligence and Cognitive Intelligence. All are recorded
+per the Repository Structure convention, above, at
+`docs/architecture/organization/platform/` and
+`docs/architecture/organization/engineering/`.
