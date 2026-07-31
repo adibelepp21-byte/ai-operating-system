@@ -13,7 +13,7 @@ Capability is not an architectural-tier decision.
 ## Metadata
 
 - **Name:** Governance Artifact Integrity Agent
-- **Version:** 1.0
+- **Version:** 1.1
 - **Status:** Active
 
 ## Purpose / Description
@@ -61,26 +61,54 @@ Model semantics, or ADR approval.
 
 ## Permitted Skills
 
-None declared. No Skill entity, Skill Framework, or Skill storage
-convention exists yet in AIOS. Per Agent Definition Framework §10, Skill
-reference validation is aspirational until such a framework exists, and
-its absence is not treated as a defect. This field is therefore left
-unpopulated rather than naming placeholder Skills that would have no
-governed definition behind them. Per Canonical Domain Model §7 invariant
-15, an empty Skill declaration is a valid architectural state and no
-minimum Skill cardinality is required; this question, previously tracked
-as Agent Definition Framework Open Architectural Question 5, is resolved
-by [ADR-0007](../../../adr/decisions/ADR-0007.md).
+This Agent Definition specifies the following Skills, per the specifies
+relationship (Domain Model §4) and per EARC's Reference Model and
+canonical key format (EARC §9, as amended by EARC Amendment v1.1):
+
+- [`skill.authority-boundary-check`](../../execution-catalog/skill/authority-boundary-check.md)
+- [`skill.citation-discipline-verification`](../../execution-catalog/skill/citation-discipline-verification.md)
+- [`skill.correction-proposal-drafting`](../../execution-catalog/skill/correction-proposal-drafting.md)
+- [`skill.duplicate-content-detection`](../../execution-catalog/skill/duplicate-content-detection.md)
+- [`skill.governance-artifact-diff-summary`](../../execution-catalog/skill/governance-artifact-diff-summary.md)
+- [`skill.governance-cross-reference-scan`](../../execution-catalog/skill/governance-cross-reference-scan.md)
+- [`skill.open-item-tracking-review`](../../execution-catalog/skill/open-item-tracking-review.md)
+- [`skill.section-numbering-consistency-check`](../../execution-catalog/skill/section-numbering-consistency-check.md)
+- [`skill.staleness-detection`](../../execution-catalog/skill/staleness-detection.md)
+- [`skill.terminology-consistency-scan`](../../execution-catalog/skill/terminology-consistency-scan.md)
+
+Each listed Skill's own Permitted Invocation Context field already names
+an Agent Instance of this Agent Definition as its invoker; this list
+completes that previously one-directional citation. Per Canonical Domain
+Model §7 invariant 15, an empty Skill declaration remains a valid
+architectural state and no minimum Skill cardinality is required — this
+list is populated because these ten Skills already exist and already
+declare this Agent Definition as their invoker, not because
+non-emptiness is itself required. This question, previously tracked as
+Agent Definition Framework Open Architectural Question 5, remains
+resolved by [ADR-0007](../../../adr/decisions/ADR-0007.md).
 
 ## Permitted Workflows
 
-None declared, for the same reason as Permitted Skills, above: no
-Workflow entity, Workflow Framework, or Workflow storage convention
-exists yet. Per Canonical Domain Model §7 invariant 15, an empty
-Workflow declaration is likewise a valid architectural state and no
-minimum Workflow cardinality is required; this question, previously
-tracked as Agent Definition Framework Open Architectural Question 5, is
-resolved by [ADR-0007](../../../adr/decisions/ADR-0007.md).
+This Agent Definition specifies the following Workflows, per the same
+specifies relationship (Domain Model §4) applied to Permitted Skills,
+above:
+
+- [`workflow.governance-corpus-health-check`](../../execution-catalog/workflow/governance-corpus-health-check.md)
+- [`workflow.governance-synchronization-review`](../../execution-catalog/workflow/governance-synchronization-review.md)
+- [`workflow.post-amendment-consistency-sweep`](../../execution-catalog/workflow/post-amendment-consistency-sweep.md)
+- [`workflow.pre-ratification-validation`](../../execution-catalog/workflow/pre-ratification-validation.md)
+- [`workflow.terminology-audit`](../../execution-catalog/workflow/terminology-audit.md)
+
+Each listed Workflow's own Invokes Agent Instance field already names an
+Agent Instance of this Agent Definition; this list completes that
+previously one-directional citation. Per Canonical Domain Model §7
+invariant 15, an empty Workflow declaration remains a valid architectural
+state and no minimum Workflow cardinality is required — this list is
+populated because these five Workflows already exist and already declare
+this Agent Definition as their invoker, not because non-emptiness is
+itself required. This question, previously tracked as Agent Definition
+Framework Open Architectural Question 5, remains resolved by
+[ADR-0007](../../../adr/decisions/ADR-0007.md).
 
 ## Runtime Requirements
 
@@ -93,6 +121,21 @@ infrastructure product is named or implied anywhere in this document.
 
 ## Version History
 
+- **v1.1** — Populated Permitted Skills (ten entries) and Permitted
+  Workflows (five entries) with the Skills and Workflows created under
+  this Agent Definition's own Governance Artifact Integrity Capability
+  scope during Governance Freeze Beta, each of which already names an
+  Agent Instance of this Agent Definition as its invoker in its own
+  Permitted Invocation Context or Invokes Agent Instance field. The
+  governing Capability contract is unchanged from v1.0 — still the state
+  defined by [ADR-0003](../../../adr/decisions/ADR-0003.md). Per
+  Canonical Domain Model §7 invariant 15 and
+  [ADR-0007](../../../adr/decisions/ADR-0007.md), this update does not
+  establish a minimum Skill or Workflow cardinality; it records which of
+  the already-declared, previously one-directional relationships are now
+  reciprocated, consistent with Agent Definition Framework §8's
+  treatment of Permitted Skills/Permitted Workflows as permitted to be
+  empty, not required to be empty.
 - **v1.0** — Initial creation. Established as Department-discretion,
   Implementation Tier work under Canonical Domain Model §6. The governing
   Capability contract version is referenced, per Agent Definition
