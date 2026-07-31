@@ -1,0 +1,106 @@
+{
+  "captured_at": 1784402216.6396685,
+  "scenarios": [
+    {
+      "scenario": {
+        "workflow_key": "workflow.pre-ratification-validation",
+        "target_document": null
+      },
+      "workflow_completion_state": "completed",
+      "skill_reports": [
+        {
+          "skill": "skill.authority-boundary-check",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 0
+        },
+        {
+          "skill": "skill.citation-discipline-verification",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 4
+        }
+      ],
+      "trace_file": "/home/user/ai-operating-system/execution/traces/run-9c2ffa827db7.jsonl"
+    },
+    {
+      "scenario": {
+        "workflow_key": "workflow.post-amendment-consistency-sweep",
+        "target_document": null
+      },
+      "workflow_completion_state": "completed",
+      "skill_reports": [
+        {
+          "skill": "skill.governance-cross-reference-scan",
+          "status": "not_implemented",
+          "failure_class": "not_implemented",
+          "evidence_count": 0
+        },
+        {
+          "skill": "skill.section-numbering-consistency-check",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 4
+        }
+      ],
+      "trace_file": "/home/user/ai-operating-system/execution/traces/run-3536b085797b.jsonl"
+    },
+    {
+      "scenario": {
+        "workflow_key": "workflow.terminology-audit",
+        "target_document": "docs/architecture/adr/decisions/ADR-0007.md"
+      },
+      "workflow_completion_state": "completed",
+      "skill_reports": [
+        {
+          "skill": "skill.terminology-consistency-scan",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 163
+        },
+        {
+          "skill": "skill.duplicate-content-detection",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 0
+        }
+      ],
+      "trace_file": "/home/user/ai-operating-system/execution/traces/run-0146c05dfc01.jsonl"
+    }
+  ],
+  "consumption": {
+    "cache_entry_count": 4,
+    "cache_keys": [
+      [
+        "/home/user/ai-operating-system/docs/architecture/organization/platform/capabilities/governance-artifact-integrity.md",
+        "\u00a76"
+      ],
+      [
+        "/home/user/ai-operating-system/docs/architecture/adr/decisions/ADR-0007.md",
+        "\u00a77"
+      ],
+      [
+        "/home/user/ai-operating-system/docs/architecture/adr/decisions/ADR-0003.md",
+        "\u00a77"
+      ],
+      [
+        "/home/user/ai-operating-system/docs/architecture/organization/skill-framework.md",
+        "\u00a75"
+      ]
+    ],
+    "run_a_real_calls": 4,
+    "run_b_real_calls": 0,
+    "run_b_served_calls": 4
+  },
+  "memory": {
+    "total_trace_records": 194,
+    "total_memories": 305,
+    "distinct_kinds": [
+      "cross_reference_check",
+      "section_numbering_mismatch",
+      "staleness_flag",
+      "terminology_confusion_flag",
+      "uncited_restatement_flag"
+    ]
+  }
+}

@@ -1,0 +1,760 @@
+{
+  "captured_at": 1784403229.0526185,
+  "scenarios": [
+    {
+      "scenario": {
+        "workflow_key": "workflow.pre-ratification-validation",
+        "target_document": null
+      },
+      "workflow_completion_state": "completed",
+      "skill_reports": [
+        {
+          "skill": "skill.authority-boundary-check",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 0
+        },
+        {
+          "skill": "skill.citation-discipline-verification",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 4
+        }
+      ],
+      "trace_file": "/home/user/ai-operating-system/execution/traces/run-2e14006ef04e.jsonl"
+    },
+    {
+      "scenario": {
+        "workflow_key": "workflow.post-amendment-consistency-sweep",
+        "target_document": null
+      },
+      "workflow_completion_state": "completed",
+      "skill_reports": [
+        {
+          "skill": "skill.governance-cross-reference-scan",
+          "status": "not_implemented",
+          "failure_class": "not_implemented",
+          "evidence_count": 0
+        },
+        {
+          "skill": "skill.section-numbering-consistency-check",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 4
+        }
+      ],
+      "trace_file": "/home/user/ai-operating-system/execution/traces/run-2394e71edc3d.jsonl"
+    },
+    {
+      "scenario": {
+        "workflow_key": "workflow.terminology-audit",
+        "target_document": "docs/architecture/adr/decisions/ADR-0007.md"
+      },
+      "workflow_completion_state": "completed",
+      "skill_reports": [
+        {
+          "skill": "skill.terminology-consistency-scan",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 163
+        },
+        {
+          "skill": "skill.duplicate-content-detection",
+          "status": "success",
+          "failure_class": null,
+          "evidence_count": 0
+        }
+      ],
+      "trace_file": "/home/user/ai-operating-system/execution/traces/run-00f1512cfeb3.jsonl"
+    }
+  ],
+  "consumption": {
+    "cache_entry_count": 134,
+    "cache_keys": [
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Positive Consequences\n- Preserves full compatibility with the Governance Artifact Integrity Agent \u2014 no remediation, exemption, or transition mechanism required.\n- Adds no complexity beyond what current evidence demonstrates necessary, consistent with Constitution \u00a78.\n- Closes Agent Definition Framework Open Architectural Question 5 definitively.\n- Provides a clear, citable Domain Model invariant that future Agent Definition authors and Frameworks can rely on, rather than the current unexplained silence.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  This invariant does not modify invariant 2 (Capability's own \"at least one\" requirement, which remains untouched); does not alter any Agent Definition relationship in \u00a74; introduces no lifecycle behavior into \u00a76; and introduces no Framework-level authority \u2014 it is a Domain Model semantic statement only, per Constitution \u00a76.2 invariant 3, and ADR-0007 is the sole artifact introducing it.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  This invariant does not modify invariant 2 (Capability's own \"at least one\" requirement, which remains untouched); does not alter any Agent Definition relationship in \u00a74; introduces no lifecycle behavior into \u00a76; and introduces no Framework-level authority \u2014 it is a Domain Model semantic statement only, per Constitution \u00a76.2 invariant 3, and ADR-0007 is the sole artifact introducing it.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  This invariant does not modify invariant 2 (Capability's own \"at least one\" requirement, which remains untouched); does not alter any Agent Definition relationship in \u00a74; introduces no lifecycle behavior into \u00a76; and introduces no Framework-level authority \u2014 it is a Domain Model semantic statement only, per Constitution \u00a76.2 invariant 3, and ADR-0007 is the sole artifact introducing it.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  This invariant does not modify invariant 2 (Capability's own \"at least one\" requirement, which remains untouched); does not alter any Agent Definition relationship in \u00a74; introduces no lifecycle behavior into \u00a76; and introduces no Framework-level authority \u2014 it is a Domain Model semantic statement only, per Constitution \u00a76.2 invariant 3, and ADR-0007 is the sole artifact introducing it.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  This invariant does not modify invariant 2 (Capability's own \"at least one\" requirement, which remains untouched); does not alter any Agent Definition relationship in \u00a74; introduces no lifecycle behavior into \u00a76; and introduces no Framework-level authority \u2014 it is a Domain Model semantic statement only, per Constitution \u00a76.2 invariant 3, and ADR-0007 is the sole artifact introducing it.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Agent Definition Framework documentation synchronization.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Agent Definition Framework documentation synchronization.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Agent Definition Framework documentation synchronization.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Agent Definition Framework documentation synchronization.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Agent Definition Framework documentation synchronization.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Agent Definition Framework documentation synchronization.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Agent Definition Framework documentation synchronization.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "A single, ephemeral runtime execution of an Agent Definition, hosted by a Runtime."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "An explicit, inspectable composition of Skills accomplishing a multi-step outcome."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.cross-reference-link-validator-interface",
+        "/home/user/ai-operating-system/docs/architecture/organization/platform/capabilities/governance-artifact-integrity.md",
+        "\u00a76"
+      ],
+      [
+        "tool.cross-reference-link-validator-interface",
+        "/home/user/ai-operating-system/docs/architecture/adr/decisions/ADR-0007.md",
+        "\u00a77"
+      ],
+      [
+        "tool.cross-reference-link-validator-interface",
+        "/home/user/ai-operating-system/docs/architecture/adr/decisions/ADR-0003.md",
+        "\u00a77"
+      ],
+      [
+        "tool.document-structure-parser-interface",
+        "/home/user/ai-operating-system/docs/architecture/organization/platform/agent-definitions/governance-artifact-integrity-agent.md"
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Identifier:** ADR-0007\n- **Title:** Agent Definition Skill and Workflow Minimum Count\n- **Status:** Approved\n- **Decision Owner:** Architect\n- **Proposer:** AI Systems Engineer\n- **Date:** 2026-07-16",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "Canonical Domain Model invariant 2 requires every Agent Definition to implement at least one Capability. No equivalent minimum exists for Permitted Skills or Permitted Workflows. Agent Definition Framework \u00a78 states explicitly that \"the Domain Model states no minimum count for this field. Whether an empty set is a valid declaration is not settled by ratified text,\" and \u00a715 tracks this as Open Architectural Question 5.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This gap is not a deliberate, documented deferral \u2014 unlike, for example, the Runtime entity-vs-attribute question, which \u00a79 explicitly names as deferred pending future evidence. No comparable statement exists for Skill/Workflow cardinality anywhere in ratified text. The one real Agent Definition instance, the Governance Artifact Integrity Agent, currently declares zero Permitted Skills and zero Permitted Workflows, with its own document explicitly flagging both fields as resting on this unresolved question.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An Agent Definition may declare zero, one, or multiple Permitted Skills and zero, one, or multiple Permitted Workflows.",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Constitution \u00a78** requires that complexity be added only when a demonstrated problem requires it. The only operational evidence available \u2014 the Governance Artifact Integrity Agent, functioning with zero Skills and zero Workflows, its authorization carried entirely by its independently-mandatory Behavior and Permissions field \u2014 shows this state working in practice, with no observed failure mode to justify a new constraint.\n2. **Domain Model \u00a72**'s own definition of Agent Definition groups Skills and Workflows together with behavior and permissions as things the entity \"specifies,\" without singling them out for an invariant-backed minimum the way \u00a77 invariant 2 explicitly singles out Capability. This drafting pattern treats Skills/Workflows descriptively, not prescriptively.\n3. **The Domain Model and prior ADR history demonstrate that absence of related instances may be explicitly recognized as a valid state rather than automatically treated as non-compliance.** ADR-0003's treatment of a zero-Agent-Definition Capability as an explicitly expected, reviewable condition is supporting context for this reading, not a direct precedent for Skill/Workflow cardinality specifically \u2014 the two questions concern different relationships (Capability\u2194Agent Definition versus Agent Definition\u2194Skill/Workflow), and this ADR does not treat ADR-0003 as dispositive, only as consistent supporting context.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "1. **Minimum one Skill (Option B).** *Rejected* \u2014 an unmotivated asymmetry privileging Skill over Workflow with no architectural basis found in the analytical record; would immediately break the only real Agent Definition instance's compliance, with no remediation path available since no Skill Framework exists; cuts against the Skill/Workflow structural symmetry ADR-0004 and ADR-0005 established.\n2. **Minimum one Workflow (Option C).** *Rejected* \u2014 the same reasoning as Option B, compounded by an internal incoherence: Workflow is defined (\u00a72) as a composition *of* Skills, so requiring a Workflow without requiring the Skills it composes is architecturally weaker than requiring a Skill alone.\n3. **Minimum one Skill OR one Workflow (Option D).** *Rejected*, despite being architecturally competitive with the selected option in earlier analysis. Ultimately rejected because it would certainly and immediately break the Governance Artifact Integrity Agent's compliance, with no remediation path available under current governance, for a constraint the available evidence does not demonstrate is necessary under Constitution \u00a78.\n4. **Minimum one Skill AND one Workflow (Option E).** *Rejected* \u2014 the most speculative-forward option; would stall Agent Definition creation broadly until both Skill and Workflow Frameworks exist; no Domain Model precedent exists anywhere for a compound, two-entity-type minimum; least evidence-backed of all options considered.\n5. **Context-dependent transitional minimum (Option F).** *Rejected* \u2014 while it would preserve backward compatibility, it introduces a new Domain Model invariant *style* (conditional/temporal invariants) with no precedent among the existing 14 invariants, a structurally larger change than the substantive question warrants, and requires precisely defining a \"trigger\" condition that was never attempted in the analytical record. Disproportionate to the problem being solved.\n6. **Framework-level non-binding recommendation only (Option G).** *Rejected* \u2014 mischaracterizes the nature of the question. This is an invariant-shaped question reserved to the Domain Model under Constitution \u00a76.2 invariant 3, not a documentation-convention question a Framework may resolve on its own authority. Would leave the actual question open indefinitely, in tension with the Governance Artifact Integrity Capability's own charter to resolve exactly this kind of unresolved inconsistency.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Negative Consequences\n- Leaves open the possibility of an Agent Definition relying entirely on narrative Behavior-and-Permissions authorization with no Skill or Workflow backing \u2014 though this is independently bounded by that field's own requirement for substantive, real authorization, not created or expanded by this ADR.\n- Does not resolve whether direct, non-Skill-mediated authorization is a sound *permanent* execution pathway for Agent Instances \u2014 an adjacent question this ADR deliberately does not address (see Non-Goals).",
+        "A stable, versioned specification of what a class of Agent does and is permitted to use."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "### Future Implications\n- This decision is reversible through a future ADR if real operational evidence \u2014 once Skill/Workflow Frameworks and real Agent Instances exist \u2014 demonstrates an actual need for a minimum.\n- Any future tightening ADR would need to address Agent Definitions that accumulated with zero Skills/Workflows under this decision; that migration cost is deferred to the point where real evidence would justify incurring it, not eliminated.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "A dynamic, experiential, scoped record of what an Agent Instance has encountered."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Entities affected:** Agent Definition (clarified, not redefined).\n- **Relationships affected:** None \u2014 the \"Agent Definition specifies Skill, Workflow\" relationship (\u00a74) is unchanged in content and is not altered by the invariant below.\n- **Ownership impact:** Not applicable.\n- **Lifecycle impact:** Not applicable \u2014 Agent Definition's \u00a76 Lifecycle Rule is unchanged; this invariant introduces no lifecycle behavior.\n- **Invariant impact:** Proposes one new invariant in \u00a77:",
+        "The immutable, append-only, unconditional audit record of one Agent Instance action."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "  **Invariant 15 \u2014 Agent Definition Skill and Workflow Declaration**\n  An Agent Definition may specify zero or more Skills and zero or more Workflows. An empty Skill declaration, an empty Workflow declaration, or both empty declarations represent a valid architectural state. No minimum cardinality is required for either relationship.",
+        "An integration point to something outside AIOS's own cognition."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "The execution substrate that hosts Agent Instances."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "This ADR does not:\n- Resolve whether direct, non-Skill-mediated Behavior-and-Permissions authorization is a permanent, architecturally sound Agent Instance execution pathway.\n- Resolve Framework sequencing (which of Skill, Workflow, Runtime, or Tool Frameworks is built first).\n- Define validation authority or timing for any future minimum, should one ever be adopted.\n- Alter Capability's own minimum requirement (invariant 2).\n- Create a Skill Framework, a Workflow Framework, or any other Framework.\n- Modify the Governance Artifact Integrity Agent document.\n- Redefine Agent Definition, Skill, Workflow, or any other Canonical Domain Model entity, relationship, ownership rule, or lifecycle rule.",
+        "Curated, canonical, reviewed, versioned understanding that is durable."
+      ],
+      [
+        "tool.text-similarity-comparison-interface",
+        "- **Authority validation** \u2014 Proposer standing is valid under Constitution \u00a73.4. Approval authority rests with the Architect exclusively: this ADR effects a Canonical Domain Model semantic change (a new \u00a77 invariant), which Constitution \u00a73.2 explicitly places outside any permissible delegation scope, regardless of whether a delegation is currently in force.\n- No technology/vendor/model references \u2014 confirmed absent.\n- No implementation details \u2014 confirmed absent.\n- No Framework decision disguised as a Domain Model change \u2014 confirmed; Framework documentation synchronization is required after approval but is explicitly documentation-only, not a new architectural decision, and does not occur until this ADR is approved.\n- No contradiction with the Constitution \u2014 consistent with \u00a72, \u00a73.4, \u00a75, \u00a76.2, \u00a78.\n- No contradiction with ADR-0001 through ADR-0006 \u2014 none of those addressed Skill/Workflow cardinality; ADR-0004 and ADR-0005's Skill/Workflow governance-pattern symmetry is preserved, not altered; ADR-0003 is cited as supporting context only, not as direct precedent, and this ADR does not restate or alter ADR-0003's own decision.\n- No silent resolution of deferred questions \u2014 execution semantics, Framework sequencing, and validation authority/timing are explicitly separated out as Non-Goals, not resolved by implication.\n- **Compatibility with the Governance Artifact Integrity Agent \u2014 confirmed preserved.** The instance remains fully compliant with no change required.\n- **No repository inconsistency introduced** \u2014 this decision formalizes the current de facto state; nothing in the repository moves from a compliant to a non-compliant state as a result of this ADR.\n- **No transition mechanism required** \u2014 unlike Options B/C/D/E/F, this decision creates no compliance gap to transition across.\n- **Reversibility confirmed** \u2014 this decision may be revisited through a future Domain Model ADR if evidence, once available, warrants tightening the invariant; nothing in this ADR forecloses that path.\n- **ADR-0007 is the sole artifact introducing this Domain Model semantic decision** \u2014 confirmed; no existing ADR, Framework, or Domain Model concept is redefined outside its authority boundary, and Framework synchronization is explicitly deferred to after approval.",
+        "A discrete, reusable, bounded unit of executable ability."
+      ]
+    ],
+    "run_a_real_calls": 4,
+    "run_b_real_calls": 3,
+    "run_b_served_calls": 1
+  },
+  "memory": {
+    "total_trace_records": 358,
+    "total_memories": 370,
+    "distinct_kinds": [
+      "cross_reference_check",
+      "document_structure_parse_failure",
+      "section_numbering_mismatch",
+      "staleness_flag",
+      "terminology_confusion_flag",
+      "uncited_restatement_flag"
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+Trace records: 398
+Skill telemetry events: 200
+Workflow telemetry events: 98
+
+=== Skill status distribution ===
+{'success': 168, 'failure': 32}
+
+=== Failure class distribution (status=failure only) ===
+{'not_implemented': 28, 'input_validation': 2, None: 2}
+
+=== Tool call telemetry (2858 total calls) ===
+cache_status distribution: {'miss': 534, None: 2321, 'hit': 3}
+verification_status distribution: {'not_applicable': 525, None: 2321, 'invalidated': 9, 'verified': 3}
+resolved distribution: {True: 2571, False: 287}
+
+=== Duration by Skill (avg ms, sample count) ===
+  skill.terminology-consistency-scan: avg=365.0524ms n=18 max=486.9308ms
+  skill.duplicate-content-detection: avg=161.5776ms n=18 max=211.4007ms
+  skill.citation-discipline-verification: avg=1.2577ms n=50 max=2.9440ms
+  skill.section-numbering-consistency-check: avg=0.4114ms n=20 max=0.8101ms
+  skill.staleness-detection: avg=0.2245ms n=4 max=0.3004ms
+  skill.authority-boundary-check: avg=0.1852ms n=54 max=0.4802ms
+  skill.correction-proposal-drafting: avg=0.0368ms n=4 max=0.0746ms
+  skill.governance-cross-reference-scan: avg=0.0322ms n=24 max=0.0615ms
+
+=== Workflow duration (ms) ===
+  workflow.terminology-audit: 699.196ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 686.002ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 669.159ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 631.079ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 624.720ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 617.861ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 615.725ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 613.770ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 601.032ms, 2 skill(s), final=completed
+  workflow.terminology-audit: 599.334ms, 2 skill(s), final=completed
