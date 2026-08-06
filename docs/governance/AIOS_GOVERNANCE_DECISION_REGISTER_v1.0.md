@@ -797,8 +797,325 @@ No entity, relationship, invariant, ownership rule, or lifecycle rule; no Consti
 
 ---
 
+### GDR-0007 — Architect Acceptance · Native Core Conformance Program (Baselines 01, 02, 04A, 04B, 04C)
+
+| Field | Value |
+|---|---|
+| **Identifier** | GDR-0007 |
+| **Program reference** | Native Core Conformance — Baselines 01 Skill, 02 Workflow, 04A Knowledge, 04B Runtime, 04C Agent |
+| **Dates decided** | 2026-07-31 → 2026-08-06 |
+| **Deciding authority** | Architect |
+| **Verified and recorded by** | AI Systems Engineer, under Baseline 05 authorization |
+| **Act type** | Acceptance and transport acts on existing evidence. Not a constitutional amendment, not an ADR. |
+| **Status transition** | Each baseline: **Verified → Accepted → Frozen → Transported** |
+
+#### 3.7.1 Decision text (verbatim, where available)
+
+**Baseline 04B — Runtime Conformance, Stage 4 (P7-I17):**
+
+> **Decision: ACCEPTED**
+>
+> Baseline **04B — Runtime Conformance** has successfully completed Stage 4.
+>
+> The baseline is authorized to proceed to:
+>
+> > **Stage 5 — Commit & Freeze**
+
+**Baseline 04B — Stage 6 (P7-I18):**
+
+> **Decision: AUTHORIZED**
+>
+> Baseline 04B — Runtime Conformance is authorized to proceed to:
+>
+> > Stage 6 — Repository Transport
+>
+> Transport authority applies only to the frozen commit:
+> `973196411d8d5031776dabcb0296f07a107f9338`
+
+**Baseline 04C — Agent Conformance, Stage 1 (P7-I19):**
+
+> Its sole objective is to verify the existing structural conformance of the
+> **Agent** boundary against the frozen architecture, specifications, and
+> architectural invariants.
+>
+> This baseline is **verification-only**.
+>
+> No implementation work is authorized.
+
+**Baseline 04C — Stage 4 (P7-I21):**
+
+> **Decision: ACCEPTED**
+>
+> Baseline **04C — Agent Conformance** has successfully completed Stage 4 —
+> Architect Acceptance.
+
+**Baseline 04C — Stage 6 (P7-I22):**
+
+> Transport authority applies only to the frozen commit:
+> `43652dedd57aeec3ca0de15338379cca24f9e1d2`
+>
+> No other commit, file, or repository state is authorized.
+
+**Not recorded verbatim.** The acceptance decisions for Baselines 01, 02, and
+04A, and the directives P7-I1 … P7-I15, were **not available verbatim** in the
+recording session. Under §2.3's verbatim discipline they are therefore not
+reproduced here and not paraphrased. Their completion is evidenced by the
+transported commits below; the gap in the decision record is recorded as
+**P7-G-1** in `AIOS_FINDING_REGISTER_v1.0.md`.
+
+#### 3.7.2 Authority basis
+
+| Provision | Text or effect |
+|---|---|
+| Engineering Constitution §6.2 invariant 2 | *"Automation may request. Automation may recommend. Automation may not override governance authority."* — every acceptance and transport act recorded here is the Architect's; automation performed verification and recording only. |
+| Engineering Constitution §14.1 | *"Any point at which approval was required and sought must be recorded in the artifact under review, not left to memory or inference."* — the basis for recording these acts rather than leaving them in correspondence. |
+| Engineering Constitution §15 | Definition of Done, per tier. |
+| Native Core Blueprint §27 | Conformance verification as the boundary-completion instrument. |
+| Native Core Implementation Roadmap §9 | Per-boundary completion criteria against which each baseline was verified. |
+
+#### 3.7.3 Baselines accepted and transported
+
+| Baseline | Boundary | Layer | Frozen commit | Date | Kind |
+|---|---|---|---|---|---|
+| 01 — Skill | Skill | L5 | `21aae20` | 2026-07-31 | Implementation |
+| 02 — Workflow | Workflow | L6 | `bf0a3be` | 2026-08-05 | Implementation |
+| 04A — Knowledge Conformance | Knowledge | L8 | `8dd6513` | 2026-08-05 | Verification only |
+| 04B — Runtime Conformance | Runtime | L2 | `9731964` | 2026-08-06 | Verification only |
+| 04C — Agent Conformance | Agent | L3 | `43652de` | 2026-08-06 | Verification only |
+
+Lineage is linear and unrewritten. No baseline was amended, squashed, or rebased
+after freeze.
+
+#### 3.7.4 Evidence of record
+
+| # | Condition | Result |
+|---|---|---|
+| 1 | Every built boundary carries a conformance suite | ✅ **10 of 10** — Runtime, Agent, Workflow, Skill, Capability, Knowledge, Governance, Trace, Memory, Infrastructure |
+| 2 | Regression | ✅ **421/421 pass**, one expected failure (P7-F-2) |
+| 3 | Zero production source modification by the verification baselines | ✅ Blob comparison at each freeze: every pre-existing source file byte-identical |
+| 4 | AST dependency sweep | ✅ Acyclic graph; **zero** non-stdlib imports repository-wide (INV-12) |
+| 5 | Invariant conformance | ✅ INV-3, INV-4, INV-5, INV-7, INV-8, INV-12, INV-13, INV-15, PR-3, PR-4 verified. INV-2 not verifiable — **P7-L-1** |
+| 6 | Repository synchronized | ✅ Local HEAD = remote HEAD = `43652de` |
+| 7 | No unresolved finding capable of blocking completion | ✅ Ten findings recorded; none blocking. See `AIOS_FINDING_REGISTER_v1.0.md` |
+
+Detailed evidence is held in the per-baseline Stage 3 verification reports and
+in the conformance suites themselves; it is referenced here, not duplicated.
+
+#### 3.7.5 Governance consequences
+
+- Native Core Conformance is complete for all **ten built boundaries**.
+- The repository state at `43652de` becomes the governance reference point for
+  subsequent architecture work.
+- Baselines 01, 02, 04A, 04B, and 04C are **closed**. Per P7-I22: *"No further
+  Baseline 04C changes are permitted after successful transport except through a
+  future authorized maintenance baseline"* — the same rule governs each.
+- This entry records **status only**. It authorizes no implementation, creates
+  no entity, grants no authority, and changes no architecture.
+
+#### 3.7.6 Downstream position
+
+| Item | State |
+|---|---|
+| **L10 — Optimization** | **NOT BUILT.** `native_core/core/optimization/` absent; 0 tracked files. Native Core stands at 10 of 11 boundaries. |
+| Optimization dependency gate | **Satisfied** — Roadmap §9.11: *"**Blocked by** [E]: Governance complete."* Trace, Memory, and Governance are built and verified. |
+| Optimization authorization gate | **Reserved** — Roadmap §14, Stage VI: *"**Authorization:** Architect closeout of Native Core."* |
+
+No further transition is asserted.
+
+#### 3.7.7 Explicitly not changed
+
+No entity, relationship, invariant, ownership rule, or lifecycle rule; no
+Constitution or Canonical Domain Model text; no ADR; no architecture artifact;
+no specification; no Python source file. Governance status only.
+
+---
+
+### GDR-0008 — Architect Decision · Native Core Governance Closeout, Instrument Rulings, and Post-Conformance Program
+
+| Field | Value |
+|---|---|
+| **Identifier** | GDR-0008 |
+| **Decision reference** | Governance closeout instrument rulings R-1, R-2, R-3; the four-phase Post-Conformance Program; Baseline 05 authorization |
+| **Date decided** | 2026-08-06 |
+| **Decided by** | Architect |
+| **Recorded by** | AI Systems Engineer, under Baseline 05 authorization |
+| **Instrument** | Governance Decision Register entry — not an ADR (see §2.1) |
+| **Status** | **Ratified** — binding and active immediately |
+
+#### 3.8.1 Decision text (verbatim)
+
+**R-1 — Use the existing instrument:**
+
+> Jangan membuat AIOS Architect Decision Register baru.
+>
+> Gunakan `docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md` sebagai
+> satu-satunya register keputusan governance dan tambahkan keputusan baru secara
+> append-only sebagai entri berikutnya (misalnya GDR-0007 dan seterusnya).
+>
+> Alasan:
+> * Sudah merupakan instrumen permanen.
+> * Sudah memiliki aturan append-only.
+> * Menghindari duplikasi sumber kebenaran (single source of truth).
+> * Konsisten dengan tujuan dokumen tersebut.
+
+**R-2 — Finding namespace:**
+
+> Jangan mengubah label yang sudah dibekukan pada Baseline 04A–04C.
+>
+> Gunakan namespace baru hanya pada governance register.
+>
+> | Historical Reference | Governance Identifier |
+> |---|---|
+> | F-2 | P7-F-2 |
+> | F-3 | P7-F-3 |
+> | F-4 | P7-F-4 |
+> | O-1 | P7-O-1 |
+> | O-2 | P7-O-2 |
+>
+> Aturan:
+> * kode sumber tetap memakai label historis;
+> * governance register memakai namespace baru;
+> * setiap entri memuat cross-reference ke label historis.
+>
+> Dengan demikian tidak ada perubahan terhadap artefak yang sudah Frozen &
+> Transported.
+
+**R-3 — Consolidation:**
+
+> Saya tidak menyarankan lima dokumen terpisah.
+>
+> Sebaiknya cukup tiga artefak:
+>
+> 1. Existing — `docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md`
+>    → append-only
+> 2. New — `docs/governance/AIOS_FINDING_REGISTER_v1.0.md`
+>    Berisi: seluruh finding · classification · disposition · status ·
+>    cross-reference
+> 3. New — `docs/governance/AIOS_NATIVE_CORE_CLOSEOUT_v1.0.md`
+>    Berisi: baseline register · conformance status · completion summary ·
+>    Native Core closeout · readiness menuju L10
+>
+> Dengan begitu:
+> * tidak ada proliferasi dokumen;
+> * tetap memenuhi tujuan Option C;
+> * mudah dipelihara.
+
+**Post-Conformance Program (four phases):**
+
+> ```text
+> Native Core Conformance
+>             │
+>             ▼
+> Option C — Governance Closeout
+>             │
+>             ▼
+> L10 — Optimization Baseline
+>             │
+>             ▼
+> Native Core Completion Review
+>             │
+>             ▼
+> AIOS v1.0 Freeze
+>             │
+>             ▼
+> Future AIOS Development
+> ```
+
+> This phase exists to ensure every architectural decision made during Baseline
+> 01–04C becomes part of the permanent governance record rather than remaining
+> only in implementation reports or conversation history.
+
+> **Phase 2 — L10 Stage 1: Optimization Baseline.** This baseline shall begin
+> only after Governance Closeout has completed.
+
+**Baseline 05 authorization — scope:**
+
+> **Allowed path:** `docs/governance/`
+>
+> **Deliverables:** append `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md` ·
+> `AIOS_FINDING_REGISTER_v1.0.md` · `AIOS_NATIVE_CORE_CLOSEOUT_v1.0.md`
+>
+> **Forbidden:** seluruh `native_core/` · seluruh `tests/` · seluruh ADR ·
+> seluruh Constitution · seluruh Blueprint · seluruh Roadmap · seluruh
+> implementation · seluruh API · seluruh specification
+>
+> **Finding Handling:** Recording only. Tidak boleh: repair · redesign ·
+> implementation · API modification · export modification
+>
+> **Exit:** STOP setelah Stage 2.
+
+#### 3.8.2 Authority basis
+
+| Provision | Text or effect |
+|---|---|
+| Engineering Constitution §14.1 | *"Any point at which approval was required and sought must be recorded in the artifact under review, not left to memory or inference."* — the requirement this closeout satisfies. |
+| Engineering Constitution §16 | Constitutional acts carry *"a recorded version and change entry"*. |
+| This register §1 | *"one coherent, append-only record of every governance decision whose durability matters, **rather than an accumulating set of one-file-per-decision artifacts**"* — the rationale R-1 applies. |
+| This register §2.3 | Append-only · `GDR-NNNN` sequential identifiers · verbatim discipline — the rules this entry and GDR-0007 follow. |
+| Engineering Constitution §6.2 invariant 2 | The rulings are the Architect's; automation prepared the options and recorded the outcome. |
+
+#### 3.8.3 Governance consequences
+
+- **A second decision register is not created.** This register remains the
+  single source of truth for governance decisions; P7-era decisions are appended
+  as GDR-0007 onward.
+- **Frozen artifacts stay frozen.** The `P7-` namespace exists only in
+  governance records. Source files transported under Baselines 04A, 04B, and 04C
+  keep their historical labels `F-2`, `F-3`, `F-4` and are not amended,
+  re-labelled, or rewritten. Every governance entry carries a cross-reference in
+  both directions.
+- **Two new permanent records are established:** `AIOS_FINDING_REGISTER_v1.0.md`
+  and `AIOS_NATIVE_CORE_CLOSEOUT_v1.0.md`, both append-only, both carrying an
+  authority disclaimer, neither carrying independent authority.
+- **Finding identifier ambiguity is closed** — recorded as **P7-G-2**.
+- The four-phase Post-Conformance Program is recorded as the Architect's stated
+  sequence. Recording it **authorizes none of its later phases**: L10, the
+  Completion Review, and the v1.0 Freeze each require their own authorization.
+
+#### 3.8.4 What this decision does not authorize
+
+Stated explicitly because the closeout adjoins work that is not authorized:
+
+- No repair of any finding — P7-F-1, P7-F-2, P7-F-3, P7-F-4 remain recorded only.
+- No resolution of P7-L-1 (INV-2): no Agent Factory, bootstrap path, Department
+  binding, or Capability binding.
+- No resolution of P7-O-1 or P7-O-2.
+- No creation of ADR-B4 or ADR-B5 (**P7-G-3** remains open).
+- No API, export, or public-surface change in any boundary.
+- No modification of any specification, Blueprint, Roadmap, Freeze, Constitution,
+  Domain Model, or ADR.
+- No implementation of L10 Optimization.
+
+#### 3.8.5 Lineage
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-06 | Baseline 04C transported; Native Core Conformance complete at 10/10 built boundaries | Architect / AI Systems Engineer |
+| 2026-08-06 | L10 direction options prepared and presented read-only; decision reserved | AI Systems Engineer |
+| 2026-08-06 | Option C selected; four-phase Post-Conformance Program issued | Architect |
+| 2026-08-06 | Collision check reported: proposed *Architect Decision Register* conflicts with this register; rulings R-1/R-2/R-3 requested | AI Systems Engineer |
+| 2026-08-06 | **R-1, R-2, R-3 ruled; Baseline 05 scope authorized** | Architect |
+| 2026-08-06 | Recorded in this register as GDR-0007 and GDR-0008 | AI Systems Engineer |
+
+#### 3.8.6 Status history
+
+| Status | Date | Note |
+|---|---|---|
+| Proposed | 2026-08-06 | Options A / B / C presented; engineering recommendation was Option C first, then L10 |
+| **Ratified** | 2026-08-06 | Option C selected; instrument rulings issued; Baseline 05 scope authorized |
+
+#### 3.8.7 Explicitly not changed
+
+No entity, relationship, invariant, ownership rule, or lifecycle rule; no
+Constitution or Canonical Domain Model text; no ADR; no architecture artifact;
+no specification; no Python source file; no frozen or transported artifact; no
+historical finding label. Two new governance records were added and this
+register was appended to — nothing existing was rewritten.
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0007 onward.)*
+GDR-0009 onward.)*
 
 ---
 
@@ -855,3 +1172,33 @@ ADR-0001 through ADR-0007, Architecture Freeze, Native Core Blueprint,
 Canonical Relationship Model, Native Core Implementation Roadmap, Engineering
 Specifications, and Implementation Constitution were not modified. This is a
 new additive governance record only.**
+
+---
+
+## 7. Baseline 05 Append — Integrity Verification (2026-08-06)
+
+Sections 1–6 above record the register's **establishing session** of
+2026-07-30. They are a point-in-time record and are preserved **unmodified** —
+including §5's entry count and regression figure, which describe that session
+and are not a live status. This section records the Baseline 05 append instead
+of rewriting them, so §2.3's append-only rule holds without qualification.
+
+- **Entries appended:** 2 — GDR-0007, GDR-0008. Register total: 8
+  (GDR-0001 … GDR-0008).
+- **Existing entries modified:** 0. GDR-0001 through GDR-0006 are unchanged.
+- **Sections 1, 2, 4, 5, 6 modified:** 0. The only edit outside §3 is this new
+  §7, plus the §3 insertion pointer advanced from *"GDR-0007 onward"* to
+  *"GDR-0009 onward"* — the pointer's stated purpose.
+- **Python files created, modified, or deleted:** 0.
+- **`native_core/` changes:** 0.
+- **Frozen or transported artifacts modified:** 0. Baselines 01, 02, 04A, 04B,
+  04C remain byte-identical.
+- **Historical finding labels changed:** 0.
+- **API, export, or public-surface changes:** 0.
+- **Specification, Blueprint, Roadmap, Freeze, Constitution, Domain Model, or
+  ADR changes:** 0.
+- **Findings repaired:** 0.
+- **Regression:** 421/421 pass; one expected failure (P7-F-2), unchanged.
+- **Companion records established:** `AIOS_FINDING_REGISTER_v1.0.md`,
+  `AIOS_NATIVE_CORE_CLOSEOUT_v1.0.md`.
+- **Commit status:** recorded at Stage 2; not committed, not pushed.
