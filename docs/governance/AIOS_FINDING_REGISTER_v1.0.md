@@ -143,6 +143,26 @@ out: no reading of "permitted future dependencies" rescues the claim
 **Not authorized under any baseline to date:** editing the docstring or the
 Knowledge README.
 
+**Status update — 2026-08-07: reclassified as Open Maintenance Item.** The
+original entry above is preserved unmodified; this note records the later
+disposition rather than rewriting it.
+
+| Field | Value |
+|---|---|
+| **New status** | **Open Maintenance Item** |
+| **Assigned by** | Architect, P7-I32 Governance Ruling 3, reaffirmed at P7-I33 §4 |
+| **Recorded under** | P7-I37 — Governance Synchronization Commit |
+| **Cross-reference** | GDR-0010 §3.10.4; `AIOS_NATIVE_CORE_CLOSEOUT_v1.0.md` §10.4 |
+
+Ruling 3 [E]: *"Walaupun perubahan hanya berupa docstring, secara governance
+perubahan tersebut tetap merupakan perubahan terhadap baseline yang telah
+dibekukan… Status baru: **Open Maintenance Item**. Observation tersebut hanya
+dapat diproses apabila di masa depan diterbitkan Maintenance Baseline yang
+secara eksplisit mengotorisasi perubahan terhadap Baseline 04A."*
+
+The target file is inside frozen, transported Baseline 04A and remains
+**untouched**. This is a reclassification, not a repair.
+
 ---
 
 ### P7-F-2 — Five Knowledge halt sites pass a non-string argument

@@ -1114,8 +1114,401 @@ register was appended to — nothing existing was rewritten.
 
 ---
 
+### GDR-0009 — Baseline 06 · L10 Optimization — Full Lifecycle Record
+
+| Field | Value |
+|---|---|
+| **Identifier** | GDR-0009 |
+| **Baseline** | 06 — L10 Optimization, the eleventh and last frozen Native Core boundary |
+| **Dates** | 2026-08-06 → 2026-08-07 |
+| **Deciding authority** | Architect (directives P7-I26, P7-I27, P7-I28, P7-I29, P7-I30) |
+| **Verified and recorded by** | AI Systems Engineer |
+| **Act type** | Authorization, acceptance, freeze, and transport acts. Not a constitutional amendment, not an ADR. |
+| **Frozen commit** | `c45d82a29528ebe2132cc5c78e39bdefb64cef6c` |
+| **Status** | **Frozen & Transported** — Baseline 06 complete and closed |
+
+#### 3.9.1 Decision text (verbatim)
+
+**Stage 1 — Implementation Authorization (P7-I26):**
+
+> Memulai boundary terakhir Native Core — Optimization (L10) …
+> Baseline 06 tidak menggunakan authorization sebelumnya.
+> Authorization ini berdiri sendiri sebagai boundary baru dengan scope,
+> deliverable, verification, dan lifecycle yang terpisah.
+
+**Stage 2 governance rulings (P7-I27) — the three Stage 1 scope conflicts:**
+
+> **Conflict A.** Optimization **shall not submit proposals directly to
+> Governance**. There shall be **no Governance API dependency** originating
+> from the Optimization boundary. … Replace every concept equivalent to
+> *"Optimization proposes to Governance"* with *"Optimization publishes
+> Optimization Observation for optional future consumption."*
+
+> **Conflict B.** The following remain **Architect Reserved** and SHALL NOT be
+> implemented during Baseline 06: signal catalog · evaluation scoring ·
+> prioritization model · optimization algorithm · recommendation engine ·
+> ranking model · decision heuristics · promotion strategy.
+
+> **Conflict C.** | observability.py — REFERENCE ONLY | metrics.py — REFERENCE
+> ONLY | promotion.py — CANONICAL REFERENCE | … shall not be imported · shall
+> not become a dependency · shall not be copied · shall not be migrated into
+> the Native Core · shall not be partially incorporated into implementation.
+
+**Stage 4 — Architect Acceptance (P7-I28):** the acceptance review was
+conducted against criteria A1–A6 and returned ACCEPTED. Recorded with the
+qualification stated at the time: this Stage 4 was produced by the same party
+that implemented and verified the baseline, which collapses proposer, verifier,
+and approver into one and is structurally weaker than the independent
+acceptances recorded at GDR-0007. The determination rests on re-derived
+repository evidence, not on assertion.
+
+**Stage 6 — Transport (P7-I30):**
+
+> Transport **only** the frozen Baseline 06 commit. Authorized commit:
+> `c45d82a29528ebe2132cc5c78e39bdefb64cef6c`. No additional commits may be
+> included. No history modification. No amend. No rebase. No squash. No new
+> commit.
+
+#### 3.9.2 Authority basis
+
+| Provision | Text or effect |
+|---|---|
+| Native Core Implementation Roadmap §9.11 | *"**Purpose** [E]: governed learning loop — detect/propose only. **Entity:** (none; detect-only). **Layer:** L10. **Priority:** 11 (last)."* |
+| Roadmap §14, Stage VI | *"**Authorization:** Architect closeout of Native Core."* — satisfied by the P7-I26 authorization issued after Baseline 05 completed. |
+| optimization_spec §7/§8 | Allowed: reads Trace, reads Memory. Forbidden: deciding governance (PR-3), auto-promotion (INV-8), mutating Trace (INV-5), external dependency (INV-12). |
+| Blueprint §31 | Eleven frozen boundaries; no new entity or subsystem is introduced. |
+| Engineering Constitution §6.2 invariant 2 | Every act recorded here is the Architect's; automation implemented, verified, and recorded. |
+
+#### 3.9.3 Evidence of record
+
+| # | Condition | Result |
+|---|---|---|
+| 1 | Boundary built within the authorized path | ✅ 8 files under `native_core/core/optimization/`; **0 existing files modified** |
+| 2 | Conformance | ✅ 74 tests; repository total **495**, `OK (expected failures = 1)` |
+| 3 | Dependency direction | ✅ `optimization → {memory, trace}` only; graph acyclic; no inbound edge |
+| 4 | INV-12 | ✅ standard library only |
+| 5 | PR-3 / INV-8 / INV-5 | ✅ no decision verb, no promotion path, no Trace write — verified across 215 identifiers |
+| 6 | Rulings A, B, C | ✅ no governance identifier, no outbound verb, no reserved model, no legacy reference |
+| 7 | Repository integrity | ✅ 376/376 tracked files byte-identical; local HEAD = remote HEAD |
+
+Detailed evidence is held in the Baseline 06 Stage 2, 3, 5, and 6 reports; it is
+referenced here, not duplicated.
+
+#### 3.9.4 Governance consequences
+
+- The Native Core reaches **11 of 11 boundaries built** and **11 of 11
+  conformance-verified**.
+- Baseline 06 is **closed**. No further change to it is permitted except through
+  a future authorized Maintenance Baseline.
+- The Roadmap §14 Stage VI gate is satisfied.
+- This entry records **status only**: it authorizes no implementation, creates
+  no entity, grants no authority, and changes no architecture.
+
+#### 3.9.5 Explicitly not changed
+
+No entity, relationship, invariant, ownership rule, or lifecycle rule; no
+Constitution or Canonical Domain Model text; no ADR; no architecture artifact;
+no specification; no previously frozen source file.
+
+---
+
+### GDR-0010 — Native Core Completion Review · Outcome, Rulings, and Outcome Model
+
+| Field | Value |
+|---|---|
+| **Identifier** | GDR-0010 |
+| **Decision reference** | Native Core Completion Review (R1–R11) and its resolution rulings |
+| **Date decided** | 2026-08-07 |
+| **Decided by** | Architect (directives P7-I31, P7-I32) |
+| **Recorded by** | AI Systems Engineer, under P7-I32 Governance Ruling 2 |
+| **Instrument** | Governance Decision Register entry — not an ADR (see §2.1) |
+| **Status** | **Ratified** — binding and active immediately |
+
+#### 3.10.1 Completion Review outcome as reported
+
+The review evaluated the Native Core as one integrated architecture at
+`c45d82a`. Result: **zero FAIL**, six PASS, five PASS WITH OBSERVATIONS.
+
+| Domain | Outcome | Domain | Outcome |
+|---|---|---|---|
+| R1 Architecture Completeness | PASS | R7 Repository Integrity | PASS |
+| R2 Layer Consistency | PASS | R8 Reference Impl. Readiness | OBSERVATION |
+| R3 Cross-Boundary Dependency | OBSERVATION | R9 Reusability | PASS |
+| R4 Domain Boundary Integrity | OBSERVATION | R10 Scalability | PASS |
+| R5 Governance Consistency | OBSERVATION | R11 Construction Readiness | OBSERVATION |
+| R6 Conformance Integrity | PASS | | |
+
+No architecture defect, implementation defect, dependency violation, invariant
+violation, or repository defect was found in any domain.
+
+#### 3.10.2 Decision text (verbatim)
+
+**Ruling 1 — Accepted Architectural Decisions:**
+
+> Observation berikut: O-R3-1, O-R4-1 ditetapkan sebagai **Accepted
+> Architectural Decisions for AIOS Native Core v1.0**. Bukan sebagai: defect;
+> architecture violation; redesign requirement; implementation task.
+>
+> Alasan keputusan ini: merupakan intentional design; tidak melanggar
+> invariant; tidak melanggar dependency rules; tidak memerlukan perubahan
+> implementasi; tidak memerlukan perubahan boundary; tidak memerlukan
+> perubahan export surface; tidak memerlukan perubahan repository.
+>
+> Observation tersebut dapat dievaluasi kembali apabila suatu saat terdapat
+> kebutuhan nyata melalui Maintenance Baseline yang terpisah.
+
+**Ruling 2 — Group A Authorization:**
+
+> Group A tetap dilanjutkan. Scope Group A dibatasi secara eksklusif pada
+> governance synchronization. Ruang lingkup yang diizinkan: Governance Decision
+> Register update · Native Core Closeout update · Baseline 06 governance record
+> · Lifecycle documentation. Tujuan Group A adalah menutup observation pada:
+> R5 — Governance Consistency; R11 — Construction Readiness.
+
+**Ruling 3 — Group B Classification:**
+
+> P7-F-1 tidak termasuk Completion Resolution. … Walaupun perubahan hanya
+> berupa docstring, secara governance perubahan tersebut tetap merupakan
+> perubahan terhadap baseline yang telah dibekukan. … Status baru: **Open
+> Maintenance Item**. Observation tersebut hanya dapat diproses apabila di masa
+> depan diterbitkan Maintenance Baseline yang secara eksplisit mengotorisasi
+> perubahan terhadap Baseline 04A.
+
+**Ruling 4 — Completion Review Outcome Model:** three categories — FAIL →
+Architecture Repair · OBSERVATION → Governance Resolution or Accepted
+Architectural Decision · PASS → Reference Implementation Approval.
+
+> Reference Implementation tidak boleh ditunda hanya karena terdapat
+> Architectural Evolution Candidate yang telah diterima sebagai Accepted
+> Architectural Decision.
+>
+> Completion Review bukan mekanisme untuk melakukan redesign terhadap
+> arsitektur yang telah lolos seluruh invariant dan conformance.
+
+#### 3.10.3 The two Accepted Architectural Decisions, as evidenced
+
+**AAD-1 (was O-R3-1) — two cross-boundary imports reach past a package public
+surface.** Of 18 cross-boundary imports, two target a nested module because the
+required name is exported by neither the package root nor the sub-package:
+`agent/agent.py → runtime.execution.consumer` (`ExecutionConsumer`) and
+`runtime/{contract,runtime}.py → knowledge.composition` (`KnowledgeSubsystem`,
+`create_knowledge_subsystem`). Both are stated intents in source:
+`knowledge/__init__.py` declares its surface *"contracts only, no behavior"*,
+and a composition root is behavior. No invariant is violated; the graph remains
+acyclic. **Accepted as intentional design.**
+
+**AAD-2 (was O-R4-1) — the opaque-stub reference pattern.**
+`skill.declaration.AgentDefinitionRef` and
+`workflow.declaration.AgentDefinitionRef` are distinct classes of identical
+shape; `capability.models.DepartmentRef` is the same pattern. Documented in
+source as deliberate: the stub avoids inverting the `Agent → Skill` and
+`Agent → Workflow` edges and *"keeps each boundary independently constructible
+and its dependency sweep unambiguous."* **Accepted as intentional design.**
+
+Both remain re-evaluable through a separate Maintenance Baseline should a real
+need arise.
+
+#### 3.10.4 Governance consequences
+
+- **Group C is complete.** AAD-1 and AAD-2 are closed as Accepted Architectural
+  Decisions. No architecture change, no implementation change, no export-surface
+  change, no repository change.
+- **Group A is executed** under Ruling 2: this entry, GDR-0009, the Closeout
+  status supersession, and `AIOS_BASELINE_LIFECYCLE_v1.0.md` — closing the R5
+  and R11 observations.
+- **Group B is removed** from Completion Resolution. **P7-F-1** is reclassified
+  from *Category C — Governance Status Drift, documentation sync open* to
+  **Open Maintenance Item**, processable only under a Maintenance Baseline that
+  explicitly authorizes change to Baseline 04A.
+- The three-category outcome model governs Completion Reviews from AIOS Native
+  Core v1.0 onward. It is recorded in
+  `AIOS_BASELINE_LIFECYCLE_v1.0.md` §6.
+- **P7-G-1** (decisions P7-I1 … P7-I15 and P5-I1N-A unrecorded) and **P7-G-3**
+  (ADR-B4 / ADR-B5 ratified but absent) remain **open**. Neither falls within
+  the Group A scope, and neither is closed by this entry.
+
+#### 3.10.5 What this decision does not authorize
+
+- No Reference Implementation approval.
+- No Native Core v1.0 Freeze.
+- No Native Core Closeout beyond the Group A synchronization named above.
+- No Platform Expansion.
+- No implementation change, redesign, or maintenance on any frozen baseline.
+- No repair of P7-F-1, P7-F-2, P7-F-3, P7-F-4, P7-L-1, P7-O-1, P7-O-2, P7-G-1,
+  or P7-G-3.
+- No commit and no push.
+
+#### 3.10.6 Lineage
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-07 | Baseline 06 transported; Native Core reaches 11/11 | Architect / AI Systems Engineer |
+| 2026-08-07 | Native Core Completion Review conducted across R1–R11 | AI Systems Engineer |
+| 2026-08-07 | Approval withheld — five domains PASS WITH OBSERVATIONS, zero FAIL | AI Systems Engineer |
+| 2026-08-07 | Resolution Program issued; Group C decision package prepared without recommendation | Architect / AI Systems Engineer |
+| 2026-08-07 | **Rulings 1–4 issued** | Architect |
+| 2026-08-07 | Recorded as GDR-0009 and GDR-0010 | AI Systems Engineer |
+
+#### 3.10.7 Explicitly not changed
+
+No entity, relationship, invariant, ownership rule, or lifecycle rule; no
+Constitution or Canonical Domain Model text; no ADR; no architecture artifact;
+no specification; no Python source file; no frozen or transported baseline; no
+historical finding label; no previously recorded register entry.
+
+---
+
+### GDR-0011 — RI-0001 · AIOS Native Core v1.0 Reference Implementation Approval
+
+| Field | Value |
+|---|---|
+| **Identifier** | GDR-0011 |
+| **Decision ID** | **RI-0001** |
+| **Decision type** | Reference Implementation Approval |
+| **Date decided** | 2026-08-07 |
+| **Decided by** | Architect (directive P7-I34, refined by the Governance Recommendation) |
+| **Recorded by** | AI Systems Engineer, under P7-I37 |
+| **Instrument** | Governance Decision Register entry — not an ADR (see §2.1) |
+| **Status** | **Approved** — binding and active immediately |
+
+#### 3.11.1 Decision text (verbatim)
+
+> ```
+> =========================================================
+> AIOS GOVERNANCE DECISION
+>
+> Decision ID
+>     RI-0001
+>
+> Decision
+>     AIOS Native Core v1.0 is hereby approved as the
+>     official AIOS Reference Implementation.
+>
+> Effective Status
+>     APPROVED
+>
+> Reference Scope
+>     Entire AIOS Native Core v1.0
+>
+> Next Required Governance Action
+>     Governance Synchronization Commit,
+>     followed by AIOS Native Core v1.0 Freeze
+>
+> Approval establishes governance status only.
+>
+> Approval does not perform repository configuration.
+>
+> Repository configuration remains the responsibility of the
+> subsequent Native Core v1.0 Freeze.
+>
+> =========================================================
+> ```
+
+**Reference scope** [E]: the complete Native Core as one integrated
+architecture — the eleven frozen boundaries (Trace, Memory, Knowledge,
+Governance, Runtime, Agent, Capability, Skill, Workflow, Infrastructure,
+Optimization) and the `shared/` primitives region; the ten-layer model of
+Architecture Freeze §5; the boundary set of Blueprint §3 and §31; the
+dependency directions of Freeze §6; the fifteen Canonical Domain Model
+invariants as realized in code; and the governance baseline comprising the
+six-stage lifecycle, this register, the Finding Register, the Closeout record,
+and ADR-0001 … ADR-0008.
+
+**Not in scope** [E]: the Native Core is approved as an architectural and
+governance reference, **not** as a feature-complete runtime. Agent behavior,
+model invocation, scheduling, the Agent Factory, and the Optimization
+evaluation models remain deliberately reserved.
+
+#### 3.11.2 Governance sequence
+
+The approval sits at a fixed position in a sequence whose stages are separate
+governance acts and are not merged:
+
+```
+Completion Review
+        ↓
+Reference Implementation Approval        ← RI-0001
+        ↓
+Governance Synchronization Commit
+        ↓
+Native Core v1.0 Freeze
+        ↓
+Native Core Closeout
+```
+
+**Review is evaluation. Approval is a governance decision. Freeze is repository
+configuration.** Approval does not perform repository configuration, and does
+not depend on it: the evidence supporting the decision exists and is verifiable
+independently of whether any synchronization commit has been performed. Freeze
+remains a separate governance action.
+
+#### 3.11.3 Authority basis
+
+| Provision | Text or effect |
+|---|---|
+| Native Core Completion Review | Eleven domains R1–R11, all **PASS**, zero FAIL — the evidence on which this approval rests |
+| GDR-0010 §3.10.2, Ruling 1 | O-R3-1 and O-R4-1 closed as **Accepted Architectural Decisions**; intentional design, no invariant violated |
+| P7-I33 Ruling 5 §6 | Deferred governance items with recorded disposition and no implementation impact do not prevent R5/R8 evaluating PASS — verified individually per item |
+| Engineering Constitution §14.1 | *"Any point at which approval was required and sought must be recorded in the artifact under review, not left to memory or inference."* — the requirement this entry satisfies |
+| Engineering Constitution §6.2 invariant 2 | The decision is the Architect's; automation prepared the evidence and records it here |
+
+#### 3.11.4 Evidence of record
+
+| # | Condition | Result |
+|---|---|---|
+| 1 | All eleven boundaries built and conformance-verified | ✅ 11/11 · 11/11 |
+| 2 | All seven baseline lifecycles complete | ✅ Frozen & Transported: `21aae20` `bf0a3be` `8dd6513` `9731964` `43652de` `bb781b9` `c45d82a` |
+| 3 | Completion Review | ✅ R1–R11 all PASS, zero FAIL |
+| 4 | Regression | ✅ 495 tests, `OK (expected failures = 1)` — P7-F-2 |
+| 5 | Dependency integrity | ✅ acyclic; standard library only; no cycle; no inbound edge to Optimization |
+| 6 | Repository integrity | ✅ protected artifacts unchanged since the first baseline; linear history; zero merges |
+
+#### 3.11.5 Governance consequences
+
+- The Native Core **construction phase is complete**; the architecture becomes
+  the official AIOS reference.
+- **AIOS Native Core v1.0 is established as the normative architectural
+  baseline** for future Platform Divisions, Maintenance Baselines, External
+  Architecture Intelligence reviews, governance evaluations, and future AIOS
+  Reference Implementations — unless explicitly superseded by a future approved
+  version.
+- Every subsequent change to approved material requires a **Maintenance
+  Baseline** carrying its own full six-stage lifecycle.
+- **Platform Expansion remains blocked** until the Native Core v1.0 Freeze is
+  performed. Approval alone does not unblock it.
+
+#### 3.11.6 What this decision does not authorize
+
+No Native Core Freeze · no Native Core Closeout · no Platform Expansion · no
+implementation change · no architecture redesign · no maintenance on any frozen
+baseline · no repair of any recorded finding.
+
+#### 3.11.7 Open items at approval
+
+Recorded so the approval is not read as closing them. None prevents approval;
+each is documented with a recorded disposition and requires no implementation
+change.
+
+| Item | Status |
+|---|---|
+| **AAD-1**, **AAD-2** | Accepted Architectural Decisions — intentional design (GDR-0010) |
+| **P7-F-1** | **Open Maintenance Item** — processable only through a Maintenance Baseline for Knowledge |
+| **P7-G-1**, **P7-G-3** | Deferred governance items — documented, disposition recorded |
+| P7-F-2, P7-F-3, P7-F-4 | Category B recorded evidence |
+| P7-L-1 | Coverage Limitation — INV-2 unverifiable while the Agent Factory is reserved |
+| P7-O-1, P7-O-2 | Reserved Observations — record-only |
+
+#### 3.11.8 Explicitly not changed
+
+No entity, relationship, invariant, ownership rule, or lifecycle rule; no
+Constitution or Canonical Domain Model text; no ADR; no architecture artifact;
+no specification; no Python source file; no frozen or transported baseline; no
+previously recorded register entry.
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0009 onward.)*
+GDR-0012 onward.)*
 
 ---
 
@@ -1202,3 +1595,59 @@ of rewriting them, so §2.3's append-only rule holds without qualification.
 - **Companion records established:** `AIOS_FINDING_REGISTER_v1.0.md`,
   `AIOS_NATIVE_CORE_CLOSEOUT_v1.0.md`.
 - **Commit status:** recorded at Stage 2; not committed, not pushed.
+
+---
+
+## 8. Completion Resolution Group A Append — Integrity Verification (2026-08-07)
+
+Sections 1–7 above are preserved **unmodified**. Section 5 remains the
+point-in-time record of the 2026-07-30 establishing session and section 7 that
+of the Baseline 05 append; neither is a live status. This section records the
+Group A append instead of rewriting them, so §2.3's append-only rule holds
+without qualification.
+
+- **Entries appended:** 2 — GDR-0009, GDR-0010. Register total: 10
+  (GDR-0001 … GDR-0010).
+- **Existing entries modified:** 0. GDR-0001 through GDR-0008 are unchanged.
+- **Sections 1, 2, 4, 5, 6, 7 modified:** 0. The only edits outside §3 are this
+  new §8 and the §3 insertion pointer, advanced from *"GDR-0009 onward"* to
+  *"GDR-0011 onward"* — the pointer's stated purpose.
+- **Authority:** P7-I32 Governance Ruling 2 (Group A — governance
+  synchronization only).
+- **Python files created, modified, or deleted:** 0.
+- **`native_core/` changes:** 0.
+- **Frozen or transported baselines modified:** 0. Baselines 01, 02, 04A, 04B,
+  04C, 05, 06 remain byte-identical.
+- **Specification, Blueprint, Roadmap, Freeze, Constitution, Domain Model, or
+  ADR changes:** 0.
+- **Findings repaired:** 0. P7-F-1 was **reclassified**, not repaired — its
+  target file is untouched.
+- **Regression:** 495/495 pass; one expected failure (P7-F-2), unchanged.
+- **Companion record established:** `AIOS_BASELINE_LIFECYCLE_v1.0.md`.
+- **Commit status:** recorded at Stage 2; not committed, not pushed.
+
+---
+
+## 9. Governance Synchronization Commit — Integrity Verification (2026-08-07)
+
+Sections 1–8 above are preserved **unmodified**. This section records the
+Governance Synchronization Commit append instead of rewriting them, so §2.3's
+append-only rule holds without qualification.
+
+- **Authority:** P7-I37 — Governance Synchronization Commit Authorization.
+- **Entry appended:** 1 — GDR-0011 (**RI-0001**). Register total: 11
+  (GDR-0001 … GDR-0011).
+- **Existing entries modified:** 0. GDR-0001 through GDR-0010 are unchanged.
+- **Sections 1–8 modified:** 0. The only edits outside §3 are this new §9 and
+  the §3 insertion pointer, advanced from *"GDR-0011 onward"* to *"GDR-0012
+  onward"* — the pointer's stated purpose.
+- **Python files created, modified, or deleted:** 0.
+- **`native_core/` changes:** 0.
+- **Frozen or transported baselines modified:** 0. Baselines 01, 02, 04A, 04B,
+  04C, 05, 06 remain byte-identical.
+- **Specification, Blueprint, Roadmap, Freeze, Constitution, Domain Model, or
+  ADR changes:** 0.
+- **Findings repaired:** 0.
+- **Regression:** 495/495 pass; one expected failure (P7-F-2), unchanged.
+- **Freeze performed:** none. The Native Core v1.0 Freeze remains a separate
+  governance action, unauthorized by P7-I37.

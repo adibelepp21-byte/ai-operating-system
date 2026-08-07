@@ -313,3 +313,82 @@ repairs no finding, and authorizes no implementation.
 Native Core Conformance is complete for all ten built boundaries. The eleventh
 boundary, Optimization, remains unbuilt, and building it requires a separate
 Architect authorization that this document does not supply and does not imply.
+
+---
+
+## 10. Status Supersession — Native Core Complete (2026-08-07)
+
+**Sections 1–9 above are preserved unmodified.** They record the state at
+2026-08-06, when this document was written and transported, and they were
+accurate then. This section records what has since changed; it does not rewrite
+them.
+
+*Recorded under P7-I32 Governance Ruling 2 (Group A — governance
+synchronization). Authority: GDR-0010.*
+
+### 10.1 What is superseded
+
+| §  | Statement as written (2026-08-06) | Superseded by (2026-08-07) |
+|---|---|---|
+| §4.1 | *"**10 of 10 built boundaries verified.**"* | **11 of 11 built · 11 of 11 conformance-verified** |
+| §4.2 | 421 tests | **495 tests**, `OK (expected failures = 1)` |
+| §4.3 | INV-2 *not verifiable* — unchanged, see §10.4 | unchanged |
+| §7.1 | *"**L10 — Optimization. Status: NOT BUILT.**"* … *"10 of 11 boundaries built"* | **Built, frozen, and transported** at `c45d82a` |
+| §7.2 | Optimization authorization gate *"Reserved to the Architect"* | **Satisfied** — authorized by P7-I26 after Baseline 05 completed |
+| §6 | Repository reference point `43652de` | **`c45d82a29528ebe2132cc5c78e39bdefb64cef6c`** |
+
+### 10.2 Baseline register — complete
+
+| Baseline | Scope | Layer | Frozen commit | Status |
+|---|---|---|---|---|
+| 01 — Skill | Skill | L5 | `21aae20` | Frozen & Transported |
+| 02 — Workflow | Workflow | L6 | `bf0a3be` | Frozen & Transported |
+| 04A — Knowledge Conformance | Knowledge | L8 | `8dd6513` | Frozen & Transported |
+| 04B — Runtime Conformance | Runtime | L2 | `9731964` | Frozen & Transported |
+| 04C — Agent Conformance | Agent | L3 | `43652de` | Frozen & Transported |
+| 05 — Governance Closeout | Governance records | — | `bb781b9` | Frozen & Transported |
+| **06 — L10 Optimization** | **Optimization** | **L10** | **`c45d82a`** | **Frozen & Transported** |
+
+Full lifecycle evidence for Baseline 06: **GDR-0009**.
+
+### 10.3 Conformance coverage — complete
+
+Eleven boundaries, eleven conformance suites, **495 tests**:
+
+| Boundary | Tests | | Boundary | Tests |
+|---|---|---|---|---|
+| runtime | 94 | | knowledge | 37 |
+| optimization | 74 | | governance | 30 |
+| agent | 68 | | trace | 19 |
+| workflow | 63 | | memory | 15 |
+| skill | 43 | | infrastructure | 14 |
+| capability | 38 | | **TOTAL** | **495** |
+
+Dependency graph at completion — acyclic, standard library only:
+
+```
+agent -> runtime            knowledge -> governance, infrastructure, memory
+runtime -> infrastructure, knowledge      governance -> infrastructure, memory
+memory -> trace             optimization -> memory, trace
+trace -> infrastructure     edgeless: capability, skill, workflow, infrastructure
+```
+
+### 10.4 Findings — status at supersession
+
+| Identifier | Status |
+|---|---|
+| **P7-F-1** | **Reclassified: Open Maintenance Item** (P7-I32 Ruling 3). Its target lies inside frozen Baseline 04A; processable only under a Maintenance Baseline that explicitly authorizes change to 04A. Not repaired. |
+| P7-F-2 | Category B — recorded; the sole expected failure repository-wide |
+| P7-F-3, P7-F-4 | Category B — recorded evidence; reserved |
+| **AAD-1** (was O-R3-1) | **Accepted Architectural Decision** — intentional design (GDR-0010) |
+| **AAD-2** (was O-R4-1) | **Accepted Architectural Decision** — intentional design (GDR-0010) |
+| P7-L-1 | Coverage Limitation — INV-2 unverifiable while the Agent Factory is reserved |
+| P7-O-1, P7-O-2 | Reserved Observations — record-only |
+| P7-G-1, P7-G-3 | **Open.** Outside the Group A scope; not closed by this supersession |
+| P7-G-2 | Closed by the `P7-` namespace ruling |
+
+### 10.5 What this supersession does not do
+
+It approves no Reference Implementation, performs no v1.0 Freeze, closes no
+program, and authorizes no Platform Expansion. It records status only, and
+modifies no prior text in this document.
