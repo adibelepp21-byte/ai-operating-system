@@ -1507,8 +1507,215 @@ previously recorded register entry.
 
 ---
 
+### GDR-0012 — EAI-0001 · External Architecture Intelligence Governance Decision
+
+| Field | Value |
+|---|---|
+| **Identifier** | GDR-0012 |
+| **Decision type** | External Architecture Intelligence — Governance Decision on evaluated external patterns |
+| **Date decided** | 2026-08-08 |
+| **Decided by** | Architect (directive P7-I43 §2) |
+| **Recorded by** | AI Systems Engineer, under P7-I43 §4 |
+| **Instrument** | Governance Decision Register entry — not an ADR (see §2.1) |
+| **Status** | **Approved** — binding and active immediately |
+| **External reference** | **EAI-0001** — `1jehuang/jcode` |
+| **Reference revision** | `dd8755f7e71f0673911d481b625b8a559c81a8b6` (v0.71.1) |
+| **Comparison baseline** | AIOS Native Core v1.0 / RI-0001 at `024b9f0c3d2681b463a1421ae88dcf11bf0d7336` |
+
+#### 3.12.1 What this entry decides
+
+EAI-0001 evaluated four external architecture patterns and produced four
+**recommendations**. This entry converts those recommendations into **final
+Governance Decisions**. The two are separate layers and are recorded
+separately; the decision does not overwrite, amend, or reinterpret the
+recommendation history.
+
+The three-layer separation is mandatory and is preserved throughout this entry:
+
+```
+EAI Recommendation
+        ≠
+Governance Decision
+        ≠
+Implementation Authorization
+```
+
+#### 3.12.2 Canonical decision table
+
+| Pattern | EAI Recommendation | Final Governance Decision | Implementation Authorized |
+|---|---|---|---|
+| **EP-1** — Ratcheting Quality Budgets | ADAPT | **APPROVED AS ADAPT** | **NO** |
+| **EP-2** — Type-Crate / Behavior Separation with Automated Guard | REJECT | **REJECTED** | **NO** |
+| **EP-3** — Graduated Risk Gate with Asymmetric-Cost Reasoning | OBSERVE | **OBSERVE** | **NO** |
+| **EP-4** — Swarm Coordination via Structured Message Contracts | REJECT | **REJECTED** | **NO** |
+
+**Implementation authorized: none, for any of the four.** No pattern in this
+table may be built, and no frozen artifact may be touched, on the authority of
+this entry.
+
+#### 3.12.3 Decision text (verbatim, per §2.3 verbatim discipline)
+
+**EP-1 — Ratcheting Quality Budgets · APPROVED AS ADAPT**
+
+> AIOS accepts the architectural principle that some undesirable properties may
+> require a directional conformance mechanism when immediate elimination is
+> impractical.
+>
+> However, AIOS must not copy jcode's mutable ratchet model directly.
+>
+> The AIOS adaptation shall preserve:
+>
+> * fail-closed enforcement;
+> * explicit exception identity;
+> * append-only governance;
+> * Architect authorization;
+> * traceability to a Finding / Governance Decision;
+> * no self-service baseline expansion.
+>
+> The proposed AIOS adaptation is:
+>
+> **Bounded Exception Register**
+>
+> The mechanism may:
+>
+> * record explicitly known exceptions;
+> * prevent introduction of new exceptions;
+> * identify existing exception locations;
+> * require explicit governance authorization for any increase;
+> * permit the exception set to shrink through normal maintenance.
+>
+> It must NOT become a mechanism for silently normalizing architectural
+> violations.
+>
+> **Implementation Status: NOT AUTHORIZED BY THIS DECISION.** This Governance
+> Decision authorizes the architectural direction only. Any implementation must
+> proceed through its own appropriate Maintenance Baseline / engineering
+> authorization.
+>
+> **Governance Interpretation:** This is an architectural decision to consider
+> and preserve the adapted pattern, not an instruction to immediately modify
+> P7-F-2 or any frozen baseline.
+
+**EP-2 — Type-Crate / Behavior Separation with Automated Guard · REJECTED**
+
+> AIOS already possesses a stronger equivalent through its existing boundary and
+> dependency enforcement model.
+>
+> The external denylist/default-open approach must not replace or weaken AIOS's
+> fail-closed enforcement.
+>
+> Therefore: No adoption. No adaptation. No architecture change.
+>
+> The external pattern remains retained as Reference Knowledge because it
+> independently corroborates the architectural principle of separating data
+> contracts from runtime behavior.
+
+**EP-3 — Graduated Risk Gate · OBSERVE**
+
+> The pattern is architecturally relevant but AIOS Tool execution semantics are
+> not yet sufficiently established to authorize architectural integration.
+>
+> The pattern shall remain under observation.
+>
+> No AIOS architecture is modified. No Tool boundary redesign is authorized. No
+> risk classifier or decision gate is to be implemented from this decision.
+>
+> Future EAI reviews may revisit this reference when AIOS Tool execution
+> semantics become sufficiently mature.
+
+**EP-4 — Swarm Coordination via Structured Message Contracts · REJECTED**
+
+> The external pattern permits peer-to-peer agent communication and constrains
+> message shape.
+>
+> AIOS deliberately uses a different architectural strategy:
+>
+> ```
+> Workflow
+>     ↓
+> Agent / Instance interaction
+> ```
+>
+> with INV-13 preventing direct Instance-to-Instance collaboration.
+>
+> Therefore the external topology must not be adopted.
+>
+> The message-shape constraint may remain as Reference Knowledge, but it does
+> not justify weakening INV-13.
+
+#### 3.12.4 Authority basis
+
+| Provision | Text or effect |
+|---|---|
+| Directive P7-I43 §2, §3 | Establishes the four final Governance Decisions and the canonical decision table recorded above |
+| Directive P7-I43 §4 | Authorizes this recording, names this register and the identifier `GDR-0012` |
+| Directive P7-I43 §6 | Withholds implementation authorization for every pattern, and for EP-1 specifically |
+| EAI specification | *"EAI evaluates and produces a Decision Recommendation. Governance / Architect produces the final architectural decision."* |
+| Engineering Constitution §6.2 invariant 2 | The decision is the Architect's; automation prepared the evidence and records it here |
+| Engineering Constitution §14.1 | *"Any point at which approval was required and sought must be recorded in the artifact under review, not left to memory or inference."* |
+| GDR-0011 §3.11.5 | Establishes Native Core v1.0 as the normative baseline for *"External Architecture Intelligence reviews"* — the baseline against which EAI-0001 was compared |
+
+#### 3.12.5 Governance consequences
+
+- **EAI-0001 is external reference knowledge, not an AIOS architectural
+  baseline.** The normative comparison baseline remains AIOS Native Core v1.0 /
+  RI-0001 at `024b9f0`. An external reference may challenge, corroborate, or
+  expose a gap in AIOS; it does not redefine AIOS.
+- **REJECT does not mean irrelevant.** EP-2 and EP-4 were evaluated and are not
+  accepted into the AIOS architecture under the current baseline. Their evidence
+  and Reference Knowledge are retained and remain available to future review.
+- **OBSERVE alters nothing.** EP-3 is monitored knowledge. It may be revisited
+  when Tool execution semantics mature.
+- **ADAPT accepts a transformed form only.** EP-1 is accepted as the AIOS
+  *Bounded Exception Register* direction, never as a copy of jcode's ratchet.
+- **No pattern transfers automatically to a future review.** A later EAI review
+  must prove its own architectural relevance independently; this entry is not a
+  decision template.
+
+#### 3.12.6 What this decision does not authorize
+
+No implementation of EP-1 · no Bounded Exception Register construction · no
+modification of P7-F-2 · no modification of any frozen baseline · no
+modification of Native Core boundaries · no change to INV-12 · no change to
+INV-13 · no Tool execution implementation · no swarm topology change · no
+dependency-boundary redesign · no ADR · no Platform Expansion · no freeze-tag
+action of any kind.
+
+Any future implementation requires its own authorized Maintenance Baseline
+carrying the full six-stage lifecycle.
+
+#### 3.12.7 Recorded correction to EAI-0001 evidence
+
+Re-verification of the pinned revision before this entry was written found one
+count error in the EAI-0001 review. It is corrected here rather than by
+rewriting the review, and the corrected value is the one of record.
+
+| Item | As stated in EAI-0001 | Verified at `dd8755f7` | Effect on the decision |
+|---|---|---|---|
+| `scripts/check_dependency_boundaries.py` · `FORBIDDEN_INTERNAL_DEPS` | 24 entries | **22 entries** (lines 28–51) | **None.** The EP-2 rejection rests on the list being a *default-open denylist* — an unknown internal dependency produces a warning, not an error (lines 94–98) — not on its length. |
+
+`ALLOWED_INTERNAL_TYPE_DEPS = 1` entry is confirmed unchanged.
+
+#### 3.12.8 Explicitly not changed
+
+No entity, relationship, invariant, ownership rule, or lifecycle rule; no
+Constitution or Canonical Domain Model text; no ADR; no architecture artifact;
+no specification; no Python source file; no frozen or transported baseline; no
+previously recorded register entry; no EAI-0001 recommendation.
+
+#### 3.12.9 Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-08 | EAI-0001 review completed; four recommendations produced | AI Systems Engineer (EAI role) |
+| 2026-08-08 | P7-I42 halted — STOP, GOVERNANCE DECISION REQUIRED; decisions deliberately not supplied | AI Systems Engineer |
+| 2026-08-08 | Four final Governance Decisions established | Architect (P7-I43 §2) |
+| 2026-08-08 | Recorded as GDR-0012 | AI Systems Engineer |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0012 onward.)*
+GDR-0013 onward.)*
 
 ---
 
@@ -1651,3 +1858,37 @@ append-only rule holds without qualification.
 - **Regression:** 495/495 pass; one expected failure (P7-F-2), unchanged.
 - **Freeze performed:** none. The Native Core v1.0 Freeze remains a separate
   governance action, unauthorized by P7-I37.
+
+---
+
+## 10. EAI-0001 Governance Decision Append — Integrity Verification (2026-08-08)
+
+Sections 1–9 above are preserved **unmodified**. This section records the
+EAI-0001 Governance Decision append instead of rewriting them, so §2.3's
+append-only rule holds without qualification.
+
+- **Authority:** P7-I43 §4 — EAI-0001 Governance Decision & EAI-0002 Intake
+  Authorization.
+- **Entry appended:** 1 — GDR-0012. Register total: 12 (GDR-0001 … GDR-0012).
+- **Existing entries modified:** 0. GDR-0001 through GDR-0011 are unchanged.
+- **Sections 1–9 modified:** 0. The only edits outside §3 are this new §10 and
+  the §3 insertion pointer, advanced from *"GDR-0012 onward"* to *"GDR-0013
+  onward"* — the pointer's stated purpose.
+- **EAI recommendations modified:** 0. The EAI-0001 recommendations are recorded
+  alongside the decisions, not replaced by them.
+- **Implementation authorized:** none, for any of the four patterns.
+- **Python files created, modified, or deleted:** 0.
+- **`native_core/` changes:** 0.
+- **Frozen or transported baselines modified:** 0. Baselines 01, 02, 04A, 04B,
+  04C, 05, 06 remain byte-identical.
+- **Specification, Blueprint, Roadmap, Freeze, Constitution, Domain Model, or
+  ADR changes:** 0.
+- **Invariant changes:** 0. INV-12 and INV-13 are untouched.
+- **Findings repaired:** 0. P7-F-2 is unmodified; EP-1's approval as ADAPT
+  authorizes no work on it.
+- **Freeze tag:** untouched. No retry, recreation, move, conversion, force-push,
+  or remote reconfiguration was attempted.
+- **Regression:** 495/495 pass; one expected failure (P7-F-2), unchanged.
+- **Companion record established:** `docs/architecture/external-reference/` —
+  the External Reference Registry, carrying the EAI-0001 record.
+- **Commit status:** recorded; not committed, not pushed.
