@@ -161,6 +161,7 @@ Each review proves its own architectural relevance independently.
 | ID | External reference | Revision | Review status | Governance Decision |
 |---|---|---|---|---|
 | [**EAI-0001**](EAI-0001.md) | `1jehuang/jcode` (v0.71.1) | `dd8755f7e71f0673911d481b625b8a559c81a8b6` | Complete | **GDR-0012** — recorded 2026-08-08 |
+| [**EAI-0002**](EAI-0002.md) | `Alishahryar1/free-claude-code` (R-001) | `627c6d7417e764b7334e5b59643b6c7c872d5bbb` | Complete | **P7-I45** — recorded 2026-08-08 |
 
 ---
 
