@@ -159,9 +159,14 @@ creation, not approval; approval rests with the Architect under Constitution
 §3.4, and `AIOS_BASELINE_LIFECYCLE_v1.0.md` §5 holds that the proposer is not
 the approver.
 
-**Consequence:** an **approved** ADR remains a **prerequisite of Stage 2**,
-recorded as E-10 in §8 below. ADR-0009 existing in `Proposed` status does not
-satisfy it.
+**[E] ADR-0009 was approved by the Architect under P7-I50** on 2026-08-08, with
+its decision text unchanged. Prerequisite **E-10** in §8 below is therefore
+**SATISFIED**.
+
+**Consequence:** **E-11 — Stage 2 authorization — remains UNSATISFIED.**
+P7-I50 §4: *"The approval does not authorize implementation."* Approving the
+architectural decision is not authorization to build it; Stage 2 requires its
+own separate Architect act.
 
 **[O] Reserved.** Should the Architect intend a deliberately narrower mechanism — scoped to a single boundary and carrying no cross-boundary convention — the determination would change to ADR NOT REQUIRED. That narrowing is an Architect ruling, not an engineering judgement, and is not assumed here.
 
@@ -182,8 +187,8 @@ Stage 1 is complete when **all** of the following hold. Each is presently satisf
 | E-7 | Authorized paths fixed, collision-checked, outside every frozen boundary | ✅ |
 | E-8 | Deliverables, forbidden modifications, and finding handling fixed in writing | ✅ |
 | E-9 | ADR requirement resolved — **REQUIRED** | ✅ |
-| E-10 | Approved ADR exists for the mechanism | ❌ **NOT SATISFIED** — ADR-0009 created under P7-I49 with status **Proposed**; Architect approval outstanding |
-| E-11 | Stage 2 authorization issued by the Architect | ❌ **NOT SATISFIED** — separate act |
+| E-10 | Approved ADR exists for the mechanism | ✅ **SATISFIED** — **ADR-0009 Approved** by the Architect under P7-I50, 2026-08-08 |
+| E-11 | Stage 2 authorization issued by the Architect | ❌ **NOT SATISFIED** — separate act. **Stage 2 has not begun** |
 
 **E-1 … E-9 are satisfied: the authorization boundary is established.**
 
