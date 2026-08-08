@@ -1714,8 +1714,155 @@ previously recorded register entry; no EAI-0001 recommendation.
 
 ---
 
+### GDR-0013 — EAI-0002 · External Architecture Intelligence Governance Decision
+
+| Field | Value |
+|---|---|
+| **Identifier** | GDR-0013 |
+| **Decision type** | External Architecture Intelligence — Governance Decision on evaluated external patterns |
+| **Date decided** | 2026-08-08 |
+| **Decided by** | Architect (directive **P7-I45** §3, §14) |
+| **Recorded by** | AI Systems Engineer, under **P7-I46** |
+| **Instrument** | Governance Decision Register entry — not an ADR (see §2.1) |
+| **Status** | **Approved** — binding and active immediately |
+| **External reference** | **EAI-0002** — `Alishahryar1/free-claude-code` (registry R-001) |
+| **Reference revision** | `627c6d7417e764b7334e5b59643b6c7c872d5bbb` |
+| **Comparison baseline** | AIOS Native Core v1.0 / RI-0001 at `024b9f0c3d2681b463a1421ae88dcf11bf0d7336` |
+| **Review act** | **P7-I44** |
+| **Governance act** | **P7-I45** |
+| **Recording act** | **P7-I46** |
+| **Canonical EAI record** | `docs/architecture/external-reference/EAI-0002.md`, committed at `e2a0faa0b08f16a2748e77a76bc6c18685eacde8` |
+
+#### 3.13.1 Nature of this entry
+
+**This entry records a Governance Decision that was already established. It is
+not an independent or newly deliberated decision.**
+
+The substantive decision for EP-5 … EP-9 was made by the Architect in **P7-I45**
+and is already carried by the canonical EAI-0002 record. **P7-I46** authorizes
+only the register representation of that decision, so the governance corpus
+holds EAI-0002 on the same footing as EAI-0001 (GDR-0012).
+
+Nothing here reconsiders, reinterprets, expands, weakens, or reverses any
+EP-5 … EP-9 disposition. Where this entry and P7-I45 could be read differently,
+**P7-I45 governs**.
+
+#### 3.13.2 Canonical decision table
+
+| Pattern | EAI Recommendation | **Governance Decision** | Implementation Authorized |
+|---|---|---|---|
+| **EP-5** — Declared least-privilege dependency allowlist | REJECT | **REJECT** | **NO** |
+| **EP-6** — Zero-tolerance suppression ban | REJECT | **REJECT AS GOVERNANCE MECHANISM / REFERENCE KNOWLEDGE RETAINED** | **NO** |
+| **EP-7** — Structural (`Protocol`) seam for the provider boundary | REJECT | **REJECT** | **NO** |
+| **EP-8** — Dependency-terminal process composition root | OBSERVE | **OBSERVE / DEFER** | **NO** |
+| **EP-9** — Architecture documentation with maintenance triggers | REJECT | **REJECT** | **NO** |
+
+#### 3.13.3 Dispositions (verbatim, per §2.3 verbatim discipline)
+
+> **EP-5 — REJECT.** Do not adopt or adapt the prose-only mechanism. AIOS's
+> existing enforced dependency policy remains authoritative.
+>
+> **EP-6 — REJECT AS GOVERNANCE MECHANISM.** Do not adopt the mechanism as an
+> AIOS governance control. Preserve the observation as Reference Knowledge
+> because it provides a useful counterexample to the bounded-exception posture.
+>
+> **EP-7 — REJECT.** Do not adopt or adapt this pattern for AIOS
+> provider-boundary architecture.
+>
+> **EP-8 — OBSERVE / DEFER.** No architecture change. Revisit only when AIOS
+> introduces a process/runtime composition layer that makes the comparison
+> evidentially applicable.
+>
+> **EP-9 — REJECT.** Do not adopt the convention-only maintenance-trigger
+> mechanism as an AIOS governance control. Existing append-only and
+> integrity-verified documentation mechanisms remain authoritative.
+
+#### 3.13.4 Decision semantics — three statuses, never collapsed
+
+| Status | Meaning in this entry |
+|---|---|
+| **REJECT** | The pattern is not authorized for adoption or adaptation. It was evaluated and is not accepted into the AIOS architecture under the current baseline. **REJECT ≠ discard all knowledge** — the underlying evidence remains available to future review. |
+| **REJECT AS GOVERNANCE MECHANISM / REFERENCE KNOWLEDGE RETAINED** | Applies to **EP-6 only**. The governance *mechanism* is rejected; the architectural *observation* remains useful Reference Knowledge. This is **not** ADAPT, and it is **not** a discard. |
+| **OBSERVE / DEFER** | Applies to **EP-8 only**. AIOS makes no positive adoption decision **and** does not declare the pattern invalid. The matter is deferred because the current architecture provides no comparable process-composition layer against which to evaluate it. |
+
+#### 3.13.5 Standing statements required by P7-I45 §4 and P7-I46 §4
+
+- **No pattern was adopted.** EAI-0002 produced no ADOPT decision.
+- **No pattern was adapted.** EAI-0002 produced no ADAPT decision.
+- **No AIOS architecture was changed** by the decision or by this recording.
+- **EP-6 remains Reference Knowledge only.** *A zero-tolerance suppression
+  policy represents an alternative governance response to accumulated
+  exceptions. It is not authoritative for AIOS and does not modify the
+  already-approved bounded-exception direction* recorded in GDR-0012.
+- **EP-8 remains deferred**, pending a future comparable AIOS
+  process-composition layer.
+- **No implementation work is authorized** by P7-I45 or by P7-I46.
+
+#### 3.13.6 Traceability
+
+```
+EAI-0002
+   ↓
+P7-I44 — Architecture Review          (evidence, observations, recommendations)
+   ↓
+P7-I45 — Governance Decision          (EP-5 … EP-9 dispositions)
+   ↓
+GDR-0013 — Governance Register Record (this entry; recording act P7-I46)
+   ↓
+docs/architecture/external-reference/EAI-0002.md  — canonical EAI record
+```
+
+The link is bidirectional: this entry names the canonical record and its
+commit, and the canonical record's §1 identity table and §11.2 provenance note
+name **GDR-0013**.
+
+#### 3.13.7 Authority basis
+
+| Provision | Text or effect |
+|---|---|
+| Directive P7-I45 §3, §14 | The authoritative Architect decision for EP-5 … EP-9, recorded verbatim above |
+| Directive P7-I46 §1, §3, §9 | Authorizes this register entry, fixes the identifier `GDR-0013`, and limits the act to recording |
+| Directive P7-I46 §2 | *"P7-I46 is not a new Governance Decision… GDR-0013 is a canonical register representation of P7-I45, not an independent decision."* |
+| Directive P7-I44 | The completed review supplying the evidence; remains the source of truth for findings |
+| Engineering Constitution §14.1 | *"Any point at which approval was required and sought must be recorded in the artifact under review, not left to memory or inference."* — the requirement this parity act satisfies |
+| Engineering Constitution §6.2 invariant 2 | The decision is the Architect's; automation prepared the evidence and records it here |
+| GDR-0011 §3.11.5 | Establishes Native Core v1.0 as the normative baseline for *"External Architecture Intelligence reviews"* |
+
+#### 3.13.8 What this entry does not authorize
+
+No implementation of any evaluated pattern · no bounded-exception mechanism ·
+no process-composition root · no modification of `native_core/` · no ADR · no
+Maintenance Baseline · no new architectural invariant · no change to dependency
+rules, provider contracts, or documentation-governance mechanisms · no
+alteration of GDR-0012 or any earlier entry · no change to the EAI methodology ·
+no EAI-0003 intake.
+
+**EP-1 (Bounded Exception Register) is outside the scope of this entry.** It
+remains an approved architectural direction under GDR-0012, awaiting its own
+Maintenance Baseline lifecycle. It is unrelated to this parity act and is
+neither advanced nor altered by it.
+
+#### 3.13.9 Explicitly not changed
+
+No entity, relationship, invariant, ownership rule, or lifecycle rule; no
+Constitution or Canonical Domain Model text; no ADR; no architecture artifact;
+no specification; no Python source file; no frozen or transported baseline; no
+previously recorded register entry, GDR-0012 included; no EAI-0001 record; no
+EAI-0002 finding, observation, evaluation, or recommendation.
+
+#### 3.13.10 Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-08 | EAI-0002 review completed; EP-5 … EP-9 recommendations produced (P7-I44) | AI Systems Engineer (EAI role) |
+| 2026-08-08 | Governance Decision established for EP-5 … EP-9 (P7-I45 §3, §14) | Architect |
+| 2026-08-08 | Canonical EAI-0002 record created and transported at `e2a0faa` | AI Systems Engineer |
+| 2026-08-08 | Register parity authorized; recorded as GDR-0013 (P7-I46) | Architect / AI Systems Engineer |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0013 onward.)*
+GDR-0014 onward.)*
 
 ---
 
@@ -1892,3 +2039,44 @@ append-only rule holds without qualification.
 - **Companion record established:** `docs/architecture/external-reference/` —
   the External Reference Registry, carrying the EAI-0001 record.
 - **Commit status:** recorded; not committed, not pushed.
+
+---
+
+## 11. EAI-0002 Governance Register Parity Append — Integrity Verification (2026-08-08)
+
+Sections 1–10 above are preserved **unmodified**. This section records the
+GDR-0013 parity append instead of rewriting them, so §2.3's append-only rule
+holds without qualification.
+
+- **Authority:** P7-I46 — EAI-0002 Governance Register Parity Authorization.
+- **Nature of the act:** **recording and traceability only.** No new governance
+  decision was made. GDR-0013 records the decision already established by
+  P7-I45.
+- **Entry appended:** 1 — GDR-0013. Register total: 13 (GDR-0001 … GDR-0013).
+- **Existing entries modified:** 0. GDR-0001 through GDR-0012 are unchanged.
+- **Sections 1–10 modified:** 0. The only edits outside §3 are this new §11 and
+  the §3 insertion pointer, advanced from *"GDR-0013 onward"* to *"GDR-0014
+  onward"* — the pointer's stated purpose.
+- **EP-5 … EP-9 dispositions altered:** 0. Recorded exactly as P7-I45 §3 and
+  §14 state them.
+- **ADOPT decisions:** 0. **ADAPT decisions:** 0.
+- **Implementation authorized:** none.
+- **EAI-0002 canonical record:** unchanged except the minimum cross-reference
+  required by P7-I46 §5 — the §1 identity row and the §11.2 provenance note now
+  resolve to GDR-0013. No finding, observation, evaluation, or recommendation
+  was altered.
+- **EAI-0001 record:** unchanged.
+- **Python files created, modified, or deleted:** 0.
+- **`native_core/` changes:** 0.
+- **Frozen or transported baselines modified:** 0. Baselines 01, 02, 04A, 04B,
+  04C, 05, 06 remain byte-identical.
+- **Specification, Blueprint, Roadmap, Freeze, Constitution, Domain Model, or
+  ADR changes:** 0.
+- **Invariant changes:** 0.
+- **EP-1 (Bounded Exception Register):** outside the scope of this act; not
+  implemented, not advanced, not altered. GDR-0012 is untouched.
+- **EAI-0003:** not authorized, not started; no artifact, directory, or branch
+  created.
+- **Freeze tag:** untouched. No retry, recreation, move, conversion,
+  force-push, or remote reconfiguration was attempted.
+- **Regression:** 495/495 pass; one expected failure (P7-F-2), unchanged.
