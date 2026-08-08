@@ -188,7 +188,7 @@ Stage 1 is complete when **all** of the following hold. Each is presently satisf
 | E-8 | Deliverables, forbidden modifications, and finding handling fixed in writing | ✅ |
 | E-9 | ADR requirement resolved — **REQUIRED** | ✅ |
 | E-10 | Approved ADR exists for the mechanism | ✅ **SATISFIED** — **ADR-0009 Approved** by the Architect under P7-I50, 2026-08-08 |
-| E-11 | Stage 2 authorization issued by the Architect | ❌ **NOT SATISFIED** — separate act. **Stage 2 has not begun** |
+| E-11 | Stage 2 authorization issued by the Architect | ✅ **SATISFIED** — **P7-I52**, 2026-08-08. Stage 2 completed at `f76f314`; Stage 3 independently verified under P7-I53; Stage 4 **ACCEPTED** under P7-I54 |
 
 **E-1 … E-9 are satisfied: the authorization boundary is established.**
 
