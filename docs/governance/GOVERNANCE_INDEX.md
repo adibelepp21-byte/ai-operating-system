@@ -25,7 +25,7 @@ governs.
 
 - Engineering Constitution — `docs/constitution/engineering-constitution-v1.md`
 - Canonical Domain Model — `docs/architecture/domain-model/canonical-domain-model-v1.md`
-- Architecture Decision Records — `docs/architecture/adr/README.md` (framework); `docs/architecture/adr/decisions/ADR-0001.md` through `ADR-0007.md`
+- Architecture Decision Records — `docs/architecture/adr/README.md` (framework); `docs/architecture/adr/decisions/ADR-0001.md` through `ADR-0009.md`
 - Organization Framework — `docs/architecture/organization/README.md`
 - Agent Definition Framework — `docs/architecture/organization/agent-definitions.md`
 - Execution Artifact Repository Convention (EARC) — `docs/architecture/organization/execution-artifact-repository.md`
@@ -47,7 +47,7 @@ Per Constitution §4, governance artifacts occupy one of five tiers:
 
 - Constitutional Tier — Engineering Constitution
 - Domain Model Tier — Canonical Domain Model
-- Architectural Tier — ADR-0001 through ADR-0007
+- Architectural Tier — ADR-0001 through ADR-0009
 - Principle Documents Tier — Organization Framework, Agent Definition Framework, EARC, Skill Framework, Workflow Framework, Runtime Framework, Tool Framework
 - Implementation Tier — Department, Capability, and Agent Definition instances; Skill, Workflow, Runtime, and Tool instances (once EARC's remaining open items are resolved)
 

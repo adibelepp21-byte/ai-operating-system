@@ -233,7 +233,8 @@ through a Maintenance Baseline with its own lifecycle.
 
 ## 7. Application Record
 
-The lifecycle was applied seven times without variation:
+The lifecycle was applied seven times without variation during Native Core
+construction, and once more as the program's first Maintenance Baseline:
 
 | Baseline | Objective | Frozen commit | Status |
 |---|---|---|---|
@@ -244,8 +245,9 @@ The lifecycle was applied seven times without variation:
 | 04C — Agent Conformance | Verify Agent (L3) | `43652de` | Frozen & Transported |
 | 05 — Governance Closeout | Durable governance records | `bb781b9` | Frozen & Transported |
 | 06 — L10 Optimization | Optimization boundary (L10) | `c45d82a` | Frozen & Transported |
+| MB-01 — Bounded Exception Register | Establish the bounded-exception mechanism (Objective A) | `f76f314` | Frozen & Transported |
 
-History is linear across all seven: no merge, no amend, no squash, no rewrite.
+History is linear across all eight: no merge, no amend, no squash, no rewrite.
 
 ---
 
