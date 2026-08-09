@@ -1861,8 +1861,140 @@ EAI-0002 finding, observation, evaluation, or recommendation.
 
 ---
 
+### GDR-0014 — P7-F-2 · Bounded Exception Admission
+
+| Field | Value |
+|---|---|
+| **Identifier** | GDR-0014 |
+| **Decision type** | Bounded Exception Admission — admission of identified exception sites to the Bounded Exception Register |
+| **Date decided** | 2026-08-08 |
+| **Decided by** | Architect (directive **P7-I63** §2, §3) |
+| **Recorded by** | AI Systems Engineer, under **P7-I63** §9 |
+| **Instrument** | Governance Decision Register entry — not an ADR (see §2.1) |
+| **Status** | **Approved** — binding and active immediately |
+| **Subject finding** | **P7-F-2** — five Knowledge halt sites pass a non-string argument |
+| **Governing mechanism** | **ADR-0009** (Approved) — Bounded Exception Register |
+| **Prior direction** | **GDR-0012** — EP-1 approved as ADAPT |
+| **Maintenance baseline** | **MB-02** — application of the mechanism to P7-F-2 (Stage 1 boundary only) |
+
+#### 3.14.1 Decision
+
+> The five explicitly identified P7-F-2 Knowledge exception sites are **admitted
+> as bounded exceptions** under the Bounded Exception Register mechanism
+> established by ADR-0009.
+>
+> Admission is limited strictly to the five exact identities enumerated in
+> §3.14.2.
+>
+> This decision authorizes their **future registration** in the Bounded
+> Exception Register, subject to ADR-0009's identity, provenance, append-only,
+> fail-closed, and verification requirements.
+>
+> This decision does **not** authorize modification of the five source sites,
+> modification of Baseline 04A, modification of the Bounded Exception mechanism,
+> or admission of any additional site.
+>
+> Any site outside these five identities requires a separate explicit Governance
+> Decision and corresponding authorization.
+
+#### 3.14.2 Exact admission scope
+
+The admission is **identity-based, not directory-wide**. These five identities
+are the complete admission boundary:
+
+| # | Path | Enclosing qualname | Exception | Ordinal |
+|---|---|---|---|---|
+| 1 | `native_core/core/knowledge/admission.py` | `InMemoryKnowledgeAdmission.__init__` | `KnowledgeError` | 0 |
+| 2 | `native_core/core/knowledge/admission.py` | `InMemoryKnowledgeAdmission.__init__` | `KnowledgeError` | 1 |
+| 3 | `native_core/core/knowledge/repository.py` | `InMemoryKnowledgeRepository.__init__` | `KnowledgeError` | 0 |
+| 4 | `native_core/core/knowledge/repository.py` | `InMemoryKnowledgeRepository.__init__` | `KnowledgeError` | 1 |
+| 5 | `native_core/core/knowledge/retrieval.py` | `InMemoryKnowledgeRetrieval.__init__` | `KnowledgeError` | 0 |
+
+**[E]** These identities were re-derived from source under P7-I61, P7-I62, and
+again under P7-I63 before recording, and exactly five sites exist — no sixth.
+
+#### 3.14.3 Constraints on the admission
+
+| Constraint | Effect |
+|---|---|
+| **Exact identity only** | A changed relative path, enclosing qualname, exception class, or ordinal constitutes a **different identity** and is **not** automatically admitted |
+| **No wildcard admission** | No wildcard matching, directory-level, module-wide, class-wide, or exception-class-wide admission; no future site by implication |
+| **No source modification** | `admission.py`, `repository.py`, and `retrieval.py` are **not** authorized for modification. The decision concerns tolerance and registration of the existing bounded sites only |
+| **No Baseline 04A modification** | The Knowledge conformance test and its `@unittest.expectedFailure` marker remain **untouched**. No frozen baseline file is modified to accommodate this admission, and the existing expected-failure state is **not** reinterpreted as a defect requiring repair |
+| **No mechanism modification** | ADR-0009 and the MB-01 implementation are unchanged |
+
+#### 3.14.4 Relationship to GDR-0012 and ADR-0009
+
+**GDR-0012 remains unchanged.** It established the approved architectural
+direction for the bounded-exception mechanism but did **not** itself authorize
+modification of P7-F-2 or of any frozen baseline (GDR-0012 §3.12.6).
+**GDR-0014 supplies that missing admission authority** for these five
+identities. GDR-0012 is not amended and is not to be reinterpreted as having
+historically authorized P7-F-2.
+
+**ADR-0009 remains unchanged and Approved.** GDR-0014 operates *within* it, so
+the resulting register entries remain subject to identity-based registration,
+append-only behaviour, explicit governance provenance, fail-closed
+verification, no self-service expansion, deterministic verification, and
+bounded scan scope.
+
+#### 3.14.5 Register provenance and mandatory ordering
+
+A bounded-exception register entry admitted by this decision shall carry
+`governance_decision_id: GDR-0014`, and that provenance must resolve to **this
+entry**.
+
+The ordering is mandatory:
+
+```
+1. Record the real GDR-0014 Governance Decision      ← this entry
+2. Verify GDR-0014 resolves as a genuine entry
+3. Only under a later, separately authorized MB-02 Stage 2 act
+   may register entries cite GDR-0014
+```
+
+**[E] Recorded defect, not repaired.** Before this entry existed, the MB-01
+provenance resolver produced a **false positive** for `GDR-0014`, because the
+identifier appeared in the register's forward-looking insertion pointer rather
+than as a real entry (P7-I61 D.4, re-verified under P7-I62). The existence of
+this genuine entry **masks that observation for GDR-0014 only**; it does **not**
+repair the resolver, whose structural behaviour can move to the next
+non-existent identifier. The defect remains a **separate maintenance finding**
+requiring its own authorization. No MB-01 implementation artifact was modified.
+
+#### 3.14.6 What this decision does not authorize
+
+**MB-02 Stage 2 · registration of the five sites · modification of
+`tools/bounded_exception/register.json` · modification of any implementation
+code · modification of P7-F-2 source · modification of Baseline 04A · repair of
+the provenance defect · admission of any further site · any commit, push, tag,
+or transport.**
+
+**GDR-0014 Approved ≠ P7-F-2 registered. P7-F-2 registered ≠ MB-02 Stage 2
+authorized.** The five sites may be registered only under a subsequent explicit
+MB-02 Stage 2 authorization, which this decision does not supply and from which
+no authorization may be inferred.
+
+#### 3.14.7 Explicitly not changed
+
+No entity, relationship, invariant, ownership rule, or lifecycle rule; no
+Constitution or Canonical Domain Model text; no ADR; no architecture artifact;
+no Python source file; no frozen or transported baseline; no previously
+recorded register entry, GDR-0012 and GDR-0013 included; no MB-01 artifact; no
+EAI record.
+
+#### 3.14.8 Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-08 | MB-02 Stage 1 boundary; five identities enumerated from source (P7-I61) | AI Systems Engineer |
+| 2026-08-08 | D.3 register-growth boundary ruled; D.2 admission found not yet established (P7-I62) | Architect / AI Systems Engineer |
+| 2026-08-08 | **Approved** — admission decision issued and recorded (P7-I63) | Architect |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0014 onward.)*
+GDR-0015 onward.)*
 
 ---
 
@@ -2080,3 +2212,39 @@ holds without qualification.
 - **Freeze tag:** untouched. No retry, recreation, move, conversion,
   force-push, or remote reconfiguration was attempted.
 - **Regression:** 495/495 pass; one expected failure (P7-F-2), unchanged.
+
+---
+
+## 12. P7-F-2 Bounded Exception Admission Append — Integrity Verification (2026-08-08)
+
+Sections 1–11 above are preserved **unmodified**. This section records the
+GDR-0014 append instead of rewriting them, so §2.3's append-only rule holds
+without qualification.
+
+- **Authority:** P7-I63 §2, §9, §12 — GDR-0014 Approval: P7-F-2 Bounded
+  Exception Admission.
+- **Entry appended:** 1 — GDR-0014. Register total: 14 (GDR-0001 … GDR-0014).
+- **Existing entries modified:** 0. GDR-0001 through GDR-0013 are unchanged.
+- **Sections 1–11 modified:** 0. The only edits outside §3 are this new §12 and
+  the §3 insertion pointer, advanced from *"GDR-0014 onward"* to *"GDR-0015
+  onward"* — the pointer's stated purpose.
+- **Status recorded:** **Approved.** No `Proposed` state was introduced and no
+  unapproved register convention was invented.
+- **Implementation authorized:** none. MB-02 Stage 2 is not authorized by this
+  decision, and no entry was added to `tools/bounded_exception/register.json`.
+- **Python files created, modified, or deleted:** 0.
+- **`native_core/` changes:** 0. The five P7-F-2 source sites are unmodified.
+- **Frozen or transported baselines modified:** 0. Baseline 04A remains at zero
+  drift and its `@unittest.expectedFailure` marker is intact.
+- **MB-01 artifacts modified:** 0. Implementation tree remains
+  `a836a514dda8a88ee3875a063d5b2233a3fe09da`, identical to frozen commit
+  `f76f314`.
+- **ADR changes:** 0. ADR-0009 remains Approved; decision span unchanged.
+- **Provenance defect (P7-I61 D.4):** **recorded, not repaired.** No resolver or
+  other MB-01 implementation file was touched. Advancing the §3 pointer to
+  *"GDR-0015 onward"* carries the same structural false-positive behaviour
+  forward to `GDR-0015`; this is disclosed rather than corrected, because
+  repair requires its own maintenance authorization.
+- **Regression:** 495/495 pass; one expected failure (P7-F-2), unchanged.
+- **Commit status:** recorded; **not committed, not pushed** — P7-I63 §15
+  authorizes no commit, push, transport, or tag.
