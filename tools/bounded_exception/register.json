@@ -1,5 +1,81 @@
 {
   "version": 1,
-  "scan_scope": [],
-  "entries": []
+  "scan_scope": [
+    {
+      "root": "native_core/core/knowledge",
+      "detector": "container_arg_raise"
+    }
+  ],
+  "entries": [
+    {
+      "identity": {
+        "path": "native_core/core/knowledge/admission.py",
+        "qualname": "InMemoryKnowledgeAdmission.__init__",
+        "exception": "KnowledgeError",
+        "ordinal": 0
+      },
+      "category": "non-string-halt-message",
+      "rationale": "Halt passes a list rather than a message string, so str(exc) renders as a structured object rather than a message. Recorded as P7-F-2; repair not authorized.",
+      "finding_id": "P7-F-2",
+      "governance_decision_id": "GDR-0014",
+      "authorizing_act": "P7-I66",
+      "line": 86
+    },
+    {
+      "identity": {
+        "path": "native_core/core/knowledge/admission.py",
+        "qualname": "InMemoryKnowledgeAdmission.__init__",
+        "exception": "KnowledgeError",
+        "ordinal": 1
+      },
+      "category": "non-string-halt-message",
+      "rationale": "Halt passes a list rather than a message string, so str(exc) renders as a structured object rather than a message. Recorded as P7-F-2; repair not authorized.",
+      "finding_id": "P7-F-2",
+      "governance_decision_id": "GDR-0014",
+      "authorizing_act": "P7-I66",
+      "line": 88
+    },
+    {
+      "identity": {
+        "path": "native_core/core/knowledge/repository.py",
+        "qualname": "InMemoryKnowledgeRepository.__init__",
+        "exception": "KnowledgeError",
+        "ordinal": 0
+      },
+      "category": "non-string-halt-message",
+      "rationale": "Halt passes a list rather than a message string, so str(exc) renders as a structured object rather than a message. Recorded as P7-F-2; repair not authorized.",
+      "finding_id": "P7-F-2",
+      "governance_decision_id": "GDR-0014",
+      "authorizing_act": "P7-I66",
+      "line": 95
+    },
+    {
+      "identity": {
+        "path": "native_core/core/knowledge/repository.py",
+        "qualname": "InMemoryKnowledgeRepository.__init__",
+        "exception": "KnowledgeError",
+        "ordinal": 1
+      },
+      "category": "non-string-halt-message",
+      "rationale": "Halt passes a list rather than a message string, so str(exc) renders as a structured object rather than a message. Recorded as P7-F-2; repair not authorized.",
+      "finding_id": "P7-F-2",
+      "governance_decision_id": "GDR-0014",
+      "authorizing_act": "P7-I66",
+      "line": 97
+    },
+    {
+      "identity": {
+        "path": "native_core/core/knowledge/retrieval.py",
+        "qualname": "InMemoryKnowledgeRetrieval.__init__",
+        "exception": "KnowledgeError",
+        "ordinal": 0
+      },
+      "category": "non-string-halt-message",
+      "rationale": "Halt passes a list rather than a message string, so str(exc) renders as a structured object rather than a message. Recorded as P7-F-2; repair not authorized.",
+      "finding_id": "P7-F-2",
+      "governance_decision_id": "GDR-0014",
+      "authorizing_act": "P7-I66",
+      "line": 64
+    }
+  ]
 }
