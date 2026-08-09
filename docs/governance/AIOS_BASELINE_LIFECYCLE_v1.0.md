@@ -234,7 +234,7 @@ through a Maintenance Baseline with its own lifecycle.
 ## 7. Application Record
 
 The lifecycle was applied seven times without variation during Native Core
-construction, and once more as the program's first Maintenance Baseline:
+construction, and twice more as the program's first two Maintenance Baselines:
 
 | Baseline | Objective | Frozen commit | Status |
 |---|---|---|---|
@@ -246,8 +246,20 @@ construction, and once more as the program's first Maintenance Baseline:
 | 05 — Governance Closeout | Durable governance records | `bb781b9` | Frozen & Transported |
 | 06 — L10 Optimization | Optimization boundary (L10) | `c45d82a` | Frozen & Transported |
 | MB-01 — Bounded Exception Register | Establish the bounded-exception mechanism (Objective A) | `f76f314` | Frozen & Transported |
+| MB-02 — P7-F-2 Bounded Exception Registration | Register the five P7-F-2 Knowledge exception sites admitted by GDR-0014 (Objective B) | `6fcb238` | Frozen & Transported |
 
-History is linear across all eight: no merge, no amend, no squash, no rewrite.
+History is linear across all nine: no merge, no amend, no squash, no rewrite.
+
+MB-02's frozen commit `6fcb2385dce2fab4260bfea1e088b8fca37da75a` carries the
+registration alone — `tools/bounded_exception/register.json` and nothing else.
+Stage 1 satisfied; Stage 2 implemented, persisted, and transported; Stage 3
+verified; Stage 4 accepted; Stage 5 frozen; Stage 6 satisfied as a no-op,
+because the frozen commit was already contained in remote history as an
+ancestor of the remote branch head, so durability required no push. The
+accepted repository state at acceptance was
+`60cd088136d80e70dab721518f4114bbcc927526` — the separate MB-01 guard-test
+maintenance commit, which is the repository tip and not MB-02 content. The two
+commits are distinct baselines' work and are not collapsed.
 
 ---
 
