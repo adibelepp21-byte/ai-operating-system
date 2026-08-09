@@ -284,12 +284,36 @@ class IdentityTest(unittest.TestCase):
 
 
 class ShippedRegisterGuardTest(unittest.TestCase):
-    """MB-01 ships the register empty and applies it to nothing."""
+    """The shipped register tolerates exactly what governance has admitted.
 
-    def test_shipped_register_is_empty_and_scopeless(self):
+    MB-01 shipped this register empty and scopeless. GDR-0014 then admitted
+    five P7-F-2 Knowledge identities and MB-02 registered them, so the
+    empty/scopeless assertion is superseded. What must still hold is the
+    property that assertion existed to protect: the register names an exact,
+    governed, identity-based set and nothing wider.
+    """
+
+    def test_shipped_register_matches_the_authorized_admission(self):
         register = load_register(verifier.DEFAULT_REGISTER)
-        self.assertEqual(register.entries, ())
-        self.assertEqual(register.scan_scope, ())
+
+        self.assertEqual(len(register.entries), 5)
+        self.assertEqual(
+            [entry.governance_decision_id for entry in register.entries],
+            ["GDR-0014"] * 5,
+        )
+        self.assertEqual(
+            [entry.finding_id for entry in register.entries], ["P7-F-2"] * 5
+        )
+        self.assertEqual(
+            [(scope.root, scope.detector) for scope in register.scan_scope],
+            [("native_core/core/knowledge", "container_arg_raise")],
+        )
+
+        # Identity-based, never a wildcard: a pattern here would silently widen
+        # the admission beyond the five identities GDR-0014 named.
+        for entry in register.entries:
+            for pattern_char in "*?[":
+                self.assertNotIn(pattern_char, entry.identity.path)
 
     def test_shipped_register_verifies_clean(self):
         provenance = RegisterFileProvenance(
