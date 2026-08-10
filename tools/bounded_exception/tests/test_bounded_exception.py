@@ -224,6 +224,56 @@ class VerifierTest(unittest.TestCase):
         self.assertFalse(resolver.finding_exists("P9-F-8"))
         self.assertFalse(resolver.decision_exists("GDR-999"))
 
+    def test_table_identifier_resolves(self):
+        findings = self.fx.root / "findings.md"
+        decisions = self.fx.root / "decisions.md"
+        findings.write_text(
+            f"| Identifier | Status |\n|---|---|\n| **{FINDING}** | open |\n",
+            encoding="utf-8",
+        )
+        decisions.write_text(
+            f"| Identifier | Status |\n|---|---|\n| `{DECISION}` | approved |\n",
+            encoding="utf-8",
+        )
+        resolver = RegisterFileProvenance(findings, decisions)
+        self.assertTrue(resolver.finding_exists(FINDING))
+        self.assertTrue(resolver.decision_exists(DECISION))
+
+    def test_identifier_named_only_in_pointer_prose_does_not_resolve(self):
+        """P7-I61 D.4. A register names the next identifier before it exists.
+
+        The recorded entry must resolve and the forward-looking pointer
+        must not. Resolving the pointer would let an entry cite
+        governance that has not been decided yet, which is the one thing
+        provenance resolution exists to prevent.
+        """
+        pending = "GDR-10000"
+        findings = self.fx.root / "findings.md"
+        decisions = self.fx.root / "decisions.md"
+        findings.write_text(f"### {FINDING} — a synthetic finding\n", encoding="utf-8")
+        decisions.write_text(
+            f"### {DECISION} — a synthetic decision\n\n"
+            f"*(The next entry is {pending} onward.)*\n"
+            f"The §3 insertion pointer now reads {pending}.\n",
+            encoding="utf-8",
+        )
+        resolver = RegisterFileProvenance(findings, decisions)
+        self.assertTrue(resolver.decision_exists(DECISION))
+        self.assertFalse(resolver.decision_exists(pending))
+
+    def test_identifier_named_only_in_narrative_does_not_resolve(self):
+        findings = self.fx.root / "findings.md"
+        decisions = self.fx.root / "decisions.md"
+        findings.write_text(
+            f"### {FINDING} — a synthetic finding\n\n"
+            "A future P9-F-8 would record the successor observation.\n",
+            encoding="utf-8",
+        )
+        decisions.write_text(f"### {DECISION} — a synthetic decision\n", encoding="utf-8")
+        resolver = RegisterFileProvenance(findings, decisions)
+        self.assertTrue(resolver.finding_exists(FINDING))
+        self.assertFalse(resolver.finding_exists("P9-F-8"))
+
     def test_missing_provenance_file_resolves_to_failure(self):
         resolver = RegisterFileProvenance(
             self.fx.root / "absent.md", self.fx.root / "absent.md"
