@@ -1,11 +1,11 @@
 # Volume 1 — PD-01 Executive Office — Part A Recovery Manifest
 
-**Act ID:** AR-PD01-P7-REC-006 (Part A) · AR-PD01-P7-RES-007 (Part B) · AR-PD01-P7-RES-008 (Part C) · AR-PD01-P7-RES-009 (Part D)
+**Act ID:** AR-PD01-P7-REC-006 (Part A) · AR-PD01-P7-RES-007 (Part B) · AR-PD01-P7-RES-008 (Part C) · AR-PD01-P7-RES-009 (Part D) · AR-PD01-P7-RES-010 (Part E)
 **Recovery Date:** 2026-08-14
 **Repository:** https://github.com/adibelepp21-byte/ai-operating-system
 **Branch:** claude/aios-genesis-planning-hmbvlc
 **Canonical Path:** `docs/architecture/volume-1/pd-01-executive-office/`
-**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING (Parts A, B, C, D)
+**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING (Parts A, B, C, D, E — corpus complete 45/45)
 
 ---
 
@@ -157,6 +157,81 @@ D1. Closing the fence or restoring the markup would be an unauthorized mutation
 of a canonical body. This is recorded as an open item for Architect adjudication
 and is **not** treated as a recovery failure — no content is missing.
 
+### Part E — Performance Architecture (Batch RES-010-PART-E)
+
+| Section ID | Part | Section Name | Canonical Path | Bytes | SHA-256 |
+|---|---|---|---|---:|---|
+| E1 | Part E | Performance Constitution | `docs/architecture/volume-1/pd-01-executive-office/E1.md` | 7007 | `d187574dff36e29484823d6a07a6e590ae1b88a3337d980261b70338eec80901` |
+| E2 | Part E | Performance Model | `docs/architecture/volume-1/pd-01-executive-office/E2.md` | 6831 | `e6e5a7b8c8b8ce720be4ebfc08af1e05d380986d28ce6c0ac23406f05ff075a4` |
+| E3 | Part E | Performance Measurement Model | `docs/architecture/volume-1/pd-01-executive-office/E3.md` | 5272 | `4bc13eaf218b915ebd4e33c70ab020c941386fa3b1774930e2f4fa48f34bfa8f` |
+| E4 | Part E | KPI & Success Metrics Framework | `docs/architecture/volume-1/pd-01-executive-office/E4.md` | 6015 | `9cbd9a76c504d3edf74c2fe074c326db31d947f65bb0ef7d67f580eac411726c` |
+| E5 | Part E | Performance Review Model | `docs/architecture/volume-1/pd-01-executive-office/E5.md` | 5544 | `5a0cc5f208d0b5c5a3e885cf326f90ac8a76504597c8978e05cbc07ad9a5b38c` |
+| E6 | Part E | Performance Governance Model | `docs/architecture/volume-1/pd-01-executive-office/E6.md` | 5785 | `084d359b5d096bfb328546de2ddf365b81b2c58392c7d61b6e64dedde7d37be5` |
+| E7 | Part E | Performance Reporting Model | `docs/architecture/volume-1/pd-01-executive-office/E7.md` | 5814 | `7fa73bc75b2de36921213579c8be41258967a5f14bc96477c0ffa531a655b6c5` |
+| E8 | Part E | Performance Improvement Model | `docs/architecture/volume-1/pd-01-executive-office/E8.md` | 6328 | `2ec39ff929d4ed94229e4024b3c33442c7a6feb6a9478a5031ab894e81a3b852` |
+| E9 | Part E | Performance Maturity Model | `docs/architecture/volume-1/pd-01-executive-office/E9.md` | 8830 | `7b89daa523fdca4b6226875b610754110e72093fa58ecdfedbecd1782f50720d` |
+| E10 | Part E | Performance Success Constitution | `docs/architecture/volume-1/pd-01-executive-office/E10.md` | 15642 | `bc0153d5fa73f88ca01d7568922d8d29f9b7cbe32ca6ca9e1056645715443f39` |
+
+**Part E totals:** 10 sections · 73,068 bytes · 10 unique SHA-256 (no duplicate bodies).
+
+**Act:** AR-PD01-P7-RES-010 · **Source:** Architect Transmission (Recovery Candidate)
+**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING
+
+**Part E structural verification.** Exactly ten unique Section IDs E1–E10, no
+duplicate ID, no missing ID. Filename ↔ Section ID match 10/10; Section Name ↔
+metadata match 10/10; `PD-01` present 10/10; `Part E` present 10/10; a
+`Canonical Status & Freeze Record` block present 10/10.
+
+**Part E boundary decisions.** Per the RES-010 directive, no Part E header file
+was created: the `# PART E — PERFORMANCE ARCHITECTURE` banner is preserved at the
+head of `E1.md`. The `END OF PART E — E1–E10` closing line followed E10 §35 in
+the transmission and is preserved at the end of `E10.md`. The `============`
+rule lines were treated as transmission separators, not body content. The
+POST-CORPUS PERSISTENCE PROTOCOL that followed the corpus was excluded as
+non-body material.
+
+**Part E truncation check.** Each of E1–E9 terminates on its own closing
+`Single Source of Truth` / model-status sentence; E10 terminates on
+`END OF PART E — E1–E10`. No section was merged, split, truncated, or silently
+modified.
+
+**⚠ Part E residency-vs-freeze distinction — MATERIAL, DO NOT CONFLATE.** Every
+Part E body carries in its own metadata `Status: FROZEN`, `Gold Standard Review:
+PASS`, and `Freeze Decision: APPROVED`, and each closes with a
+`Canonical Status & Freeze Record` block. **These are transcribed body content,
+not a repository or governance freeze event.** They were recorded verbatim
+because altering them would mutate a canonical body. They do **not** establish,
+and must not be read as establishing:
+
+- that Volume 1 or Part E has been validated in this repository;
+- that any Volume 1 freeze gate has been passed;
+- that P7-I99 returned `APPROVED FOR FREEZE`;
+- that REM-003 has been executed.
+
+The governing repository state remains **RECOVERED — DURABLE / VALIDATION
+PENDING**, and the Volume 1 freeze gate remains **NOT APPROVED (P7-I99 re-gate
+outstanding)** per §5 of this manifest. Reconciling the in-body freeze claims
+against actual repository governance state is an open item for Architect
+adjudication.
+
+**Part E fidelity note — SAME UNCLOSED-FENCE DEFECT AS PART D (Architect
+decision required).** The received transmission opens a fenced code block
+(` ```text `) at E1 §2 "Performance Philosophy" and never closes it. As a
+consequence, everything transmitted after that point — E1 §3 onward and the
+whole of E2 through E10 — arrived as unfenced plain text rather than the
+blockquote metadata / `#` heading markup used by E1 §1–§2. This defect has been
+**preserved exactly as received and not corrected**: `E1.md` carries a single
+unbalanced ` ```text ` fence at line 56, and E2–E10 carry plain-text
+`Section ID:` metadata rather than the `> **Section ID:**` blockquote form used
+by E1. This is the identical defect pattern recorded for Part D and is carried
+as the same open adjudication item. No content is missing.
+
+**Part E observation — identifier not previously registered.** All ten Part E
+bodies name `ESD-08 Performance Management Office` as Owner. This identifier is
+recorded here as observed content only; no reconciliation, registration, or
+remediation was performed under this Act. It is carried forward as input to
+REM-003 and the P7-I99 re-gate.
+
 ---
 
 ## 3. Identity Verification
@@ -218,8 +293,13 @@ finalised Reference Implementation. REC-006 establishes durable residency only.
 | Part B | 5 | 5 | RECOVERED — DURABLE / VALIDATION PENDING |
 | Part C | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
 | Part D | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
-| Part E | 10 | 0 | NOT RECOVERED |
-| **Total** | **45** | **35** | **PARTIAL** |
+| Part E | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
+| **Total** | **45** | **45** | **COMPLETE — DURABLE / VALIDATION PENDING** |
+
+**Corpus complete.** All 45 canonical bodies (A1–A10, B1–B5, C1–C10, D1–D10,
+E1–E10) are present in the repository and durable on the remote. Completeness of
+the corpus is a residency fact only; it is **not** validation, **not** freeze,
+**not** ratification, and **not** a P7-I99 outcome.
 
 ---
 
@@ -270,6 +350,8 @@ bodies A1–A10 are unchanged by that follow-up commit; their SHA-256 values in
 | RES-007-PART-B | AR-PD01-P7-RES-007 | B1–B5 | `e07faea0` | `5d214f26` | VERIFIED |
 | RES-008-PART-C | AR-PD01-P7-RES-008 | C1–C10 | `5d214f26` | `cc5f8b79` | VERIFIED |
 | RES-009-PART-D | AR-PD01-P7-RES-009 | D1–D10 | `cc5f8b79` | `43758306` | VERIFIED |
+| — (manifest transport record) | AR-PD01-P7-RES-009 | manifest only | `43758306` | `27816aab` | VERIFIED |
+| RES-010-PART-E | AR-PD01-P7-RES-010 | E1–E10 | `27816aab` | *(recorded at commit)* | *(verified at push)* |
 
 Each batch satisfies the durability chain in full:
 `LOCAL FILE → VERIFIED → COMMITTED → PUSHED → REMOTE COMMIT VERIFIED`.
