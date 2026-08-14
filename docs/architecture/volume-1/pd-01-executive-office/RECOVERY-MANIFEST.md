@@ -130,4 +130,24 @@ Any subsequent Act modifying these files MUST:
 
 ## 8. Transport Record
 
-Recorded in the follow-up entry appended after commit and push verification.
+| Field | Value |
+|---|---|
+| Batch ID | REC-006-PART-A |
+| Git Commit | `545140dda789ff15a73d2131e35f546b7c81dddd` |
+| Commit Subject | Restore canonical Volume 1 corpus batch REC-006-PART-A |
+| Files in Commit | 11 (A1–A10 + this manifest), 1822 insertions |
+| Remote Branch | `claude/aios-genesis-planning-hmbvlc` |
+| Remote Commit | `545140dda789ff15a73d2131e35f546b7c81dddd` |
+| Predecessor Commit | `34a9ee403dcab51ec53444d0d647044e4d767096` |
+| Local == Remote | VERIFIED |
+| Disk == Committed Blob | VERIFIED, 11 / 11 |
+| Remote Tree File Count | 11 |
+| Verification Status | **DURABLE** |
+
+All ten Part A bodies and this manifest are durable at the commit above:
+local file → verified → committed → pushed → remote commit verified.
+
+**Note.** This manifest section was appended after the batch commit, so this
+manifest file carries one additional commit beyond `545140d`. The ten canonical
+bodies A1–A10 are unchanged by that follow-up commit; their SHA-256 values in
+§2 remain authoritative.
