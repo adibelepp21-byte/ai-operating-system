@@ -351,10 +351,38 @@ bodies A1–A10 are unchanged by that follow-up commit; their SHA-256 values in
 | RES-008-PART-C | AR-PD01-P7-RES-008 | C1–C10 | `5d214f26` | `cc5f8b79` | VERIFIED |
 | RES-009-PART-D | AR-PD01-P7-RES-009 | D1–D10 | `cc5f8b79` | `43758306` | VERIFIED |
 | — (manifest transport record) | AR-PD01-P7-RES-009 | manifest only | `43758306` | `27816aab` | VERIFIED |
-| RES-010-PART-E | AR-PD01-P7-RES-010 | E1–E10 | `27816aab` | *(recorded at commit)* | *(verified at push)* |
+| RES-010-PART-E | AR-PD01-P7-RES-010 | E1–E10 | `27816aab` | `1514e4f3` | VERIFIED |
 
 Each batch satisfies the durability chain in full:
 `LOCAL FILE → VERIFIED → COMMITTED → PUSHED → REMOTE COMMIT VERIFIED`.
+
+**RES-010-PART-E transport detail.**
+
+| Field | Value |
+|---|---|
+| Batch ID | RES-010-PART-E |
+| Git Commit | `1514e4f3c0493da5f54689b78d6b4439267c2427` |
+| Commit Subject | Restore canonical Volume 1 corpus batch RES-010-PART-E |
+| Files in Commit | 11 (E1–E10 + this manifest), 3712 insertions |
+| Predecessor Commit | `27816aabf9b9ecb4c6d1bbb9325d655452187d98` |
+| Remote Branch | `claude/aios-genesis-planning-hmbvlc` |
+| Remote Commit | `1514e4f3c0493da5f54689b78d6b4439267c2427` |
+| Local == Remote | VERIFIED |
+| Disk == HEAD Blob == Remote Blob | VERIFIED, 11 / 11 |
+| Remote Tree File Count (canonical path) | 46 |
+| A1–A10 / B1–B5 / C1–C10 / D1–D10 modified | 0 |
+| Paths outside canonical directory modified | 0 |
+| Verification Status | **DURABLE** |
+
+**Note.** As with the Part A and Part D batches, this ledger entry was appended
+after the batch commit, so this manifest file carries one additional commit
+beyond `1514e4f3`. The ten canonical bodies E1–E10 are unchanged by that
+follow-up commit; their SHA-256 values in §2 remain authoritative.
+
+**Volume 1 corpus durability summary.** With RES-010 complete, all 45 canonical
+bodies are durable on the remote across five batches. Total canonical body
+payload: 35,327 (A) + 48,789 (B) + 55,953 (C) + 34,213 (D) + 73,068 (E) =
+**247,350 bytes** across 45 files, 45 unique SHA-256 values, 0 duplicate bodies.
 
 **RES-009-PART-D transport detail.**
 
