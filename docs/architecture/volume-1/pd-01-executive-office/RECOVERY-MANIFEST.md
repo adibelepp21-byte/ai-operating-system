@@ -269,7 +269,30 @@ bodies A1–A10 are unchanged by that follow-up commit; their SHA-256 values in
 | — (manifest transport record) | AR-PD01-P7-REC-006 | manifest only | `545140dd` | `e07faea0` | VERIFIED |
 | RES-007-PART-B | AR-PD01-P7-RES-007 | B1–B5 | `e07faea0` | `5d214f26` | VERIFIED |
 | RES-008-PART-C | AR-PD01-P7-RES-008 | C1–C10 | `5d214f26` | `cc5f8b79` | VERIFIED |
-| RES-009-PART-D | AR-PD01-P7-RES-009 | D1–D10 | `cc5f8b79` | *(recorded at commit)* | *(verified at push)* |
+| RES-009-PART-D | AR-PD01-P7-RES-009 | D1–D10 | `cc5f8b79` | `43758306` | VERIFIED |
 
 Each batch satisfies the durability chain in full:
 `LOCAL FILE → VERIFIED → COMMITTED → PUSHED → REMOTE COMMIT VERIFIED`.
+
+**RES-009-PART-D transport detail.**
+
+| Field | Value |
+|---|---|
+| Batch ID | RES-009-PART-D |
+| Git Commit | `437583062688e54bd4cb4e504bcab2613ab8f121` |
+| Commit Subject | Restore canonical Volume 1 corpus batch RES-009-PART-D |
+| Files in Commit | 11 (D1–D10 + this manifest), 1916 insertions |
+| Predecessor Commit | `cc5f8b791021642d187b7b2a08ff2c6e77c9d0d8` |
+| Remote Branch | `claude/aios-genesis-planning-hmbvlc` |
+| Remote Commit | `437583062688e54bd4cb4e504bcab2613ab8f121` |
+| Local == Remote | VERIFIED |
+| Disk == HEAD Blob == Remote Blob | VERIFIED, 11 / 11 |
+| Remote Tree File Count (canonical path) | 36 |
+| A1–A10 / B1–B5 / C1–C10 modified | 0 |
+| Paths outside canonical directory modified | 0 |
+| Verification Status | **DURABLE** |
+
+**Note.** As with the Part A batch, this ledger entry was appended after the
+batch commit, so this manifest file carries one additional commit beyond
+`43758306`. The ten canonical bodies D1–D10 are unchanged by that follow-up
+commit; their SHA-256 values in §2 remain authoritative.
