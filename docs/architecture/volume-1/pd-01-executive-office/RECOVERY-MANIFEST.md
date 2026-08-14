@@ -1,11 +1,11 @@
 # Volume 1 — PD-01 Executive Office — Part A Recovery Manifest
 
-**Act ID:** AR-PD01-P7-REC-006 (Part A) · AR-PD01-P7-RES-007 (Part B) · AR-PD01-P7-RES-008 (Part C)
+**Act ID:** AR-PD01-P7-REC-006 (Part A) · AR-PD01-P7-RES-007 (Part B) · AR-PD01-P7-RES-008 (Part C) · AR-PD01-P7-RES-009 (Part D)
 **Recovery Date:** 2026-08-14
 **Repository:** https://github.com/adibelepp21-byte/ai-operating-system
 **Branch:** claude/aios-genesis-planning-hmbvlc
 **Canonical Path:** `docs/architecture/volume-1/pd-01-executive-office/`
-**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING (Parts A, B, C)
+**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING (Parts A, B, C, D)
 
 ---
 
@@ -102,6 +102,61 @@ EXECUTION DIRECTIVE was excluded as non-body material and is not stored in
 `Section CN END` line; C10 terminates on `END OF PART C — C1–C10`. No section was
 merged, truncated, or silently modified.
 
+### Part D — Operating Architecture (Batch RES-009-PART-D)
+
+| Section ID | Part | Section Name | Canonical Path | Bytes | SHA-256 |
+|---|---|---|---|---:|---|
+| D1 | Part D | Operating Model Constitution | `docs/architecture/volume-1/pd-01-executive-office/D1.md` | 6630 | `d634a42451243652f2b6d23f40759e8c30279c081d7eab808bfbef153e047048` |
+| D2 | Part D | Executive Operating Constitution | `docs/architecture/volume-1/pd-01-executive-office/D2.md` | 3928 | `e57ff58e39d0160593282e0d7e53e04f421b8ad4d9ce6918a380231d7e75440d` |
+| D3 | Part D | Platform Coordination Constitution | `docs/architecture/volume-1/pd-01-executive-office/D3.md` | 2955 | `717b4871999ec9109a0d0b7f4d414c180b2b5ac3d57b971a59b707ddcbe21fd8` |
+| D4 | Part D | Work Management Constitution | `docs/architecture/volume-1/pd-01-executive-office/D4.md` | 2701 | `177e95f24c8651cb6138116f122cb8e4785b59b86d8e83d25b36eaf8823271ef` |
+| D5 | Part D | Operational Decision Constitution | `docs/architecture/volume-1/pd-01-executive-office/D5.md` | 2663 | `9618a30f23cc82f8d6ac6a65099198eea3a31d3453026b02add70d41d917ae04` |
+| D6 | Part D | Operating Rhythm Constitution | `docs/architecture/volume-1/pd-01-executive-office/D6.md` | 2646 | `8230d2ee1ce190faf5a4f4b8d7a223df20b35d5471bfb41052a564d1ea491abc` |
+| D7 | Part D | Collaboration Constitution | `docs/architecture/volume-1/pd-01-executive-office/D7.md` | 2537 | `cc16585d012cd55eb0a18394b56c0c96fdc01e3fbf1039048604a113e08a40a4` |
+| D8 | Part D | Operational Control Constitution | `docs/architecture/volume-1/pd-01-executive-office/D8.md` | 2679 | `59e64bb4356a50bdc84e9f96b99c022ceb8024a44ae128ccaa64b23be3831fcc` |
+| D9 | Part D | Operating Improvement Constitution | `docs/architecture/volume-1/pd-01-executive-office/D9.md` | 2644 | `8d44d4b72b4ee0ad88fe1f44aedb327af4dac918b34bc48b3c626cec56806da8` |
+| D10 | Part D | Operating Success Constitution | `docs/architecture/volume-1/pd-01-executive-office/D10.md` | 4830 | `868a62ea3c2a748150917f4ef11909ccfa1e3a393098a48915efc78456f8df5e` |
+
+**Part D totals:** 10 sections · 34,213 bytes · 10 unique SHA-256 (no duplicate bodies).
+
+**Act:** AR-PD01-P7-RES-009 · **Source:** Architect Transmission (Recovery Candidate)
+**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING
+
+**Part D structural verification.** Exactly ten unique Section IDs D1–D10, no
+duplicate ID, no missing ID. The declared parent chain is contiguous and
+complete: D1 (parent constitution) → D2 → D3 → D4 → D5 → D6 → D7 → D8 → D9 → D10.
+
+**Part D boundary decisions.** The `# PART D — OPERATING ARCHITECTURE` header
+block (purpose statement, D1–D10 chain, and the Part B / Part C / Part E
+non-replacement clause) was transmitted contiguously above D1 and is preserved at
+the head of `D1.md`; no separate Part-header file was created. The
+`13. Part D Completion Statement` block is an internal section of D10 in the
+transmission and is preserved at the end of `D10.md`. The
+`# ============` rule lines separating sections were treated as transmission
+separators, not body content; the section title line immediately following each
+rule was retained as the first line of its file, matching the Part C convention.
+The POST-RECEIPT EXECUTION PROTOCOL that followed
+`END OF ARCHITECT TRANSMISSION — PART D` was excluded as non-body material.
+
+**Part D truncation check.** Each file terminates on its own final numbered
+section: D2–D9 on their `Success Statement` closing list, D1 on
+`D1 is the constitutional parent for D2–D10.`, and D10 on
+`Those decisions remain subject to their respective gates.` No section was
+merged, split, truncated, or silently modified.
+
+**Part D fidelity note — UNRESOLVED FORMATTING DEFECT IN SOURCE (Architect
+decision required).** The received transmission opens a fenced code block
+(` ```text `) at D1 §10 "Operating Lifecycle" and never closes it. As a
+consequence, everything transmitted after that point — D1 §11 and the whole of
+D2 through D10 — arrived as unfenced plain text rather than as the blockquote
+metadata / `##` heading markup used by D1 §1–§10. This defect has been
+**preserved exactly as received** and **not corrected**: `D1.md` carries a single
+unbalanced ` ```text ` fence at line 245, and D2–D10 carry plain-text
+`Section ID:` metadata rather than the `> Section ID:` blockquote form used by
+D1. Closing the fence or restoring the markup would be an unauthorized mutation
+of a canonical body. This is recorded as an open item for Architect adjudication
+and is **not** treated as a recovery failure — no content is missing.
+
 ---
 
 ## 3. Identity Verification
@@ -162,9 +217,9 @@ finalised Reference Implementation. REC-006 establishes durable residency only.
 | Part A | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
 | Part B | 5 | 5 | RECOVERED — DURABLE / VALIDATION PENDING |
 | Part C | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
-| Part D | 10 | 0 | NOT RECOVERED |
+| Part D | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
 | Part E | 10 | 0 | NOT RECOVERED |
-| **Total** | **45** | **25** | **PARTIAL** |
+| **Total** | **45** | **35** | **PARTIAL** |
 
 ---
 
@@ -205,3 +260,16 @@ local file → verified → committed → pushed → remote commit verified.
 manifest file carries one additional commit beyond `545140d`. The ten canonical
 bodies A1–A10 are unchanged by that follow-up commit; their SHA-256 values in
 §2 remain authoritative.
+
+### Batch Transport Ledger
+
+| Batch ID | Act | Sections | Predecessor Commit | Transport Commit | Remote Verified |
+|---|---|---|---|---|---|
+| REC-006-PART-A | AR-PD01-P7-REC-006 | A1–A10 | `34a9ee40` | `545140dd` | VERIFIED |
+| — (manifest transport record) | AR-PD01-P7-REC-006 | manifest only | `545140dd` | `e07faea0` | VERIFIED |
+| RES-007-PART-B | AR-PD01-P7-RES-007 | B1–B5 | `e07faea0` | `5d214f26` | VERIFIED |
+| RES-008-PART-C | AR-PD01-P7-RES-008 | C1–C10 | `5d214f26` | `cc5f8b79` | VERIFIED |
+| RES-009-PART-D | AR-PD01-P7-RES-009 | D1–D10 | `cc5f8b79` | *(recorded at commit)* | *(verified at push)* |
+
+Each batch satisfies the durability chain in full:
+`LOCAL FILE → VERIFIED → COMMITTED → PUSHED → REMOTE COMMIT VERIFIED`.
