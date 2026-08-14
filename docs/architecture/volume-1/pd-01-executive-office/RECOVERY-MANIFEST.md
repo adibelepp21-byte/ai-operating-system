@@ -1,11 +1,11 @@
 # Volume 1 — PD-01 Executive Office — Part A Recovery Manifest
 
-**Act ID:** AR-PD01-P7-REC-006
+**Act ID:** AR-PD01-P7-REC-006 (Part A) · AR-PD01-P7-RES-007 (Part B)
 **Recovery Date:** 2026-08-14
 **Repository:** https://github.com/adibelepp21-byte/ai-operating-system
 **Branch:** claude/aios-genesis-planning-hmbvlc
 **Canonical Path:** `docs/architecture/volume-1/pd-01-executive-office/`
-**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING
+**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING (Parts A, B)
 
 ---
 
@@ -46,7 +46,28 @@ missing content inferred, and no prior derivative report was merged in.
 | A9 | Part A | Success Criteria | `docs/architecture/volume-1/pd-01-executive-office/A9.md` | 3977 | `0dfb2c6157451dc73ebb565d46eee7d1799e5971c9e13c81c18b400ac875fded` |
 | A10 | Part A | Relationship to AIOS Architecture Baseline | `docs/architecture/volume-1/pd-01-executive-office/A10.md` | 6431 | `3d70a901608ab1a9dfb28bcfd351c4efea31c821111a169d1ac03ef82be0cbbe` |
 
-**Totals:** 10 sections · 35,327 bytes · 10 unique SHA-256 (no duplicate bodies).
+**Part A totals:** 10 sections · 35,327 bytes · 10 unique SHA-256 (no duplicate bodies).
+
+### Part B — Organization Architecture (Batch REC-007-PART-B)
+
+| Section ID | Part | Section Name | Canonical Path | Bytes | SHA-256 |
+|---|---|---|---|---:|---|
+| B1 | Part B | Organizational Model | `docs/architecture/volume-1/pd-01-executive-office/B1.md` | 8903 | `a6a50a99719d467b1f536187baab4e7208cc4da7c5ec74414d75ace6d53ba949` |
+| B2 | Part B | Executive Sub Division Architecture | `docs/architecture/volume-1/pd-01-executive-office/B2.md` | 8156 | `0814cff260384bfc40e95b97c2cf82a3d3e99d27893050c3e88f519173fdc42d` |
+| B3 | Part B | Executive Sub Division Capability Architecture | `docs/architecture/volume-1/pd-01-executive-office/B3.md` | 8695 | `32ed429629fae4f46713ef1b18997576c0f7e34a1173e78602c943c059325aab` |
+| B4 | Part B | Executive Team Architecture | `docs/architecture/volume-1/pd-01-executive-office/B4.md` | 9181 | `5ab49cd41948af953bc39fbf3e78a76d847b7f5d29f4aeffe3c31c72edc2225f` |
+| B5 | Part B | Executive Role Group Architecture | `docs/architecture/volume-1/pd-01-executive-office/B5.md` | 13854 | `79003f0faab8f0b041c3ad32a745996256820b4e75f5ea5f2fc76b15e2997281` |
+
+**Part B totals:** 5 sections · 48,789 bytes · 5 unique SHA-256 (no duplicate bodies).
+
+**Act:** AR-PD01-P7-RES-007 · **Source:** Architect Transmission (Recovery Candidate)
+
+**Part B boundary decisions.** The Part B package header block (recovery-status
+blockquote, `# PART B — ORGANIZATION ARCHITECTURE`, and the architectural chain)
+was transmitted contiguously above Section B1 and is preserved at the head of
+`B1.md`. The `END OF PART B — B1–B5` closing block followed B5 §14 and is
+preserved at the end of `B5.md`. The RES-007 execution directive that followed
+the corpus was excluded as non-body material.
 
 ---
 
@@ -106,11 +127,11 @@ finalised Reference Implementation. REC-006 establishes durable residency only.
 | Part | Expected | Recovered | Status |
 |---|---:|---:|---|
 | Part A | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
-| Part B | 5 | 0 | NOT RECOVERED |
+| Part B | 5 | 5 | RECOVERED — DURABLE / VALIDATION PENDING |
 | Part C | 10 | 0 | NOT RECOVERED |
 | Part D | 10 | 0 | NOT RECOVERED |
 | Part E | 10 | 0 | NOT RECOVERED |
-| **Total** | **45** | **10** | **PARTIAL** |
+| **Total** | **45** | **15** | **PARTIAL** |
 
 ---
 
