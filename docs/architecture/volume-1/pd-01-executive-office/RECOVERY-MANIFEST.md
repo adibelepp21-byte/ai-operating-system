@@ -1,11 +1,11 @@
 # Volume 1 — PD-01 Executive Office — Part A Recovery Manifest
 
-**Act ID:** AR-PD01-P7-REC-006 (Part A) · AR-PD01-P7-RES-007 (Part B)
+**Act ID:** AR-PD01-P7-REC-006 (Part A) · AR-PD01-P7-RES-007 (Part B) · AR-PD01-P7-RES-008 (Part C)
 **Recovery Date:** 2026-08-14
 **Repository:** https://github.com/adibelepp21-byte/ai-operating-system
 **Branch:** claude/aios-genesis-planning-hmbvlc
 **Canonical Path:** `docs/architecture/volume-1/pd-01-executive-office/`
-**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING (Parts A, B)
+**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING (Parts A, B, C)
 
 ---
 
@@ -69,6 +69,39 @@ was transmitted contiguously above Section B1 and is preserved at the head of
 preserved at the end of `B5.md`. The RES-007 execution directive that followed
 the corpus was excluded as non-body material.
 
+### Part C — Governance Architecture (Batch RES-008-PART-C)
+
+| Section ID | Part | Section Name | Canonical Path | Bytes | SHA-256 |
+|---|---|---|---|---:|---|
+| C1 | Part C | Governance Framework | `docs/architecture/volume-1/pd-01-executive-office/C1.md` | 8361 | `6f446f94a9bfb87c957fec8f330d2ed9893ed34a4d0998b6621410080c6ae4b7` |
+| C2 | Part C | Decision Governance | `docs/architecture/volume-1/pd-01-executive-office/C2.md` | 6169 | `76392509337a24ee499640d81a18d6419c6dea26be0dc7273b710c62633c79a3` |
+| C3 | Part C | Delegation Framework | `docs/architecture/volume-1/pd-01-executive-office/C3.md` | 5818 | `c7cef0fa727deaa2ab37f373399b766104d057e7fa5b80273c1073dec876787b` |
+| C4 | Part C | Accountability Framework | `docs/architecture/volume-1/pd-01-executive-office/C4.md` | 5342 | `63fa87f896281d96fdde568e371f465a801986c3bf82d8c507ab57981f647ddc` |
+| C5 | Part C | Authority Matrix | `docs/architecture/volume-1/pd-01-executive-office/C5.md` | 5456 | `6ebe88cf214b16ca7850a8eab479081acc12009aed583c00cf37e536415c0458` |
+| C6 | Part C | Executive Review Model | `docs/architecture/volume-1/pd-01-executive-office/C6.md` | 4063 | `5a8e8d28d9ee5858eb09dfb6cb8ca202d8e13df5146519eecbeae82369a52266` |
+| C7 | Part C | Escalation Framework | `docs/architecture/volume-1/pd-01-executive-office/C7.md` | 4060 | `50f16418aa4de53d8d942ea103a49070d21431676d165d386e93193ce94accd6` |
+| C8 | Part C | Cross Platform Governance | `docs/architecture/volume-1/pd-01-executive-office/C8.md` | 5269 | `2c99c9cb9fc5b07462c68b0f8bc12ddb7777ad4d316516b489fc3c2e66934a31` |
+| C9 | Part C | Governance Compliance | `docs/architecture/volume-1/pd-01-executive-office/C9.md` | 4131 | `ce437b60437c5c0792070268edfa0e9068bd26cb163147b5a1fd777b85d52924` |
+| C10 | Part C | Governance Success Criteria | `docs/architecture/volume-1/pd-01-executive-office/C10.md` | 7284 | `be8cf1abe2c6aa83aa0e1fa5faa8f810d85be14aaa28576fd080c398d6771c70` |
+
+**Part C totals:** 10 sections · 55,953 bytes · 10 unique SHA-256 (no duplicate bodies).
+
+**Act:** AR-PD01-P7-RES-008 · **Source:** Architect Transmission (Recovery Candidate)
+**Recovery Status:** RECOVERED — DURABLE / VALIDATION PENDING
+
+**Part C boundary decisions.** Per the RES-008 directive, no Part C header file was
+created: the `# PART C — GOVERNANCE ARCHITECTURE` banner is preserved at the head
+of `C1.md`, and the `FINAL PART C CLOSURE` block together with the
+`END OF PART C — C1–C10` line is preserved at the end of `C10.md`. The
+inter-section separator banners (`====` blocks repeating the next section title)
+were treated as transmission separators, not body content. The POST-CORPUS
+EXECUTION DIRECTIVE was excluded as non-body material and is not stored in
+`C10.md`.
+
+**Part C truncation check.** Each of C1–C9 terminates on its own
+`Section CN END` line; C10 terminates on `END OF PART C — C1–C10`. No section was
+merged, truncated, or silently modified.
+
 ---
 
 ## 3. Identity Verification
@@ -128,10 +161,10 @@ finalised Reference Implementation. REC-006 establishes durable residency only.
 |---|---:|---:|---|
 | Part A | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
 | Part B | 5 | 5 | RECOVERED — DURABLE / VALIDATION PENDING |
-| Part C | 10 | 0 | NOT RECOVERED |
+| Part C | 10 | 10 | RECOVERED — DURABLE / VALIDATION PENDING |
 | Part D | 10 | 0 | NOT RECOVERED |
 | Part E | 10 | 0 | NOT RECOVERED |
-| **Total** | **45** | **15** | **PARTIAL** |
+| **Total** | **45** | **25** | **PARTIAL** |
 
 ---
 
