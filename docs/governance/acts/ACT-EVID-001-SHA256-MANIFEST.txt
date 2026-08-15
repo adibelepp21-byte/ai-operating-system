@@ -1,0 +1,82 @@
+ACT-CC-EVID-001 — T4 GOVERNANCE ACT EVIDENCE · SHA-256 MANIFEST
+
+Generated under : ACT-CC-EVID-001
+Authority       : DEL-T4.4-CF-001 (scoped Constitution 3.2 delegation)
+Date            : 2026-08-15
+Purpose         : Close T4.5 Open Item #8 — T4 Act evidence not repository-resident.
+                  Makes GDR-0015 Evidence-of-Record references resolvable in-repository.
+
+Source          : Session transcript, extracted programmatically and verified
+                  byte-identical to the emitted report text. No report was
+                  retyped, reconstructed, summarized, or edited.
+Fidelity        : 7 / 7 verbatim match against source.
+
+------------------------------------------------------------------------------
+
+File        : ACT-CC-VAL-001.md
+Act ID      : ACT-CC-VAL-001
+Title       : Volume 1 Integrated Architecture Validation
+Bytes       : 24280
+SHA-256     : 7ecc0a6ddd3361fd30bd61e8a591fc05ed35393961f7dad2c17e57ea68f9e2a0
+Provenance  : transcript record line 1102
+
+File        : ACT-CC-T4.1.md
+Act ID      : ACT-CC-T4.1
+Title       : Authority Reconciliation Report
+Bytes       : 31847
+SHA-256     : 1bd366299ebed771893fa9b2c80b225bb4151d0302fdbd3b29e077d871f5b563
+Provenance  : transcript record line 1151
+
+File        : ACT-CC-T4.2.md
+Act ID      : ACT-CC-T4.2
+Title       : Founder Constitutional Co-Founder Authority Decision & Authority Reconciliation
+Bytes       : 33396
+SHA-256     : 71f104acec13c8a8826ab9e4882e69536b374813214c00e9fc4a4785996e885b
+Provenance  : transcript record line 1176
+
+File        : ACT-CC-T4.3.md
+Act ID      : ACT-CC-T4.3
+Title       : Final Pre-Mutation Specification & Authorization Gate (controlling issuance)
+Bytes       : 28167
+SHA-256     : 3e97789d3ed96b665b33096f9c7b71d5e8eb0ee8f21e57985c4f6f385f2df53a
+Provenance  : transcript record line 1210
+
+File        : ACT-CC-T4.3-first-issuance.md
+Act ID      : ACT-CC-T4.3
+Title       : Final Pre-Mutation Specification (first issuance; retained for completeness)
+Bytes       : 31085
+SHA-256     : 2a8a68c9a43bfb6642047dbae24bd7d1bbc8c8c383a8308d9b730eab10bc8b60
+Provenance  : transcript record line 1191
+
+File        : ACT-CC-T4.4.md
+Act ID      : ACT-CC-T4.4
+Title       : Co-Founder Authority Activation, Delegation & Governance Registration — Execution & Certification
+Bytes       : 7900
+SHA-256     : 1a60ef71412da3af1c2f438910b997211c42e7bf7666f9d8169eb4efb374e1ea
+Provenance  : transcript record line 1295
+
+File        : ACT-CC-T4.5.md
+Act ID      : ACT-CC-T4.5
+Title       : T4 Completion & Closure Verdict
+Bytes       : 10167
+SHA-256     : 7b48bb3f310de3ef1ae9c29455ddf65e6afc518b550d2e21897404f3b9ec2c64
+Provenance  : transcript record line 1334
+
+------------------------------------------------------------------------------
+
+Files        : 7
+Total bytes  : 166842
+
+NOTE ON FILE COUNT. ACT-CC-EVID-001 §4 specifies six files. Seven are
+recorded because ACT-CC-T4.3 was executed twice against two successive
+issuances of its Act, and both reports exist in the record. Suppressing
+either to meet a file count would be historical curation, which §5
+forbids. ACT-CC-T4.3.md is the controlling issuance (the one subsequently
+frozen); the first issuance is retained unaltered alongside it.
+
+SCOPE. This manifest records evidence only. It grants no authority,
+amends no artifact, and changes no governance state. The Constitution,
+Canonical Domain Model, Architecture Freeze v1.0, Finding Register,
+GDR-0001..GDR-0015, DEL-T4.4-CF-001 and Volume 1 are unchanged.
+
+REM-003: HOLD.  P7-I99: HOLD.  Volume 1 Freeze: HOLD.  Roadmap: NOT ADVANCED.
