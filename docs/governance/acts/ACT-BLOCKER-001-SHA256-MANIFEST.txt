@@ -1,0 +1,16 @@
+ACT-CC-BLOCKER-001 — B-04 EVIDENCE RESIDENCY MANIFEST
+Source: session transcript, extracted programmatically. No text retyped.
+Transcript: 65906d03-338e-526f-8d73-cedffdf59bfe.jsonl
+
+6df430924885bb3e8a93e4187725334a1e21fbca696c70a5df16ba7a79424ddd  ACT-CC-CD1.0.md  (11842 bytes, transcript line 1453)
+c258a12d62509867bc22bc7e2bc352a68c807b4b371a30e39c3f0c6feb5d5680  ACT-CC-CD1.1.md  (8686 bytes, transcript line 1488)
+8abf6f60a223679a58a28d3309bd677ab36530d90bc503637e2ea5838fb5ab51  ACT-CC-FD34-001.md  (8316 bytes, transcript line 1541)
+f5b333de5d4c896be3a0db9ab12f8b0da57030370a5be6878c7c160dcaf7d8e8  ACT-CC-FD34-001.1.md  (7546 bytes, transcript line 1568)
+23e8c7b1992162367c79b3329939b1081b5dc6906759c81c48a0bc8fc141f8f7  ACT-CC-FD34-001.2.md  (6348 bytes, transcript line 1614)
+f9ff42d80288bf3393158fd89b9d0ea1b654b5be6a4edad75605ba65c8e51c0e  ACT-CC-REM-003.0.md  (14865 bytes, transcript line 1372)
+0ed6d3e37e7f9929174eee40cce9b877206da17954c6ab168e5ac476d8df452f  ACT-CC-REM-003.1.md  (9923 bytes, transcript line 1523)
+723f57cbe38135a0d4a3c9c1b8bddb2be93f38f9a7d245e8ea4cafae06b2510a  ACT-CC-REM-003.2.md  (11177 bytes, transcript line 1587)
+c009c83b080b37535e31d696277b06fb8b472af4c40a8bff10d2c629982bcfcf  ACT-CC-REM-003.3.md  (9934 bytes, transcript line 1647)
+bf14fbdccb18a42ea67c1ed6cca5e6c4460b30afd8229939f4c7c68f68b23571  ACT-CC-REM-003.4.md  (5049 bytes, transcript line 1690)
+fd9fe0ca35d91d97e83fccdc3ca159d9d6cbb6da394339d3b366cf68b4198b49  ACT-CC-REM-003.4-first-issuance.md  (5403 bytes, transcript line 1662)
+f9ca4c50690657defdcb1315902662fb96612414791e5bf379f1035ef29dd974  ACT-CC-REM-003.5.md  (5446 bytes, transcript line 1940)
