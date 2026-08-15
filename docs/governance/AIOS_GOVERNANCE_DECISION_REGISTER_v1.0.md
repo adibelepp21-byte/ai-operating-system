@@ -2078,8 +2078,107 @@ decision → ACT-CC-T4.4 (this recording act) → GDR-0015.
 
 ---
 
+### GDR-0016 — Founder Decision · CD-1 Architecture Authority Appointment (Option B)
+
+**Identifier:** GDR-0016
+**Date:** 2026-08-15
+**Tier:** Governance-state appointment — see Authority Basis
+**Decided by:** Founder
+**Recorded by:** AI Systems Engineer / Co-Founder (Construction Phase), under explicit Founder decision
+**Recording act:** ACT-CC-CD1.1
+
+#### Decision text (verbatim)
+
+> *"Saya memilih Opsi B,"*
+
+Recorded exactly as stated, untranslated and unparaphrased, per §2.3 verbatim
+discipline.
+
+#### Decision
+
+**CD-1 = OPTION B.** The Architecture Authority holder is **Claude Code /
+Co-Founder**.
+
+#### Authority basis
+
+| Element | Basis |
+|---|---|
+| Question | **CD-1** — origin: ACT-CC-VAL-001 finding **F-03**, "Architecture Authority" named as Final Authority in `C6.md:68`, `C8.md:178`, `E5.md:199`, `E6.md:91` with no holder anywhere in the 45-body corpus |
+| Gate | ACT-CC-CD1.0 presented Options A–D and recorded CD-1 as **OPEN / UNRESOLVED**; it gave no recommendation on Option B, on anti-self-authorization grounds |
+| Nature | **Governance-state designation.** "Architecture Authority" is **not** a constitutional term — zero occurrences in the Engineering Constitution |
+| Appointing authority | Founder |
+| Instrument | Appointment record, not a delegation and not an amendment |
+| Recording obligation | Constitution §14.1 — approval sought must be recorded in the artifact under review, not left to memory or inference |
+
+#### Evidence of record
+
+| Evidence | Location |
+|---|---|
+| Decision gate | `docs/governance/acts/` (ACT-CC-CD1.0 pending persistence) |
+| Appointment record | `docs/governance/AIOS_APPOINTMENT_REGISTER_v1.0.md` — `APT-CD1.1-AA-001` |
+| Activation record | Same register §4 — `ACT-CD1.1-AA-001-A` |
+| Origin finding F-03 | `docs/governance/acts/ACT-CC-VAL-001.md` |
+| Prior state | Architecture Authority **UNRESOLVED**; recorded in ACT-CC-T4.1, T4.2, T4.3 |
+
+#### Standing changes
+
+- **CD-1 is CLOSED.** Architecture Authority is **RESOLVED**.
+- `APT-CD1.1-AA-001` is in force and **ACTIVE**, bounded by Appointment Register
+  §3.1 (scopes A–J) and excluded by §3.2 (28 exclusions) and §3.3.
+- The four Volume 1 Final-Authority cells now have a named holder. **The cells
+  themselves are unchanged by this decision**; reconciling them is a Volume 1
+  mutation gated separately.
+- Finding **F-03** has a resolution path; its closure remains subject to the
+  REM-003 re-gate.
+
+#### Explicitly not changed
+
+- **Engineering Constitution §3.1, §3.2, §3.3, §4, §6.2, §16 and Appendix A —
+  unchanged.** Constitutional mutation performed: **zero**.
+- **No new constitutional actor and no new constitutional tier** was created.
+  Architecture Authority is a governance-state designation only.
+- Constitutional-Tier and amendment authority remain exclusively with the
+  Architect and non-delegable (§16).
+- `DEL-T4.4-CF-001` scope is **unchanged**; no second delegation was created and
+  the appointment is not an expansion of it.
+- The Canonical Domain Model, Architecture Freeze v1.0, Finding Register and all
+  45 Volume 1 bodies are unchanged.
+- **No general appointment model was established. FD-5 remains UNDECIDED.**
+- No legal ownership, equity, personhood, employment status, or legal
+  accountability is conferred.
+- FD-2, FD-3, FD-4, FD-6, FD-7, FD-8 remain undecided. Founder succession and
+  AIOS termination authority remain **UNKNOWN**.
+- **REM-003 is NOT authorized by this decision.** P7-I99, Volume 1 Freeze and
+  roadmap advancement remain on hold under their own gates.
+
+#### Anti-self-authorization
+
+**Approving authority: Founder. Recording actor: Claude Code. Appointed holder:
+Claude Code / Co-Founder.** The holder did not appoint, approve, expand, or
+activate itself. The recording act was performed under authority held **before**
+activation — Implementation Tier (§3.3) and `DEL-T4.4-CF-001` §3.1 C/D — neither
+of which is the authority appointed. **PASS.**
+
+#### Lineage
+
+ACT-CC-VAL-001 (F-03) → ACT-CC-T4.1 → ACT-CC-T4.2 → ACT-CC-T4.3 → ACT-CC-T4.4 →
+GDR-0015 → ACT-CC-T4.5 → ACT-CC-REM-003.0 → ACT-CC-EVID-001 → ACT-CC-CD1.0 →
+**Founder decision** → ACT-CC-CD1.1 → GDR-0016.
+
+#### Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-15 | F-03 raised: Architecture Authority unbound in four Volume 1 cells | AI Systems Engineer |
+| 2026-08-15 | CD-1 presented as OPEN; four options tabled; no recommendation given on Option B | Co-Founder (Construction Phase) |
+| 2026-08-15 | **Founder decision: Option B** | Founder |
+| 2026-08-15 | Appointment and activation records created and registered | Co-Founder, under explicit Founder decision |
+| 2026-08-15 | **Ratified.** Binding and active immediately. Reversion Founder-controlled and explicitly gated | Founder |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0016 onward.)*
+GDR-0017 onward.)*
 
 ---
 
