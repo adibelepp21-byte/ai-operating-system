@@ -2306,8 +2306,151 @@ decision** → ACT-CC-FD34-001.1 → GDR-0017.
 
 ---
 
+### GDR-0018 — Founder Decision · FD-3 Volume 1 Governance Standing (Option A — Governed Canonical Artifact)
+
+**Identifier:** GDR-0018
+**Date:** 2026-08-15
+**Tier:** Governance-state standing determination — see Authority Basis
+**Decided by:** Founder
+**Recorded by:** AI Systems Engineer / Co-Founder (Construction Phase), under explicit Founder decision
+**Recording act:** ACT-CC-FD34-001.2
+**Decision gate:** ACT-CC-FD34-001 (options) · ACT-CC-FD34-001.1 §10 (gate presented)
+
+#### 1. Decision text (verbatim)
+
+> **FD-3 = OPTION A — GOVERNED CANONICAL ARTIFACT**
+
+Recorded exactly as stated, without paraphrase, wording improvement, semantic
+expansion, or reinterpretation, per §2.3 verbatim discipline. The operational
+mapping in §3 below is separate and does **not** replace this text.
+
+#### 2. Resulting governance state
+
+| Field | Value |
+|---|---|
+| Decision ID | **FD-3** |
+| Decision domain | **CD-4** — Volume 1 Governance Standing |
+| Decision authority | **Founder** |
+| Decision | **FD-3 = OPTION A — GOVERNED CANONICAL ARTIFACT** |
+| Effective standing | **GOVERNED CANONICAL ARTIFACT** |
+| Scope | Volume 1 — PD-01 Executive Office |
+| Status | **DECIDED / ACTIVE** |
+| Related finding | **F-01** |
+| Historical rewrite | **NONE** |
+| Authority expansion | **NONE** |
+
+**FD-3 is DECIDED. CD-4 is RESOLVED.**
+
+#### 3. Operational implications
+
+Per the Option A definition put to the Founder in ACT-CC-FD34-001 §11:
+
+> Volume 1 — PD-01 Executive Office is formally recognized and registered as a
+> governed canonical artifact within the applicable AIOS governance/document
+> hierarchy.
+
+- This entry **is** the authoritative registration. Before it, the `volume-1`
+  path appeared in zero governance registers (finding **F-01**).
+- Ownership: **PD-01 Executive Office**, as declared throughout the corpus.
+- Applicable authority: **Architecture Authority** — holder Claude Code /
+  Co-Founder per `APT-CD1.1-AA-001`, bounded by Appointment Register §3.1 and
+  excluded by §3.2 and §3.3.
+
+#### 4. Combined authoritative state — the two decisions are independent
+
+| Determination | Decision | Register entry |
+|---|---|---|
+| **Lifecycle state** | **FROZEN** | GDR-0017 (FD-4) |
+| **Governance standing** | **GOVERNED CANONICAL ARTIFACT** | GDR-0018 (this entry) |
+
+> **Volume 1 — PD-01 Executive Office = FROZEN + GOVERNED CANONICAL ARTIFACT**
+
+**`FROZEN` is a lifecycle state. `GOVERNED CANONICAL ARTIFACT` is a governance
+standing. Neither substitutes for the other, and neither was implied by the
+other.** FD-3 was **not** derived from FD-4; it was put to the Founder as a
+separate gate and decided separately. GDR-0017 is unchanged by this entry.
+
+#### 5. Exclusions and non-effects
+
+This decision does **not**, by itself:
+
+- modify the **Engineering Constitution** — §3.1, §3.2, §3.3, §4, §6.2, §16 and
+  Appendix A are unchanged. **Constitutional mutation: zero.**
+- modify the Canonical Domain Model, Architecture Freeze v1.0, or Finding Register.
+- modify any of the **45 Volume 1 bodies**.
+- transfer ownership of any other Platform Division.
+- expand **Architecture Authority** beyond `APT-CD1.1-AA-001`, or expand
+  `DEL-T4.4-CF-001`. **No authority is created by this entry.**
+- modify the 31-row Authority Matrix (A=11 · B=0 · C=10 · D=10).
+- authorize implementation, **MC-1 … MC-7**, or **REM-003**.
+- execute or complete **P7-I99**, which remains **HOLD**. No architecture review
+  was performed by this entry.
+- advance the roadmap or any phase — both remain **HOLD**.
+- alter any Founder-reserved matter. **FD-6 and FD-8 remain undecided**; FD-2
+  remains IMPLIED; Founder succession and AIOS termination authority remain
+  **UNKNOWN**.
+- retrospectively rewrite historical Acts or retroactively reinterpret prior
+  authority.
+
+**Canonical standing does not mean every internal statement in Volume 1 is
+correct.** The corpus still carries the known findings from ACT-CC-VAL-001,
+including four contradictory in-body lifecycle labels recorded in GDR-0017.
+Those remain subject to controlled remediation under the applicable mutation
+candidate; none becomes executable by virtue of this entry.
+
+#### 6. Authority basis
+
+| Element | Basis |
+|---|---|
+| Reserved to | **Founder.** Recorded as Founder-reserved in GDR-0016 and Appointment Register §3.2 exclusion 26 |
+| Origin | ACT-CC-VAL-001 finding **F-01** — Volume 1 had zero governance standing |
+| Gate | ACT-CC-FD34-001 §11 presented Options A–D; re-presented at ACT-CC-FD34-001.1 §10; no recommendation was offered |
+| Duplicate check | **CLEAR** — 17 GDR entries at recording time; GDR-0018 absent; zero prior occurrences of the decision text |
+| Not derived from | Architecture Authority, the construction delegation, FD-4, precedent, or title — none of which reaches this question |
+
+#### 7. Evidence of record
+
+| Item | Location |
+|---|---|
+| Origin finding F-01 | `docs/governance/acts/ACT-CC-VAL-001.md` |
+| Prior confirmation FD-3 undecided | GDR-0015 · GDR-0016 · GDR-0017 · Appointment Register §8 |
+| Blocker B-01 raised | ACT-CC-REM-003.2 |
+| Recording act | ACT-CC-FD34-001.2 (this entry) |
+| Forward reference | ACT-CC-REM-003.3 — eligibility re-gate, which must verify independently |
+
+#### 8. Anti-self-authorization
+
+**Decision authority: Founder. Recording actor: Claude Code / Co-Founder.
+Decision inference: NONE. Decision expansion: NONE. Decision paraphrase: NONE.**
+
+The recording actor did not select this option, present a recommendation as a
+decision, infer it from FD-4, from precedent, or from title, and did not invoke
+Architecture Authority to justify it — the authority to decide FD-3 originates
+from Founder authority alone. **PASS.**
+
+#### 9. Lineage
+
+ACT-CC-VAL-001 (F-01) → ACT-CC-REM-003.0 → ACT-CC-EVID-001 → ACT-CC-CD1.0 →
+ACT-CC-CD1.1 → GDR-0016 → ACT-CC-REM-003.1 → ACT-CC-FD34-001 → ACT-CC-FD34-001.1
+→ GDR-0017 → ACT-CC-REM-003.2 (B-01 raised) → **Founder decision** →
+ACT-CC-FD34-001.2 → GDR-0018.
+
+#### 10. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-15 | F-01 raised: Volume 1 has zero governance standing | AI Systems Engineer |
+| 2026-08-15 | ACT-CC-REM-003.1 records `E6 = FAIL`, FD-3 OPEN | Co-Founder (Construction Phase) |
+| 2026-08-15 | FD-3 gate presented; Options A–D; no recommendation given | Co-Founder (Construction Phase) |
+| 2026-08-15 | ACT-CC-REM-003.2 raises **B-01** — decision received, not recorded | Co-Founder (Construction Phase) |
+| 2026-08-15 | **Founder decision: FD-3 = OPTION A — GOVERNED CANONICAL ARTIFACT** | Founder |
+| 2026-08-15 | Decision recorded; governance standing effective; **B-01 closed** | Co-Founder, under explicit Founder decision |
+| 2026-08-15 | **Ratified.** Binding and active immediately | Founder |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0018 onward.)*
+GDR-0019 onward.)*
 
 ---
 
