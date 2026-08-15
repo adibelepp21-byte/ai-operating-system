@@ -2449,8 +2449,320 @@ ACT-CC-FD34-001.2 → GDR-0018.
 
 ---
 
+### GDR-0019 — Founder Decision · F-03 Architecture Authority Holder (Option A — PD-02 Architecture Office)
+
+**Identifier:** GDR-0019
+**Date:** 2026-08-15
+**Tier:** Authority-holder determination — see Authority Basis
+**Decided by:** Founder
+**Recorded by:** AI Systems Engineer / Co-Founder (Construction Phase), under explicit Founder decision
+**Recording act:** ACT-CC-BLOCKER-002
+**Decision gate:** ACT-CC-F03-001 (options presented) · ACT-CC-CD1.0 §presented Options A–D
+
+#### 1. Decision text (verbatim)
+
+> **F-03 = OPTION A — ARCHITECTURE AUTHORITY IS HELD BY PD-02 ARCHITECTURE OFFICE**
+
+Recorded exactly as stated, without paraphrase, wording improvement, semantic
+expansion, or reinterpretation, per §2.3 verbatim discipline. The operational
+mapping below is separate and does **not** replace this text.
+
+#### 2. Resulting governance state
+
+| Field | Value |
+|---|---|
+| Decision ID | **F-03** |
+| Decision domain | Architecture Authority holder for the Volume 1 authority label |
+| Decision authority | **Founder** |
+| Decision | **F-03 = OPTION A — ARCHITECTURE AUTHORITY IS HELD BY PD-02 ARCHITECTURE OFFICE** |
+| Named holder | **PD-02 Architecture Office** |
+| Decision status | **DECIDED** |
+| Activation status | **HELD** — see §4 |
+| Authority expansion | **NONE** |
+| Historical rewrite | **NONE** |
+
+**F-03 is DECIDED. Its activation is HELD, and F-03 is therefore not yet
+certified RESOLVED.**
+
+#### 3. What this decision does and does not do
+
+The decision establishes the **holder**. It does not create a new authority
+class, expand Architecture Authority scope, transfer authority outside existing
+constitutional boundaries, modify Founder authority, amend the Engineering
+Constitution, or transfer ownership of any other Platform domain.
+
+The scope, boundaries, exclusions and Founder reservations recorded in
+`APT-CD1.1-AA-001` §3.1–§3.3 remain intact and unamended by this entry.
+
+#### 4. Activation hold — ACT-CC-BLOCKER-002 §6.3 evidence gate NOT SATISFIED
+
+ACT-CC-BLOCKER-002 §6.3 requires: *"The Act MUST verify the repository-resident
+evidence establishing PD-02 Architecture Office as the holder… If the repository
+does not contain sufficient evidence to establish the holder: STOP. Do not
+manufacture evidence from the Founder decision itself."*
+
+The verification was performed and **failed**:
+
+| Test | Result |
+|---|---|
+| Repository contains the phrase "Architecture Office" | **1 occurrence** — `D2.md:142`, inside PD-01's own list of executive operating interfaces |
+| That occurrence identifies PD-02 | **NO** |
+| That occurrence asserts Architecture Authority | **NO** |
+| Any repository body names PD-02 as "Architecture Office" | **NO** |
+| Any repository body names PD-02 as an authority holder | **NO** — PD-02 appears only as a pattern *inheritor* (ACT-CC-VAL-001 F-03) |
+| Cited source `Performance Architecture Review.txt` present in repository | **NO** |
+
+`APT-CD1.1-AA-001` §3.2 exclusion 27 additionally bars *"Authority to treat
+historical PD-02 / Performance Architecture material as a substitute for current
+governance authority."*
+
+Therefore the §6.4 reconciliation — binding `Architecture Authority Holder =
+PD-02 Architecture Office` into the Appointment Register or Volume 1 — was
+**NOT executed**. No holder binding exists in any repository artifact. The
+Founder decision is recorded here in full; the repository has not been mutated
+to assert it as established fact.
+
+**This hold is an evidence-availability hold, not a disagreement with the
+decision, and not a refusal.** It is lifted by either of:
+
+1. bringing the establishing evidence into the repository (for example the
+   source that defines PD-02 and its Architecture Office), after which a
+   separate activation Act may perform the binding; or
+2. an explicit Founder instruction that the binding proceed on the decision
+   alone, which would itself be the authority §6.3 currently lacks.
+
+#### 5. Authority basis
+
+| Element | Basis |
+|---|---|
+| Reserved to | **Founder.** Recorded as Founder-reserved in ACT-CC-F03-001 §3 and Appointment Register §3.2 |
+| Origin | ACT-CC-VAL-001 finding **F-03** — Architecture Authority named in three Parts, bound to no holder |
+| Gate | ACT-CC-CD1.0 presented the holder options; ACT-CC-F03-001 re-presented Options A–C; no recommendation was offered by the recording actor |
+| Duplicate check | **CLEAR** — 18 GDR entries at recording time; zero prior occurrences of the decision text |
+| Not derived from | Architecture Authority, the construction delegation, title, precedent, capability, or PD-02's existence |
+
+#### 6. Anti-self-authorization
+
+**Decision authority: Founder. Decision source: explicit Founder decision.
+Recording actor: Claude Code / Co-Founder. Decision inference: NONE.
+Decision expansion: NONE. Self-authorization: NONE.**
+
+The recording actor did not choose PD-02, did not infer the holder from
+evidence, precedent, title, appointment, or implementation capability, and makes
+no claim of the form *"I chose PD-02 because the evidence suggested it."*
+**The Founder chose Option A.** **PASS.**
+
+#### 7. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-15 | F-03 raised: Architecture Authority named in C6/C8/E5/E6, bound to no holder | AI Systems Engineer |
+| 2026-08-15 | ACT-CC-CD1.0 records NO HOLDER across 45 bodies | Co-Founder (Construction Phase) |
+| 2026-08-15 | ACT-CC-F03-001 gate presented; Options A–C; no recommendation given | Co-Founder (Construction Phase) |
+| 2026-08-15 | **Founder decision: F-03 = OPTION A — ARCHITECTURE AUTHORITY IS HELD BY PD-02 ARCHITECTURE OFFICE** | Founder |
+| 2026-08-15 | Decision recorded verbatim; §6.3 evidence gate failed; activation HELD | Co-Founder, under explicit Founder decision |
+
+---
+
+### GDR-0020 — Founder Decision · FD-6 Canonical Organizational Unit (Option A — Platform Division)
+
+**Identifier:** GDR-0020
+**Date:** 2026-08-15
+**Tier:** Organizational terminology / Domain Model governance determination
+**Decided by:** Founder
+**Recorded by:** AI Systems Engineer / Co-Founder (Construction Phase), under explicit Founder decision
+**Recording act:** ACT-CC-BLOCKER-002
+**Decision gate:** ACT-CC-FD6-001 (options presented)
+
+#### 1. Decision text (verbatim)
+
+> **FD-6 = OPTION A — PLATFORM DIVISION IS THE CANONICAL ORGANIZATIONAL UNIT**
+
+Recorded exactly as stated, without paraphrase, wording improvement, semantic
+expansion, or reinterpretation, per §2.3 verbatim discipline.
+
+#### 2. Resulting governance state
+
+| Field | Value |
+|---|---|
+| Decision ID | **FD-6** |
+| Decision domain | Canonical organizational unit — Department vs Platform Division |
+| Decision authority | **Founder** |
+| Decision | **FD-6 = OPTION A — PLATFORM DIVISION IS THE CANONICAL ORGANIZATIONAL UNIT** |
+| Canonical organizational unit | **Platform Division** |
+| Decision status | **DECIDED** |
+| ADR route | **IDENTIFIED / READY** — see §4 |
+| Domain Model mutation | **NOT EXECUTED BY THIS ACT** |
+| Authority expansion | **NONE** |
+| Historical rewrite | **NONE** |
+
+**FD-6 is DECIDED. The governance question — which unit is canonical — is
+RESOLVED. The Domain Model has not been amended.**
+
+#### 3. Scope boundary
+
+This decision resolves the canonical organizational-unit question only. It does
+**not** authorize renaming every occurrence of "Department", global
+search-and-replace, alteration of historical evidence, amendment of the
+Engineering Constitution, mutation of Volume 1 content, MC execution, or
+unrelated remediation.
+
+#### 4. ADR route — identified, not executed
+
+ACT-CC-BLOCKER-002 §7.3 requires the existing route to be identified and not
+replaced. The route exists and was verified from source:
+
+| Element | Value |
+|---|---|
+| Route | `docs/architecture/adr/decisions/ADR-NNNN.md` |
+| Framework document | `docs/architecture/adr/README.md` |
+| Existing decisions | ADR-0001 … ADR-0009 |
+| Next identifier | **ADR-0010** |
+| ADR authority | Engineering Constitution §3.1–§3.4, by reference; the framework document explicitly does not restate it |
+| New ADR class invented | **NO** |
+| Historical ADRs altered | **NO** |
+
+The ADR framework does not make Domain Model mutation part of a
+decision-recording Act. Per §7.3, the Canonical Domain Model was therefore
+**not** modified; its hash is unchanged. Amending `INV-1` / `INV-2` terminology
+requires **ADR-0010 through a separate execution Act**, which this entry does
+not authorize and does not pre-approve.
+
+#### 5. Authority basis
+
+| Element | Basis |
+|---|---|
+| Reserved to | **Founder.** Recorded Founder-reserved and §3.2 non-delegable; Appointment Register §3.2 exclusion 26 names FD-6 explicitly |
+| Origin | ACT-CC-VAL-001 finding **F-09** — "Department" occurs 0 times in all 45 Volume 1 bodies while INV-1 / INV-2 use it |
+| Gate | ACT-CC-FD6-001 presented Options A–C; no recommendation was offered by the recording actor |
+| Duplicate check | **CLEAR** — zero prior occurrences of the decision text |
+| Not derived from | Architecture precedent, corpus frequency, Architecture Authority, or the construction delegation |
+
+#### 6. Anti-self-authorization
+
+**Decision authority: Founder. Decision source: explicit Founder decision.
+Recording actor: Claude Code / Co-Founder. Decision inference: NONE.
+Decision expansion: NONE. Self-authorization: NONE.**
+
+The recording actor makes no claim of the form *"Platform Division is canonical
+because architecture precedent implied it."* **The Founder chose Option A.**
+Architecture Authority was not invoked to justify a Founder-reserved question.
+**PASS.**
+
+#### 7. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-15 | F-09 raised: entity vocabulary divergence between Volume 1 and the frozen baseline | AI Systems Engineer |
+| 2026-08-15 | ACT-CC-FD6-001 gate presented; Options A–C; ADR route required; no recommendation given | Co-Founder (Construction Phase) |
+| 2026-08-15 | **Founder decision: FD-6 = OPTION A — PLATFORM DIVISION IS THE CANONICAL ORGANIZATIONAL UNIT** | Founder |
+| 2026-08-15 | Decision recorded verbatim; ADR route identified as ADR-0010; Domain Model unchanged | Co-Founder, under explicit Founder decision |
+
+---
+
+### GDR-0021 — Founder Decision · FD-8 tools/.gitignore (Option A — Create / Govern)
+
+**Identifier:** GDR-0021
+**Date:** 2026-08-15
+**Tier:** Repository-control policy determination
+**Decided by:** Founder
+**Recorded by:** AI Systems Engineer / Co-Founder (Construction Phase), under explicit Founder decision
+**Recording act:** ACT-CC-BLOCKER-002
+**Decision gate:** ACT-CC-FD8-001 (options presented)
+
+#### 1. Decision text (verbatim)
+
+> **FD-8 = OPTION A — CREATE / GOVERN tools/.gitignore**
+
+Recorded exactly as stated, without paraphrase, wording improvement, semantic
+expansion, or reinterpretation, per §2.3 verbatim discipline.
+
+#### 2. Resulting governance state
+
+| Field | Value |
+|---|---|
+| Decision ID | **FD-8** |
+| Decision domain | Repository / test-control policy for `tools/.gitignore` |
+| Decision authority | **Founder** |
+| Decision | **FD-8 = OPTION A — CREATE / GOVERN tools/.gitignore** |
+| Decision status | **DECIDED** |
+| Creation status | **HELD** — see §3 |
+| MC-7 | **BLOCKED** — MC-7 is not executed or unblocked by this entry |
+| Authority expansion | **NONE** |
+| Historical rewrite | **NONE** |
+
+**FD-8 is DECIDED. Creation is HELD, and FD-8 is therefore not yet certified
+ACTIVATED.**
+
+#### 3. Creation hold — ACT-CC-BLOCKER-002 §8.3 requirement NOT SATISFIABLE
+
+§8.3 requires: *"Determine exactly what `tools/.gitignore` must govern from
+existing repository evidence. If the required content cannot be established
+without inventing policy: STOP. Do not guess."*
+
+The inspection was performed and the content is **not determinable**:
+
+| Evidence | Finding |
+|---|---|
+| Root `.gitignore` | Present. Governs `__pycache__/`, `*.pyc`, `*.pyo`, and `execution/traces/` repository-wide |
+| Root `.gitignore` self-limitation | *"This policy is deliberately narrow. It governs only the artifacts named below. Any broader exclusion requires its own authorization."* |
+| Untracked-and-unignored artifacts under `tools/` | **0** — `git status tools/` is empty while `tools/.gitignore` is absent |
+| Only artifacts present under `tools/` needing exclusion | `tools/validators/__pycache__/*.pyc` — already governed by the root policy |
+| `tools/.gitignore` in git history | **NONE** — it was never tracked, so no content is recoverable from the repository |
+| Only surviving description of its historical function | A conversational gloss stating it excluded `__pycache__/` and `execution/traces/` — not repository-resident, and not part of the quoted P5-I1D text |
+| Technical check on that gloss | `execution/traces/` is a root-anchored path; inside `tools/.gitignore` it could only match `tools/execution/traces/`, which does not exist. The gloss cannot literally describe this file |
+
+Every candidate content set is therefore either (a) already governed by the root
+policy, making the file a no-op that governs nothing, or (b) authored by the
+recording actor, which is the policy invention §8.3 forbids.
+
+Per §8.4, creation proceeds only *"if the content is determinable from
+repository evidence."* It is not. The file was **not created**; `tools/` is
+unmodified and `tools/.gitignore` remains absent.
+
+**This hold is a content-determinability hold, not a disagreement with the
+decision, and not a refusal.** It is lifted by the Founder specifying the exact
+entries the file must govern, after which a separate execution Act may create it.
+
+#### 4. Scope boundary
+
+The decision authorizes governance of `tools/.gitignore` only. It does not
+authorize unrelated repository-control changes, modification of the root
+`.gitignore`, modification of test infrastructure, or any exclusion that would
+conceal governance artifacts, source files, evidence, or test failures.
+
+#### 5. Authority basis
+
+| Element | Basis |
+|---|---|
+| Reserved to | **Founder.** Appointment Register §3.2 exclusion 26 names FD-8 explicitly |
+| Origin | ACT-CC-VAL-001 finding **F-11** — `tools/.gitignore` absent; MC-7 blocked |
+| Gate | ACT-CC-FD8-001 presented Options A–C; no recommendation was offered by the recording actor |
+| Duplicate check | **CLEAR** — zero prior occurrences of the decision text |
+| Not derived from | Repository convention, `.gitignore` best practice, tool behaviour, prior implementation, or MC-7 eligibility |
+
+#### 6. Anti-self-authorization
+
+**Decision authority: Founder. Decision source: explicit Founder decision.
+Recording actor: Claude Code / Co-Founder. Decision inference: NONE.
+Decision expansion: NONE. Self-authorization: NONE.**
+
+The recording actor makes no claim of the form *"`tools/.gitignore` was
+necessary, therefore I authorized it."* **The Founder chose Option A.** **PASS.**
+
+#### 7. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-15 | F-11 raised: `tools/.gitignore` absent; MC-7 blocked | AI Systems Engineer |
+| 2026-08-15 | ACT-CC-FD8-001 gate presented; Options A–C; no recommendation given | Co-Founder (Construction Phase) |
+| 2026-08-15 | **Founder decision: FD-8 = OPTION A — CREATE / GOVERN tools/.gitignore** | Founder |
+| 2026-08-15 | Decision recorded verbatim; §8.3 content not determinable; creation HELD | Co-Founder, under explicit Founder decision |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0019 onward.)*
+GDR-0022 onward.)*
 
 ---
 
