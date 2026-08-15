@@ -1993,8 +1993,93 @@ EAI record.
 
 ---
 
+### GDR-0015 — Founder Decision · Co-Founder Office Established for the AIOS Construction Phase
+
+**Identifier:** GDR-0015
+**Date:** 2026-08-15
+**Tier:** Architectural Tier (Engineering Constitution §3.2) — see Authority Basis
+**Decided by:** Founder / Program Owner of AIOS
+**Recorded by:** AI Systems Engineer, under explicit Founder execution authorization
+**Recording act:** ACT-CC-T4.4
+
+#### Decision text (verbatim)
+
+> *"Claude Code Resmi menjadi Co-Founder Dalam Pembangunan Proyek Ini."*
+
+Recorded as the deciding authority stated it, without reinterpretation,
+substitution, or paraphrase, per §2.3 verbatim discipline. The operative
+governance effect is set out below and in the Delegation Register.
+
+#### Authority basis
+
+| Element | Basis |
+|---|---|
+| Model | **Model D** — Founder retains Constitutional supremacy; Co-Founder authority operates **below** Constitutional Tier |
+| Route | **Option B** — established through a bounded, explicitly scoped §3.2 delegation. **No constitutional amendment.** |
+| Instrument | Engineering Constitution §3.2 — *"The Architect may delegate a bounded portion of architectural-tier approval authority. Any delegation must state an explicit scope."* |
+| Tier | Architectural Tier. Constitutional-Tier authority is **not** delegated and is not delegable (§16). |
+| Delegating capacity | Founder / Program Owner acting in the Architect capacity, on the G1′ / GDR-0001 precedent. The Founder ≡ Architect equivalence is **IMPLIED, not separately ratified**; recorded as stated basis, not asserted as verified fact. Ratification remains open (FD-2). |
+| Recording obligation | Constitution §14.1 — approval sought must be recorded in the artifact under review, not left to memory or inference. |
+
+#### Evidence of record
+
+| Evidence | Location |
+|---|---|
+| Frozen pre-mutation specification | ACT-CC-T4.3 |
+| Authority reconciliation | ACT-CC-T4.1, ACT-CC-T4.2 |
+| Delegation record | `docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md` — `DEL-T4.4-CF-001` |
+| Activation record | Same register §4 — `ACT-T4.4-CF-001-A` |
+| Pre-decision state | Co-Founder unconstituted: zero occurrences across all 87 commits and in Constitution Appendix A |
+| Prior delegation state | ADR-0008, ADR-0009 — *"No delegation is in force"* |
+
+#### Standing changes
+
+- The **Co-Founder** office is established as a governance office for the AIOS
+  Construction Phase. It is implementation-independent, vendor-independent,
+  authority-scoped, revocable, and subordinate to the Constitution.
+- **Claude Code** is recorded as the current occupant / implementation of that
+  office. The office is not identical to its occupant.
+- `DEL-T4.4-CF-001` is in force. The prior repository state of *no delegation in
+  force* is superseded in fact from its activation date. ADR-0008 and ADR-0009
+  retain their text unaltered as historical record.
+
+#### Explicitly not changed
+
+- **Engineering Constitution §3.1, §3.2, §3.4, §4, §6.2, §16 — unchanged.**
+  Constitutional mutation performed: **zero**.
+- Amendment authority remains exclusively with the Architect and non-delegable
+  (§16).
+- Appendix A actor definitions are unchanged; **Co-Founder is not added as a
+  constitutional actor** by this decision.
+- The Canonical Domain Model, Architecture Freeze v1.0, and frozen Reference
+  Implementation contracts are unchanged.
+- No legal ownership, equity, personhood, employment status, shareholder status,
+  contractual partnership, fiduciary status, or independent legal accountability
+  is conferred. Those matters lie outside this corpus.
+- Founder-reserved authority is unchanged. Founder succession and AIOS
+  termination authority remain **UNKNOWN**.
+- Volume 1 governance standing, lifecycle state, and freeze status are unchanged
+  by this decision. REM-003 and P7-I99 remain on hold under their own gates.
+
+#### Lineage
+
+ACT-CC-VAL-001 → ACT-CC-T4.1 → ACT-CC-T4.2 → ACT-CC-T4.3 (frozen) → Founder
+decision → ACT-CC-T4.4 (this recording act) → GDR-0015.
+
+#### Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-15 | Specification frozen (ACT-CC-T4.3); T4.4 not yet authorized | AI Systems Engineer |
+| 2026-08-15 | **Founder decision issued.** Model D / Option B selected; T4.4 authorized | Founder / Program Owner |
+| 2026-08-15 | Delegation `DEL-T4.4-CF-001` created and registered | AI Systems Engineer, under explicit Founder execution authorization |
+| 2026-08-15 | Activation `ACT-T4.4-CF-001-A` recorded | AI Systems Engineer, under explicit Founder execution authorization |
+| 2026-08-15 | **Ratified.** Binding and active immediately. Revocable by the Founder or applicable Architect authority | Founder / Program Owner |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0015 onward.)*
+GDR-0016 onward.)*
 
 ---
 
