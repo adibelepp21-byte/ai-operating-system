@@ -2177,8 +2177,137 @@ GDR-0015 → ACT-CC-T4.5 → ACT-CC-REM-003.0 → ACT-CC-EVID-001 → ACT-CC-CD1
 
 ---
 
+### GDR-0017 — Founder Decision · FD-4 Volume 1 Lifecycle State (Option A — Frozen)
+
+**Identifier:** GDR-0017
+**Date:** 2026-08-15
+**Tier:** Governance-state lifecycle determination — see Authority Basis
+**Decided by:** Founder
+**Recorded by:** AI Systems Engineer / Co-Founder (Construction Phase), under explicit Founder decision
+**Recording act:** ACT-CC-FD34-001.1
+**Decision gate:** ACT-CC-FD34-001
+
+#### Decision text (verbatim)
+
+> **FD-4 = OPTION A — FROZEN**
+
+Recorded exactly as stated, without paraphrase, reinterpretation, wording
+improvement, semantic expansion, or replacement by an operational summary, per
+§2.3 verbatim discipline.
+
+#### Decision
+
+| Field | Value |
+|---|---|
+| Decision ID | **FD-4** |
+| Decision domain | **CD-3** — Volume 1 Lifecycle State |
+| Decision authority | **Founder** |
+| Decision | **FD-4 = OPTION A — FROZEN** |
+| Effective state | **FROZEN** |
+| Scope | Volume 1 — PD-01 Executive Office |
+| Status | **DECIDED / ACTIVE** |
+| Related finding | **F-02** |
+| Historical rewrite | **NONE** |
+| Authority expansion | **NONE** |
+
+#### Meaning, per the Option A definition put to the Founder in ACT-CC-FD34-001
+
+> Volume 1 — PD-01 Executive Office is FROZEN as a canonical architectural
+> artifact, subject to applicable freeze/change-control rules.
+
+#### Authority basis
+
+| Element | Basis |
+|---|---|
+| Reserved to | **Founder.** Recorded as Founder-reserved in GDR-0016 and Appointment Register §3.2 exclusion 26 |
+| Origin | ACT-CC-VAL-001 finding **F-02** — four mutually exclusive lifecycle states declared across the 45 bodies |
+| Gate | ACT-CC-FD34-001 presented Options A–D; duplicate-decision check returned **CLEAR** (no prior FD-4 decision existed) |
+| Not derived from | Architecture Authority, the construction delegation, precedent, title, or implementation authority — none of which reaches this question |
+
+#### Evidence of record
+
+| Item | Location |
+|---|---|
+| Origin finding F-02 | `docs/governance/acts/ACT-CC-VAL-001.md` |
+| Pre-decision state (four contradictory labels) | Volume 1 bodies, unchanged |
+| Prior confirmation FD-4 undecided | GDR-0015 · GDR-0016 · Appointment Register §8 |
+| Decision gate | ACT-CC-FD34-001 |
+| Recording act | ACT-CC-FD34-001.1 (this entry) |
+| Forward reference | ACT-CC-REM-003.2 — eligibility re-gate, when separately authorized |
+
+#### Standing changes
+
+- **FD-4 is DECIDED. CD-3 is RESOLVED.**
+- The **authoritative current lifecycle state of Volume 1 — PD-01 Executive
+  Office is FROZEN**, effective from this entry.
+- Volume 1 is treated as a frozen lifecycle baseline from this effective point.
+- Future material changes to the frozen Volume require the applicable
+  Architecture Change Control.
+
+#### Recorded divergence — in-body labels vs authoritative state
+
+The 45 Volume 1 bodies continue to declare four mutually exclusive lifecycle
+labels: `RECOVERED — VALIDATION PENDING` (10) · `Canonical Draft (Gold Standard
+Validated)` (10) · `RECOVERY CANDIDATE` (10) · `FROZEN` (10) · no Status field
+(5, Part B).
+
+**These labels are deliberately not rewritten.** Historical records remain
+immutable; this decision establishes the authoritative state **prospectively**.
+Where an in-body label differs from this entry, **this entry governs**.
+Reconciling the labels is mutation candidate **MC-2**, which is not authorized
+by this decision and remains gated.
+
+#### Explicitly not changed
+
+- **FD-3 / CD-4 — Volume 1 governance standing — remains OPEN.** `FROZEN` is a
+  **lifecycle state**; it does **not** mean *governed canonical artifact* and
+  does **not** resolve governance standing. Those are separate determinations.
+- **P7-I99 was not executed and did not produce this freeze.** The Founder
+  determined the lifecycle state directly. P7-I99 remains **HOLD**; no
+  architecture review was performed or completed by this entry.
+- **Engineering Constitution §3.1, §3.2, §3.3, §4, §6.2, §16 and Appendix A —
+  unchanged.** Constitutional mutation: **zero**.
+- Canonical Domain Model, Architecture Freeze v1.0 and Finding Register unchanged.
+- **All 45 Volume 1 bodies unchanged.** No lifecycle field was edited.
+- Architecture Authority holder, scope, exclusions, `APT-CD1.1-AA-001`,
+  `ACT-CD1.1-AA-001-A` and `DEL-T4.4-CF-001` — all unchanged. **No authority was
+  granted or expanded by this decision.**
+- FD-2, FD-3, FD-6, FD-7, FD-8 remain undecided. Founder succession and AIOS
+  termination authority remain **UNKNOWN**.
+- **REM-003 is NOT authorized and NOT eligible.** No mutation candidate MC-1 …
+  MC-7 becomes executable by virtue of this decision. Roadmap and phase
+  advancement remain **HOLD**.
+- `FROZEN` does not mean AIOS is complete.
+
+#### Anti-self-authorization
+
+**Decision authority: Founder. Recording actor: Claude Code. Decision inference:
+NONE.** The recording actor did not select, recommend as decision, or infer this
+option, and did not use its Architecture Authority to justify it — the authority
+to decide FD-4 originates from Founder authority, not Architecture Authority.
+**PASS.**
+
+#### Lineage
+
+ACT-CC-VAL-001 (F-02) → ACT-CC-REM-003.0 → ACT-CC-EVID-001 → ACT-CC-CD1.0 →
+ACT-CC-CD1.1 → GDR-0016 → ACT-CC-REM-003.1 → ACT-CC-FD34-001 → **Founder
+decision** → ACT-CC-FD34-001.1 → GDR-0017.
+
+#### Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-15 | F-02 raised: four contradictory lifecycle states across 45 bodies | AI Systems Engineer |
+| 2026-08-15 | ACT-CC-REM-003.1 records `E5 = FAIL`, FD-4 OPEN, REM-003 NOT ELIGIBLE | Co-Founder (Construction Phase) |
+| 2026-08-15 | FD-4 gate presented; Options A–D; no recommendation given | Co-Founder (Construction Phase) |
+| 2026-08-15 | **Founder decision: FD-4 = OPTION A — FROZEN** | Founder |
+| 2026-08-15 | Decision recorded; lifecycle state **FROZEN** effective | Co-Founder, under explicit Founder decision |
+| 2026-08-15 | **Ratified.** Binding and active immediately | Founder |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0017 onward.)*
+GDR-0018 onward.)*
 
 ---
 
