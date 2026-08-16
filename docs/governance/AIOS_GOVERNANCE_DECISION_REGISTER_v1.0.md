@@ -2761,8 +2761,103 @@ necessary, therefore I authorized it."* **The Founder chose Option A.** **PASS.*
 
 ---
 
+### GDR-0022 — FD-8 Activation & MC-7 Execution Reconciliation
+
+**Identifier:** GDR-0022
+**Date:** 2026-08-16
+**Tier:** Governance-record reconciliation (repository-control policy)
+**Decided by:** Founder — FD-8 (GDR-0021) and the content decision supplied via ACT-CC-FD8-003
+**Recorded by:** Claude Code / Co-Founder (Construction Phase)
+**Recording act:** ACT-CC-MC7-RECON-001
+**Authorized by:** FOUNDER · ACT-CC-F03-009 §5, §6, §7
+**Supersedes prospectively:** GDR-0021 §2 creation/MC-7 status fields and §3 creation hold
+
+#### 1. Why this entry exists
+
+`ACT-CC-F03-008` — the Founder-mandated REM-003 independent re-gate — classified
+gate **E18 / MC-7** as **MATERIAL GAP**. The repository asserted two
+incompatible things: `GDR-0021` recorded that `tools/.gitignore` was **not
+created** and **remains absent** with MC-7 **BLOCKED**, while the file existed
+and was tracked.
+
+This entry reconciles the record. **`GDR-0021` is not rewritten.**
+
+#### 2. The hold and its stated release condition
+
+`GDR-0021 §3` recorded a **content-determinability hold**, expressly not a
+refusal, and named its own release condition:
+
+> *"It is lifted by the Founder specifying the exact entries the file must
+> govern, after which a separate execution Act may create it."*
+
+The Founder subsequently supplied those entries through **ACT-CC-FD8-003**
+(FD-8 Content & MC-7 Execution Authorization), following the scope gate
+**ACT-CC-FD8-002**. Both instruments were issued conversationally and are **not
+repository-resident**. That residency defect — not any absence of authority — is
+what produced the contradiction.
+
+#### 3. Verified repository facts
+
+| Field | Value |
+|---|---|
+| Artifact | `tools/.gitignore` |
+| Tracked | **YES** |
+| Size | **38 bytes** |
+| SHA-256 | `599e8d09a18b6bac6f70ed12bf96f67e49c4d992ee2601bc173d92fbcb64b11d` |
+| Governed entries | `__pycache__/` · `*.py[cod]` · `.pytest_cache/` |
+| Creating commit | `36e96fd` — *"MC-7 — create tools/.gitignore under FD-8"* |
+| Modifications since creation | **NONE** |
+
+The governed entries are read from the tracked artifact itself. They were **not**
+reconstructed from any report, summary, or recollection.
+
+#### 4. Reconciled governance state
+
+| Field | Value |
+|---|---|
+| Decision ID | **FD-8** |
+| Decision | **FD-8 = OPTION A — CREATE / GOVERN tools/.gitignore** (unchanged) |
+| Decision status | **DECIDED** |
+| Creation status | **COMPLETE** — hold released; release condition of GDR-0021 §3 met |
+| FD-8 activation | **ACTIVATED** |
+| MC-7 | **EXECUTED** at `36e96fd` under Founder authorization ACT-CC-FD8-003 |
+| GDR-0021 | **RETAINED UNCHANGED** — accurate as of its recording date; superseded prospectively by this entry |
+| Historical rewrite | **NONE** |
+| Authority expansion | **NONE** |
+| Decision substance altered | **NONE** |
+
+#### 5. Explicitly not done
+
+- **`ACT-CC-FD8-002` and `ACT-CC-FD8-003` were not reconstructed.** Their bodies
+  are unrecoverable from repository evidence; fabricating them would be the
+  invention this governance system exists to prevent. They are cited by
+  identifier, and their residency defect remains an **open item**.
+- **`GDR-0021` was not edited.** Append-only discipline (§2.3) is preserved; the
+  only deletion in this change is this register's own forward-pointer line.
+- **`tools/.gitignore` was not modified or re-created.**
+- No blocker outside FD-8 / MC-7 is closed by this entry.
+
+#### 6. Effect on REM-003
+
+This entry supplies the resident evidence whose absence produced finding **M-1**.
+Gate **E18** is re-gated in the REM-003 re-verification performed under
+`ACT-CC-F03-009 §10`. **This entry does not itself declare E18 passed, does not
+declare REM-003 eligible, and does not authorize P7-I99.**
+
+#### 7. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-15 | **Founder decision: FD-8 = OPTION A** recorded; §8.3 content not determinable; creation **HELD** (GDR-0021) | Co-Founder, under explicit Founder decision |
+| 2026-08-15 | Founder supplies governed entries via **ACT-CC-FD8-003**; MC-7 authorized | Founder |
+| 2026-08-15 | MC-7 executed; `tools/.gitignore` created at `36e96fd` | Co-Founder |
+| 2026-08-16 | `ACT-CC-F03-008` re-gate identifies **M-1 / E18 = MATERIAL GAP** — authorization not resident | Co-Founder |
+| 2026-08-16 | Reconciliation recorded; FD-8 **ACTIVATED**; MC-7 **EXECUTED** | Co-Founder, under FOUNDER · ACT-CC-F03-009 |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0022 onward.)*
+GDR-0023 onward.)*
 
 ---
 
