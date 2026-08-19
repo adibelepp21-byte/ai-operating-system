@@ -1,6 +1,7 @@
 # Volume 2 — PD-02 Architecture Office · Residency Manifest
 
 **Platform:** PD-02 — Architecture Office
+**Canonical path:** `docs/architecture/volume-2/pd-02-architecture-office/` (established by ADR-0012)
 **Volume:** Volume 2
 **Parts:** A (Strategic Foundation) · B (Organization) · C (Governance) · D (Operating) · E (Performance)
 **Sections resident:** 50 / 50
