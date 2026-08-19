@@ -1,8 +1,9 @@
 # AIOS Volume Activation Model
 
-**Version:** v1.0
+**Version:** v1.1
 **Status:** Canonical — governance machinery
-**Authority:** Founder · `ACT-CC-F03-014`
+**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015`
+**Change in v1.1:** GG-1…GG-4 resolved by FD-015-01/02/03; T6 established; PD-01 review basis adopted
 **Recorded by:** Claude Code / Co-Founder (Construction Phase)
 **Date:** 2026-08-16
 **Scope:** PD-01 (Volume 1) · PD-02 (Volume 2)
@@ -57,7 +58,7 @@ Each transition is classified by whether resident evidence establishes it.
 | T3 | Section Validation → Integrated Review | `ACT-CC-REM-003.0 §6`: section-level claims *"do not constitute Volume-level freeze"* | **ESTABLISHED** |
 | T4 | Integrated Review → Freeze Eligibility | PD-01 manifest: `Volume 1 Freeze Gate \| NOT APPROVED (P7-I99 re-gate outstanding)`; roadmap `REM-003 → P7-I99 → V1 Freeze` | **ESTABLISHED — but not the only route (see §4)** |
 | T5 | Freeze Eligibility → Freeze | `GDR-0017` (FD-4) | **ESTABLISHED** |
-| T6 | **Freeze → Activation Eligibility** | **none found** | **⚠ GOVERNANCE GAP — NOT SELF-AUTHORIZED** |
+| T6 | **Freeze → Activation Eligibility** | `ACT-CC-F03-015` FD-015-03 | **ESTABLISHED** — Freeze is a *prerequisite* for Activation Eligibility; `FROZEN ≠ ACTIVATION ELIGIBLE` |
 | T7 | Activation Eligibility → Activation Gate | `ACT-CC-F03-014 §3` | **ESTABLISHED (this Act)** |
 | T8 | Activation Gate → Founder Authorization | `ACT-CC-F03-014 §3` | **ESTABLISHED (this Act)** |
 | T9 | Authorization → Activated | `ACT-CC-F03-014 §3` | **ESTABLISHED (this Act)** |
@@ -121,18 +122,25 @@ Volume 2 set is domain-adapted and its historical identity with the Volume 1 set
 is unproven. Authoring a replacement set would be inventing substantive
 criteria, then grading PD-01 against them.
 
-### 5.4 Minimum Founder decision required
+### 5.4 Founder decision — RESOLVED
 
-Exactly one of:
+**FD-015-02 — OPTION B.** The resident R1–R11 set in `ACT-CC-F03-007` is the
+canonical integrated-review requirement basis for **both** Volumes, subject to
+Volume-specific evidence and domain adaptation.
 
-| Option | Effect |
-|---|---|
-| **A** | Founder supplies the Volume 1 P7-I99 requirement set → PD-01 integrated review becomes executable |
-| **B** | Founder rules the Volume 2 R1–R11 set applies to Volume 1 → PD-01 review executable under that set |
-| **C** | Founder defines PD-01 activation eligibility **without** an integrated-review requirement, relying on the direct-lifecycle route (R-B) already exercised in `GDR-0017` |
-| **D** | Founder defers PD-01 activation |
+```text
+P7-I99 REVIEW CONTRACT → COMMON R1–R11 STRUCTURE
+    → VOLUME-SPECIFIC EVIDENCE → VOLUME-SPECIFIC ASSESSMENT
+```
 
-**GOVERNANCE GAP — NOT SELF-AUTHORIZED.**
+**Inherited:** R1–R11 · evidence requirement · materiality classification ·
+PASS / NOT PASS logic · prohibition on unsupported inference · `MATERIAL GAP` /
+`BLOCKED` / `REQUIRES ARCHITECT DECISION` / `UNKNOWN` handling · freeze-gate logic.
+**Never shared:** evidence · findings · interpretation · result.
+
+**The original Volume 1 document was not recovered and remains unrecoverable.**
+The gap was closed by *adopting* a resident contract, not by recovering a
+historical one. `PD-01 = PD-02` is not implied.
 
 ---
 
@@ -146,12 +154,12 @@ category **A** by implementation convenience.
 |---|---|---|---|
 | AG-01 | Identity / residency integrity | **A** source-backed | Manifests; ADR-0012 for Volume 2 namespace |
 | AG-02 | Corpus completeness | **A** | PD-01 45/45 manifest; PD-02 50/50 manifest |
-| AG-03 | Integrated architecture review | **A** for PD-02 (`ACT-CC-F03-007`) · **C GAP** for PD-01 (§5) | — |
+| AG-03 | Integrated architecture review | **A** — `ACT-CC-F03-007` R1–R11, adopted for **both** Volumes by FD-015-02 | Volume-specific evidence required |
 | AG-04 | Material findings resolved | **A** | `ACT-CC-VAL-001` + GDR dispositions |
 | AG-05 | Authority integrity | **A** | Constitution §3.2 · `DEL-T4.4-CF-001` · Appointment Register |
 | AG-06 | Traceability / evidence integrity | **B** derived check | Mechanical verification of AG-01…AG-05 |
 | AG-07 | Freeze eligibility / freeze state | **A** | `GDR-0017` · PD-01 manifest · §4 above |
-| AG-08 | Activation-specific readiness | **C GAP** | No resident source defines what activation *does* (§3 T6) |
+| AG-08 | Activation-specific readiness | **A** definition (FD-015-03 §5 of `ACT-CC-F03-015`) · **D** conditions | Definition resident; the enumerated conditions beyond Freeze remain Founder-reserved — **RG-1** |
 | AG-09 | Governance separation | **A** | `ACT-CC-F03-006` · `ACT-CC-F03-014` |
 | AG-10 | Founder activation authorization | **D** Founder-reserved | `ACT-CC-F03-014 §3` |
 
@@ -168,11 +176,11 @@ requirements are **not** flattened for symmetry.
 |---|---|---|---|
 | AG-01 identity/residency | corpus at `volume-1/pd-01-executive-office/` | **45/45 resident** | no |
 | AG-02 completeness | A10 · **B5** · C10 · D10 · E10 = 45 | **PASS** — Part B is 5 by design (`END OF PART B — B1–B5`) | no |
-| AG-03 integrated review | P7-I99 (Volume 1) result | **NOT APPROVED** ×2; **requirement set unrecoverable** | **YES** |
+| AG-03 integrated review | P7-I99 result under the adopted R1–R11 contract | basis **RESOLVED** (FD-015-02); prior runs **NOT APPROVED** ×2; **review NOT RUN under the adopted contract** | **YES** |
 | AG-04 findings | material findings dispositioned | F-01/02/03/07/09/11 resolved; **F-05 non-blocking**; F-12 UNKNOWN; **F-14 superseded** | no |
 | AG-05 authority | valid bounded authority | `DEL-T4.4-CF-001` ACTIVE | no |
 | AG-07 freeze | freeze state known | **FROZEN** via R-B (`GDR-0017`); gate `NOT APPROVED` via R-A | see §4 |
-| AG-08 activation readiness | defined | **GAP** | **YES** |
+| AG-08 activation readiness | conditions enumerated | definition resident; **conditions Founder-reserved (RG-1)** | **YES** |
 | AG-10 authorization | Founder authorization issued | **NOT ISSUED** | **YES** |
 
 **PD-01 = NOT ACTIVATION-ELIGIBLE.** Blocking: AG-03, AG-08, AG-10.
@@ -183,12 +191,12 @@ requirements are **not** flattened for symmetry.
 |---|---|---|---|
 | AG-01 identity/residency | corpus at `volume-2/pd-02-architecture-office/` | **50/50**, byte-identical, ADR-0012 | no |
 | AG-02 completeness | A10·B10·C10·D10·E10 = 50 | **PASS** | no |
-| AG-03 integrated review | P7-I99 Volume 2 R1–R11 | **requirement set RESIDENT** (`ACT-CC-F03-007`); **review NOT RUN** | **YES** |
+| AG-03 integrated review | P7-I99 Volume 2 R1–R11 | requirement set **RESIDENT**; execution authority **DELEGATED but DORMANT** (`DEL-F03-015-P7I99-001`); **review NOT RUN** | **YES** |
 | AG-04 findings | B-07 and Phase D findings resolved | ADR-0010/0011/0012; F-D1/F-D2/F-D3 resolved | no |
 | AG-05 authority | Architecture Authority designated | **DESIGNATED**, activation HELD (`GDR-0019`) | see note |
 | AG-06 traceability | chain reconstructible | `ACT-CC-F03-006/007` resident | no |
 | AG-07 freeze | Volume-level freeze | **NOT FROZEN** — 23 section-level claims are **not** Volume freeze | no |
-| AG-08 activation readiness | defined | **GAP** | **YES** |
+| AG-08 activation readiness | conditions enumerated | definition resident; **conditions Founder-reserved (RG-1)** | **YES** |
 | AG-10 authorization | Founder authorization issued | **NOT ISSUED** | **YES** |
 
 **PD-02 = NOT ACTIVATION-ELIGIBLE.** Blocking: AG-03 (review not run), AG-08, AG-10.
@@ -203,14 +211,20 @@ Authority`. **Lifting the hold requires a governance act and has not been done.*
 
 ## 8. Open governance gaps
 
-| ID | Gap | Category | Resolution required from |
-|---|---|---|---|
-| GG-1 | Freeze → Activation Eligibility has no resident basis (T6) | GOVERNANCE GAP | Founder |
-| GG-2 | AG-08 — no source defines what activation confers or requires | GOVERNANCE GAP | Founder |
-| GG-3 | PD-01 P7-I99 requirement set unrecoverable (§5.4 options A–D) | GOVERNANCE GAP | Founder |
-| GG-4 | Appointment Register `§3.2` exclusion 22 bars P7-I99 execution; later Acts authorize it. The register was never amended | AUTHORITY-RECORD GAP — same pattern as G-1 | Founder |
+| ID | Gap | Status |
+|---|---|---|
+| GG-1 | Freeze → Activation Eligibility | **RESOLVED** — FD-015-03 |
+| GG-2 | What Activation confers | **RESOLVED (definition)** — `ACT-CC-F03-015 §5`; conditions → RG-1 |
+| GG-3 | PD-01 P7-I99 requirement basis | **RESOLVED** — FD-015-02 Option B |
+| GG-4 | Apparent P7-I99 authority conflict | **RESOLVED — no conflict existed.** Appointment Register exclusion 22 is a *non-conferral clause*, not a prohibition (`ACT-CC-F03-015 §2.1`). Authority now supplied by `DEL-F03-015-P7I99-001` |
 
-**None of these is self-authorized. None is closed by this document.**
+### Residual
+
+| ID | Residual | Class |
+|---|---|---|
+| RG-1 | Activation conditions beyond Freeze are not enumerated in resident evidence | **REQUIRES FOUNDER DECISION** |
+| RG-2 | PD-01 has never passed an integrated review; adopting the contract makes it executable, not passed | **MATERIAL GAP** — by design |
+| RG-3 | F-05 Master Roadmap · F-12 label collision | **OPEN / UNKNOWN**, non-blocking |
 
 ---
 
@@ -222,7 +236,7 @@ Authority`. **Lifting the hold requires a governance act and has not been done.*
 | What makes PD-02 eligible? | AG-01…AG-10 §7.2 — currently blocked at AG-03, AG-08, AG-10 |
 | Who may authorize activation? | **Founder only** — `ACT-CC-F03-014 §3` |
 | P7-I99 ↔ Freeze? | P7-I99 is the freeze gate, but freeze is also reachable by direct Founder lifecycle determination (§4) |
-| Freeze ↔ Activation Eligibility? | **Undefined — GG-1** |
+| Freeze ↔ Activation Eligibility? | Freeze is a **prerequisite**, not eligibility itself — FD-015-03 |
 | Eligibility vs Authorization? | Eligibility is evidence; authorization is a Founder decision |
 | Volume passes its gate, no Founder authorization? | **The Volume remains NOT ACTIVATED** |
 

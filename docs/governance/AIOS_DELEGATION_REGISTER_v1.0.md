@@ -218,6 +218,96 @@ authority within the AIOS project only.
 
 ---
 
+### DEL-F03-015-P7I99-001 — Bounded P7-I99 Execution Delegation
+
+| Field | Value |
+|---|---|
+| **Delegation ID** | `DEL-F03-015-P7I99-001` |
+| **Date** | 2026-08-16 |
+| **Tier** | Architectural Tier (Constitution §3.2) |
+| **Delegating Authority** | Founder / Program Owner of AIOS, acting in the Architect capacity |
+| **Delegate** | Co-Founder — Construction Phase (occupant: Claude Code) |
+| **Scope** | Execution of the P7-I99 integrated architecture review (R1–R11) for a Volume, **only** when a separate Founder-authorized Act expressly invokes this authority for that Volume |
+| **Exclusions** | §A below |
+| **Effective Condition** | Per-Volume invocation by a Founder-authorized Act. Absent invocation, no execution authority exists |
+| **Review Condition** | Construction-phase governance review |
+| **Revocation Authority** | Founder / applicable Architect authority |
+| **Evidence** | ACT-CC-F03-015 · FD-015-01 · GDR-0024 |
+| **Governing Decision** | FD-015-01 |
+| **Status** | **ACTIVE — DORMANT UNTIL INVOKED** |
+
+#### Founder decision text (verbatim)
+
+> *"The Founder explicitly authorizes Claude Code, in its delegated Co-Founder /
+> implementation capacity, to execute P7-I99 R1–R11 for a Volume only when a
+> separate Founder-authorized Act explicitly invokes that execution authority for
+> that Volume."*
+
+#### Authority basis
+
+| Element | Basis |
+|---|---|
+| Instrument | Constitution §3.2 — *"The Architect may delegate a bounded portion of architectural-tier approval authority. Any delegation must state an explicit scope."* |
+| Why a delegation and not an appointment amendment | Determined in `ACT-CC-F03-015 §2`. The Appointment Register records **appointments** (§1) and is **append-only** (§2); `APT-CD1.1-AA-001 §3.2` exclusion 22 is a **non-conferral clause** — *"The appointment grants none of the following"* — not a prohibition. There is nothing to amend. Constitution §3.2 makes an explicit scoped delegation the canonical vehicle |
+| Why not the Bounded Exception Register | `ADR-0009` governs identity-based **code conformance** exception sites and states *"it is not authority."* Not applicable |
+| Recording basis | Delegation Register §2 — *"Recording a delegation is an Implementation-Tier act (Constitution §3.3) performed under explicit authorization; it is not an approval act."* |
+
+#### A. Excluded authority
+
+This delegation grants **none** of the following:
+
+1. Authority to activate any Volume.
+2. Authority to authorize activation.
+3. Authority to freeze any Volume.
+4. Authority to convert a P7-I99 result into activation or freeze.
+5. Authority to redefine the P7-I99 requirement set.
+6. Authority to redefine Freeze or Activation criteria.
+7. Authority to expand this delegation.
+8. Authority to invoke this delegation on its own initiative.
+9. Authority to execute P7-I99 for a Volume not expressly named in an invoking Act.
+10. Constitutional amendment, Domain Model semantic change, or cross-Department structural change (Constitution §3.2 non-delegable).
+
+#### B. Canonical separation
+
+```text
+P7-I99 Execution Authority  ≠  Freeze Authority  ≠  Activation Authority
+```
+
+Producing a P7-I99 result is evidence. It is neither a freeze nor an activation,
+and it confers no authority to perform either.
+
+#### C. Relationship to existing instruments
+
+Four **distinct** instruments. This delegation expands none of the others:
+
+| Instrument | Nature | Status |
+|---|---|---|
+| `DEL-T4.4-CF-001` | Scoped Constitution §3.2 construction delegation | **ACTIVE — scope byte-unchanged by this entry** |
+| `APT-CD1.1-AA-001` | Architecture Authority appointment | **ACTIVE — unchanged** |
+| `ACT-CD1.1-AA-001-A` | Activation of that appointment | **ACTIVE — unchanged** |
+| `DEL-F03-015-P7I99-001` | Bounded P7-I99 execution delegation | **ACTIVE — dormant until invoked** |
+
+`APT-CD1.1-AA-001 §3.2` exclusion 22 remains correct and is **not** contradicted:
+the Architecture Authority appointment does not confer P7-I99 execution
+authority, and this delegation does not alter that. The authority arrives by a
+separate, explicitly scoped route, exactly as Constitution §3.2 requires.
+
+#### D. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-16 | `ACT-CC-F03-014` reports GG-4 as an apparent authority conflict | Co-Founder |
+| 2026-08-16 | `ACT-CC-F03-015 §2` determines exclusion 22 is a non-conferral clause, not a prohibition; no conflict exists | Co-Founder |
+| 2026-08-16 | **Founder decision FD-015-01** — bounded, per-Volume-invocation P7-I99 execution authority | Founder |
+| 2026-08-16 | Delegation recorded | Co-Founder, under FOUNDER · ACT-CC-F03-015 |
+
+**Note on §11.** This register's Closing section states that it records
+`DEL-T4.4-CF-001` *"and nothing else."* That statement was accurate when written
+and is **retained unaltered** under §2 append-only discipline; it is superseded
+prospectively by this entry.
+
+---
+
 ## 4. Activation Record
 
 | Field | Value |

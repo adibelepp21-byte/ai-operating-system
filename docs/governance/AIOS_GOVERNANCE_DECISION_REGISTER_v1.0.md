@@ -2962,8 +2962,122 @@ expanded · no historical evidence altered · AIOS not declared complete.
 
 ---
 
+### GDR-0024 — Founder Governance Reconciliation · FD-015-01 / FD-015-02 / FD-015-03
+
+**Identifier:** GDR-0024 · **Date:** 2026-08-16
+**Tier:** Governance-machinery reconciliation
+**Decided by:** Founder · **Recorded by:** Claude Code / Co-Founder
+**Recording act:** ACT-CC-F03-015
+**Companion artifacts:** `DEL-F03-015-P7I99-001` · `AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md` (v1.1)
+
+#### 1. FD-015-01 — Bounded P7-I99 execution authority
+
+> *"The Founder explicitly authorizes Claude Code, in its delegated Co-Founder /
+> implementation capacity, to execute P7-I99 R1–R11 for a Volume only when a
+> separate Founder-authorized Act explicitly invokes that execution authority for
+> that Volume."*
+
+Persisted as **`DEL-F03-015-P7I99-001`** — bounded · execution-specific ·
+Volume-specific · non-transferable · non-self-expanding · **dormant until
+invoked**. It grants no authority to activate, to freeze, or to convert a review
+result into either.
+
+```text
+P7-I99 Execution Authority ≠ Freeze Authority ≠ Activation Authority
+```
+
+**Mechanism determination.** The canonical form was derived, not chosen for
+convenience. The Bounded Exception Register (`ADR-0009`) was eliminated — it
+governs code conformance sites and states *"it is not authority."* Amending the
+Appointment Register was eliminated — it is append-only, records appointments,
+and **there was nothing to amend**. Constitution §3.2 makes an explicit scoped
+delegation the only canonical vehicle.
+
+**Correction of record.** `ACT-CC-F03-014` reported GG-4 as an authority
+conflict. That was imprecise. `APT-CD1.1-AA-001 §3.2` exclusion 22 sits under a
+heading reading *"The appointment grants **none** of the following"* — a
+**non-conferral clause about that appointment**, not a prohibition on the
+delegate. **No conflict existed.** Exclusion 22 remains correct and unaltered.
+
+#### 2. FD-015-02 — PD-01 P7-I99 requirement basis · OPTION B
+
+The resident R1–R11 set in **`ACT-CC-F03-007`** is the canonical
+integrated-review requirement basis for **both** Volume 2 — PD-02 and Volume 1 —
+PD-01, subject to Volume-specific evidence and domain adaptation.
+
+Inherited as common contract: R1–R11 · evidence requirement · materiality
+classification · PASS / NOT PASS logic · prohibition on unsupported inference ·
+`MATERIAL GAP` / `BLOCKED` / `REQUIRES ARCHITECT DECISION` / `UNKNOWN` handling ·
+freeze-gate logic. **Never shared:** evidence · findings · interpretation ·
+result.
+
+**The original Volume 1 requirement document was NOT recovered and remains
+unrecoverable** — searched across the repository and the full session transcript
+(2,387 `P7-I99` occurrences); every requirement-bearing context refers to the
+Volume 2 set. The Founder closed the gap by **adopting** a resident contract, not
+by recovering a historical one. **`PD-01 = PD-02` is not implied.**
+
+#### 3. FD-015-03 — Freeze / Activation relationship
+
+> **Freeze is a prerequisite condition for Activation Eligibility, but Freeze is
+> not Activation Eligibility and does not itself authorize Activation.**
+
+A Volume becomes Activation Eligible only when the integrated review requirement
+is satisfied, the Freeze Gate is satisfied, the Volume is recorded as Frozen
+through the canonical lifecycle mechanism, and all activation-specific conditions
+are separately satisfied.
+
+```text
+FROZEN ≠ ACTIVATION ELIGIBLE        ACTIVATION ELIGIBLE ≠ ACTIVATED
+```
+
+#### 4. Activation defined (GG-2)
+
+Activation is a **Founder-authorized lifecycle transition** in which a Volume is
+formally recognized as an operationally accepted and governance-authorized Volume
+whose architecture, evidence, lifecycle state, and required activation conditions
+have been independently verified, and whose use as an active canonical platform
+artifact is expressly authorized by the Founder.
+
+Activation is **not**: AIOS completion · future-Volume completion · Freeze alone ·
+P7-I99 PASS alone · section-level `PASS` or `FROZEN` · designation · architecture
+ownership · execution authority.
+
+#### 5. Activation authority — unchanged
+
+**FOUNDER-RESERVED.** The Co-Founder receives no activation authority by this
+entry and may not self-authorize, issue the final activation decision, convert
+eligibility into authorization, or treat Freeze as authorization.
+
+#### 6. Residual — not closed
+
+| ID | Residual | Class |
+|---|---|---|
+| RG-1 | Activation conditions beyond Freeze are not enumerated in resident evidence | REQUIRES FOUNDER DECISION |
+| RG-2 | PD-01 has never passed an integrated review | MATERIAL GAP — by design |
+| RG-3 | F-05 · F-12 | OPEN / UNKNOWN, non-blocking |
+
+#### 7. Explicitly not done
+
+P7-I99 Volume 1 **not executed** · P7-I99 Volume 2 **not executed** · no Volume
+activated · no Volume frozen · Domain Model unchanged · ADR-0010/0011 not
+rewritten · Appointment Register, Finding Register, historical Acts and Founder
+Decisions unaltered · `DEL-T4.4-CF-001` scope byte-unchanged · no
+self-authorization · AIOS not declared complete.
+
+#### 8. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-16 | `ACT-CC-F03-014` records GG-1…GG-4 | Co-Founder |
+| 2026-08-16 | `ACT-CC-F03-015 §2` determines the canonical mechanism and corrects the GG-4 framing | Co-Founder |
+| 2026-08-16 | **Founder decisions FD-015-01/02/03 issued** | Founder |
+| 2026-08-16 | Decisions persisted; delegation recorded; activation model → v1.1 | Co-Founder, under FOUNDER · ACT-CC-F03-015 |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0024 onward.)*
+GDR-0025 onward.)*
 
 ---
 
