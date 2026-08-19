@@ -2856,8 +2856,114 @@ declare REM-003 eligible, and does not authorize P7-I99.**
 
 ---
 
+### GDR-0023 — Founder Governance Resolution · Activation Authority, G-1, F-05, F-14
+
+**Identifier:** GDR-0023
+**Date:** 2026-08-16
+**Tier:** Governance-machinery resolution
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase)
+**Recording act:** ACT-CC-F03-014
+**Companion artifact:** `docs/governance/AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md`
+
+#### 1. Why this entry exists
+
+`ACT-CC-F03-013` established that the governance machinery required to decide
+Volume activation did not itself exist in the repository: no instrument defined
+an Activation Gate, none delegated activation authority, and the Co-Founder had
+crossed a Domain Model authority boundary whose authorization was recorded only
+in conversation. Each was Founder-reserved. This entry makes the resolutions
+durable.
+
+#### 2. Volume Activation authority
+
+**Volume Activation authority is retained by the Founder.**
+
+The Co-Founder may inspect, reconstruct requirements, execute bounded
+remediation, create authorized governance artifacts, execute validation and
+verification, execute P7-I99 where separately authorized, prepare Activation
+Eligibility evidence, produce an Activation Gate result, and **recommend**
+activation.
+
+The Co-Founder may **not** self-grant activation authority, self-authorize
+activation, convert a passing technical review into activation, treat Eligibility
+as Authorization, treat Freeze as Activation, treat section-level `PASS` or
+`FROZEN` claims as Volume activation, or activate PD-01 or PD-02.
+
+```text
+Assessment → Eligibility → Gate Result → Founder Authorization → Activation
+```
+
+**A passing gate is evidence of eligibility, not an activation decision.** Where
+a Volume passes its technical gate and Founder authorization has not been issued,
+the Volume remains **NOT ACTIVATED**.
+
+#### 3. G-1 — ADR-0010 / ADR-0011 disposition
+
+`DEL-T4.4-CF-001 §3.2` exclusion 9 bars Domain Model semantic changes and `§7`
+reserves Domain Model semantic authority to the Founder. ADR-0010 and ADR-0011
+renamed the canonical organizational-unit entity. The Co-Founder disclosed this
+against its own work.
+
+**Founder resolution: ADR-0010 and ADR-0011 were Founder-authorized semantic
+Domain Model mutations** — authority chain `FD-6 / GDR-0020 §4` →
+`ACT-CC-F03-009` → Post-Phase-D Directive §4. They are **not** unauthorized
+self-delegation.
+
+**The disposition is specific to ADR-0010 / ADR-0011. `DEL-T4.4-CF-001` is not
+widened; Domain Model semantic authority remains Founder-reserved; no precedent
+is created.** ADR-0010 and ADR-0011 are not rewritten.
+
+#### 4. F-05 — Master Roadmap
+
+**Founder-owned program-level debt. NOT a Volume activation blocker.** No
+resident artifact ties the Master Roadmap to a Volume gate; `ACT-CC-VAL-001 §17`
+MB-6 records it as blocking *"§7/§35 phase-gate checks"* — program phase gates.
+F-05 remains **OPEN** and tracked.
+
+#### 5. F-14 — GOV-CC-COF-001
+
+**SUPERSEDED / RESOLVED.** `GOV-CC-COF-001` was never created, but the defect it
+named — no repository standing for the Co-Founder authority model — was cured by
+a different instrument: `GDR-0015` plus `DEL-T4.4-CF-001` (Status ACTIVE,
+Constitution §3.2 route). The Finding Register is unaltered; F-14's historical
+entry stands and is superseded prospectively.
+
+#### 6. Lifecycle finding — freeze is reachable by two routes
+
+Resident evidence establishes P7-I99 as Volume 1's integrated review and freeze
+gate, **and** that Volume 1 reached `FROZEN` without it: `GDR-0017` records that
+*"P7-I99 was not executed and did not produce this freeze."* Therefore a frozen
+Volume is **not** evidence that its integrated review passed. Volume 1 is
+`FROZEN` (lifecycle) while its freeze gate remains `NOT APPROVED` (review).
+
+#### 7. Open governance gaps — not closed by this entry
+
+| ID | Gap |
+|---|---|
+| GG-1 | Freeze → Activation Eligibility has no resident basis |
+| GG-2 | No source defines what activation confers or requires (AG-08) |
+| GG-3 | PD-01 P7-I99 requirement set unrecoverable — Founder must choose option A–D |
+| GG-4 | Appointment Register §3.2 exclusion 22 bars P7-I99 execution while later Acts authorize it; register never amended |
+
+#### 8. Explicitly not done
+
+No Volume activated · no Volume frozen · **P7-I99 Volume 2 not executed** · no
+activation authority delegated to the Co-Founder · `DEL-T4.4-CF-001` not
+expanded · no historical evidence altered · AIOS not declared complete.
+
+#### 9. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-16 | `ACT-CC-F03-013` reports activation-authority gap, G-1, and PD-01 requirement gap; declines to self-delegate | Co-Founder |
+| 2026-08-16 | **Founder resolution issued** — activation authority retained; G-1 validated as authorized and bounded; F-05 non-blocking; F-14 superseded | Founder |
+| 2026-08-16 | Resolutions persisted; Volume Activation Model recorded | Co-Founder, under FOUNDER · ACT-CC-F03-014 |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0023 onward.)*
+GDR-0024 onward.)*
 
 ---
 
