@@ -13,7 +13,7 @@ Twelve entities across four categories.
 
 | Category | Entities |
 |---|---|
-| Spine | Organization, Department, Capability |
+| Spine | Organization, Platform Division, Capability |
 | Execution | Agent Definition, Agent Instance, Skill, Workflow, Tool, Runtime |
 | Substrate | Knowledge, Memory |
 | Cross-cutting | Trace |
@@ -25,7 +25,7 @@ Twelve entities across four categories.
 | Entity | Definition |
 |---|---|
 | **Organization** | The whole of AIOS. Single root identity; ultimate accountable body. |
-| **Department** | A bounded, semi-autonomous unit of accountability with its own domain vocabulary. Owns Capabilities and Agent Definitions. |
+| **Platform Division** | A bounded, semi-autonomous unit of accountability with its own domain vocabulary. Owns Capabilities and Agent Definitions. Historical alias: **Department** — see ADR-0010. |
 | **Capability** | A stable, named, outcome-oriented contract — what can be delivered, independent of how. Owned by exactly one Department. The unit that persists across model, vendor, and Agent changes. Carries dependency-governance rules (§5, §7). |
 | **Agent Definition** | A stable, versioned specification: what a class of Agent does, which Capabilities it implements, which Department owns it, what behavior/permissions/Skills/Workflows it is allowed to use, and what Runtime requirements it has. Does not run — it is the design, not the process. |
 | **Agent Instance** | A single, ephemeral runtime execution of an Agent Definition. Hosted by a Runtime. Has its own execution lifecycle (spawned → active → terminated), independent of the Agent Definition's own version lifecycle. Produces Trace. |
@@ -37,6 +37,15 @@ Twelve entities across four categories.
 | **Memory** | Dynamic, experiential, scoped record of what an Agent Instance has encountered. Provisional. Has a retention window — promote or expire. |
 | **Trace** | The immutable, append-only, unconditional audit record of one Agent Instance action. See §2.1. |
 
+
+> **Terminology — organizational unit.** The canonical organizational-unit entity
+> is **Platform Division**, per Founder decision **FD-6** (GDR-0020) and
+> **ADR-0010**. **Department** is its recorded **historical alias**: where the
+> term appears in this document's descriptive prose, in historical Acts, in prior
+> Governance Decision Register entries, in findings, in review reports, or in
+> commit history, it denotes the same entity and is historical terminology, not
+> current canonical terminology. Those occurrences are deliberately preserved —
+> `GDR-0020 §3` excludes global renaming and alteration of historical evidence.
 ### 2.1 Trace — Required Contents
 
 Every Trace record contains:
@@ -160,8 +169,8 @@ other entity's continued existence.
 
 ## 7. Invariants Derived from the Model
 
-1. Every Capability is owned by exactly one Department.
-2. Every Agent Definition is owned by exactly one Department and
+1. Every Capability is owned by exactly one Platform Division.
+2. Every Agent Definition is owned by exactly one Platform Division and
    implements at least one Capability.
 3. Every Agent Instance instantiates exactly one Agent Definition and is
    hosted by exactly one Runtime.
