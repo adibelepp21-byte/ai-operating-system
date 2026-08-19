@@ -26,8 +26,8 @@ Twelve entities across four categories.
 |---|---|
 | **Organization** | The whole of AIOS. Single root identity; ultimate accountable body. |
 | **Platform Division** | A bounded, semi-autonomous unit of accountability with its own domain vocabulary. Owns Capabilities and Agent Definitions. Historical alias: **Department** — see ADR-0010. |
-| **Capability** | A stable, named, outcome-oriented contract — what can be delivered, independent of how. Owned by exactly one Department. The unit that persists across model, vendor, and Agent changes. Carries dependency-governance rules (§5, §7). |
-| **Agent Definition** | A stable, versioned specification: what a class of Agent does, which Capabilities it implements, which Department owns it, what behavior/permissions/Skills/Workflows it is allowed to use, and what Runtime requirements it has. Does not run — it is the design, not the process. |
+| **Capability** | A stable, named, outcome-oriented contract — what can be delivered, independent of how. Owned by exactly one Platform Division. The unit that persists across model, vendor, and Agent changes. Carries dependency-governance rules (§5, §7). |
+| **Agent Definition** | A stable, versioned specification: what a class of Agent does, which Capabilities it implements, which Platform Division owns it, what behavior/permissions/Skills/Workflows it is allowed to use, and what Runtime requirements it has. Does not run — it is the design, not the process. |
 | **Agent Instance** | A single, ephemeral runtime execution of an Agent Definition. Hosted by a Runtime. Has its own execution lifecycle (spawned → active → terminated), independent of the Agent Definition's own version lifecycle. Produces Trace. |
 | **Skill** | A discrete, reusable, bounded unit of executable ability, invoked by an Agent Instance or Workflow. |
 | **Workflow** | An explicit, inspectable composition of Skills (and possibly Agent Instance invocations) accomplishing a multi-step outcome. |
@@ -39,12 +39,14 @@ Twelve entities across four categories.
 
 
 > **Terminology — organizational unit.** The canonical organizational-unit entity
-> is **Platform Division**, per Founder decision **FD-6** (GDR-0020) and
-> **ADR-0010**. **Department** is its recorded **historical alias**: where the
-> term appears in this document's descriptive prose, in historical Acts, in prior
-> Governance Decision Register entries, in findings, in review reports, or in
-> commit history, it denotes the same entity and is historical terminology, not
-> current canonical terminology. Those occurrences are deliberately preserved —
+> is **Platform Division**, per Founder decision **FD-6** (GDR-0020), **ADR-0010**
+> and **ADR-0011**. **Department** is its recorded **historical alias**. This
+> document — a living canonical artifact — uses **Platform Division** throughout.
+> The alias governs evidence **outside** this document: historical Acts, prior
+> Governance Decision Register entries, findings, review reports, ADR-0001 …
+> ADR-0009, the Volume 1 and Volume 2 corpora, and commit history. There
+> `Department` denotes the same entity and is historical terminology, not current
+> canonical terminology. Those occurrences are deliberately preserved —
 > `GDR-0020 §3` excludes global renaming and alteration of historical evidence.
 ### 2.1 Trace — Required Contents
 
@@ -65,10 +67,10 @@ Every Trace record contains:
 
 A stable specification and an ephemeral execution have incompatible
 lifecycles: a Definition changes on a deliberate, versioned,
-Department-governed cadence; an Instance is created and destroyed
+Platform-Division-governed cadence; an Instance is created and destroyed
 constantly, sometimes many times per minute, with no governance overhead
 per spawn. The split makes Agent Definition governable at the same cadence
-as Capability and Department (slow, deliberate), while Agent Instance is
+as Capability and Platform Division (slow, deliberate), while Agent Instance is
 governed at the cadence of Runtime and Trace (constant, cheap, disposable).
 This is also what makes "Agent Definition implements Capability" a
 meaningful, stable statement.
@@ -78,7 +80,7 @@ meaningful, stable statement.
 ## 3. Entity Categories
 
 - **Spine** (tree-shaped, single ownership, slow-changing): Organization,
-  Department, Capability
+  Platform Division, Capability
 - **Execution** (many-to-many with Capability, fast-changing): Agent
   Definition, Agent Instance, Skill, Workflow, Tool, Runtime
 - **Substrate** (graph-structured, cross-cutting, addressable from
@@ -90,10 +92,10 @@ meaningful, stable statement.
 
 ## 4. Relationships
 
-- Organization **owns** Department
-- Organization **governs** Department
-- Department **owns** Capability
-- Department **owns** Agent Definition
+- Organization **owns** Platform Division
+- Organization **governs** Platform Division
+- Platform Division **owns** Capability
+- Platform Division **owns** Agent Definition
 - Capability **depends on** Capability *(governed — see §7)*
 - Agent Definition **implements** Capability
 - Capability **governs** Agent Definition
@@ -130,14 +132,14 @@ meaningful, stable statement.
 
 | Entity | Owner |
 |---|---|
-| Department | Organization |
-| Capability | Exactly one Department |
-| Agent Definition | Exactly one Department |
-| Agent Instance | Not owned — a transient instantiation, tracked by Runtime, accountable to the Department that owns its Agent Definition |
+| Platform Division | Organization |
+| Capability | Exactly one Platform Division |
+| Agent Definition | Exactly one Platform Division |
+| Agent Instance | Not owned — a transient instantiation, tracked by Runtime, accountable to the Platform Division that owns its Agent Definition |
 | Skill / Tool / Runtime | Owned centrally |
 | Workflow | Owned centrally |
-| Knowledge | Collectively owned by the Organization; each item has a home Department |
-| Memory | Owned/scoped by the Agent Instance (or Department) that produced it |
+| Knowledge | Collectively owned by the Organization; each item has a home Platform Division |
+| Memory | Owned/scoped by the Agent Instance (or Platform Division) that produced it |
 | Trace | Owned by no one — immutable, append-only, governed only by retention policy |
 
 ---
@@ -146,8 +148,8 @@ meaningful, stable statement.
 
 | Entity | Lifecycle |
 |---|---|
-| Department, Capability | Created/retired via architectural decision, architect approval. Capability deprecation requires a defined sunset path. A Capability with zero active Agent Definitions implementing it is an invalid steady state and must be flagged for governance review — it is not silently acceptable. |
-| Agent Definition | Versioned; created/deprecated at Department discretion within Capability governance. Its version is bound to the Capability contract version it implements. |
+| Platform Division, Capability | Created/retired via architectural decision, architect approval. Capability deprecation requires a defined sunset path. A Capability with zero active Agent Definitions implementing it is an invalid steady state and must be flagged for governance review — it is not silently acceptable. |
+| Agent Definition | Versioned; created/deprecated at Platform Division discretion within Capability governance. Its version is bound to the Capability contract version it implements. |
 | Agent Instance | Fastest-changing lifecycle in the model, by design: spawned, active, terminated — no governance overhead per instance. |
 | Skill / Tool | Versioned independently; may evolve as long as the interface is preserved. Because AI-implemented Skills can drift behaviorally without an interface change, Skill/Tool version changes that alter behavior materially should be documented at promotion time, not just interface-checked. |
 | Runtime | Versioned independently; evolved through governed revisions, with compatibility boundaries preserved where applicable; behavioral drift is documented at change time. |
@@ -187,7 +189,7 @@ other entity's continued existence.
    automatically.
 9. Every Capability-to-Capability dependency must be explicit and must
    reference a specific versioned contract.
-10. Cross-Department Capability dependencies require governance approval
+10. Cross-Platform-Division Capability dependencies require governance approval
     through the Decision-Making Process — never silent adoption.
 11. The full graph of Capability dependencies must remain queryable and
     observable at all times — no undocumented dependencies.
@@ -214,7 +216,7 @@ other entity's continued existence.
   for vendor/model independence.
 - Substrate entities are cross-cutting and addressable from any point in
   the Spine or Execution layer — they are not owned by, or private to, any
-  single Department, Capability, or Agent.
+  single Platform Division, Capability, or Agent.
 - Runtime and Tool are the only entities permitted to name or imply
   anything about specific external technology, vendors, or models. No
   other entity's definition may reference implementation detail.
@@ -263,7 +265,7 @@ Deferred concepts. Not canonical entities in v1.0.
 | **Goal / Objective** | Needed once AIOS pursues standing, multi-step objectives spanning multiple Capability invocations over time, rather than only responding to point-in-time requests. | Current operation is invocation-scoped. Adding intent-modeling now would describe behavior the system doesn't yet exercise — premature for a minimal model. |
 | **Escalation / Incident** | Needed once Agent autonomy increases to the point that "this requires human attention" must be a structural, queryable state. | Today, escalation is adequately handled procedurally via the existing Decision-Making Process plus Trace's success/failure/escalation status field — no dedicated entity required yet. |
 | **Steward** | Needed if AIOS is to formally model hybrid human+AI accountability (approvals, reviews, sign-offs) rather than treat human ownership as incidental. | Current governance (architect-approved decisions) already covers accountability without a formal entity. Whether human accountability needs entity-level treatment is still an open question, not yet a demonstrated need. |
-| **Cost Management System** | Needed for attributing real compute/vendor spend back to Departments and Capabilities as usage scales. | Trace already reserves a cost/resource metadata field. Sufficient until aggregation or reporting needs demonstrably outgrow a field on Trace. |
+| **Cost Management System** | Needed for attributing real compute/vendor spend back to Platform Divisions and Capabilities as usage scales. | Trace already reserves a cost/resource metadata field. Sufficient until aggregation or reporting needs demonstrably outgrow a field on Trace. |
 | **Knowledge Trust Scoring** | Needed once promotion volume grows large enough that a binary canonical/not-canonical gate becomes either a bottleneck or a quality risk. | Promotion is currently assumed to be a deliberate, low-volume, governed process where binary canonical status is still sufficient. |
 | **Autonomous Capability Creation** | Needed only if AIOS moves toward higher autonomy where an Agent may need to propose new Capabilities rather than operate solely within architect-defined ones. | Capability creation is intentionally, not accidentally, restricted to architect-approved decisions under the current governance model. This is a deliberate constraint for the foreseeable future, not a gap. |
 
