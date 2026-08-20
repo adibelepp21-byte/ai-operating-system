@@ -40,6 +40,7 @@ from types import MappingProxyType
 from typing import Iterable, Mapping, Optional, Tuple
 
 from .exceptions import (
+    ConflictingAgentDefinitionOwnership,
     DisputedCapabilityOwnership,
     ConflictingCapabilityOwnership,
     InvalidDepartment,
@@ -96,13 +97,22 @@ class DepartmentIdentity:
 class Department:
     """An accountability unit owned by exactly one Organization (Freeze §4).
 
-    Owns Capabilities (INV-1). Ownership is held as capability *keys*, never as
-    embedded Capability state. Agent Definition ownership (INV-2) is realizable
-    on this surface but is a separate construction target, not built here."""
+    Freeze §4 [E] gives a Department two ownership responsibilities — it *"owns
+    Capabilities **and Agent Definitions**"* — and INV-2 [E] fixes the second:
+    *"Every Agent Definition is owned by exactly one Department."* Both are held
+    as identity *keys*, never as embedded state; the owned entity's own boundary
+    owns its data, and holding keys is what keeps this package free of any
+    dependency on Agent (department_spec §8).
+
+    INV-2's *second* clause — that a Definition *"implements at least one
+    Capability"* — is **not** enforced here. Checking a Definition against
+    Capabilities is Agent construction discipline, which `agent_spec §12`/`§13`
+    [O] place in the Agent Factory, *"reserved to the Architect"*."""
 
     identity: DepartmentIdentity
     organization: OrganizationIdentity
     owned_capabilities: Tuple[str, ...] = field(default_factory=tuple)
+    owned_agent_definitions: Tuple[str, ...] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
         if not isinstance(self.identity, DepartmentIdentity):
@@ -112,18 +122,35 @@ class Department:
                 "organization must be exactly one OrganizationIdentity "
                 "(Freeze §4: a Department is owned by an Organization)"
             )
-        if not isinstance(self.owned_capabilities, tuple):
-            raise InvalidDepartment("owned_capabilities must be a tuple")
+        self._validate_owned(
+            self.owned_capabilities, "owned_capabilities", "capability_key", "INV-1"
+        )
+        self._validate_owned(
+            self.owned_agent_definitions,
+            "owned_agent_definitions",
+            "agent_definition_key",
+            "INV-2",
+        )
+
+    def _validate_owned(
+        self, owned: Tuple[str, ...], field_name: str, key_name: str, invariant: str
+    ) -> None:
+        """Both ownership sets carry the same rule: distinct, non-empty keys.
+
+        `agent_definition_key` is the ratified identity name already used by the
+        Agent Definition contract; it is named identically here to avoid
+        terminology drift."""
+        if not isinstance(owned, tuple):
+            raise InvalidDepartment(f"{field_name} must be a tuple")
         seen = set()
-        for capability_key in self.owned_capabilities:
-            _require_text(capability_key, "capability_key", InvalidDepartment)
-            if capability_key in seen:
+        for key in owned:
+            _require_text(key, key_name, InvalidDepartment)
+            if key in seen:
                 raise InvalidDepartment(
-                    f"{self.identity.department_key!r} claims "
-                    f"{capability_key!r} more than once; ownership is exactly "
-                    "one (INV-1)"
+                    f"{self.identity.department_key!r} claims {key!r} more "
+                    f"than once; ownership is exactly one ({invariant})"
                 )
-            seen.add(capability_key)
+            seen.add(key)
 
 
 class OwnershipGraph:
@@ -134,7 +161,12 @@ class OwnershipGraph:
     detect, don't decide (PR-3), matching how `CapabilityGraph` reports INV-14.
     """
 
-    __slots__ = ("_organizations", "_departments", "_owner_of")
+    __slots__ = (
+        "_organizations",
+        "_departments",
+        "_owner_of",
+        "_definition_owner_of",
+    )
 
     def __init__(
         self,
@@ -142,6 +174,7 @@ class OwnershipGraph:
         departments: Iterable[Department],
     ) -> None:
         orgs = {}
+        definition_owner_of = {}
         for organization in organizations:
             if not isinstance(organization, Organization):
                 raise InvalidOrganization("every member must be an Organization")
@@ -181,11 +214,26 @@ class OwnershipGraph:
                     )
                 owner_of[capability_key] = key
 
+            # INV-2 clause 1 [E]: *"Every Agent Definition is owned by exactly
+            # one Department."* Same rule as INV-1, a different owned entity.
+            for definition_key in department.owned_agent_definitions:
+                existing = definition_owner_of.get(definition_key)
+                if existing is not None:
+                    raise ConflictingAgentDefinitionOwnership(
+                        f"agent definition {definition_key!r} is claimed by "
+                        f"both {existing!r} and {key!r}; INV-2 admits exactly "
+                        "one owning Department"
+                    )
+                definition_owner_of[definition_key] = key
+
             depts[key] = department
 
         self._organizations = MappingProxyType(dict(orgs))
         self._departments = MappingProxyType(dict(depts))
         self._owner_of = MappingProxyType(dict(owner_of))
+        self._definition_owner_of = MappingProxyType(
+            dict(definition_owner_of)
+        )
 
     # -- queries ---------------------------------------------------------
 
@@ -229,6 +277,42 @@ class OwnershipGraph:
                 "the graph (INV-1)"
             )
         return self._departments[owner]
+
+    def owner_of_agent_definition(self, agent_definition_key: str) -> Department:
+        """The single Department owning an Agent Definition (INV-2 clause 1).
+
+        Resolved from the Department side only. This package holds the ratified
+        `agent_definition_key` and never imports Agent (department_spec §8), so
+        an Agent Definition's own view of its owner is not visible here — see
+        `unowned_agent_definitions` for what that costs."""
+        owner = self._definition_owner_of.get(agent_definition_key)
+        if owner is None:
+            raise UnknownDepartment(
+                f"agent definition {agent_definition_key!r} has no owning "
+                "Department in the graph (INV-2)"
+            )
+        return self._departments[owner]
+
+    def agent_definitions_of(self, department_key: str) -> Tuple[str, ...]:
+        """The Agent Definition keys a Department owns (Freeze §4)."""
+        return tuple(sorted(self.department(department_key).owned_agent_definitions))
+
+    def unowned_agent_definitions(
+        self, agent_definition_keys: Iterable[str]
+    ) -> Tuple[str, ...]:
+        """Definition keys no Department claims — flagged, never raised.
+
+        INV-2 makes an unowned Definition invalid, but this boundary detects and
+        does not decide (PR-3): over a partial corpus an absent claim is
+        ordinary incompleteness, and the caller supplies the keys precisely so
+        that no `capability → agent` dependency is created."""
+        return tuple(
+            sorted(
+                key
+                for key in agent_definition_keys
+                if key not in self._definition_owner_of
+            )
+        )
 
     # -- R-4: bind DepartmentRef to its referent --------------------------
 

@@ -12,6 +12,9 @@ and Department, and adds nothing to them:
     the hierarchy root with nothing above it.
   - INV-1  — a Capability is owned by *exactly one* Department; two claimants
     fail closed.
+  - INV-2  — clause 1 only: an Agent Definition is owned by *exactly one*
+    Department. Clause 2 (*implements ≥1 Capability*) is Agent construction
+    discipline, [O]-reserved to the Architect by `agent_spec §12`/`§13`.
   - PR-3   — unowned and unresolvable references are *flagged*, never raised,
     when the corpus is surveyed.
   - PR-4   — malformed structure and unresolvable references fail closed.
@@ -34,6 +37,7 @@ from pathlib import Path
 from native_core.core.capability import (
     Capability,
     CapabilityIdentity,
+    ConflictingAgentDefinitionOwnership,
     ConflictingCapabilityOwnership,
     Department,
     DisputedCapabilityOwnership,
@@ -55,9 +59,14 @@ def _org(key: str = "aios") -> Organization:
     return Organization(OrganizationIdentity(key))
 
 
-def _dept(key: str, organization: str = "aios", capabilities=()) -> Department:
+def _dept(
+    key: str, organization: str = "aios", capabilities=(), definitions=()
+) -> Department:
     return Department(
-        DepartmentIdentity(key), OrganizationIdentity(organization), tuple(capabilities)
+        DepartmentIdentity(key),
+        OrganizationIdentity(organization),
+        tuple(capabilities),
+        tuple(definitions),
     )
 
 
@@ -285,6 +294,98 @@ class TestOwnershipEdgeAgreement(unittest.TestCase):
         self.assertEqual(len(self.graph.resolve(corpus)), 2)
 
 
+class TestInv2AgentDefinitionOwnership(unittest.TestCase):
+    """INV-2 clause 1 — an Agent Definition is owned by exactly one Department.
+
+    Freeze §4 [E] gives a Department both ownership responsibilities: it *"owns
+    Capabilities **and Agent Definitions**"*. Ownership is held as ratified
+    `agent_definition_key` values, so this package never imports Agent."""
+
+    def setUp(self):
+        self.graph = OwnershipGraph(
+            [_org()],
+            [
+                _dept("platform", capabilities=["cap.a"],
+                      definitions=["ad.builder", "ad.linter"]),
+                _dept("research", definitions=["ad.prober"]),
+            ],
+        )
+
+    def test_definition_resolves_to_its_owning_department(self):
+        owner = self.graph.owner_of_agent_definition("ad.linter")
+        self.assertEqual(owner.identity, DepartmentIdentity("platform"))
+
+    def test_two_departments_claiming_one_definition_fails_closed(self):
+        with self.assertRaises(ConflictingAgentDefinitionOwnership):
+            OwnershipGraph(
+                [_org()],
+                [
+                    _dept("platform", definitions=["ad.linter"]),
+                    _dept("ops", definitions=["ad.linter"]),
+                ],
+            )
+
+    def test_one_department_claiming_a_definition_twice_fails_closed(self):
+        with self.assertRaises(InvalidDepartment):
+            _dept("platform", definitions=["ad.a", "ad.a"])
+
+    def test_unknown_definition_fails_closed(self):
+        with self.assertRaises(UnknownDepartment):
+            self.graph.owner_of_agent_definition("ad.absent")
+
+    def test_definitions_of_a_department_are_queryable(self):
+        self.assertEqual(
+            self.graph.agent_definitions_of("platform"), ("ad.builder", "ad.linter")
+        )
+
+    def test_unowned_definitions_are_flagged_never_raised(self):
+        """PR-3 — the caller supplies the keys, so no capability→agent edge."""
+        self.assertEqual(
+            self.graph.unowned_agent_definitions(["ad.builder", "ad.ghost"]),
+            ("ad.ghost",),
+        )
+
+    def test_ownership_defaults_to_empty(self):
+        self.assertEqual(_dept("platform").owned_agent_definitions, ())
+
+    def test_definition_keys_must_be_non_empty_text(self):
+        with self.assertRaises(InvalidDepartment):
+            _dept("platform", definitions=[""])
+        with self.assertRaises(InvalidDepartment):
+            _dept("platform", definitions=[None])
+
+    def test_capability_and_definition_ownership_are_independent(self):
+        """The same key may name a Capability and a Definition; the two sets
+        are distinct namespaces and must not collide with each other."""
+        graph = OwnershipGraph(
+            [_org()],
+            [
+                _dept("platform", capabilities=["shared.key"]),
+                _dept("research", definitions=["shared.key"]),
+            ],
+        )
+        self.assertEqual(graph.owner_of("shared.key").identity.department_key, "platform")
+        self.assertEqual(
+            graph.owner_of_agent_definition("shared.key").identity.department_key,
+            "research",
+        )
+
+    def test_inv2_second_clause_is_not_enforced_here(self):
+        """`agent_spec §12`/`§13` [O] reserve Agent construction discipline —
+        validating a Definition against Capabilities — to the Architect. A
+        Department owning a Definition while owning no Capability at all is
+        therefore accepted by this boundary, and that silence is deliberate."""
+        graph = OwnershipGraph([_org()], [_dept("research", definitions=["ad.prober"])])
+        self.assertEqual(graph.agent_definitions_of("research"), ("ad.prober",))
+        self.assertEqual(graph.departments()["research"].owned_capabilities, ())
+
+    def test_no_agent_import_is_introduced(self):
+        """department_spec §8 [E] — must not depend on Agent."""
+        source = (Path(__file__).resolve().parents[1] / "ownership.py").read_text()
+        self.assertNotIn("import agent", source)
+        self.assertNotIn("from native_core.core.agent", source)
+
+
 class TestNoNewBoundary(unittest.TestCase):
     """Blueprint §4 — the core region holds exactly eleven boundaries."""
 
@@ -314,9 +415,23 @@ class TestReservedStructureAbsent(unittest.TestCase):
         self.assertEqual(fields & reserved, set())
 
     def test_department_has_exactly_the_freeze_shape(self):
+        """Freeze §4 [E]: a Department *"owns Capabilities **and Agent
+        Definitions**"*, and is *"owned by Organization"*. Both ownership sets
+        are named by the ratified entry, and INV-2 [E] fixes the second —
+        *"Every Agent Definition is owned by exactly one Department."*
+
+        `owned_agent_definitions` was added under `ACT-CC-F03-038`. It is not
+        new structure: the earlier expectation encoded only half of the shape
+        this test's own authority states. Nothing beyond those two ownership
+        sets and the identity/parent edge may appear here."""
         self.assertEqual(
             set(Department.__dataclass_fields__),
-            {"identity", "organization", "owned_capabilities"},
+            {
+                "identity",
+                "organization",
+                "owned_capabilities",
+                "owned_agent_definitions",
+            },
         )
 
     def test_entities_expose_no_execution_surface(self):

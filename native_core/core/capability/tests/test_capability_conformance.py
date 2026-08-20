@@ -425,7 +425,18 @@ class TestBoundaryRules(unittest.TestCase):
         Capability's `DepartmentRef` and the Department's `owned_capabilities`
         — so the two can now contradict each other. The exception names that
         contradiction. No new invariant, entity, boundary, lifecycle or
-        governance semantic accompanies it."""
+        governance semantic accompanies it.
+
+        It grew once more by `ConflictingAgentDefinitionOwnership` under
+        `ACT-CC-F03-038`, for the same reason. Freeze §4 [E] gives a Department
+        two ownership responsibilities — it *"owns Capabilities **and Agent
+        Definitions**"* — and INV-2 [E] fixes the second: *"Every Agent
+        Definition is owned by exactly one Department."* Realizing the half
+        that was left unbuilt needs a name for its violation. Ownership is held
+        as ratified `agent_definition_key` values, so no dependency on Agent is
+        created (department_spec §8), and INV-2's second clause is deliberately
+        not enforced — that is Agent construction discipline, [O]-reserved to
+        the Architect by `agent_spec §12`/`§13`."""
         self.assertEqual(
             set(capability_pkg.__all__),
             {
@@ -442,6 +453,7 @@ class TestBoundaryRules(unittest.TestCase):
                 "UndocumentedCapabilityDependency",
                 "UngovernedCrossDepartmentDependency",
                 # Ownership context — Phase 5 realization (Freeze §4 entities)
+                "ConflictingAgentDefinitionOwnership",
                 "ConflictingCapabilityOwnership",
                 "DisputedCapabilityOwnership",
                 "Department",

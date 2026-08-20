@@ -68,6 +68,7 @@ from .ownership import (
 )
 from .exceptions import (
     CapabilityError,
+    ConflictingAgentDefinitionOwnership,
     ConflictingCapabilityOwnership,
     DisputedCapabilityOwnership,
     InvalidCapability,
@@ -94,6 +95,7 @@ __all__ = [
     "CapabilityError",
     "CapabilityGraph",
     "CapabilityIdentity",
+    "ConflictingAgentDefinitionOwnership",
     "ConflictingCapabilityOwnership",
     "DisputedCapabilityOwnership",
     "Department",

@@ -104,3 +104,11 @@ class DisputedCapabilityOwnership(CapabilityError):
     Distinct from `ConflictingCapabilityOwnership`, which is two Departments
     claiming one Capability. This is the two representations contradicting
     each other about a single edge."""
+
+
+class ConflictingAgentDefinitionOwnership(CapabilityError):
+    """Raised when two Departments claim the same Agent Definition.
+
+    INV-2 [E]: *"Every Agent Definition is owned by exactly one Department."*
+    The Capability analogue is `ConflictingCapabilityOwnership`; Freeze §4 gives
+    a Department both ownership responsibilities under the same rule."""
