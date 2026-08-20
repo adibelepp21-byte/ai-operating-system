@@ -90,3 +90,17 @@ class ConflictingCapabilityOwnership(CapabilityError):
 
     INV-1, and Freeze §4's explicit prohibition on a Department *"owning
     another Department's Capability"*. Exactly one, never two."""
+
+
+class DisputedCapabilityOwnership(CapabilityError):
+    """Raised when the two sides of an ownership edge disagree.
+
+    INV-1 is represented twice — a Capability names its owner through
+    `DepartmentRef`, and a Department names what it owns through
+    `owned_capabilities`. When one side asserts an edge the other does not
+    acknowledge, *"owned by exactly one Department"* is not satisfied: the
+    Capability is owned by zero Departments that agree it is theirs.
+
+    Distinct from `ConflictingCapabilityOwnership`, which is two Departments
+    claiming one Capability. This is the two representations contradicting
+    each other about a single edge."""

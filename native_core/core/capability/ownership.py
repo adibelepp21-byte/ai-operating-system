@@ -19,6 +19,15 @@ the twelve. This module realizes them and ratifies nothing. Authorized by
 FOUNDER · `ACT-CC-F03-035` (`DEC-DEPT-REALIZATION = AUTHORIZE`) and located by
 `ACT-CC-F03-036` Outcome A.
 
+**Ownership reconciliation** (`ACT-CC-F03-037`). Realization put INV-1 on both
+sides of the ownership edge: a Capability names its owner through
+`DepartmentRef`, and a Department names what it owns through
+`owned_capabilities`. Two representations of one fact can contradict each other,
+so `resolve` requires both sides to agree before treating an edge as ownership
+(PR-4), and `disputed_ownership` / `unbacked_ownership_claims` survey a corpus
+without halting (PR-3). This enforces INV-1 and `capability_spec §11`; it adds
+no invariant.
+
 Deliberately absent, because Freeze §4 does not establish them: roles,
 workforce, budgets, KPIs, lifecycle *states*, Department nesting, and
 Department↔Skill/Workflow relations (Inferred, reserved).
@@ -28,9 +37,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from types import MappingProxyType
-from typing import Iterable, Mapping, Tuple
+from typing import Iterable, Mapping, Optional, Tuple
 
 from .exceptions import (
+    DisputedCapabilityOwnership,
     ConflictingCapabilityOwnership,
     InvalidDepartment,
     InvalidOrganization,
@@ -235,8 +245,73 @@ class OwnershipGraph:
             if not isinstance(capability, Capability):
                 raise UnknownDepartment("every member must be a Capability")
             key = capability.owning_department.department_key
-            resolved.append((capability, self.department(key)))
+            department = self.department(key)
+
+            # INV-1 is represented on both sides of the edge. Resolving the
+            # reference is not enough: the Department must also acknowledge
+            # the Capability, or no Department actually owns it. Fails closed
+            # (PR-4) — a contradiction is not resolved by preferring a side.
+            capability_key = capability.identity.capability_key
+            if capability_key not in department.owned_capabilities:
+                claimant = self._owner_of.get(capability_key)
+                raise DisputedCapabilityOwnership(
+                    f"{capability_key!r} names department {key!r} as its "
+                    f"owner, but {key!r} does not claim it"
+                    + (
+                        f"; {claimant!r} does"
+                        if claimant is not None
+                        else " and no Department in the graph does"
+                    )
+                    + " (INV-1: owned by exactly one Department)"
+                )
+            resolved.append((capability, department))
         return tuple(resolved)
+
+    def disputed_ownership(
+        self, capabilities: Iterable[Capability]
+    ) -> Tuple[Tuple[str, str, Optional[str]], ...]:
+        """Edges where the Capability and the Department contradict each other.
+
+        Each entry is `(capability_key, department_named_by_the_capability,
+        department_that_actually_claims_it_or_None)`. Detect, don't decide
+        (PR-3): surveys the whole corpus and reports, so a reconciliation pass
+        sees every contradiction rather than only the first.
+
+        References that resolve to no Department at all are *not* reported
+        here — that is `unresolved_ownership`, a different condition."""
+        disputes = []
+        for capability in capabilities:
+            named = capability.owning_department.department_key
+            department = self._departments.get(named)
+            if department is None:
+                continue
+            capability_key = capability.identity.capability_key
+            if capability_key not in department.owned_capabilities:
+                disputes.append(
+                    (capability_key, named, self._owner_of.get(capability_key))
+                )
+        return tuple(sorted(disputes))
+
+    def unbacked_ownership_claims(
+        self, capabilities: Iterable[Capability]
+    ) -> Tuple[Tuple[str, str], ...]:
+        """Departments claiming Capabilities no supplied Capability declares.
+
+        Each entry is `(department_key, capability_key)`. A claim with no
+        Capability behind it is reported, never raised: over a partial corpus
+        it is ordinary incompleteness, and deciding which it is belongs to
+        governance, not to this boundary (PR-3)."""
+        declared = {
+            capability.identity.capability_key for capability in capabilities
+        }
+        return tuple(
+            sorted(
+                (department_key, capability_key)
+                for department_key, department in self._departments.items()
+                for capability_key in department.owned_capabilities
+                if capability_key not in declared
+            )
+        )
 
     def unresolved_ownership(
         self, capabilities: Iterable[Capability]

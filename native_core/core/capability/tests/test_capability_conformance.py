@@ -414,7 +414,18 @@ class TestBoundaryRules(unittest.TestCase):
         AUTHORIZE` and located here by `ACT-CC-F03-036` Outcome A. The surface
         therefore grows by the ratified Freeze §4 entities `Organization` and
         `Department` and their ownership graph — and by nothing else. No new
-        entity was created; both were already two of the twelve."""
+        entity was created; both were already two of the twelve.
+
+        It then grew once more by `DisputedCapabilityOwnership` under
+        `ACT-CC-F03-037`. That is a *named failure mode*, not an addition to
+        the architecture: INV-1 [E] already requires a Capability be *"owned by
+        exactly one Department"*, and `capability_spec §11` [E] already
+        requires that an invalid ownership state fail closed (PR-4). Realizing
+        Department ownership put INV-1 on both sides of the edge — the
+        Capability's `DepartmentRef` and the Department's `owned_capabilities`
+        — so the two can now contradict each other. The exception names that
+        contradiction. No new invariant, entity, boundary, lifecycle or
+        governance semantic accompanies it."""
         self.assertEqual(
             set(capability_pkg.__all__),
             {
@@ -432,6 +443,7 @@ class TestBoundaryRules(unittest.TestCase):
                 "UngovernedCrossDepartmentDependency",
                 # Ownership context — Phase 5 realization (Freeze §4 entities)
                 "ConflictingCapabilityOwnership",
+                "DisputedCapabilityOwnership",
                 "Department",
                 "DepartmentIdentity",
                 "InvalidDepartment",

@@ -15,7 +15,8 @@ and Department, and adds nothing to them:
   - PR-3   — unowned and unresolvable references are *flagged*, never raised,
     when the corpus is surveyed.
   - PR-4   — malformed structure and unresolvable references fail closed.
-  - R-4    — `DepartmentRef` resolves to a realized Department.
+  - R-4    — `DepartmentRef` resolves to a realized Department, and the two
+    sides of the ownership edge must agree before it is treated as ownership.
   - No new boundary — realization lives inside the capability package; the core
     region still holds exactly eleven boundaries.
   - Reserved structure absent — no roles, workforce, budgets, KPIs, lifecycle
@@ -35,6 +36,7 @@ from native_core.core.capability import (
     CapabilityIdentity,
     ConflictingCapabilityOwnership,
     Department,
+    DisputedCapabilityOwnership,
     DepartmentIdentity,
     DepartmentRef,
     InvalidDepartment,
@@ -209,6 +211,78 @@ class TestR4DepartmentRefBinding(unittest.TestCase):
     def test_stub_still_accepts_any_key_without_a_graph(self):
         """The stub alone cannot verify INV-1 — that is what realization adds."""
         self.assertEqual(DepartmentRef("anything-at-all").department_key, "anything-at-all")
+
+
+class TestOwnershipEdgeAgreement(unittest.TestCase):
+    """INV-1 is represented on both sides; the two must agree.
+
+    A Capability names its owner (`DepartmentRef`) and a Department names what
+    it owns (`owned_capabilities`). Two representations of one fact can
+    contradict each other, and *"owned by exactly one Department"* is not
+    satisfied by a claim the named owner does not acknowledge."""
+
+    def setUp(self):
+        self.graph = OwnershipGraph(
+            [_org()],
+            [
+                _dept("platform", capabilities=["cap.b", "cap.c"]),
+                _dept("research"),
+            ],
+        )
+
+    def test_agreeing_edge_resolves(self):
+        (_, department), = self.graph.resolve([_capability("cap.c", "platform")])
+        self.assertEqual(department.identity, DepartmentIdentity("platform"))
+
+    def test_named_owner_that_does_not_claim_it_fails_closed(self):
+        """PR-4 — the contradiction is not resolved by preferring a side."""
+        with self.assertRaises(DisputedCapabilityOwnership):
+            self.graph.resolve([_capability("cap.b", "research")])
+
+    def test_dispute_names_both_sides(self):
+        with self.assertRaises(DisputedCapabilityOwnership) as raised:
+            self.graph.resolve([_capability("cap.b", "research")])
+        message = str(raised.exception)
+        self.assertIn("research", message)
+        self.assertIn("platform", message)
+        self.assertIn("INV-1", message)
+
+    def test_disputes_are_surveyed_not_halted_on(self):
+        """PR-3 — a reconciliation pass sees every dispute, not just the first."""
+        disputes = self.graph.disputed_ownership(
+            [
+                _capability("cap.b", "research"),
+                _capability("cap.c", "platform"),
+            ]
+        )
+        self.assertEqual(disputes, (("cap.b", "research", "platform"),))
+
+    def test_survey_reports_no_claimant_as_none(self):
+        graph = OwnershipGraph([_org()], [_dept("research")])
+        self.assertEqual(
+            graph.disputed_ownership([_capability("cap.q", "research")]),
+            (("cap.q", "research", None),),
+        )
+
+    def test_unresolvable_reference_is_not_reported_as_a_dispute(self):
+        """Naming no Department at all is a different condition."""
+        corpus = [_capability("cap.z", "absent")]
+        self.assertEqual(self.graph.disputed_ownership(corpus), ())
+        self.assertEqual(self.graph.unresolved_ownership(corpus), ("cap.z",))
+
+    def test_claims_with_no_capability_behind_them_are_flagged_never_raised(self):
+        """PR-3 — over a partial corpus this is incompleteness, not a verdict."""
+        self.assertEqual(
+            self.graph.unbacked_ownership_claims([_capability("cap.b", "platform")]),
+            (("platform", "cap.c"),),
+        )
+
+    def test_a_fully_reconciled_corpus_reports_nothing(self):
+        corpus = [_capability("cap.b", "platform"), _capability("cap.c", "platform")]
+        self.assertEqual(self.graph.disputed_ownership(corpus), ())
+        self.assertEqual(self.graph.unresolved_ownership(corpus), ())
+        self.assertEqual(self.graph.unbacked_ownership_claims(corpus), ())
+        self.assertEqual(len(self.graph.resolve(corpus)), 2)
 
 
 class TestNoNewBoundary(unittest.TestCase):
