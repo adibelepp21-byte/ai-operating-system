@@ -1,8 +1,8 @@
 # AIOS Volume Activation Model
 
-**Version:** v1.5
+**Version:** v1.6
 **Status:** Canonical — governance machinery
-**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018` · `ACT-CC-F03-020` · `ACT-CC-F03-023` · `ACT-CC-F03-024`
+**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018` · `ACT-CC-F03-020` · `ACT-CC-F03-023` · `ACT-CC-F03-024` · `ACT-CC-F03-030`
 **Change in v1.1:** GG-1…GG-4 resolved by FD-015-01/02/03; T6 established; PD-01 review basis adopted
 **Change in v1.2 — GOVERNANCE STATE RECONCILIATION (`ACT-CC-F03-018`):** this
 document's PD-02 lifecycle statements were stale relative to two authoritative
@@ -31,6 +31,12 @@ records a completed binding only — **no eligibility assessment was executed.**
 **Change in v1.5 — ELIGIBILITY ASSESSMENT EXECUTED (`ACT-CC-F03-024`):** AE-01…AE-06
 were assessed individually against repository evidence. Result: **STATE B — NOT
 SATISFIED** (AE-04 and AE-05). AE-01…AE-06 were **not modified** — see §6C.
+**Change in v1.6 — ACTIVATION SEMANTICS DECIDED (`ACT-CC-F03-030`):** the Founder
+selected **DEC-ACT-SEMANTICS = OPTION C — OPERATIVE AUTHORITY**, recorded with its
+enumerated authority set (OA-01…OA-07) and its explicit non-conferrals at
+**`GDR-0027`**. `AGC-01` and `AGC-02` are thereby satisfiable; `AGC-06` still fails.
+New open boundary **OB-01** (actor through which PD-02 authority is exercised).
+**PD-02 is still NOT ACTIVATED.**
 **Recorded by:** Claude Code / Co-Founder (Construction Phase)
 **Date:** 2026-08-16
 **Scope:** PD-01 (Volume 1) · PD-02 (Volume 2)
@@ -221,7 +227,7 @@ Decision. These supersede §6 as the governing eligibility requirements.
 | **1** | The applicable integrated review requirement is satisfied | **SATISFIED** | P7-I99 Volume 2 R1–R11 = `PASS` / `APPROVED FOR FREEZE` — `GDR-0025` |
 | **2** | The Volume satisfies its applicable Freeze Gate | **SATISFIED** | R11 = `FREEZE READY` |
 | **3** | The Volume is **actually** recorded as `FROZEN` through the canonical lifecycle mechanism | **SATISFIED** | `GDR-0026`, appended to this register's canonical mechanism |
-| **4** | All Activation-specific conditions separately required by the Founder are satisfied | **NOT SATISFIED** | AE-01…AE-06 assessed under `ACT-CC-F03-024`; **AE-04 and AE-05 NOT SATISFIED** — see §6C |
+| **4** | All Activation-specific conditions separately required by the Founder are satisfied | **NOT SATISFIED** | AE-04 unchanged (3 dispositions Founder-reserved). AE-05: Gate criteria proposal now at **v0.4**, 4/5 criteria pass after `GDR-0027`; **AGC-06 still fails** and the set remains **NON-CANONICAL** pending `DEC-ADOPTION` |
 
 **Condition 4 is no longer an empty set.** `ACT-CC-F03-020 §3` defines it as the
 PD-02 condition set below. It may not be supplemented, expanded, reinterpreted or
@@ -407,6 +413,10 @@ PD-02 P7-I99 ............. PASS / APPROVED FOR FREEZE (GDR-0025)
 RG-1 .............................. RESOLVED (ACT-CC-F03-020)
 AG-05 evidence hold ............... SATISFIED (ACT-CC-F03-020 §7)
 AG-05 binding ..................... EXECUTED (ACT-CC-F03-023, Branch B) · STOP-01 CLOSED
+DEC-ACT-SEMANTICS ................. DECIDED — Option C, Operative Authority (GDR-0027)
+Operative authority set ........... OA-01…OA-07 enumerated · OB-01 open (exercising actor)
+DEC-REVOCATION .................... FOUNDER-RESERVED (blocks AGC-06)
+DEC-ADOPTION ...................... FOUNDER-RESERVED (AGC set NON-CANONICAL)
 PD-02 Activation Eligibility ..... ASSESSED (ACT-CC-F03-024) · RESULT: NOT SATISFIED — AE-04, AE-05
 PD-02 Activation Gate ............ NOT EXECUTED
 PD-02 Activation Authorization ... NOT ISSUED

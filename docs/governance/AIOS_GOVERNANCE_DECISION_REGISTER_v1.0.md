@@ -3389,8 +3389,129 @@ P7-I99-V2-PD-02-001 → `GDR-0025` → **Founder freeze authorization
 
 ---
 
+### GDR-0027 — Founder Decision · DEC-ACT-SEMANTICS (Option C — Operative Authority)
+
+**Identifier:** GDR-0027
+**Date:** 2026-08-20
+**Tier:** Governance-semantics determination — Founder-reserved
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** `ACT-CC-F03-030 §1`, `§34.1`
+**Closes:** `DEC-ACT-SEMANTICS`, open since `GDR-0023` GG-2
+
+---
+
+#### 1. Decision text (verbatim)
+
+> **DEC-ACT-SEMANTICS — OPTION C — OPERATIVE AUTHORITY**
+>
+> **PD-02 ACTIVATED means that PD-02 enters an activated state in which the
+> operative authority/capability explicitly defined by the applicable activation
+> contract and canonical governance becomes effective.**
+
+Recorded as the Founder stated it, per §2.3 verbatim discipline. The Act further
+directs that the decision **must not** be reinterpreted as status-only,
+informational, advisory, or consumer-guarantee-only.
+
+#### 2. What this closes
+
+`GDR-0023` recorded the gap in terms: *"No source defines what activation confers
+or requires."* `ACT-CC-F03-024` measured it again (**0** resident sources) and
+`ACT-CC-F03-029` re-derived it twice by independent methods. **That gap is now
+closed by Founder decision.**
+
+#### 3. The bounding rule the Founder attached
+
+`ACT-CC-F03-030 §1`: *"the phrase **operative authority** MUST NOT be expanded
+beyond the authority explicitly supported by"* existing canonical governance, the
+PD-02 specification, the activation contract, explicit Founder decisions,
+approved architectural decisions, and evidence recovered during that Act — and
+*"Claude Code must not invent authority merely because Option C was selected."*
+
+**Option C therefore names a mechanism, not a quantity.** It says the authority
+already defined becomes *effective*; it creates none.
+
+#### 4. The operative authority set — enumerated from resident sources
+
+Every entry is drawn from PD-02's **frozen** corpus (`A5`) and existing Founder
+decisions. Classification per `ACT-CC-F03-030 §7`.
+
+| ID | Authority | Scope | Source | Class |
+|---|---|---|---|---|
+| **OA-01** | **Domain Authority** — system structure · domain boundary · architecture consistency · reference architecture | Architecture domain | `A5 §5` | **EXPLICIT** |
+| **OA-02** | **Decision Authority** over material architectural decisions — structure, boundary, consistency, reference/canonical architecture, standards, decisions, assessment outcomes | Architecture domain; requires architectural basis, traceability to evidence, and a decision record where material | `A5 §6` | **EXPLICIT** |
+| **OA-03** | **Architecture Review Authority** — determine need and scope, evaluate evidence, set findings, assessments and conditions, escalate | Architecture Review | `A5 §8` | **EXPLICIT** |
+| **OA-04** | **Approval Authority** — Canonical Architecture, Blueprint, Standards, ADR, baseline changes, review outcomes | Valid **only** where Decision Domain = Architecture Domain | `A5 §9` | **EXPLICIT** |
+| **OA-05** | **Override Authority (limited)** — only for decisions within PD-02 authority, non-final approvals outside other domains, interpretations contradicting canonical architecture, unauthorized deviations | Architecture domain only; 6 mandatory conditions | `A5 §11` | **EXPLICIT** |
+| **OA-06** | Cross-platform architectural **responsibility** and primary ownership over its named areas | Cross-platform architecture governance | `C8` | **EXPLICIT** |
+| **OA-07** | The above become **effective** upon activation rather than remaining designated | — | Option C + `A5` | **DERIVED** — mechanically unavoidable; creates no new authority |
+
+#### 5. What activation does NOT confer
+
+Determinable from resident sources, not by inference:
+
+- **Repository-mutation authority.** `FD-01` (`ACT-CC-F03-006 §2`) states the designation *"does **not** confer repository-mutation authority"*, and PD-02's own `A5` claims decisional, review, approval and override authority — never execution. **Nothing confers it, so it is not in the operative set.**
+- **P7-I99 execution authority.** `FD-01` excludes it; `DEL-F03-015-P7I99-001` is the sole P7-I99 authority and is invoked per-Volume.
+- **Replacement of `APT-CD1.1-AA-001`.** `FD-01` holds the two holders **scope-differentiated, not competing**, and expressly not merged. Unchanged.
+- **Authority outside the Architecture domain.** `A5 §9`: where a change needs another domain's authority, PD-02 approval *"tidak menggantikan approval authority tersebut."*
+- **Anything in the GG-2 negative clause** — activation is not completion of AIOS, not Freeze, not P7-I99 PASS, not designation, not architecture ownership, not execution authority.
+- **Activation Authority itself.** Remains **FOUNDER-RESERVED**.
+
+#### 6. Boundary identified but NOT resolved
+
+`ACT-CC-F03-030 §1` directs that an undefined boundary be **defined and packaged**, not invented.
+
+| ID | Open boundary | Why unresolved |
+|---|---|---|
+| **OB-01** | Through which **actor** is PD-02's operative authority exercised? A Platform Division is an organizational unit, not an actor. `B`-series describes capability as *"cluster responsibility … dapat dijalankan oleh satu kategori workforce"*, and the Canonical Domain Model carries a Platform-Division/agent relationship — but **no resident instrument names the occupant of PD-02's authority** | Requires a Founder appointment act, structurally analogous to `APT-CD1.1-AA-001` |
+
+**OB-01 does not block the enumeration above**; it blocks *exercise*, not *definition*.
+
+#### 7. Standing changes
+
+- **`DEC-ACT-SEMANTICS` is DECIDED.** PD-02 activation semantics = **Option C, Operative Authority**.
+- The operative authority set is **OA-01 … OA-07** as enumerated, bounded by §5.
+- **`AGC-01` becomes satisfiable** — a resident instrument (this entry) now enumerates activation effects.
+
+#### 8. Explicitly not changed
+
+- **PD-02 is NOT ACTIVATED.** This entry defines what activation *would* confer; it performs no lifecycle transition.
+- Activation Gate **NOT EXECUTED** · Activation Authorization **NOT ISSUED** · Activation **NOT EXECUTED**.
+- `AE-04` unchanged — its three dispositions remain Founder-reserved; Option C does not bear on any of them.
+- `DEC-REVOCATION` unchanged — still Founder-reserved.
+- `DEC-ADOPTION` unchanged — the AGC set remains **NON-CANONICAL**.
+- Constitution, Canonical Domain Model, Architecture Freeze, Appointment Register, Delegation Register, Finding Register, `ADR-0001…0012`, both Volume corpora and the P7-I99 review — **all unchanged**.
+- **AIOS is NOT COMPLETE.**
+
+#### 9. Anti-self-authorization
+
+**Decision authority: Founder (`ACT-CC-F03-030 §1`). Recording actor: Claude Code.
+Decision inference: NONE.** The recording actor did not select Option C, did not
+recommend it, and did not expand it. Every entry in §4 is quoted or cited from
+PD-02's frozen corpus or an existing Founder decision; the single **DERIVED**
+entry (OA-07) restates the Founder's own sentence. Where the boundary was
+undefined it was recorded as **OB-01** rather than filled. **PASS.**
+
+#### 10. Lineage
+
+`GDR-0023` (GG-2 gap) → `ACT-CC-F03-015 §5` (GG-2 definition) → `ACT-CC-F03-020`
+(RG-1, AE-01…AE-06) → `ACT-CC-F03-024` (AE-05 NOT SATISFIED) → `ACT-CC-F03-027`
+(AGC proposal) → `ACT-CC-F03-029` (decision package, Option A/B/C) → **Founder
+selects Option C** → `ACT-CC-F03-030` → `GDR-0027`.
+
+#### 11. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-16 | `GDR-0023` records GG-2: no source defines what activation confers | Co-Founder, under Founder resolution |
+| 2026-08-20 | `ACT-CC-F03-029` packages Options A / B / C with evidence | Co-Founder |
+| 2026-08-20 | **Founder selects Option C — Operative Authority** | Founder |
+| 2026-08-20 | Operative authority enumerated from resident sources; OB-01 recorded as open | Co-Founder, under FOUNDER · `ACT-CC-F03-030` |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0027 onward.)*
+GDR-0028 onward.)*
 
 ---
 
