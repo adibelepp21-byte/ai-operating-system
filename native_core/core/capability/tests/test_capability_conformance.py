@@ -400,9 +400,25 @@ class TestBoundaryRules(unittest.TestCase):
         self.assertNotIn("workflow", surface)
 
     def test_public_surface_is_exactly_the_declared_exports(self):
+        """The surface grew when the Phase-3 ownership stub was realized.
+
+        The original set captured the boundary as built in Phase 3, where
+        `NCIR §9.6` [E] recorded its Department dependency as a *"(Phase-5
+        stub)"* and [O] recorded it as *"Blocked by: Department ownership
+        (Phase 5) for **full realization**"*. Blueprint §4 [E] places that
+        ownership context here — *"Spine (capability + the ownership context it
+        lives in)"* — and Blueprint §7 [E] lists *"its Department"* among this
+        package's allowed dependencies.
+
+        The realization was authorized by FOUNDER `DEC-DEPT-REALIZATION =
+        AUTHORIZE` and located here by `ACT-CC-F03-036` Outcome A. The surface
+        therefore grows by the ratified Freeze §4 entities `Organization` and
+        `Department` and their ownership graph — and by nothing else. No new
+        entity was created; both were already two of the twelve."""
         self.assertEqual(
             set(capability_pkg.__all__),
             {
+                # Capability — as built in Phase 3
                 "Capability",
                 "CapabilityDependency",
                 "CapabilityError",
@@ -414,6 +430,17 @@ class TestBoundaryRules(unittest.TestCase):
                 "InvalidCapabilityDependency",
                 "UndocumentedCapabilityDependency",
                 "UngovernedCrossDepartmentDependency",
+                # Ownership context — Phase 5 realization (Freeze §4 entities)
+                "ConflictingCapabilityOwnership",
+                "Department",
+                "DepartmentIdentity",
+                "InvalidDepartment",
+                "InvalidOrganization",
+                "Organization",
+                "OrganizationIdentity",
+                "OwnershipGraph",
+                "UnknownDepartment",
+                "UnknownOrganization",
             },
         )
 

@@ -43,5 +43,8 @@
 ## 13. Future Evolution
 [O] Organization-level policy, budget, workforce and reporting structures are **not** in Freeze §4 and are reserved to the Architect.
 
+## 13A. Implementation Location — RESOLVED
+[A] Realized alongside Department at `native_core/core/capability/ownership.py`, inside the ratified Capability boundary. [E] Blueprint §4 places the ownership context there — *"Spine (capability + the ownership context it lives in)"* — and fixes the core region at eleven boundaries, so no `core/organization/` boundary exists or is required. Determined under `ACT-CC-F03-036` Outcome A.
+
 ## 14. Open Questions
 [O] Whether more than one Organization may coexist. [O] Organization lifecycle *states*, which Freeze §4 does not enumerate.

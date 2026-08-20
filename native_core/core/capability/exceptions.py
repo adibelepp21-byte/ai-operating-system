@@ -55,3 +55,38 @@ class UngovernedCrossDepartmentDependency(CapabilityError):
     capability_spec §3 records such approvals as governed records carried on
     the dependency; this boundary requires the record's presence and never
     evaluates authority itself (PR-3)."""
+
+
+class InvalidOrganization(CapabilityError):
+    """Raised when an Organization is malformed.
+
+    Freeze §4: Organization is the hierarchy root and the accountability root;
+    an Organization without identity is the root of nothing."""
+
+
+class InvalidDepartment(CapabilityError):
+    """Raised when a Department is malformed.
+
+    Freeze §4: Department is an accountability unit owned by an Organization
+    that owns Capabilities (INV-1) and Agent Definitions (INV-2)."""
+
+
+class UnknownOrganization(CapabilityError):
+    """Raised when a Department names an Organization absent from the graph.
+
+    department_spec §11: an unresolvable parent fails closed — the parent edge
+    is meaningless without its referent."""
+
+
+class UnknownDepartment(CapabilityError):
+    """Raised when an ownership reference resolves to no known Department.
+
+    INV-1: *"Every Capability is owned by exactly one Department."* A reference
+    resolving to zero Departments is not ownership."""
+
+
+class ConflictingCapabilityOwnership(CapabilityError):
+    """Raised when two Departments claim the same Capability.
+
+    INV-1, and Freeze §4's explicit prohibition on a Department *"owning
+    another Department's Capability"*. Exactly one, never two."""

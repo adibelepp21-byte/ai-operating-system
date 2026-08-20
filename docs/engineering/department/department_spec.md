@@ -43,9 +43,10 @@
 ## 13. Future Evolution
 [O] Roles, workforce, budgets, KPIs and Department lifecycle *states* are **not** in Freeze §4 and are reserved to the Architect. [O] Agent Definition ownership (INV-2) is realizable on this surface but is a separate construction target and is not built here.
 
-## 13A. Implementation Location — UNRESOLVED
-[E] Native Core Blueprint §4: *"The **core** region contains exactly the eleven frozen subsystem boundaries — no more (no new entity/subsystem may be introduced)."* [E] §3 admits only a **core** region and a **shared** region, and §14 bars **shared** from holding *"entity ownership"*. [E] `GDR` records that *"introducing a twelfth core boundary … would require a separate architectural decision under Engineering Constitution §3.4."*
-[A] **No permissible `native_core` location for a separate Department boundary therefore exists today.** [E] Blueprint §4 places the Spine as *"capability + **the ownership context it lives in**"*, which locates the ownership context **inside** the capability boundary. [O] Which realization applies — a twelfth boundary under §3.4, or realization inside the existing capability boundary — is **reserved**; see `AIOS_DEPT_LOCATION_ESCALATION_v1.0.md`.
+## 13A. Implementation Location — RESOLVED
+[E] Native Core Blueprint §4 defines the Spine as *"**capability + the ownership context it lives in**"*, and §7 lists this ownership context among the Capability package's **allowed dependencies**: *"its Department; other Capabilities via governed versioned contracts"*. [E] `NCIR §9.6` records the Capability package's dependency as *"Department ownership (**Phase-5 stub**)"* and **[O]** *"Blocked by: Department ownership (Phase 5) for **full realization** — built with a governance stub in Phase 3."*
+[E] Blueprint §4 also fixes the core region at *"exactly the eleven frozen subsystem boundaries — no more"*, and §3 admits only **core** and **shared**, with §14 barring **shared** from *"entity ownership"*. **No twelfth boundary is available, and none is needed.**
+[A] **Realization location: `native_core/core/capability/ownership.py`** — inside the already-ratified Capability boundary, exactly where Blueprint §4 places the ownership context. `DepartmentRef` was its Phase-3 stub; `OwnershipGraph.resolve` binds the stub to its referent. Determined under `ACT-CC-F03-036` **Outcome A**; see `AIOS_DEPT_LOCATION_ESCALATION_v1.0.md`. **Core boundaries remain eleven.**
 
 ## 14. Open Questions
 [O] Whether a Department may be nested under another Department — Freeze §4 gives Organization → Department only, so nesting is not established. [O] Department lifecycle *states*.

@@ -59,12 +59,24 @@ Knowledge, Optimization, or Infrastructure, and holds no external dependency
 (INV-12).
 """
 
+from .ownership import (
+    Department,
+    DepartmentIdentity,
+    Organization,
+    OrganizationIdentity,
+    OwnershipGraph,
+)
 from .exceptions import (
     CapabilityError,
+    ConflictingCapabilityOwnership,
     InvalidCapability,
     InvalidCapabilityDependency,
+    InvalidDepartment,
+    InvalidOrganization,
     UndocumentedCapabilityDependency,
     UngovernedCrossDepartmentDependency,
+    UnknownDepartment,
+    UnknownOrganization,
 )
 from .graph import CapabilityGraph
 from .models import (
@@ -81,10 +93,20 @@ __all__ = [
     "CapabilityError",
     "CapabilityGraph",
     "CapabilityIdentity",
+    "ConflictingCapabilityOwnership",
+    "Department",
+    "DepartmentIdentity",
     "DepartmentRef",
     "GovernanceRecord",
     "InvalidCapability",
     "InvalidCapabilityDependency",
+    "InvalidDepartment",
+    "InvalidOrganization",
+    "Organization",
+    "OrganizationIdentity",
+    "OwnershipGraph",
     "UndocumentedCapabilityDependency",
     "UngovernedCrossDepartmentDependency",
+    "UnknownDepartment",
+    "UnknownOrganization",
 ]

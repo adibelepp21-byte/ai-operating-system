@@ -1,10 +1,19 @@
 # Architecture Escalation — Department Realization Location
 
-> **ARCHITECTURE DECISION REQUIRED** under Engineering Constitution **§3.4**.
-> `ACT-CC-F03-035 §13`. No architecture was invented; no boundary was created.
+> # RESOLVED — `ACT-CC-F03-036` OUTCOME A
+>
+> **No architecture decision was required after all.** Evidence recovery under
+> `ACT-CC-F03-036 §7` established that canonical architecture **already defines**
+> where Capability's ownership context is realized. Realization landed at
+> `native_core/core/capability/ownership.py`; the core region still holds
+> **eleven** boundaries. Option 2 below was not *chosen* — it was **established
+> from evidence**, which is what `§4 Outcome A` and `§11` authorize without a
+> further Founder decision.
+>
+> *The record below is retained unaltered as the escalation as it stood.*
 
 **Raised under:** FOUNDER · `ACT-CC-F03-035` `DEC-DEPT-REALIZATION = AUTHORIZE` · **Date:** 2026-08-20
-**Status of R-1/R-2:** **COMPLETE** · **Status of R-3/R-4:** **BLOCKED — location unratified**
+**Status of R-1/R-2:** **COMPLETE** · **Status of R-3/R-4:** **COMPLETE** — see §7 Resolution
 
 ---
 
@@ -112,3 +121,51 @@ boundary in place would itself have been the violation.
 ```
 
 Decision: `____________________`  Founder/Architect: `____________________`  Date: `____________________`
+
+
+---
+
+## 7. Resolution — `ACT-CC-F03-036` Outcome A (D-01 Location Determination Record)
+
+**Selected realization location:** `native_core/core/capability/ownership.py`
+
+**Governing evidence — three converging `[E]` sources:**
+
+| Source | Statement |
+|---|---|
+| Blueprint **§4** [E] | *"The four Domain-Model categories organize the core conceptually: **Spine (capability + the ownership context it lives in)**…"* |
+| Blueprint **§7** [E] | Capability package **allowed dependencies**: *"**its Department**; other Capabilities via governed versioned contracts"* |
+| `NCIR §9.6` [E]/[O] | Dependencies: *"Department ownership **(Phase-5 stub)**"* · Blocked by: *"Department ownership (Phase 5) for **full realization** — built with a governance stub in Phase 3"* |
+
+**Why this creates no new architectural entity or boundary.** `Organization` and
+`Department` are already two of the twelve Freeze §4 entities. The core region
+still holds **exactly eleven** boundaries — asserted by a dedicated test in the
+new suite as well as by the pre-existing `optimization` structural test. Nothing
+was added to `core/`; a module was added *within* an existing boundary, in the
+package Blueprint §4 assigns the ownership context to.
+
+**Rejected alternatives:**
+
+| Option | Why rejected |
+|---|---|
+| 1 — twelfth core boundary | Blueprint §4 bars it; would need a §3.4 amendment. **Unnecessary** once §4's Spine clause is read |
+| 3 — new non-core region | Blueprint §3 admits only core and shared; strictly larger than 1 |
+| 4 — defer | Not required; evidence resolves the question |
+
+**Further architecture authority required: NONE.** `ACT-CC-F03-036 §11` grants
+R-3/R-4 completion once the location is established from evidence.
+
+**Interpretation test (`§8`) results:** Interpretation 1 — rejected (Blueprint
+§4). **Interpretation 2 — ESTABLISHED.** Interpretation 3 — no such region
+exists. Interpretation 4 — not reached; resident evidence sufficed.
+
+**External research:** none used. Resident evidence was decisive, so no
+ADAPT/ADOPT/OBSERVE classification arises.
+
+**One conformance test was updated, and only on independent authority.**
+`test_public_surface_is_exactly_the_declared_exports` pinned the package surface
+to its **Phase-3 stub** state, which `NCIR §9.6` itself labels a stub *"blocked
+by Department ownership (Phase 5) for full realization."* The growth is the
+architecture's own plan, now Founder-authorized — not an accommodation of the
+implementation. The authority is cited in the test. **The eleven-boundary test
+was not touched**, and still passes.
