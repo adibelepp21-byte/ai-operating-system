@@ -41,6 +41,7 @@ from typing import Iterable, Mapping, Optional, Tuple
 
 from .exceptions import (
     ConflictingAgentDefinitionOwnership,
+    DisputedAgentDefinitionOwnership,
     DisputedCapabilityOwnership,
     ConflictingCapabilityOwnership,
     InvalidDepartment,
@@ -394,6 +395,103 @@ class OwnershipGraph:
                 for department_key, department in self._departments.items()
                 for capability_key in department.owned_capabilities
                 if capability_key not in declared
+            )
+        )
+
+    # -- INV-2 clause 1: the Agent Definition side of the edge --------------
+    #
+    # Declarations arrive as `(agent_definition_key, named_department_key)`
+    # plain-key pairs rather than as Agent Definition objects. That is
+    # deliberate and structural: `Blueprint §26` places `capability` among the
+    # boundaries Agent must not import, and this boundary must not import Agent
+    # either, so neither side can hold the other's type. A caller that can see
+    # both supplies the pairs. It mirrors, for Agent Definitions, exactly what
+    # `resolve`/`disputed_ownership` do for Capabilities.
+
+    def resolve_agent_definitions(
+        self, declarations: Iterable[Tuple[str, str]]
+    ) -> Tuple[Tuple[str, Department], ...]:
+        """Resolve each Definition's declared owner to a real Department.
+
+        INV-2 clause 1 is represented on both sides of the edge, so resolving
+        the declaration is not enough: the Department must also claim the
+        Definition, or no Department actually owns it. Fails closed (PR-4) — a
+        contradiction is never settled by preferring one side."""
+        resolved = []
+        for definition_key, named in declarations:
+            _require_text(definition_key, "agent_definition_key", InvalidDepartment)
+            _require_text(named, "owning_department_key", InvalidDepartment)
+            department = self.department(named)
+            if definition_key not in department.owned_agent_definitions:
+                claimant = self._definition_owner_of.get(definition_key)
+                raise DisputedAgentDefinitionOwnership(
+                    f"{definition_key!r} names department {named!r} as its "
+                    f"owner, but {named!r} does not claim it"
+                    + (
+                        f"; {claimant!r} does"
+                        if claimant is not None
+                        else " and no Department in the graph does"
+                    )
+                    + " (INV-2: owned by exactly one Department)"
+                )
+            resolved.append((definition_key, department))
+        return tuple(resolved)
+
+    def disputed_agent_definition_ownership(
+        self, declarations: Iterable[Tuple[str, str]]
+    ) -> Tuple[Tuple[str, str, Optional[str]], ...]:
+        """Edges where the Definition and the Department contradict each other.
+
+        Each entry is `(agent_definition_key, department_named_by_the_definition,
+        department_that_actually_claims_it_or_None)`. Detect, don't decide
+        (PR-3): surveys the whole corpus so a reconciliation pass sees every
+        contradiction, not only the first.
+
+        Declarations naming no Department at all are *not* reported here — that
+        is `unresolved_agent_definition_ownership`, a different condition."""
+        disputes = []
+        for definition_key, named in declarations:
+            department = self._departments.get(named)
+            if department is None:
+                continue
+            if definition_key not in department.owned_agent_definitions:
+                disputes.append(
+                    (
+                        definition_key,
+                        named,
+                        self._definition_owner_of.get(definition_key),
+                    )
+                )
+        return tuple(sorted(disputes))
+
+    def unresolved_agent_definition_ownership(
+        self, declarations: Iterable[Tuple[str, str]]
+    ) -> Tuple[str, ...]:
+        """Definition keys whose declared owner is no Department in the graph."""
+        return tuple(
+            sorted(
+                definition_key
+                for definition_key, named in declarations
+                if named not in self._departments
+            )
+        )
+
+    def unbacked_agent_definition_claims(
+        self, declarations: Iterable[Tuple[str, str]]
+    ) -> Tuple[Tuple[str, str], ...]:
+        """Departments claiming Definitions no supplied Definition declares.
+
+        Each entry is `(department_key, agent_definition_key)`. Reported, never
+        raised: over a partial corpus an absent declaration is ordinary
+        incompleteness, and deciding which it is belongs to governance rather
+        than to this boundary (PR-3)."""
+        declared = {definition_key for definition_key, _ in declarations}
+        return tuple(
+            sorted(
+                (department_key, definition_key)
+                for department_key, department in self._departments.items()
+                for definition_key in department.owned_agent_definitions
+                if definition_key not in declared
             )
         )
 

@@ -31,6 +31,7 @@ Run: python -m unittest native_core.core.capability.tests.test_ownership_conform
 
 from __future__ import annotations
 
+import ast
 import unittest
 from pathlib import Path
 
@@ -38,6 +39,7 @@ from native_core.core.capability import (
     Capability,
     CapabilityIdentity,
     ConflictingAgentDefinitionOwnership,
+    DisputedAgentDefinitionOwnership,
     ConflictingCapabilityOwnership,
     Department,
     DisputedCapabilityOwnership,
@@ -384,6 +386,97 @@ class TestInv2AgentDefinitionOwnership(unittest.TestCase):
         source = (Path(__file__).resolve().parents[1] / "ownership.py").read_text()
         self.assertNotIn("import agent", source)
         self.assertNotIn("from native_core.core.agent", source)
+
+
+class TestInv2BothSidesOfTheEdge(unittest.TestCase):
+    """INV-2 clause 1 reconciled across both sides, under `ACT-CC-F03-039`
+    `DEC-AGENT-DEPT-OWNERSHIP = OPTION A`.
+
+    Declarations are `(agent_definition_key, named_department_key)` plain-key
+    pairs, never Agent Definition objects: `Blueprint §26` bars Agent from
+    importing `capability`, and this boundary must not import Agent, so neither
+    side can hold the other's type and a caller supplies the pairs."""
+
+    def setUp(self):
+        self.graph = OwnershipGraph(
+            [_org()],
+            [
+                _dept("platform", capabilities=["cap.a"], definitions=["ad.analyst"]),
+                _dept("research", definitions=["ad.prober"]),
+            ],
+        )
+
+    def test_a_declaration_resolves_to_its_department(self):
+        resolved = self.graph.resolve_agent_definitions([("ad.analyst", "platform")])
+        self.assertEqual((("ad.analyst",), ("platform",)),
+                         (tuple(k for k, _ in resolved),
+                          tuple(d.identity.department_key for _, d in resolved)))
+
+    def test_a_contradicted_declaration_fails_closed(self):
+        """Both sides must agree, or no Department actually owns it (PR-4)."""
+        with self.assertRaises(DisputedAgentDefinitionOwnership):
+            self.graph.resolve_agent_definitions([("ad.analyst", "research")])
+
+    def test_disputes_are_surveyed_not_halted_on(self):
+        self.assertEqual(
+            self.graph.disputed_agent_definition_ownership(
+                [("ad.analyst", "research"), ("ad.prober", "research")]
+            ),
+            (("ad.analyst", "research", "platform"),),
+        )
+
+    def test_a_declaration_naming_no_department_is_unresolved_not_disputed(self):
+        declarations = [("ad.analyst", "ghost")]
+        self.assertEqual(
+            self.graph.unresolved_agent_definition_ownership(declarations),
+            ("ad.analyst",),
+        )
+        self.assertEqual(
+            self.graph.disputed_agent_definition_ownership(declarations), ()
+        )
+        with self.assertRaises(UnknownDepartment):
+            self.graph.resolve_agent_definitions(declarations)
+
+    def test_unbacked_claims_are_reported_never_raised(self):
+        self.assertEqual(
+            self.graph.unbacked_agent_definition_claims([("ad.analyst", "platform")]),
+            (("research", "ad.prober"),),
+        )
+
+    def test_declaration_keys_must_be_non_empty_text(self):
+        for declaration in ((("", "platform"),), (("ad.analyst", ""),)):
+            with self.assertRaises(InvalidDepartment):
+                self.graph.resolve_agent_definitions(declaration)
+
+    def test_capability_reconciliation_is_unaffected(self):
+        """§5.6 — existing Department ownership of Capabilities untouched."""
+        capability = Capability(
+            CapabilityIdentity("cap.a", "1.0"), DepartmentRef("platform"), ()
+        )
+        resolved = self.graph.resolve([capability])
+        self.assertEqual(resolved[0][1].identity.department_key, "platform")
+
+    def test_this_boundary_still_imports_nothing_from_agent(self):
+        """Anchored on the import graph, not on text.
+
+        A substring scan is wrong here: this module legitimately *names*
+        `ConflictingAgentDefinitionOwnership` and
+        `DisputedAgentDefinitionOwnership`, both of which contain
+        "AgentDefinition". What must not exist is an **import** reaching the
+        Agent boundary, so the imports are parsed and checked."""
+        source = (Path(__file__).resolve().parents[1] / "ownership.py").read_text()
+        modules = []
+        for node in ast.walk(ast.parse(source)):
+            if isinstance(node, ast.Import):
+                modules.extend(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and not node.level:
+                modules.append(node.module or "")
+        for module in modules:
+            self.assertNotEqual("agent", module.split(".")[0], module)
+            self.assertNotIn(".agent", module, module)
+        self.assertEqual(
+            [], [m for m in modules if "agent" in m.lower()], modules
+        )
 
 
 class TestNoNewBoundary(unittest.TestCase):

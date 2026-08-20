@@ -50,8 +50,8 @@ an architecture gap.
 | # | Candidate | Architecture | Spec | Dependency | Authority | Eligibility |
 |---|---|---|---|---|---|---|
 | **T-9** | **Department ownership of Agent Definitions (INV-2 clause 1)** | **RATIFIED** — Freeze §4 (twice) + INV-2 | **SUFFICIENT** — `department_spec §1`, `§2` already name it | **SATISFIED** — Department realization COMPLETE; `agent_definition_key` ratified | **PRESENT** — `§11` *"governed ownership context"*; `§12` | **ELIGIBLE — SELECTED** |
-| T-10 | Agent Definition declaring its own owning Department (second side of the edge) | RATIFIED | — | satisfied | **ABSENT** — Agent construction discipline, `agent_spec §12`/`§13` **[O]** Agent Factory, *"reserved to the Architect"* | **DEFERRED — reserved** |
-| T-11 | INV-2 **clause 2** — Definition implements ≥1 Capability | RATIFIED | — | satisfied | **ABSENT** — same reservation | **DEFERRED — reserved** |
+| ~~T-10~~ | Agent Definition declaring its own owning Department (second side of the edge) | RATIFIED | — | satisfied | **AUTHORIZED** — `ACT-CC-F03-039` `DEC-AGENT-DEPT-OWNERSHIP = OPTION A` | **COMPLETE** — see correction below |
+| T-11 | INV-2 **clause 2** — Definition implements ≥1 Capability | RATIFIED | — | satisfied | **ABSENT** — checking a Definition against Capabilities is Agent construction discipline, `agent_spec §12`/`§13` **[O]** Agent Factory, *"reserved to the Architect"* | **DEFERRED — reserved** |
 | T-2 | Capability↔Skill/Workflow composition | RATIFIED | **RESERVED** `capability_spec §12`/`§14` **[O]** | satisfied | ABSENT | NOT ELIGIBLE |
 | T-3 | Versioned-contract representation | RATIFIED | **RESERVED** `capability_spec §14` **[O]** | satisfied | ABSENT | NOT ELIGIBLE |
 | T-4 | Capability Catalog category instantiation | RATIFIED | sufficient | satisfied | **ABSENT** — assigning an owner is a governance data decision; `OB-01` unresolved | CONDITIONALLY ELIGIBLE |
@@ -152,3 +152,24 @@ order, are: **(i)** whether the Agent Factory reservation (`agent_spec §12`/`§
 is lifted far enough to let an Agent Definition name its owning Department,
 which would complete the INV-2 edge; and **(ii)** who may assign a Capability
 category to an owning Department (T-4), which is entangled with `OB-01`.
+
+
+---
+
+## Correction — `ACT-CC-F03-039`
+
+**[E] The T-10 row above, and the *"What was deliberately not built"* note in
+D-02, were wrong** where they described the Agent Definition side of the INV-2
+edge as `[O]`-reserved under `agent_spec §12`/`§13`. This was an error in this
+report, disclosed and corrected rather than quietly amended.
+
+Agent Definition ownership by Department is **`[E]` ratified in three canonical
+sources and reserved in none**: `agent_spec §3 Owned Data`, Freeze §4's Agent
+Definition entry, and Domain Model §5's Ownership Rules table. The
+`agent_spec §12`/`§13` reservation covers Agent **construction** discipline, not
+ownership. What genuinely remains reserved is **INV-2 clause 2** — that a
+Definition *implements at least one Capability* — which does require checking a
+Definition against Capabilities, and that characterization stands.
+
+T-10 was built under `ACT-CC-F03-039`. **T-11 remains reserved.** The rows for
+T-2, T-3, T-4, T-12 and T-5–T-8 are unaffected by this correction.

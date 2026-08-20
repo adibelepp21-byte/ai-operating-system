@@ -112,3 +112,13 @@ class ConflictingAgentDefinitionOwnership(CapabilityError):
     INV-2 [E]: *"Every Agent Definition is owned by exactly one Department."*
     The Capability analogue is `ConflictingCapabilityOwnership`; Freeze §4 gives
     a Department both ownership responsibilities under the same rule."""
+
+
+class DisputedAgentDefinitionOwnership(CapabilityError):
+    """Raised when an Agent Definition and a Department contradict each other.
+
+    INV-2 clause 1 [E] is represented on both sides of the edge: a Definition
+    names its owning Department, and a Department claims the Definitions it
+    owns. When the two disagree, no Department actually owns it. Fail closed
+    (PR-4) — the contradiction is never settled by preferring one side. The
+    Capability analogue is `DisputedCapabilityOwnership`."""

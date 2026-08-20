@@ -164,8 +164,12 @@ def _field_types(klass):
     ]
 
 
-def _definition(key="analyst", version="1.0.0"):
-    return AgentDefinition(agent_definition_key=key, agent_definition_version=version)
+def _definition(key="analyst", version="1.0.0", department="platform"):
+    return AgentDefinition(
+        agent_definition_key=key,
+        agent_definition_version=version,
+        owning_department_key=department,
+    )
 
 
 # --------------------------------------------------------------------------
@@ -274,9 +278,21 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
         self.assertTrue(AgentDefinition.__dataclass_params__.frozen)
         self.assertFalse(inspect.isabstract(AgentDefinition))
 
-    def test_it_carries_exactly_identity_and_version(self):
+    def test_it_carries_exactly_identity_version_and_its_owner(self):
+        """`agent_spec §3 Owned Data` [E] — *"Agent Definitions owned by exactly
+        one Department (INV-2)"*; Freeze §4 — *"Ownership: exactly one
+        Department"*; Domain Model §5 — `Agent Definition → Exactly one Platform
+        Division`. Ownership is ratified owned data, so the shape carries it.
+
+        `owning_department_key` added under `ACT-CC-F03-039`. It is a plain
+        `str`, not the Capability boundary's `DepartmentRef`, so no forbidden
+        import is taken. Nothing beyond these three may appear."""
         self.assertEqual(
-            [("agent_definition_key", "str"), ("agent_definition_version", "str")],
+            [
+                ("agent_definition_key", "str"),
+                ("agent_definition_version", "str"),
+                ("owning_department_key", "str"),
+            ],
             _field_types(AgentDefinition),
         )
 
@@ -304,12 +320,15 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
             {"agent_definition_key": "k", "agent_definition_version": None},
             {"agent_definition_key": "k", "agent_definition_version": 1},
         ):
+            kwargs.setdefault("owning_department_key", "platform")
             with self.assertRaises(InvalidAgentDefinition):
                 AgentDefinition(**kwargs)
 
-    def test_both_fields_are_required(self):
+    def test_every_field_is_required(self):
         with self.assertRaises(TypeError):
             AgentDefinition(agent_definition_key="k")
+        with self.assertRaises(TypeError):
+            AgentDefinition(agent_definition_key="k", agent_definition_version="1")
         for field in dataclasses.fields(AgentDefinition):
             self.assertIs(dataclasses.MISSING, field.default, field.name)
             self.assertIs(dataclasses.MISSING, field.default_factory, field.name)
@@ -801,7 +820,11 @@ class TestFailClosedTaxonomy(unittest.TestCase):
                     )
                     if isinstance(argument, ast.Constant):
                         self.assertIsInstance(argument.value, str)
-        self.assertEqual(4, raises, "one guard per declared field")
+        # One guard per declared field across the two contracts. Was 4; became
+        # 5 when `AgentDefinition.owning_department_key` was declared under
+        # `ACT-CC-F03-039`. The rule is unchanged and the string assertion above
+        # is enforced on every guard, this one included.
+        self.assertEqual(5, raises, "one guard per declared field")
 
     def test_nothing_is_caught_or_suppressed(self):
         """Fail closed: the boundary swallows no exception and degrades

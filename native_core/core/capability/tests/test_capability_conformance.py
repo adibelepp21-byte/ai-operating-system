@@ -436,7 +436,12 @@ class TestBoundaryRules(unittest.TestCase):
         as ratified `agent_definition_key` values, so no dependency on Agent is
         created (department_spec §8), and INV-2's second clause is deliberately
         not enforced — that is Agent construction discipline, [O]-reserved to
-        the Architect by `agent_spec §12`/`§13`."""
+        the Architect by `agent_spec §12`/`§13`.
+
+        `DisputedAgentDefinitionOwnership` followed under `ACT-CC-F03-039`
+        (`DEC-AGENT-DEPT-OWNERSHIP = OPTION A`), when the Agent Definition side
+        of the INV-2 clause 1 edge was realized and the two sides could
+        therefore contradict each other for the first time."""
         self.assertEqual(
             set(capability_pkg.__all__),
             {
@@ -454,6 +459,7 @@ class TestBoundaryRules(unittest.TestCase):
                 "UngovernedCrossDepartmentDependency",
                 # Ownership context — Phase 5 realization (Freeze §4 entities)
                 "ConflictingAgentDefinitionOwnership",
+                "DisputedAgentDefinitionOwnership",
                 "ConflictingCapabilityOwnership",
                 "DisputedCapabilityOwnership",
                 "Department",
