@@ -3161,8 +3161,236 @@ not expanded and remains dormant for every other Volume.
 
 ---
 
+### GDR-0026 — Founder Decision · PD-02 / Volume 2 Volume-Level Freeze (FROZEN)
+
+**Identifier:** GDR-0026
+**Date:** 2026-08-16
+**Tier:** Governance-state lifecycle determination — see Authority Basis
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** `ACT-CC-F03-017` — Founder PD-02 Volume Freeze Authorization & Independent Verification
+**Target:** PD-02 — Architecture Office / Volume 2
+**Mechanism determination:** §1 below
+
+---
+
+#### 1. Canonical mechanism — derived, not selected
+
+`ACT-CC-F03-017 §9.1` requires that the canonical lifecycle record governing
+PD-02 be **identified from resident authority**, and `§10` requires that a
+different resident instrument be **derived** rather than invented if the
+Governance Decision Register is not that mechanism.
+
+| Candidate resident instrument | Disposition | Basis |
+|---|---|---|
+| `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md` | **SELECTED** | `GDR-0017` is the sole resident instance of a **Volume-level lifecycle state** being recorded (Volume 1 = FROZEN). §2.1 scope covers non-ADR governance decisions; §2.3 makes it append-only, satisfying `ACT-CC-F03-017 §9.7` |
+| `AIOS_BASELINE_LIFECYCLE_v1.0.md` | ELIMINATED | Contains **0** occurrences of "Volume" against **20** of "baseline". It governs Native Core baselines, not Volumes |
+| `AIOS_ARCHITECTURE_FREEZE_v1.0.md` | ELIMINATED | Contains **0** occurrences of "Volume". Its §2 scope is the Phase-2 architectural contract — entities, relationships, vocabulary, layers, invariants, boundaries, building blocks, native systems. It is not a Volume lifecycle register |
+| Architecture Decision Record | ELIMINATED | Register §2.2 routes **Architectural Tier** decisions to ADRs. Volume lifecycle state is Founder-reserved (`GDR-0016`; Appointment Register §3.2), not Architectural Tier, and the ADR Framework's boundary validation bars ADRs from that territory |
+| PD-02 corpus / `RESIDENCY-MANIFEST.md` | ELIMINATED | `ACT-CC-F03-017 §9` expressly bars rewriting the corpus to make it appear frozen. The manifest is residency evidence, not a lifecycle register |
+
+Exactly one canonical vehicle survives. This entry is that vehicle.
+
+---
+
+#### 2. Decision text (verbatim)
+
+> Verify the current PD-02 state against the resident freeze requirements and,
+> only if every required freeze condition is satisfied, persist the
+> Volume-level FROZEN state for PD-02 / Volume 2.
+>
+> This is a Freeze Authorization, not an Activation Authorization.
+
+and, as the non-negotiable boundary of that authorization:
+
+> This Act authorizes one lifecycle transition only:
+>
+> PD-02
+> FREEZE ELIGIBLE
+>         ↓
+> FOUNDER-AUTHORIZED
+>         ↓
+> FROZEN
+>
+> It does not authorize:
+>
+> FROZEN
+>    ↓
+> ACTIVATION ELIGIBLE
+>    ↓
+> ACTIVATION GATE
+>    ↓
+> ACTIVATED
+
+Recorded exactly as the Founder stated it, without paraphrase, reinterpretation,
+wording improvement, semantic expansion, or replacement by an operational
+summary, per §2.3 verbatim discipline.
+
+---
+
+#### 3. Decision
+
+| Field | Value |
+|---|---|
+| Decision domain | Volume-level lifecycle state — PD-02 / Volume 2 |
+| Decision authority | **Founder** |
+| Authorizing instrument | `ACT-CC-F03-017` |
+| Scope | Volume 2 — PD-02 Architecture Office, `docs/architecture/volume-2/pd-02-architecture-office/` |
+| **Volume-level lifecycle state** | **FROZEN** |
+| Effective from | This entry |
+| Freeze authorization | **ISSUED** — Founder, `ACT-CC-F03-017 §1` |
+| Activation authorization | **NOT ISSUED** — Founder-reserved |
+| Historical rewrite | **NONE** |
+| Authority expansion | **NONE** |
+| Corpus mutation | **NONE** |
+
+---
+
+#### 4. P7-I99 identity and result
+
+| Field | Value |
+|---|---|
+| Review ID | **P7-I99-V2-PD-02-001** |
+| Review record | `docs/architecture/reviews/P7-I99-VOLUME-2-PD-02-REVIEW.md` |
+| Requirement contract | `ACT-CC-F03-007` R1–R11 — resident, 11/11 requirement headings, unmodified since `e9e3360`, **0** superseding instruments |
+| Execution authority | `DEL-F03-015-P7I99-001`, expressly invoked for PD-02 by `ACT-CC-F03-016` (FD-016-03) |
+| R1 … R10 | **COMPLETE** (10/10) |
+| R11 — terminal gate | **FREEZE READY** |
+| Blocking-class tally | MATERIAL GAP **0** · BLOCKED MATERIAL ITEM **0** · REQUIRES ARCHITECT DECISION **0** · UNKNOWN MATERIAL ITEM **0** |
+| Non-blocking | NON-MATERIAL GAP **1** — R1, `D2.md` metadata schema variance |
+| **Integrated result** | **`P7-I99 — PASS`** · **`APPROVED FOR FREEZE`** |
+| Recorded at | `GDR-0025` |
+
+The P7-I99 result is **freeze-eligibility evidence**. It did not, and could not,
+perform this freeze: `DEL-F03-015-P7I99-001` exclusion 3 withholds *"Authority to
+freeze any Volume"* and exclusion 4 withholds *"Authority to convert a P7-I99
+result into activation or freeze."* The freeze authority exercised here
+originates solely in `ACT-CC-F03-017`.
+
+---
+
+#### 5. Evidence basis — pre-freeze gates, independently recomputed
+
+| Gate | Result | Evidence |
+|---|---|---|
+| **FZ-01** Corpus integrity | **PASS** | 50/50 sections (A10·B10·C10·D10·E10); missing **0**; duplicate **0**; unexpected body **0**; path `volume-2/pd-02-architecture-office/` per `ADR-0012`; corpus digest `506818698fc7a241683c9257d81a2ee2` reproduced and matching the value recorded in the review record; all 50 per-section SHA-256 match `RESIDENCY-MANIFEST.md`; **0** commits touching the corpus since `7e3b6fe` |
+| **FZ-02** Identity & namespace | **PASS** | 50/50 bodies name PD-02; 50/50 name "Architecture Office"; **0** bodies declare `Volume: Volume 1`; the 2 "Volume 1 — PD-01" strings sit under `REFERENCE PATTERN` headings as provenance, not identity; `Platform Division` **128** / bare `Department` **0**, consistent with `ADR-0010`/`ADR-0011`; exactly **1** corpus directory |
+| **FZ-03** P7-I99 integrity | **PASS** | Verified directly from the resident review artifact, not from any prior report — see §4 |
+| **FZ-04** Governance authority | **PASS** | Activation authority Founder-reserved (`GDR-0023`, `ACT-CC-F03-014`, `ACT-CC-F03-015 §164`); **0** resident instruments grant the Co-Founder independent activation authority; Delegation, Appointment and Finding Registers unchanged since `f8d8c70`; Delegation Register §8 precedence places **Founder Decision above Valid Delegation**, so `ACT-CC-F03-017` supplies authority the delegations withhold, without widening either |
+| **FZ-05** Materiality recheck | **PASS** | **0** commits since `f8d8c70`; working tree clean; review record unaltered; Constitution / Architecture Freeze / Finding Register hashes unchanged; **0** affirmative Volume-level freeze records for Volume 2 (all 8 grep hits are negative or definitional statements, eliminated by content-anchored analysis) |
+| **FZ-06** Activation separation | **PASS** | **0** activation records for PD-02 (the single hit reads *"PD-02 activation — NOT ACTIVATED"*); **0** Activation Gate executions (all 3 hits describe delegated *capability*, not execution) |
+
+---
+
+#### 6. Standing changes
+
+- **The authoritative Volume-level lifecycle state of PD-02 — Architecture
+  Office / Volume 2 is FROZEN**, effective from this entry.
+- Volume 2 is treated as a frozen lifecycle baseline from this effective point.
+- Future material changes to the frozen Volume require the applicable
+  Architecture Change Control.
+
+---
+
+#### 7. Freeze semantic boundary — preserved
+
+```text
+Section-level FROZEN   ≠  Volume-level FROZEN
+P7-I99 PASS            ≠  Volume-level FROZEN
+Volume-level FROZEN    ≠  Activation ELIGIBLE
+Activation ELIGIBLE    ≠  Activation AUTHORIZED
+Activation AUTHORIZED  ≠  ACTIVATED
+```
+
+**Volume-level FROZEN does not constitute Activation.**
+
+The 50 section-level `Status: FROZEN` claims in the PD-02 bodies are **source
+content**. They were **not** used as evidence for this freeze, consistent with
+`ACT-CC-REM-003.0 §6`. This freeze rests on `ACT-CC-F03-017` plus the
+independently recomputed gates in §5.
+
+---
+
+#### 8. Explicitly not changed
+
+- **PD-02 Activation — NOT EXECUTED.** No Activation Gate was executed, no
+  Activation Eligibility was declared, no activation record was created, no
+  Activation Authorization was issued. Activation authority remains
+  **FOUNDER-RESERVED** and unaltered.
+- **RG-1 unchanged.** Activation conditions beyond Freeze remain unenumerated.
+- **PD-01 out of scope.** PD-01 P7-I99 remains unexecuted; PD-01's lifecycle
+  state remains as recorded at `GDR-0017`. Nothing here reaches Volume 1.
+- **PD-02 corpus unchanged.** All 50 bodies and `RESIDENCY-MANIFEST.md` are
+  byte-identical; the corpus was not rewritten to appear frozen.
+- **No delegation widened or reinterpreted.** `DEL-T4.4-CF-001` and
+  `DEL-F03-015-P7I99-001` are unchanged; the latter remains dormant for every
+  other Volume.
+- Constitution, Canonical Domain Model, Architecture Freeze v1.0, Appointment
+  Register, Finding Register, `ADR-0001` … `ADR-0012`, historical Acts, prior
+  GDR entries and `native_core/` — **all unchanged.**
+- **AIOS is NOT COMPLETE.**
+
+---
+
+#### 9. Recorded divergence — `AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md`
+
+That model's §7 table and §10 status block predate `ACT-CC-F03-016` and still
+read `AG-03 … review NOT RUN`, `PD-02 P7-I99 … NOT EXECUTED` and
+`PD-02 Freeze … NOT FROZEN`.
+
+**Those lines were deliberately not edited.** Repairing only the freeze line
+would leave that artifact internally inconsistent, and repairing the P7-I99
+lines is residue of `ACT-CC-F03-016` which `ACT-CC-F03-017 §13` bars from being
+bundled into this commit. The staleness understates what has occurred and cannot
+produce a false freeze or activation, so it is **non-material to this decision**.
+
+**Where that model differs from this entry, this entry governs.** Reconciling it
+requires a separate Founder act and is carried forward as an open item.
+
+---
+
+#### 10. Anti-self-authorization
+
+**Decision authority: Founder (`ACT-CC-F03-017`). Recording actor: Claude Code.
+Decision inference: NONE.** The recording actor did not select, recommend as
+decision, or infer this freeze; did not use its Architecture Authority to
+justify it; and holds no freeze authority of its own — `DEL-F03-015-P7I99-001`
+exclusion 3 withholds it expressly. Appointment Register §3.2 is a
+**non-conferral** list (*"The appointment grants none of the following"*), not a
+prohibition; its item 23 concerns **Volume 1** and is conditioned on *"without
+its own freeze gate"* — neither reaches this operation, which targets Volume 2
+through its own executed gate. **PASS.**
+
+---
+
+#### 11. Lineage
+
+`ACT-CC-F03-004` → `ACT-CC-F03-006` → `ACT-CC-F03-007` (R1–R11) →
+`ACT-CC-F03-009` → `ACT-CC-F03-010` / `-010-A` (residency) → `ADR-0010` /
+`ADR-0011` / `ADR-0012` → `ACT-CC-F03-014` → `ACT-CC-F03-015`
+(`DEL-F03-015-P7I99-001`) → `ACT-CC-F03-016` (FD-016-03 invocation) →
+P7-I99-V2-PD-02-001 → `GDR-0025` → **Founder freeze authorization
+`ACT-CC-F03-017`** → `GDR-0026`.
+
+---
+
+#### 12. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-08-16 | `ACT-CC-F03-007` fixes the R1–R11 requirement contract | Founder |
+| 2026-08-16 | 50/50 PD-02 bodies resident and byte-identical; namespace fixed by `ADR-0012` | Co-Founder |
+| 2026-08-16 | FD-016-03 invokes `DEL-F03-015-P7I99-001` for PD-02 only | Founder |
+| 2026-08-16 | P7-I99 executed — **PASS / APPROVED FOR FREEZE**; recorded at `GDR-0025`; **no freeze performed** | Co-Founder |
+| 2026-08-16 | **Founder freeze authorization issued — `ACT-CC-F03-017`** | Founder |
+| 2026-08-16 | FZ-01 … FZ-06 independently recomputed — all **PASS** | Co-Founder |
+| 2026-08-16 | **PD-02 / Volume 2 Volume-level lifecycle state recorded as FROZEN** | Co-Founder, under FOUNDER · `ACT-CC-F03-017` |
+| 2026-08-16 | Activation **NOT** performed; execution stopped at the freeze boundary per §16 | Co-Founder |
+
+---
+
 *(No further entries. Subsequent governance decisions are appended below as
-GDR-0026 onward.)*
+GDR-0027 onward.)*
 
 ---
 
