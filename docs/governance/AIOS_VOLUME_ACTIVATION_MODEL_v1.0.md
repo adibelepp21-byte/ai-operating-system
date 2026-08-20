@@ -1,9 +1,18 @@
 # AIOS Volume Activation Model
 
-**Version:** v1.1
+**Version:** v1.2
 **Status:** Canonical — governance machinery
-**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015`
+**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018`
 **Change in v1.1:** GG-1…GG-4 resolved by FD-015-01/02/03; T6 established; PD-01 review basis adopted
+**Change in v1.2 — GOVERNANCE STATE RECONCILIATION (`ACT-CC-F03-018`):** this
+document's PD-02 lifecycle statements were stale relative to two authoritative
+records issued after v1.1. **PD-02 P7-I99 was executed under `ACT-CC-F03-016`**
+(result recorded at `GDR-0025`) and **PD-02 was frozen under `ACT-CC-F03-017`**
+(recorded at `GDR-0026`). v1.2 **synchronizes this model with those records and
+creates no governance.** No activation condition, authority boundary, activation
+definition, gate semantic, PD-01 statement, R1–R11 criterion or historical
+finding was altered. The pre-synchronization wording is preserved in version
+control.
 **Recorded by:** Claude Code / Co-Founder (Construction Phase)
 **Date:** 2026-08-16
 **Scope:** PD-01 (Volume 1) · PD-02 (Volume 2)
@@ -77,7 +86,7 @@ Therefore two routes to Freeze exist in the record:
 
 | Route | Mechanism | Precedent |
 |---|---|---|
-| **R-A** | P7-I99 returns `APPROVED FOR FREEZE` | Never achieved — 2 runs, both `NOT APPROVED` |
+| **R-A** | P7-I99 returns `APPROVED FOR FREEZE` | **Achieved for PD-02 / Volume 2** — executed under `ACT-CC-F03-016`, result at `GDR-0025`. **For PD-01: never achieved** — 2 runs, both `NOT APPROVED` |
 | **R-B** | Founder determines the lifecycle state directly | `GDR-0017` (FD-4) — Volume 1 |
 
 **A frozen Volume is therefore not evidence that its integrated review passed.**
@@ -191,15 +200,20 @@ requirements are **not** flattened for symmetry.
 |---|---|---|---|
 | AG-01 identity/residency | corpus at `volume-2/pd-02-architecture-office/` | **50/50**, byte-identical, ADR-0012 | no |
 | AG-02 completeness | A10·B10·C10·D10·E10 = 50 | **PASS** | no |
-| AG-03 integrated review | P7-I99 Volume 2 R1–R11 | requirement set **RESIDENT**; execution authority **DELEGATED but DORMANT** (`DEL-F03-015-P7I99-001`); **review NOT RUN** | **YES** |
+| AG-03 integrated review | P7-I99 Volume 2 R1–R11 | requirement set **RESIDENT**; `DEL-F03-015-P7I99-001` **INVOKED** for PD-02 by `ACT-CC-F03-016` (FD-016-03); **review EXECUTED** — R1–R10 `COMPLETE`, R11 `FREEZE READY`, result **`PASS` · `APPROVED FOR FREEZE`** (`GDR-0025`) | no |
 | AG-04 findings | B-07 and Phase D findings resolved | ADR-0010/0011/0012; F-D1/F-D2/F-D3 resolved | no |
 | AG-05 authority | Architecture Authority designated | **DESIGNATED**, activation HELD (`GDR-0019`) | see note |
 | AG-06 traceability | chain reconstructible | `ACT-CC-F03-006/007` resident | no |
-| AG-07 freeze | Volume-level freeze | **NOT FROZEN** — 23 section-level claims are **not** Volume freeze | no |
+| AG-07 freeze | Volume-level freeze | **FROZEN** — Volume-level freeze recorded at `GDR-0026` under Founder authorization `ACT-CC-F03-017`; section-level claims were **excluded** as evidence | no |
 | AG-08 activation readiness | conditions enumerated | definition resident; **conditions Founder-reserved (RG-1)** | **YES** |
 | AG-10 authorization | Founder authorization issued | **NOT ISSUED** | **YES** |
 
-**PD-02 = NOT ACTIVATION-ELIGIBLE.** Blocking: AG-03 (review not run), AG-08, AG-10.
+**PD-02 = NOT ACTIVATION-ELIGIBLE.** Blocking: **AG-08, AG-10**.
+
+AG-03 and AG-07 no longer block. **Neither confers activation eligibility:**
+`P7-I99 PASS ≠ FROZEN ≠ ACTIVATION ELIGIBLE`. AG-08 (conditions Founder-reserved,
+**RG-1**) and AG-10 (authorization **NOT ISSUED**) are unchanged by this
+reconciliation and continue to block.
 
 **AG-05 note.** `GDR-0019 §4`'s evidence gate — which forced the activation hold
 because no repository body named PD-02 as Architecture Office or as an authority
@@ -233,7 +247,7 @@ Authority`. **Lifting the hold requires a governance act and has not been done.*
 | Question | Answer |
 |---|---|
 | What makes PD-01 eligible? | AG-01…AG-10 §7.1 — currently blocked at AG-03, AG-08, AG-10 |
-| What makes PD-02 eligible? | AG-01…AG-10 §7.2 — currently blocked at AG-03, AG-08, AG-10 |
+| What makes PD-02 eligible? | AG-01…AG-10 §7.2 — currently blocked at AG-08, AG-10 |
 | Who may authorize activation? | **Founder only** — `ACT-CC-F03-014 §3` |
 | P7-I99 ↔ Freeze? | P7-I99 is the freeze gate, but freeze is also reachable by direct Founder lifecycle determination (§4) |
 | Freeze ↔ Activation Eligibility? | Freeze is a **prerequisite**, not eligibility itself — FD-015-03 |
@@ -246,8 +260,11 @@ Authority`. **Lifting the hold requires a governance act and has not been done.*
 
 ```text
 PD-01 Activation ......... NOT EXECUTED       PD-01 Freeze ... FROZEN (lifecycle, GDR-0017)
-PD-02 Activation ......... NOT EXECUTED       PD-02 Freeze ... NOT FROZEN
-PD-02 P7-I99 ............. NOT EXECUTED
+PD-02 Activation ......... NOT EXECUTED       PD-02 Freeze ... FROZEN (Volume-level, GDR-0026)
+PD-02 P7-I99 ............. PASS / APPROVED FOR FREEZE (GDR-0025)
+PD-02 Activation Eligibility ..... NOT EXECUTED
+PD-02 Activation Gate ............ NOT EXECUTED
+PD-02 Activation Authorization ... NOT ISSUED
 Activation Authority ..... FOUNDER-RESERVED
 AIOS ..................... NOT COMPLETE
 ```
