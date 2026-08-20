@@ -164,11 +164,14 @@ def _field_types(klass):
     ]
 
 
-def _definition(key="analyst", version="1.0.0", department="platform"):
+def _definition(
+    key="analyst", version="1.0.0", department="platform", capabilities=("analysis",)
+):
     return AgentDefinition(
         agent_definition_key=key,
         agent_definition_version=version,
         owning_department_key=department,
+        implemented_capabilities=tuple(capabilities),
     )
 
 
@@ -278,22 +281,61 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
         self.assertTrue(AgentDefinition.__dataclass_params__.frozen)
         self.assertFalse(inspect.isabstract(AgentDefinition))
 
-    def test_it_carries_exactly_identity_version_and_its_owner(self):
+    def test_it_carries_exactly_identity_version_owner_and_capabilities(self):
         """`agent_spec §3 Owned Data` [E] — *"Agent Definitions owned by exactly
         one Department (INV-2)"*; Freeze §4 — *"Ownership: exactly one
         Department"*; Domain Model §5 — `Agent Definition → Exactly one Platform
         Division`. Ownership is ratified owned data, so the shape carries it.
 
-        `owning_department_key` added under `ACT-CC-F03-039`. It is a plain
-        `str`, not the Capability boundary's `DepartmentRef`, so no forbidden
-        import is taken. Nothing beyond these three may appear."""
+        `implemented_capabilities` carries INV-2's second clause — *"…and
+        implements at least one Capability"* — corroborated by `agent_spec §2`
+        and by Freeze §4's Capability entry, *"be implemented by Agent
+        Definitions"*. Added under `ACT-CC-F03-040`.
+
+        Both were added as plain keys, never the Capability boundary's own
+        types, so no forbidden import is taken. Nothing beyond these four may
+        appear."""
         self.assertEqual(
             [
                 ("agent_definition_key", "str"),
                 ("agent_definition_version", "str"),
                 ("owning_department_key", "str"),
+                ("implemented_capabilities", "Tuple[str, ...]"),
             ],
             _field_types(AgentDefinition),
+        )
+
+    def test_it_must_implement_at_least_one_capability(self):
+        """INV-2 clause 2 [E] — *"…and implements at least one Capability."*
+        *At least one*, so an empty declaration fails closed (PR-4) rather
+        than standing as a Definition that implements nothing."""
+        with self.assertRaises(InvalidAgentDefinition):
+            _definition(capabilities=())
+
+    def test_a_capability_cannot_be_declared_twice(self):
+        """Implementing one Capability twice is not implementing two."""
+        with self.assertRaises(InvalidAgentDefinition):
+            _definition(capabilities=("analysis", "analysis"))
+
+    def test_implemented_capabilities_must_be_a_tuple_of_text(self):
+        """A list is refused as well as a non-text member: the field is an
+        immutable declaration, and PR-4 refuses rather than coerces."""
+        for bad in (None, ["analysis"], ("",), ("   ",), (1,), (None,)):
+            with self.assertRaises(InvalidAgentDefinition, msg=repr(bad)):
+                AgentDefinition(
+                    agent_definition_key="k",
+                    agent_definition_version="1",
+                    owning_department_key="d",
+                    implemented_capabilities=bad,
+                )
+
+    def test_capabilities_are_named_by_key_not_by_capability_objects(self):
+        """The declaration carries plain keys, so no `agent → capability`
+        import is taken. INV-2 clause 2 is a per-Definition fact; whether the
+        named Capabilities exist is a corpus fact this contract cannot see."""
+        self.assertEqual(("analysis",), _definition().implemented_capabilities)
+        self.assertTrue(
+            all(isinstance(k, str) for k in _definition().implemented_capabilities)
         )
 
     def test_it_cannot_be_mutated(self):
@@ -321,6 +363,7 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
             {"agent_definition_key": "k", "agent_definition_version": 1},
         ):
             kwargs.setdefault("owning_department_key", "platform")
+            kwargs.setdefault("implemented_capabilities", ("analysis",))
             with self.assertRaises(InvalidAgentDefinition):
                 AgentDefinition(**kwargs)
 
@@ -329,6 +372,12 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
             AgentDefinition(agent_definition_key="k")
         with self.assertRaises(TypeError):
             AgentDefinition(agent_definition_key="k", agent_definition_version="1")
+        with self.assertRaises(TypeError):
+            AgentDefinition(
+                agent_definition_key="k",
+                agent_definition_version="1",
+                owning_department_key="d",
+            )
         for field in dataclasses.fields(AgentDefinition):
             self.assertIs(dataclasses.MISSING, field.default, field.name)
             self.assertIs(dataclasses.MISSING, field.default_factory, field.name)
@@ -569,7 +618,14 @@ class TestDependencyDirection(unittest.TestCase):
             "optimization",
         }
     )
-    STDLIB = frozenset({"__future__", "dataclasses"})
+    # `typing` joined under `ACT-CC-F03-040` with
+    # `AgentDefinition.implemented_capabilities: Tuple[str, ...]`. This
+    # allowlist exists for INV-12 — *"Tool is the only entity permitted an
+    # external dependency"* — and `typing` is stdlib, which the assertion
+    # below re-checks against `sys.stdlib_module_names` independently of this
+    # set. It is also the annotation convention already used across the
+    # Capability boundary.
+    STDLIB = frozenset({"__future__", "dataclasses", "typing"})
 
     def test_cross_boundary_imports_are_only_the_permitted_one(self):
         reached = {_boundary_of(m) for _, m, _ in _cross_boundary_records()}
@@ -820,11 +876,15 @@ class TestFailClosedTaxonomy(unittest.TestCase):
                     )
                     if isinstance(argument, ast.Constant):
                         self.assertIsInstance(argument.value, str)
-        # One guard per declared field across the two contracts. Was 4; became
-        # 5 when `AgentDefinition.owning_department_key` was declared under
-        # `ACT-CC-F03-039`. The rule is unchanged and the string assertion above
-        # is enforced on every guard, this one included.
-        self.assertEqual(5, raises, "one guard per declared field")
+        # One guard per declared field across the two contracts, plus the
+        # extra shape guards a collection-valued field needs. Was 4; 5 when
+        # `owning_department_key` was declared (`ACT-CC-F03-039`); 8 when
+        # `implemented_capabilities` was declared (`ACT-CC-F03-040`), which
+        # needs four of its own — not a tuple, empty, a non-text member, and a
+        # duplicate — because INV-2 clause 2 says *at least one* and it is the
+        # first collection-valued field here. The rule is unchanged and the
+        # string assertion above is enforced on every guard.
+        self.assertEqual(9, raises, "one guard per declared field")
 
     def test_nothing_is_caught_or_suppressed(self):
         """Fail closed: the boundary swallows no exception and degrades

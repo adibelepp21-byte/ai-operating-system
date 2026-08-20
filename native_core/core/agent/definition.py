@@ -32,6 +32,14 @@ Fields — each added only on direct evidence, none invented:
     Department"*, ADR-0010). Held as a **plain key**, not as a reference object,
     so that no import of the Capability boundary is taken (see *Dependencies*).
     Required, because INV-2 admits no unowned Definition and PR-4 fails closed.
+  - `implemented_capabilities` — the Capabilities this Definition implements.
+    **[E] INV-2 clause 2**: *"…and implements **at least one Capability**."*
+    Corroborated by `agent_spec §2` — *"An Agent Definition implements ≥1
+    Capability (INV-2)"* — and by Freeze §4's Capability entry, which lists
+    *"be implemented by Agent Definitions"* among a Capability's allowed
+    relations. **At least one**, so an empty tuple fails closed; distinct keys,
+    since implementing the same Capability twice is not implementing two.
+    Plain keys again, for the same dependency reason.
   - `agent_definition_key` — the template's stable identity. Required because
     INV-3 fixes that an Agent Instance instantiates *exactly one* Agent
     Definition (which presupposes Definitions are distinguishable) and Domain
@@ -55,13 +63,24 @@ Capabilities (INV-2/INV-14), created, or registered.
 That reservation covers construction — *"governed, validated against
 Capabilities, created, or registered"* — and **not ownership**, which the three
 sources above ratify as `[E]`. `owning_department_key` was added under
-`ACT-CC-F03-039` (`DEC-AGENT-DEPT-OWNERSHIP = OPTION A`). It carries **INV-2
-clause 1 only**. Clause 2 — that a Definition *implements at least one
-Capability* — needs a Definition checked against Capabilities, which is squarely
-the reserved construction discipline, and is **not** represented here. The field
-was absent before now for a historical reason rather than a reserved one: in
-Phase 3 the Department entity did not exist, only the `DepartmentRef` stub, and
-Department was realized under `ACT-CC-F03-036`.
+`ACT-CC-F03-039` (`DEC-AGENT-DEPT-OWNERSHIP = OPTION A`), carrying **INV-2
+clause 1**. The field had been absent for a historical reason rather than a
+reserved one: in Phase 3 the Department entity did not exist, only the
+`DepartmentRef` stub, and Department was realized under `ACT-CC-F03-036`.
+
+`implemented_capabilities` followed under `ACT-CC-F03-040`
+(`DEC-AGENT-FACTORY-INV2-CLAUSE2 = OPTION A`), carrying **INV-2 clause 2**.
+That clause *was* genuinely behind the reservation: a Definition declaring which
+Capabilities it implements is the *"validated against Capabilities"* surface the
+Agent Factory reserves. The Founder opened exactly that, and nothing else — the
+reservation stands over governed **creation, registration and lifecycle** of
+Definitions, which remain unbuilt and unrepresented here.
+
+**What this contract does and does not assert.** It fixes that a Definition
+declares **at least one** Capability, which is the whole of INV-2 clause 2 as
+stated. Whether those Capabilities *exist*, and whether every Capability has an
+implementer (INV-14), are corpus-level facts invisible to a single Definition —
+they are reconciled by a caller that can see both sides, exactly as ownership is.
 
 Ownership: this contract owns **only Agent specification identity**. The Agent
 Contract owns behavioral participation; Agent Instance (future) will own runtime
@@ -88,6 +107,7 @@ state, no singleton, no registry, no global mutable state.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Tuple
 
 
 class InvalidAgentDefinition(ValueError):
@@ -100,12 +120,14 @@ class AgentDefinition:
     """The immutable specification/template of an Agent.
 
     Frozen, hashable, and comparable; carries the template's identity, its
-    version, and the Department that owns it (INV-2 clause 1). Descriptive only — it holds no execution, no runtime identity, and
+    version, the Department that owns it (INV-2 clause 1), and the Capabilities
+    it implements (INV-2 clause 2). Descriptive only — it holds no execution, no runtime identity, and
     no behavior."""
 
     agent_definition_key: str
     agent_definition_version: str
     owning_department_key: str
+    implemented_capabilities: Tuple[str, ...]
 
     def __post_init__(self):
         if not isinstance(self.agent_definition_key, str) or not self.agent_definition_key.strip():
@@ -122,4 +144,34 @@ class AgentDefinition:
             raise InvalidAgentDefinition(
                 "owning_department_key must be a non-empty string (INV-2: every "
                 "Agent Definition is owned by exactly one Department)"
+            )
+        # INV-2 clause 2 [E]: "...and implements at least one Capability."
+        # "At least one" is the invariant, so an empty declaration fails closed
+        # (PR-4) rather than being accepted as a Definition that implements
+        # nothing. Duplicates are refused because implementing the same
+        # Capability twice is not implementing two.
+        if not isinstance(self.implemented_capabilities, tuple):
+            raise InvalidAgentDefinition(
+                "implemented_capabilities must be a tuple"
+            )
+        if not self.implemented_capabilities:
+            raise InvalidAgentDefinition(
+                "implemented_capabilities must name at least one Capability "
+                "(INV-2: every Agent Definition implements at least one "
+                "Capability)"
+            )
+        for capability_key in self.implemented_capabilities:
+            if not isinstance(capability_key, str) or not capability_key.strip():
+                raise InvalidAgentDefinition(
+                    "every implemented capability_key must be a non-empty string"
+                )
+        # Expressed without a local binding: this boundary stores nothing and
+        # mutates nothing, so the duplicate check is a comparison rather than
+        # an accumulator.
+        if len(set(self.implemented_capabilities)) != len(
+            self.implemented_capabilities
+        ):
+            raise InvalidAgentDefinition(
+                "a Capability is declared more than once; implementing one "
+                "Capability twice is not implementing two"
             )

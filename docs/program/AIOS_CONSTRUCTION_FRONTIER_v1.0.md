@@ -51,7 +51,7 @@ an architecture gap.
 |---|---|---|---|---|---|---|
 | **T-9** | **Department ownership of Agent Definitions (INV-2 clause 1)** | **RATIFIED** — Freeze §4 (twice) + INV-2 | **SUFFICIENT** — `department_spec §1`, `§2` already name it | **SATISFIED** — Department realization COMPLETE; `agent_definition_key` ratified | **PRESENT** — `§11` *"governed ownership context"*; `§12` | **ELIGIBLE — SELECTED** |
 | ~~T-10~~ | Agent Definition declaring its own owning Department (second side of the edge) | RATIFIED | — | satisfied | **AUTHORIZED** — `ACT-CC-F03-039` `DEC-AGENT-DEPT-OWNERSHIP = OPTION A` | **COMPLETE** — see correction below |
-| T-11 | INV-2 **clause 2** — Definition implements ≥1 Capability | RATIFIED | — | satisfied | **ABSENT** — checking a Definition against Capabilities is Agent construction discipline, `agent_spec §12`/`§13` **[O]** Agent Factory, *"reserved to the Architect"* | **DEFERRED — reserved** |
+| ~~T-11~~ | INV-2 **clause 2** — Definition implements ≥1 Capability | RATIFIED | sufficient | satisfied | **AUTHORIZED** — `ACT-CC-F03-040` `DEC-AGENT-FACTORY-INV2-CLAUSE2 = OPTION A` | **COMPLETE** |
 | T-2 | Capability↔Skill/Workflow composition | RATIFIED | **RESERVED** `capability_spec §12`/`§14` **[O]** | satisfied | ABSENT | NOT ELIGIBLE |
 | T-3 | Versioned-contract representation | RATIFIED | **RESERVED** `capability_spec §14` **[O]** | satisfied | ABSENT | NOT ELIGIBLE |
 | T-4 | Capability Catalog category instantiation | RATIFIED | sufficient | satisfied | **ABSENT** — assigning an owner is a governance data decision; `OB-01` unresolved | CONDITIONALLY ELIGIBLE |
@@ -173,3 +173,24 @@ Definition against Capabilities, and that characterization stands.
 
 T-10 was built under `ACT-CC-F03-039`. **T-11 remains reserved.** The rows for
 T-2, T-3, T-4, T-12 and T-5–T-8 are unaffected by this correction.
+
+
+---
+
+## Update — `ACT-CC-F03-040`
+
+**T-11 is complete.** INV-2 clause 2 — *"…and implements at least one
+Capability"* — was realized under `DEC-AGENT-FACTORY-INV2-CLAUSE2 = OPTION A`:
+`AgentDefinition.implemented_capabilities` enforces *at least one* per
+Definition, and `CapabilityGraph.implementer_counts` /
+`implementers_of` / `unknown_implemented_capabilities` supply the corpus view,
+closing the INV-14 orphan loop from what Definitions actually declare.
+
+**Reservation exercised:** the *"validated against Capabilities"* surface only.
+Governed **creation, registration and lifecycle** of Agent Definitions remain
+`[O]` reserved to the Architect and unbuilt.
+
+**Remaining frontier:** **T-2**, **T-3**, **T-12** `[O]`-reserved; **T-4**
+blocked on Founder-reserved authority entangled with `OB-01`; **T-5**–**T-8**
+unratified and excluded. No non-reserved engineering gap remains in the
+Capability boundary, its ownership context, or the INV-2 edge.

@@ -498,5 +498,78 @@ class TestDeterminism(unittest.TestCase):
         )
 
 
+
+class TestInv2Clause2ImplementerEdge(unittest.TestCase):
+    """INV-2 clause 2's corpus view, added under `ACT-CC-F03-040`
+    (`DEC-AGENT-FACTORY-INV2-CLAUSE2 = OPTION A`).
+
+    INV-2 clause 2 [E] — *"…and implements at least one Capability"* — is a
+    per-Definition fact enforced on the Definition contract. What this boundary
+    adds is what no single Definition can see: which Capabilities have
+    implementers (INV-14) and which declarations resolve. Declarations arrive
+    as plain `(agent_definition_key, capability_keys)` pairs so that no
+    `capability → agent` dependency is created."""
+
+    def setUp(self):
+        self.graph = CapabilityGraph(
+            [
+                Capability(
+                    CapabilityIdentity("cap.a", "1.0"), DepartmentRef("platform"), ()
+                ),
+                Capability(
+                    CapabilityIdentity("cap.b", "1.0"), DepartmentRef("platform"), ()
+                ),
+            ]
+        )
+        self.declarations = [
+            ("ad.one", ("cap.a",)),
+            ("ad.two", ("cap.a", "cap.ghost")),
+        ]
+
+    def test_counts_are_derived_from_declarations(self):
+        self.assertEqual(
+            {"cap.a": 2, "cap.ghost": 1},
+            dict(self.graph.implementer_counts(self.declarations)),
+        )
+
+    def test_one_definition_counts_once_however_often_it_repeats_a_key(self):
+        counts = self.graph.implementer_counts([("ad.one", ("cap.a", "cap.a"))])
+        self.assertEqual({"cap.a": 1}, dict(counts))
+
+    def test_the_inv14_loop_closes_from_declarations(self):
+        """INV-14 [E]: *"A Capability with zero active Agent Definitions
+        implementing it is an invalid steady state and must be flagged."*"""
+        orphans = self.graph.orphan_capabilities(
+            self.graph.implementer_counts(self.declarations)
+        )
+        self.assertEqual(("cap.b",), tuple(o.capability_key for o in orphans))
+
+    def test_implementers_are_queryable(self):
+        self.assertEqual(
+            ("ad.one", "ad.two"), self.graph.implementers_of("cap.a", self.declarations)
+        )
+        self.assertEqual((), self.graph.implementers_of("cap.b", self.declarations))
+
+    def test_unresolvable_declarations_are_flagged_never_raised(self):
+        """PR-3 — over a partial corpus an absent Capability is ordinary
+        incompleteness, and whether it is a defect is a governance judgement."""
+        self.assertEqual(
+            (("ad.two", "cap.ghost"),),
+            self.graph.unknown_implemented_capabilities(self.declarations),
+        )
+
+    def test_no_agent_import_is_introduced(self):
+        """Anchored on the import graph, not on text — the module legitimately
+        names Agent Definitions in prose and identifiers."""
+        source = (Path(__file__).resolve().parents[1] / "graph.py").read_text()
+        modules = []
+        for node in ast.walk(ast.parse(source)):
+            if isinstance(node, ast.Import):
+                modules.extend(a.name for a in node.names)
+            elif isinstance(node, ast.ImportFrom) and not node.level:
+                modules.append(node.module or "")
+        self.assertEqual([], [m for m in modules if "agent" in m.lower()], modules)
+
+
 if __name__ == "__main__":
     unittest.main()

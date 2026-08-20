@@ -175,6 +175,72 @@ class CapabilityGraph:
 
     # -- INV-14: flag, never decide -------------------------------------
 
+    # -- INV-2 clause 2: the Agent Definition side of the implementer edge --
+    #
+    # Declarations arrive as `(agent_definition_key, implemented_capability_keys)`
+    # plain-key pairs, never Agent Definition objects. INV-2 clause 2 is a
+    # per-Definition fact and the Definition contract enforces it there; what
+    # this boundary adds is the *corpus* view, which no single Definition can
+    # see. Keys rather than objects keep the module's stated dependency rule
+    # intact: Agent is not among this boundary's permitted dependencies, and
+    # `capability → agent` must not exist. Added under `ACT-CC-F03-040`.
+
+    def implementer_counts(
+        self, declarations: Iterable[Tuple[str, Iterable[str]]]
+    ) -> Mapping[str, int]:
+        """Count implementing Agent Definitions per Capability key.
+
+        The mapping `orphan_capabilities` already expects, derived from what
+        Definitions declare rather than assembled by hand. Counts *distinct*
+        Definitions: one Definition contributes at most one to a Capability,
+        so a Definition cannot make a Capability look implemented twice.
+
+        Keys the graph does not contain are counted too — deciding what an
+        unknown key means belongs to `unknown_implemented_capabilities`, not
+        here."""
+        counts = {}
+        for definition_key, capability_keys in declarations:
+            for capability_key in set(capability_keys):
+                counts[capability_key] = counts.get(capability_key, 0) + 1
+        return MappingProxyType(counts)
+
+    def implementers_of(
+        self,
+        capability_key: str,
+        declarations: Iterable[Tuple[str, Iterable[str]]],
+    ) -> Tuple[str, ...]:
+        """The Agent Definition keys declaring they implement a Capability."""
+        return tuple(
+            sorted(
+                {
+                    definition_key
+                    for definition_key, capability_keys in declarations
+                    if capability_key in set(capability_keys)
+                }
+            )
+        )
+
+    def unknown_implemented_capabilities(
+        self, declarations: Iterable[Tuple[str, Iterable[str]]]
+    ) -> Tuple[Tuple[str, str], ...]:
+        """Declarations naming a Capability this graph does not contain.
+
+        Each entry is `(agent_definition_key, capability_key)`. Reported, never
+        raised (PR-3): over a partial corpus a Capability absent from *this*
+        graph is ordinary incompleteness rather than a violation, and INV-2
+        clause 2 — *"implements at least one Capability"* — is enforced on the
+        Definition itself, which is where the invariant is stated. Whether an
+        unresolvable declaration is a defect is a governance judgement, and
+        this boundary does not make it."""
+        return tuple(
+            sorted(
+                (definition_key, capability_key)
+                for definition_key, capability_keys in declarations
+                for capability_key in set(capability_keys)
+                if capability_key not in self._capabilities
+            )
+        )
+
     def orphan_capabilities(
         self, implementer_counts: Mapping[str, int]
     ) -> Tuple[CapabilityIdentity, ...]:
