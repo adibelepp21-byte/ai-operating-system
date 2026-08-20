@@ -32,7 +32,10 @@ class InvalidCapabilityDependency(CapabilityError):
     not versioned.
 
     INV-9: *"Every Capability-to-Capability dependency must be explicit and
-    must reference a specific versioned contract."*"""
+    must reference a specific versioned contract."*
+
+    Also raised when a Capability declares a dependency on itself:
+    capability_spec §7 admits dependencies on *other* Capabilities only."""
 
 
 class UndocumentedCapabilityDependency(CapabilityError):

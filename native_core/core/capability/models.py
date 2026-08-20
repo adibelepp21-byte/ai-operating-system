@@ -175,3 +175,14 @@ class Capability:
                 raise InvalidCapabilityDependency(
                     "every dependency must be a CapabilityDependency (INV-9)"
                 )
+            # capability_spec §7 [E]: a Capability depends on its Department
+            # and on *other* Capabilities. A dependency on itself is not a
+            # dependency on another Capability, so it fails closed (PR-4).
+            # Checked here rather than in CapabilityGraph because it is an
+            # intra-Capability fact, visible without the rest of the graph.
+            if dependency.depends_on.capability_key == self.identity.capability_key:
+                raise InvalidCapabilityDependency(
+                    f"{self.identity.capability_key!r} declares a dependency on "
+                    "itself; capability_spec §7 admits dependencies on *other* "
+                    "Capabilities only"
+                )

@@ -111,6 +111,30 @@ class TestInv9ExplicitVersionedDependencies(unittest.TestCase):
         with self.assertRaises(InvalidCapabilityDependency):
             Capability(_identity("alpha"), PLATFORM, ("beta",))
 
+    def test_self_dependency_fails_closed(self):
+        """capability_spec §7 [E] admits dependencies on *other* Capabilities.
+
+        A Capability naming itself is not depending on another Capability, so
+        it fails closed (PR-4). Before this check the graph accepted it and
+        reported the Capability as its own dependent."""
+        with self.assertRaises(InvalidCapabilityDependency):
+            _capability("alpha", dependencies=[CapabilityDependency(_identity("alpha"))])
+
+    def test_self_dependency_is_rejected_at_construction_not_only_in_graph(self):
+        """The check belongs to Capability: it is an intra-Capability fact,
+        visible without assembling the rest of the graph."""
+        with self.assertRaises(InvalidCapabilityDependency):
+            Capability(
+                _identity("solo"),
+                PLATFORM,
+                (CapabilityDependency(_identity("solo")),),
+            )
+
+    def test_dependency_on_a_different_capability_is_admitted(self):
+        """The check must reject only self-reference, never a real dependency."""
+        cap = _capability("alpha", dependencies=[CapabilityDependency(_identity("beta"))])
+        self.assertEqual(cap.dependencies[0].depends_on.capability_key, "beta")
+
     def test_version_mismatch_is_not_a_specific_contract(self):
         beta = _capability("beta", version="v2")
         alpha = _capability(
