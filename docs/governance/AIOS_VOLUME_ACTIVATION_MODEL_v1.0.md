@@ -1,8 +1,8 @@
 # AIOS Volume Activation Model
 
-**Version:** v1.3
+**Version:** v1.4
 **Status:** Canonical — governance machinery
-**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018` · `ACT-CC-F03-020`
+**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018` · `ACT-CC-F03-020` · `ACT-CC-F03-023`
 **Change in v1.1:** GG-1…GG-4 resolved by FD-015-01/02/03; T6 established; PD-01 review basis adopted
 **Change in v1.2 — GOVERNANCE STATE RECONCILIATION (`ACT-CC-F03-018`):** this
 document's PD-02 lifecycle statements were stale relative to two authoritative
@@ -22,6 +22,12 @@ provenance but **relabelled non-canonical implementation scaffolding**, not
 Founder authority. The **AG-05 evidence-availability hold is Founder-resolved as
 satisfied**; the binding it gates remains **NOT EXECUTED** — see §6B. No
 activation occurred and no activation authority moved.
+**Change in v1.4 — AG-05 BINDING EXECUTED (`ACT-CC-F03-023`):** the Founder
+selected **Branch B — PD-01 / Volume 1** and named the exact targets. The binding
+`Architecture Authority Holder = PD-02 Architecture Office` is now resident at
+`volume-1/pd-01-executive-office/C6.md:68` and `C8.md:178`. **STOP-01 is CLOSED.**
+`E5.md`/`E6.md` were excluded by Founder decision and are byte-unchanged. This
+records a completed binding only — **no eligibility assessment was executed.**
 **Recorded by:** Claude Code / Co-Founder (Construction Phase)
 **Date:** 2026-08-16
 **Scope:** PD-01 (Volume 1) · PD-02 (Volume 2)
@@ -249,10 +255,13 @@ ALL AE CONDITIONS PASS → PD-02 MAY BE DECLARED ACTIVATION-ELIGIBLE
 |---|---|
 | Original hold | `GDR-0019 §4` — **evidence-availability** hold; the `ACT-CC-BLOCKER-002 §6.3` gate failed, so the §6.4 binding was not executed |
 | Evidence precondition | **SATISFIED — Founder-resolved**, `ACT-CC-F03-020 §7`. Corroborated: "Architecture Office" 1 → **417** occurrences / 57 files; **50/50** PD-02 bodies name PD-02 as Architecture Office; **33/50** declare `Platform Authority: Architecture Authority` |
-| Binding execution | **NOT EXECUTED** |
-| Why | `Evidence Available ≠ Binding Executed`. The defining instrument `ACT-CC-BLOCKER-002 §6.4` is **not repository-resident**; the only resident description of its target is the **disjunction** *"into the Appointment Register **or** Volume 1"* (`GDR-0019 §4`). `ACT-CC-F03-020` forecloses both branches — its header records **Appointment Register Mutation: NOT AUTHORIZED BY THIS ACT**, and its scope is **PD-02 / Volume 2 only** with **PD-01 OUT OF SCOPE** (§19). Target therefore not exactly identifiable → **`ACT-CC-F03-020 §16.3` STOP** |
+| Binding execution | **EXECUTED** — `ACT-CC-F03-023`, Branch B. Binding resident at `volume-1/pd-01-executive-office/C6.md:68` (Review Types → Final Authority) and `C8.md:178` (Shared Responsibility Model → Owner) |
+| STOP-01 — history | `ACT-CC-BLOCKER-002 §6.4` is **not repository-resident**, and the only resident description of its target was the **disjunction** *"into the Appointment Register **or** Volume 1"* (`GDR-0019 §4`). `ACT-CC-F03-020 §16.3` therefore stopped for an unidentifiable target; `ACT-CC-F03-021` and `ACT-CC-F03-022` stopped again for ambiguous branch selection. **Resolved by `ACT-CC-F03-023`**, in which the Founder selected Branch B and named the exact target loci. **STOP-01 = CLOSED.** |
+| Excluded targets | `E5.md` and `E6.md` — Founder decision `ACT-CC-F03-023 §6.2`, not implementation inference. Both **byte-unchanged**. They carry no `Architecture Authority` occurrence; `C6` records that E5 §9 and E6 §6 **reference** its table rather than duplicating it, so the binding reaches them by reference |
+| Branch A | **NOT EXECUTED.** `AIOS_APPOINTMENT_REGISTER_v1.0.md` byte-unchanged |
+| Scope differentiation | **PRESERVED.** `APT-CD1.1-AA-001` (CD-1 / Option B) remains in force in its own scope and is **not** superseded; the two holders are **not** merged (FD-01, `ACT-CC-F03-006 §2`) |
 | Two-holder question | **NOT a conflict.** `GDR-0016` (CD-1) and `GDR-0019` (F-03) are **scope-differentiated, not competing**, per **FD-01** (`ACT-CC-F03-006 §2`). That disposition is controlling and must not be reconstructed as though it had not been issued (`ACT-CC-F03-020 §8`) |
-| Effect on eligibility | **AE-04 not established** while the binding remains unexecuted and its target Founder-undetermined |
+| Effect on eligibility | The AG-05 item no longer blocks. **AE-04 remains NOT ASSESSED** — `ACT-CC-F03-023 §3`/`§9` expressly withhold Activation Eligibility determination, and **no eligibility assessment has been executed**. Binding completion is not eligibility |
 
 **No second Architecture Authority holder was appointed. No authority model was
 created, widened, or reinterpreted.**
@@ -351,8 +360,8 @@ PD-02 Activation ......... NOT EXECUTED       PD-02 Freeze ... FROZEN (Volume-le
 PD-02 P7-I99 ............. PASS / APPROVED FOR FREEZE (GDR-0025)
 RG-1 .............................. RESOLVED (ACT-CC-F03-020)
 AG-05 evidence hold ............... SATISFIED (ACT-CC-F03-020 §7)
-AG-05 binding ..................... NOT EXECUTED — STOP-01, target Founder-undetermined
-PD-02 Activation Eligibility ..... NOT EXECUTED (Condition 4 / AE-04 open)
+AG-05 binding ..................... EXECUTED (ACT-CC-F03-023, Branch B) · STOP-01 CLOSED
+PD-02 Activation Eligibility ..... NOT EXECUTED (Condition 4 / AE-04 not assessed)
 PD-02 Activation Gate ............ NOT EXECUTED
 PD-02 Activation Authorization ... NOT ISSUED
 Activation Authority ..... FOUNDER-RESERVED
