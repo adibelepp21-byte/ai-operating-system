@@ -1,8 +1,8 @@
 # AIOS Volume Activation Model
 
-**Version:** v1.4
+**Version:** v1.5
 **Status:** Canonical — governance machinery
-**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018` · `ACT-CC-F03-020` · `ACT-CC-F03-023`
+**Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018` · `ACT-CC-F03-020` · `ACT-CC-F03-023` · `ACT-CC-F03-024`
 **Change in v1.1:** GG-1…GG-4 resolved by FD-015-01/02/03; T6 established; PD-01 review basis adopted
 **Change in v1.2 — GOVERNANCE STATE RECONCILIATION (`ACT-CC-F03-018`):** this
 document's PD-02 lifecycle statements were stale relative to two authoritative
@@ -28,6 +28,9 @@ selected **Branch B — PD-01 / Volume 1** and named the exact targets. The bind
 `volume-1/pd-01-executive-office/C6.md:68` and `C8.md:178`. **STOP-01 is CLOSED.**
 `E5.md`/`E6.md` were excluded by Founder decision and are byte-unchanged. This
 records a completed binding only — **no eligibility assessment was executed.**
+**Change in v1.5 — ELIGIBILITY ASSESSMENT EXECUTED (`ACT-CC-F03-024`):** AE-01…AE-06
+were assessed individually against repository evidence. Result: **STATE B — NOT
+SATISFIED** (AE-04 and AE-05). AE-01…AE-06 were **not modified** — see §6C.
 **Recorded by:** Claude Code / Co-Founder (Construction Phase)
 **Date:** 2026-08-16
 **Scope:** PD-01 (Volume 1) · PD-02 (Volume 2)
@@ -218,7 +221,7 @@ Decision. These supersede §6 as the governing eligibility requirements.
 | **1** | The applicable integrated review requirement is satisfied | **SATISFIED** | P7-I99 Volume 2 R1–R11 = `PASS` / `APPROVED FOR FREEZE` — `GDR-0025` |
 | **2** | The Volume satisfies its applicable Freeze Gate | **SATISFIED** | R11 = `FREEZE READY` |
 | **3** | The Volume is **actually** recorded as `FROZEN` through the canonical lifecycle mechanism | **SATISFIED** | `GDR-0026`, appended to this register's canonical mechanism |
-| **4** | All Activation-specific conditions separately required by the Founder are satisfied | **NOT ESTABLISHED** | Defined as AE-01 … AE-06 below; AE-04 open — see §6B |
+| **4** | All Activation-specific conditions separately required by the Founder are satisfied | **NOT SATISFIED** | AE-01…AE-06 assessed under `ACT-CC-F03-024`; **AE-04 and AE-05 NOT SATISFIED** — see §6C |
 
 **Condition 4 is no longer an empty set.** `ACT-CC-F03-020 §3` defines it as the
 PD-02 condition set below. It may not be supplemented, expanded, reinterpreted or
@@ -246,6 +249,49 @@ ALL AE CONDITIONS PASS → PD-02 MAY BE DECLARED ACTIVATION-ELIGIBLE
 ```
 
 **No condition here is an automatic grant of Activation Authorization.**
+
+---
+
+## 6C. Activation Eligibility Assessment Result — `ACT-CC-F03-024`
+
+**Executed:** 2026-08-20 · **Mutation to AE-01…AE-06:** **NONE** (immutable during
+that Act) · **Method:** each condition assessed independently against repository
+evidence, then independently re-verified by recomputation.
+
+| AE | Status | Basis |
+|---|---|---|
+| **AE-01** Governance State Integrity | **SATISFIED** | Identity 50/50 · 0 Volume-1 identity · 1 corpus dir · FD-01 scope-differentiated authority resident · AG-05 bound at 2/2 sites · 1 authoritative `FROZEN`, 0 reversals · 1 P7-I99 result, 0 supersessions · 0 activation records. One **non-material** divergence recorded below |
+| **AE-02** Freeze State | **SATISFIED** | `GDR-0026` records Volume-level `FROZEN` through the canonical lifecycle mechanism (`GDR-0026 §1`). Section-level claims were **excluded** as evidence, as the condition requires |
+| **AE-03** Integrated Review Integrity | **SATISFIED** | Review resident and blob-identical to `HEAD`; attributable to `ACT-CC-F03-016` / `DEL-F03-015-P7I99-001`; independently re-verified under `ACT-CC-F03-017` FZ-03; **0** superseding or invalidating findings |
+| **AE-04** Material Governance Conditions | **NOT SATISFIED** | The condition permits an open item to remain as debt **only where the Founder has expressly determined it does not block.** Three unresolved Founder-reserved items carry **no such determination** — see below |
+| **AE-05** Activation-Specific Gate Readiness | **NOT SATISFIED** | **No resident source enumerates what the Activation Gate tests.** Every resident mention establishes the Gate's *position* (`T7`/`T8`, `ACT-CC-F03-014 §3`) or *who may produce a result* — never its criteria. The only enumerated set that ever existed, `AG-01…AG-10`, is **non-canonical** (§6). Adopting it would be the "undocumented precedent / historical assumption" AE-05 forbids |
+| **AE-06** Authority Separation | **SATISFIED** | The result is expressed as an assessment only; Activation Authority remains **FOUNDER-RESERVED**; **0** instruments grant the Co-Founder activation authority; no delegation created |
+
+### AE-04 — the three items lacking an express Founder non-blocking determination
+
+| # | Item | Why Founder-reserved | Founder determination |
+|---|---|---|---|
+| 1 | `GDR-0025`, `GDR-0026` and the P7-I99 review each assert *"the **50** section-level `Status: FROZEN` claims"*. Measured: **11** bodies carry `FROZEN` in a `Status:` field; **50** contain the word anywhere | The Governance Decision Register is append-only; correction needs Founder authorization | **NONE** |
+| 2 | Act bodies not repository-resident: `ACT-CC-BLOCKER-002`, `ACT-CC-F03-010`…`-013`, `-016`…`-024` | Only the Founder can supply them | **NONE** |
+| 3 | **RG-3's `F-12` item.** Its *"non-blocking"* classification was authored by the Co-Founder, not the Founder. `F-05` by contrast **is** Founder-determined (`ACT-CC-F03-014`: *"It does not block PD-01 or PD-02 activation."*) | Classification of a residual as non-blocking to Activation Eligibility | **NONE** |
+
+**Recorded divergence, not repaired** (`ACT-CC-F03-024 §4`): item 1 is **non-material**
+to every decision taken — the claims were *excluded* as freeze evidence, and the
+exclusion holds at any count. Item 3 additionally exposes a further label
+collision: the Founder's own `F-12` is *"Documentation quality sufficient"* (a
+P7-I99 prerequisite), while the Co-Founder's `F-12` is the `O-5` label-collision
+finding. **Two different F-12s.**
+
+### Integrated result
+
+```text
+PD-02 Activation Eligibility Assessment Result:
+NOT SATISFIED
+Reason: AE-04, AE-05
+```
+
+**This is an assessment result only.** Activation Gate = NOT EXECUTED ·
+Activation Authorization = NOT ISSUED · Activation = NOT EXECUTED.
 
 ---
 
@@ -361,7 +407,7 @@ PD-02 P7-I99 ............. PASS / APPROVED FOR FREEZE (GDR-0025)
 RG-1 .............................. RESOLVED (ACT-CC-F03-020)
 AG-05 evidence hold ............... SATISFIED (ACT-CC-F03-020 §7)
 AG-05 binding ..................... EXECUTED (ACT-CC-F03-023, Branch B) · STOP-01 CLOSED
-PD-02 Activation Eligibility ..... NOT EXECUTED (Condition 4 / AE-04 not assessed)
+PD-02 Activation Eligibility ..... ASSESSED (ACT-CC-F03-024) · RESULT: NOT SATISFIED — AE-04, AE-05
 PD-02 Activation Gate ............ NOT EXECUTED
 PD-02 Activation Authorization ... NOT ISSUED
 Activation Authority ..... FOUNDER-RESERVED
