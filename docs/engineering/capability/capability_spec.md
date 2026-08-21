@@ -37,10 +37,10 @@
 [E] Fail closed (PR-4): an ungoverned or undocumented dependency is invalid; a zero-implementer capability is an invalid steady state (INV-14) and halts as a governance flag.
 
 ## 12. Extension Points
-[A] New Capabilities and governed versioned dependencies are the primary extension mechanism. [O] Capability↔**Skill** composition is currently Inferred (reserved). **Partially discharged:** this read *"Capability↔Skill/Workflow"* until `DEC-F03-047` S-2; the **Workflow** half is now the canonical relationship `Workflow realizes Capability` (T-2 ALT-3, `DEC-F03-046`), directed **Workflow→Capability** — this boundary declares no Workflow.
+[A] New Capabilities and governed versioned dependencies are the primary extension mechanism. **Capability↔Skill — RESOLVED.** T-2 Skill half **DETERMINED — derived, no direct edge** (`DEC-F03-053 = S-ALT-1`, reaffirmed against the Canonical Relationship Model under `ACT-CC-F03-055 §4`: `Capability exposes Skill` is **Inferred**, i.e. *"reasoned [A] … but not stated verbatim"*, and "exposes" appears **0 times** in the Domain Model and the Freeze. Declining to ratify it is what S-ALT-1 decides.) Capability and Skill connect only through the two ratified derived paths — via an Agent Definition, or via a Workflow. **No direct edge exists or is pending.** **Partially discharged:** this read *"Capability↔Skill/Workflow"* until `DEC-F03-047` S-2; the **Workflow** half is now the canonical relationship `Workflow realizes Capability` (T-2 ALT-3, `DEC-F03-046`), directed **Workflow→Capability** — this boundary declares no Workflow.
 
 ## 13. Future Evolution
 [O] Department Architecture (Phase 5) realizes Organization/Department/Capability ownership as a governed structure; reserved to the Architect.
 
 ## 14. Open Questions
-[O] Capability↔**Skill** relationship ratification — the **Skill** half only. The Workflow half was ratified under `DEC-F03-045`/`DEC-F03-046`; **Capability↔Skill/Workflow is not fully ratified.** [O] Versioned-contract representation (reserved — no format defined here).
+**Capability↔Skill/Workflow — both halves now resolved.** The Workflow half was ratified as `Workflow realizes Capability` (`DEC-F03-045`/`-046`); the Skill half was determined **derived** (`DEC-F03-053`, reaffirmed `DEC-F03-055`) and is **not** a direct edge. [O] Versioned-contract representation (reserved — no format defined here).

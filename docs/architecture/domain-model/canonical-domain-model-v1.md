@@ -110,7 +110,7 @@ meaningful, stable statement.
 - Workflow **invokes** Agent Instance
 - Workflow **realizes** Capability *(T-2 ALT-3; `DEC-F03-045`, canonicalized
   under `DEC-F03-046` C-1. The converse does not hold: a Capability declares no
-  Workflow. **Capability ↔ Skill remains `[O]` reserved** — see Freeze §10.)*
+  Workflow. **Capability ↔ Skill is derived, not declared** — `DEC-F03-053`/`DEC-F03-055`; no direct edge.)*
 - Skill **invokes** Tool
 - Agent Instance **consumes** Knowledge
 - Agent Instance **consumes** Memory

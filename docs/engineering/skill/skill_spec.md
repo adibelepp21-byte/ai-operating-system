@@ -43,4 +43,4 @@
 [O] Skill registry discipline and discovery model reserved to later phases and the Architect.
 
 ## 14. Open Questions
-[O] Registry facility scope. [O] Skill↔Capability/Workflow composition ratification (Inferred).
+[O] Registry facility scope. **Skill↔Capability — RESOLVED:** T-2 Skill half **DETERMINED — derived, no direct edge** (`DEC-F03-053 = S-ALT-1`, reaffirmed against the Canonical Relationship Model under `ACT-CC-F03-055 §4`: `Capability exposes Skill` is **Inferred**, i.e. *"reasoned [A] … but not stated verbatim"*, and "exposes" appears **0 times** in the Domain Model and the Freeze. Declining to ratify it is what S-ALT-1 decides.) Capability and Skill connect only through the two ratified derived paths — via an Agent Definition, or via a Workflow. **No direct edge exists or is pending.** **Skill↔Workflow** is ratified — `§7` above states **[E]** *"composed within Workflows"*, Domain Model §4 carries *"Workflow **contains** Skill"*, and Freeze §4 lists *"compose Skills"*; this entry tracked the Relationship Model's older *Inferred* status and is corrected here.

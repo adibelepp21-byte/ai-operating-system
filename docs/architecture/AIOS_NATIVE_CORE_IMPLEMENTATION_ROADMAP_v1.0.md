@@ -163,7 +163,7 @@ Optimization   → Trace, Memory, Governance
 - **Prerequisites** [E]: Governance context. **Dependencies:** Department ownership (Phase-5 stub), governed versioned contracts. **Gates:** Governance boundary (INV-10). **Invariants:** INV-1/9/10/11/14. **Principles:** Capability First, Evidence First.
 - **Legacy** [E]: none directly (the legacy harness has one real Agent Definition; Capability realization is minimal). **Reuse:** none / new under spec.
 - **Validation** [A]: single-Department ownership; explicit, queryable, versioned dependencies; no orphan. **Deliverables:** governed capability model. **Completion:** INV-1/9/10/11/14 tests pass.
-- **Blocked by** [O]: Department ownership (Phase 5) for full realization — built with a governance stub in Phase 3. **Enables:** Agent Definitions implementing Capabilities. **Risks:** cross-Department dependency without governance. **Reserved** [O]: Capability↔Skill/Workflow (Inferred).
+- **Blocked by** [O]: Department ownership (Phase 5) for full realization — built with a governance stub in Phase 3. **Enables:** Agent Definitions implementing Capabilities. **Risks:** cross-Department dependency without governance. **Resolved:** Capability↔Workflow ratified as `Workflow realizes Capability` (`DEC-F03-046`); Capability↔Skill determined **derived** (`DEC-F03-053`/`DEC-F03-055`). Neither is reserved, and neither is a Capability-side construction target.
 
 ### 9.7 Skill
 - **Purpose** [E]: reusable, composable units of ability — facilities, not actors. **Entity:** Skill. **Layer:** L5. **Spec:** skill_spec. **Pkg:** Skill. **Priority:** 7.
