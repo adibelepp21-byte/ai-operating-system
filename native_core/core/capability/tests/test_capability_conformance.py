@@ -561,6 +561,68 @@ class TestInv2Clause2ImplementerEdge(unittest.TestCase):
         )
         self.assertEqual((), self.graph.implementers_of("cap.b", self.declarations))
 
+    def test_the_contract_version_binding_is_caller_reconciled(self):
+        """Domain Model §6 [E]: an Agent Definition's *"version is bound to the
+        Capability contract version it implements."* That is the
+        `Capability governs Agent Definition` edge, ratified `DEC-F03-057`,
+        canonicalized `DEC-F03-058`, and constructed under
+        `DEC-F03-060 = OPTION B` — **caller-reconciled**, so the binding is
+        produced here from supplied declarations and is **not** carried
+        structurally on the Agent Definition."""
+        graph = CapabilityGraph(
+            [
+                Capability(
+                    CapabilityIdentity("cap.a", "2.1.0"), DepartmentRef("platform"), ()
+                ),
+                Capability(
+                    CapabilityIdentity("cap.b", "1.0.0"), DepartmentRef("platform"), ()
+                ),
+            ]
+        )
+        self.assertEqual(
+            (("ad.one", "cap.a", "2.1.0"), ("ad.two", "cap.b", "1.0.0")),
+            graph.contract_version_bindings(
+                [("ad.one", ("cap.a",)), ("ad.two", ("cap.b",))]
+            ),
+        )
+
+    def test_a_definition_binds_once_per_capability(self):
+        graph = CapabilityGraph(
+            [Capability(CapabilityIdentity("cap.a", "1.0"), DepartmentRef("d"), ())]
+        )
+        self.assertEqual(
+            (("ad.one", "cap.a", "1.0"),),
+            graph.contract_version_bindings([("ad.one", ("cap.a", "cap.a"))]),
+        )
+
+    def test_an_unresolvable_declaration_is_skipped_not_raised(self):
+        """PR-3 — what an unresolvable declaration means is governance's call.
+        It is surveyed by `unknown_implemented_capabilities`, not decided here."""
+        graph = CapabilityGraph(
+            [Capability(CapabilityIdentity("cap.a", "1.0"), DepartmentRef("d"), ())]
+        )
+        declarations = [("ad.one", ("cap.a", "cap.ghost"))]
+        self.assertEqual(
+            (("ad.one", "cap.a", "1.0"),),
+            graph.contract_version_bindings(declarations),
+        )
+        self.assertEqual(
+            (("ad.one", "cap.ghost"),),
+            graph.unknown_implemented_capabilities(declarations),
+        )
+
+    def test_the_agent_definition_carries_no_capability_version(self):
+        """`DEC-F03-060 = OPTION B` and `ACT-CC-F03-060A §4`: the binding must
+        not introduce *"additional structural responsibility into the Agent
+        Definition."* `implemented_capabilities` therefore still carries plain
+        keys — a version field here would be OPTION A, which was not selected."""
+        import dataclasses
+
+        from native_core.core.agent.definition import AgentDefinition
+
+        types = {f.name: str(f.type) for f in dataclasses.fields(AgentDefinition)}
+        self.assertEqual("Tuple[str, ...]", types["implemented_capabilities"])
+
     def test_unresolvable_declarations_are_flagged_never_raised(self):
         """PR-3 — over a partial corpus an absent Capability is ordinary
         incompleteness, and whether it is a defect is a governance judgement."""

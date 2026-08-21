@@ -220,6 +220,46 @@ class CapabilityGraph:
             )
         )
 
+    def contract_version_bindings(
+        self, declarations: Iterable[Tuple[str, Iterable[str]]]
+    ) -> Tuple[Tuple[str, str, str], ...]:
+        """Resolve each declaration to the Capability **contract version** it
+        binds to. Entries are `(agent_definition_key, capability_key,
+        capability_version)`, sorted.
+
+        Domain Model §6 [E]: an Agent Definition is *"created/deprecated at
+        Platform Division discretion within Capability governance"*, and *"its
+        version is **bound to the Capability contract version it
+        implements**."* That is the `Capability governs Agent Definition` edge
+        (Domain Model §4), ratified as `governs` by `DEC-F03-057` and
+        canonicalized by `DEC-F03-058`.
+
+        **Caller-reconciled, per `DEC-F03-060 = OPTION B`.** The binding is
+        produced here — by the side holding the Capability contracts — from
+        declarations a caller supplies, rather than being carried structurally
+        on the Agent Definition. `ACT-CC-F03-060A §4` records the reason: it
+        *"preserv[es] the existing architectural separation without introducing
+        additional structural responsibility into the Agent Definition."*
+
+        This adds **no dependency**. Ratified interpretation 4 fixes that
+        `Capability governs Agent Definition` creates no package edge, and
+        declarations arrive as plain keys, so nothing imports `core/agent/`.
+
+        A declaration naming a Capability absent from this graph is **skipped,
+        not raised** — deciding what an unresolvable declaration means is
+        governance's call, not this boundary's (PR-3). Use
+        `unknown_implemented_capabilities` to survey those; it is not
+        duplicated here."""
+        return tuple(
+            sorted(
+                (definition_key, capability_key,
+                 self._capabilities[capability_key].identity.capability_version)
+                for definition_key, capability_keys in declarations
+                for capability_key in set(capability_keys)
+                if capability_key in self._capabilities
+            )
+        )
+
     def unknown_implemented_capabilities(
         self, declarations: Iterable[Tuple[str, Iterable[str]]]
     ) -> Tuple[Tuple[str, str], ...]:
