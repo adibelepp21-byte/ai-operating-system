@@ -165,13 +165,20 @@ def _field_types(klass):
 
 
 def _definition(
-    key="analyst", version="1.0.0", department="platform", capabilities=("analysis",)
+    key="analyst",
+    version="1.0.0",
+    department="platform",
+    capabilities=("analysis",),
+    skills=(),
+    workflows=(),
 ):
     return AgentDefinition(
         agent_definition_key=key,
         agent_definition_version=version,
         owning_department_key=department,
         implemented_capabilities=tuple(capabilities),
+        specified_skills=tuple(skills),
+        specified_workflows=tuple(workflows),
     )
 
 
@@ -281,7 +288,7 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
         self.assertTrue(AgentDefinition.__dataclass_params__.frozen)
         self.assertFalse(inspect.isabstract(AgentDefinition))
 
-    def test_it_carries_exactly_identity_version_owner_and_capabilities(self):
+    def test_it_carries_exactly_the_four_things_domain_model_2_names(self):
         """`agent_spec §3 Owned Data` [E] — *"Agent Definitions owned by exactly
         one Department (INV-2)"*; Freeze §4 — *"Ownership: exactly one
         Department"*; Domain Model §5 — `Agent Definition → Exactly one Platform
@@ -292,15 +299,26 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
         and by Freeze §4's Capability entry, *"be implemented by Agent
         Definitions"*. Added under `ACT-CC-F03-040`.
 
-        Both were added as plain keys, never the Capability boundary's own
-        types, so no forbidden import is taken. Nothing beyond these four may
-        appear."""
+        `specified_skills` / `specified_workflows` carry **INV-15** — *"zero or
+        more Skills and zero or more Workflows … No minimum cardinality is
+        required"* (ADR-0007). Added under `ACT-CC-F03-050`.
+
+        Together these are the shape Domain Model §2 [E] names: *"which
+        Capabilities it implements, which Platform Division owns it, what
+        behavior/permissions/Skills/Workflows it is allowed to use."* The
+        **behavior/permissions** and **Runtime requirements** clauses of that
+        same sentence are deliberately **not** built — they were not authorized.
+
+        All are plain keys, never another boundary's types, so no forbidden
+        import is taken. Nothing beyond these may appear."""
         self.assertEqual(
             [
                 ("agent_definition_key", "str"),
                 ("agent_definition_version", "str"),
                 ("owning_department_key", "str"),
                 ("implemented_capabilities", "Tuple[str, ...]"),
+                ("specified_skills", "Tuple[str, ...]"),
+                ("specified_workflows", "Tuple[str, ...]"),
             ],
             _field_types(AgentDefinition),
         )
@@ -327,6 +345,8 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
                     agent_definition_version="1",
                     owning_department_key="d",
                     implemented_capabilities=bad,
+                    specified_skills=(),
+                    specified_workflows=(),
                 )
 
     def test_capabilities_are_named_by_key_not_by_capability_objects(self):
@@ -337,6 +357,70 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
         self.assertTrue(
             all(isinstance(k, str) for k in _definition().implemented_capabilities)
         )
+
+    def test_it_may_specify_zero_skills_and_zero_workflows(self):
+        """INV-15 [E]: *"An Agent Definition may specify zero or more Skills and
+        zero or more Workflows. An empty Skill declaration, an empty Workflow
+        declaration, **or both empty declarations**, represent a valid
+        architectural state."* Resolved by ADR-0007. Emptiness is never an
+        error here, and no minimum may be introduced."""
+        definition = _definition(skills=(), workflows=())
+        self.assertEqual((), definition.specified_skills)
+        self.assertEqual((), definition.specified_workflows)
+
+    def test_it_may_specify_many_skills_and_workflows(self):
+        definition = _definition(skills=("sk.a", "sk.b"), workflows=("wf.a",))
+        self.assertEqual(("sk.a", "sk.b"), definition.specified_skills)
+        self.assertEqual(("wf.a",), definition.specified_workflows)
+
+    def test_no_maximum_or_uniqueness_beyond_ambiguity_is_imposed(self):
+        """The only rejection is a repeated key, which would make the declared
+        set ambiguous. No maximum cardinality exists, so a long declaration is
+        as valid as a short one."""
+        many = tuple(f"sk.{n}" for n in range(50))
+        self.assertEqual(50, len(_definition(skills=many).specified_skills))
+
+    def test_a_repeated_declaration_fails_closed(self):
+        with self.assertRaises(InvalidAgentDefinition):
+            _definition(skills=("sk.a", "sk.a"))
+        with self.assertRaises(InvalidAgentDefinition):
+            _definition(workflows=("wf.a", "wf.a"))
+
+    def test_malformed_declarations_fail_closed(self):
+        """Constructed directly rather than through `_definition`, which coerces
+        with `tuple(...)` and would mask a non-tuple argument."""
+        base = dict(
+            agent_definition_key="k",
+            agent_definition_version="1",
+            owning_department_key="d",
+            implemented_capabilities=("c",),
+            specified_skills=(),
+            specified_workflows=(),
+        )
+        for field in ("specified_skills", "specified_workflows"):
+            for bad in (None, ["sk.a"], ("",), ("   ",), (1,), (None,)):
+                with self.assertRaises(
+                    InvalidAgentDefinition, msg=f"{field}={bad!r}"
+                ):
+                    AgentDefinition(**{**base, field: bad})
+
+    def test_declarations_are_keys_not_skill_or_workflow_objects(self):
+        """Plain keys, so no `agent → skill` or `agent → workflow` import is
+        taken. The Skill and Workflow boundaries hold their own view of the
+        same relationship; reconciling the two belongs to a caller that can
+        see both, since neither boundary may import the other."""
+        definition = _definition(skills=("sk.a",), workflows=("wf.a",))
+        self.assertTrue(all(isinstance(k, str) for k in definition.specified_skills))
+        self.assertTrue(all(isinstance(k, str) for k in definition.specified_workflows))
+
+    def test_behaviour_permissions_and_runtime_requirements_are_not_built(self):
+        """Domain Model §2 names them in the same sentence as Skills/Workflows —
+        *"what behavior/permissions/Skills/Workflows it is allowed to use, and
+        what Runtime requirements it has"* — and `ACT-CC-F03-050 §4` authorized
+        only the Skills/Workflows part. The rest must not appear."""
+        names = {f.name for f in dataclasses.fields(AgentDefinition)}
+        for absent in ("behavior", "behaviour", "permissions", "runtime_requirements"):
+            self.assertNotIn(absent, names)
 
     def test_it_cannot_be_mutated(self):
         definition = _definition()
@@ -364,6 +448,8 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
         ):
             kwargs.setdefault("owning_department_key", "platform")
             kwargs.setdefault("implemented_capabilities", ("analysis",))
+            kwargs.setdefault("specified_skills", ())
+            kwargs.setdefault("specified_workflows", ())
             with self.assertRaises(InvalidAgentDefinition):
                 AgentDefinition(**kwargs)
 
@@ -377,6 +463,13 @@ class TestAgentDefinitionDataContract(unittest.TestCase):
                 agent_definition_key="k",
                 agent_definition_version="1",
                 owning_department_key="d",
+            )
+        with self.assertRaises(TypeError):
+            AgentDefinition(
+                agent_definition_key="k",
+                agent_definition_version="1",
+                owning_department_key="d",
+                implemented_capabilities=("c",),
             )
         for field in dataclasses.fields(AgentDefinition):
             self.assertIs(dataclasses.MISSING, field.default, field.name)
@@ -882,9 +975,14 @@ class TestFailClosedTaxonomy(unittest.TestCase):
         # `implemented_capabilities` was declared (`ACT-CC-F03-040`), which
         # needs four of its own — not a tuple, empty, a non-text member, and a
         # duplicate — because INV-2 clause 2 says *at least one* and it is the
-        # first collection-valued field here. The rule is unchanged and the
+        # first collection-valued field here; and 12 when `specified_skills`
+        # and `specified_workflows` were declared (`ACT-CC-F03-050`), which
+        # need three apiece — not a tuple, a non-text member, a duplicate — and
+        # pointedly **no** empty guard, because INV-15 makes an empty
+        # declaration valid. The count was measured, not predicted. The rule is
+        # unchanged and the
         # string assertion above is enforced on every guard.
-        self.assertEqual(9, raises, "one guard per declared field")
+        self.assertEqual(12, raises, "one guard per declared field")
 
     def test_nothing_is_caught_or_suppressed(self):
         """Fail closed: the boundary swallows no exception and degrades

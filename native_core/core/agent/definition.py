@@ -40,6 +40,15 @@ Fields — each added only on direct evidence, none invented:
     relations. **At least one**, so an empty tuple fails closed; distinct keys,
     since implementing the same Capability twice is not implementing two.
     Plain keys again, for the same dependency reason.
+  - `specified_skills`, `specified_workflows` — what this Definition is
+    permitted to use. **[E] INV-15**: *"An Agent Definition may specify zero or
+    more Skills and zero or more Workflows … **No minimum cardinality is
+    required** for either relationship."* Resolved by **ADR-0007**. Domain Model
+    §2 [E] names them among what an Agent Definition carries — *"which
+    Capabilities it implements, which Platform Division owns it, **what
+    behavior/permissions/Skills/Workflows it is allowed to use**"* — and
+    Blueprint's Agent package assigns the responsibility here: **[E]** *"may
+    declare 0+ Skills/Workflows (INV-15)."* Plain keys, same reason as above.
   - `agent_definition_key` — the template's stable identity. Required because
     INV-3 fixes that an Agent Instance instantiates *exactly one* Agent
     Definition (which presupposes Definitions are distinguishable) and Domain
@@ -67,6 +76,19 @@ sources above ratify as `[E]`. `owning_department_key` was added under
 clause 1**. The field had been absent for a historical reason rather than a
 reserved one: in Phase 3 the Department entity did not exist, only the
 `DepartmentRef` stub, and Department was realized under `ACT-CC-F03-036`.
+
+`specified_skills` and `specified_workflows` followed under `ACT-CC-F03-050`
+(`DEC-F03-050 = OPTION A`), carrying **INV-15**. Only the Skills/Workflows part
+of Domain Model §2's clause is built: *behavior*, *permissions* and *Runtime
+requirements* are named in the same sentence and are **not** authorized here.
+
+The relationship is also modelled from the other side — `core/skill/`'s
+`SkillDeclaration` and `core/workflow/`'s `WorkflowDeclaration` each hold *"the
+Skills/Workflows one Agent Definition specifies"*, keyed by `AgentDefinitionRef`.
+Those are the owned entity's view; this is the Definition's own, which Blueprint
+assigns to this package. Neither is derived from the other, and — exactly as with
+INV-1 and INV-2 — reconciling the two views belongs to a caller that can see
+both, since neither boundary may import the other.
 
 `implemented_capabilities` followed under `ACT-CC-F03-040`
 (`DEC-AGENT-FACTORY-INV2-CLAUSE2 = OPTION A`), carrying **INV-2 clause 2**.
@@ -120,14 +142,17 @@ class AgentDefinition:
     """The immutable specification/template of an Agent.
 
     Frozen, hashable, and comparable; carries the template's identity, its
-    version, the Department that owns it (INV-2 clause 1), and the Capabilities
-    it implements (INV-2 clause 2). Descriptive only — it holds no execution, no runtime identity, and
+    version, the Department that owns it (INV-2 clause 1), the Capabilities it
+    implements (INV-2 clause 2), and the Skills and Workflows it is permitted to
+    use (INV-15). Descriptive only — it holds no execution, no runtime identity, and
     no behavior."""
 
     agent_definition_key: str
     agent_definition_version: str
     owning_department_key: str
     implemented_capabilities: Tuple[str, ...]
+    specified_skills: Tuple[str, ...]
+    specified_workflows: Tuple[str, ...]
 
     def __post_init__(self):
         if not isinstance(self.agent_definition_key, str) or not self.agent_definition_key.strip():
@@ -175,3 +200,33 @@ class AgentDefinition:
                 "a Capability is declared more than once; implementing one "
                 "Capability twice is not implementing two"
             )
+        # INV-15 [E]: "zero or more Skills and zero or more Workflows … No
+        # minimum cardinality is required." ADR-0007 is explicit that an empty
+        # declaration — either or both — is "a valid architectural state", so
+        # emptiness is never an error here. What is refused is a malformed
+        # declaration: a non-tuple, a non-text key, or a repeated key, which
+        # would make the declared set ambiguous.
+        #
+        # The fields are required rather than defaulted, unlike
+        # `SkillDeclaration.skills`. Every other field of this contract is
+        # required and a conformance guard asserts it, so an author states the
+        # declaration explicitly — writing `()` for "none" — rather than
+        # omitting it. That is a construction-discipline choice, not a
+        # cardinality one: INV-15 governs how many may be named, not whether
+        # the declaration must be stated.
+        for declared, field_name, noun in (
+            (self.specified_skills, "specified_skills", "skill"),
+            (self.specified_workflows, "specified_workflows", "workflow"),
+        ):
+            if not isinstance(declared, tuple):
+                raise InvalidAgentDefinition(f"{field_name} must be a tuple")
+            for key in declared:
+                if not isinstance(key, str) or not key.strip():
+                    raise InvalidAgentDefinition(
+                        f"every declared {noun}_key must be a non-empty string"
+                    )
+            if len(set(declared)) != len(declared):
+                raise InvalidAgentDefinition(
+                    f"a {noun} is declared more than once; a repeated key makes "
+                    "the declared set ambiguous"
+                )
