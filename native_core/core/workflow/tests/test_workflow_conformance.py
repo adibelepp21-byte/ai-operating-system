@@ -533,7 +533,18 @@ class TestReservedScopeIsNotBuilt(unittest.TestCase):
         self.assertEqual(offences, [])
 
     def test_capability_composition_is_not_modelled(self):
-        """workflow_spec §7/§14 [O]: Workflow↔Capability is Inferred, not frozen."""
+        """`Workflow realizes Capability` is **canonical** since `DEC-F03-046`
+        (Freeze §6 frozen table; Domain Model §4; `workflow_spec §7` synchronized
+        under `DEC-F03-047` S-1). This guard's basis therefore changed: it no
+        longer holds a reservation open, it holds the **construction gate**.
+
+        The relationship being ratified does **not** authorize modelling it —
+        `ACT-CC-F03-047 §6` expressly withholds authority to create
+        `WorkflowCapabilityRef` or any equivalent runtime structure, and Blueprint
+        §10 admits the relation **by reference only, with no import of
+        `core/capability/`**. Until a construction Act grants that authority the
+        package must still expose nothing named for it. **The assertion below is
+        unchanged; only this cited authority was corrected.**"""
         self.assertNotIn("capability", " ".join(workflow_pkg.__all__).lower())
 
     def test_runtime_relationship_is_not_modelled(self):

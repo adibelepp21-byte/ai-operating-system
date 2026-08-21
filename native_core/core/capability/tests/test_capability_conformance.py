@@ -394,7 +394,18 @@ class TestBoundaryRules(unittest.TestCase):
             graph.capabilities()["beta"] = _capability("beta")
 
     def test_skill_and_workflow_composition_is_not_modelled(self):
-        """Freeze §10 / Blueprint §7 / capability_spec §12: Inferred, reserved."""
+        """Freeze §10 / `capability_spec §12`: the **Skill** half remains
+        Inferred and reserved. The **Workflow** half was ratified under
+        `DEC-F03-045`/`DEC-F03-046`, and both were synchronized here under
+        `DEC-F03-047` S-2.
+
+        The assertions still hold, and for a stronger reason than before. T-2
+        ALT-3 is directed **Workflow→Capability**: a Workflow realizes a
+        Capability, and a Capability declares no Workflow. Blueprint §7 [E]
+        still admits only *its Department and other Capabilities* as this
+        package's dependencies. So the Capability surface must name neither
+        Skill nor Workflow — under the reservation for Skill, and under the
+        ratified *direction* for Workflow. **Both assertions are unchanged.**"""
         surface = " ".join(dir(capability_pkg)).lower()
         self.assertNotIn("skill", surface)
         self.assertNotIn("workflow", surface)

@@ -22,7 +22,7 @@
 [A] Sequence/branch composition; validate that coordination stays within INV-13 and that each step is Trace-producing; keep composition checkable.
 
 ## 7. Allowed Dependencies
-[E] Executed by Runtime; composes Skills; realizes Capabilities (Inferred, reserved). [A] Coordinates Agent Instances.
+[E] Executed by Runtime; composes Skills; **realizes Capabilities** — ratified as the canonical relationship `Workflow realizes Capability` (T-2 ALT-3; `DEC-F03-045`, canonicalized under `DEC-F03-046` C-1/C-2/C-3; Freeze §6 frozen relationship table; Domain Model §4). The *(Inferred, reserved)* qualifier this clause carried until then is discharged. [A] Coordinates Agent Instances.
 
 ## 8. Forbidden Dependencies
 [E] Must not permit collaboration outside itself/Knowledge/scoped Memory (INV-13). [E] Must not hold an external dependency (INV-12). [E] Is not the Runtime (Vocabulary — Workflow ≠ Runtime).
@@ -43,4 +43,6 @@
 [O] Workflow validation discipline and failure-recovery semantics reserved to later phases and the Architect.
 
 ## 14. Open Questions
-[O] Workflow↔Capability/Skill and Runtime↔Workflow relationships (Inferred). [O] Failure-recovery/compensation model (fail-closed baseline holds).
+[O] Workflow↔Skill and Runtime↔Workflow relationships (Inferred). **Partially discharged:** this entry read *"Workflow↔Capability/Skill and Runtime↔Workflow"* until `DEC-F03-047` S-1. **Workflow↔Capability is now canonical** and no longer Inferred; the other two are untouched. [O] Failure-recovery/compensation model (fail-closed baseline holds).
+
+> **[D] Pre-existing inconsistency, flagged and *not* resolved here.** The entry above still lists **Workflow↔Skill** as Inferred, yet Domain Model §4 carries *"Workflow **contains** Skill"* and Freeze §4 lists *"compose Skills"* among a Workflow's allowed relations — both **[E]**. The specification therefore appears to under-state a relationship canonical sources already ratify. This predates T-2 ALT-3 and is **outside** `ACT-CC-F03-047`'s scope, which reaches only the Capability half (`§5` S-1/S-2, `§6`). Resolving it needs its own authority.
