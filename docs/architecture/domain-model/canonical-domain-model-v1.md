@@ -108,6 +108,9 @@ meaningful, stable statement.
 - Agent Instance **follows** Workflow
 - Workflow **contains** Skill
 - Workflow **invokes** Agent Instance
+- Workflow **realizes** Capability *(T-2 ALT-3; `DEC-F03-045`, canonicalized
+  under `DEC-F03-046` C-1. The converse does not hold: a Capability declares no
+  Workflow. **Capability ↔ Skill remains `[O]` reserved** — see Freeze §10.)*
 - Skill **invokes** Tool
 - Agent Instance **consumes** Knowledge
 - Agent Instance **consumes** Memory

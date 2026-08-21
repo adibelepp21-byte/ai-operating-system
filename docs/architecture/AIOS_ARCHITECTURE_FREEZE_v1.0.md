@@ -130,6 +130,7 @@
 | Memory derived-from Trace | Trace→Memory | Memory→Trace write (INV-5) | Memory scoped | bounded |
 | Memory promoted-to Knowledge | Memory→(governed review)→Knowledge (INV-8) | Memory→Knowledge automatic | Knowledge home-Dept | versioned |
 | Capability depends-on Capability | governed, versioned (INV-9/10) | silent/cross-Dept ungoverned | per-Cap | governed |
+| Workflow realizes Capability | Workflow→Capability | Capability→Workflow (Blueprint §7 [E] admits only its Department and other Capabilities) | unchanged — Workflow central, Capability Dept-owned (INV-1) | governed |
 
 [A] **Direction summary (frozen):** authority ↓, execution ↓, information/knowledge ↑ through the single governed promotion gate (INV-8), Trace immutable (INV-5).
 
@@ -162,7 +163,7 @@
 - **Model-optimization** — external concern; not an AIOS entity (DNA §III; Native Design §11).
 - **Database implementation**, **Observability implementation** — implementation-plane, deferred (Native Design §10; §9 boundary).
 - **Knowledge admission model & versioned repository discipline** — design-only, open (Architecture Review R-A4).
-- **Inferred relationships** — Capability↔Skill/Workflow; Agent-Instance↔Skill/Knowledge; Runtime↔Workflow (Relationship Model §12).
+- **Inferred relationships** — Capability↔**Skill**; Agent-Instance↔Skill/Knowledge; Runtime↔Workflow (Relationship Model §12). **Partially discharged:** the entry read *"Capability↔Skill/Workflow"* until `DEC-F03-046` C-2. The **Workflow** half was ratified as *Workflow realizes Capability* (T-2 ALT-3, `DEC-F03-045`) and now sits in the §6 frozen table; the **Skill** half is untouched and remains reserved here, as do the other two. **Capability↔Skill/Workflow is therefore *not* fully ratified.**
 [A] Each is named as a boundary, not defined; each awaits an Architect decision before it enters any freeze.
 
 ## 11. Architecture Decision Log (frozen)

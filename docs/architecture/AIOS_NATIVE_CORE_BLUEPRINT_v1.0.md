@@ -82,7 +82,7 @@ shared/
 - **Purpose** [E]: governed composition; sole multi-agent channel (INV-13).
 - **Ownership** [E]: owned centrally.
 - **Responsibilities** [A]: coordinate Instances; compose Skills; each step Trace-producing (INV-4).
-- **Allowed dependencies** [A]: executed by runtime; composes skill.
+- **Allowed dependencies** [A]: executed by runtime; composes skill; **realizes capability** — **by reference only**, carrying the Capability's key the way `AgentDefinitionRef` already carries an Agent Definition's, so the package takes **no import of `core/capability/`** and holds no Capability state (`DEC-F03-046` C-3; T-2 ALT-3).
 - **Forbidden dependencies** [E]: collaboration outside itself/knowledge/scoped memory (INV-13); external dependency (INV-12); being the runtime (Workflow ≠ Runtime).
 - **Future extension** [O]: composition validation — reserved.
 - **Governance constraints** [E]: free agent-to-agent delegation is a rejected anti-pattern (Freeze AD-9).
