@@ -129,6 +129,34 @@ meaningful, stable statement.
   pairwise coordination need is satisfiable as a Memory scoped to that
   pair — this does not require a new entity.
 
+### 4.1 `governs` — canonical relationship terminology
+
+**A governs B when A bounds the discretion exercised over B without possessing
+B. The owner retains the discretion to act; the governor constrains the
+conditions under which that discretion is valid.**
+
+Ratified by `DEC-F03-057`; canonicalized by `DEC-F03-058`. The two `governs`
+edges listed above are the only ones; no other is established.
+
+- **`governs` is distinct from `owns`.** They are separate relationship types.
+  Neither is an alias, a merger, or a specialization of the other.
+- **`governs` does not imply ownership.** A governor may bound the discretion of
+  an entity it does not possess. `A governs B` must never be read as `A owns B`.
+- **`governs` does not by itself confer lifecycle authority.** Its presence
+  establishes no creation, retirement, deprecation, or unilateral mutation
+  authority. Lifecycle authority is only what §6 already assigns.
+- **`Capability governs Agent Definition` establishes no package dependency.**
+  The constraint is architectural and is borne by the governed Agent Definition
+  — §6 states it: a Definition is *"created/deprecated at Platform Division
+  discretion within Capability governance"*, its version *"bound to the
+  Capability contract version it implements"*. It is not an import instruction
+  in either direction.
+- **`Organization governs Platform Division` is defined here semantically
+  only.** Its concrete governance bounds are **not determined** by any ratified
+  source and are deliberately not stated. A Platform Division is
+  *"semi-autonomous"* (§2), which presupposes a bounding party without
+  enumerating the bounds.
+
 ---
 
 ## 5. Ownership Rules
