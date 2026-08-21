@@ -1,5 +1,16 @@
 # `ACT-CC-F03-059` — `governs` SPECIFICATION SYNCHRONIZATION GATE
 
+> # SUPERSEDED — DO NOT ACT ON THIS DOCUMENT
+> The Founder issued their own `ACT-CC-F03-059`, which governs. **That Act's
+> `§4.2` forbids what this draft proposed**: *"Absence alone does not
+> automatically require mutation. No specification may be changed merely to
+> increase textual coverage."* The candidate changes below are exactly that
+> case — this draft's own `§2` already conceded *"none of these is forced."*
+> Execution is recorded in `AIOS_GOVERNS_SPEC_SYNC_RECORD_v1.0.md`: **zero
+> mutations required.** Retained unaltered below as provenance.
+>
+> ---
+>
 > **DRAFT — PREPARED BY THE CO-FOUNDER OFFICE · AWAITING FOUNDER ISSUANCE.**
 > Produced under `ACT-CC-F03-058 §12`. **This document confers no authority on
 > itself.** Until issued, the specification lag `ACT-CC-F03-058 §6` expects
