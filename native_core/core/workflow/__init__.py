@@ -99,12 +99,14 @@ from .composition import (
 )
 from .coordination import WorkflowCoordination
 from .declaration import AgentDefinitionRef, WorkflowDeclaration
+from .realization import CapabilityRef, WorkflowRealization
 from .exceptions import (
     DirectCollaborationForbidden,
     DuplicateWorkflowDeclaration,
     InvalidWorkflow,
     InvalidWorkflowComposition,
     InvalidWorkflowDeclaration,
+    InvalidWorkflowRealization,
     InvalidWorkflowStep,
     UnresolvedWorkflow,
     WorkflowError,
@@ -113,12 +115,14 @@ from .models import Workflow, WorkflowIdentity
 
 __all__ = [
     "AgentDefinitionRef",
+    "CapabilityRef",
     "AgentInstanceRef",
     "DirectCollaborationForbidden",
     "DuplicateWorkflowDeclaration",
     "InvalidWorkflow",
     "InvalidWorkflowComposition",
     "InvalidWorkflowDeclaration",
+    "InvalidWorkflowRealization",
     "InvalidWorkflowStep",
     "SkillRef",
     "UnresolvedWorkflow",
@@ -128,5 +132,6 @@ __all__ = [
     "WorkflowDeclaration",
     "WorkflowError",
     "WorkflowIdentity",
+    "WorkflowRealization",
     "WorkflowStep",
 ]

@@ -29,6 +29,7 @@ Run: python -m unittest native_core.core.workflow.tests.test_workflow_conformanc
 from __future__ import annotations
 
 import ast
+import dataclasses
 import sys
 import unittest
 from pathlib import Path
@@ -36,12 +37,14 @@ from pathlib import Path
 from native_core.core import workflow as workflow_pkg
 from native_core.core.workflow import (
     AgentDefinitionRef,
+    CapabilityRef,
     AgentInstanceRef,
     DirectCollaborationForbidden,
     DuplicateWorkflowDeclaration,
     InvalidWorkflow,
     InvalidWorkflowComposition,
     InvalidWorkflowDeclaration,
+    InvalidWorkflowRealization,
     InvalidWorkflowStep,
     SkillRef,
     UnresolvedWorkflow,
@@ -51,6 +54,7 @@ from native_core.core.workflow import (
     WorkflowDeclaration,
     WorkflowError,
     WorkflowIdentity,
+    WorkflowRealization,
     WorkflowStep,
 )
 
@@ -379,6 +383,84 @@ class TestAdr0004OwnershipAndLifecycle(unittest.TestCase):
             )
 
 
+class TestWorkflowRealizesCapability(unittest.TestCase):
+    """`Workflow realizes Capability` — Domain Model §4 [E]; Freeze §6 frozen
+    relationship table; Blueprint §10; `workflow_spec §7`.
+
+    Ratified as T-2 ALT-3 (`DEC-F03-045`), canonicalized (`DEC-F03-046`),
+    specification-synchronized (`DEC-F03-047`), and constructed under
+    `DEC-F03-048 = OPTION A`. The **Skill** half of T-2 remains `[O]` reserved
+    and is not built."""
+
+    def test_a_workflow_realizes_the_capabilities_it_names(self):
+        realization = WorkflowRealization(
+            _identity("onboarding"),
+            (CapabilityRef("cap.intake"), CapabilityRef("cap.review")),
+        )
+        self.assertEqual(("cap.intake", "cap.review"), realization.capability_keys())
+        self.assertTrue(realization.realizes_capability("cap.intake"))
+        self.assertFalse(realization.realizes_capability("cap.absent"))
+
+    def test_no_cardinality_is_imposed(self):
+        """No canonical source states a cardinality for this edge, so an empty
+        realization is a valid structural state, not an incomplete one.
+        Requiring a minimum here would invent an invariant."""
+        self.assertEqual((), WorkflowRealization(_identity("empty")).capability_keys())
+
+    def test_a_reference_carries_a_key_and_nothing_else(self):
+        """Blueprint §10: *by reference only … holds no Capability state.*"""
+        self.assertEqual(
+            ["capability_key"], [f.name for f in dataclasses.fields(CapabilityRef)]
+        )
+
+    def test_malformed_references_fail_closed(self):
+        for bad in ("", "   ", None, 1):
+            with self.assertRaises(InvalidWorkflowRealization, msg=repr(bad)):
+                CapabilityRef(bad)
+
+    def test_a_capability_realized_twice_fails_closed(self):
+        with self.assertRaises(InvalidWorkflowRealization):
+            WorkflowRealization(
+                _identity("dup"), (CapabilityRef("c"), CapabilityRef("c"))
+            )
+
+    def test_entries_must_be_capability_references(self):
+        with self.assertRaises(InvalidWorkflowRealization):
+            WorkflowRealization(_identity("bad"), (_identity("not-a-ref"),))
+        with self.assertRaises(InvalidWorkflowRealization):
+            WorkflowRealization(_identity("bad"), [CapabilityRef("c")])
+
+    def test_the_subject_must_be_a_workflow_identity(self):
+        with self.assertRaises(InvalidWorkflowRealization):
+            WorkflowRealization("onboarding", (CapabilityRef("c"),))
+
+    def test_it_is_immutable(self):
+        realization = WorkflowRealization(_identity("frozen"), (CapabilityRef("c"),))
+        with self.assertRaises(dataclasses.FrozenInstanceError):
+            realization.realizes = ()
+
+    def test_the_skill_half_of_t2_is_not_built(self):
+        """`Capability↔Skill` remains [O] (Freeze §10; `capability_spec §12`).
+        Constructing the Workflow half must not smuggle in the Skill half: no
+        Capability-to-Skill surface may appear on this package."""
+        self.assertEqual(
+            [],
+            [
+                n
+                for n in workflow_pkg.__all__
+                if "capability" in n.lower() and "skill" in n.lower()
+            ],
+        )
+
+    def test_the_workflow_entity_itself_is_unchanged(self):
+        """The relationship lives in its own module, as composition,
+        coordination and declaration do. `Workflow` still carries only its
+        identity — no ownership, no lifecycle, no Capability state."""
+        self.assertEqual(
+            ["identity"], [f.name for f in dataclasses.fields(Workflow)]
+        )
+
+
 class TestInv12NoExternalDependency(unittest.TestCase):
     """INV-12 — Tool is the only entity permitted an external dependency."""
 
@@ -532,29 +614,62 @@ class TestReservedScopeIsNotBuilt(unittest.TestCase):
                         offences.append((path.name, target.id))
         self.assertEqual(offences, [])
 
-    def test_capability_composition_is_not_modelled(self):
-        """`Workflow realizes Capability` is **canonical** since `DEC-F03-046`
-        (Freeze §6 frozen table; Domain Model §4; `workflow_spec §7` synchronized
-        under `DEC-F03-047` S-1). This guard's basis therefore changed: it no
-        longer holds a reservation open, it holds the **construction gate**.
+    def test_capability_realization_is_modelled_by_reference_only(self):
+        """The gate this guard held is now open, and it guards the shape instead.
 
-        The relationship being ratified does **not** authorize modelling it —
-        `ACT-CC-F03-047 §6` expressly withholds authority to create
-        `WorkflowCapabilityRef` or any equivalent runtime structure, and Blueprint
-        §10 admits the relation **by reference only, with no import of
-        `core/capability/`**. Until a construction Act grants that authority the
-        package must still expose nothing named for it. **The assertion below is
-        unchanged; only this cited authority was corrected.**"""
-        self.assertNotIn("capability", " ".join(workflow_pkg.__all__).lower())
+        Its predecessor, `test_capability_composition_is_not_modelled`, asserted
+        the package modelled no Capability. That rested first on the `[O]`
+        reservation, and then — once `DEC-F03-046` canonicalized the
+        relationship — on the absence of construction authority. **That
+        authority now exists**: `DEC-F03-048 = OPTION A` authorizes
+        construction of `Workflow realizes Capability`, and only that.
+
+        So the assertion is not dropped, it is **replaced by the constraint that
+        actually binds**. Blueprint §10 admits the relation *"by reference only …
+        so the package takes no import of `core/capability/` and holds no
+        Capability state."* A reference must therefore carry a key and nothing
+        else, and no Capability type may cross the boundary. That is a stricter
+        test of the same discipline, not a relaxation of it."""
+        self.assertIn("CapabilityRef", workflow_pkg.__all__)
+
+        # by reference only: the ref carries a key and nothing more
+        self.assertEqual(
+            ["capability_key"],
+            [f.name for f in dataclasses.fields(workflow_pkg.CapabilityRef)],
+        )
+
+        # The no-import half of that discipline is already enforced, and is
+        # deliberately not duplicated here: `TestInv12NoExternalDependency.
+        # test_no_other_core_boundary_import` carries "capability" in its
+        # FORBIDDEN_BOUNDARIES and parses the real import graph. It was not
+        # touched by this construction and still passes.
+
+    def test_the_capability_boundary_still_names_no_workflow(self):
+        """Direction is load-bearing: the edge runs Workflow → Capability, and
+        Blueprint §7 [E] still admits only *its Department; other Capabilities*
+        for the Capability package. Constructing this half must not mirror it."""
+        import native_core.core.capability as capability_pkg
+
+        self.assertEqual(
+            [], [n for n in capability_pkg.__all__ if "workflow" in n.lower()]
+        )
 
     def test_runtime_relationship_is_not_modelled(self):
         """workflow_spec §14 [O]: Runtime↔Workflow is Inferred, not frozen."""
         self.assertNotIn("runtime", " ".join(workflow_pkg.__all__).lower())
 
     def test_public_surface_is_exactly_the_declared_exports(self):
+        """Enumeration guard. It grew by exactly three names under
+        `DEC-F03-048 = OPTION A`, which authorizes construction of
+        `Workflow realizes Capability` and nothing else: `CapabilityRef`,
+        `WorkflowRealization`, and `InvalidWorkflowRealization`. Nothing for the
+        Skill half of T-2, which remains **[O]** reserved."""
         self.assertEqual(
             set(workflow_pkg.__all__),
-            {
+            {            "CapabilityRef",
+            "InvalidWorkflowRealization",
+            "WorkflowRealization",
+
                 "AgentDefinitionRef",
                 "AgentInstanceRef",
                 "DirectCollaborationForbidden",

@@ -80,3 +80,14 @@ class DirectCollaborationForbidden(WorkflowError, ValueError):
     Instance outside of a shared Workflow, Knowledge, or scoped Memory."*
     Workflow is the sole channel this boundary owns; Knowledge and scoped
     Memory are owned elsewhere and are not reachable from here."""
+
+
+class InvalidWorkflowRealization(WorkflowError, ValueError):
+    """Raised when a Workflow's Capability realization cannot be constructed
+    accountably.
+
+    Domain Model §4 [E] and Freeze §6 fix `Workflow realizes Capability`. Fail
+    closed (PR-4): a malformed reference, a non-`CapabilityRef` entry, or a
+    `capability_key` realized twice is refused rather than coerced. An **empty**
+    realization is *not* an error — no canonical source states a cardinality for
+    this edge, so none is imposed."""
