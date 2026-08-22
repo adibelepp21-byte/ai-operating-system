@@ -3515,6 +3515,249 @@ GDR-0028 onward.)*
 
 ---
 
+### GDR-0028 — Founder Decision · T-12 Scoped Ratification of the Phase 3.289 Knowledge Admission Model
+
+**Identifier:** GDR-0028
+**Date:** 2026-08-22
+**Tier:** Architect-reserved architectural ratification — Founder / Architect authority
+**Decided by:** Founder / Architect (Moriarty)
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** `ACT-CC-P6-018 §13` (Ratification Authorization), `§14` (Execution Authority), `§15` (Mutation Boundary)
+**Predecessor decision:** `DEC-P6-017 = OPTION A — SCOPED RATIFICATION` (`ACT-CC-P6-017 §22`)
+**Closes:** the `T-12` ratification question — **within the scope stated below and no further**
+
+---
+
+#### 1. Decision text (verbatim)
+
+Recorded as the Founder / Architect stated it, per §2.3 verbatim discipline.
+
+> **§13 — Founder / Architect Ratification Authorization**
+>
+> **Ratification Authority:** Founder / Architect
+> **Date:** 2026-08-22
+> **Confirmation:** Founder / Architect: Moriarty.
+>
+> **Ratification Authorization:** **[X] AUTHORIZED — SCOPED RATIFICATION ONLY**
+>
+> **Scope:** `AIOS_PHASE3_289_KNOWLEDGE_ADMISSION_MODEL_v1.0.md`
+>
+> **Explicit Scope Exclusions:**
+> - T12-D-003 — Validity-Condition Catalogue: DEFERRED
+> - T12-D-004 — Storage Facility: DEFERRED
+> - T12-D-006 — Cross-Process Signal Trust: PROCESS-SCOPED / ROUTED
+> - No general Phase-6 construction
+> - No governed read-path construction
+> - No storage construction
+> - No validity-condition semantics
+> - No Identity / Authentication mutation
+>
+> **§16 Treatment:**
+> - Item 1 — Versioned Repository Discipline: EXPLICITLY SUPERSEDED by T12-D-002
+> - Item 2 — Read / Consumption Path: EXPLICITLY SUPERSEDED by T12-D-001
+> - Remaining §16 reservations: PRESERVED
+>
+> **Known Citation Defect:** PRESERVE WITH DISCLOSURE
+>
+> **Ratification Record Target:** Governance Decision Register — new T-12 scoped-ratification decision entry
+>
+> **Mutation Authority:** BOUNDED — RATIFICATION RECORD ONLY
+>
+> **Mutation Boundary:** Only the explicitly identified Governance Decision Register entry recording the scoped ratification may be created or modified. No direct mutation of Freeze §10, NCIR §9.5, knowledge_spec §14, Phase 3.289 itself, or unrelated canonical artifacts is authorized by this Act.
+>
+> **Construction Authority:** NONE
+>
+> **Status:** AUTHORIZED FOR EXECUTION
+
+#### 2. Ratification object
+
+| Field | Value |
+|---|---|
+| Document | `docs/architecture/history/phase3/AIOS_PHASE3_289_KNOWLEDGE_ADMISSION_MODEL_v1.0.md` |
+| Version | v1.0, as written — **no amendment** |
+| Integrity at ratification | SHA-256 `1c7b5eaa6102f151…` · **159 lines** · unmodified against HEAD |
+| Terminology state | includes the Phase 3.296 F-K1 hardening (Knowledge lifecycle = {Candidate, Active, Superseded}) |
+| Audit state | Phase 3.295 independent audit — **PASS WITH CONDITIONS**; its single condition (F-K1) closed by Phase 3.296 |
+
+The hash and line count above are the ratified article. Any later differing text
+is not what was ratified.
+
+#### 3. What is ratified
+
+**Phase 3.289 §1–§15** become the canonical Knowledge Admission Model for T-12:
+
+the lifecycle {Candidate → Active → Superseded} with no intermediate state ·
+Memory as the sole candidate source, `occurrence_count` non-gating ·
+human-authorized promotion only · **exactly one gate** — the Governance
+subsystem's promotion authorization, affirmative `True` only · reject absolute ·
+conflict resolved by governed human review · governed replacement producing a new
+Active version with the prior **Superseded and retained** · **new version, never
+an in-place edit** · immutability of an admitted version · **fail closed** on any
+absence or non-authorization · Knowledge holds no authority of its own, and the
+direction is strictly Governance → Knowledge.
+
+#### 4. Authority basis
+
+- **Architecture Freeze §10** reserves the Knowledge admission model to the
+  Architect: *"not frozen … each awaits an **Architect decision** before it
+  enters any freeze."*
+- **Phase 3.289 §20** defers to exactly this decision: *"[O] **Ratification of
+  this model into canon** … reserved to the Architect."*
+- **Implementation Readiness Review §18 condition 1** admits two dispositions —
+  *"resolve it, or authorize a Fail-Closed placeholder"*. This ratification is
+  the **resolve it** branch.
+- **Architecture Review R-A4** raised the item; its checklist item **C-5** posed
+  the binary *"remain design-only [O] or ratify"*.
+
+**Boundary validation (§2.2).** This is an Architect-reserved matter under Freeze
+§10, not a delegable Architectural-Tier decision requiring an ADR; the Founder /
+Architect named this register as the recording instrument. This entry does not
+substitute for any ADR. **[A]** Should the Architect later judge the matter to be
+ADR territory, an ADR would be a separate instrument and this entry would remain
+the governance record of the decision, not its architectural specification.
+
+#### 5. Evidence of record
+
+| Layer | Evidence |
+|---|---|
+| Canonical consistency | `ACT-CC-P6-013` bounded reconciliation — **no contradiction found** between Phase 3.289 and canon; independently corroborated by the Phase 3.295 adversarial audit |
+| Clause correspondence | 20-row clause matrix, **C1=9 · C2=7 · C3=2 · C4=1 · C5=4** — as recorded in `ACT-CC-P6-013`, **not re-graded** |
+| Behavioural | `ACT-CC-P6-015` — **13 tests** over the five `T12-D-005` clauses, all passing; every asserted value independently reproduced by a probe run outside the test assertions. Disclosed at record time: **12 behavioural + 1 structural** |
+| Evidence sufficiency | `ACT-CC-P6-016` — **T12-D-005 = SUFFICIENT**, determined against eight sub-checks, not on the test count |
+| `T12-R-003` | **CLOSED within its defined evidence scope**, recorded as a subsequent assessment |
+| Regression at ratification | `native_core` **601 OK (expected failures = 1 — P7-F-2)** · `tools` **49 OK** |
+
+#### 6. §16 treatment — supersession, explicit and bounded
+
+Phase 3.289 §16 reserves **nine** items. **Two are explicitly superseded** by
+later Founder / Architect decisions and shall not be re-imported as unresolved
+merely because the historical document retains the reservation language:
+
+| §16 item | Superseded by | Status |
+|---|---|---|
+| **1** — version-identifier scheme; versioned-repository discipline | `DEC-P6-014` · **T12-D-002** | ACCEPT REALIZED FORM AS CANON-CONSISTENT |
+| **2** — read / consumption path | `DEC-P6-014` · **T12-D-001** | NOT REQUIRED |
+
+**The remaining seven are PRESERVED**, unchanged and unresolved by this
+ratification: storage-facility choice (D-004, deferred) · validity-condition
+catalogue and conflict-detection signals (D-003, deferred) · Knowledge Trust
+Scoring · Policy as a category of Knowledge · persistent cross-process trust of
+the promotion signal (D-006, routed to Identity/Authentication) · the
+Agent-Instance acting-path Trace of a governed decision · F-H2 / F-G2.
+
+This is a supersession clarification. It authorizes no new architecture and does
+not retroactively rewrite Phase 3.289.
+
+#### 7. Known citation defect — preserved with disclosure
+
+Phase 3.289 **§8** and **§16** cite *"Impl Constitution §13"*. The Implementation
+Constitution **ends at §12**, and its §12 — *Reserved Future Topics* — is where
+*"Version-identifier scheme; migration and deprecation workflow"* actually
+appears. **The pointer is wrong; the substance is traceable and correct.**
+
+The defect is **disclosed, not corrected**, and **shall not be represented as
+having been corrected by this ratification**. No amendment of the historical
+document was performed or authorized. A second citation of the same class —
+`native_core/core/knowledge/models.py:31` citing `knowledge_spec §6/§22`, where
+that specification has 14 sections — is recorded as **T12-R-007** and remains
+routed to a Maintenance Baseline under **GDR-0010 Ruling 3**.
+
+#### 8. Standing changes
+
+1. The Knowledge admission model is **no longer an open reserved item**; it is
+   ratified within the scope above.
+2. Phase 3.289 may be cited as canonical authority **for its §1–§15 content
+   only**, and no longer as an unratified document.
+3. `T12-R-006` — *the model is cited as authority while unratified* — is thereby
+   resolved.
+4. **RU-5 is NOT discharged.** It remains **OPEN — partially materialized**. This
+   ratification addresses its procedural form (*"built before decided"* becomes
+   *"decided"*) but does not discharge the risk record, which requires its own
+   instrument and evidence against the specific NCIR harm.
+
+#### 9. What is explicitly NOT changed
+
+**No canonical artifact other than this register was mutated.** Verified at
+execution: `Freeze §10` · `NCIR §9.5` · `knowledge_spec §4/§12/§13/§14` ·
+Architecture Review checklist **C-5** · the Canonical Domain Model · the
+Canonical Relationship Model · the Native Core Blueprint · the Engineering
+Constitution · the Finding Register · Phase 3.289 itself — **all hash-identical
+and untouched**, per the `§15` mutation boundary.
+
+**A synchronization hazard is recorded here rather than acted on.** Three
+canonical entries name the T-12 item, and every one **bundles** it with other
+reserved items:
+
+| Entry | Composition |
+|---|---|
+| Freeze §10 | *"Knowledge admission model **& versioned repository discipline**"* — **2 items** |
+| NCIR §9.5 | *"admission model, versioned-repository discipline, consumption path"* — **3 items** |
+| `knowledge_spec §14` | the same three — **3 items** |
+
+Per `ACT-CC-P6-018 §7`, **no bundled entry may be marked fully discharged unless
+every constituent item has an explicit and traceable disposition.** The
+attributions are: admission model ← **this ratification**; versioned-repository
+discipline ← **T12-D-002**; consumption path ← **T12-D-001**; validity conditions
+← **DEFERRED under T12-D-003**. Any future synchronization act must carry all of
+them, or it will over- or under-discharge. **No such act is authorized here.**
+
+**Also not changed:** no Phase-6 construction authority · no Knowledge store · no
+repository construction · no admission implementation · no governed read-path ·
+no storage provisioning · no validity-condition semantics · no
+Identity/Authentication mutation · no Knowledge admitted · no implementation or
+test redesign. **Ratification ≠ Construction Authorization.**
+
+**Conformance is not asserted.** The existing implementation is not deemed fully
+conformant by virtue of this ratification. The behavioural evidence establishes
+the five `T12-D-005` scopes; it is not blanket conformance evidence for every
+clause. The seven `C2` rows and one `C4` row of the `ACT-CC-P6-013` matrix that
+the evidence bears on are **not re-graded** by this entry.
+
+**Historical records are preserved.** `ACT-CC-P6-013`, `-014`, `-015`, `-016`,
+`-017` remain as originally recorded; every reassessment is a new record, never a
+rewrite. In particular the `P6-013` reconciliation record still carries
+`T12-R-003` as **HIGH / OPEN** and its original matrix tally.
+
+#### 10. Lineage
+
+`Architecture Review R-A4` / `C-5` → `Implementation Readiness Review §18 cond. 1`
+→ `Freeze §10` (reserved) → `Phase 3.289` (defined) → `Phase 3.295` (audited) →
+`Phase 3.296` (F-K1 closed) → `ACT-CC-P6-012` / `-012R1` (evidence review;
+decision gate revision) → `ACT-CC-P6-013` (bounded reconciliation — PARTIALLY
+ESTABLISHED) → `ACT-CC-P6-014` (**DEC-P6-014 = OPTION D**, hybrid disposition,
+D-001…D-006) → `ACT-CC-P6-015` (bounded behavioural evidence) → `ACT-CC-P6-016`
+(readiness — READY WITH EXPLICITLY SCOPED DEFERRALS) → `ACT-CC-P6-017`
+(**DEC-P6-017 = OPTION A**, scoped ratification) → `ACT-CC-P6-018 §13` (**Founder
+/ Architect ratification authorization**) → **GDR-0028**.
+
+#### 11. Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| — | Freeze §10 reserves the Knowledge admission model to the Architect | Architect |
+| — | Phase 3.289 defines the model; §20 reserves its ratification | Architect / prior phase |
+| 2026-08-21 | Evidence review establishes the model is DEFINED, BUILT, **UNRATIFIED** | Co-Founder, under `ACT-CC-P6-012` |
+| 2026-08-21 | Bounded reconciliation returns **PARTIALLY ESTABLISHED**; no contradiction with canon | Co-Founder, under `ACT-CC-P6-013` |
+| 2026-08-22 | **Founder selects OPTION D — Hybrid Disposition**; D-001…D-006 decided, deferred or routed | Founder / Architect, `ACT-CC-P6-014` |
+| 2026-08-21 | Bounded behavioural evidence executed and independently verified | Co-Founder, under `ACT-CC-P6-015` |
+| 2026-08-21 | **D-005 assessed SUFFICIENT**; `T12-R-003` reassessed **CLOSED** within its defined scope | Co-Founder, under `ACT-CC-P6-016` |
+| 2026-08-22 | **Founder selects OPTION A — Scoped Ratification** | Founder / Architect, `ACT-CC-P6-017` |
+| 2026-08-22 | **Founder / Architect grants bounded Ratification Authority**; record target named | Founder / Architect, `ACT-CC-P6-018 §13` |
+| 2026-08-22 | **Scoped ratification recorded** — this entry | Co-Founder, under FOUNDER · `ACT-CC-P6-018` |
+
+#### 12. Recording note — register pointer
+
+This entry is appended **below** the §3 closing note, so that note's sentence
+*"Subsequent governance decisions are appended below as GDR-0028 onward"*
+correctly describes it. **Its leading clause *"(No further entries."* is thereby
+stale**, and the pointer will need to read `GDR-0029 onward` before a further
+entry is added. That correction is **outside the `§15` mutation boundary** — which
+permits only this entry — and is **recorded here rather than performed**. It is
+the same class of defect `GDR-0014 §3.14.5` recorded for the MB-01 provenance
+resolver, and warrants its own authorization.
+
+---
+
 ## 4. External Corpus Synchronization Ledger
 
 The Master Program (Volumes I–VIII), `AIOS_CANONICAL_ARCHITECTURE.md`, ALMM,
