@@ -1,14 +1,14 @@
 # agent_execution_semantics_spec
 
 **Authority:** `P6-AES-01 — Agent Execution Semantics`, authorized scope items **1** (execution semantics), **2** (participation semantics), **4** (rejection), **5** (termination), **8** (lifecycle/state), **9** (failure and its evidence requirements), **10** (evidence and conformance criteria), per `DEC-P6-029` issuance 3 as accepted by issuance 4.
-**Delegation:** Co-Founder / Delegated Architecture Authority, `AIOS CO-FOUNDER DELEGATION CHARTER v1.0` §4.1/§4.4. §§1–12 written under `ACT-CC-P6-034`; §§13–17 under `ACT-CC-P6-035`.
+**Delegation:** Co-Founder / Delegated Architecture Authority, `AIOS CO-FOUNDER DELEGATION CHARTER v1.0` §4.1/§4.4. §§1–12 under `ACT-CC-P6-034`; §§13–17 under `ACT-CC-P6-035`; §18 under `ACT-CC-P6-037`, consuming `DEC-P6-033`.
 **Status:** Specification. **No construction authority. No construction target. Class H remains EMPTY.**
 
 ## 1. Purpose
 [A] Defines what **rejection**, **failure** and **termination** mean for an Agent participating through `ExecutionConsumer.participate(execution)`, and what evidence establishes each. It defines meanings; it implements nothing.
 
 ## 2. Non-Goals
-[E] Out of scope by governing decision, not by omission: Agent → Capability **reference** (Founder-reserved, `DEC-P6-032`); Capability **invocation** (excluded, `DEC-P6-029` issuance 4); Capability **self-execution** (forbidden, Freeze §4); execution-**result** model (declared absent, `consumer.py:75`); **cancellation** mechanism (excluded unless separately established by canon); Agent Factory, bootstrap, Department/Capability binding (`P7-L-1`); Runtime lifecycle redesign (`P7-O-1`); Knowledge access redefinition (C-01/D-001 — preserved, not redefined).
+[E] Out of scope by governing decision, not by omission: Capability **invocation** (excluded, `DEC-P6-029` issuance 4); Capability **self-execution** (forbidden, Freeze §4); execution-**result** model (declared absent, `consumer.py:75`); **cancellation** mechanism (excluded unless separately established by canon); Agent Factory, bootstrap, Department/Capability binding (`P7-L-1`); Runtime lifecycle redesign (`P7-O-1`); Knowledge access redefinition (C-01/D-001 — preserved, not redefined).
 
 ## 3. The three events are distinct
 [A] They are separated by **whether participation was accepted** and **whether an action occurred**:
@@ -99,7 +99,7 @@ RuntimeError
 [E] C-01 · D-001…D-006 · `P7-L-1` · `P7-O-1` · `P7-O-2` · `RU-5` (open) · Freeze §4 · INV-4/5/6 · PR-3 · PR-4 — all unchanged by this document.
 
 ## 12. Reserved / still open
-[E] Agent ↔ Capability **reference** — Founder-reserved (`DEC-P6-032`), and no part of this specification presumes, implies or requires one. Execution **result** model — declared absent. **Cancellation** — excluded. **Concurrency** — unauthorized; §6 depends on its absence. Readiness reassessment — belongs to a gate, not to this document.
+[E] Agent ↔ Capability **reference** — **decided OPTIONAL** by `DEC-P6-033`; specified at §18. Execution **result** model — declared absent. **Cancellation** — excluded. **Concurrency** — unauthorized; §6 depends on its absence. Readiness reassessment — belongs to a gate, not to this document.
 
 ---
 
@@ -195,7 +195,7 @@ CONCLUDED        participate() has returned or raised — terminal
 [A] **The Definition / Execution separation is preserved absolutely.** Nothing in §§13–17 reads an execution semantic out of a Definition field, and nothing assigns an execution concern to the Definition layer.
 
 ### 17.1 Deliberately undefined
-[E] **Founder-reserved:** Agent → Capability reference (`DEC-P6-032`) — no part of §§13–17 presumes, implies or requires one.
+[E] **Decided OPTIONAL** (`DEC-P6-033`): Agent → Capability reference — see §18. No part of §§13–17 presumes, implies or requires one, and OPTIONAL confirms that.
 [E] **Declared absent:** execution-result model.
 [E] **Excluded:** Capability invocation · Capability self-execution · cancellation · concurrency.
 [E] **Belonging elsewhere and not specified here:** scheduling · dispatch · retry · queueing · planner · workflow · tool execution · Agent Factory, bootstrap, Department/Capability binding (`P7-L-1`) · Runtime lifecycle redesign (`P7-O-1`).
@@ -209,3 +209,36 @@ CONCLUDED        participate() has returned or raised — terminal
 - Specifying **preconditions** does **not** authorize adding a precondition check.
 
 [A] **Everything in §§13–17 describes meaning. No mechanism is authorized, and none is created.**
+
+---
+
+## 18. Capability reference — OPTIONAL
+
+[E] **Status decided.** `DEC-P6-033` (Founder Reserved Authority, 2026-08-26): **OPTION B — OPTIONAL** at the Execution Layer. This supersedes the *Founder-reserved* status previously recorded at §2, §12 and §17.1 under `DEC-P6-032`.
+
+### 18.1 Governing rule
+[E] *"The Agent → Capability reference is not a universal execution prerequisite. Its presence alone does not authorize capability invocation. Its semantic use is permitted only when an applicable canonical Execution contract explicitly defines that use."*
+
+### 18.2 What OPTIONAL means here
+| Situation | Consequence |
+|---|---|
+| Reference **absent** | The execution **may still be valid.** An Agent execution must not be considered invalid merely because the reference is absent |
+| Reference **present** | Confers **no** invocation authority |
+| Reference **semantically used** | Permitted **only** where an applicable canonical Execution contract explicitly defines that use — **no such contract exists today** |
+
+### 18.3 Consequence for §§13–17 — none, and that is the point
+[A] Verified: **no phase, transition, precondition or outcome in §§13–17 is conditioned on the reference.** §13.2's four preconditions do not include one; §15's four valid transitions do not mention one; §16's verification rests on the boundary signal and Trace alone. **OPTIONAL confirms that construction rather than requiring it to be amended.**
+
+### 18.4 The Definition-layer requirement is not an execution-layer requirement
+[E] `definition.py` enforces INV-2 clause 2 locally: *"implemented_capabilities must name at least one Capability."*
+
+[A] That is a **Definition-layer validity rule**, and per `DEC-P6-033` §9 it does not determine execution behaviour. An `AgentDefinition` must name at least one Capability; an **execution need not reference one**. Recorded because the two are otherwise easy to conflate — the layer separation is exactly what carries the distinction.
+
+### 18.5 Six things that confer no invocation authority
+[E] Per `DEC-P6-033` §10, no implementation may infer invocation authority merely because: a reference exists · a capability is listed · a graph contains a relationship · ownership resolves · caller reconciliation succeeds · an implementation field is populated. **Invocation authority requires an explicit canonical execution contract, and none exists.**
+
+### 18.6 Conformance
+[A] A conformance suite for these semantics **must not** assert the reference is present, **must not** assert it is absent, and **must not** derive invocation from it. It **may** assert that an execution's validity is independent of it.
+
+### 18.7 Not reopened
+[A] Per `DEC-P6-033` §19, OPTIONAL is consumed as decided. It is not reopened because implementation details remain undecided — those are delegated. Should future evidence materially conflict with it or with higher-order Canon, the conflict is reported, never silently overridden.
