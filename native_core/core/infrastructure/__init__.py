@@ -16,6 +16,7 @@ exists yet in Stage I.
 Public surface (the only names other boundaries may depend on):
   - lifecycle: Facility, FacilityState, FacilityUnavailable
   - storage:   StorageFacility, LocalAppendOnlyStorage
+  - records:   decode_record, decode_records, read_records, RecordDecodeError
   - external:  ToolBoundary, ExternalTool
   - substrate: ExecutionSubstrate, LocalExecutionSubstrate
   - bootstrap: Bootstrap, BootstrapError
@@ -27,6 +28,12 @@ from pathlib import Path
 from .bootstrap import Bootstrap, BootstrapError
 from .facility import Facility, FacilityState, FacilityUnavailable
 from .filesystem import FilesystemFacility
+from .records import (
+    RecordDecodeError,
+    decode_record,
+    decode_records,
+    read_records,
+)
 from .storage import LocalAppendOnlyStorage, StorageFacility
 from .substrate import ExecutionSubstrate, LocalExecutionSubstrate
 from .tool_boundary import ExternalTool, ToolBoundary
@@ -38,6 +45,10 @@ __all__ = [
     "FilesystemFacility",
     "StorageFacility",
     "LocalAppendOnlyStorage",
+    "RecordDecodeError",
+    "decode_record",
+    "decode_records",
+    "read_records",
     "ToolBoundary",
     "ExternalTool",
     "ExecutionSubstrate",
