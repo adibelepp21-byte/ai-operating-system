@@ -771,13 +771,25 @@ class TestDependencyDirection(unittest.TestCase):
     """Blueprint §26; INV-12 — the boundary depends only on what is beneath it,
     and holds no external dependency."""
 
-    PERMITTED_BOUNDARIES = frozenset({"infrastructure", "knowledge"})
+    # Canonically permitted, per the four sources cited below: infrastructure
+    # (Tool boundary and facilities beneath), knowledge, and agent. Asserted as
+    # an **upper bound**: canon states what Runtime *may* depend on, never that
+    # it must reach all of them. The former equality also pinned a lower bound
+    # no canonical source requires (ADR-0016).
+    PERMITTED_BOUNDARIES = frozenset({"infrastructure", "knowledge", "agent"})
+    # `agent` is NOT forbidden. Freeze §5 layer 2 lists Runtime's dependencies
+    # as *"Agent, Workflow, Tool"*; Freeze §6 gives `Runtime hosts Agent
+    # Instance` as allowed `Runtime→Instance` with **no** forbidden direction;
+    # Blueprint §6 lists Runtime's allowed dependencies as *"agent, workflow,
+    # and the Tool boundary"*; runtime_spec §7 says Runtime *"depends on Agent
+    # Definitions, Workflows, and the Tool boundary."* Each source's own
+    # forbidden list enumerates knowledge ownership, OQ-2, INV-13 and INV-12 —
+    # and none of them names agent. Corrected under `DEC-P6-038`; see ADR-0016.
     FORBIDDEN_BOUNDARIES = frozenset(
         {
             "memory",
             "governance",
             "trace",
-            "agent",
             "capability",
             "skill",
             "workflow",
@@ -786,13 +798,15 @@ class TestDependencyDirection(unittest.TestCase):
     )
     STDLIB = frozenset({"__future__", "abc", "dataclasses", "enum", "types", "typing"})
 
-    def test_cross_boundary_imports_are_only_the_permitted_two(self):
+    def test_cross_boundary_imports_stay_within_the_permitted_set(self):
         reached = {_boundary_of(m) for _, m, _ in _cross_boundary_records()}
-        self.assertEqual(self.PERMITTED_BOUNDARIES, reached)
+        self.assertLessEqual(reached, self.PERMITTED_BOUNDARIES)
 
     def test_no_forbidden_boundary_is_imported(self):
-        """INV-13 and OQ-2 rest on this: no Runtime → Agent/Workflow edge, and
-        no Trace dependency."""
+        """INV-13 and OQ-2 rest on this: no Trace dependency, and no edge to a
+        boundary Runtime does not canonically depend on. `agent` is not among
+        them — Freeze §5/§6, Blueprint §6 and runtime_spec §7 all list it as an
+        allowed Runtime dependency (ADR-0016)."""
         for path, module, _ in _cross_boundary_records():
             self.assertNotIn(
                 _boundary_of(module),
