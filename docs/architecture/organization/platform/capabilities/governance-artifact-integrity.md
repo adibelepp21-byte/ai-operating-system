@@ -32,8 +32,13 @@ established.
 
 ## Status
 
-No Agent Definition currently implements this Capability. Per ADR-0003,
-this is an expected, temporary condition following the Capability's
-creation, not an oversight — an Agent Definition is expected to be
-created promptly as ordinary Department-discretion work, outside the
-scope of any ADR.
+The [Governance Artifact Integrity Agent](../agent-definitions/governance-artifact-integrity-agent.md)
+implements this Capability.
+
+ADR-0003 recorded that this Capability began with zero implementers, and
+noted that this was an expected, temporary condition following the
+Capability's creation rather than an oversight — an Agent Definition was
+expected to be created promptly as ordinary Department-discretion work,
+outside the scope of any ADR. That Agent Definition exists, and this
+section is updated to record it. The Capability's contract is unchanged
+by the update.
