@@ -45,8 +45,19 @@ deferred under `T12-D-003`; this module therefore asserts nothing about them and
 reads nothing from them. The reasoning is recorded in the Act record; if the
 Founder binds the term differently, `read` is where the change lands.
 
+**How it reaches Knowledge.** Two modes, and the second is the architectural
+one. Collaborators may be injected directly — useful for focused unit evidence —
+or omitted, in which case `participate` resolves them from the Execution it is
+handed: `execution.runtime.knowledge`. That path is not invented here. The
+Execution contract already names it — *"Reaching Knowledge through
+`runtime.knowledge` still passes the Runtime's own RUNNING-only access control —
+Execution adds no authority and bypasses nothing"* — and `Runtime.knowledge` is
+RUNNING-gated and fails closed otherwise. A consumer that takes its Knowledge
+access from the Runtime hosting it is simply what *hosting* means.
+
 Dependencies: the `Agent` contract and the Knowledge public surface. Nothing
-from `tools/`, no Runtime type, no Governance type it could act through.
+from `tools/`, no Runtime type imported, no Governance type it could act through
+— the hosting Runtime is reached through the Execution it is given, never named.
 """
 
 from __future__ import annotations
@@ -69,17 +80,19 @@ class KnowledgeConsumingAgent(Agent):
 
     def __init__(
         self,
-        retrieval: "KnowledgeRetrieval",
-        admission: "KnowledgeAdmission",
+        retrieval: "Optional[KnowledgeRetrieval]" = None,
+        admission: "Optional[KnowledgeAdmission]" = None,
         knowledge_item_key: Optional[str] = None,
+        proposal: "Optional[tuple]" = None,
     ) -> None:
-        if not isinstance(retrieval, KnowledgeRetrieval):
+        if retrieval is not None and not isinstance(retrieval, KnowledgeRetrieval):
             raise TypeError("a Knowledge-consuming Agent requires a KnowledgeRetrieval")
-        if not isinstance(admission, KnowledgeAdmission):
+        if admission is not None and not isinstance(admission, KnowledgeAdmission):
             raise TypeError("a Knowledge-consuming Agent requires a KnowledgeAdmission")
         self._retrieval = retrieval
         self._admission = admission
         self._key = knowledge_item_key
+        self._proposal = proposal
         self._read: List[KnowledgeVersion] = []
         self._admitted: List[KnowledgeVersion] = []
 
@@ -100,6 +113,20 @@ class KnowledgeConsumingAgent(Agent):
 
     # -- the two halves of the exit statement ------------------------------
 
+    def _resolve(self, execution: "object"):
+        """Return the (retrieval, admission) pair this participation will use.
+
+        Injected collaborators win when present. Otherwise the pair comes from
+        the Runtime hosting this Execution — `execution.runtime.knowledge` —
+        which is RUNNING-gated by the Runtime itself. This consumer adds no
+        access control and bypasses none: if the Runtime is not RUNNING, the
+        Runtime refuses and the refusal propagates.
+        """
+        if self._retrieval is not None and self._admission is not None:
+            return self._retrieval, self._admission
+        subsystem = execution.runtime.knowledge
+        return subsystem.retrieval, subsystem.admission
+
     def read(self, knowledge_item_key: str) -> Optional["KnowledgeVersion"]:
         """*mengambil* — obtain the Active admitted version for a key.
 
@@ -108,6 +135,9 @@ class KnowledgeConsumingAgent(Agent):
         value. An unadmitted candidate is not reachable through this path at
         all, which is what makes what it returns *validated*.
         """
+        if self._retrieval is None:
+            raise RuntimeError("read requires an injected KnowledgeRetrieval; "
+                               "otherwise read through participate(execution)")
         version = self._retrieval.active(knowledge_item_key)
         if version is not None:
             self._read.append(version)
@@ -126,6 +156,9 @@ class KnowledgeConsumingAgent(Agent):
         that softened a fail-closed gate would be claiming an authority it does
         not hold.
         """
+        if self._admission is None:
+            raise RuntimeError("propose requires an injected KnowledgeAdmission; "
+                               "otherwise propose through participate(execution)")
         version = self._admission.admit(candidate, authorization)
         self._admitted.append(version)
         return version
@@ -143,5 +176,11 @@ class KnowledgeConsumingAgent(Agent):
         version — is a completion, not a failure; this consumer manufactures no
         failure condition it does not have.
         """
+        retrieval, admission = self._resolve(execution)
+        if self._proposal is not None:
+            candidate, authorization = self._proposal
+            self._admitted.append(admission.admit(candidate, authorization))
         if self._key is not None:
-            self.read(self._key)
+            version = retrieval.active(self._key)
+            if version is not None:
+                self._read.append(version)
