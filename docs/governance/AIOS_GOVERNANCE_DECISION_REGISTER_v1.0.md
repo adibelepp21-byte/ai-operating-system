@@ -4008,3 +4008,322 @@ without qualification.
 - **Regression:** 495/495 pass; one expected failure (P7-F-2), unchanged.
 - **Commit status:** recorded; **not committed, not pushed** — P7-I63 §15
   authorizes no commit, push, transport, or tag.
+
+---
+
+### FD-P6-001 — Founder Decision · Phase 6 E6 Criteria & Scope Ratification
+
+**Identifier:** FD-P6-001
+**Date:** 2026-08-28
+**Tier:** Founder / Program Owner phase-exit criteria ratification — Master Program Volume V §3, procedure per `GDR-0005`
+**Decided by:** Founder / Program Owner (Moriarty)
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P6-075`
+**Authorizing act:** `ACT-CC-P6-075 §6` (Mutation Boundary), `§9` (FD-P6-001 Registration), `§10` (Operative Content)
+**Predecessor decision:** N/A — first Phase 6 E6 ratification decision
+**Closes:** the Phase 6 criteria-definition and scope-ratification gate
+
+> **Date note, recorded rather than resolved.** The issued instrument carries
+> `Date: [ISSUE DATE]` unfilled and an unsigned attestation block. The date above
+> is the date of Founder authorization under `ACT-CC-P6-075 §27` (*"Founder /
+> Program Owner: Moriarty · Authorization: CONFIRMED"*), which names this
+> instrument as an authoritative input at `§3`. It is **not** a transcribed
+> decision date, and is disclosed here rather than inferred silently.
+
+---
+
+#### 1. Canonical source basis
+
+The operative Phase 6 source is **Master Program Volume II §4.3**:
+
+```text
+Phase             : 6
+Deliverable Utama : Knowledge Ecosystem — Knowledge Graph, RAG,
+                    Semantic Search, Knowledge Promotion
+Exit Criteria     : "Agent dapat mengambil dan memperbarui pengetahuan tervalidasi"
+Dependency        : Phase 4, Phase 5
+```
+
+No additional Phase 6 requirement is introduced beyond the ratified
+interpretation of this source statement.
+
+#### 2. Exit-criteria procedure
+
+Established according to `GDR-0005`. Governing principles preserved: every
+criterion transforms an existing source statement; no new requirement may be
+introduced merely to strengthen certification; each criterion has a measurable or
+countable condition; exit criteria remain distinct from certification procedure;
+implementation evidence is evaluated only **after** the criteria are ratified.
+
+#### 3. Ratified criteria
+
+**E6-01 — Agent Retrieval.** At least one Agent Instance must obtain an admitted
+Knowledge version through the authorized Knowledge consumption path during an
+actual execution path, demonstrating:
+
+```text
+Agent → Execution → Runtime (RUNNING) → Knowledge → retrieval → Active Knowledge
+```
+
+*Minimum measurable condition:* Agent Instances successfully obtaining admitted
+Knowledge **≥ 1**.
+
+*Evidence requirement:* the Knowledge consumed must originate from the
+Runtime-hosted Knowledge subsystem. Insufficient by themselves: direct function
+invocation; isolated Knowledge invocation; mocked Runtime invocation; stub-only
+execution; evidence in which the Agent is given Knowledge directly.
+
+**E6-02 — Agent Update.** At least one Agent Instance must cause a Knowledge
+update through the governed admission path during an actual execution path,
+demonstrating:
+
+```text
+Agent → Execution → Runtime (RUNNING) → Knowledge → T-12 admission → new Active version
+```
+
+*Minimum measurable condition:* Agent Instances causing a governed Knowledge
+update **≥ 1**.
+
+*Required evidence:* admission through the T-12 gate; creation of the subsequent
+Knowledge version; preservation of the prior version; correct Active-version
+transition; rejection of an unauthorized update.
+
+**E6-03 — Validated Knowledge.** Knowledge consumed or updated under E6-01 and
+E6-02 must satisfy the Phase 6 interpretation of *tervalidasi*. The Founder
+ratifies:
+
+> **Tervalidasi = Active melalui T-12 governance admission gate.**
+
+Knowledge is validated for Phase 6 only after it has passed the T-12 admission
+gate and occupies the Active state.
+
+*Minimum measurable condition:* non-validated Knowledge consumed as validated
+**= 0**; and consumed validated Knowledge **=** Active Knowledge admitted through
+T-12.
+
+#### 4. Ratified scope
+
+| Capability | Ratified treatment |
+|---|---|
+| **Knowledge Promotion** | **REQUIRED** |
+| Knowledge Graph | SUPPORTING CAPABILITY |
+| RAG | SUPPORTING CAPABILITY |
+| Semantic Search | SUPPORTING CAPABILITY |
+
+The three supporting capabilities are **not** independent Phase 6 exit gates.
+Their absence does not prevent Phase 6 certification when E6-01 through E6-03 are
+satisfied. Their designation does not prohibit future construction or evolution;
+future implementation is governed by the applicable future workstream, phase, or
+governance instrument.
+
+**Knowledge Promotion** is the required mechanism for producing the validated
+Knowledge referenced by the Phase 6 exit statement. The completion assessment must
+verify that the Agent's Knowledge interaction uses the governed admission path
+rather than an ungoverned write path. **No alternative validation mechanism is
+authorized by this Decision.**
+
+#### 5. Governance dispositions
+
+**T-12 — UNCHANGED.** This Decision does not modify, amend, or add T-12
+requirements, and does not claim blanket T-12 conformance. The only T-12
+interpretation ratified is: *validated Knowledge = Active Knowledge admitted
+through the T-12 governance gate.*
+
+**T12-D-004 — DEFERRED.** Not resolved, not ratified, not satisfied merely because
+storage code exists, and **not a Phase 6 exit blocker** under the ratified Phase 6
+scope. Any future resolution remains independently governed.
+
+#### 6. Non-decisions
+
+This Decision does not: certify Phase 6 · declare Phase 6 complete · authorize
+Phase 7 · modify Knowledge architecture · modify T-12 · resolve T12-D-004 · grant
+construction authority · adopt Graphify as a dependency · require Knowledge Graph,
+RAG, or Semantic Search as independent exit gates · establish new Phase 6
+requirements.
+
+#### 7. Implementation status at ratification
+
+This Decision does not itself declare the implementation PASS or FAIL. The
+evidence reported by `ACT-CC-P6-074` — E6-01/E6-02/E6-03 PASS, verified
+`Agent → Execution → Runtime (RUNNING) → Knowledge` path, T-12 unchanged,
+T12-D-004 unchanged, regression passing, no unresolved Phase 6 technical blocker —
+**remains evidence. It is not transformed into certification by this Decision.**
+
+#### 8. Certification dependency
+
+`FD-P6-002` may become effective only if this Decision has been validly issued and
+entered into this Register; E6-01, E6-02 and E6-03 remain the operative criteria;
+and the final implementation evidence is traceable to those criteria.
+
+#### 9. Effect
+
+On this entry, the following become **operative Phase 6 governance criteria**:
+`E6-01`, `E6-02`, `E6-03`. The scope disposition becomes canonical: Knowledge
+Promotion required; Knowledge Graph, RAG and Semantic Search supporting. **No new
+criteria-definition exercise is to be performed after registration**
+(`ACT-CC-P6-075 §11`).
+
+**Phase 6 certification: NOT YET PERFORMED.**
+
+---
+
+### FD-P6-002 — Founder Decision · Phase 6 Frozen → Certified / Completion Declaration
+
+**Identifier:** FD-P6-002
+**Date:** 2026-08-28
+**Tier:** Founder / Program Owner phase certification — Master Program Volume V §3 second gate (*"Volume/Boundary/Phase berpindah Frozen → Certified … Pemilik Program (Moriarty), berdasarkan bukti implementasi"*)
+**Decided by:** Founder / Program Owner (Moriarty)
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P6-075`
+**Authorizing act:** `ACT-CC-P6-075 §13` (Registration), `§14` (Operative Content), `§15` (Frozen → Certified)
+**Predecessor decision:** `FD-P6-001` — Phase 6 E6 Criteria & Scope Ratification
+**Closes:** Phase 6 — Knowledge Ecosystem
+
+> **Date note, recorded rather than resolved.** As with `FD-P6-001`, the issued
+> instrument carries `Date: [ISSUE DATE]` unfilled and an unsigned attestation
+> block. The date above is the date of Founder authorization under
+> `ACT-CC-P6-075 §27` (*"Founder / Program Owner: Moriarty · Authorization:
+> CONFIRMED"*), which names this instrument as an authoritative input at `§3`. It
+> is **not** a transcribed decision date, and is disclosed here rather than
+> inferred silently.
+
+---
+
+#### 1. Prerequisite satisfied
+
+`FD-P6-002 §2` conditions effectiveness on `FD-P6-001` having been issued by the
+Founder / Program Owner **and** entered into this Register, and states: *"If
+FD-P6-001 is absent from the canonical Register: FD-P6-002 MUST NOT be activated.
+No inference from an unregistered document is permitted."*
+
+`FD-P6-001` was registered in this Register immediately above, under the same
+authorizing Act. The dependency `FD-P6-001 → FD-P6-002` is preserved by ordering
+and by the **Predecessor decision** field above. The prerequisite is therefore
+satisfied by record, not by inference.
+
+#### 2. Canonical phase basis
+
+Phase 6 is defined by **Master Program Volume II §4.3** as *Knowledge Ecosystem*,
+deliverable *"Knowledge Graph, RAG, Semantic Search, Knowledge Promotion"*, exit
+statement *"Agent dapat mengambil dan memperbarui pengetahuan tervalidasi"*. The
+measurable interpretation of that statement is established by `FD-P6-001`. **This
+Decision does not create or modify those criteria**, and no additional exit
+criterion is introduced during certification.
+
+#### 3. Certification criteria and final determinations
+
+The operative criteria are exclusively `E6-01`, `E6-02` and `E6-03` as ratified
+under `FD-P6-001`.
+
+| Criterion | Ratification | Evidence | Final determination |
+|---|---|---|---|
+| **E6-01** — Agent Retrieval | `FD-P6-001 §3` | `ACT-CC-P6-074` | **PASS** |
+| **E6-02** — Agent Update | `FD-P6-001 §3` | `ACT-CC-P6-074` | **PASS** |
+| **E6-03** — Validated Knowledge | `FD-P6-001 §3` | `ACT-CC-P6-074` | **PASS** |
+
+**E6-01.** The full execution path was independently verified: Runtime state
+RUNNING; Execution associated with that Runtime; Agent participating through
+Execution; Knowledge reached through the Runtime; retrieval occurring through the
+hosted Knowledge subsystem; returned Knowledge Active.
+
+**E6-02.** The verified path demonstrated
+`Agent → Execution → Runtime → Knowledge → T-12 admission → new Active version`,
+with initial version, subsequent version, prior version retained, Active-version
+transition, and rejection of an unauthorized update.
+
+**E6-03.** Against the ratified definition **tervalidasi = Active through the T-12
+admission gate**: pre-admission Knowledge is not consumed as validated Knowledge;
+admission occurs through the T-12 gate; admitted Knowledge becomes Active; Active
+Knowledge is what is consumed; unauthorized or rejected Knowledge does not satisfy
+the validation condition.
+
+#### 4. Scope determination
+
+The scope ratified by `FD-P6-001` is confirmed unchanged.
+
+| Capability | Certification treatment |
+|---|---|
+| **Knowledge Promotion** | **REQUIRED — SATISFIED** |
+| Knowledge Graph | SUPPORTING — NOT AN EXIT GATE |
+| RAG | SUPPORTING — NOT AN EXIT GATE |
+| Semantic Search | SUPPORTING — NOT AN EXIT GATE |
+
+No supporting capability is promoted into an independent exit criterion. No new
+requirement is introduced.
+
+#### 5. Governance boundaries
+
+**T-12: UNCHANGED.** `ACT-CC-P6-074` verified the relevant T-12 admission
+behaviour. **This Decision does not claim blanket T-12 conformance**, consistent
+with `GDR-0028 §9` (*"Conformance is not asserted."*). No T-12 amendment,
+reinterpretation, or new requirement is made.
+
+**T12-D-004: DEFERRED.** It remains outside the Phase 6 exit gate per
+`FD-P6-001`. The existence of a storage implementation is **not** interpreted as
+ratification or resolution of `T12-D-004`. No `T12-D-004` decision is made here.
+
+#### 6. Evidence basis
+
+Certification rests on the technical evidence recorded by **`ACT-CC-P6-074`**,
+including the verified actual execution path:
+
+```text
+Agent → Execution → Runtime (RUNNING) → Knowledge → T-12 → Active
+```
+
+and the regression and integrity evidence recorded by that Act: `native_core`
+676 OK with the previously admitted expected `P7-F-2` failure; `consumers` 54 OK;
+`tools` 146 OK; no new regression; T-12 unchanged; `T12-D-004` unchanged;
+protected packages untouched; no Graphify dependency introduced.
+
+#### 7. Frozen → Certified, and completion
+
+On the basis above, the Founder / Program Owner executes the canonical transition
+**FROZEN → CERTIFIED** and declares **Phase 6 — Knowledge Ecosystem COMPLETE**.
+
+The declaration is made **specifically against the criteria and scope ratified
+under `FD-P6-001`**. It does not imply completion of every possible future
+Knowledge capability.
+
+**Completion means:** the ratified exit criteria are satisfied; the required
+Knowledge Promotion mechanism is operational; Agent retrieval through the actual
+Runtime execution path is evidenced; Agent update through the governed admission
+path is evidenced; validated Knowledge is defined and demonstrated as Active
+Knowledge admitted through T-12; the supporting-capability treatment is confirmed;
+no unresolved Phase 6 technical blocker remains.
+
+**Completion does not mean:** that Knowledge Graph, RAG or Semantic Search are
+independently complete; that T-12 holds blanket re-conformance certification; that
+`T12-D-004` is resolved; or that Phase 7 has started.
+
+#### 8. Post-certification boundary
+
+Phase 6 must not be reopened merely because a supporting capability remains
+unimplemented. Knowledge Graph, RAG and Semantic Search may evolve under their
+applicable future governance path. T-12 and `T12-D-004` remain independently
+governed. **New requirements may not be retroactively inserted into the Phase 6
+exit criteria.** Phase 7 requires its own applicable entry and governance
+conditions and is **not** authorized by this Decision or by `ACT-CC-P6-075 §21`.
+
+#### 9. Attribution
+
+The Founder / Program Owner certified Phase 6 through this Decision. Claude Code /
+Co-Founder Office **recorded and verified** the Decision under `ACT-CC-P6-075`,
+and is not the authority that certified Phase 6 (`ACT-CC-P6-075 §15`).
+
+#### 10. Final governance state
+
+```text
+PHASE 6 — KNOWLEDGE ECOSYSTEM
+
+E6-01 : PASS          Knowledge Promotion : REQUIRED / SATISFIED
+E6-02 : PASS          Knowledge Graph     : SUPPORTING
+E6-03 : PASS          RAG                 : SUPPORTING
+                      Semantic Search     : SUPPORTING
+
+T-12        : UNCHANGED
+T12-D-004   : DEFERRED
+Blockers    : NONE
+
+FROZEN → CERTIFIED
+
+PHASE 6 — CERTIFIED / COMPLETE
+```
