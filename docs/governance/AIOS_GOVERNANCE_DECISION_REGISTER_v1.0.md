@@ -4327,3 +4327,181 @@ FROZEN → CERTIFIED
 
 PHASE 6 — CERTIFIED / COMPLETE
 ```
+
+---
+
+### FD-P5-001 — Founder Decision · Phase 5 Certification & Baseline Consequence
+
+**Identifier:** FD-P5-001
+**Date:** 2026-08-29
+**Tier:** Founder / Program Owner phase certification — Master Program Volume V §3 second gate (*"Volume/Boundary/Phase berpindah Frozen → Certified … Pemilik Program (Moriarty), berdasarkan bukti implementasi"*)
+**Decided by:** Founder / Program Owner (Moriarty)
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P1-6-078`
+**Authorizing act:** `ACT-CC-P1-6-078 §4` (Mutation Boundary), `§11` (Registration Procedure)
+**Predecessor decision:** `GDR-0006` — Founder Authorization · Phase 5 Implementation
+**Closes:** Phase 5 — Intelligence Ecosystem
+
+> **Date, recorded as issued.** The instrument states `Date: 2026-08-29` in its
+> Founder Attestation and is transcribed here as issued. The recording office
+> notes, without resolving, that registration is performed on 2026-08-28. The
+> date is the Founder's, not the recorder's, and is not adjusted.
+
+---
+
+#### 1. Decision text — Founder determination, transcribed faithfully
+
+**Purpose.** This Decision resolves the remaining Phase 5 governance status
+identified by `ACT-CC-P6/P1-6-076` (Phase 1–6 Final Closure & Residual Audit)
+and `ACT-CC-P1-6-077` (Phase 1–6 Governance Residual Closure & Final Baseline
+Certification). It accepts the established Phase 5 evidence, ratifies the final
+satisfaction status of `E5-1` through `E5-5`, certifies Phase 5 as complete,
+preserves the status and authority boundaries of residual governance matters,
+and establishes the governance consequence of valid Phase 5 certification for
+the final Phase 1–6 baseline closure process.
+
+> **This Decision is a governance certification. It does not authorize new
+> Phase 5 engineering work.**
+
+**Effective condition.** *"Effective only upon valid recording in the canonical
+Governance Decision Register by an authorized governance process."* This entry
+is that recording.
+
+#### 2. Evidence accepted
+
+From **`ACT-CC-P6/P1-6-076`**: the previously unfinished Phase 5 implementation
+surface had been remediated; `E5-1` through `E5-5` were technically satisfied;
+the implementation was demonstrated through the real execution path; Runtime
+RUNNING access control was preserved; no prohibited reverse dependency was
+introduced; `native_core/` remained unchanged; regression evidence remained
+green; **and the Phase 5 result was evidence-complete but not yet
+governance-certified.**
+
+From **`ACT-CC-P1-6-077`**: the Phase 1–6 baseline was re-verified; the `R-15`
+regression in the governance-index test assertions was corrected and disclosed;
+Phase 5 certification status was verified as the sole governance item preventing
+a final P1–P6 Governance-Closed declaration; `E5-1` through `E5-5` remained
+supported by current evidence; and no material technical blocker had emerged.
+
+#### 3. Founder determination — Phase 5 criteria
+
+| Criterion | Founder determination |
+|---|---|
+| **E5-1** | **SATISFIED / PASS** |
+| **E5-2** | **SATISFIED / PASS** |
+| **E5-3** | **SATISFIED / PASS** |
+| **E5-4** | **SATISFIED / PASS** |
+| **E5-5** | **SATISFIED / PASS** |
+
+*"No criterion in E5-1 through E5-5 remains open as a technical Phase 5 exit
+condition."* The supporting evidence is that identified in §2.
+
+#### 4. Founder certification
+
+Upon satisfaction of the effective condition:
+
+```text
+PHASE 5 — CERTIFIED / COMPLETE
+```
+
+Phase 5 is no longer classified as *CERTIFICATION READY / FOUNDER DECISION
+REQUIRED*.
+
+> *"Claude Code, automation, tests, repository state, or technical evidence may
+> establish whether certification criteria are satisfied, but may not
+> independently create this governance status."*
+
+#### 5. Explicit residual dispositions — unchanged by this certification
+
+**5.1 Phase 3 residual — Planner / Scheduler / Execution Orchestrator.** These
+remain residual matters associated with Phase 3; remain outside the scope of
+this Phase 5 certification; are **not authorized for construction by
+implication**; are not ratified as complete; and retain their existing
+governance disposition. *"No actor may infer implementation authority for these
+components from the certification of Phase 5."*
+
+**5.2 `T-2` · `T-3` · `T-4` · `OB-01`.** All remain under their respective
+reserved authorities. This Decision does not decide them, close them, alter
+their ownership, promote them to resolved status, or treat their continued
+existence as Phase 5 certification failure.
+
+**5.3 `T12-D-003` · `T12-D-004`.** Both remain **DEFERRED**. This Decision
+grants no authority to modify them, resolve them, reinterpret their deferral, or
+infer implementation authority from their storage or repository presence.
+
+#### 6. Baseline consequence
+
+Upon valid registration, **Phase 5 is no longer a governance blocker to the
+declaration of a P1–P6 Governance-Closed Baseline.**
+
+> *"This statement does not itself declare the P1–P6 baseline closed."*
+
+A final baseline declaration requires an authorized verification and
+reconciliation process after registration, which must verify: that Phase 5
+certification has been validly recorded; that the evidence supporting `E5-1`
+through `E5-5` has not materially regressed; that Phase 1–6 status remains
+consistent with the recorded governance state; that every remaining residual is
+formally CLOSED, REMEDIATED, FORMALLY DEFERRED, RESERVED TO FOUNDER / ARCHITECT,
+or explicitly NON-BLOCKING; and that no unexplained or active governance blocker
+remains.
+
+#### 7. Knowledge Graph operating rule
+
+The resident Knowledge Graph **should** be used as the first-pass discovery and
+retrieval mechanism for locating Decisions, Acts, dependencies, canonical
+records, evidence paths and prior determinations, to reduce token consumption
+and avoid redundant repository-wide searches.
+
+> *"The Knowledge Graph is not an independent source of governance authority."*
+
+Before any PASS/FAIL determination, governance mutation, certification
+conclusion or baseline declaration, the canonical source **must** be verified.
+Where the Knowledge Graph is unavailable, stale, incomplete, contradictory, or
+unable to locate a required source, the minimum additional canonical-source
+discovery required must be performed. *"The Knowledge Graph may accelerate
+discovery. It may not replace evidence."*
+
+#### 8. No reopening of Phase 5 engineering
+
+This Decision authorizes no new Phase 5 implementation cycle, no new Phase 5
+discovery cycle, no speculative remediation, no micro-Act generation for
+already-satisfied criteria, and no architectural expansion beyond the
+established Phase 5 evidence. A later technical issue may be addressed only if
+an authorized verification process identifies a genuine material regression or
+blocker. *"The existence of a residual outside the Phase 5 exit criteria is not,
+by itself, authority to reopen Phase 5."*
+
+#### 9. Effective sequence
+
+```text
+FD-P5-001 (Founder Decision) → Canonical Evidence Freshness Verification
+→ Verbatim Registration in the canonical Register → FD-P5-001 Effective
+→ PHASE 5 — CERTIFIED / COMPLETE → Final P1–P6 Governance Reconciliation
+→ P1–P6 GOVERNANCE-CLOSED BASELINE → READY FOR PHASE 7 AUTHORIZATION
+```
+
+*"The sequence MUST NOT be reversed."*
+
+#### 10. Authority boundary
+
+The recording office may verify evidence, freshness and prerequisites, record
+this Decision when explicitly authorized, verify the resulting Register entry,
+and perform authorized final baseline reconciliation. It may **not** assign a
+different Decision ID, alter the Founder determinations, issue this Decision on
+behalf of the Founder, infer certification before valid registration, alter
+residual dispositions, infer authority for Planner / Scheduler / Execution
+Orchestrator, or resolve `T-2`, `T-3`, `T-4`, `OB-01`, `T12-D-003` or
+`T12-D-004`.
+
+#### 11. Effect
+
+On this entry, `E5-1` through `E5-5` stand **SATISFIED / PASS** by Founder
+determination, and:
+
+```text
+PHASE 5 — INTELLIGENCE ECOSYSTEM: CERTIFIED / COMPLETE
+```
+
+The certification authorizes the next bounded governance process to determine
+whether `P1–P6 = GOVERNANCE-CLOSED BASELINE → READY FOR PHASE 7 AUTHORIZATION`.
+
+**No Phase 7 construction authority is granted by this Decision.**
