@@ -4505,3 +4505,402 @@ The certification authorizes the next bounded governance process to determine
 whether `P1–P6 = GOVERNANCE-CLOSED BASELINE → READY FOR PHASE 7 AUTHORIZATION`.
 
 **No Phase 7 construction authority is granted by this Decision.**
+
+---
+
+### FD-P7-001 — Founder Decision · Phase 7 Memory Ecosystem Canonical Direction, Scope & E7 Criteria Ratification
+
+**Identifier:** FD-P7-001
+**Date:** 2026-08-29
+**Tier:** Founder / Program Owner phase direction and exit-criteria ratification — Master Program Volume V §3 first gate (*"Exit criteria Phase 5-13 disahkan menjadi kriteria terukur … Pemilik Program (Moriarty)"*), procedure per `GDR-0005`
+**Decided by:** Founder / Program Owner (Moriarty)
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P7-001`
+**Authorizing act:** `ACT-CC-P7-001 §4` (Mutation Authority), `§9` (Registration Order), `§10` (Faithful Transcription)
+**Predecessor decision:** `FD-P5-001` — the P1–P6 governance-closed baseline this Decision builds on
+**Closes:** the Phase 7 criteria-definition and direction gate
+
+> **Attestation fields, recorded rather than resolved** (`ACT-CC-P7-001 §10`). The
+> instrument carries `Issue Date: [FOUNDER ISSUE DATE]` unfilled and an unsigned
+> confirmation line. The date above is taken from the companion instrument
+> `FD-P7-002`, which is signed *"Moriarty"* and dated **29-08-2026**, and which
+> names this Decision as its predecessor. It is **not** a transcribed issue date
+> from this instrument, and is disclosed here rather than silently supplied.
+
+---
+
+#### 1. Objective
+
+Phase 7 shall establish a Memory Ecosystem **as a lifecycle capability, not merely
+as storage**. The canonical lifecycle is:
+
+```text
+Information → Memory Candidate → Admission/Retention → Retrieval
+            → Update/Consolidation → Expiry/Invalidation
+```
+
+The capability must have an identifiable and verifiable representation; receive
+Memory Candidates through a lawful boundary; govern admission and retention
+through the Memory lifecycle boundary; support deterministic-core retrieval,
+explicit update and consolidation, and expiry and invalidation; preserve
+lifecycle integrity; and be accessible by agents **only** through the approved
+execution path.
+
+> *"The existence of a database, vector store, embedding system, scheduler, or
+> persistent storage mechanism is not itself the objective of Phase 7."*
+
+#### 2. Canonical dependency
+
+The canonical dependency permitting Phase 7 to begin is **Phase 4 — AI Runtime**,
+certified. Phase 7 may proceed when Phase 4 is certified and the Execution →
+Runtime boundary is available for lawful runtime-mediated access.
+
+> **Phase 5 and Phase 6 are not prerequisites for Phase 7.** Their availability or
+> implementation status *"must not be promoted into an additional prerequisite"*
+> for Phase 7 entry, implementation, E7 satisfaction, or certification. No
+> additional dependency may be inferred without subsequent authorized governance
+> action.
+
+#### 3. Canonical scope
+
+Memory representation · Information-to-Candidate formation · admission ·
+retention · retrieval · update · consolidation · expiry · invalidation ·
+lifecycle integrity · agent access through the Execution → Runtime boundary.
+
+> **Memory is lifecycle-governed operational state. It is not automatically
+> Knowledge.**
+
+#### 4. Canonical Memory representation
+
+Every Memory realization must possess a technology-neutral conceptual
+representation containing, at minimum: **identity · payload or content ·
+lifecycle state · provenance or source · timestamps or equivalent lifecycle
+metadata.**
+
+No database, ORM, vector format, serialization format, persistence engine, vendor
+or embedding model is mandated. *"A Memory implementation must not reduce Memory
+to an unidentifiable blob lacking lifecycle state."*
+
+#### 5. Authority model
+
+**Agent and Execution** may produce Information, generate or propose a Memory
+Candidate, request lawful lifecycle operations, and receive lawful retrieval
+results. They **must not** thereby acquire authority to directly admit Memory,
+directly mutate admitted Memory lifecycle state, bypass the Memory lifecycle
+boundary, or become Memory storage or lifecycle authority.
+
+**The Memory lifecycle boundary** owns admission, retention, retrieval
+eligibility, update, consolidation, supersession, expiry and invalidation.
+
+**Runtime** remains an execution and enforcement boundary. *"Runtime must not be
+silently transformed into the Memory storage implementation. Execution must not
+be silently transformed into Memory authority."*
+
+#### 6. Ratified exit criteria
+
+**E7-01 — Memory Representation & Candidate Formation.** Memory has a valid
+conceptual representation with identity, payload/content, lifecycle state,
+provenance/source, and timestamps or equivalent lifecycle metadata; Information
+can become a Memory Candidate; candidate formation can occur through the lawful
+Agent/Execution path; and candidate formation does not itself grant direct
+admission authority to Agent or Execution.
+*Exit condition:* representation and candidate-formation behaviour implemented and
+independently verifiable.
+
+**E7-02 — Admission & Retention.** A Memory Candidate can be submitted to the
+Memory lifecycle boundary; admission is decided through that boundary; retention
+is lifecycle-governed; Agent does not directly write admitted Memory state;
+Execution does not silently become Memory authority; Runtime does not silently
+become the storage implementation; invalid lifecycle bypass is rejected.
+*Exit condition:* admission and retention operate through an explicit lifecycle
+boundary and are independently verifiable.
+
+**E7-03 — Retrieval & Runtime-Mediated Access.** The real execution path
+
+```text
+Agent → Execution → Runtime (RUNNING) → Memory Retrieval → Result
+```
+
+must be demonstrated, with: retrieval independently verifiable; the same request
+against the same eligible state having **deterministic-core** behaviour;
+ineligible Memory not returned as eligible active Memory; retrieval occurring
+through the lawful Runtime-mediated path; and Runtime boundary enforcement
+remaining effective. **Similarity retrieval, vector retrieval, embeddings,
+semantic ranking and semantic search are not required by this criterion.**
+*Exit condition:* real Runtime-mediated retrieval demonstrated, including
+negative behaviour where an invalid boundary condition must be rejected.
+
+**E7-04 — Update & Consolidation.** Explicit lifecycle operations for applicable
+Memory evolution — update, merge, consolidation, supersession, predecessor
+invalidation where required by the chosen lifecycle realization. The
+implementation must not perform silent state mutation, leave dangling references,
+bypass lifecycle authority, or produce contradictory lifecycle state.
+*Exit condition:* operations explicit, verifiable, and lifecycle-integrity
+preserving.
+
+**E7-05 — Expiry, Invalidation & Lifecycle Integrity.** Memory can expire; Memory
+can be invalidated; invalid or expired Memory is not treated as active Memory;
+retrieval does not return ineligible Memory as eligible; lifecycle transitions
+are valid and verifiable; update and consolidation do not create contradictory
+lifecycle state; every Memory retains valid identity throughout its applicable
+lifecycle. **Automatic scheduling is not required** — no cron, background
+workers, schedulers or TTL daemons.
+*Exit condition:* expiry, invalidation, retrieval eligibility and lifecycle
+integrity demonstrated and independently verifiable.
+
+#### 7. Required exit gates
+
+`E7-01` through `E7-05` satisfied · lifecycle capability demonstrated ·
+Runtime-mediated access demonstrated · lifecycle integrity demonstrated ·
+architectural boundaries preserved · real execution evidence produced ·
+**negative controls demonstrating that prohibited or invalid operations are
+actually rejected.**
+
+> *"Passing isolated unit tests alone is insufficient."*
+
+#### 8. Supporting capabilities — not exit gates
+
+| Capability | Treatment |
+|---|---|
+| Knowledge Graph · RAG · Semantic Search | SUPPORTING — not an exit gate |
+| vector database · embeddings · similarity retrieval · semantic ranking | SUPPORTING — not an exit gate |
+| Memory visualization · persistent storage | SUPPORTING — not an exit gate |
+
+Their absence must not be treated as failure of `E7-01` through `E7-05`, and
+*"no supporting capability may silently become an exit requirement through
+implementation convenience."*
+
+#### 9. Persistence boundary
+
+**Persistence across process restart is not an initial Phase 7 exit gate.**
+Persistent Memory is *SUPPORTING / FUTURE CAPABILITY — NOT A PHASE 7
+CERTIFICATION PREREQUISITE.* No implementation may reinterpret this Decision as
+requiring a database or persistence architecture merely to claim Phase 7
+completion.
+
+#### 10. Phase boundaries
+
+**Phase 6 / Knowledge.** `Memory ≠ Knowledge`. Memory lifecycle ≠ Knowledge
+promotion; Memory update ≠ Knowledge update; Memory retrieval ≠ Knowledge
+retrieval; Memory admission ≠ Knowledge promotion. Integration may occur only
+through lawful boundaries. **Phase 7 must not reopen, reinterpret, or expand
+Phase 6 certification criteria.**
+
+**Phase 4 / Runtime.** Phase 7 uses the lawful Execution → Runtime boundary and
+must not redefine Runtime semantics, weaken RUNNING-gate enforcement, convert
+Runtime into the Memory storage implementation, or modify Phase 4 architecture
+without separately authorized authority.
+
+**Agent / Execution.** They remain consumers of lawful Memory capability and must
+not implicitly become Memory, storage or lifecycle authority — nor Planner,
+Scheduler or Execution Orchestrator. **Nothing in this Decision authorizes
+construction of the Phase 3 residual.**
+
+#### 11. T-12 and deferred boundaries
+
+This Decision authorizes no modification, reinterpretation or closure of **T-12**,
+**`T12-D-003`** or **`T12-D-004`**. Existing deferred status remains unchanged.
+
+#### 12. Protected packages
+
+The protected packages remain outside Phase 7 authority — no reading for
+convenience, modifying, staging, committing, relocating, renaming, deleting or
+persisting. If Phase 7 construction requires such access: **STOP → escalate.**
+*"No implementation convenience or token-saving objective may weaken this
+boundary."*
+
+#### 13. Accelerator policy
+
+Use a native Knowledge Graph **if one genuinely exists**; otherwise an available
+repository-native accelerator (governance index, dependency graph, equivalent
+resident mechanism). *"Do not construct a Knowledge Graph merely to save
+tokens."* **Accelerator silence must never be treated as proof of absence**;
+governance-critical conclusions require canonical verification.
+
+#### 14. Explicit non-goals
+
+Knowledge Graph · RAG · Semantic Search · vector database · embeddings ·
+similarity retrieval · persistent storage architecture · database vendor
+selection · autonomous reasoning · Planner · Scheduler · Execution Orchestrator ·
+T-12 remediation · `T12-D-003`/`T12-D-004` remediation · protected-package access.
+
+#### 15. Evidence standard
+
+Evidence must demonstrate the real path `Agent → Execution → Runtime (RUNNING) →
+Memory lifecycle → Result`, and include unit verification, integration
+verification, at least one real end-to-end execution, lifecycle transition
+verification, architecture-boundary verification, and negative controls. *"Mocks
+alone are insufficient to establish Phase 7 completion."*
+
+#### 16. Certification path
+
+Stage 1 Founder direction (this Decision) → Stage 2 authorized construction, only
+after separate construction authority exists → Stage 3 Founder certification.
+
+> *"Claude Code must not infer: IMPLEMENTED → CERTIFIED. No amount of passing
+> tests independently grants certification authority."*
+
+#### 17. Effect
+
+On this entry, `E7-01` through `E7-05` become the **ratified measurable Phase 7
+exit criteria**, and this Decision becomes the canonical Founder direction for
+Phase 7.
+
+```text
+PHASE 7 — MEMORY ECOSYSTEM: CANONICALLY DEFINED
+E7-01 THROUGH E7-05: RATIFIED
+PHASE 7 CONSTRUCTION: NOT AUTHORIZED BY THIS DECISION
+PHASE 7 CERTIFICATION: NOT AUTHORIZED BY THIS DECISION
+```
+
+---
+
+### FD-P7-002 — Founder Architecture Decision · Phase 7 Runtime ↔ Memory Boundary Amendment
+
+**Identifier:** FD-P7-002
+**Date:** 2026-08-29
+**Tier:** Founder / Program Owner architectural amendment — scoped amendment of the Runtime dependency boundary
+**Decided by:** Founder / Program Owner (Moriarty) — instrument signed *"Moriarty"*
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P7-001`
+**Authorizing act:** `ACT-CC-P7-001 §4` (Mutation Authority), `§9` (Registration Order), `§11` (Architecture Entry Verification)
+**Predecessor decision:** `FD-P7-001` — Phase 7 Founder / Program Owner Direction
+**Closes:** the E7-03 architectural-dependency gap
+
+> **Why this Decision exists.** Verification under `FD-P7-001` established that
+> `E7-03`'s required path could not be built within existing authority: the
+> Runtime contract exposed only `state` and `knowledge`; the resident conformance
+> suite listed `memory` among Runtime's **forbidden** boundaries against a
+> permitted set of `{infrastructure, knowledge, agent}`; and four core assertions
+> record that *"Runtime owns no Memory."* This Decision supplies **one explicit
+> and bounded architectural permission rather than allowing Claude Code to infer
+> one.**
+
+---
+
+#### 1. Decision
+
+The Runtime boundary **may depend on the Phase 7 Memory boundary for the limited
+purpose of lawful runtime-mediated Memory operations.** The canonical Phase 7
+execution path is:
+
+```text
+Agent → Execution → Runtime (RUNNING) → Memory → Result
+```
+
+This Decision amends the applicable Runtime dependency boundary **only to the
+extent necessary** to permit that relationship. *"No broader Runtime
+architectural expansion is implied."*
+
+#### 2. Scoped dependency permission
+
+Runtime may interact with Memory **only through a lawful Memory boundary,
+contract, facade, protocol, adapter, or equivalent abstraction** consistent with
+the resident architecture. The permitted dependency is limited to operations
+required to support Phase 7 runtime-mediated Memory access. *"This Decision does
+not authorize Runtime to acquire unrestricted knowledge of Memory internals."*
+
+#### 3. Runtime remains non-owner
+
+Runtime **MUST NOT**: own Memory lifecycle policy; directly implement Memory
+admission, retention, expiry or invalidation policy; directly own Memory
+persistence; directly manipulate Memory internal state outside the lawful Memory
+boundary; become a general-purpose Memory storage layer; or **silently absorb
+Memory authority into Phase 4.**
+
+**Memory lifecycle authority remains within the Phase 7 Memory boundary.**
+
+#### 4. Memory boundary authority
+
+The Memory boundary owns, at minimum: Memory identity · representation ·
+admission · retention · retrieval eligibility · update or consolidation ·
+invalidation · expiry · lifecycle integrity.
+
+Agent and Execution may propose or generate a Memory Candidate. *"Neither Agent
+nor Execution may thereby acquire authority to directly mutate Memory lifecycle
+state outside the Memory boundary. Runtime-mediated access does not transfer
+Memory authority to Runtime."*
+
+#### 5. Implementation neutrality
+
+No database, ORM, vendor, vector database, embeddings, serialization format,
+persistence engine, protocol implementation, module placement, class hierarchy or
+dependency-injection mechanism is prescribed. Implementation freedom exists
+**only inside the boundaries established by this Decision** and subsequent
+authorized construction authority.
+
+#### 6. Dependency scope
+
+The Runtime → Memory permission is **SCOPED TO PHASE 7 MEMORY ECOSYSTEM
+REQUIREMENTS.** It must **not** be interpreted as general permission for Runtime
+to depend on arbitrary new subsystems; permission to reopen Phase 4 architecture
+generally; precedent that future ecosystem boundaries automatically become
+Runtime dependencies; permission to introduce Planner, Scheduler or Execution
+Orchestrator; or permission to alter unrelated Runtime dependencies.
+
+> *"Any dependency beyond the bounded Runtime ↔ Memory relationship requires
+> separate authority."*
+
+#### 7. E7-03 architectural consequence
+
+`E7-03` may be implemented using the canonical path `Agent → Execution → Runtime
+in RUNNING state → lawful Memory boundary → Result`. **The Runtime RUNNING gate
+remains meaningful.**
+
+A construction implementation **MUST NOT** satisfy `E7-03` merely through: direct
+`Agent → Memory` access bypassing the required Runtime path; direct Execution
+ownership of Memory state; mocked Runtime evidence presented as real execution; a
+dormant Runtime path that does not enforce RUNNING state; or *"an architectural
+bypass created solely to avoid this amendment."*
+
+#### 8. Phase boundaries
+
+**Phase 6.** `Memory ≠ Knowledge`. Memory retrieval does not imply Knowledge
+retrieval; Memory admission does not imply Knowledge promotion; Memory update
+does not imply Knowledge update. **This Decision does not alter Phase 6
+certification, criteria, or Knowledge boundaries.**
+
+**Phase 4.** Phase 4 remains the Runtime boundary. This Decision grants a
+narrowly scoped permitted dependency and **does not transfer Memory lifecycle
+ownership into Runtime.**
+
+**T-12.** Outside scope. No modification, interpretation, closure or
+certification of T-12 is authorized.
+
+**Protected packages.** Outside authority. If implementation requires access:
+**STOP → escalate.**
+
+#### 9. Explicit non-decisions
+
+This Decision does **not**: authorize Phase 7 construction; register `FD-P7-001`;
+certify Phase 7 or any E7 criterion; mandate persistence, a database, semantic
+retrieval, RAG or a Knowledge Graph; authorize Planner, Scheduler or Execution
+Orchestrator; resolve `T-2`, `T-3`, `T-4` or `OB-01`; resolve `T12-D-003` or
+`T12-D-004`; or authorize protected-package access.
+
+#### 10. Required escalation
+
+The implementation office must STOP and escalate if implementation requires a
+dependency beyond Runtime ↔ Memory as authorized here; transfer of Memory
+lifecycle authority to Runtime; modification of protected packages, T-12,
+`T12-D-003` or `T12-D-004`; a new architectural boundary not established here;
+reinterpretation of E7 criteria; or construction authority not explicitly granted
+by a successor Act.
+
+#### 11. Effect
+
+```text
+Runtime MAY depend on the Phase 7 Memory boundary through a lawful bounded
+contract for runtime-mediated Memory operations.
+
+Runtime remains NON-OWNER of Memory lifecycle and storage.
+Memory remains a distinct Phase 7 lifecycle boundary.
+
+No broader architectural permission is implied.
+No construction or certification authority is granted by this Decision alone.
+```
+
+**Recorded architectural divergence, not resolved here.** The resident canonical
+architecture texts that enumerate Runtime's allowed dependencies — Native Core
+Blueprint §6 and `runtime_spec §7` (*"agent, workflow, and the Tool boundary"*) —
+do not yet name Memory. This Decision is the governing amendment; those texts
+remain as written. Their synchronization is a documentation act reserved to the
+applicable architecture authority and is **recorded here rather than performed**.
