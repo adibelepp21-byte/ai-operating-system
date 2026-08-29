@@ -4904,3 +4904,193 @@ Blueprint §6 and `runtime_spec §7` (*"agent, workflow, and the Tool boundary"*
 do not yet name Memory. This Decision is the governing amendment; those texts
 remain as written. Their synchronization is a documentation act reserved to the
 applicable architecture authority and is **recorded here rather than performed**.
+
+---
+
+### FD-P7-003 — Founder Decision · Phase 7 Certification & Completion Declaration
+
+**Identifier:** FD-P7-003
+**Date:** 2026-08-29
+**Tier:** Founder / Program Owner phase certification — Master Program Volume V §3 second gate (*"Volume/Boundary/Phase berpindah Frozen → Certified … Pemilik Program (Moriarty), berdasarkan bukti implementasi"*)
+**Decided by:** Founder / Program Owner (Moriarty) — instrument signed *"Moriarty"*
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P7-003`
+**Authorizing act:** `ACT-CC-P7-003 §4` (Mutation Authority), `§11` (Registration Procedure)
+**Predecessor decisions:** `FD-P7-001` — Phase 7 Direction & E7 Criteria Ratification · `FD-P7-002` — Runtime ↔ Memory Boundary Amendment
+**Evidence basis:** `ACT-CC-P7-001`; `ACT-CC-P7-002`
+**Closes:** Phase 7 — Memory Ecosystem
+
+> **Date fields, recorded rather than resolved** (`ACT-CC-P7-003 §11.6`). The
+> instrument carries an unfilled header placeholder, `Issue Date: [FOUNDER ISSUE
+> DATE]`. Its §12 Attestation is **signed** *"Moriarty"* and dated
+> **29-08-2026**, and that attestation date is the one recorded above. The
+> divergence between the two fields is disclosed here rather than silently
+> reconciled, and no date was invented.
+
+---
+
+#### 1. Decision authority
+
+This Decision determines the certification status of Phase 7 — Memory Ecosystem.
+It accepts the implementation and verification evidence identified in §2;
+determines the disposition of `E7-01` through `E7-05`; determines certification
+and completion; preserves the architectural and governance boundaries established
+by its predecessors; and **authorizes no new engineering work, no Phase 8, and no
+authority for Claude Code to infer or issue additional Founder or Architect
+decisions.**
+
+#### 2. Accepted evidence
+
+`ACT-CC-P7-001` (Phase 7 Governance Entry) · `ACT-CC-P7-002` (Construction and
+Verification) · the Phase 7 E7 evidence matrix · independent verification
+performed **outside the test suites' own assertions** · real execution evidence
+through `Agent → Execution → Runtime (RUNNING) → Memory lifecycle / retrieval →
+Result` · negative-control evidence demonstrating fail-closed behaviour for
+invalid or unauthorized lifecycle operations · regression evidence confirming no
+material regression.
+
+> *"Acceptance of this evidence does not imply that passing tests independently
+> created certification authority. Certification is established by this Founder
+> Decision."*
+
+#### 3. E7 exit-criteria determination
+
+| Criterion | Determination |
+|---|---|
+| **E7-01** — Memory Representation & Candidate Formation | **SATISFIED / PASS** |
+| **E7-02** — Admission & Retention | **SATISFIED / PASS** |
+| **E7-03** — Runtime-Mediated Retrieval | **SATISFIED / PASS** |
+| **E7-04** — Update & Consolidation | **SATISFIED / PASS** |
+| **E7-05** — Expiry, Invalidation & Lifecycle Integrity | **SATISFIED / PASS** |
+
+**E7-01.** The implemented lifecycle provides a representation carrying identity,
+payload/content, lifecycle state, provenance/source, and lifecycle metadata or
+equivalent timestamps. Memory Candidates remain distinct from admitted Memory
+state.
+
+**E7-02.** Candidates may be proposed through the authorized system path;
+admission and retention remain controlled by the Memory lifecycle boundary. The
+boundary remains explicit: Agent does not directly write Memory state; Execution
+does not silently become Memory authority; Runtime does not become the storage
+implementation; lifecycle admission is determined by the Memory boundary.
+
+**E7-03.** Retrieval demonstrated through a real execution path. Runtime-mediated
+access remains subject to the Runtime ↔ Memory relationship authorized under
+`FD-P7-002`. **This Decision authorizes no additional Runtime dependencies.**
+
+**E7-04.** Lifecycle operations support authorized update and consolidation —
+merge, supersede, update, invalidation of a predecessor — while preserving
+lifecycle integrity, and must not silently produce contradictory lifecycle state
+or dangling references.
+
+**E7-05.** The lifecycle demonstrates invalidation, expiry, exclusion of
+ineligible Memory from normal retrieval, valid and verifiable transitions,
+preservation of Memory identity, and prevention of contradictory state.
+**Automatic scheduling, cron services, background workers, TTL daemons, Planner
+or Scheduler functionality are not required by this criterion.**
+
+#### 4. Supporting capabilities
+
+Knowledge Graph · RAG · Semantic Search · vector database · embeddings ·
+similarity retrieval · semantic ranking · memory visualization · persistence
+architecture — all remain **supporting capabilities and are not Phase 7
+certification exit gates.** Their absence does not invalidate satisfaction of
+`E7-01` through `E7-05`; their future implementation requires authority
+appropriate to the affected architectural boundary; and **no supporting
+capability is implicitly authorized for construction by this certification.**
+
+#### 5. Memory and Knowledge boundary
+
+```text
+Memory ≠ Knowledge
+```
+
+Memory admission does not constitute Knowledge promotion; Memory update does not
+constitute Knowledge update; Memory retrieval does not constitute Knowledge
+retrieval; Knowledge promotion does not automatically constitute Memory
+admission. Integration may occur only through separately lawful and explicitly
+governed boundaries. **This Decision does not alter the Phase 6 Knowledge
+Ecosystem governance.**
+
+#### 6. Runtime and architecture boundary
+
+The Runtime ↔ Memory relationship used to satisfy `E7-03` is accepted as
+implemented under `FD-P7-002`. This certification accepts that relationship as
+evidence; it does **not** expand Runtime ownership into unrestricted Memory
+authority, authorize additional Runtime dependencies, authorize silent
+modification of canonical architecture, or authorize unrelated Phase 4 changes.
+*"Any additional architectural boundary or dependency requires separate
+authority."*
+
+#### 7. Residual and governance boundaries — expressly unchanged
+
+**7.1 Phase 3 residual.** Planner, Scheduler and Execution Orchestrator remain
+Phase 3 residual matters. They are **not authorized by implication** through
+Phase 7 implementation, the Memory lifecycle, expiry capability,
+Runtime-mediated retrieval, or this certification. No construction authority is
+created for them.
+
+**7.2 `T-2` · `T-3` · `T-4` · `OB-01`.** All remain under their respective
+Founder and/or Architect authority — not resolved, promoted, superseded, or
+absorbed into Phase 7 certification.
+
+**7.3 `T-12`.** Unchanged. **No blanket conformance assertion is created by this
+Decision.**
+
+**7.4 `T12-D-003` · `T12-D-004`.** Both remain **DEFERRED**. *"No storage,
+persistence, or Memory implementation detail shall be interpreted as resolving
+either deferred item unless explicitly authorized through its own governance
+process."*
+
+**7.5 Protected packages.** Outside this Decision's operational authority — no
+reading for convenience, modifying, staging, committing, relocating, renaming,
+deleting or persisting. A future action requiring such access must **STOP and
+escalate.**
+
+#### 8. Certification decision
+
+On the evidence accepted in §2 and the determinations in §3:
+
+```text
+PHASE 7 — MEMORY ECOSYSTEM
+
+CERTIFIED / COMPLETE
+```
+
+Certification is established by this Founder Decision and becomes effective
+through valid registration. **Implementation and verification evidence alone did
+not create certification.**
+
+#### 9. Program consequence
+
+Upon valid registration: **PHASE 7 GOVERNANCE STATUS: CLOSED.** The Phase 7
+implementation and certification cycle is complete. This does not imply that
+every future Memory-related capability is complete; supporting capabilities may
+remain absent, deferred, or subject to future authority.
+
+#### 10. Phase 8 boundary
+
+This Decision does not authorize, define, or establish exit criteria,
+architecture or engineering for Phase 8, and does not authorize successor
+construction.
+
+```text
+PHASE 8 — NOT AUTHORIZED BY THIS DECISION
+```
+
+Any Phase 8 work requires its own Founder / Program Owner direction and
+governance authorization.
+
+#### 11. Effect
+
+On this entry, `E7-01` through `E7-05` stand **SATISFIED / PASS** by Founder
+determination, and:
+
+```text
+PHASE 7 — MEMORY ECOSYSTEM: CERTIFIED / COMPLETE
+PHASE 7 GOVERNANCE STATUS:  CLOSED
+PHASE 8:                    NOT AUTHORIZED
+```
+
+The Founder / Program Owner certified Phase 7 through this Decision. Claude Code
+recorded and verified it under `ACT-CC-P7-003`, and is not the authority that
+certified Phase 7.
