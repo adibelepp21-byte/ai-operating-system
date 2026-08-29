@@ -5447,3 +5447,206 @@ The Founder / Program Owner issued this certification through `FD-P8-002`. Claud
 Code registered and verified the Decision under `ACT-CC-P8-002`, did not
 independently certify Phase 8, and certification became effective through this
 authorized registration rather than through passing tests.
+
+---
+
+### FD-P9-001 — Founder Direction · Phase 9 Workflow Ecosystem
+
+**Identifier:** FD-P9-001
+**Date stated by the instrument:** *none* — no issue-date field is present; see the metadata note
+**Recorded:** 2026-08-29
+**Tier:** Founder / Program Owner phase direction and gap closure — Master Program Volume V §3 first gate
+**Decided by:** Founder / Program Owner
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P9-001`
+**Authorizing act:** `ACT-CC-P9-001 §6` (Authorized Registration of FD-P9-001)
+**Predecessor decision:** `FD-P8-002` — Phase 8 Certification & Governance Closure
+**Discovery basis:** `ACT-CC-P9-EXT-001` — External Reference Discovery for Phase 9
+**Closes:** the three Phase 9 Founder gaps reported by `ACT-CC-P9-EXT-001`
+
+> **Metadata recorded rather than resolved** (`ACT-CC-P9-001 §6.4`). This
+> instrument carries **no issue-date field** and **no attestation or signature
+> block**, as with `FD-P8-001`. No date, signature or attestation is invented:
+> the `Date` field records that the instrument states none, and `Recorded`
+> carries the date this office performed the registration.
+
+---
+
+#### 1. Role and objective
+
+This Direction establishes the architectural and operational direction for
+**Phase 9 — Workflow Ecosystem**, closing the Founder gaps that remained after
+canonical internal discovery, baseline review, certified-baseline verification,
+bounded external reference discovery, and identification of canonical conflict
+and reserved items.
+
+It is **not** an Execution Act. It does not by itself modify the repository,
+**register itself**, authorize construction or implementation, authorize
+mutation of protected packages, authorize Phase 10, or grant authority by
+inference.
+
+The canonical Phase 9 outcome it serves is:
+
+```text
+Workflow lintas-agent dapat dijalankan dan dipantau.
+```
+
+#### 2. Baseline — Workflow is not greenfield
+
+Existing Workflow capability already covers composition, coordination,
+declaration, realization, and references to Agent Instance, Skill and
+Capability. What the baseline does **not** yet provide operationally is
+execution, a Runtime-mediated execution path, workflow lifecycle, workflow
+execution state, monitoring state, retry, cancellation, suspension, recovery and
+compensation.
+
+#### 3. Architectural tension identified by discovery
+
+Discovery found a canonical tension on **Runtime ↔ Workflow**: some canonical
+sources state a Runtime dependency on Workflow; some reserved architecture items
+still treat the relationship as unresolved/Inferred; and current conformance
+enforcement forbids the implementation the relationship requires.
+
+> *"Tension tersebut tidak boleh diselesaikan melalui silent implementation."*
+
+This Direction fixes substantive direction. Reconciliation of canonical
+documentation, architecture specification, conformance and implementation is
+reserved to the next authorized instrument.
+
+#### 4. Founder determinations
+
+**4.1 `FD-P9-001-A` — Runtime ↔ Workflow.** *"Runtime SHALL be permitted to
+serve as the access and execution host for Workflow execution **without becoming
+the owner of Workflow**."*
+
+Workflow retains ownership of identity · structure · composition · coordination ·
+declaration · realization · **workflow lifecycle/state semantics**.
+
+Runtime provides a lawful access path, execution hosting/context, and
+enforcement of the Runtime lifecycle requirements that already govern Runtime
+access. Runtime shall **not** become Workflow owner, composition owner, Planner,
+Scheduler, Execution Orchestrator, owner of Workflow lifecycle semantics, or a
+substitute for the Workflow boundary.
+
+**4.2 `FD-P9-001-B` — Monitoring model.** Phase 9 shall establish a minimal
+monitorable Workflow execution lifecycle/state model **distinct from Trace**.
+Workflow execution state represents the operational condition of a Workflow;
+Trace remains immutable execution evidence/history.
+
+```text
+Workflow State ≠ Trace
+```
+
+> *"Reading Trace alone SHALL NOT be treated as automatically satisfying the
+> Phase 9 requirement that Workflow can be monitored."*
+
+**4.3 `FD-P9-001-C` — Minimum lifecycle.**
+
+```text
+DEFINED → READY → RUNNING → SUCCEEDED / FAILED
+```
+
+`CANCELLED`, `SUSPENDED`, `PAUSED`, `RETRYING`, `RECOVERING` and `COMPENSATING`
+are **not granted** by this Direction. A subsequent instrument may determine
+whether any is necessary. *"No additional state SHALL be introduced merely
+because an external framework supports it."*
+
+**4.4 `FD-P9-001-D` — Failure semantics.** An explicit **fail-closed** baseline:
+failure shall be explicit and observable; Workflow shall enter the authorized
+terminal failure condition; evidence shall remain distinguishable from
+successful execution; failure shall not silently become success; and failure
+shall **not** automatically trigger recovery unless separately authorized.
+
+#### 5. Multi-agent coordination boundary
+
+Workflow remains the canonical channel for multi-agent composition. Direct
+Instance ↔ Instance collaboration shall not be introduced outside the authorized
+Workflow model; free agent-to-agent delegation shall not be introduced; Workflow
+continues to realize capability through the canonical reference model; and
+external framework delegation patterns shall not override AIOS boundary
+constraints.
+
+The existence of multi-agent execution is **not** authority to create
+unrestricted delegation, autonomous agent hierarchy, Planner, Scheduler, or
+Execution Orchestrator.
+
+#### 6. Trace and monitoring boundary
+
+Workflow state answers *"what is the current operational condition of this
+Workflow execution?"* Trace remains evidence/history and shall **not** silently
+become Workflow lifecycle owner, mutable execution state, a resumability engine,
+a recovery engine, or scheduler state. Neither shall silently absorb the
+responsibility of the other.
+
+#### 7. Failure boundary
+
+Unless separately authorized, Phase 9 shall **not** include automatic retry,
+retry orchestration, compensation, rollback orchestration, a recovery engine, or
+durable restart recovery. The authorized baseline is:
+
+```text
+Explicit failure → observable terminal failure state → fail closed
+```
+
+This does not prohibit future recovery capability; it establishes that such
+capability is outside current Phase 9 authority.
+
+#### 8. Explicit non-goals
+
+Planner · Scheduler · Execution Orchestrator · persistent workflow engine ·
+durable workflow persistence · distributed execution · external orchestration
+provider · automatic retry · compensation · rollback orchestration · recovery
+engine · unrestricted agent-to-agent delegation · Workflow becoming Runtime ·
+Runtime becoming Workflow owner · external framework adoption by inference.
+
+The presence of graph structures, multi-step execution, lifecycle state,
+monitoring, multi-agent coordination, failure states, or future parallelism
+considerations is **not** authority to introduce any of them.
+
+#### 9. Provisional certification criteria direction
+
+| Criterion | Required demonstration |
+|---|---|
+| **E9-01** | Workflow Representation & Executability — a valid Workflow representation can lawfully reach an authorized executable path; invalid or structurally ineligible representation does not silently execute |
+| **E9-02** | Runtime-Mediated Workflow Execution — a real lawful path consistent with consumer → Execution boundary as applicable → Runtime in lawful running state → Workflow execution path |
+| **E9-03** | Workflow Lifecycle & Monitoring — authorized transitions, distinguishable operational states, monitorability through Workflow state, separation from Trace; illegal transitions fail closed |
+| **E9-04** | Multi-Agent Coordination & Boundary Integrity — Workflow remains the lawful coordination channel; prohibited collaboration paths remain unavailable; Runtime does not become Workflow owner; no Planner/Scheduler/Execution Orchestrator by implication |
+| **E9-05** | Failure Semantics & Fail-Closed Behaviour — failure structurally distinguishable from success, reaching the authorized terminal state; no automatic retry, compensation, rollback or recovery; negative controls demonstrate genuine fail-closed behaviour |
+
+#### 10. Supporting capabilities — not exit gates
+
+Persistent workflow storage · distributed execution · durable checkpointing ·
+external workflow provider · scheduler · Planner · Execution Orchestrator ·
+retry orchestration · compensation · rollback · recovery · external
+observability provider.
+
+External repositories, frameworks, SDKs and protocols may serve as comparative
+reference during authorized discovery or architecture review. *"They SHALL NOT
+become implementation dependencies or canonical architecture merely because they
+were reviewed."*
+
+#### 11. Governance and authority boundary
+
+Before Phase 9 construction, a separate explicitly authorized instrument shall
+establish, as applicable: Execution Office · mutation boundary · architecture
+reconciliation authority · registration authority for this Direction ·
+construction scope · permitted and prohibited implementation paths · evidence,
+regression and integrity requirements · commit boundary · stop conditions.
+
+> *"No repository mutation SHALL occur merely because this Direction exists."*
+
+#### 12. Effect
+
+On this entry, `E9-01` through `E9-05` stand as the **candidate Phase 9 evidence
+framework**, and this Direction becomes the canonical Founder direction for
+Phase 9.
+
+```text
+PHASE 9 — FOUNDER DIRECTION ESTABLISHED
+Workflow execution direction:               ESTABLISHED
+Runtime ↔ Workflow direction:               ESTABLISHED
+Workflow monitoring direction:              ESTABLISHED
+Failure baseline:                           ESTABLISHED
+Planner / Scheduler / Execution Orchestrator: NOT AUTHORIZED
+Phase 9 construction:  NOT AUTHORIZED BY THIS DIRECTION ALONE
+Phase 10:              NOT AUTHORIZED
+```
