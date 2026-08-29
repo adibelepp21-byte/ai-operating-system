@@ -5261,3 +5261,189 @@ E8-01 THROUGH E8-05: RATIFIED
 PHASE 8 CONSTRUCTION: NOT AUTHORIZED BY THIS DIRECTION ALONE
 PHASE 8 CERTIFICATION: RESERVED TO THE FOUNDER / PROGRAM OWNER
 ```
+
+---
+
+### FD-P8-002 — Founder Decision · Phase 8 Certification & Governance Closure
+
+**Identifier:** FD-P8-002
+**Date stated by the instrument:** *none* — `Issue Date: [FOUNDER ISSUE DATE]` is unfilled; see the metadata note
+**Recorded:** 2026-08-29
+**Tier:** Founder / Program Owner phase certification — Master Program Volume V §3 second gate (*"Volume/Boundary/Phase berpindah Frozen → Certified … Pemilik Program (Moriarty), berdasarkan bukti implementasi"*)
+**Decided by:** Founder / Program Owner (Moriarty) — instrument signed *"Founder / Program Owner: Moriarty"*
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P8-002`
+**Authorizing act:** `ACT-CC-P8-002 §4` (Mutation Boundary), `§12` (Registration Procedure)
+**Predecessor decision:** `FD-P8-001` — Phase 8 Tool Ecosystem Direction
+**Evidence basis:** `ACT-CC-P8-001`
+**Closes:** Phase 8 — Tool Ecosystem
+
+> **Metadata recorded rather than resolved** (`ACT-CC-P8-002 §4.2`, `§12` Step 2).
+> The instrument carries `Issue Date: [FOUNDER ISSUE DATE]` unfilled. It **is**
+> signed — *"Founder / Program Owner: Moriarty"* — unlike `FD-P8-001`, which
+> carried neither date nor signature. No date is invented or normalized: the
+> `Date` field records that the instrument states none, and `Recorded` carries
+> the date this office performed the registration under `ACT-CC-P8-002`.
+
+---
+
+#### 1. Role and scope
+
+This Decision is the Founder / Program Owner instrument accepting Phase 8
+evidence, determining exit-criteria status, certifying Phase 8, and closing Phase
+8 governance. It is **not** an engineering Act, and it grants Claude Code no
+authority for construction, refactor, redesign, new audit, or Phase 9 work.
+
+#### 2. Acceptance of evidence
+
+The Founder / Program Owner accepts the evidence produced and reported through
+**`ACT-CC-P8-001`** as the basis for the Phase 8 certification determination.
+The Decision does not order implementation or discovery reopened merely to repeat
+completed work.
+
+`ACT-CC-P8-001` reported Phase 8 as **IMPLEMENTED / VERIFIED / CERTIFICATION
+READY** and expressly claimed no authority to promote `IMPLEMENTED / VERIFIED →
+CERTIFIED`. That determination rests with the Founder / Program Owner.
+
+#### 3. E8 certification determination
+
+| Criterion | Determination |
+|---|---|
+| **E8-01** — Tool Representation & Identity | **SATISFIED / PASS** |
+| **E8-02** — Registration & Lifecycle | **SATISFIED / PASS** |
+| **E8-03** — Governance-Mediated Invocation | **SATISFIED / PASS** |
+| **E8-04** — Structured Outcomes | **SATISFIED / PASS** |
+| **E8-05** — Traceability & Fail-Closed Behaviour | **SATISFIED / PASS** |
+
+**E8-01.** A Tool representation carrying at minimum stable identity, invocation
+contract, lifecycle/eligibility state, and capability metadata.
+
+**E8-02.** Registration precedes eligibility; lifecycle determines eligibility;
+an unregistered, not-yet-eligible, disabled, or retired Tool **is not executed**;
+lifecycle authority remains in the Tool capability layer.
+
+**E8-03.** The real execution path is proven:
+
+```text
+Agent → Execution → Runtime (RUNNING) → Invocation Governance
+      → Tool Boundary → Tool → Structured Result
+```
+
+Runtime in this architecture is an **access host / execution context**. It is
+**not** Tool lifecycle authority, Tool governance authority, or a direct
+execution bypass.
+
+**E8-04.** The public invocation path produces structurally distinguishable
+`SUCCESS`, `GOVERNANCE_REFUSAL`, `INVALID_INVOCATION` and `EXECUTION_FAILURE`.
+Governance refusal must not be treated as execution failure; invalid invocation
+must not reach Tool implementation; execution failure must not be labelled
+success. Exceptions remain available for internal invariant failure, but the
+normal public invocation contract does not depend on exceptions to represent an
+expected refusal.
+
+**E8-05.** Every invocation attempt entering the governance path produces a
+verifiable invocation trace covering invocation identity, Tool identity,
+caller/source class, lifecycle/eligibility result, governance decision, whether
+execution was attempted, and structured outcome category — the invocation
+lifecycle, not merely successful execution. Negative controls prove fail-closed
+behaviour, including that refusal is demonstrable **as non-execution**, that
+Runtime provides no bypass, and that an Agent holds no lawful public path to run
+a Tool implementation directly.
+
+#### 4. Certification
+
+```text
+PHASE 8 — TOOL ECOSYSTEM
+CERTIFIED / COMPLETE
+```
+
+This certification is a **Founder determination**. It does not arise
+automatically from passing tests, implementation completion, a Claude Code
+recommendation, an automation signal, tool output, or inferred authority.
+**Claude Code obtains no authority to independently certify Phase 8.**
+
+#### 5. Bounded Outcome-contract repair — accepted
+
+The repair of the pre-existing `ToolBoundary` Outcome-contract defect is accepted
+as a **bounded correctness repair within authorized Phase 8 construction**,
+accepted only so far as necessary to enforce the existing public Outcome
+contract. It is **not** authority for general Infrastructure redesign or
+refactor, architectural expansion, unrelated defect remediation, or reopening
+Phase 8 construction.
+
+```text
+ACCEPTED AS BOUNDED PHASE 8 CORRECTNESS REPAIR
+```
+
+#### 6. Invocation ledger classification
+
+The invocation ledger is classified as a **Verifiable Invocation Trace
+Capability**: it satisfies Phase 8 verifiability, records invocation attempts and
+dispositions, and supports proving accepted / refused / non-executed invocation.
+It is **not the canonical core Trace entity.**
+
+This Decision does not move canonical Trace ownership, alter canonical core Trace
+authority, permit Runtime to become an independent Trace authority, or create a
+new core boundary.
+
+#### 7. Supporting capabilities — not exit gates
+
+External Tool providers · external Tool execution infrastructure · persistent
+audit store · database audit/logging · distributed tracing · external logging
+provider · immutable event store · advanced observability · any particular
+persistence engine · vendor-specific Tool integration.
+
+Their absence does not invalidate Phase 8 certification. Future implementation of
+any of them requires the authority and boundary appropriate to it.
+
+#### 8. Boundary reaffirmation
+
+**Runtime** remains **access host / execution context only** — no authority over
+Tool registration, lifecycle transition, eligibility, or governance decision.
+
+**Tool lifecycle authority** remains in the Tool capability layer / authorized
+Tool lifecycle boundary, and is **not** moved to Runtime, Agent, or Execution.
+
+**ToolBoundary** remains the **invocation foundation** and is **not** promoted to
+governance decision-maker; governance remains in the invocation governance layer
+above it.
+
+**Agent** may select a capability and propose invocation through the lawful path,
+and gains no authority to bypass governance, registration, or lifecycle
+eligibility, nor to run a Tool implementation directly through a lawful public
+path.
+
+**Protected boundaries** are unchanged: protected packages · `T-12` ·
+`T12-D-003` · `T12-D-004` · Planner · Scheduler · Execution Orchestrator ·
+authority reserved to Founder / Architect. `T12-D-003` and `T12-D-004` remain
+**DEFERRED**, and Planner / Scheduler / Execution Orchestrator gain **no** new
+authority implicitly from this certification.
+
+#### 9. No implicit Phase 9 authorization
+
+Phase 8 certification does not authorize Phase 9, define its objective or `E9`
+criteria, or authorize Phase 9 discovery, architecture, or construction, and does
+not authorize Claude Code to create a successor Act. Any Phase 9 work requires
+its own Founder / Program Owner direction and authority.
+
+#### 10. No reopening by certification
+
+This Decision does not reopen the `ACT-CC-P8-001` implementation, architecture
+discovery, Tool Ecosystem construction, general Infrastructure review, or general
+audit. A future defect or new requirement requires the authority appropriate to
+it. **This certification may not be used as blanket authority for new mutation.**
+
+#### 11. Effect
+
+On this entry, `E8-01` through `E8-05` stand **SATISFIED / PASS** by Founder
+determination, and:
+
+```text
+PHASE 8 — TOOL ECOSYSTEM: CERTIFIED / COMPLETE
+PHASE 8 GOVERNANCE STATUS:  CLOSED
+PHASE 9:                    NOT AUTHORIZED
+```
+
+The Founder / Program Owner issued this certification through `FD-P8-002`. Claude
+Code registered and verified the Decision under `ACT-CC-P8-002`, did not
+independently certify Phase 8, and certification became effective through this
+authorized registration rather than through passing tests.
