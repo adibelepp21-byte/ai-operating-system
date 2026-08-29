@@ -5094,3 +5094,170 @@ PHASE 8:                    NOT AUTHORIZED
 The Founder / Program Owner certified Phase 7 through this Decision. Claude Code
 recorded and verified it under `ACT-CC-P7-003`, and is not the authority that
 certified Phase 7.
+
+---
+
+### FD-P8-001 — Founder Direction · Phase 8 Tool Ecosystem
+
+**Identifier:** FD-P8-001
+**Date stated by the instrument:** *none* — see the metadata note below
+**Recorded:** 2026-08-29
+**Tier:** Founder / Program Owner phase direction and exit-criteria definition — Master Program Volume V §3 first gate, procedure per `GDR-0005`
+**Decided by:** Founder / Program Owner
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P8-001`
+**Authorizing act:** `ACT-CC-P8-001 §4` (Founder Direction Registration Authority)
+**Predecessor decision:** `FD-P7-003` — Phase 7 Certification & Completion
+**Closes:** the Phase 8 direction and policy-definition gate
+
+> **Metadata recorded rather than resolved** (`ACT-CC-P8-001 §4.2`). This
+> instrument states **no Issue Date** and carries **no attestation or signature
+> block** — unlike `FD-P7-002` and `FD-P7-003`, which are signed *"Moriarty"*.
+> The Act forbids inferring an Issue Date, so none is asserted: the `Date`
+> field above records that the instrument states none, and `Recorded` is the
+> date this office performed the registration. Its authority rests on
+> `ACT-CC-P8-001`, which names it as the already-issued Founder Direction to be
+> registered.
+
+---
+
+#### 1. Role and objective
+
+This Direction establishes the canonical objective, scope, authority boundaries,
+lifecycle policy, measurable exit criteria, non-goals and certification model for
+**Phase 8 — Tool Ecosystem**. It fixes policy and *"does not itself: authorize
+engineering construction; modify the repository; certify Phase 8; authorize Phase
+9; authorize Claude Code to infer additional architectural authority."*
+
+Phase 8 governs **the lawful invocation of identified Tools through a bounded
+Tool boundary**. A Tool is *"not merely an external provider integration or
+arbitrary callable"* — it is an identified capability that has an invocation
+contract, accepts invocation input, executes through the Tool boundary, produces
+a structured outcome or structured failure/refusal, and **is subject to
+governance policy before execution.**
+
+#### 2. Canonical principle
+
+> *"A caller may request invocation. An Agent may propose invocation. Runtime may
+> mediate lawful access. **The Tool boundary governs whether invocation may
+> proceed.**"*
+
+No caller receives Tool execution authority merely by knowing a Tool identity, an
+implementation, a callable, a module, or an internal path.
+
+#### 3. Registration and lifecycle
+
+Registration is **mandatory**: *"No valid registration → no lawful invocation."*
+An unregistered Tool must not execute through the lawful path, and registration
+alone does not establish eligibility.
+
+The canonical lifecycle is:
+
+```text
+Defined → Registered → Enabled → Invoked → Succeeded / Failed → Disabled / Retired
+```
+
+Internal representation may differ provided the canonical semantics are
+preserved. A Tool that is unregistered, disabled or retired **must not remain
+lawfully executable through fallback, aliasing, implicit discovery, or another
+public bypass path.**
+
+#### 4. Governance location and checks
+
+Governance checks **must occur at the Tool invocation boundary before Tool
+execution**:
+
+```text
+Authorized Caller → Invocation Request → Tool Boundary → Governance Check
+                  → Tool Execution → Structured Outcome / Failure
+```
+
+*"Agent-side approval alone is insufficient."* Before execution the boundary must
+be capable of verifying: Tool identity validity · registration validity ·
+lifecycle eligibility · invocation contract validity · caller authority to submit
+the request · absence of a boundary violation. Phase 8 does **not** require
+enterprise policy engines, dynamic risk scoring, billing systems, human approval
+workflows, or organization-wide authorization systems as exit gates.
+
+#### 5. Authority boundaries
+
+**Agent** may select or propose a Tool and contribute invocation input, but gains
+no authority to register Tools, alter lifecycle, enable or disable Tools, bypass
+governance, or **directly invoke Tool implementation through a lawful public
+path.**
+
+**Runtime** acts as access host and execution context where the architecture
+requires Runtime-mediated access, and *"does not thereby become the owner of Tool
+registration, Tool lifecycle, Tool eligibility, or Tool governance policy."*
+
+**Execution** may submit a lawful invocation request and does not silently
+acquire lifecycle or governance authority.
+
+#### 6. Structured outcome contract
+
+Invocation must produce a structured outcome distinguishing at minimum:
+**successful result · governance refusal · invalid invocation · Tool execution
+failure.**
+
+> *"Governance refusal and Tool execution failure are distinct conditions. A
+> governance refusal means the Tool MUST NOT execute… Implementation MUST NOT
+> convert refusal into a false execution failure or false success."*
+
+#### 7. Traceability
+
+Traceability is a **required Phase 8 exit gate**. Every invocation that is
+accepted or refused must produce verifiable trace evidence connecting at minimum:
+invocation identity · Tool identity · governance disposition · outcome or refusal
+· relevant lifecycle event or equivalent execution state. Phase 8 does **not**
+require SIEM integration, immutable ledger infrastructure, distributed tracing
+platforms, or external observability providers — *"a minimal bounded trace
+capability is sufficient if it is verifiable."*
+
+#### 8. Ratified exit criteria
+
+| Criterion | Required capability | Negative control |
+|---|---|---|
+| **E8-01** | Tool Representation & Identity | invalid/missing identity rejected |
+| **E8-02** | Registration & Lifecycle Eligibility | unregistered/disabled/retired Tool does not execute |
+| **E8-03** | Governance-Mediated Invocation | governance bypass unavailable |
+| **E8-04** | Contracted Outcome & Failure | refusal does not execute; failure is not false success |
+| **E8-05** | Traceability & Fail-Closed Integrity | invalid operation demonstrably cannot execute |
+
+`E8-03` requires a **real execution path** — *"unit tests alone are insufficient
+if they do not prove the real invocation path."* `E8-05` requires that negative
+controls *"demonstrate genuine non-execution where refusal is required."*
+
+Construction status must distinguish NOT STARTED · IMPLEMENTED · VERIFIED ·
+CERTIFICATION READY · CERTIFIED / COMPLETE, and *"no lower status may be promoted
+to a higher status by inference."*
+
+#### 9. Supporting capabilities — not exit gates
+
+External provider integration · plugin marketplace · automatic Tool discovery ·
+semantic Tool selection · LLM-based Tool routing · distributed Tool execution ·
+remote Tool registry · cost optimization · rate limiting · provider health
+monitoring · advanced policy engines · human approval workflows · visual Tool
+management. *"Their absence MUST NOT independently prevent Phase 8
+certification."*
+
+#### 10. Certification authority
+
+Passing `E8-01`–`E8-05` establishes **IMPLEMENTED / VERIFIED / CERTIFICATION
+READY** only. It does not establish `PHASE 8 — CERTIFIED / COMPLETE`, which
+*"requires an explicit Founder / Program Owner decision based on the authorized
+evidence."*
+
+> *"Claude Code or another implementation office MUST NOT infer: IMPLEMENTED →
+> CERTIFIED."*
+
+#### 11. Effect
+
+On this entry, `E8-01` through `E8-05` become the **ratified measurable Phase 8
+exit criteria**, and this Direction becomes the canonical Founder policy for
+Phase 8.
+
+```text
+PHASE 8 — TOOL ECOSYSTEM: CANONICALLY DEFINED
+E8-01 THROUGH E8-05: RATIFIED
+PHASE 8 CONSTRUCTION: NOT AUTHORIZED BY THIS DIRECTION ALONE
+PHASE 8 CERTIFICATION: RESERVED TO THE FOUNDER / PROGRAM OWNER
+```
