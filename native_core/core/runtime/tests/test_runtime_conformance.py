@@ -296,8 +296,16 @@ def _stopped_runtime():
 class TestRuntimeContractIntegrity(unittest.TestCase):
     """runtime_spec §1/§4/§5/§10 — the contract declares; it does not behave."""
 
+    # `memory` added under **`FD-P7-002`**, the Founder architectural amendment
+    # permitting Runtime to depend on the Phase 7 Memory boundary for lawful
+    # runtime-mediated Memory operations. This is an enumeration guard: it fired
+    # when the surface changed, which is its purpose, and the change is declared
+    # here rather than worked around. Runtime remains a non-owner — the added
+    # member is a read-only property returning the assembled subsystem, and no
+    # lifecycle operation is exposed on Runtime.
     EXPECTED_ABSTRACT = frozenset(
-        {"state", "initialize", "start", "stop", "create_context", "knowledge"}
+        {"state", "initialize", "start", "stop", "create_context", "knowledge",
+         "memory"}
     )
 
     def test_runtime_is_an_abstract_contract(self):
@@ -316,7 +324,7 @@ class TestRuntimeContractIntegrity(unittest.TestCase):
     def test_state_and_knowledge_are_read_only_properties(self):
         """Neither is a setter surface: hosting state and hosted subsystems are
         exposed, never assigned through the contract."""
-        for name in ("state", "knowledge"):
+        for name in ("state", "knowledge", "memory"):
             member = Runtime.__dict__[name]
             self.assertIsInstance(member, property, name)
             self.assertIsNone(member.fset, f"{name} must expose no setter")
@@ -384,6 +392,7 @@ class TestAIOSRuntimePublicContract(unittest.TestCase):
             "stop",
             "create_context",
             "knowledge",
+            "memory",  # FD-P7-002
         }
     )
 
@@ -776,7 +785,20 @@ class TestDependencyDirection(unittest.TestCase):
     # an **upper bound**: canon states what Runtime *may* depend on, never that
     # it must reach all of them. The former equality also pinned a lower bound
     # no canonical source requires (ADR-0016).
-    PERMITTED_BOUNDARIES = frozenset({"infrastructure", "knowledge", "agent"})
+    PERMITTED_BOUNDARIES = frozenset(
+        {"infrastructure", "knowledge", "agent", "memory"}
+    )
+    # `memory` moved from forbidden to permitted under **`FD-P7-002`**, which
+    # decides that *"the Runtime boundary may depend on the Phase 7 Memory
+    # boundary for the limited purpose of lawful runtime-mediated Memory
+    # operations."* Same shape as the `agent` correction below: the edge is
+    # permitted by a governance instrument, not by implementation convenience.
+    #
+    # RECORDED DIVERGENCE, not resolved here: Blueprint §6 and `runtime_spec §7`
+    # still enumerate Runtime's allowed dependencies without naming Memory.
+    # `FD-P7-002` is the governing amendment; synchronising those texts is an
+    # architecture-authority documentation act, recorded in the Register entry
+    # for `FD-P7-002` rather than performed here.
     # `agent` is NOT forbidden. Freeze §5 layer 2 lists Runtime's dependencies
     # as *"Agent, Workflow, Tool"*; Freeze §6 gives `Runtime hosts Agent
     # Instance` as allowed `Runtime→Instance` with **no** forbidden direction;
@@ -787,7 +809,6 @@ class TestDependencyDirection(unittest.TestCase):
     # and none of them names agent. Corrected under `DEC-P6-038`; see ADR-0016.
     FORBIDDEN_BOUNDARIES = frozenset(
         {
-            "memory",
             "governance",
             "trace",
             "capability",
@@ -1037,6 +1058,7 @@ class TestFacilityNotActor(unittest.TestCase):
                 "_substrate",
                 "_state",
                 "_knowledge",
+                "_memory",  # FD-P7-002 — a hosted reference, released on stop
                 "_execution_sequence",
             },
             set(instance.__dict__),

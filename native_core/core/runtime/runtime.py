@@ -43,6 +43,7 @@ from typing import Optional
 
 from ..infrastructure import ExecutionSubstrate, StorageFacility
 from ..knowledge.composition import KnowledgeSubsystem, create_knowledge_subsystem
+from ..memory.composition import MemorySubsystem, create_memory_subsystem
 from .context import RuntimeContext
 from .contract import Runtime
 from .exceptions import InvalidRuntimeConfiguration, RuntimeNotRunning, RuntimeSubsystemError
@@ -73,6 +74,7 @@ class AIOSRuntime(Runtime):
         # CREATED; nothing is assembled or started here.
         self._state = RuntimeState.CREATED
         self._knowledge: Optional[KnowledgeSubsystem] = None
+        self._memory: Optional[MemorySubsystem] = None
         self._execution_sequence = 0
 
     # --- lifecycle ---
@@ -91,8 +93,12 @@ class AIOSRuntime(Runtime):
         composition roots. Fail closed on an invalid transition; on assembly
         failure the error propagates and the state is left unchanged."""
         target = require_transition(self._state, RuntimeState.INITIALIZED)
-        # Composition root only — never construct Knowledge internals.
+        # Composition root only — never construct Knowledge or Memory internals.
         self._knowledge = create_knowledge_subsystem(self._storage)
+        # Memory is assembled the same way, under `FD-P7-002`. Runtime holds the
+        # assembled bundle and no lifecycle collaborator of its own, which is how
+        # hosting stays distinct from owning (`FD-P7-002 §3`).
+        self._memory = create_memory_subsystem()
         self._state = target
 
     def start(self) -> None:
@@ -114,6 +120,7 @@ class AIOSRuntime(Runtime):
         Bootstrap that established them. STOPPED is terminal."""
         self._state = require_transition(self._state, RuntimeState.STOPPING)
         self._knowledge = None
+        self._memory = None
         self._state = require_transition(self._state, RuntimeState.STOPPED)
 
     # --- execution context ---
@@ -140,6 +147,22 @@ class AIOSRuntime(Runtime):
         self._require_running("knowledge")
         assert self._knowledge is not None  # guaranteed by the lifecycle
         return self._knowledge
+
+    @property
+    def memory(self) -> "MemorySubsystem":
+        """The hosted Phase 7 Memory subsystem. RUNNING only (fail closed).
+
+        Authorized by `FD-P7-002`. Runtime hosts it; the Memory boundary retains
+        every lifecycle decision — admission, retention, update, consolidation,
+        expiry, invalidation and retrieval eligibility. Nothing on this Runtime
+        performs any of them, and this property exposes no operation that could.
+
+        The RUNNING gate is the same one Knowledge passes and is not weakened
+        for Memory: `FD-P7-002 §7` requires that the gate stay meaningful, so a
+        Runtime that is not RUNNING refuses here exactly as it does elsewhere."""
+        self._require_running("memory")
+        assert self._memory is not None  # guaranteed by the lifecycle
+        return self._memory
 
     # --- internal ---
 

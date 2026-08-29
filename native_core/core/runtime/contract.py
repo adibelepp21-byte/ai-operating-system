@@ -15,8 +15,9 @@ model adapter, or any automation logic.
 
 Frozen constraints this contract preserves:
   - Runtime owns transient hosting state only; it **owns no Knowledge**
-    (Blueprint §6 forbidden; Freeze §5), no Memory, no Governance authority, and
-    no Trace record.
+    (Blueprint §6 forbidden; Freeze §5), **no Memory lifecycle or storage**
+    (`FD-P7-002 §3`), no Governance authority, and no Trace record. Runtime
+    *hosts* Knowledge and, since `FD-P7-002`, Memory — hosting is not owning.
   - Runtime authors **no independent Trace** (OQ-2; runtime_spec §9) — nothing
     here produces a Trace.
   - Runtime enforces isolation, not policy — it makes no governance decision
@@ -34,6 +35,7 @@ from __future__ import annotations
 import abc
 
 from ..knowledge.composition import KnowledgeSubsystem
+from ..memory.composition import MemorySubsystem
 from .context import RuntimeContext
 from .lifecycle import RuntimeState
 
@@ -85,4 +87,27 @@ class Runtime(abc.ABC):
         Runtime **hosts** Knowledge; it does not own Knowledge semantics: it
         never admits, revises, supersedes, derives status, or authorizes
         promotion. Governance remains the sole authority (INV-8)."""
+        ...
+
+    @property
+    @abc.abstractmethod
+    def memory(self) -> "MemorySubsystem":
+        """Controlled access to the hosted Phase 7 Memory subsystem, assembled
+        via its composition root. Permitted only while RUNNING — fail closed
+        otherwise.
+
+        Authorized by **`FD-P7-002`**, which permits Runtime to depend on the
+        Memory boundary *"only through a lawful Memory boundary, contract,
+        facade, protocol, adapter, or equivalent abstraction"* and *"only for the
+        limited purpose of lawful runtime-mediated Memory operations"*. This
+        property is that abstraction: it hands back the assembled subsystem and
+        nothing more.
+
+        Runtime **hosts** Memory; it does not own Memory lifecycle. Per
+        `FD-P7-002 §3` it never admits, retains, updates, consolidates, expires
+        or invalidates, and never manipulates Memory internal state outside the
+        lawful Memory boundary. Reaching a boundary through this property is not
+        manipulating its internals, and no lifecycle operation is exposed here.
+        `FD-P7-002 §6` scopes this permission to Phase 7 and makes it no
+        precedent for any further Runtime dependency."""
         ...
