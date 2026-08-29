@@ -29,7 +29,7 @@ from __future__ import annotations
 
 import abc
 
-from ...shared import Failure, Outcome
+from ...shared import Failure, Outcome, Success
 from .facility import Facility
 
 
@@ -114,6 +114,19 @@ class ToolBoundary(Facility):
         # The boundary does not interpret success; it only guarantees the
         # shape. A Tool that returns a non-Outcome is itself violating the
         # contract — surface that as a Failure rather than passing it on.
-        if not hasattr(outcome, "__class__"):
-            return Failure(reason=f"tool {canonical_key!r} returned a non-Outcome value")
+        #
+        # Repaired under `ACT-CC-P8-001 §10`. The previous guard tested
+        # `hasattr(outcome, "__class__")`, which is true of every Python object
+        # and therefore never fired: a Tool returning a bare string passed
+        # straight through, contradicting this module's own documented
+        # guarantee that invocation "returns an Outcome (Success | Failure),
+        # never a silently-degraded value". The check now tests the actual
+        # invariant. Repair authority is bounded to enforcing that existing
+        # guarantee — no exception model is replaced and nothing else here is
+        # redesigned.
+        if not isinstance(outcome, (Success, Failure)):
+            return Failure(
+                reason=f"tool {canonical_key!r} returned a non-Outcome value",
+                detail={"returned_type": type(outcome).__name__},
+            )
         return outcome

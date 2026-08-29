@@ -36,6 +36,7 @@ import abc
 
 from ..knowledge.composition import KnowledgeSubsystem
 from ..memory.composition import MemorySubsystem
+from ..infrastructure import ToolSubsystem
 from .context import RuntimeContext
 from .lifecycle import RuntimeState
 
@@ -110,4 +111,24 @@ class Runtime(abc.ABC):
         manipulating its internals, and no lifecycle operation is exposed here.
         `FD-P7-002 §6` scopes this permission to Phase 7 and makes it no
         precedent for any further Runtime dependency."""
+        ...
+
+    @property
+    @abc.abstractmethod
+    def tools(self) -> "ToolSubsystem":
+        """Controlled access to the hosted Phase 8 Tool Ecosystem, assembled via
+        its composition root. Permitted only while RUNNING — fail closed
+        otherwise.
+
+        **No architectural amendment was required for this one.** Blueprint §6
+        already lists Runtime's allowed dependencies as *"agent, workflow, and
+        the Tool boundary (infrastructure)"*, and Infrastructure is already a
+        permitted Runtime dependency — unlike Memory, which needed `FD-P7-002`.
+
+        Runtime is an **access host only** (`ACT-CC-P8-001 §8.3`): it does not
+        own Tool registration, Tool lifecycle, Tool eligibility, or Tool
+        governance policy. This property hands back the assembled subsystem and
+        exposes no lifecycle mutation and no bypass — a caller reaching a Tool
+        through it still passes `ToolInvocationGovernance`, because that is the
+        only surface on the bundle that reaches `ToolBoundary.invoke`."""
         ...

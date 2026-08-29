@@ -37,6 +37,28 @@ from .records import (
 from .storage import LocalAppendOnlyStorage, StorageFacility
 from .substrate import ExecutionSubstrate, LocalExecutionSubstrate
 from .tool_boundary import ExternalTool, ToolBoundary
+from .tool_composition import ToolSubsystem, create_tool_subsystem
+from .tool_invocation import (
+    AUTHORIZED_CALLERS,
+    CallerClass,
+    InvocationDisposition,
+    InvocationLedger,
+    InvocationRecord,
+    InvocationRequest,
+    InvocationResult,
+    ToolInvocationGovernance,
+)
+from .tool_lifecycle import (
+    INVOCABLE_STATES,
+    InvalidToolDefinition,
+    InvalidToolTransition,
+    ToolContract,
+    ToolDescriptor,
+    ToolIdentity,
+    ToolLifecycleError,
+    ToolState,
+)
+from .tool_registry import ToolAlreadyDefined, ToolNotDefined, ToolRegistry
 
 __all__ = [
     "Facility",
@@ -51,6 +73,28 @@ __all__ = [
     "read_records",
     "ToolBoundary",
     "ExternalTool",
+    # -- Phase 8 Tool Ecosystem (FD-P8-001) --
+    "ToolIdentity",
+    "ToolContract",
+    "ToolDescriptor",
+    "ToolState",
+    "INVOCABLE_STATES",
+    "ToolLifecycleError",
+    "InvalidToolDefinition",
+    "InvalidToolTransition",
+    "ToolRegistry",
+    "ToolNotDefined",
+    "ToolAlreadyDefined",
+    "CallerClass",
+    "AUTHORIZED_CALLERS",
+    "InvocationRequest",
+    "InvocationResult",
+    "InvocationRecord",
+    "InvocationDisposition",
+    "InvocationLedger",
+    "ToolInvocationGovernance",
+    "ToolSubsystem",
+    "create_tool_subsystem",
     "ExecutionSubstrate",
     "LocalExecutionSubstrate",
     "Bootstrap",

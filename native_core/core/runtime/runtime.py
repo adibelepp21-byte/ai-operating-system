@@ -41,7 +41,12 @@ from __future__ import annotations
 
 from typing import Optional
 
-from ..infrastructure import ExecutionSubstrate, StorageFacility
+from ..infrastructure import (
+    ExecutionSubstrate,
+    StorageFacility,
+    ToolSubsystem,
+    create_tool_subsystem,
+)
 from ..knowledge.composition import KnowledgeSubsystem, create_knowledge_subsystem
 from ..memory.composition import MemorySubsystem, create_memory_subsystem
 from .context import RuntimeContext
@@ -75,6 +80,7 @@ class AIOSRuntime(Runtime):
         self._state = RuntimeState.CREATED
         self._knowledge: Optional[KnowledgeSubsystem] = None
         self._memory: Optional[MemorySubsystem] = None
+        self._tools: Optional[ToolSubsystem] = None
         self._execution_sequence = 0
 
     # --- lifecycle ---
@@ -99,6 +105,10 @@ class AIOSRuntime(Runtime):
         # assembled bundle and no lifecycle collaborator of its own, which is how
         # hosting stays distinct from owning (`FD-P7-002 §3`).
         self._memory = create_memory_subsystem()
+        # The Tool Ecosystem is assembled the same way. Runtime holds the
+        # assembled bundle and no registry, lifecycle or governance collaborator
+        # of its own — hosting, not owning (`ACT-CC-P8-001 §8.3`).
+        self._tools = create_tool_subsystem()
         self._state = target
 
     def start(self) -> None:
@@ -121,6 +131,7 @@ class AIOSRuntime(Runtime):
         self._state = require_transition(self._state, RuntimeState.STOPPING)
         self._knowledge = None
         self._memory = None
+        self._tools = None
         self._state = require_transition(self._state, RuntimeState.STOPPED)
 
     # --- execution context ---
@@ -163,6 +174,20 @@ class AIOSRuntime(Runtime):
         self._require_running("memory")
         assert self._memory is not None  # guaranteed by the lifecycle
         return self._memory
+
+    @property
+    def tools(self) -> "ToolSubsystem":
+        """The hosted Phase 8 Tool Ecosystem. RUNNING only (fail closed).
+
+        Runtime hosts it; the Tool Ecosystem retains every lifecycle and
+        governance decision. Nothing on this Runtime registers, enables,
+        disables, retires, or invokes a Tool, and this property exposes no
+        operation that could. `FD-P8-001 §4.7` is explicit that Runtime *"does
+        not thereby become the owner of Tool registration, Tool lifecycle, Tool
+        eligibility, or Tool governance policy."*"""
+        self._require_running("tools")
+        assert self._tools is not None  # guaranteed by the lifecycle
+        return self._tools
 
     # --- internal ---
 

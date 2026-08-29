@@ -303,9 +303,15 @@ class TestRuntimeContractIntegrity(unittest.TestCase):
     # here rather than worked around. Runtime remains a non-owner — the added
     # member is a read-only property returning the assembled subsystem, and no
     # lifecycle operation is exposed on Runtime.
+    # `tools` added under **`ACT-CC-P8-001 §12`**, which authorizes Runtime to
+    # expose lawful Tool access as an *access host only*. Unlike `memory`, this
+    # needed no architectural amendment: Blueprint §6 already lists Runtime's
+    # allowed dependencies as "agent, workflow, and the Tool boundary
+    # (infrastructure)". The guard fired because the surface changed, which is
+    # its purpose; the change is declared here rather than worked around.
     EXPECTED_ABSTRACT = frozenset(
         {"state", "initialize", "start", "stop", "create_context", "knowledge",
-         "memory"}
+         "memory", "tools"}
     )
 
     def test_runtime_is_an_abstract_contract(self):
@@ -324,7 +330,7 @@ class TestRuntimeContractIntegrity(unittest.TestCase):
     def test_state_and_knowledge_are_read_only_properties(self):
         """Neither is a setter surface: hosting state and hosted subsystems are
         exposed, never assigned through the contract."""
-        for name in ("state", "knowledge", "memory"):
+        for name in ("state", "knowledge", "memory", "tools"):
             member = Runtime.__dict__[name]
             self.assertIsInstance(member, property, name)
             self.assertIsNone(member.fset, f"{name} must expose no setter")
@@ -393,6 +399,7 @@ class TestAIOSRuntimePublicContract(unittest.TestCase):
             "create_context",
             "knowledge",
             "memory",  # FD-P7-002
+            "tools",  # ACT-CC-P8-001 §12
         }
     )
 
@@ -868,7 +875,17 @@ class TestDependencyDirection(unittest.TestCase):
                 f"{path.name} reaches an Infrastructure internal module",
             )
             for name in names:
-                self.assertIn(name, ("StorageFacility", "ExecutionSubstrate"), path.name)
+                # `ToolSubsystem` / `create_tool_subsystem` added under
+                # `ACT-CC-P8-001 §12`. The rule itself is unchanged and was
+                # obeyed rather than relaxed: Runtime still reaches
+                # Infrastructure only through the package's public surface, and
+                # the Tool Ecosystem is assembled via its composition root.
+                self.assertIn(
+                    name,
+                    ("StorageFacility", "ExecutionSubstrate",
+                     "ToolSubsystem", "create_tool_subsystem"),
+                    path.name,
+                )
 
     def test_knowledge_is_reached_only_through_its_composition_root(self):
         """runtime.py §composition boundary: hosted subsystems are assembled
@@ -1059,6 +1076,7 @@ class TestFacilityNotActor(unittest.TestCase):
                 "_state",
                 "_knowledge",
                 "_memory",  # FD-P7-002 — a hosted reference, released on stop
+                "_tools",  # ACT-CC-P8-001 §12 — hosted, released on stop
                 "_execution_sequence",
             },
             set(instance.__dict__),
