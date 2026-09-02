@@ -309,9 +309,21 @@ class TestRuntimeContractIntegrity(unittest.TestCase):
     # allowed dependencies as "agent, workflow, and the Tool boundary
     # (infrastructure)". The guard fired because the surface changed, which is
     # its purpose; the change is declared here rather than worked around.
+    # `workflows` added under **`FD-P9-001`**, whose determination
+    # `ACT-CC-P9-001 §8.1` permits Runtime to *"depend on and access the
+    # Workflow capability for authorized execution hosting, without becoming the
+    # owner of Workflow semantics."* Like `tools` and unlike `memory`, this
+    # needed no amendment to Blueprint §6 or runtime_spec §7 — both already
+    # named `workflow` among Runtime's allowed dependencies. What it needed was
+    # the discharge of the `[O]` relationship reservation that had kept the edge
+    # Inferred, and the correction of the conformance rule below that had
+    # contradicted those two documents. The guard fired because the surface
+    # changed, which is its purpose; the change is declared here rather than
+    # worked around, and Runtime remains a non-owner — a read-only property
+    # returning the assembled subsystem, exposing no lifecycle operation.
     EXPECTED_ABSTRACT = frozenset(
         {"state", "initialize", "start", "stop", "create_context", "knowledge",
-         "memory", "tools"}
+         "memory", "tools", "workflows"}
     )
 
     def test_runtime_is_an_abstract_contract(self):
@@ -400,6 +412,7 @@ class TestAIOSRuntimePublicContract(unittest.TestCase):
             "knowledge",
             "memory",  # FD-P7-002
             "tools",  # ACT-CC-P8-001 §12
+            "workflows",  # FD-P9-001 / ACT-CC-P9-001 §8.1
         }
     )
 
@@ -793,7 +806,7 @@ class TestDependencyDirection(unittest.TestCase):
     # it must reach all of them. The former equality also pinned a lower bound
     # no canonical source requires (ADR-0016).
     PERMITTED_BOUNDARIES = frozenset(
-        {"infrastructure", "knowledge", "agent", "memory"}
+        {"infrastructure", "knowledge", "agent", "memory", "workflow"}
     )
     # `memory` moved from forbidden to permitted under **`FD-P7-002`**, which
     # decides that *"the Runtime boundary may depend on the Phase 7 Memory
@@ -814,13 +827,31 @@ class TestDependencyDirection(unittest.TestCase):
     # Definitions, Workflows, and the Tool boundary."* Each source's own
     # forbidden list enumerates knowledge ownership, OQ-2, INV-13 and INV-12 —
     # and none of them names agent. Corrected under `DEC-P6-038`; see ADR-0016.
+    # `workflow` moved from forbidden to permitted under **`FD-P9-001`**, whose
+    # Runtime↔Workflow determination `ACT-CC-P9-001 §8.1` states as *"Runtime
+    # MAY depend on and access the Workflow capability for authorized execution
+    # hosting, without becoming the owner of Workflow semantics."*
+    #
+    # This entry was not merely unratified — it **contradicted the two canonical
+    # sources quoted in this class's own comment above**, which give Runtime's
+    # allowed dependencies as *"agent, workflow, and the Tool boundary"*
+    # (Blueprint §6 [A]) and *"Agent Definitions, Workflows, and the Tool
+    # boundary"* (runtime_spec §7 [E]). The prohibition was the outlier, not the
+    # documents, so nothing in Blueprint §6 or runtime_spec §7 needed amending
+    # for this edge. `ACT-CC-P9-001 §8.2` forbids resolving that disagreement
+    # silently through implementation and requires this deliberate, minimal
+    # correction instead.
+    #
+    # The edge stays one-directional. Workflow models no Runtime relationship,
+    # and `test_runtime_relationship_is_not_modelled` in the Workflow suite
+    # still asserts exactly that — which is how `§8.3`'s prohibition on
+    # ownership inversion is held structurally rather than promised in prose.
     FORBIDDEN_BOUNDARIES = frozenset(
         {
             "governance",
             "trace",
             "capability",
             "skill",
-            "workflow",
             "optimization",
         }
     )
@@ -1077,6 +1108,7 @@ class TestFacilityNotActor(unittest.TestCase):
                 "_knowledge",
                 "_memory",  # FD-P7-002 — a hosted reference, released on stop
                 "_tools",  # ACT-CC-P8-001 §12 — hosted, released on stop
+                "_workflows",  # ACT-CC-P9-001 §8.1 — hosted, released on stop
                 "_execution_sequence",
             },
             set(instance.__dict__),

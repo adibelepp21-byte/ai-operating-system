@@ -663,12 +663,38 @@ class TestReservedScopeIsNotBuilt(unittest.TestCase):
         `DEC-F03-048 = OPTION A`, which authorizes construction of
         `Workflow realizes Capability` and nothing else: `CapabilityRef`,
         `WorkflowRealization`, and `InvalidWorkflowRealization`. Nothing for the
-        Skill half of T-2, which remains **[O]** reserved."""
+        Skill half of T-2, which remains **[O]** reserved.
+
+        It then grew by exactly nine under `FD-P9-001`, which authorizes the
+        Phase 9 Workflow execution lifecycle and nothing else: the state model
+        (`WorkflowState`, `WorkflowLifecycleModel`, `WorkflowLifecycleState`),
+        its authority and read-only view (`WorkflowLifecycle`,
+        `WorkflowMonitor`), the composition root (`WorkflowSubsystem`,
+        `create_workflow_subsystem`), and the lifecycle exceptions
+        (`WorkflowLifecycleError`, `InvalidWorkflowTransition`,
+        `UnknownWorkflowLifecycle`, `DuplicateWorkflowLifecycle`).
+
+        Nothing here is an execution surface, and `test_no_execution_surface`
+        below is unchanged and still passing — `ACT-CC-P9-001 §11.2` gives
+        Workflow the lifecycle *semantics* while `§10.1` leaves hosting to
+        Runtime, so the package gained the first and still holds none of the
+        second."""
         self.assertEqual(
             set(workflow_pkg.__all__),
             {            "CapabilityRef",
             "InvalidWorkflowRealization",
             "WorkflowRealization",
+            "DuplicateWorkflowLifecycle",
+            "InvalidWorkflowTransition",
+            "UnknownWorkflowLifecycle",
+            "WorkflowLifecycle",
+            "WorkflowLifecycleError",
+            "WorkflowLifecycleModel",
+            "WorkflowLifecycleState",
+            "WorkflowMonitor",
+            "WorkflowState",
+            "WorkflowSubsystem",
+            "create_workflow_subsystem",
 
                 "AgentDefinitionRef",
                 "AgentInstanceRef",

@@ -26,10 +26,15 @@ Public surface:
   - composition:  SkillRef · AgentInstanceRef · WorkflowStep · WorkflowComposition
   - coordination: WorkflowCoordination
   - declaration:  AgentDefinitionRef · WorkflowDeclaration
+  - lifecycle:    WorkflowState · WorkflowLifecycleModel ·
+                  WorkflowLifecycleState · WorkflowLifecycle · WorkflowMonitor
+  - subsystem:    WorkflowSubsystem · create_workflow_subsystem
   - exceptions:   WorkflowError · InvalidWorkflow · InvalidWorkflowStep ·
                   InvalidWorkflowComposition · InvalidWorkflowDeclaration ·
                   UnresolvedWorkflow · DuplicateWorkflowDeclaration ·
-                  DirectCollaborationForbidden
+                  DirectCollaborationForbidden · WorkflowLifecycleError ·
+                  InvalidWorkflowTransition · UnknownWorkflowLifecycle ·
+                  DuplicateWorkflowLifecycle
 
 **How INV-13 is enforced structurally** — the reason this boundary exists.
 Freeze §6 [E] forbids the `direct Instance↔Instance` direction, and Freeze AD-9
@@ -55,7 +60,16 @@ NOT implemented here, and reserved by the frozen architecture:
   - **Execution of any kind** — no `execute`/`run`/`invoke`/`perform`/
     `dispatch`. workflow_spec §8 [E]: a Workflow *"is not the Runtime."*
     Running a composition is Runtime driving Agent-Instance actions (Freeze §5
-    layer 2).
+    layer 2). **Phase 9 did not relax this.** `lifecycle.py` owns the *state
+    semantics* of an execution — which transitions are lawful, and what the
+    current condition is — and performs no work whatsoever. The two are
+    genuinely different: `ACT-CC-P9-001 §11.2` gives Workflow the lifecycle
+    while `§10.1` gives Runtime the hosting, and this package holds only the
+    first half.
+  - **Resumability, retry, recovery, compensation, rollback** —
+    `ACT-CC-P9-001 §11.4`/`§11.5`/`§13.2` place all of them outside Phase 9.
+    `SUCCEEDED` and `FAILED` have no lawful successor, so a terminal Workflow
+    cannot be resumed rather than merely being expected not to be.
   - **Trace authorship.** INV-4 gives each Agent-Instance action exactly one
     Trace; workflow_spec §9 [E] makes each step's actor the author. The
     Workflow authors none of its own.
@@ -64,9 +78,18 @@ NOT implemented here, and reserved by the frozen architecture:
     fail-closed baseline holds (§11).
   - **Compile-time composition validation** — workflow_spec §12 [O] marks it a
     candidate evolution, admissible only under governance.
-  - **Workflow↔Capability and Runtime↔Workflow relationships** — workflow_spec
-    §7/§14 mark both *Inferred*, and Freeze §6 [E] states *"Inferred
-    relationships are NOT frozen."* Not modelled.
+  - **A Runtime↔Workflow relationship modelled from this side.** `FD-P9-001`
+    ratifies the hosting direction — `ACT-CC-P9-001 §8.1`: *"Runtime MAY depend
+    on and access the Workflow capability for authorized execution hosting,
+    without becoming the owner of Workflow semantics."* That edge runs
+    **Runtime → Workflow and not back**. This package imports no Runtime type,
+    names no Runtime, and exports nothing containing `runtime`; the Workflow
+    conformance suite still asserts it. `§8.3` is the reason — *"Hosting is not
+    ownership"* — and an edge modelled from both ends would be the ownership
+    inversion it prohibits.
+  - **Workflow↔Skill relationship** — workflow_spec §7/§14 still mark it
+    *Inferred*, and Freeze §6 [E] states *"Inferred relationships are NOT
+    frozen."* Not modelled.
   - **Registry, discovery, or catalogue** — reserved (Blueprint §25;
     skill_spec §13/§14 precedent). `resolve()` searches one declaration only.
   - **Workflow instances** — none is created here. This package models the
@@ -103,15 +126,27 @@ from .realization import CapabilityRef, WorkflowRealization
 from .exceptions import (
     DirectCollaborationForbidden,
     DuplicateWorkflowDeclaration,
+    DuplicateWorkflowLifecycle,
     InvalidWorkflow,
     InvalidWorkflowComposition,
     InvalidWorkflowDeclaration,
     InvalidWorkflowRealization,
     InvalidWorkflowStep,
+    InvalidWorkflowTransition,
+    UnknownWorkflowLifecycle,
     UnresolvedWorkflow,
     WorkflowError,
+    WorkflowLifecycleError,
+)
+from .lifecycle import (
+    WorkflowLifecycle,
+    WorkflowLifecycleModel,
+    WorkflowLifecycleState,
+    WorkflowMonitor,
+    WorkflowState,
 )
 from .models import Workflow, WorkflowIdentity
+from .subsystem import WorkflowSubsystem, create_workflow_subsystem
 
 __all__ = [
     "AgentDefinitionRef",
@@ -119,12 +154,15 @@ __all__ = [
     "AgentInstanceRef",
     "DirectCollaborationForbidden",
     "DuplicateWorkflowDeclaration",
+    "DuplicateWorkflowLifecycle",
     "InvalidWorkflow",
     "InvalidWorkflowComposition",
     "InvalidWorkflowDeclaration",
     "InvalidWorkflowRealization",
     "InvalidWorkflowStep",
+    "InvalidWorkflowTransition",
     "SkillRef",
+    "UnknownWorkflowLifecycle",
     "UnresolvedWorkflow",
     "Workflow",
     "WorkflowComposition",
@@ -132,6 +170,14 @@ __all__ = [
     "WorkflowDeclaration",
     "WorkflowError",
     "WorkflowIdentity",
+    "WorkflowLifecycle",
+    "WorkflowLifecycleError",
+    "WorkflowLifecycleModel",
+    "WorkflowLifecycleState",
+    "WorkflowMonitor",
     "WorkflowRealization",
+    "WorkflowState",
     "WorkflowStep",
+    "WorkflowSubsystem",
+    "create_workflow_subsystem",
 ]

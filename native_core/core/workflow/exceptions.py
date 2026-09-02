@@ -91,3 +91,33 @@ class InvalidWorkflowRealization(WorkflowError, ValueError):
     `capability_key` realized twice is refused rather than coerced. An **empty**
     realization is *not* an error — no canonical source states a cardinality for
     this edge, so none is imposed."""
+
+
+class WorkflowLifecycleError(WorkflowError):
+    """Base for Phase 9 Workflow execution-lifecycle failures (`FD-P9-001`)."""
+
+
+class InvalidWorkflowTransition(WorkflowLifecycleError):
+    """A lifecycle transition is not lawful from the current state.
+
+    `ACT-CC-P9-001 §11.3` requires that *"invalid transitions SHALL fail
+    closed"*, and `§13.3` that they *"SHALL NOT be silently normalized into
+    successful execution."* Raising is how both hold: the caller is refused and
+    the recorded state is left exactly as it was, so a refused attempt leaves no
+    trace of progress that a later reader could mistake for execution."""
+
+
+class UnknownWorkflowLifecycle(WorkflowLifecycleError):
+    """No lifecycle state is held for the requested Workflow.
+
+    Fails closed rather than synthesizing a default. A manufactured `DEFINED`
+    would make an unmanaged Workflow appear ready to progress, which is the
+    silent normalization `§13.3` forbids."""
+
+
+class DuplicateWorkflowLifecycle(WorkflowLifecycleError):
+    """A Workflow already under lifecycle management was defined again.
+
+    Refused rather than reset. Returning a fresh `DEFINED` for a Workflow that
+    is `RUNNING` or terminal would be a reactivation path, and `§11.4` states
+    that a terminal Workflow *"SHALL NOT silently resume."*"""

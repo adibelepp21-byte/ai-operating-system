@@ -36,6 +36,7 @@ import abc
 
 from ..knowledge.composition import KnowledgeSubsystem
 from ..memory.composition import MemorySubsystem
+from ..workflow.subsystem import WorkflowSubsystem
 from ..infrastructure import ToolSubsystem
 from .context import RuntimeContext
 from .lifecycle import RuntimeState
@@ -131,4 +132,32 @@ class Runtime(abc.ABC):
         exposes no lifecycle mutation and no bypass — a caller reaching a Tool
         through it still passes `ToolInvocationGovernance`, because that is the
         only surface on the bundle that reaches `ToolBoundary.invoke`."""
+        ...
+
+    @property
+    @abc.abstractmethod
+    def workflows(self) -> "WorkflowSubsystem":
+        """Controlled access to the hosted Phase 9 Workflow execution lifecycle,
+        assembled via its composition root. Permitted only while RUNNING — fail
+        closed otherwise.
+
+        Authorized by `FD-P9-001`, whose determination `ACT-CC-P9-001 §8.1`
+        states as *"Runtime MAY depend on and access the Workflow capability for
+        authorized execution hosting, without becoming the owner of Workflow
+        semantics."* Blueprint §6 [A] and runtime_spec §7 [E] already listed
+        `workflow` among Runtime's allowed dependencies; what `FD-P9-001` settles
+        is the reservation that had kept the edge Inferred, and with it the
+        Runtime conformance rule that had contradicted both documents.
+
+        **Hosting, not ownership** (`§8.3`: *"Hosting is not ownership"*).
+        Runtime does not own Workflow identity, composition, coordination,
+        lifecycle semantics or governance, and this property exposes no
+        operation that could take any of them. It hands back the assembled
+        bundle; every lawful transition is decided inside `WorkflowLifecycle`,
+        which is the Workflow boundary's own authority under `§11.2`.
+
+        `§10.1` bounds the role precisely: Runtime is authorized to be an access
+        host, an execution host and an execution-context provider — and is *not*
+        authorized to become Workflow lifecycle authority, composition owner,
+        coordination policy owner, or governance authority."""
         ...

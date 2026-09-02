@@ -49,6 +49,7 @@ from ..infrastructure import (
 )
 from ..knowledge.composition import KnowledgeSubsystem, create_knowledge_subsystem
 from ..memory.composition import MemorySubsystem, create_memory_subsystem
+from ..workflow.subsystem import WorkflowSubsystem, create_workflow_subsystem
 from .context import RuntimeContext
 from .contract import Runtime
 from .exceptions import InvalidRuntimeConfiguration, RuntimeNotRunning, RuntimeSubsystemError
@@ -81,6 +82,7 @@ class AIOSRuntime(Runtime):
         self._knowledge: Optional[KnowledgeSubsystem] = None
         self._memory: Optional[MemorySubsystem] = None
         self._tools: Optional[ToolSubsystem] = None
+        self._workflows: Optional[WorkflowSubsystem] = None
         self._execution_sequence = 0
 
     # --- lifecycle ---
@@ -109,6 +111,11 @@ class AIOSRuntime(Runtime):
         # assembled bundle and no registry, lifecycle or governance collaborator
         # of its own — hosting, not owning (`ACT-CC-P8-001 §8.3`).
         self._tools = create_tool_subsystem()
+        # The Phase 9 Workflow execution lifecycle is assembled the same way,
+        # under `FD-P9-001`. Runtime holds the assembled bundle and no
+        # lifecycle collaborator of its own — `ACT-CC-P9-001 §8.3`: *"Hosting
+        # is not ownership."*
+        self._workflows = create_workflow_subsystem()
         self._state = target
 
     def start(self) -> None:
@@ -132,6 +139,7 @@ class AIOSRuntime(Runtime):
         self._knowledge = None
         self._memory = None
         self._tools = None
+        self._workflows = None
         self._state = require_transition(self._state, RuntimeState.STOPPED)
 
     # --- execution context ---
@@ -188,6 +196,26 @@ class AIOSRuntime(Runtime):
         self._require_running("tools")
         assert self._tools is not None  # guaranteed by the lifecycle
         return self._tools
+
+    @property
+    def workflows(self) -> "WorkflowSubsystem":
+        """The hosted Phase 9 Workflow execution lifecycle. RUNNING only (fail
+        closed).
+
+        Runtime hosts it; the Workflow boundary retains every lifecycle
+        decision — eligibility, the accepted execution attempt, and both
+        terminal outcomes. Nothing on this Runtime defines a Workflow, marks one
+        ready, enters one into execution, succeeds one or fails one, and this
+        property exposes no operation that could. `ACT-CC-P9-001 §8.1` permits
+        Runtime to *"depend on and access the Workflow capability for authorized
+        execution hosting, without becoming the owner of Workflow semantics."*
+
+        The RUNNING gate is the same one Knowledge, Memory and Tools pass, and
+        it is not weakened here: a Runtime that is not RUNNING refuses, so there
+        is no path to a Workflow lifecycle that skips the host's own state."""
+        self._require_running("workflows")
+        assert self._workflows is not None  # guaranteed by the lifecycle
+        return self._workflows
 
     # --- internal ---
 
