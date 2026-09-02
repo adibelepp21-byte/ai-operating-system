@@ -78,11 +78,23 @@ SCHEMA_VERSION = 1
 # segment must open with a digit or capital so that a filename such as
 # "ACT-CC-F03-014.md" does not absorb its own extension.
 _SEGMENT = r"[A-Z0-9][A-Za-z0-9]*"
-IDENTIFIER_RE = re.compile(r"\b(?:DEC|GDR|ADR|ACT)-" + _SEGMENT + r"(?:[.-]" + _SEGMENT + r")*")
+#: `FD` was absent from this alternation until `ACT-CC-R1-002`. The omission
+#: made every **Founder Decision** — the highest-authority record class in the
+#: register — invisible to this index: `ACT-CC-R1-001` measured 10 of 10
+#: undiscoverable while all 10 were present in the source. Nothing else was
+#: wrong with discovery; one missing prefix hid the records that matter most.
+IDENTIFIER_RE = re.compile(
+    r"\b(?:DEC|GDR|ADR|ACT|FD)-" + _SEGMENT + r"(?:[.-]" + _SEGMENT + r")*"
+)
 TOPIC_RE = re.compile(r"\bT-\d+\b|\bT\d+-[A-Z]-\d+\b")
 
 #: Identifier prefixes recognized as governance record classes.
-IDENTIFIER_CLASSES = ("DEC", "GDR", "ACT", "ADR")
+#:
+#: NOTE: this constant is not referenced anywhere in this module — discovery
+#: runs off `IDENTIFIER_RE` alone. It is kept in step with that pattern so the
+#: two cannot drift, but it is dead as written; removing it is a separate
+#: question and is not decided here (`ACT-CC-R1-002 §4`).
+IDENTIFIER_CLASSES = ("DEC", "GDR", "ACT", "ADR", "FD")
 
 
 def identifiers_in(text: str) -> Tuple[str, ...]:
@@ -144,7 +156,7 @@ _H1_RE = re.compile(r"^#\s+(?P<title>.+?)\s*$")
 # where a file carries two or more of them, so that a single such heading inside
 # a narrative document is not mistaken for a record boundary.
 _SUBRECORD_RE = re.compile(
-    r"^(?P<hashes>#{2,4})\s+(?P<identifier>(?:DEC|GDR|ACT|ADR)-" + _SEGMENT
+    r"^(?P<hashes>#{2,4})\s+(?P<identifier>(?:DEC|GDR|ACT|ADR|FD)-" + _SEGMENT
     + r"(?:[.-]" + _SEGMENT + r")*)\s*(?P<sep>[-—–:·])"
 )
 
@@ -162,14 +174,59 @@ def _metadata_lines(lines: Sequence[str]) -> List[str]:
     return list(lines[:METADATA_FALLBACK_LINES])
 
 
+def _table_label(line: str) -> Optional[Tuple[str, str]]:
+    """Return ``(label, value)`` for a two-cell Markdown table row, else None.
+
+    The register carries **two** metadata forms — `ACT-CC-R1-001` measured 24
+    entries in the inline form and 14 in this table form, and this parser read
+    only the first. That is the whole of `G02`: not a missing schema, but two
+    schemas where the tooling knew one.
+
+    Deliberately narrow. A row qualifies only when it has exactly two cells and
+    the first is *entirely* bold — `| **Identifier** | GDR-0002 |`. That
+    excludes the header (`| Field | Value |`, unbold), the delimiter
+    (`|---|---|`), and every wider table, so a data table elsewhere in a record
+    cannot be mistaken for metadata. Anything else returns None and falls
+    through to the inline form, which is left exactly as it was: the colon it
+    requires is what stops a bold *value* from reading as the next label, and
+    relaxing that to reach table rows would corrupt inline parsing to fix an
+    unrelated shape.
+    """
+    stripped = line.strip()
+    if not stripped.startswith("|"):
+        return None
+    cells = [c.strip() for c in stripped.strip("|").split("|")]
+    if len(cells) != 2:
+        return None
+    label_cell, value_cell = cells
+    if not (len(label_cell) > 4 and label_cell.startswith("**")
+            and label_cell.endswith("**") and "**" not in label_cell[2:-2]):
+        return None
+    label = " ".join(label_cell[2:-2].split())
+    value = _unwrap(value_cell.strip().strip(_VALUE_TRIM))
+    if not label or not value:
+        return None
+    return label, value
+
+
 def _labels(lines: Iterable[str]) -> Dict[str, str]:
     """Return ``{label: value}`` for every bold-label line, verbatim values.
+
+    Two source forms are recognized and normalized to one representation: the
+    inline `**Label:** value` form and the two-cell table row. Both resolve to
+    the same ``{label: value}`` mapping, which is where `ACT-CC-R1-002 §6`
+    places normalization — at the tooling boundary, leaving the canonical
+    records untouched.
 
     A repeated label keeps its first value; the source stated that one first and
     the parser has no basis to prefer another.
     """
     found: Dict[str, str] = {}
     for line in lines:
+        table = _table_label(line)
+        if table is not None:
+            found.setdefault(table[0], table[1])
+            continue
         matches = list(_LABEL_RE.finditer(line))
         for position, match in enumerate(matches):
             label = " ".join(match.group("label").split())

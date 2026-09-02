@@ -574,3 +574,155 @@ class Queries(_Corpus):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# --------------------------------------------------------------------------
+# Scope H — governance substrate repair (ACT-CC-R1-002; G02, G10)
+# --------------------------------------------------------------------------
+
+
+class SchemaNormalization(unittest.TestCase):
+    """`ACT-CC-R1-002 §6` — two source forms, one internal representation.
+
+    `ACT-CC-R1-001` measured the register carrying **both** an inline
+    `**Identifier:**` form (24 entries) and a two-cell table form (14 entries),
+    while this parser read only the first. Normalization happens here, at the
+    tooling boundary; the canonical records are not rewritten.
+    """
+
+    def test_list_style_identifier_parses(self):
+        self.assertEqual({"Identifier": "X-1"}, gi._labels(["**Identifier:** X-1"]))
+
+    def test_table_style_identifier_parses(self):
+        self.assertEqual({"Identifier": "X-1"}, gi._labels(["| **Identifier** | X-1 |"]))
+
+    def test_both_forms_reach_the_same_representation(self):
+        """The point of the repair: form is not meaning."""
+        self.assertEqual(
+            gi._labels(["**Identifier:** GDR-0002"]),
+            gi._labels(["| **Identifier** | GDR-0002 |"]),
+        )
+
+    def test_a_mixed_corpus_yields_every_record(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write(root, "inline.md", "# Inline\n\n**Identifier:** GDR-9001\n\n---\n\nbody\n")
+            _write(root, "table.md",
+                   "# Table\n\n| Field | Value |\n|---|---|\n"
+                   "| **Identifier** | GDR-9002 |\n\n---\n\nbody\n")
+            index, _ = GovernanceIndex.build(sorted(root.glob("*.md")), root)
+            found = {r.identifier for r in index.records}
+
+        self.assertIn("GDR-9001", found)
+        self.assertIn("GDR-9002", found)
+
+    def test_table_parsing_is_narrow_enough_to_be_safe(self):
+        """Header rows, delimiters and wider tables are not metadata. A parser
+        that read them would invent labels out of ordinary content."""
+        for line in ("| Field | Value |", "|---|---|", "| **A** | b | c |",
+                     "| not bold | v |", "|  |  |"):
+            self.assertEqual({}, gi._labels([line]), line)
+
+    def test_the_inline_colon_rule_is_untouched(self):
+        """Regression guard on the fix itself. The inline form requires a colon
+        so that a bold *value* is not read as the next label; reaching table
+        rows must not have relaxed that."""
+        self.assertEqual(
+            {"Status": "AUTHORIZED"}, gi._labels(["**Status:** **AUTHORIZED**"])
+        )
+
+
+class FounderDecisionsAreDiscoverable(_Corpus):
+    """`ACT-CC-R1-002 §9`, `§20` — `G10` closure evidence.
+
+    `ACT-CC-R1-001` measured 10 of 10 Founder Decisions present in the register
+    and invisible to this index, because `FD` was missing from the identifier
+    alternation. Discovery here runs off the real corpus through the parser —
+    `§9` forbids whitelisting identifiers to make a count pass, so nothing below
+    names an expected set: the register is read, and what it states is what is
+    checked.
+    """
+
+    def _register_fd_identifiers(self):
+        register = REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+        return {
+            line.split()[1]
+            for line in register.read_text(encoding="utf-8").splitlines()
+            if line.startswith("### FD-")
+        }
+
+    def test_the_identifier_pattern_recognizes_the_founder_class(self):
+        self.assertEqual(("FD-P9-002",), identifiers_in("see FD-P9-002 for the decision"))
+
+    def test_every_founder_decision_in_the_register_is_indexed(self):
+        stated = self._register_fd_identifiers()
+        self.assertTrue(stated, "the register must state Founder Decisions")
+
+        indexed = {r.identifier for r in self.index.records}
+
+        self.assertEqual(set(), stated - indexed, "Founder Decisions missing from index")
+
+    def test_each_one_is_retrievable_individually(self):
+        for identifier in sorted(self._register_fd_identifiers()):
+            self.assertTrue(
+                self.index.by_identifier(identifier), f"{identifier} not retrievable"
+            )
+
+    def test_discovery_is_not_a_whitelist(self):
+        """An FD identifier this repository has never used still parses, so the
+        mechanism is general rather than fitted to the current corpus."""
+        self.assertEqual(("FD-P42-999",), identifiers_in("FD-P42-999"))
+
+
+class IndexIntegrity(_Corpus):
+    """`ACT-CC-R1-002 §10`, `§12` — no silent loss, no duplicates, deterministic."""
+
+    def test_no_identifier_is_indexed_twice(self):
+        identified = [
+            r.identifier for r in self.index.records if r.identifier != ABSENT
+        ]
+
+        self.assertEqual(len(identified), len(set(identified)))
+
+    def test_every_register_subrecord_reaches_the_index(self):
+        """Source count == indexed count for the register's own headings."""
+        register = REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+        stated = {
+            line.split()[1]
+            for line in register.read_text(encoding="utf-8").splitlines()
+            if line.startswith("### ") and gi._SUBRECORD_RE.match(line)
+        }
+        indexed = {r.identifier for r in self.index.records}
+
+        self.assertEqual(set(), stated - indexed, "records dropped between source and index")
+
+    def test_a_malformed_record_is_not_silently_absorbed(self):
+        """`§11`: unparseable metadata yields ABSENT, which is visible, rather
+        than a fabricated value."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            _write(root, "broken.md",
+                   "# Broken\n\n| **Identifier** |\n\n---\n\nbody\n")
+            index, _ = GovernanceIndex.build(sorted(root.glob("*.md")), root)
+            records = index.records
+
+        for record in records:
+            self.assertEqual(ABSENT, record.identifier)
+
+    def test_the_index_is_deterministic(self):
+        first, _ = GovernanceIndex.build(tracked_markdown(REPO_ROOT), REPO_ROOT)
+        second, _ = GovernanceIndex.build(tracked_markdown(REPO_ROOT), REPO_ROOT)
+
+        self.assertEqual(
+            [r.identifier for r in first.records],
+            [r.identifier for r in second.records],
+        )
+
+    def test_repair_did_not_change_the_corpus(self):
+        """The repair is tooling-only. `§4.1` forbids canonical content change,
+        and this asserts it against the register itself."""
+        register = REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+        before = sha256_of(register)
+        GovernanceIndex.build(tracked_markdown(REPO_ROOT), REPO_ROOT)
+
+        self.assertEqual(before, sha256_of(register))
