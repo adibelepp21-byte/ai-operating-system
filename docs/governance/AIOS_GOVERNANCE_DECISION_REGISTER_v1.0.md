@@ -5650,3 +5650,175 @@ Planner / Scheduler / Execution Orchestrator: NOT AUTHORIZED
 Phase 9 construction:  NOT AUTHORIZED BY THIS DIRECTION ALONE
 Phase 10:              NOT AUTHORIZED
 ```
+
+---
+
+### FD-P9-002 — Founder Decision · Phase 9 Certification & Governance Closure
+
+**Identifier:** FD-P9-002
+**Date stated by the instrument:** 2026-09-03 (`§7 Decision Date`)
+**Recorded:** 2026-09-02
+**Tier:** Founder / Program Owner phase certification — Master Program Volume V §3 second gate (*"Volume/Boundary/Phase berpindah Frozen → Certified … Pemilik Program (Moriarty), berdasarkan bukti implementasi"*)
+**Decided by:** Founder / Program Owner (Moriarty) — `§7 Founder: Moriarty`, `Decision: CERTIFY`, `Founder Authorization: YES`
+**Recorded by:** Claude Code / Co-Founder Office, under explicit authority of `ACT-CC-P9-002`
+**Authorizing act:** `ACT-CC-P9-002 §9` (Execution Sequence), `§12` (Mutation Boundary)
+**Predecessor decision:** `FD-P9-001` — Phase 9 Workflow Ecosystem Direction
+**Evidence basis:** `ACT-CC-P9-001` and the subsequently re-derived Phase 9 certification evidence package
+**Closes:** Phase 9 — Workflow Ecosystem
+
+> **Metadata recorded rather than resolved** (`ACT-CC-P9-002 §8`).
+> The instrument states `Decision Date: 2026-09-03`. This office performed the
+> registration on **2026-09-02**, so the stated decision date falls one day
+> after the date of registration. The date is recorded **exactly as the
+> instrument states it** and is neither normalized nor corrected: `§8` requires
+> the decision be registered exactly as authoritative, and adjusting a Founder's
+> stated date would alter the record rather than transcribe it. The discrepancy
+> is noted here so the reader sees it in the register rather than discovering it
+> later.
+
+> **A first, worth recording.** This is the first Founder Decision in this
+> register to arrive with `§7` **complete on the authorizing turn** — decision
+> selected, date populated, authorization affirmed. `FD-P8-001` carried neither
+> date nor signature; `FD-P8-002` carried a signature but an unfilled date;
+> `FD-P9-001` stated no issue date and carried no signature. An earlier draft of
+> **this** instrument was declined by this office because `§7` held only
+> unselected menus, and `ACT-CC-P9-002` was halted at Step 1 for the same reason
+> even though that Act's own header asserted `CERTIFY`. The header was a
+> citation; this record is the decision.
+
+---
+
+#### 1. Role and scope
+
+This entry registers a **Founder certification decision**. It is not an
+engineering conclusion and did not become true by passing tests. `ACT-CC-P9-002
+§3` fixes the relationship exactly:
+
+```text
+FD-P9-002       = AUTHORITY
+ACT-CC-P9-002   = REGISTRATION / EXECUTION
+```
+
+The certification subject is **Phase 9 — Workflow Ecosystem**, over the
+implementation and verification scope established through `ACT-CC-P9-001`.
+
+#### 2. The decision, as stated
+
+| Field | Value |
+|---|---|
+| **Decision** | **CERTIFY** |
+| **Founder Authorization** | **YES** |
+| **Founder** | Moriarty |
+| **Decision Date** | 2026-09-03 |
+| **Certification Subject** | Phase 9 — Workflow Ecosystem |
+| **Authority Source** | Founder Decision |
+
+#### 3. Founder rationale, registered without broadening
+
+`FD-P9-002 §7` states the rationale, and `ACT-CC-P9-002 §8` forbids any
+paraphrase that alters its meaning. It is therefore carried here as written:
+
+> *"The Founder determines that the canonical Phase 9 exit condition 'Workflow
+> lintas-agent dapat dijalankan dan dipantau' is satisfied when a Workflow
+> genuinely composes and coordinates multiple Agent Instances and the resulting
+> Workflow execution path can be executed and monitored. The Founder further
+> determines that this interpretation preserves the established separation of
+> ownership and authority between Workflow, Runtime, Consumer, and Agent.
+> Certification confirms the approved and verified Phase 9 scope and does not
+> authorize new capabilities."*
+
+#### 4. Founder interpretation of the exit condition
+
+`FD-P9-002 §4` determines that the canonical exit phrase does **not**, by
+itself, require: every named Agent Instance to independently become a live
+execution performer · per-step Agent invocation architecture · per-step Trace
+generation · free Agent-to-Agent delegation. Those are *"separate architectural
+questions"* and are **not retroactively imposed** as Phase 9 certification
+requirements.
+
+This resolves a limitation this office raised, and did not conceal, when
+recommending on the certification questions: the Phase 9 evidence demonstrates a
+composition naming two distinct Agent Instances, correctly scoped coordination,
+lawful execution and monitoring — while the *acting* is performed by a single
+supplied performer rather than by each named Instance as a live Agent. The
+Founder has determined that reading. The determination is the Founder's; the
+disclosure was this office's obligation.
+
+#### 5. Architectural rationale
+
+`FD-P9-002 §5` affirms the boundary that the certification rests on:
+
+```text
+Workflow  → composition · coordination · lifecycle
+Runtime   → hosting
+Consumer  → execution driving
+Agent     → participant identity / capability boundary
+```
+
+and determines that **`WORKFLOW ≠ AGENT`**. It further determines that requiring
+live per-step Agent Instance action as a retroactive certification requirement
+*"would improperly expand Phase 9 beyond its authorized and verified scope."*
+
+#### 6. Certification basis
+
+Founder certification rests on the fourteen-item evidence package enumerated at
+`FD-P9-002 §6`: FD-P9-001 registration · Runtime ↔ Workflow reconciliation ·
+Workflow construction · lifecycle · monitoring · State ≠ Trace ·
+fail-closed · Planner/Scheduler/Execution Orchestrator exclusion · E9 criteria ·
+negative controls · mutation attribution · regression · independent
+architectural probes · repository and working-tree integrity.
+
+`§6` records specifically that *"the Planner / Scheduler / Execution
+Orchestrator exclusion evidence was explicitly re-derived after the original
+ACT-CC-P9-001 evidence package review and verified without repository
+mutation."* That item had been **absent** from the original package; this office
+disclosed the gap rather than letting the certification rest on it, and the
+Founder's decision accounts for the later verification.
+
+#### 7. Explicit non-authorization
+
+`FD-P9-002 §8` affirms **`CERTIFICATION ≠ CAPABILITY EXPANSION`** and withholds
+authorization for all of the following:
+
+```text
+live per-step Agent invocation architecture   per-step Trace architecture
+retry architecture                            compensation architecture
+rollback architecture                         recovery architecture
+Planner                                       Scheduler
+Execution Orchestrator                        any new core boundary
+any new organizational authority              Phase 10
+```
+
+#### 8. The future architectural question, left open
+
+`FD-P9-002 §9` recognizes whether AIOS should support **live per-step Agent
+Instance action** as a possible future architectural question. It is expressly
+*"not a Phase 9 defect determination"* and *"not a condition retroactively
+imposed upon Phase 9 certification."* It *"requires separate authority before
+becoming construction scope"*, and **no implementation work for it is
+authorized**.
+
+#### 9. No reopening by certification
+
+This Decision does not reopen the `ACT-CC-P9-001` implementation, the Runtime ↔
+Workflow reconciliation, Workflow construction, or general audit. A future
+defect or new requirement requires the authority appropriate to it. **This
+certification may not be used as blanket authority for new mutation.**
+
+#### 10. Effect
+
+On this entry, `E9-01` through `E9-05` stand **SATISFIED / PASS** by Founder
+determination, and:
+
+```text
+PHASE 9 — WORKFLOW ECOSYSTEM: CERTIFIED / COMPLETE
+PHASE 9 GOVERNANCE STATUS:    CLOSED
+PHASE 10:                     NOT AUTHORIZED
+```
+
+The Founder / Program Owner issued this certification through `FD-P9-002`.
+Claude Code registered and verified the Decision under `ACT-CC-P9-002`, did not
+independently certify Phase 9, and certification became effective through this
+authorized registration rather than through passing tests.
+
+---
