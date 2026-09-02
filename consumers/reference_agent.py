@@ -53,6 +53,9 @@ from __future__ import annotations
 from typing import List, Tuple
 
 from native_core.core.agent import Agent
+from native_core.core.trace import TraceWriter
+
+from .observation import TracedAction, runtime_identity
 
 
 class ReferenceAgent(Agent):
@@ -64,7 +67,8 @@ class ReferenceAgent(Agent):
     reserved to the Architect, not to a consumer proving realizability.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, trace_writer: "Optional[TraceWriter]" = None) -> None:
+        self._trace_writer = trace_writer
         self._sequences: List[int] = []
 
     @property
@@ -83,4 +87,9 @@ class ReferenceAgent(Agent):
         never constructed and never re-bound: a consumer receives the boundary
         it is given.
         """
-        self._sequences.append(execution.context.execution_sequence)
+        with TracedAction(
+            self._trace_writer,
+            agent_instance="reference-agent",
+            runtime=runtime_identity(execution),
+        ):
+            self._sequences.append(execution.context.execution_sequence)

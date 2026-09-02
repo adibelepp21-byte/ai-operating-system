@@ -60,6 +60,9 @@ from native_core.core.memory import (
     MemoryProvenance,
     MemoryRetrieval,
 )
+from native_core.core.trace import TraceWriter
+
+from .observation import TracedAction, runtime_identity
 
 
 class MemoryConsumingAgent(Agent):
@@ -77,7 +80,9 @@ class MemoryConsumingAgent(Agent):
         retrieval: "Optional[MemoryRetrieval]" = None,
         memory_key: Optional[str] = None,
         proposal: "Optional[tuple]" = None,
+        trace_writer: "Optional[TraceWriter]" = None,
     ) -> None:
+        self._trace_writer = trace_writer
         if lifecycle is not None and not isinstance(lifecycle, MemoryLifecycle):
             raise TypeError("a Memory-consuming Agent requires a MemoryLifecycle")
         if retrieval is not None and not isinstance(retrieval, MemoryRetrieval):
@@ -201,15 +206,20 @@ class MemoryConsumingAgent(Agent):
         this returns without raising. There is no result value because no result
         model is ratified; what was read is read from `memory_read`.
         """
-        lifecycle, retrieval = self._resolve(execution)
-        if self._proposal is not None:
-            key, payload = self._proposal
-            self._propose_through(
-                lifecycle,
-                MemoryCandidate(
-                    key=key, payload=payload,
-                    provenance=MemoryProvenance("agent-instance"),
-                ),
-            )
-        if self._key is not None:
-            self._read_through(retrieval, self._key)
+        with TracedAction(
+            self._trace_writer,
+            agent_instance="memory-consuming-agent",
+            runtime=runtime_identity(execution),
+        ):
+            lifecycle, retrieval = self._resolve(execution)
+            if self._proposal is not None:
+                key, payload = self._proposal
+                self._propose_through(
+                    lifecycle,
+                    MemoryCandidate(
+                        key=key, payload=payload,
+                        provenance=MemoryProvenance("agent-instance"),
+                    ),
+                )
+            if self._key is not None:
+                self._read_through(retrieval, self._key)

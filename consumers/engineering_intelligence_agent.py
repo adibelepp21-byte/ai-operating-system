@@ -67,6 +67,9 @@ from dataclasses import dataclass
 from typing import Optional, Sequence, Tuple
 
 from native_core.core.agent import Agent
+from native_core.core.trace import TraceWriter
+
+from .observation import TracedAction, runtime_identity
 
 #: The two sub-abilities `E5-3` places in Phase 5 scope. Recorded as data so the
 #: conformance suite can assert the boundary rather than trusting prose.
@@ -153,10 +156,12 @@ class EngineeringIntelligenceAgent(Agent):
         self,
         artifact: "Optional[Artifact]" = None,
         criteria: "Optional[Sequence[ConformanceCriterion]]" = None,
+        trace_writer: "Optional[TraceWriter]" = None,
     ) -> None:
         """Configure the artifact this Agent will verify when it participates,
         and the criteria it will verify against. Left unset, participation
         completes having verified nothing — an explicit absence."""
+        self._trace_writer = trace_writer
         self._artifact = artifact
         self._criteria: Tuple[ConformanceCriterion, ...] = tuple(criteria or ())
         self._constructed: Tuple[Artifact, ...] = ()
@@ -258,5 +263,10 @@ class EngineeringIntelligenceAgent(Agent):
         §13.3 — participation completes when this returns without raising, and
         the return stays `None` because no result model is ratified.
         """
-        if self._artifact is not None and self._criteria:
-            self.verify(self._artifact, self._criteria)
+        with TracedAction(
+            self._trace_writer,
+            agent_instance="engineering-intelligence-agent",
+            runtime=runtime_identity(execution),
+        ):
+            if self._artifact is not None and self._criteria:
+                self.verify(self._artifact, self._criteria)

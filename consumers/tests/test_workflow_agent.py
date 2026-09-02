@@ -198,16 +198,24 @@ class ItHoldsNoLifecycleAuthority(unittest.TestCase):
         core = {m for m in _imported_modules() if m.startswith("native_core")}
 
         self.assertEqual(
-            {"native_core.core.agent", "native_core.core.workflow"}, core
+            {"native_core.core.agent", "native_core.core.workflow",
+             "native_core.core.trace"},
+            core,
         )
 
     def test_it_imports_no_runtime_type(self):
         for module in _imported_modules():
             self.assertNotIn("runtime", module)
 
-    def test_it_imports_nothing_from_governance_trace_or_knowledge(self):
+    def test_it_imports_nothing_from_governance_or_knowledge(self):
+        """`trace` left this prohibition under `ACT-CC-R2A-IMPL-001 §5`, which
+        makes the concrete consumer Agent the INV-4 Trace author. That is the
+        only word removed. Governance and Knowledge remain forbidden, and the
+        boundary guards that matter are untouched: the Workflow package still
+        authors no Trace (`test_workflow_authors_no_trace`) and Runtime still
+        carries no Trace identifier."""
         for module in _imported_modules():
-            for word in ("governance", "trace", "knowledge"):
+            for word in ("governance", "knowledge"):
                 self.assertNotIn(word, module)
 
     def test_it_defines_no_transition_of_its_own(self):

@@ -142,7 +142,9 @@ class ItHoldsNoToolAuthority(unittest.TestCase):
         core = {m for m in _imported_modules() if m.startswith("native_core")}
 
         self.assertEqual(
-            {"native_core.core.agent", "native_core.core.infrastructure"}, core
+            {"native_core.core.agent", "native_core.core.infrastructure",
+             "native_core.core.trace"},
+            core,
         )
 
     def test_it_imports_no_runtime_type(self):

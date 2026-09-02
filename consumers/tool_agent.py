@@ -56,6 +56,9 @@ from native_core.core.infrastructure import (
     InvocationResult,
     ToolInvocationGovernance,
 )
+from native_core.core.trace import TraceWriter
+
+from .observation import TracedAction, runtime_identity
 
 
 class ToolProposingAgent(Agent):
@@ -71,12 +74,14 @@ class ToolProposingAgent(Agent):
         governance: "Optional[ToolInvocationGovernance]" = None,
         proposal: "Optional[tuple]" = None,
         caller: CallerClass = CallerClass.AGENT,
+        trace_writer: "Optional[TraceWriter]" = None,
     ) -> None:
         if governance is not None and not isinstance(governance, ToolInvocationGovernance):
             raise TypeError("a Tool-proposing Agent requires a ToolInvocationGovernance")
         self._governance = governance
         self._proposal = proposal
         self._caller = caller
+        self._trace_writer = trace_writer
         self._results: List[InvocationResult] = []
 
     # -- observation ------------------------------------------------------
@@ -170,9 +175,16 @@ class ToolProposingAgent(Agent):
         with a recorded refusal, not a failed one.
         """
         governance = self._resolve(execution)
-        if self._proposal is not None:
+        with TracedAction(
+            self._trace_writer,
+            agent_instance="tool-proposing-agent",
+            runtime=runtime_identity(execution),
+        ) as observed:
+            if self._proposal is None:
+                return
             tool_key, action, parameters = self._proposal
-            self._submit(
+            observed.used_tool(tool_key)
+            result = self._submit(
                 governance,
                 InvocationRequest(
                     tool_key=tool_key,
@@ -182,3 +194,12 @@ class ToolProposingAgent(Agent):
                     invocation_id="participation",
                 ),
             )
+            # `ACT-CC-R2A-IMPL-001 §12`: a governance refusal is an observable
+            # action outcome, not an absence of one. Participation still
+            # completes lawfully — the Agent proposed correctly and was
+            # correctly refused — so this reports the outcome without altering
+            # control flow, and the single record carries `failure`.
+            if not result.execution_attempted:
+                observed.failed(f"{result.disposition.name} for {tool_key}.{action}")
+            else:
+                observed.produced({"disposition": result.disposition.name})

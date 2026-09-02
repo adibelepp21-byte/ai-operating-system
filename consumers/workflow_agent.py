@@ -57,6 +57,7 @@ from __future__ import annotations
 from typing import Any, Callable, List, Optional, Tuple
 
 from native_core.core.agent import Agent
+from native_core.core.trace import TraceWriter
 from native_core.core.workflow import (
     Workflow,
     WorkflowComposition,
@@ -64,6 +65,8 @@ from native_core.core.workflow import (
     WorkflowStep,
     WorkflowSubsystem,
 )
+
+from .observation import TracedAction, runtime_identity
 
 
 class StepFailed(Exception):
@@ -90,6 +93,7 @@ class WorkflowParticipatingAgent(Agent):
         workflow: "Optional[Workflow]" = None,
         composition: "Optional[WorkflowComposition]" = None,
         performer: "Optional[Callable[[WorkflowStep], Any]]" = None,
+        trace_writer: "Optional[TraceWriter]" = None,
     ) -> None:
         if subsystem is not None and not isinstance(subsystem, WorkflowSubsystem):
             raise TypeError(
@@ -101,6 +105,7 @@ class WorkflowParticipatingAgent(Agent):
         self._workflow = workflow
         self._composition = composition
         self._performer = performer
+        self._trace_writer = trace_writer
         self._completed: List[str] = []
         self._states: List[WorkflowLifecycleState] = []
 
@@ -162,27 +167,40 @@ class WorkflowParticipatingAgent(Agent):
         succeed, which is not the same as the participation failing.
         """
         subsystem = self._resolve(execution)
-        if self._workflow is None:
-            return None
+        with TracedAction(
+            self._trace_writer,
+            agent_instance="workflow-participating-agent",
+            runtime=runtime_identity(execution),
+        ) as observed:
+            if self._workflow is None:
+                return None
 
-        lifecycle = subsystem.lifecycle
-        identity = self._workflow.identity
+            lifecycle = subsystem.lifecycle
+            identity = self._workflow.identity
+            observed.used_skill(identity.workflow_key)
 
-        self._observe(lifecycle.define(self._workflow))
-        self._observe(lifecycle.mark_ready(identity))
-        self._observe(lifecycle.enter_running(identity))
+            self._observe(lifecycle.define(self._workflow))
+            self._observe(lifecycle.mark_ready(identity))
+            self._observe(lifecycle.enter_running(identity))
 
-        steps = self._composition.steps if self._composition is not None else ()
-        for step in steps:
-            try:
-                self._perform_one(step)
-            except StepFailed as failure:
-                return self._observe(lifecycle.fail(identity, str(failure)))
-            self._completed.append(step.step_key)
+            steps = self._composition.steps if self._composition is not None else ()
+            for step in steps:
+                try:
+                    self._perform_one(step)
+                except StepFailed as failure:
+                    final = self._observe(lifecycle.fail(identity, str(failure)))
+                    # A terminal FAILED workflow is a completed participation
+                    # with a failed outcome — `§11`. The record says failure;
+                    # the method still returns, exactly as before R2-A.
+                    observed.failed(str(failure))
+                    return final
+                self._completed.append(step.step_key)
 
-        return self._observe(
-            lifecycle.succeed(identity, outcome={"steps": tuple(self._completed)})
-        )
+            final = self._observe(
+                lifecycle.succeed(identity, outcome={"steps": tuple(self._completed)})
+            )
+            observed.produced({"steps": tuple(self._completed)})
+            return final
 
     def _perform_one(self, step: "WorkflowStep") -> None:
         """Run one step against the supplied performer.

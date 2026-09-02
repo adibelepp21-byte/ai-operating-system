@@ -171,8 +171,13 @@ class TestResidency(unittest.TestCase):
 
     def test_it_depends_only_on_the_agent_contract(self):
         """C1 in spirit: one cross-boundary dependency, and it is the contract."""
+        # `native_core.core.trace` and the sibling `observation` module joined
+        # under `ACT-CC-R2A-IMPL-001 §31`: this consumer authors the Trace for
+        # its own action. The cross-boundary count is still one contract plus
+        # the Trace substrate it writes to — no Execution, no Runtime.
         self.assertEqual(
-            {"__future__", "typing", "native_core.core.agent"},
+            {"__future__", "typing", "native_core.core.agent",
+             "native_core.core.trace", "observation"},
             _module_imports(REGION / "reference_agent.py"),
         )
 
@@ -193,7 +198,11 @@ class TestResidency(unittest.TestCase):
             imported_names
             & {"Execution", "ExecutionSession", "ExecutionContext", "create_execution_layer"},
         )
-        self.assertEqual({"Agent", "annotations", "List", "Tuple"}, imported_names)
+        self.assertEqual(
+            {"Agent", "annotations", "List", "Tuple",
+             "TraceWriter", "TracedAction", "runtime_identity"},
+            imported_names,
+        )
 
     def test_it_names_no_runtime_identifier(self):
         """C3 — honoured voluntarily; the region is not bound by it."""

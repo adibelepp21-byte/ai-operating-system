@@ -243,7 +243,9 @@ class TheAgentHoldsNoAuthority(unittest.TestCase):
     def test_it_depends_only_on_the_agent_contract(self):
         core = {m for m in self._imported_modules() if m.startswith("native_core")}
 
-        self.assertEqual({"native_core.core.agent"}, core)
+        self.assertEqual(
+            {"native_core.core.agent", "native_core.core.trace"}, core
+        )
 
     def test_it_imports_nothing_from_governance_or_knowledge(self):
         for module in self._imported_modules():

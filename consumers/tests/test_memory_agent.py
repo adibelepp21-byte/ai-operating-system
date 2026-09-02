@@ -127,7 +127,11 @@ class ItHoldsNoAuthority(unittest.TestCase):
     def test_it_depends_only_on_the_agent_contract_and_memory(self):
         core = {m for m in _imported_modules() if m.startswith("native_core")}
 
-        self.assertEqual({"native_core.core.agent", "native_core.core.memory"}, core)
+        self.assertEqual(
+            {"native_core.core.agent", "native_core.core.memory",
+             "native_core.core.trace"},
+            core,
+        )
 
     def test_it_imports_no_runtime_type(self):
         for module in _imported_modules():

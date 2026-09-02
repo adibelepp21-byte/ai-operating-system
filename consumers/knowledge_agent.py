@@ -66,6 +66,9 @@ from typing import List, Optional, Tuple
 
 from native_core.core.agent import Agent
 from native_core.core.knowledge import KnowledgeAdmission, KnowledgeRetrieval, KnowledgeVersion
+from native_core.core.trace import TraceWriter
+
+from .observation import TracedAction, runtime_identity
 
 
 class KnowledgeConsumingAgent(Agent):
@@ -84,7 +87,9 @@ class KnowledgeConsumingAgent(Agent):
         admission: "Optional[KnowledgeAdmission]" = None,
         knowledge_item_key: Optional[str] = None,
         proposal: "Optional[tuple]" = None,
+        trace_writer: "Optional[TraceWriter]" = None,
     ) -> None:
+        self._trace_writer = trace_writer
         if retrieval is not None and not isinstance(retrieval, KnowledgeRetrieval):
             raise TypeError("a Knowledge-consuming Agent requires a KnowledgeRetrieval")
         if admission is not None and not isinstance(admission, KnowledgeAdmission):
@@ -176,11 +181,16 @@ class KnowledgeConsumingAgent(Agent):
         version — is a completion, not a failure; this consumer manufactures no
         failure condition it does not have.
         """
-        retrieval, admission = self._resolve(execution)
-        if self._proposal is not None:
-            candidate, authorization = self._proposal
-            self._admitted.append(admission.admit(candidate, authorization))
-        if self._key is not None:
-            version = retrieval.active(self._key)
-            if version is not None:
-                self._read.append(version)
+        with TracedAction(
+            self._trace_writer,
+            agent_instance="knowledge-consuming-agent",
+            runtime=runtime_identity(execution),
+        ):
+            retrieval, admission = self._resolve(execution)
+            if self._proposal is not None:
+                candidate, authorization = self._proposal
+                self._admitted.append(admission.admit(candidate, authorization))
+            if self._key is not None:
+                version = retrieval.active(self._key)
+                if version is not None:
+                    self._read.append(version)

@@ -71,6 +71,9 @@ from dataclasses import dataclass
 from typing import Optional, Sequence, Tuple
 
 from native_core.core.agent import Agent
+from native_core.core.trace import TraceWriter
+
+from .observation import TracedAction, runtime_identity
 
 #: The separators a unit of work may use to state its own ordering. These are
 #: reading conventions for stated structure, not a grammar this module imposes:
@@ -122,10 +125,12 @@ class CognitiveIntelligenceAgent(Agent):
     surface, and no method that carries out decomposed work.
     """
 
-    def __init__(self, unit_of_work: Optional[str] = None) -> None:
+    def __init__(self, unit_of_work: Optional[str] = None,
+                 trace_writer: "Optional[TraceWriter]" = None) -> None:
         """Configure the unit of work this Agent will decompose when it
         participates. Left unset, participation completes having decomposed
         nothing — an explicit absence, never a fabricated decomposition."""
+        self._trace_writer = trace_writer
         self._unit_of_work = unit_of_work
         self._decomposition: Tuple[SubStep, ...] = ()
 
@@ -217,5 +222,10 @@ class CognitiveIntelligenceAgent(Agent):
         is no result value because no result model is ratified — the
         decomposition is read from `decomposition`, and the return stays `None`.
         """
-        if self._unit_of_work is not None:
-            self.decompose(self._unit_of_work)
+        with TracedAction(
+            self._trace_writer,
+            agent_instance="cognitive-intelligence-agent",
+            runtime=runtime_identity(execution),
+        ):
+            if self._unit_of_work is not None:
+                self.decompose(self._unit_of_work)
