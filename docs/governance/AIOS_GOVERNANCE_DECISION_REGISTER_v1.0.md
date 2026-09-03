@@ -3782,6 +3782,28 @@ synchronization work, not implementation defects**.
 | S-10 | Architecture Review Log | new entry | Record G1′ as a Founder decision, per the Log's stated function as validation history. | Open |
 | S-11 | Master Program Volume II | §4.3, Phase 5 row, Exit Criteria cell | Apply the C-1 synchronization specified in GDR-0004 §3.4.7 and reproduced below. Preserves history, intent, roadmap, and all eight Intelligence categories; changes evaluation scope only.<br><br>**Before:** *"Minimal satu kapabilitas per kategori intelligence terimplementasi dan teruji"*<br><br>**After:** *"Minimal satu kapabilitas per kategori intelligence yang milestone implementasi pertamanya sudah ditetapkan dan governance-ready dalam Phase ini, terimplementasi dan teruji. Kategori yang secara eksplisit ditangguhkan oleh Master Program ke Phase berikutnya, audit repository berikutnya, keputusan Gate berikutnya, atau kebutuhan implementasi berikutnya tidak diwajibkan untuk penentuan penyelesaian Phase 5; status tertangguhnya tidak berubah dan tidak ada kategori yang dibatalkan atau dihapus."*<br><br>**Reason:** removes C-1 by aligning §4.3's evaluation scope with the deferrals already recorded in Volumes III §5, IV §5.3, and VI §3.3/§3.5/§3.6/§3.7/§3.8 and §4. No category is removed from the deliverable list; no roadmap or priority changes. | Open |
 | S-12 | Master Program Volume II | §4.3, Phase 5 row, Exit Criteria cell (alongside S-11) | Record the ratified measurable Phase 5 Exit Criteria **E5-1 … E5-5** as set out in GDR-0005 §3.5.3, per Volume V §3 which requires exit-criteria ratification to be *"didokumentasikan sebagai revisi Volume II."*<br><br>**Before:** the Exit Criteria cell carries a single principle-level statement and no measurable condition.<br><br>**After:** the cell additionally carries the five ratified measurable criteria — in-scope category count and minimum verified capabilities (E5-1); the Cognitive first milestone as ≥ 2 ordered sub-steps (E5-2); the Engineering first milestone as exactly 2 of 7 named sub-capabilities (E5-3); *"teruji"* bound to the four Engineering Phase Checklist verification stages (E5-4); and preservation of all six deferred categories at zero cancelled, removed, or reordered (E5-5).<br><br>**Reason:** Volume II §6.1 records that Phase 5–13 criteria are stated *"pada level prinsip"* and *"sebaiknya diperjelas menjadi kriteria terukur"*; Volume VIII §3 makes this step 2 of starting a Phase. E5-6 was rejected and is **not** to be recorded.<br><br>**Governance authority:** Pemilik Program (Volume V §3); ratified in GDR-0005. | Open |
+| S-13 | Master Program Volume II | §9.2 dashboard; Progress Tracker | *"Intelligence Ecosystem (Phase 5) — Belum Dimulai / 0%"* is superseded by fact. Update on the `FD-P5-001` certification. | Open |
+| S-14 | Master Program Volume II | §9.2 dashboard; Progress Tracker | *"Knowledge Ecosystem (Phase 6) — Belum Dimulai / 0%"* is superseded by fact. Update on the `FD-P6-002` certification. | Open |
+| S-15 | Master Program Volume II | §9.2 dashboard; Progress Tracker | *"Memory Ecosystem (Phase 7) — Belum Dimulai / 0%"* is superseded by fact. Update on the `FD-P7-003` certification. | Open |
+| S-16 | Master Program Volume II | §9.2 dashboard; Progress Tracker | *"Tool Ecosystem (Phase 8) — Belum Dimulai / 0%"* is superseded by fact. Update on the `FD-P8-002` certification. | Open |
+| S-17 | Master Program Volume II | §9.2 dashboard; Progress Tracker | *"Workflow Ecosystem (Phase 9) — Belum Dimulai / 0%"* is superseded by fact. Update on the `FD-P9-002` certification. | Open |
+
+
+> **`S-13`–`S-17` recorded under `ACT-CC-R2BC-IMPL-001 §8`–`§11`.** They follow
+> `S-9` exactly in shape and scope: one row per Master Program Volume II phase
+> row whose recorded status is superseded by a Founder certification. `S-9`
+> covers Phase 4 only — its subject and its trigger are both Phase-4-specific —
+> so P5–P9 were uncovered, not duplicated. One entry per phase rather than one
+> combined entry, because each carries an independent trigger and each becomes
+> independently closable; a single lumped row could never be partially closed.
+>
+> **All six remain `Open`, `S-9` included.** `§10` forbids closing on trigger
+> completion alone, and the closure condition here is external: the Ledger's own
+> preamble states these documents *"are **not present in this repository** and
+> cannot be synchronized here."* The Master Program still reads
+> *"AI Runtime | Belum Dimulai | 0%"* — so the external synchronization has not
+> been performed, and `S-9` closure evidence is **absent**. Recorded, not
+> manufactured.
 
 ---
 
