@@ -52,6 +52,7 @@ from typing import Any, List, Optional, Tuple
 from native_core.core.agent import Agent
 from native_core.core.infrastructure import (
     CallerClass,
+    InvocationDisposition,
     InvocationRequest,
     InvocationResult,
     ToolInvocationGovernance,
@@ -199,7 +200,19 @@ class ToolProposingAgent(Agent):
             # completes lawfully — the Agent proposed correctly and was
             # correctly refused — so this reports the outcome without altering
             # control flow, and the single record carries `failure`.
-            if not result.execution_attempted:
-                observed.failed(f"{result.disposition.name} for {tool_key}.{action}")
-            else:
+            #
+            # The branch is on the **disposition**, not on
+            # `execution_attempted`. `ACT-CC-R6-SYSTEMIC-001` proved why: an
+            # `EXECUTION_FAILURE` reaches the Tool and therefore has
+            # `execution_attempted=True`, so keying on that predicate filed a
+            # genuinely failed invocation as `success` — and
+            # `tools/derived_views.py`, which selects failures by
+            # `status == "failure"`, could not see it. Only `SUCCESS` is a
+            # successful outcome; every other ratified disposition is a failed
+            # one. `execution_attempted` remains what it always was — evidence
+            # about whether protected execution occurred — and the
+            # `InvocationLedger` still carries that distinction separately.
+            if result.disposition is InvocationDisposition.SUCCESS:
                 observed.produced({"disposition": result.disposition.name})
+            else:
+                observed.failed(f"{result.disposition.name} for {tool_key}.{action}")
