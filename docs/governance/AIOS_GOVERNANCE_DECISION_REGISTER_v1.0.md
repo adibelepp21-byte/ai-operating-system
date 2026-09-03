@@ -3758,6 +3758,303 @@ resolver, and warrants its own authorization.
 
 ---
 
+### GDR-0029 — Founder Decision · FD-7 Master Roadmap Authority (three surfaces)
+
+**Identifier:** GDR-0029
+**Date:** 2026-09-03
+**Tier:** Program-authority determination — Founder-reserved
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** `ACT-CC-R12 §7.1`, `§7.2`, `§7.3`
+**Decision gate:** `ACT-CC-R11 §4` (questions `Q-FD7-1`, `Q-FD7-2`, `Q-FD7-3`)
+**Closes:** `FD-7`, open since `GDR-0015` / Appointment Register §8
+
+#### 1. Decision text (verbatim)
+
+Recorded exactly as the Founder stated it, without paraphrase, wording
+improvement, semantic expansion, or reinterpretation, per §2.3 verbatim
+discipline.
+
+> **`Q-FD7-1` — Roadmap Approval Authority**
+>
+> **RETAIN — Founder**
+
+> **`Q-FD7-2` — P10 Phase Transition**
+>
+> **CONDITIONAL AUTHORIZATION**
+>
+> P10 phase transition is authorized only when the applicable prerequisite and
+> gate conditions already established by the R11 decision package are satisfied.
+
+> **`Q-FD7-3` — Technical Sequencing**
+>
+> **YES — Delegate technical sequencing (#10) to Co-Founder**
+>
+> with the boundary: #10 Technical Sequencing → Delegated · #11 Roadmap Approval
+> → Founder Reserved · #30 Phase Transition → Founder-controlled / conditional.
+
+#### 2. Resulting governance state
+
+| Surface | Field | Value |
+|---|---|---|
+| **#11** | Roadmap approval authority | **FOUNDER — RETAINED** |
+| **#11** | Delegable | **NO** |
+| **#30** | P10 phase transition | **CONDITIONALLY AUTHORIZED** |
+| **#30** | Authorization state | **CONDITIONAL** |
+| **#30** | Execution state | **NOT YET EXECUTABLE** |
+| **#30** | Condition state | **PENDING** |
+| **#10** | Technical sequencing | **DELEGATED — Co-Founder** |
+| **#10** | Scope | technical sequencing only |
+| — | `FD-7` decision status | **DECIDED** |
+
+#### 3. Authority basis
+
+Founder Reserved Authority. Appointment Register §3.2 exclusion 26 reserves
+`FD-7` to the Founder: *"Authority to decide unresolved Founder-reserved matters
+— including FD-2, FD-3, FD-4, FD-6, FD-7, FD-8 — unless a separate valid Founder
+decision explicitly delegates it."* This entry records the Founder exercising
+that reserved authority; it is not a delegation of it.
+
+`ACT-CC-T4.2 §6` classifies the three surfaces separately — #10 as class **B**
+(*"grantable by §3.2 scoped delegation"*, Founder-reserved **no**), #11 and #30
+as class **C**. The Founder here delegates only the class **B** surface and
+retains both class **C** surfaces. No constitutional change is made or implied:
+#30 is exercised by the Founder, not transferred.
+
+#### 4. The conditions `Q-FD7-2` refers to
+
+The Founder's authorization is conditional on the prerequisite and gate
+conditions established by `ACT-CC-R11`. Those conditions are cited, not restated
+as new requirements, and this entry creates none:
+
+| Condition | Instrument | State at this entry |
+|---|---|---|
+| PD-02 Activation | `GDR-0030`, Volume Activation Model `AE-01…AE-06` | **NOT ACTIVATED** |
+| `ADR-0010` (FD-6 Domain Model amendment) | `ADR-0010`, Status **Approved**, Status History 2026-08-16 | **ALREADY SATISFIED** — executed under `ACT-CC-F03-009` / `-010`; the canonical Domain Model carries `Platform Division` with `Department` as recorded historical alias |
+
+#### 5. Standing changes
+
+- **`FD-7` is DECIDED**, on all three surfaces, each with its own disposition.
+- Roadmap approval authority is **Founder-retained** and is not delegated.
+- P10 phase transition holds a **conditional** Founder authorization.
+- Technical sequencing (#10) is **delegated to the Co-Founder**, scope-bounded to
+  technical sequencing.
+
+#### 6. Explicitly not changed
+
+- **P10 transition is NOT EXECUTED.** This entry records a conditional
+  authorization; it performs no phase transition.
+- **P10 construction is NOT STARTED and is not authorized by this entry.**
+- Conditional authorization is **not** convertible into execution authority by
+  the existence of this record.
+- The delegation of #10 does **not** widen Co-Founder authority to #11 or #30,
+  and grants no roadmap-approval or phase-transition authority.
+- PD-02 remains **NOT ACTIVATED**.
+- `ADR-0010` was **already executed on 2026-08-16** and is not re-executed,
+  re-approved, or altered by this entry. `GDR-0020 §4`'s statement that the route
+  was *"identified, not executed"* was accurate on 2026-08-15 and has since been
+  overtaken by `ACT-CC-F03-009` / `-010`; that historical text is **not amended**,
+  per §2.3 append-only discipline.
+- Constitution, Delegation Charter, Founder Reserved Authority, Appointment
+  Register, Canonical Domain Model, Architecture Freeze, `DEL-T4.4-CF-001`, both
+  Volume corpora, and all P1–P9 implementation — **unchanged**.
+- The Master Roadmap itself is **not present in this repository** and is **not
+  reconstructed, rewritten, or imported** by this entry.
+- **AIOS is NOT COMPLETE.**
+
+#### 7. Lineage
+
+`GDR-0015`/`GDR-0016` record `FD-7` undecided · `ACT-CC-REM-003.0 §8` and
+`ACT-CC-T4.1` establish the Master Roadmap as non-resident and the phase claim as
+unverifiable · `ACT-CC-T4.2 §6` decomposes the three surfaces and their authority
+classes · `ACT-CC-R10` identifies #11/#30 as P10 blockers and #10 as non-blocking
+· `ACT-CC-R11 §4` prepares the three bounded questions · **this entry records the
+Founder's answers.**
+
+#### 8. Anti-self-authorization
+
+**Decision authority: Founder (`ACT-CC-R12 §7`). Recording actor: Claude Code.
+Decision inference: NONE.** The recording actor did not select any of the three
+answers, did not recommend the substantive outcome on `Q-FD7-1` or `Q-FD7-2`, and
+did not expand any of them. Every value in §2 is derived only from the verbatim
+text in §1. Where §1 says *conditional*, §2 records **CONDITIONAL** and §6
+records what remains unexecuted.
+
+#### 9. Status history
+
+| Date | Event | Authority |
+|---|---|---|
+| 2026-08-13 | `FD-7` recorded as undecided | `GDR-0015` |
+| 2026-08-15 | `FD-7` restated as undecided | `GDR-0016` |
+| 2026-09-03 | Three bounded questions prepared | Co-Founder · `ACT-CC-R11 §4` |
+| **2026-09-03** | **`FD-7` DECIDED — #11 retained · #30 conditionally authorized · #10 delegated** | **Founder · `ACT-CC-R12 §7.1`–`§7.3`** |
+
+#### 10. Recording note — register pointer
+
+`GDR-0028 §12` recorded that the §3 closing note's leading clause *"(No further
+entries."* is stale and that correcting it *"warrants its own authorization."*
+That correction is **still not performed here**: `ACT-CC-R12` authorizes
+persistence of the Founder decisions in §7 and nothing else, and the note's
+remaining sentence — *"Subsequent governance decisions are appended below as
+GDR-0028 onward"* — continues to describe this entry correctly. Recorded, not
+repaired.
+
+---
+
+### GDR-0030 — Founder Decision · PD-02 Activation Governance (DEC-AE04 · DEC-ADOPTION · DEC-REVOCATION)
+
+**Identifier:** GDR-0030
+**Date:** 2026-09-03
+**Tier:** Volume activation governance determination — Founder-reserved
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** `ACT-CC-R12 §7.4`, `§7.5`, `§7.6`, `§7.7`, `§7.8`
+**Decision gate:** `ACT-CC-R11 §6`; `AIOS_PD02_FOUNDER_DECISION_PACKAGE_v1.0.md` §2, §4, §5
+**Closes:** `DEC-AE04` (three dispositions) · `DEC-ADOPTION` · `DEC-REVOCATION`, all open since `GDR-0023` / `ACT-CC-F03-024`
+
+#### 1. Decision text (verbatim)
+
+Recorded exactly as the Founder stated it, per §2.3 verbatim discipline.
+
+> **`Q-AE04-1` — Frozen Count**
+>
+> **NON-BLOCKING**
+>
+> The independent recount establishes the 50 FROZEN section count as correct and
+> the previously reported 11 discrepancy as a counting-method artifact.
+
+> **`Q-AE04-2` — Non-Resident Historical Act Bodies**
+>
+> **NON-BLOCKING**
+>
+> The absence of specified historical Act bodies does not block PD-02 activation.
+
+> **`Q-AE04-3` — RG-3 / F-12**
+>
+> **CONFIRM NON-BLOCKING — FOR PD-02 ACTIVATION ONLY**
+
+> **`Q-ADOPTION` — Activation Gate Criteria**
+>
+> **ADOPT AGC v0.4** as the canonical Activation Gate criteria.
+
+> **`Q-REVOCATION` — Activation Reversibility**
+>
+> **B — IRREVERSIBLE BY DESIGN**
+>
+> with the intended meaning that PD-02 activation is permanent by design rather
+> than merely lacking a currently implemented revocation mechanism.
+
+#### 2. Resulting governance state
+
+| Decision | Field | Value |
+|---|---|---|
+| **AE-04.1** | Disposition | **NON-BLOCKING** |
+| **AE-04.1** | Basis | 50-claim count verified correct; the 11 figure is a counting-method artifact |
+| **AE-04.2** | Disposition | **NON-BLOCKING** |
+| **AE-04.2** | Historical bodies | **remain non-resident and non-reconstructed** |
+| **AE-04.3** | Disposition | **NON-BLOCKING — FOR PD-02 ACTIVATION ONLY** |
+| **AE-04** (whole) | Condition | **assessable as SATISFIED** — all three carry an express Founder non-blocking determination |
+| **`DEC-ADOPTION`** | Outcome | **AGC v0.4 ADOPTED as canonical** |
+| **AE-05** | Condition | **satisfiable** — the Gate now has resident canonical criteria |
+| **`DEC-REVOCATION`** | Activation model | **IRREVERSIBLE BY DESIGN** |
+| **AGC-06** | Effect | **satisfiable** — the criterion's pass condition accepts *"their absence expressly determined by the Founder to be intended"* |
+
+#### 3. Authority basis
+
+Founder Reserved Authority. `AE-04`'s canonical text permits an item to remain as
+debt *"only where the Founder has expressly determined it does not block"* — this
+entry supplies three such determinations. `AE-06` reserves final Activation
+Authorization to the Founder and is **not** exercised here. `GDR-0027 §8`
+expressly left `AE-04`, `DEC-REVOCATION` and `DEC-ADOPTION` open and
+Founder-reserved; this entry closes exactly those three and nothing else.
+
+#### 4. Scope boundaries (mandatory, not abbreviable)
+
+- **AE-04.3 is scoped to PD-02 Activation only.** The determination does **not**
+  generalize to any other interpretation of `F-12` anywhere in AIOS. The label
+  collision recorded by `ACT-CC-F03-024` — the Founder's `F-12` (*"Documentation
+  quality sufficient"*) versus the Co-Founder's `F-12` (the `O-5` collision
+  finding) — is **not** resolved by this entry.
+- **Adoption is not activation.** AGC v0.4 becoming canonical fixes *what the
+  Gate tests*; it neither executes the Gate nor passes it.
+- **Irreversible by design is a governance semantic, not a mechanism.** No
+  revocation API, suspension state, deactivation procedure, rollback, or
+  reactivation path is created, and none may be inferred from this entry. Any
+  future change to this semantic is a separate governance decision.
+- **AE-04.2 authorizes no reconstruction.** The named Act bodies remain absent by
+  determination, not by oversight.
+
+#### 5. Standing changes
+
+- **`DEC-AE04` is DECIDED** — three dispositions, each **NON-BLOCKING**, AE-04.3
+  scope-qualified.
+- **`DEC-ADOPTION` is DECIDED** — **AGC v0.4** (AGC-01, -02, -03, -05, -06 plus
+  `GER-01`, `GER-02`) is the **canonical** PD-02 Activation Gate criteria set.
+  It is no longer NON-CANONICAL.
+- **`DEC-REVOCATION` is DECIDED** — PD-02 activation is **irreversible by
+  design**.
+- With `GDR-0027` (`DEC-ACT-SEMANTICS` = Option C), all four Founder decisions
+  prepared in `AIOS_PD02_FOUNDER_DECISION_PACKAGE_v1.0.md` are now decided.
+
+#### 6. Explicitly not changed
+
+- **PD-02 is NOT ACTIVATED.** This entry decides the governing conditions; it
+  performs no lifecycle transition.
+- **Activation Eligibility is NOT DECLARED** by this entry. `AE-01…AE-06` are
+  assessed by a separate assessment act, and no eligibility result may be
+  fabricated from this record.
+- **Activation Gate NOT EXECUTED · Activation Authorization NOT ISSUED ·
+  Activation Act NOT EXECUTED.**
+- `AG-01…AG-10` remain **NON-CANONICAL** historical scaffolding. Adopting AGC
+  v0.4 promotes nothing else.
+- The AGC v0.4 criteria are adopted **as they stand**; adoption does not mark any
+  criterion passed. `AGC-06`'s pass now depends on this entry's determination
+  being applied at gate time, which is a gate execution, not a recording.
+- Volume 1 / PD-01 lifecycle, freeze and activation state — **unchanged**.
+- Constitution, Delegation Charter, Founder Reserved Authority, Canonical Domain
+  Model, Architecture Freeze, Appointment Register, `ADR-0001…0009`, both Volume
+  corpora and the P7-I99 review — **unchanged**.
+- `ADR-0010` is **already executed** (2026-08-16) and is untouched by this entry.
+- **AIOS is NOT COMPLETE.**
+
+#### 7. Lineage
+
+`GDR-0023` GG-2 records the activation-semantics gap · `ACT-CC-F03-020 §3–§6`
+establishes `AE-01…AE-06` · `ACT-CC-F03-024` assesses eligibility **NOT
+SATISFIED** on `AE-04` and `AE-05` · `AIOS_PD02_FOUNDER_DECISION_PACKAGE_v1.0.md`
+prepares four decisions · `GDR-0026` records Volume 2 **FROZEN** · `GDR-0027`
+closes `DEC-ACT-SEMANTICS` as Option C and leaves the other three open ·
+`AIOS_PD02_ACTIVATION_GATE_CRITERIA_PROPOSAL_v0.4.md` carries the criteria set ·
+`ACT-CC-R11 §6` prepares the five bounded questions, including the independent
+recount cited in `Q-AE04-1` · **this entry records the Founder's answers.**
+
+#### 8. Anti-self-authorization
+
+**Decision authority: Founder (`ACT-CC-R12 §7`). Recording actor: Claude Code.
+Decision inference: NONE.** The recording actor did not select any of the five
+answers and offered no recommendation on `Q-AE04-1`, `Q-AE04-2`, `Q-AE04-3` or
+`Q-ADOPTION`. On `Q-REVOCATION` the Co-Founder recorded one observation in
+`ACT-CC-R11 §6.5` — that Option B satisfies `AGC-06` as completely as Option A,
+per the criterion's own pass condition — which is an observation about the
+criterion's text, not a recommendation of the outcome; the Founder's selection
+was made independently of it and is recorded verbatim above.
+
+The recount cited in `Q-AE04-1` was produced by the Co-Founder under
+`ACT-CC-R11 §6.1` and is **evidence**, not authority: the Founder's disposition of
+the item is what this entry records.
+
+#### 9. Status history
+
+| Date | Event | Authority |
+|---|---|---|
+| 2026-08-20 | Eligibility assessed **NOT SATISFIED** — `AE-04`, `AE-05` | Co-Founder · `ACT-CC-F03-024` |
+| 2026-08-20 | Four decisions prepared to answerable form | Co-Founder · `ACT-CC-F03-029` |
+| 2026-08-20 | `DEC-ACT-SEMANTICS` decided — Option C | Founder · `GDR-0027` |
+| 2026-09-03 | Five bounded questions prepared; recount performed | Co-Founder · `ACT-CC-R11 §6` |
+| **2026-09-03** | **`DEC-AE04` · `DEC-ADOPTION` · `DEC-REVOCATION` DECIDED** | **Founder · `ACT-CC-R12 §7.4`–`§7.8`** |
+
+---
+
 ## 4. External Corpus Synchronization Ledger
 
 The Master Program (Volumes I–VIII), `AIOS_CANONICAL_ARCHITECTURE.md`, ALMM,
