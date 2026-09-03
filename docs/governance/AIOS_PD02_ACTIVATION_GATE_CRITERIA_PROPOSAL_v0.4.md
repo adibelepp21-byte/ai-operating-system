@@ -1,16 +1,21 @@
-# PD-02 Activation Gate Criteria — ADOPTION-READY PROPOSAL
+# PD-02 Activation Gate Criteria — ADOPTED / CANONICAL
 
-> # PROPOSED — NOT CANONICAL
+> # ADOPTED — CANONICAL
 >
-> No governance authority. Not a Gate criterion, Gate result, Activation
-> Eligibility, Activation Authorization, or Activation. Becomes canonical **only**
-> by explicit Founder Adoption (`ACT-CC-F03-028 §15`, `§19`). Commit, push,
-> verification and "adoption-ready" status constitute **no** adoption.
+> **Adopted by the Founder, recorded at `GDR-0030`** (`ACT-CC-R12 §7.7` —
+> *"ADOPT AGC v0.4 as the canonical Activation Gate criteria"*). These are the
+> canonical criteria the PD-02 Activation Gate tests.
+>
+> Adoption fixes **what the Gate tests**. It is **not** a Gate result, **not**
+> Activation Eligibility, **not** Activation Authorization, and **not**
+> Activation. No criterion below is thereby marked passed: criterion assessment
+> happens at Gate execution, and **the Gate has not been executed**.
 
 **Version:** v0.4 · **Supersedes:** v0.3 (v0.1–v0.3 retained as provenance)
 **Prepared under:** FOUNDER · `ACT-CC-F03-030 §8`, `§9`, `§10`, `§15`
 **Prepared by:** Claude Code / Co-Founder (Construction Phase) · **Date:** 2026-08-20
-**Founder Adoption:** **NOT EXECUTED** · **Canonical instrument:** **NOT CREATED**
+**Founder Adoption:** **EXECUTED — `GDR-0030`, 2026-09-03** · **Canonical status:** **CANONICAL**
+**Record-currency reconciled under:** `ACT-CC-R13A` (status metadata only; no criterion changed)
 
 ---
 
@@ -28,7 +33,7 @@ re-scoped; AGC-04 remains retired.** Changes are confined to `Evidence Source`,
 | **AGC-02** | UNRESOLVED — reliance undefined pending AGC-01 | **testable; PASS on present evidence** | With OA-01…OA-06 enumerated, consumer reliance has defined content. Tested explicitly per `ACT-CC-F03-030 §9`: Option C **does** make it testable, so it is **retained, not retired** |
 | **AGC-03** | PASS | **PASS** | unchanged |
 | **AGC-05** | PASS | **PASS** | unchanged |
-| **AGC-06** | FAIL | **FAIL** | Option C *sharpens* it — revocation now means withdrawal of operative authority — but no revocation mechanism is resident. `DEC-REVOCATION` stays Founder-reserved |
+| **AGC-06** | FAIL | **FAIL** *(as authored 2026-08-20)* | Option C *sharpens* it — revocation now means withdrawal of operative authority — but no revocation mechanism is resident. `DEC-REVOCATION` stays Founder-reserved. **Superseded in its stated reason:** `DEC-REVOCATION` was decided at `GDR-0030` — see §6A |
 
 **The v0.3 observation that AGC-02 might be permanently unpassable is now
 resolved against the evidence, not by preference:** it was contingent on
@@ -163,7 +168,7 @@ No AE condition is reused as an AGC criterion. `AE-01…AE-06` are untouched.
 | **Failure Handling** | FAIL is terminal for the Gate run: no downstream criterion can be assessed while the effect set is undefined |
 | **Related Rules** | GER-01 (an undefined effect cannot be substituted by an excluded ground) |
 | **Change Control** | Changes only by a Founder instrument defining or amending activation effects |
-| **Canonical Status** | PROPOSED — NOT CANONICAL |
+| **Canonical Status** | **CANONICAL** — adopted by the Founder at `GDR-0030` |
 
 ### AGC-02 — Downstream Consumer Impact
 
@@ -187,7 +192,7 @@ No AE condition is reused as an AGC criterion. `AE-01…AE-06` are untouched.
 | **Failure Handling** | UNRESOLVED while AGC-01 is unresolved; do not downgrade to FAIL, and do not pass by assuming an effect |
 | **Related Rules** | AGC-01 (blocking dependency) |
 | **Change Control** | Changes when the consumer set or the AGC-01 effect set changes |
-| **Canonical Status** | PROPOSED — NOT CANONICAL |
+| **Canonical Status** | **CANONICAL** — adopted by the Founder at `GDR-0030` |
 
 ### AGC-03 — Verification Currency
 
@@ -211,7 +216,7 @@ No AE condition is reused as an AGC criterion. `AE-01…AE-06` are untouched.
 | **Failure Handling** | Any mismatch is FAIL and halts the Gate run; do not repair the mismatch inside the Gate |
 | **Related Rules** | GER-02 (currency evidence supports the result; it is not the result) |
 | **Change Control** | Recorded values change only through an authorized lifecycle act |
-| **Canonical Status** | PROPOSED — NOT CANONICAL |
+| **Canonical Status** | **CANONICAL** — adopted by the Founder at `GDR-0030` |
 
 ### AGC-05 — Authority Chain Integrity at Gate Time
 
@@ -235,7 +240,7 @@ No AE condition is reused as an AGC criterion. `AE-01…AE-06` are untouched.
 | **Failure Handling** | FAIL halts the Gate run and is escalated as an authority defect, never remediated by the executor |
 | **Related Rules** | GER-02 (the result must be recorded as evidence, not decision) |
 | **Change Control** | Changes only through an Appointment or Delegation Register act |
-| **Canonical Status** | PROPOSED — NOT CANONICAL |
+| **Canonical Status** | **CANONICAL** — adopted by the Founder at `GDR-0030` |
 
 ### AGC-06 — Post-Activation Change Control and Reversibility
 
@@ -259,7 +264,7 @@ No AE condition is reused as an AGC criterion. `AE-01…AE-06` are untouched.
 | **Failure Handling** | FAIL unless the Founder has expressly determined irreversibility is intended; the executor may not supply that determination |
 | **Related Rules** | AGC-01 (revocation semantics depend on what activation confers) |
 | **Change Control** | Changes only by a Founder instrument defining change control or revocation |
-| **Canonical Status** | PROPOSED — NOT CANONICAL |
+| **Canonical Status** | **CANONICAL** — adopted by the Founder at `GDR-0030` |
 
 ---
 
@@ -296,7 +301,7 @@ activation decision, and must not be framed so that it could be read as one.
 
 ---
 
-## 6. Present standing — what a Gate run would return today
+## 6. Standing as authored on 2026-08-20 — what a Gate run would have returned then
 
 | ID | Would return | Because |
 |---|---|---|
@@ -306,10 +311,34 @@ activation decision, and must not be framed so that it could be read as one.
 | AGC-05 | **PASS** | Zero instruments grant Co-Founder activation authority |
 | AGC-06 | **FAIL** | Neither an Architecture Change Control procedure nor a revocation mechanism is resident |
 
-**4 of 5 now pass — because the Founder answered the load-bearing question, not
+**4 of 5 passed — because the Founder answered the load-bearing question, not
 because the criteria were softened.** Every pass/fail threshold is byte-identical
-to v0.3; only the evidence changed. **AGC-06 still fails**, and it is the single
-remaining criterion-level blocker.
+to v0.3; only the evidence changed. This table records the position on
+2026-08-20; for what has changed since, see §6A.
+
+## 6A. Record-currency note — `ACT-CC-R13A`
+
+`GDR-0030` (2026-09-03) decided `DEC-REVOCATION` as **irreversible by design**,
+after §6 above was written. That determination bears directly on AGC-06, whose
+**Fail Condition** is *"Activation would be irreversible with no Founder
+determination that irreversibility is intended."* **That fail condition is no
+longer met.** The §6 row's stated reason is therefore superseded in part.
+
+**No new verdict is assigned here, and none may be inferred.** `ACT-CC-R13A`
+authorizes record-currency reconciliation only; it does not assess criteria. What
+is established, and what is not:
+
+| | State |
+|---|---|
+| AGC-06 revocation half — a resident revocation mechanism | **absent**, and the Founder has **expressly determined that irreversibility is intended** (`GDR-0030`) |
+| AGC-06 change-control half — a resident Architecture Change Control **procedure** | **still not established.** `GDR-0017` requires *"the applicable Architecture Change Control"*; every resident occurrence requires it or records its absence. Rechecked 2026-09-03 under `ACT-CC-R13` |
+| AGC-06 criterion result | **NOT ASSESSED** — assessment occurs at Gate execution |
+| Gate execution | **NOT PERFORMED** |
+
+A Gate run must evaluate AGC-06's two halves separately, exactly as its own
+Verification Method directs: *"(a) locate a defined Architecture Change Control
+procedure; (b) locate a Volume revocation mechanism. Absence of either is a
+finding, not a pass."*
 
 ## 7. Founder decisions this proposal cannot make
 
@@ -318,6 +347,10 @@ remaining criterion-level blocker.
 | §10 | What PD-02 activation confers | AGC-01, and AGC-02/AGC-06 downstream |
 | §11 | Whether activation is revocable, and on what terms | AGC-06 |
 | §§4–6 | AE-04.1 / .2 / .3 dispositions | AE-04 |
+
+**Currency (`ACT-CC-R13A`):** all three were subsequently decided by the Founder
+— §10 at `GDR-0027` (Option C), §11 and §§4–6 at `GDR-0030`. The table is
+retained as the record of what this proposal could not decide for itself.
 | §15 | Adoption outcome | Canonicalization (`§19`) |
 
 `ACT-CC-F03-028 §29` reserves each of these to the Founder in terms. None was
@@ -350,4 +383,5 @@ decision, and none was used to bypass an unresolved Founder decision.
 
 ---
 
-**PROPOSED — NOT CANONICAL. Founder Adoption: NOT EXECUTED. Canonical instrument: NOT CREATED.**
+**ADOPTED — CANONICAL (`GDR-0030`). Gate execution: NOT PERFORMED. Activation
+Eligibility, Activation Authorization and Activation: unchanged by adoption.**
