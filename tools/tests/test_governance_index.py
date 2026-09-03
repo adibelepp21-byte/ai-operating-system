@@ -347,7 +347,7 @@ class KnownRetrievalFailures(_Corpus):
                    and r.date != ABSENT]
         self.assertGreater(len(entries), 5)
         newest = max(entries, key=lambda r: r.date)
-        self.assertEqual("GDR-0028", newest.identifier)
+        self.assertEqual("GDR-0029", newest.identifier)
 
     def test_a_t12_enquiry_reaches_gdr_0028(self):
         found = self.index.about("T-12")
