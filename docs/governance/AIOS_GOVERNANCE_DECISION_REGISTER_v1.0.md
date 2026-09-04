@@ -4055,6 +4055,275 @@ the item is what this entry records.
 
 ---
 
+### GDR-0031 — Founder Decision · A-01 AGC-03 Corpus Digest Not Required for Future Gate Currency (A3)
+
+**Identifier:** GDR-0031
+**Date:** 2026-09-04
+**Tier:** Activation Gate evidence determination — Founder-reserved
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** FOUNDER DECISION RECORD — PD-02 Activation Gate Governance Decision Resolution, Decision A-01
+**Decision gate:** `ACT-CC-R14Z` Founder Decision Sheet A-01
+**Closes:** `A-01`, open since `ACT-CC-R14` recorded AGC-03 as UNRESOLVED
+
+#### 1. Decision text (verbatim)
+
+Recorded exactly as the Founder stated it, per §2.3 verbatim discipline.
+
+> **YES — A3: DIGEST NOT REQUIRED FOR FUTURE GATE CURRENCY.**
+>
+> The Founder hereby determines that the corpus-level digest is not required as
+> evidence for future AGC-03 currency checks.
+>
+> Future AGC-03 currency shall rely upon the following evidence:
+>
+> 1. 50/50 per-section SHA-256 evidence covering the canonical corpus bodies;
+> 2. the applicable review-record blob; and
+> 3. the applicable freeze record.
+>
+> These three evidence sources constitute the required future AGC-03 currency
+> evidence following this decision.
+
+#### 2. Resulting governance state
+
+| Field | Value |
+|---|---|
+| `A-01` decision status | **DECIDED — A3** |
+| Future AGC-03 evidence model | **three sources** — per-section SHA-256 · review-record blob · freeze record |
+| Corpus-level digest | **not required** for future AGC-03 currency |
+| Historical digest `506818698fc7a241683c9257d81a2ee2` | **PRESERVED as historical evidence** |
+| Historical derivation method | **NOT VERIFIED** — unchanged |
+| Replacement digest method | **NONE created, authorized, implied or required** |
+
+#### 3. Authority basis
+
+Founder Reserved Authority. AGC-03 is a criterion of the canonical PD-02
+Activation Gate criteria set adopted at `GDR-0030`; changing what evidence it
+requires is a change to an adopted canonical criterion and is reserved to the
+Founder. This entry records the Founder exercising that authority.
+
+#### 4. Historical record protection
+
+The Founder's record states the protections in terms, and they are reproduced
+here as binding constraints on every downstream action:
+
+- the historical recorded value is **not invalidated**;
+- the historical record is **not rewritten**;
+- the historical value is **not replaced**;
+- the historical derivation method is **not represented as recovered**;
+- the historical computation method is **not inferred or reconstructed**; and
+- **no retroactive recomputation** intended to establish historical provenance
+  is authorized.
+
+#### 5. Governance rationale (as recorded by the Founder)
+
+Based on evidence established by `ACT-CC-R14Z`: all 50 canonical bodies carry
+per-section SHA-256 evidence; those hashes cover the bytes of their bodies;
+`FZ-01` independently verifies corpus membership; controlled mutation testing
+demonstrated that a single-byte modification is detected by the per-section hash
+set; and the historical corpus-level digest method could not be established from
+resident sources or from exhausted Git history.
+
+#### 6. Standing changes
+
+- **`A-01` is DECIDED.** The corpus-level digest is **not required** for future
+  AGC-03 currency.
+- AGC-03's future evidence set is the **three-source model** above.
+- The bounded AGC-03 record update reflecting this is authorized and executed
+  under this entry's downstream authorization; **no other AGC-03 criterion
+  changes.**
+
+#### 7. Explicitly not changed
+
+- The canonical corpus · the 50 per-section SHA-256 evidence · `FZ-01` corpus
+  membership verification · the review-record blob · the applicable freeze
+  record — **all unchanged**.
+- Historical records — **unchanged**. Unrelated integrity controls —
+  **unchanged**. Every other activation criterion — **unchanged**.
+- **This decision is not an Activation Gate PASS.** AGC-03 becomes assessable on
+  three sources; it is not thereby assessed.
+- Activation Gate **NOT EXECUTED** · Activation Authorization **NOT ISSUED** ·
+  Activation **NOT EXECUTED** · P10 **NOT STARTED**.
+- **AIOS is NOT COMPLETE.**
+
+#### 8. Lineage
+
+`P7-I99-VOLUME-2-PD-02-REVIEW.md:8` records the digest and its only method
+statement · `FZ-01` (this Register) claims reproduction without method ·
+`ACT-CC-R14` finds AGC-03 UNRESOLVED on non-recomputability · `ACT-CC-R14B`
+exhausts resident sources · `ACT-CC-R14Y` establishes 4 of 9 method components ·
+`ACT-CC-R14Z` exhausts Git history and demonstrates per-section detection
+sufficiency · **this entry records the Founder's decision.**
+
+#### 9. Anti-self-authorization
+
+**Decision authority: Founder. Recording actor: Claude Code. Decision inference:
+NONE.** The Co-Founder recommended A3 in `ACT-CC-R14Z` and recorded that
+recommendation as advisory. The Founder selected it independently and stated the
+three-source model in terms; §1 is quoted, not summarized. No option was chosen
+by the recording actor, and the recommendation conferred no authority.
+
+#### 10. Status history
+
+| Date | Event | Authority |
+|---|---|---|
+| 2026-08-16 | Digest recorded in the P7-I99 review | Co-Founder under `DEL-F03-015-P7I99-001` |
+| 2026-09-03 | AGC-03 found UNRESOLVED — source not recomputable | Co-Founder · `ACT-CC-R14` |
+| 2026-09-04 | Git history exhausted; detection sufficiency demonstrated | Co-Founder · `ACT-CC-R14Z` |
+| **2026-09-04** | **`A-01` DECIDED — A3, three-source model** | **Founder** |
+
+---
+
+### GDR-0032 — Founder Decision · B-01 Volume Architectural Content is Architectural-Tier (B1)
+
+**Identifier:** GDR-0032
+**Date:** 2026-09-04
+**Tier:** Governance-boundary classification — Founder-reserved
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** FOUNDER DECISION RECORD — PD-02 Activation Gate Governance Decision Resolution, Decision B-01
+**Decision gate:** `ACT-CC-R14Z` Founder Decision Sheet B-01
+**Closes:** `B-01`, open since `ACT-CC-R14C` found ACC applicability unresolved
+
+#### 1. Decision text (verbatim)
+
+Recorded exactly as the Founder stated it, per §2.3 verbatim discipline.
+
+> **YES — B1: VOLUME ARCHITECTURAL CONTENT → ARCHITECTURAL-TIER.**
+>
+> A material change to the architectural content of PD-02 Volume is an
+> architectural-tier change.
+>
+> Such a change shall be governed through the applicable Architecture Change
+> Control and effected through an ADR under Engineering Constitution §3.4,
+> subject to the authority, scope, and approval requirements of the applicable
+> architectural governance sources.
+
+#### 2. Resulting governance state
+
+| Domain | Classification | Instrument | Authority |
+|---|---|---|---|
+| **Volume architectural content** — material change | **ARCHITECTURAL-TIER** | Architecture Change Control → **ADR**, Engineering Constitution §3.4 | per applicable architectural governance sources |
+| **Volume lifecycle state** | **GOVERNANCE-LIFECYCLE — unchanged** | Founder Decision + this Register | **Founder-reserved** |
+
+```text
+VOLUME LIFECYCLE STATE          VOLUME ARCHITECTURAL CONTENT
+        ↓                                ↓
+FOUNDER-RESERVED                MATERIAL ARCHITECTURAL CHANGE
+        ↓                                ↓
+GOVERNANCE-LIFECYCLE            ARCHITECTURAL-TIER
+        ↓                                ↓
+FOUNDER / GDR                   ARCHITECTURE CHANGE CONTROL
+                                         ↓
+                                ADR / ENGINEERING CONSTITUTION §3.4
+```
+
+**The two domains shall remain distinct.**
+
+#### 3. Authority basis
+
+Founder Reserved Authority. `GDR-0026 §1` established that Volume-level matters
+are Founder-reserved, citing `GDR-0016` and Appointment Register §3.2; the
+classification of a Volume-level change therefore sits with the Founder. This
+entry records the Founder exercising that authority to classify the **content**
+case, which `GDR-0026 §1` addressed only for **lifecycle state**.
+
+#### 4. Scope boundary
+
+This decision applies **only** to material changes to the architectural content
+of the Volume. It does **not** classify or transfer authority over: Volume
+lifecycle state · activation status · revocation · suspension · deactivation ·
+Founder-reserved governance matters · any other lifecycle-state transition.
+
+#### 5. Authority boundary — not a modification authorization
+
+This is a **classification and governance-boundary decision**, not a blanket
+authorization to modify the Volume. Nothing here grants the Architecture
+Authority role authority to modify the Volume merely by virtue of holding that
+role. **Appointment Register §3.2 exclusion 25 remains applicable:** *"Authority
+to modify Volume 1 merely because the Architecture Authority role now exists"* is
+excluded. Any future ADR or architectural change must independently identify and
+satisfy the authority and approval requirements applicable to it.
+
+#### 6. No lifecycle inference — expressly prohibited
+
+> No person, agent, automation, or governance process may infer from `B-01` that
+> *"Because architectural content is architectural-tier, Volume lifecycle state
+> is also architectural-tier."*
+
+That inference is **expressly prohibited** by the Founder's record.
+Lifecycle-state authority remains governed separately under the Founder-reserved
+framework, and `GDR-0026 §1` is **not modified** by this entry.
+
+#### 7. Governance rationale (as recorded by the Founder)
+
+Based on `ACT-CC-R14Z`: `GDR-0026 §1`'s explicit treatment of Volume lifecycle
+state as Founder-reserved and not Architectural Tier; `GDR-0026`'s standing-change
+requirement that *"future material changes to the frozen Volume require the
+applicable Architecture Change Control"*; `GDR-0017`'s corresponding treatment
+for Volume 1; Engineering Constitution §3.4's requirement of an ADR for
+architectural-tier change; and the fact that the constitutional architectural
+mechanism operates independently of the PD-02 activation-state circularity
+identified at `GDR-0027` **OA-07**. The Founder confirms the lifecycle/content
+boundary rather than collapsing both domains into one tier.
+
+#### 8. Standing changes
+
+- **`B-01` is DECIDED.** Material Volume architectural-content change is
+  **architectural-tier**, effected through Architecture Change Control and an
+  **ADR** under Engineering Constitution §3.4.
+- **`AGC-06(a)` now has a named applicable path.** The bounded AGC-06
+  applicability update reflecting this is authorized and executed under this
+  entry's downstream authorization.
+
+#### 9. Explicitly not changed
+
+- **Volume lifecycle state classification — unchanged.** `GDR-0026 §1` stands.
+- The Volume itself is **not modified**. No ADR is approved, drafted, or implied
+  by this entry.
+- No authority is granted to the Architecture Authority role. Volume lifecycle
+  state is **not altered**.
+- **This decision is not an Activation Gate PASS**, and is not an architectural
+  mutation authorization.
+- Constitution, ADR Framework, Canonical Domain Model, Architecture Freeze,
+  Appointment Register, `GDR-0026`, `GDR-0027`, both Volume corpora — **all
+  unchanged**.
+- Activation Gate **NOT EXECUTED** · Activation Authorization **NOT ISSUED** ·
+  Activation **NOT EXECUTED** · P10 **NOT STARTED**. **AIOS is NOT COMPLETE.**
+
+#### 10. Lineage
+
+`GDR-0017` and `GDR-0026` route future material Volume changes to *"the
+applicable Architecture Change Control"* without naming one · `GDR-0026 §1`
+classifies Volume lifecycle state as Founder-reserved, not Architectural Tier ·
+`Engineering Constitution §3.4` makes an ADR the required instrument for
+architectural-tier change · `ACT-CC-R13B` finds a resident ACC definition at
+`D8 §70` · `ACT-CC-R14C` finds applicability unresolved across six candidates ·
+`ACT-CC-R14Y`/`R14Z` establish the decision authority as Founder-reserved and
+surface the differential routing inside `GDR-0026` itself · **this entry records
+the Founder's decision.**
+
+#### 11. Anti-self-authorization
+
+**Decision authority: Founder. Recording actor: Claude Code. Decision inference:
+NONE.** The Co-Founder recommended B1 in `ACT-CC-R14Z`, explicitly labelled
+**INFERRED and advisory**, and declined across `R14C`, `R14X` and `R14Y` to
+classify the case itself. The Founder selected B1 independently and supplied the
+scope, authority and no-inference boundaries reproduced above. §1 is quoted, not
+summarized.
+
+#### 12. Status history
+
+| Date | Event | Authority |
+|---|---|---|
+| 2026-08-13 | `GDR-0017` routes future material Volume changes to applicable ACC | Founder |
+| 2026-08-16 | `GDR-0026 §1` classifies Volume lifecycle state as Founder-reserved | Founder |
+| 2026-09-03 | ACC applicability found unresolved; six candidates, none naming the target | Co-Founder · `ACT-CC-R14C` |
+| 2026-09-04 | Decision authority established as Founder-reserved; package prepared | Co-Founder · `ACT-CC-R14Y`/`R14Z` |
+| **2026-09-04** | **`B-01` DECIDED — B1, architectural-tier** | **Founder** |
+
+---
+
 ## 4. External Corpus Synchronization Ledger
 
 The Master Program (Volumes I–VIII), `AIOS_CANONICAL_ARCHITECTURE.md`, ALMM,
