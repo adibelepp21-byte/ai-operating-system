@@ -15,6 +15,7 @@ closes with a hash comparison proving the corpus is byte-identical afterwards.
 
 import ast
 import json
+import re
 import subprocess
 import sys
 import tempfile
@@ -346,24 +347,31 @@ class KnownRetrievalFailures(_Corpus):
                    if r.source_path == register and r.identifier.startswith("GDR-")
                    and r.date != ABSENT]
         self.assertGreater(len(entries), 5)
-        newest = max(entries, key=lambda r: r.date)
+        newest_date = max(r.date for r in entries)
         # Which entry leads is a fact about the corpus and changes every time a
-        # decision is recorded; that the selection is *earned by chronology* is
-        # the property. Pinning the identifier tested the corpus, not the index,
-        # and went stale twice -- GDR-0028 -> GDR-0029 -> GDR-0031 -- while the
-        # index stayed correct, exactly as this class's docstring describes for
-        # the two constants ACT-CC-P1-6-077 already replaced. It is also no
-        # longer well-defined: GDR-0031 and GDR-0032 share a stated date, so a
-        # literal would record which of them `max` happened to reach first.
-        self.assertTrue(newest.identifier.startswith("GDR-"))
-        self.assertEqual(register, newest.source_path)
-        for record in entries:
-            self.assertLessEqual(record.date, newest.date)
-        # ...and it is strictly ahead of everything not sharing its date, so the
-        # ordering is earned rather than incidental.
-        for record in entries:
-            if record.date != newest.date:
-                self.assertLess(record.date, newest.date)
+        # decision is recorded; that chronology is what *surfaces* it is the
+        # property. Pinning the identifier tested the corpus, not the index, and
+        # went stale twice -- GDR-0028 -> GDR-0029 -> GDR-0031 -- exactly as this
+        # class's docstring describes for the two constants ACT-CC-P1-6-077
+        # already replaced. Nor is a literal well-defined any longer: entries
+        # state the same date as one another, and no resident source establishes
+        # an ordering between entries that do, so nothing here may name one.
+        # Asserting a relation among values the test itself derived would only
+        # restate `max`, so the question §26 poses -- would the index have made
+        # the newer record easy to find? -- is put to the index instead, through
+        # the chronological query a reader would actually use.
+        surfaced = self.index.since(newest_date)
+        self.assertEqual(
+            {r.identifier for r in entries if r.date == newest_date},
+            {r.identifier for r in surfaced
+             if r.source_path == register and r.identifier.startswith("GDR-")},
+            "the chronological query must surface every register entry standing "
+            "at the newest stated date, and no entry standing before it",
+        )
+        # ...and it hands them back in date order, so the newest is reached last
+        # by chronology rather than by where it happens to sit in the file.
+        stated = [gi._ISO_DATE_RE.search(r.date).group(0) for r in surfaced]
+        self.assertEqual(sorted(stated), stated, "chronology is surfaced in order")
 
     def test_a_t12_enquiry_reaches_gdr_0028(self):
         found = self.index.about("T-12")
@@ -544,16 +552,48 @@ class Queries(_Corpus):
 
     def test_b_has_a_decision_been_superseded(self):
         answer = self.index.supersession("DEC-P6-042")
-        self.assertEqual(UNKNOWN, answer["superseded_by"],
-                         "no record in the corpus states that DEC-P6-042 was superseded")
+        # What the answer must be is read off the records, not pinned to the
+        # corpus's present silence: an edge may be reported only where a record
+        # states one, and UNKNOWN must be reported where none does. A literal
+        # UNKNOWN tested the corpus rather than the query and would go stale the
+        # moment a supersession was lawfully recorded.
+        stated = [r for r in self.index.records
+                  if (r.identifier == "DEC-P6-042" and r.superseded_by)
+                  or "DEC-P6-042" in r.supersedes]
+        if stated:
+            self.assertNotEqual(UNKNOWN, answer["superseded_by"],
+                                "a stated supersession must be reported")
+        else:
+            self.assertEqual(UNKNOWN, answer["superseded_by"],
+                             "no record states that DEC-P6-042 was superseded")
         self.assertIn("read the canonical source", str(answer["note"]))
 
     def test_c_what_records_exist_for_a_phase(self):
-        # No tracked record states a "Phase 6" phase label, so by_phase finds
-        # none -- correctly, because the index will not manufacture one from a
-        # path or a filename. The phase field works where a source states it:
-        self.assertEqual((), self.index.by_phase("Phase 6"))
+        # by_phase "matches the stated program_phase text only", and the module
+        # states that "no field is ever derived from a file's path, its name,
+        # its position in the corpus, or its commit metadata". Both are checked
+        # here against what the records state -- for a needle the corpus uses
+        # and for one it does not -- rather than against the fact that no
+        # tracked record happens to state "Phase 6" today, which is corpus state
+        # and would go stale the moment one did.
+        for needle in ("Phase 6", "DNA Consolidation"):
+            self.assertEqual(
+                tuple(r for r in self.index.records
+                      if needle.casefold() in r.program_phase.casefold()),
+                self.index.by_phase(needle), needle)
         self.assertTrue(self.index.by_phase("DNA Consolidation"))
+        # A phase is never manufactured from a path: records filed under a
+        # phase-named directory carry a phase only where they state one, and
+        # the value carried is the source's own.
+        filed_under_a_phase = [r for r in self.index.records
+                               if re.search(r"phase[-_]?\d", r.source_path, re.IGNORECASE)]
+        self.assertTrue(filed_under_a_phase)
+        for record in filed_under_a_phase:
+            if record.program_phase == ABSENT:
+                continue
+            source = (REPO_ROOT / record.source_path).read_text(encoding="utf-8")
+            self.assertIn(record.program_phase.split("\n")[0][:30], source,
+                          record.source_path)
         # Phase-6 Decisions are reachable instead through the identifier the
         # records themselves carry, which is evidence and not inference.
         decisions = self.index.search("DEC-P6")
