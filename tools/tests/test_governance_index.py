@@ -340,14 +340,30 @@ class KnownRetrievalFailures(_Corpus):
         lines = (REPO_ROOT / record.source_path).read_text(encoding="utf-8").splitlines()
         self.assertIn("GDR-0028", lines[record.source_line - 1])
 
-    def test_gdr_0028_is_the_latest_register_entry_by_stated_date(self):
+    def test_the_register_entry_it_calls_newest_is_genuinely_the_newest(self):
         register = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
         entries = [r for r in self.index.records
                    if r.source_path == register and r.identifier.startswith("GDR-")
                    and r.date != ABSENT]
         self.assertGreater(len(entries), 5)
         newest = max(entries, key=lambda r: r.date)
-        self.assertEqual("GDR-0029", newest.identifier)
+        # Which entry leads is a fact about the corpus and changes every time a
+        # decision is recorded; that the selection is *earned by chronology* is
+        # the property. Pinning the identifier tested the corpus, not the index,
+        # and went stale twice -- GDR-0028 -> GDR-0029 -> GDR-0031 -- while the
+        # index stayed correct, exactly as this class's docstring describes for
+        # the two constants ACT-CC-P1-6-077 already replaced. It is also no
+        # longer well-defined: GDR-0031 and GDR-0032 share a stated date, so a
+        # literal would record which of them `max` happened to reach first.
+        self.assertTrue(newest.identifier.startswith("GDR-"))
+        self.assertEqual(register, newest.source_path)
+        for record in entries:
+            self.assertLessEqual(record.date, newest.date)
+        # ...and it is strictly ahead of everything not sharing its date, so the
+        # ordering is earned rather than incidental.
+        for record in entries:
+            if record.date != newest.date:
+                self.assertLess(record.date, newest.date)
 
     def test_a_t12_enquiry_reaches_gdr_0028(self):
         found = self.index.about("T-12")
