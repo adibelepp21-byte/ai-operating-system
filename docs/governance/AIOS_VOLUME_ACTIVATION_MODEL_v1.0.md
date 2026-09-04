@@ -1,6 +1,6 @@
 # AIOS Volume Activation Model
 
-**Version:** v1.6
+**Version:** v1.7
 **Status:** Canonical — governance machinery
 **Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018` · `ACT-CC-F03-020` · `ACT-CC-F03-023` · `ACT-CC-F03-024` · `ACT-CC-F03-030`
 **Change in v1.1:** GG-1…GG-4 resolved by FD-015-01/02/03; T6 established; PD-01 review basis adopted
@@ -37,6 +37,14 @@ enumerated authority set (OA-01…OA-07) and its explicit non-conferrals at
 **`GDR-0027`**. `AGC-01` and `AGC-02` are thereby satisfiable; `AGC-06` still fails.
 New open boundary **OB-01** (actor through which PD-02 authority is exercised).
 **PD-02 is still NOT ACTIVATED.**
+**Change in v1.7 — ELIGIBILITY RE-ASSESSED (`ACT-CC-R14AG`):** `AE-01…AE-06` were
+assessed again, individually, against evidence re-read from source. Result: **ALL
+SIX SATISFIED — PD-02 IS ACTIVATION-ELIGIBLE**, recorded at **`GDR-0034`**. `AE-04`
+and `AE-05`, the two that failed in v1.5, are satisfied by `GDR-0030`'s `DEC-AE04`
+non-blocking determinations and its adoption of AGC v0.4 as canonical. `AE-01…AE-06`
+were **not modified** — see §6D. This synchronizes the model with `GDR-0034` and
+**creates no governance.** Activation Gate **NOT EXECUTED** · Activation Authorization
+**NOT ISSUED** · **PD-02 is still NOT ACTIVATED.**
 **Recorded by:** Claude Code / Co-Founder (Construction Phase)
 **Date:** 2026-08-16
 **Scope:** PD-01 (Volume 1) · PD-02 (Volume 2)
@@ -227,7 +235,7 @@ Decision. These supersede §6 as the governing eligibility requirements.
 | **1** | The applicable integrated review requirement is satisfied | **SATISFIED** | P7-I99 Volume 2 R1–R11 = `PASS` / `APPROVED FOR FREEZE` — `GDR-0025` |
 | **2** | The Volume satisfies its applicable Freeze Gate | **SATISFIED** | R11 = `FREEZE READY` |
 | **3** | The Volume is **actually** recorded as `FROZEN` through the canonical lifecycle mechanism | **SATISFIED** | `GDR-0026`, appended to this register's canonical mechanism |
-| **4** | All Activation-specific conditions separately required by the Founder are satisfied | **NOT SATISFIED** | AE-04 unchanged (3 dispositions Founder-reserved). AE-05: Gate criteria proposal now at **v0.4**, 4/5 criteria pass after `GDR-0027`; **AGC-06 still fails** and the set remains **NON-CANONICAL** pending `DEC-ADOPTION` |
+| **4** | All Activation-specific conditions separately required by the Founder are satisfied | **SATISFIED** | `AE-01…AE-06` all SATISFIED — `GDR-0034` (2026-09-04). `AE-04` by `GDR-0030` `DEC-AE04` (three express Founder non-blocking determinations); `AE-05` by `GDR-0030` `DEC-ADOPTION` (AGC v0.4 canonical) with every criterion's evidence ESTABLISHED or RESOLVED. *(v1.5 recorded this NOT SATISFIED on the evidence then resident; see §6C for that result and §6D for this one.)* |
 
 **Condition 4 is no longer an empty set.** `ACT-CC-F03-020 §3` defines it as the
 PD-02 condition set below. It may not be supplemented, expanded, reinterpreted or
@@ -300,6 +308,42 @@ Reason: AE-04, AE-05
 Activation Authorization = NOT ISSUED · Activation = NOT EXECUTED.
 
 ---
+
+---
+
+## 6D. Activation Eligibility Assessment Result — `ACT-CC-R14AG`
+
+**Executed:** 2026-09-04 · **Mutation to AE-01…AE-06:** **NONE** · **Method:** each
+condition assessed independently against evidence re-read from source; prior Act
+findings treated as evidence to be re-verified, never as authority.
+
+| AE | Status | Basis |
+|---|---|---|
+| **AE-01** Governance State Integrity | **SATISFIED** | 1 authoritative Volume-level `FROZEN` record, 0 reversals · 1 P7-I99 result, 0 supersessions · 0 activation records · the `AGC-06(a)` two-reading contradiction closed under `ACT-CC-R14AF`, 0 remaining |
+| **AE-02** Freeze State | **SATISFIED** | `GDR-0026`, Volume-level, through the canonical lifecycle mechanism; section-level claims excluded; 0 unfreeze or reversal records |
+| **AE-03** Integrated Review Integrity | **SATISFIED** | Review resident, attributable to `ACT-CC-F03-016`, result at `GDR-0025`; 0 superseding or invalidating findings |
+| **AE-04** Material Governance Conditions | **SATISFIED** — *was NOT SATISFIED at §6C* | The three items §6C found lacking an express Founder determination each now carry one: `GDR-0030` `DEC-AE04` — AE-04.1, AE-04.2, AE-04.3 all **NON-BLOCKING** |
+| **AE-05** Activation-Specific Gate Readiness | **SATISFIED** — *was NOT SATISFIED at §6C* | §6C's basis was that no resident source enumerated what the Gate tests. `GDR-0030` `DEC-ADOPTION` adopted **AGC v0.4 as canonical**; all seven criteria carry an `Evidence Source` of ESTABLISHED or RESOLVED |
+| **AE-06** Authority Separation | **SATISFIED** | The result is expressed as an assessment only; Activation Authority remains **Founder-reserved** (`GDR-0023`); 0 instruments grant the Co-Founder activation authority; no delegation created |
+
+### Integrated result
+
+```text
+PD-02 Activation Eligibility Assessment Result:
+SATISFIED — all six conditions
+PD-02 IS ACTIVATION-ELIGIBLE
+```
+
+**This is an assessment result only.** Per §6A's sufficiency rule it permits the
+Activation Gate to be executed; it does not execute it. Activation Gate = **NOT
+EXECUTED** · Activation Authorization = **NOT ISSUED** · Activation = **NOT
+EXECUTED** · P10 = **NOT STARTED**.
+
+**§6C is retained unaltered** as the record of what was found on 2026-08-20. It is
+superseded as the *current* assessment, not corrected: on the evidence then
+resident its result was right.
+
+Canonical record: **`GDR-0034`**, Governance Decision Register.
 
 ## 6B. AG-05 disposition (`ACT-CC-F03-020 §7–§8`)
 
