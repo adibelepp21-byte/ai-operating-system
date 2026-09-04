@@ -782,3 +782,83 @@ class IndexIntegrity(_Corpus):
         GovernanceIndex.build(tracked_markdown(REPO_ROOT), REPO_ROOT)
 
         self.assertEqual(before, sha256_of(register))
+
+
+# --------------------------------------------------------------------------
+# Scope I — same-date chronology (`GDR-0033`; ACT-CC-R14AE)
+# --------------------------------------------------------------------------
+
+
+REGISTER = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+
+
+class SameDateEntriesAreUnordered(_Corpus):
+    """`GDR-0033` — the Founder decided OPTION B, and this is what it forbids.
+
+    > *"apabila dua atau lebih Governance Register entries memiliki canonical
+    > stated date yang sama, seluruh entries pada maximal canonical stated date
+    > **ARE EQUALLY NEWEST-BY-DATE** ... dan tidak boleh diurutkan satu terhadap
+    > lainnya berdasarkan: GDR identifier; identifier sequence; file position;
+    > parser order; insertion order; append order"*
+
+    The newest-by-date answer is therefore a **date** and a **set**, never a
+    single record. Nothing below names a member of that set, and nothing below
+    requires it to hold exactly one -- the assumption the literal these tests
+    replaced was quietly making, and the one the decision rules out. Same-date
+    is not an edge case here: at the time of writing, 36 of the Register's 39
+    dated entries stand inside one of ten such groups.
+    """
+
+    def _register_entries(self):
+        return [r for r in self.index.records
+                if r.source_path == REGISTER and r.identifier != ABSENT
+                and r.date != ABSENT]
+
+    def test_the_newest_answer_is_a_date_and_every_entry_carrying_it(self):
+        entries = self._register_entries()
+        self.assertGreater(len(entries), 20)
+        newest_date = max(r.date for r in entries)
+        newest = {r.identifier for r in entries if r.date == newest_date}
+        self.assertGreaterEqual(len(newest), 1, "a maximal date always has members")
+        surfaced = {r.identifier for r in self.index.since(newest_date)
+                    if r.source_path == REGISTER and r.identifier != ABSENT}
+        self.assertEqual(newest, surfaced,
+                         "the chronological query returns the whole newest set, "
+                         "no member dropped and no earlier entry admitted")
+
+    def test_no_entry_sharing_a_date_outranks_another(self):
+        """The ordering key itself must not separate them. `_recency` is what
+        `about()` sorts by, so a key that varied within a group would be the
+        implicit ordering `GDR-0033` prohibits, whatever any caller then did
+        with it."""
+        groups = {}
+        for record in self._register_entries():
+            groups.setdefault(record.date, []).append(record)
+        shared = {date: members for date, members in groups.items() if len(members) > 1}
+        self.assertGreater(len(shared), 1, "the corpus must exercise this")
+        for date, members in shared.items():
+            self.assertEqual({gi._recency(r) for r in members}, {date},
+                             f"{date}: the sort key must not separate equals")
+            surfaced = {r.identifier for r in self.index.since(date)}
+            for record in members:
+                self.assertIn(record.identifier, surfaced,
+                              f"{record.identifier} dropped from its own date")
+
+    def test_the_index_dates_the_register_as_the_register_states_it(self):
+        """The decision speaks about *canonical* stated dates, so the maximum
+        the index reports is checked against the maximum the source states --
+        read here independently of the parser under test, since checking the
+        index against itself would prove nothing.
+
+        Known limitation, asserted narrowly for that reason: eleven entries
+        state their date as ``Date decided`` / ``Date certified`` / ``Dates
+        decided``, which `FIELD_LABELS["date"]` does not list, so the index
+        carries no date for them. All eleven are older than the maximum, so the
+        maximum agrees today. Should a future entry state the newest date in one
+        of those forms, this assertion is what will say so.
+        """
+        source = (REPO_ROOT / REGISTER).read_text(encoding="utf-8")
+        stated = re.findall(r"\*\*Dates?[^*]*\*\*:?\s*\|?\s*\**\s*(\d{4}-\d{2}-\d{2})",
+                            source)
+        self.assertGreater(len(stated), 20)
+        self.assertEqual(max(stated), max(r.date for r in self._register_entries()))

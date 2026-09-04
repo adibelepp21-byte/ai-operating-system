@@ -4324,6 +4324,154 @@ summarized.
 
 ---
 
+### GDR-0033 — Founder Decision · Governance Register Same-Date Chronology is Unordered (OPTION B)
+
+**Identifier:** GDR-0033
+**Date:** 2026-09-04
+**Tier:** Governance Register chronology semantics — Founder-reserved
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** `ACT-CC-R14AE §0` — Executive Mandate, Founder Decision: SAME-DATE GOVERNANCE REGISTER SEMANTICS
+**Decision gate:** `ACT-CC-R14AD §3` Founder Question — OPTION A / OPTION B
+**Closes:** the same-date decision surface, open since `ACT-CC-R14AC §10` found no resident source establishing a tie-break
+
+#### 1. Decision text (verbatim)
+
+Recorded exactly as the Founder stated it, per §2.3 verbatim discipline. The
+Founder's wording is reproduced without translation, paraphrase or reordering.
+
+> **OPTION B — SAME-DATE ENTRIES ARE UNORDERED FOR "NEWEST" CHRONOLOGY.**
+>
+> Dengan keputusan tersebut, apabila dua atau lebih Governance Register entries
+> memiliki canonical stated date yang sama, seluruh entries pada maximal
+> canonical stated date:
+>
+> **ARE EQUALLY NEWEST-BY-DATE**
+>
+> dan tidak boleh diurutkan satu terhadap lainnya berdasarkan:
+>
+> - GDR identifier;
+> - identifier sequence;
+> - file position;
+> - parser order;
+> - insertion order;
+> - append order;
+> - atau mekanisme lain yang tidak ditetapkan oleh governing source.
+>
+> Keputusan ini berlaku retroaktif terhadap seluruh existing same-date groups.
+
+The option so selected was stated at `ACT-CC-R14AD §3` in these terms:
+
+> **OPTION B — SAME-DATE ENTRIES ARE UNORDERED**
+>
+> Entries with the same canonical stated date are equal in chronological rank.
+> No entry may be identified as "newest" over another solely because it has a
+> particular identifier, file position, parser position, or incidental storage
+> order.
+
+#### 2. Resulting governance state
+
+| Element | Determination |
+|---|---|
+| **Maximal canonical stated date** | The single value `max(canonical stated dates)` — determinate |
+| **Newest-by-date set** | **All** entries whose canonical stated date equals that maximum — one or many |
+| **Rank within the set** | **None.** Members are equal in chronological rank |
+| **Unique "newest entry"** | **Not established**, and may not be manufactured |
+
+```text
+canonical stated date
+        |
+        v
+   maximal date            <- determinate, exactly one value
+        |
+        v
+all entries at that date   <- equally newest-by-date, count >= 1
+```
+
+#### 3. What this decision prohibits
+
+No entry may be ranked newer than another sharing its canonical stated date on
+the basis of any of the following, whether in a governance record, an index, a
+tool, a report or a test:
+
+**identifier-based tie breaking · identifier sequence · file position · parser
+order · insertion order · append order · implicit ordering of any kind.**
+
+The prohibition is on establishing *chronological rank*. It does not disturb the
+Register's existing recording conventions, which remain exactly as §2.3 states
+them and continue to grant no authority.
+
+#### 4. Retroactive applicability
+
+The decision applies retroactively to every same-date group already resident.
+Ten such groups exist, derived from this Register's own text at the date of this
+entry — **36 of 39 dated entries stand inside one**, so same-date is the
+Register's ordinary condition rather than an exception:
+
+| Stated date | n | Members |
+|---|---|---|
+| 2026-07-30 | 6 | `GDR-0001` `GDR-0002` `GDR-0003` `GDR-0004` `GDR-0005` `GDR-0006` |
+| 2026-08-06 | 2 | `GDR-0008` `GDR-0009` |
+| 2026-08-07 | 2 | `GDR-0010` `GDR-0011` |
+| 2026-08-08 | 3 | `GDR-0012` `GDR-0013` `GDR-0014` |
+| 2026-08-15 | 7 | `GDR-0015` … `GDR-0021` |
+| 2026-08-16 | 5 | `GDR-0022` `GDR-0023` `GDR-0024` `GDR-0025` `GDR-0026` |
+| 2026-08-28 | 2 | `FD-P6-001` `FD-P6-002` |
+| 2026-08-29 | 4 | `FD-P5-001` `FD-P7-001` `FD-P7-002` `FD-P7-003` |
+| 2026-09-03 | 3 | `GDR-0029` `GDR-0030` `FD-P9-002` |
+| 2026-09-04 | 2 | `GDR-0031` `GDR-0032` — joined by this entry |
+
+Three entries (`FD-P8-001`, `FD-P8-002`, `FD-P9-001`) state no date at all; each
+records that its instrument carries none. They are not placed on the timeline,
+and this decision does not place them there.
+
+#### 5. Authority basis
+
+| Element | Basis |
+|---|---|
+| Holder | **Founder.** `ACT-CC-R14AD §3` reserved the question to the Founder; `ACT-CC-R14AE §0` records the selection |
+| Why Founder-reserved | `ACT-CC-R14AC §10` established that no resident source defines the rule, and that selecting a mechanism because it is deterministic would manufacture governance semantics |
+| Instrument | This Register entry. Not an ADR — the matter is Register chronology semantics, not an architectural-tier change (§2.1) |
+| Scope | Governance Register chronological ordering only |
+
+#### 6. Evidence of record
+
+- `ACT-CC-R14AC §10` — the firewall that identified the ambiguity and barred inventing a rule.
+- `ACT-CC-R14AD §5` — source verification across eleven sources and fourteen search terms: **SOURCE-UNDEFINED**. Register §2.3 calls the sequential identifier *"a recording convention only"*; `_recency` states its key is *"the record's stated ISO date, or the empty string"*; `ACT-CC-P6-066-R2 §13` bars inferring authority from *"chronological position"*.
+- This Register `:4786` — `FD-P6-001` and `FD-P6-002` share `2026-08-28`, and their dependency is *"preserved by ordering and by the **Predecessor decision** field"*, *"satisfied by record, not by inference."* The corpus's own precedent: where order matters it is **stated**, never derived from date or position.
+
+#### 7. Standing changes
+
+Any governance record, index, tool, report or test that identifies a newest
+Register entry shall identify the maximal canonical stated date and the full set
+of entries carrying it. Where a unique record is required and only a maximal date
+is available, the requirement is unmet and must be reported — not resolved by
+selecting a member of the set.
+
+#### 8. What is explicitly not changed
+
+- **No historical record is modified.** `GDR-0031` and `GDR-0032` remain exactly as recorded, unchanged in text, date and status.
+- **No authority is conferred by chronological position.** `CHRONOLOGY ≠ SUPERSESSION`, and chronological recency does not establish authority. This decision changes neither.
+- **No delegation is created.** Founder Reserved Authority is untouched and undiminished.
+- **No Register recording convention is altered.** §2.3's append-only rule and sequential identifiers stand as written.
+- **Nothing outside Governance Register chronology is decided.** Ordering semantics elsewhere in the corpus are unaffected.
+- **No activation consequence follows.** This is not an Activation Gate result, not Activation Eligibility, and not Activation Authorization.
+
+#### 9. Lineage
+
+`ACT-CC-R14AA` (stale literal repaired) → `ACT-CC-R14AC §10` (ambiguity identified; DECISION SURFACE REQUIRED) → `ACT-CC-R14AD` (source verification: SOURCE-UNDEFINED; question put to the Founder) → **`ACT-CC-R14AE §0` — Founder selects OPTION B** → this entry.
+
+#### 10. Status history
+
+| Date | Event | Authority |
+|---|---|---|
+| 2026-09-04 | `ACT-CC-R14AC §10` finds no resident tie-break rule; invention barred | Co-Founder |
+| 2026-09-04 | `ACT-CC-R14AD §5` verifies eleven sources, fourteen terms — **SOURCE-UNDEFINED** | Co-Founder |
+| 2026-09-04 | Decision surface presented; Option A / Option B put to the Founder | Co-Founder |
+| **2026-09-04** | **Same-date semantics DECIDED — OPTION B, entries unordered** | **Founder** |
+
+---
+
 ## 4. External Corpus Synchronization Ledger
 
 The Master Program (Volumes I–VIII), `AIOS_CANONICAL_ARCHITECTURE.md`, ALMM,
