@@ -43,21 +43,31 @@ twelve, and it was not made twelve.
 | **Current state** | Frozen `PD-02 A4.md:288` — *"Developer **Enablement**"*; `MASTER_ROADMAP §5` — *"Developer **Experience**"*. Neither is a truncation of the other |
 | **Evidence** | `E-01`, `E-04`; verified at both sources |
 | **Severity** | **LOW** in impact, **HIGH** in precedence: resolving it requires deciding whether a frozen corpus or the program registry governs platform naming, and **no resident source establishes that precedence** |
-| **Owner / Authority** | **Founder or Architect.** `§6.1` bars inventing precedence |
-| **Recommended action** | Precedence determination. The name follows from it; the precedence rule is the durable output |
+| **Owner / Authority** | **Founder.** `§6.1` bars inventing precedence |
+| **Searched under `FAE-P10-FRONTIER-01 §6.3`** | Whether any resident authority resolves the divergence. **It does not.** The only naming-adjacent policy is the Organization Framework's **Identifier Policy**, and it fails on two counts: it governs *"Departments and Capabilities"* — Domain Model entities, not Platform Divisions — and it **disclaims authority in its own words**: *"This document's own content — repository structure, naming, and identifier conventions — is a documentation and repository-organization convention, **not a governance-authority artifact**."* The only platform-identifier rule found is `MASTER_ROADMAP §5` — *"CPIDs are permanent and never reused"* — which governs identifier **permanence**, not names |
+| **Recommended action** | Precedence determination. The name follows from it; the precedence rule is the durable output. **No name was chosen** — `§6` bars selecting one for consistency alone |
 | **Blocking** | NO |
 
-## G-03 — `PD-08` Security has no ownership, authority or boundary statement
+## G-03 — The Security Owner role is defined; its binding to `PD-08` is not
+
+> **CORRECTED under `FAE-P10-FRONTIER-01`.** This gap was first recorded as
+> *"PD-08 Security has no ownership, authority or boundary statement."* That was
+> measured by proximity to the `PD-08` **label**. A content search for Security
+> *material* — run under the issued authorization's source-first requirement —
+> shows the frozen corpus addresses Security ownership substantially. The
+> original statement was wrong; the corrected finding is narrower and sharper.
 
 | | |
 |---|---|
-| **Classification** | **MISSING** |
-| **Current state** | 7 resident statements. Identity and success-criteria ownership only. **No** ownership, authority, capability, boundary, interface, dependency, lifecycle, governance or change-control statement exists anywhere in the corpus |
-| **Evidence** | `EVIDENCE-LEDGER.md` §2, PD-08 |
-| **Severity** | **HIGH** — every other division with an ownership statement has one because some frozen section needed to disclaim ownership *to* it. No section ever needed to do that for Security |
-| **Owner / Authority** | **Founder** (source) → **Architect** (boundary) |
-| **Recommended action** | Treat as the first division to define, not the last. Its absence is structural, not incidental |
-| **Blocking** | NO for this baseline · **material** for any security posture claim |
+| **Classification** | **BOUNDARY CONFLICT** *(was MISSING)* |
+| **What exists** | A **Security Owner / Security Authority** role, defined in the **frozen** `PD-02` corpus: `A5 §12 Override Limit` bars PD-02 from *"mengambil alih security authority"* · `A5:330` — `Security Execution │ NONE │ Security owner`, PD-02 holds **NONE** · `A6:452` — `Security → Security Owner` · `A6:671` — `Security │ Security Owner │ Architectural Interface` · `C8:570` — *"Security owner tetap memiliki security domain responsibility"* · `C5:240`, `:272`, `C2:740` |
+| **What is absent** | **The binding.** No resident source states that `PD-08` **is** the Security Owner. The corpus names the *role* and separately lists `PD-08 Security` in boundary diagrams (`A4:286`, `A6:299`) — both diagram labels, content-anchored, not ownership statements |
+| **Comparison that makes it precise** | `PD-05` carries a prose binding — *"PD-05 owns Runtime"* (`B7:212`). So does `PD-06` (*"owns implementation"*, `B4:731`) and `PD-07` (*"tetap memiliki ownership atas Infrastructure"*, `C8:122`). **`PD-08` and `PD-09` have the owner role defined and the platform binding absent — exactly two of five domains** |
+| **Severity** | **MEDIUM** *(was HIGH)* — the security responsibility model is not missing from AIOS; it is unattached to a platform division |
+| **Owner / Authority** | **Founder** — binding a role to a platform division is an identity assertion, not an architecture inference |
+| **Recommended action** | Bind, or record that the Security Owner is deliberately not `PD-08`. **The binding was not made here:** `FAE-P10-FRONTIER-01 §7` bars declaring a Security authority, ownership model or boundary without established authority |
+| **Blocking** | NO |
+| **Extends to** | **`PD-09` Quality** — same pattern: *"Quality authority remains applicable"* (`A5:331`) with no binding to `PD-09` |
 
 ## G-04 — No bridge exists between organizational source and runtime
 
