@@ -4584,6 +4584,187 @@ it. It performs none of the steps after it.
 
 ---
 
+### GDR-0035 — PD-02 Activation Gate Result · R15 = PASS (evidence record)
+
+**Identifier:** GDR-0035
+**Date:** 2026-09-04
+**Tier:** Activation Gate execution result — evidence record, not a decision
+**Executed by:** Claude Code / Co-Founder (Construction Phase)
+**Recorded by:** Claude Code / Co-Founder (Construction Phase)
+**Authorizing act:** `ACT-CC-R15` (Gate execution) · `ACT-CC-R15A §3` — **Authorization A**, Founder authorization to persist this result
+**Governing criteria:** `AIOS_PD02_ACTIVATION_GATE_CRITERIA_PROPOSAL_v0.4.md`, adopted canonical at `GDR-0030`
+**Eligibility basis:** `GDR-0034` — `AE-01…AE-06` all SATISFIED
+**Closes:** the Activation Gate execution step of the canonical activation chain
+
+#### 1. What this record is — `GER-02`
+
+```text
+R15                     =  GATE EVIDENCE
+ACT-CC-R15A             =  FOUNDER AUTHORIZATION
+ACT-CC-R15B             =  ACTUAL ACTIVATION OPERATION
+```
+
+`ACT-CC-F03-014 §3`, which `GER-02` enforces: *"A passing gate is evidence of
+eligibility. **It is not an activation decision.**"* This entry records evidence.
+It confers no authority R15 did not possess, and it is not the activation.
+
+#### 2. Gate result
+
+| ID | Criterion | Verification executed at gate time | Result |
+|---|---|---|---|
+| **AGC-01** | Activation Effect Definition | `GDR-0027 §4` resident, enumerating **OA-01…OA-07**; every citation content-anchored in the frozen corpus — `A5 §5` Domain Authority → OA-01, `§6` Decision Authority → OA-02, `§8` Architecture Review Authority → OA-03, `§9` Approval Authority → OA-04, Override Authority → OA-05, `C8` Cross-Platform Architecture Governance (`Status: FROZEN`) → OA-06. Effects are drawn from frozen architecture, so none contradicts it | **PASS** |
+| **AGC-02** | Downstream Consumer Impact | Recomputed over all 50 bodies: **18/50** reference PD-03…PD-10. Occurrence counts reproduced exactly — PD-03 ×12 · PD-04 ×6 · PD-05 ×16 · PD-06 ×11 · PD-07 ×10 · PD-08 ×6 · PD-09 ×7. Reliance defined by `GDR-0027 §4` OA-01…OA-06 | **PASS** |
+| **AGC-03** | Verification Currency | Three sources recomputed at gate time: per-section SHA-256 **50/50 match** (bytes 1,435,864 — the manifest's exact figure) · review-record blob `8f8604a3…` **==** `HEAD:` blob · PD-02 Volume-level freeze records **= 1** (`GDR-0026`; `GDR-0017` is Volume 1 and `FD-P6-002` is Phase 6, both excluded by content). Corpus digest **not** recomputed, per `GDR-0031` | **PASS** |
+| **AGC-05** | Authority Chain Integrity at Gate Time | **0** instruments grant the Co-Founder activation authority — every candidate content-anchored; `ACT-CC-F03-014:113-114` is the *prohibited* circular pattern, not a grant. **4** instruments reserve it to the Founder. Chain reconstructed: Founder → `ACT-CC-F03-014`/`-015` → `DEL-T4.4-CF-001` (not expanded) → executor | **PASS** |
+| **AGC-06** | Post-Activation Change Control and Reversibility | **(a) resident** — `D8 §70 Architecture Change Control` (PD-02 corpus, `Status: FROZEN`) read at source; `GDR-0032` names the applicable path (architectural-tier → ACC → **ADR**, Constitution §3.4). **(b) absent and intended** — all 23 `revocation`/`revoke` occurrences in the corpus content-anchored to **authority/delegation** revocation (`A5 §33`, `C3`), **0** Volume-activation revocation mechanisms; `GDR-0030 DEC-REVOCATION` = *"IRREVERSIBLE BY DESIGN"*. Pass Condition's second disjunct met | **PASS** |
+| **GER-01** | Insufficient-Ground Exclusion | Grounds stated and checked against GG-2's eight excluded grounds; none relied upon. Section-level `FROZEN` and section-level `PASS` were **actively excluded**; P7-I99 entered only as AGC-03's blob-currency input | **SATISFIED** |
+| **GER-02** | Gate Result Is Evidence, Not Decision | This record's §1 | **SATISFIED** |
+
+```text
+AGC criteria assessed  5      PASS 5      FAIL 0      BLOCKED 0      UNRESOLVED 0
+Gate Execution Rules   2      SATISFIED 2
+        ↓
+ACTIVATION GATE RESULT = PASS
+```
+
+#### 3. Negative controls recorded
+
+| Control | Result |
+|---|---|
+| Activation absent → must not be recorded as activated | **0** genuine assertions. Two successive false-positive rounds in the executor's own control were disclosed and corrected by reading matched text; every hit was a *conditional* framing (*"once it is active"*), never a claim of current state |
+| Authority absent → must not become implicit authority | **0** grants against **4** reservations; the query surface demonstrably finds instruments when they exist, so the zero is a measurement rather than a blind spot |
+| Section-level `FROZEN` → must not satisfy the Volume condition | 42 section-level claims by one syntactic form set aside; only the **1** Volume-level record counted |
+| Revocation false positives → eliminated by content | 23 raw hits → **0** Volume-revocation mechanisms |
+
+#### 4. Explicitly not changed
+
+- **This is not Activation Authorization** and not Activation. `ACT-CC-R15` made **0** mutations.
+- No criterion, threshold, verification method or acceptance condition was altered to obtain this result.
+- `AE-01…AE-06`, `GDR-0034`, and every historical record — **unchanged**.
+- P10 **NOT STARTED**; no other Platform Division is affected.
+
+#### 5. Lineage
+
+`GDR-0034` establishes eligibility · `ACT-CC-R15` executes the Gate → this entry · `ACT-CC-R15A §3` authorizes this persistence · `ACT-CC-R15A §4` authorizes activation separately · `GDR-0036` records the activation operation.
+
+---
+
+### GDR-0036 — PD-02 / Volume 2 Volume-Level Activation (ACTIVE)
+
+**Identifier:** GDR-0036
+**Date:** 2026-09-04
+**Tier:** Governance-state lifecycle determination — Founder-reserved
+**Decided by:** Founder
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder authorization
+**Authorizing act:** `ACT-CC-R15A` — Founder Review, R15 Result Persistence Authorization & PD-02 Activation Authorization
+**Executing act:** `ACT-CC-R15B` — PD-02 Activation Act
+**Target:** PD-02 — Architecture Office / Volume 2
+**Mechanism determination:** §1 below
+**Gate evidence:** `GDR-0035` — R15 = PASS
+**Eligibility:** `GDR-0034` — `AE-01…AE-06` SATISFIED
+
+#### 1. Canonical mechanism — derived, not selected
+
+`GDR-0026 §1` already performed this derivation for the same target and the same
+class of transition, and its finding is adopted rather than repeated: of five
+candidate resident instruments, four were eliminated — `AIOS_BASELINE_LIFECYCLE`
+(0 occurrences of *"Volume"*), `AIOS_ARCHITECTURE_FREEZE` (0 occurrences), the ADR
+instrument (Register §2.2 routes Architectural Tier to ADRs, and Volume lifecycle
+state is Founder-reserved, not Architectural Tier), and the PD-02 corpus /
+`RESIDENCY-MANIFEST` (residency evidence, not a lifecycle register). *"Exactly one
+canonical vehicle survives."* That vehicle is a Governance Decision Register
+entry, and **this entry is that vehicle**, as `GDR-0026` was for `FROZEN`.
+
+**No new governance mechanism is invented here.** `ACT-CC-R15A §3` forbids it, and
+none was needed: the mechanism was derived from resident authority in August and
+is reused unchanged.
+
+#### 2. Founder authorization (verbatim)
+
+> **ACTIVATION OF PD-02 — ARCHITECTURE OFFICE**
+>
+> subject to the exact scope and safeguards in this Act.
+
+and, from the Founder's final statement:
+
+> I authorize the R15 Gate result to be persisted as evidence and authorize the
+> separate activation of PD-02, subject to the boundaries and verification
+> requirements of this Act.
+>
+> I do not authorize automatic activation of the remaining Platform Divisions,
+> automatic completion of P10, or any change to Founder Reserved Authority.
+
+#### 3. Lifecycle state transition
+
+```text
+PD-02 / Volume 2
+        FROZEN            (GDR-0026, 2026-08-16)
+           ↓
+        ACTIVE            (this entry, 2026-09-04)
+```
+
+`FROZEN` is not vacated by activation: the corpus remains frozen — 50/50 bodies
+byte-identical to the manifest, re-verified at gate time under `AGC-03`. What
+changes is the Volume's **activation state**, not the immutability of its content.
+
+#### 4. What activation confers — `OA-01 … OA-07`, and nothing beyond
+
+`GDR-0027 §4` enumerates the effects, bounded by `§5`. `OA-07` states the operative
+change this entry performs:
+
+> The above become **effective** upon activation rather than remaining designated.
+
+| | Effect | Domain |
+|---|---|---|
+| **OA-01** | Domain Authority — system structure · domain boundary · architecture consistency · reference architecture | Architecture domain |
+| **OA-02** | Decision Authority over material architectural decisions | Architecture domain |
+| **OA-03** | Architecture Review Authority | Architecture Review |
+| **OA-04** | Approval Authority — Canonical Architecture, Blueprint, Standards, ADR, baseline changes | **only** where Decision Domain = Architecture Domain |
+| **OA-05** | Override Authority (limited) | bounded, per `A5` |
+| **OA-06** | Cross-platform architectural **responsibility** and primary ownership over its named areas | Cross-platform architecture governance |
+| **OA-07** | The above become **effective** rather than designated | — |
+
+Each of OA-01…OA-06 was content-anchored to the frozen corpus at gate time
+(`GDR-0035` AGC-01). `OA-07` creates no new authority; it changes the modality of
+authority already enumerated.
+
+#### 5. What does not change
+
+- **No new authority is created.** Activation makes designated authority effective; it does not extend it. `GDR-0027 §5`'s non-conferrals stand.
+- **Founder Reserved Authority — unchanged.** Activation Authority itself remains Founder-reserved (`GDR-0023`).
+- **Appointment Register §3.2 exclusion 25 remains applicable:** *"Authority to modify Volume 1 merely because the Architecture Authority role now exists"* is excluded. Activation confers no modification authority over any Volume, and `GDR-0032 §5` says the same for PD-02's own content.
+- **No other Platform Division is activated.** PD-01 and PD-03…PD-10 are untouched; `AIOS_VOLUME_ACTIVATION_MODEL` records **PD-01 = NOT ACTIVATION-ELIGIBLE**.
+- **P10 is not authorized, started, or completed.** `GDR-0029 Q-FD7-2`'s conditional authorization is unchanged and is not converted into execution authority by this entry.
+- **No runtime or organizational identity is created.** PD-02 has no representation in `native_core`, `consumers` or `tools`; **0** code references to any Volume or PD platform exist. `native_core`'s `Department` is the Domain-Model accountability unit of Architecture Freeze §4, a different entity, and is not PD-02. Creating organizational runtime identity is P10 work and would collapse `ORGANIZATIONAL SOURCE ≠ ORGANIZATIONAL RUNTIME`, which `ACT-CC-R15A §7`/`§25` require be preserved.
+- **The corpus is not modified.** 50/50 bodies remain byte-identical; the freeze holds.
+- **No historical record is altered.** `GDR-0026` and every prior entry stand as written.
+
+#### 6. Authority basis
+
+| Element | Basis |
+|---|---|
+| Holder | **Founder.** Activation Authority is Founder-reserved — `GDR-0023`, `ACT-CC-F03-014 §3`, `ACT-CC-F03-015` |
+| Exercise | `ACT-CC-R15A §4` — Authorization B, issued on the `GDR-0035` gate evidence |
+| Executor | Claude Code / Co-Founder, recording only; the Co-Founder holds **0** activation authority and self-granted none |
+| Mechanism | Derived at `GDR-0026 §1`; reused unchanged |
+
+#### 7. Lineage
+
+`GDR-0025` P7-I99 result · `GDR-0026` Volume-level FROZEN and the mechanism derivation · `GDR-0027` activation semantics (OA-01…OA-07) · `GDR-0030` AE-04 determinations and AGC v0.4 adoption · `GDR-0031`/`GDR-0032` AGC-03 and AGC-06 evidence · `ACT-CC-R14AF` currency reconciliation · `GDR-0034` eligibility · `GDR-0035` Gate PASS · `ACT-CC-R15A` Founder authorization → this entry.
+
+#### 8. Status history
+
+| Date | Event | Authority |
+|---|---|---|
+| 2026-08-16 | PD-02 / Volume 2 recorded **FROZEN** | Founder · `GDR-0026` |
+| 2026-08-20 | Eligibility assessed NOT SATISFIED — `AE-04`, `AE-05` | Co-Founder · `ACT-CC-F03-024` |
+| 2026-09-03 | Activation semantics and AE-04 determinations decided; AGC v0.4 adopted | Founder · `GDR-0027`, `GDR-0030` |
+| 2026-09-04 | Eligibility **ESTABLISHED** — all six AE conditions SATISFIED | Co-Founder under Founder authorization · `GDR-0034` |
+| 2026-09-04 | Activation Gate executed — **PASS** | Co-Founder · `GDR-0035` |
+| **2026-09-04** | **PD-02 / Volume 2 recorded ACTIVE** | **Founder · `ACT-CC-R15A`** |
+
+---
+
 ## 4. External Corpus Synchronization Ledger
 
 The Master Program (Volumes I–VIII), `AIOS_CANONICAL_ARCHITECTURE.md`, ALMM,

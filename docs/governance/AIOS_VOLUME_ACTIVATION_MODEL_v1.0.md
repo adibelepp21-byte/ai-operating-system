@@ -1,6 +1,6 @@
 # AIOS Volume Activation Model
 
-**Version:** v1.7
+**Version:** v1.8
 **Status:** Canonical — governance machinery
 **Authority:** Founder · `ACT-CC-F03-014` · `ACT-CC-F03-015` · `ACT-CC-F03-018` · `ACT-CC-F03-020` · `ACT-CC-F03-023` · `ACT-CC-F03-024` · `ACT-CC-F03-030`
 **Change in v1.1:** GG-1…GG-4 resolved by FD-015-01/02/03; T6 established; PD-01 review basis adopted
@@ -45,6 +45,17 @@ non-blocking determinations and its adoption of AGC v0.4 as canonical. `AE-01…
 were **not modified** — see §6D. This synchronizes the model with `GDR-0034` and
 **creates no governance.** Activation Gate **NOT EXECUTED** · Activation Authorization
 **NOT ISSUED** · **PD-02 is still NOT ACTIVATED.**
+**Change in v1.8 — GATE EXECUTED AND PD-02 ACTIVATED (`ACT-CC-R15` / `ACT-CC-R15A`
+/ `ACT-CC-R15B`):** the Activation Gate was executed against the adopted canonical
+criteria — **5 AGC criteria PASS, 2 Gate Execution Rules SATISFIED, 0 FAIL, 0
+BLOCKED, 0 UNRESOLVED** — recorded as evidence at **`GDR-0035`**. On that evidence
+the Founder issued Activation Authorization (`ACT-CC-R15A §4`), and PD-02 / Volume 2
+was recorded **ACTIVE** at **`GDR-0036`** through the lifecycle vehicle derived at
+`GDR-0026 §1`. This synchronizes §10 with those records and **creates no
+governance.** The corpus remains **FROZEN** and byte-identical; activation changes
+the Volume's activation state, not the immutability of its content. **No other
+Platform Division is activated · P10 NOT STARTED · Founder Reserved Authority
+unchanged · AIOS NOT COMPLETE.**
 **Recorded by:** Claude Code / Co-Founder (Construction Phase)
 **Date:** 2026-08-16
 **Scope:** PD-01 (Volume 1) · PD-02 (Volume 2)
@@ -452,18 +463,22 @@ Authority`. **Lifting the hold requires a governance act and has not been done.*
 
 ```text
 PD-01 Activation ......... NOT EXECUTED       PD-01 Freeze ... FROZEN (lifecycle, GDR-0017)
-PD-02 Activation ......... NOT EXECUTED       PD-02 Freeze ... FROZEN (Volume-level, GDR-0026)
+PD-02 Activation ......... EXECUTED — ACTIVE  PD-02 Freeze ... FROZEN (Volume-level, GDR-0026)
+                           (GDR-0036, 2026-09-04)   corpus remains frozen; 50/50 byte-identical
 PD-02 P7-I99 ............. PASS / APPROVED FOR FREEZE (GDR-0025)
 RG-1 .............................. RESOLVED (ACT-CC-F03-020)
 AG-05 evidence hold ............... SATISFIED (ACT-CC-F03-020 §7)
 AG-05 binding ..................... EXECUTED (ACT-CC-F03-023, Branch B) · STOP-01 CLOSED
 DEC-ACT-SEMANTICS ................. DECIDED — Option C, Operative Authority (GDR-0027)
 Operative authority set ........... OA-01…OA-07 enumerated · OB-01 open (exercising actor)
-DEC-REVOCATION .................... FOUNDER-RESERVED (blocks AGC-06)
-DEC-ADOPTION ...................... FOUNDER-RESERVED (AGC set NON-CANONICAL)
-PD-02 Activation Eligibility ..... ASSESSED (ACT-CC-F03-024) · RESULT: NOT SATISFIED — AE-04, AE-05
-PD-02 Activation Gate ............ NOT EXECUTED
-PD-02 Activation Authorization ... NOT ISSUED
+DEC-REVOCATION .................... DECIDED — IRREVERSIBLE BY DESIGN (GDR-0030)
+DEC-ADOPTION ...................... DECIDED — AGC v0.4 ADOPTED AS CANONICAL (GDR-0030)
+PD-02 Activation Eligibility ..... ESTABLISHED (GDR-0034, 2026-09-04) · AE-01…AE-06 all SATISFIED
+                                   (supersedes ACT-CC-F03-024's NOT SATISFIED; see §6C / §6D)
+PD-02 Activation Gate ............ EXECUTED — PASS (GDR-0035) · 5 criteria PASS, 2 GER SATISFIED
+PD-02 Activation Authorization ... ISSUED — Founder, ACT-CC-R15A §4
 Activation Authority ..... FOUNDER-RESERVED
+Other Platform Divisions . NOT ACTIVATED — PD-01 NOT ACTIVATION-ELIGIBLE; PD-03…PD-10 untouched
+P10 ...................... NOT STARTED · NOT AUTHORIZED
 AIOS ..................... NOT COMPLETE
 ```
