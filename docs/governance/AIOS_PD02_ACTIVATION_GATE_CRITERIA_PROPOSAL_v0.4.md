@@ -331,7 +331,7 @@ is established, and what is not:
 | | State |
 |---|---|
 | AGC-06 revocation half — a resident revocation mechanism | **absent**, and the Founder has **expressly determined that irreversibility is intended** (`GDR-0030`) |
-| AGC-06 change-control half — a resident Architecture Change Control **procedure** | **still not established.** `GDR-0017` requires *"the applicable Architecture Change Control"*; every resident occurrence requires it or records its absence. Rechecked 2026-09-03 under `ACT-CC-R13` |
+| AGC-06 change-control half — a resident Architecture Change Control **procedure** | **A resident definition exists; its applicability does not.** `D8 §70 — Architecture Change Control` (PD-02 corpus, `Status: FROZEN`) states what an architecture change must carry: *change context · affected architecture · impact · applicable review · applicable decision · implementation/follow-up reference*. Two resident flows route into it — `C2 §32` (`Decision → Baseline Impact Assessment → Architecture Change Control → Approved Baseline Update`) and `E6 §48` (`Architecture Change Need → Architecture Change Control → Architecture Review → Architecture Authority → Approved Change`). **What is not established is which procedure is *applicable*:** `GDR-0017` requires *"the **applicable** Architecture Change Control"* and no resident source determines which one applies to a Volume-level post-activation change; the two flows serve different entry points and neither is declared canonical. Established under `ACT-CC-R13B`, disposition **B — SOURCE EXISTS / PROCEDURE UNRESOLVED** |
 | AGC-06 criterion result | **NOT ASSESSED** — assessment occurs at Gate execution |
 | Gate execution | **NOT PERFORMED** |
 
@@ -339,6 +339,29 @@ A Gate run must evaluate AGC-06's two halves separately, exactly as its own
 Verification Method directs: *"(a) locate a defined Architecture Change Control
 procedure; (b) locate a Volume revocation mechanism. Absence of either is a
 finding, not a pass."*
+
+**Three states stay distinct, and the correction above changes only the first:**
+
+```text
+ACC mechanism exists          →  YES   (D8 §70, resident, FROZEN)
+Applicable ACC procedure      →  NOT ESTABLISHED
+AGC-06                        →  NOT PASS
+```
+
+**Correction note — `ACT-CC-R14A`.** The row above previously read *"still not
+established … every resident occurrence requires it or records its absence."*
+That was inaccurate: `D8 §70` defines required content and had been missed,
+because earlier searches read `docs/governance/` and grepped for definitional
+phrasing rather than reading the frozen corpus bodies. The claim originated in
+`v0.1` and was repeated through `v0.4`, `ACT-CC-R13` and `ACT-CC-R13A`. Only this
+row is corrected here.
+
+**Not corrected, recorded:** AGC-06's own **`Evidence Source`** field in §4 still
+reads *"EVIDENCE NOT ESTABLISHED, both halves … no resident document defines that
+procedure."* Half (a) of that sentence is now known to be inaccurate for the same
+reason, and half (b) is superseded by `GDR-0030`. `ACT-CC-R14A` authorizes
+correction of the §6A statement only, so that field is **left as committed** and
+its correction warrants its own authorization.
 
 ## 7. Founder decisions this proposal cannot make
 
