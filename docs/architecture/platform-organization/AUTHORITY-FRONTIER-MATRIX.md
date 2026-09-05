@@ -81,7 +81,7 @@ Decide / execute / canonicalize / freeze / change are kept distinct (`§11`, `§
 | **G-01** PD-03…PD-10 corpora | the corpora themselves | **Founder** | Founder (transfer) → Co-Founder (residency) | Founder | Founder | **D — FOUNDER** |
 | **G-02** PD-10 naming | precedence rule: frozen corpus vs registry | **Founder** | Co-Founder | Founder | n/a | **D — FOUNDER** |
 | **G-03** PD-08 Security | ownership · authority · boundary | **Founder** (source) → **Architect** (boundary) | Co-Founder | Founder | Founder | **D — FOUNDER** |
-| **G-04** Org ↔ Runtime bridge | whether organizational runtime is intended | **Architect** (`§3.1 A/C/D`) → Founder **only if** a twelfth boundary is required | Architect / Co-Founder | Architect via ADR | Founder | **C — ARCHITECT** |
+| **G-04** Org ↔ Runtime bridge | whether organizational runtime is intended | **Architect** (`§3.1 A/C/D`) | Architect / Co-Founder | Architect via ADR | Founder | **C — ARCHITECT · DECIDED** `ADE-P10-G04`, Option A, 2026-09-05. No twelfth boundary required |
 | **G-05** Dependency evidence | positive dependency statements | Founder | — | Founder | n/a | **D — FOUNDER** *(dependent on G-01)* |
 | **G-06** Volume 0–0.3 | the volumes, or confirmation they are unneeded | **Founder** | Founder (supply) | Founder | n/a | **D — FOUNDER** |
 | **G-07** Master Map · Encyclopedia · gap inventory | the canonical artifacts | **Founder** | Co-Founder (derived, done) | Founder | Founder | **D — FOUNDER** |
@@ -122,7 +122,17 @@ disclaim ownership *to* it — no section ever needed to for Security.** `§15`
 bars declaring a Security authority, ownership model, or boundary because one
 appears necessary. **None was declared.**
 
-### G-04 — **READY FOR ARCHITECT**
+### G-04 — **DECIDED** *(was READY FOR ARCHITECT)*
+
+> **Conformance repair, 2026-09-05** — under `FDE-P10-AUTONOMOUS-EXECUTION-01
+> §11`. The disposition below was accurate when written and is retained
+> unaltered; it is superseded, not corrected. The question it poses was answered
+> **YES** by `ADE-P10-G04` (Option A, Architect, `APT-CD1.1-AA-001`): `Department`
+> is the historical alias of `Platform Division` per `ADR-0010`, so the
+> representation already exists, **no bridge and no twelfth boundary are
+> required**, and the Founder-escalation branch below never triggers. No new
+> decision is made by this note.
+
 The only frontier where the deciding authority is one **I hold**
 (`APT-CD1.1-AA-001`, `§3.1 A/C/D`). The architecture question is prior to any
 construction: **does `Department` — already resident in
@@ -132,8 +142,10 @@ twelfth boundary is needed. If no, a twelfth core boundary is required, and that
 **amends the ratified freeze** — beyond the appointment, whose amendment
 authority is **NONE**, and therefore Founder.
 
-**Not decided here.** `§29` expressly withholds "resolve G-04 architecturally",
-and `§16` bars constructing the bridge because it is necessary. **Prepared:** the
+**Not decided here** — and correctly so: `§29` expressly withheld "resolve G-04
+architecturally", and `§16` barred constructing the bridge because it is
+necessary. It was decided afterwards, under its own authority, at
+`ADE-P10-G04`. **Prepared:** the
 question, the two outcomes, and the escalation trigger.
 
 ### G-05 — **READY FOR FOUNDER, dependent on G-01**

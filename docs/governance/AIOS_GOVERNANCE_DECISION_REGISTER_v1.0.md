@@ -4763,6 +4763,161 @@ authority already enumerated.
 | 2026-09-04 | Activation Gate executed — **PASS** | Co-Founder · `GDR-0035` |
 | **2026-09-04** | **PD-02 / Volume 2 recorded ACTIVE** | **Founder · `ACT-CC-R15A`** |
 
+### GDR-0037 — Founder Issuance of FDE-P10-AUTONOMOUS-EXECUTION-01 (OPERATIVE)
+
+**Identifier:** GDR-0037
+**Date:** 2026-09-05
+**Tier:** Founder Decision Event — issuance and operative-state determination
+**Decided by:** Founder — Moriarty
+**Recorded by:** Claude Code / Co-Founder (Construction Phase), under explicit Founder instruction
+**Constructing act:** `ACT-CC-P10-FAE-01` — Founder Event Construction, Source Verification & Issuance-Readiness Act
+**Confirming act:** `ACT-CC-P10-FAE-02` — Founder Issuance Confirmation & Event Activation
+**Target event:** `FDE-P10-AUTONOMOUS-EXECUTION-01` — Maximum Bounded Autonomous Execution Authority
+**Event text:** `docs/governance/AIOS_P10_AUTONOMOUS_EXECUTION_FOUNDER_EVENT_PROPOSAL_v1.0.md`
+**Selected decision:** **B — Expanded but Controlled**
+**Issued at:** 05-09-2026 · **Effective from:** 05-09-2026
+**Status:** **OPERATIVE**
+
+#### 1. What this entry records, and what it does not
+
+This entry records an issuance the Founder performed. It does not perform one.
+Recording a decision is an Implementation-Tier act under Register §2 —
+*"Recording a delegation is an Implementation-Tier act (Constitution §3.3)
+performed under explicit authorization; it is not an approval act."* The same
+distinction governs here.
+
+**No second Founder Decision Event was created.** `ACT-CC-P10-FAE-02 §25`
+prohibits creating one to confirm this issuance, and none exists: the target
+event is the single operative instrument, this entry is its register record.
+
+#### 2. Founder issuance confirmation (verbatim)
+
+> §35 governs. Decision B — Expanded but Controlled — is explicitly selected and
+> issued by Founder Moriarty on 05-09-2026, with effect from 05-09-2026.
+> FDE-P10-AUTONOMOUS-EXECUTION-01 is therefore ISSUED and OPERATIVE.
+
+and, from `ACT-CC-P10-FAE-02 §33`:
+
+> Process §35 of FDE-P10-AUTONOMOUS-EXECUTION-01 as the Founder's explicitly
+> issued decision. Decision B — Expanded but Controlled — is selected. The event
+> was issued by Founder Moriarty on 05-09-2026 and is effective from 05-09-2026.
+> Record FDE-P10-AUTONOMOUS-EXECUTION-01 as ISSUED and OPERATIVE. Resolve CR-1
+> accordingly. Do not create another Founder Event for this confirmation.
+> Proceed with autonomous execution only within the authority envelope defined
+> by the operative event and its hard boundaries.
+
+Recorded as the deciding authority stated it, per Register §2 verbatim discipline.
+
+#### 3. CR-1 — RESOLVED — FOUNDER EXPLICIT ISSUANCE CONFIRMATION
+
+`ACT-CC-P10-FAE-01` contained two contradictory positions on whether the event
+was already issued: its header (*"Founder Signature: PROHIBITED TO PREFILL"*) and
+eight sections requiring a blank block, against its §35 supplying a completed
+block signed `Moriarty` and marked `OPERATIVE`. Construction surfaced the
+conflict verbatim on both sides and did not reconcile it, per that Act's §5
+(*"SOURCE CONFLICT → PRECEDENCE REQUIRED → DO NOT SILENTLY RECONCILE"*).
+
+**The Founder has now resolved it.** The governing interpretation, per
+`ACT-CC-P10-FAE-02 §3`: the completed §35 block is intentional Founder issuance;
+the prohibition on populating Founder-controlled fields governed **Claude's
+construction conduct prior to issuance** and does not override the Founder's
+subsequent explicit confirmation.
+
+**The conflict was resolved by the authority that owns it, not by the party that
+found it.** That is the outcome the escalation was for.
+
+#### 4. Lifecycle state transition
+
+```text
+FDE-P10-AUTONOMOUS-EXECUTION-01
+
+CONSTRUCTED                     ACT-CC-P10-FAE-01, 2026-09-05, a092d4a
+        ↓
+FOUNDER EXPLICITLY CONFIRMED    ACT-CC-P10-FAE-02 §1, §33
+        ↓
+ISSUED                          Moriarty, 05-09-2026
+        ↓
+OPERATIVE                       effective 05-09-2026
+```
+
+The prior state — `CONSTRUCTED / NOT ISSUED / NOT OPERATIVE` — is superseded.
+It is retained in the event document's own conflict register rather than deleted.
+
+#### 5. Authority added, stated precisely
+
+The operative envelope is **Maximum Bounded Autonomous Execution Authority**, not
+unrestricted authority. Of the four items the event proposes, only part is new:
+
+| Item | Classification |
+|---|---|
+| Resolve-on-discovery | **Clarification** — the resolution authority is already `DEL-T4.4-CF-001 §3.1 E` |
+| Standing construction | **Temporal extension** of `FDE-P10-FRONTIER-02 §4` |
+| Follow-on execution Act generation | **Genuinely new** — no prior resident source delegated it |
+| Conformance repair | **Largely existing** (`DEL §3.1 C`, `APT §3.1 H, I`); new only for repairing Claude's own prior artifacts |
+
+`ACT-CC-P10-FAE-02 §4`: this Act *"grants no authority beyond the authority
+explicitly contained in FDE-P10-AUTONOMOUS-EXECUTION-01."* **No authority is
+created by this register entry.**
+
+#### 6. Boundaries unchanged
+
+Preserved in full and unweakened by this issuance: Platform identity · CPID
+creation and mutation · ownership assignment and transfer · authority-role
+creation and binding (Security, Quality and Governance owner roles remain
+unbound) · canonicalization · freeze · `DERIVED ≠ ADOPTED ≠ CANONICAL ≠ FROZEN`
+· Constitution · Mission · Founder authority, succession, removal, replacement ·
+the delegation boundary itself · legal ownership · non-delegable Domain Model
+semantics · protected lifecycle transitions.
+
+`Constitution §16` is untouched: *"Amendment authority rests exclusively with the
+Architect. No delegation of amendment authority is permitted under any
+circumstance."*
+
+**FD-2 remains an OPEN PREMISE.** `GDR-0015` records the Founder ≡ Architect
+equivalence as *"IMPLIED, not separately ratified… Ratification remains open."*
+This issuance does not close it, and `APT-CD1.1-AA-001 §3.2` exclusion 26
+continues to bar Claude from deciding it.
+
+#### 7. Status
+
+| Field | Value |
+|---|---|
+| CR-1 | **RESOLVED — FOUNDER EXPLICIT ISSUANCE CONFIRMATION** |
+| Target event | `FDE-P10-AUTONOMOUS-EXECUTION-01` |
+| Decision | **B — Expanded but Controlled** |
+| Founder | Moriarty |
+| Issued at | 05-09-2026 |
+| Effective from | 05-09-2026 |
+| Event status | **OPERATIVE** |
+| New authority created by the confirming Act | **NONE** |
+| Second Founder Event created | **NO** |
+
+#### 8. Correction of record — `GDR-0036`, discovered during this Act
+
+`GDR-0036 §…` states that *"`native_core`'s `Department` is the Domain-Model
+accountability unit of Architecture Freeze §4, **a different entity**, and is not
+PD-02."* **The clause "a different entity" is incorrect.** `ADR-0010`
+(**Approved**, Founder decision **FD-6**, `GDR-0020`) had already renamed the
+Canonical Domain Model entity to **Platform Division**, recording `Department` as
+its **historical alias**; Domain Model §2 carries that alias today. The correct
+state was determined independently at `ADE-P10-G04` (Option A).
+
+**`GDR-0036`'s text is not altered.** Register §2: *"Append-only. Entries are
+added, never rewritten. A superseded or revoked entry is marked as such and
+retained in place; its text is not altered."* `DEL-T4.4-CF-001 §3.2` exclusion 16
+independently bars modifying historical evidence. This entry is therefore the
+mark, and `GDR-0036` stands as written.
+
+**The surrounding finding in `GDR-0036` is unaffected and remains true:** PD-02
+has no representation in `native_core`, `consumers` or `tools`, and **0** code
+references to any Volume or PD platform exist — re-verified 2026-09-05, 0 hits
+across all three regions. What was wrong was the reason given, not the
+conclusion. `ORGANIZATIONAL SOURCE ≠ ORGANIZATIONAL RUNTIME` still holds: the
+entity **type** exists in the Domain Model spine, and no **instance** binds a
+CPID to it.
+
+---
+
 ---
 
 ## 4. External Corpus Synchronization Ledger

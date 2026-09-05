@@ -27,7 +27,7 @@ the complete resident evidence base for eight of the ten platform divisions.
 | **E-10** | *"PD-09 — Evaluate Quality"* | `volume-2/.../C8.md` | :303 | **FROZEN** | Resident | **CANONICAL** |
 | **E-11** | *"PD-03 hingga PD-10 dengan domain adaptation"* · *"tanpa memaksakan metric PD-02"* | `volume-2/.../E4.md`, `D4.md` | :1431, :1125 | **FROZEN** | Resident | **CANONICAL** |
 | **E-12** | Native Core holds *"exactly the eleven frozen subsystem boundaries — no more"* | `AIOS_NATIVE_CORE_BLUEPRINT_v1.0.md` | :31 | Canonical Architecture | Resident | **CANONICAL** |
-| **E-13** | `Department` is the Freeze §4 accountability unit owned by exactly one Organization — not a platform division | `native_core/core/capability/ownership.py` | :98 | Implementation | Implementation | **RESIDENT** |
+| **E-13** | `Department` is the Freeze §4 accountability unit owned by exactly one Organization. **Corrected 2026-09-05** (`FDE-P10-AUTONOMOUS-EXECUTION-01 §11`): this row previously read *"— not a platform division"*, which contradicted `ADR-0010` (Approved, FD-6, `GDR-0020`). `Platform Division` **is** the entity; `Department` is its recorded historical alias, and this class implements it under that alias. See `ADE-P10-G04-DECISION.md` | `native_core/core/capability/ownership.py` | :98 | Implementation | Implementation | **RESIDENT** |
 | **E-14** | `PD-02` is ACTIVE | `GDR-0036` | Register | Founder | Governance | **CANONICAL** |
 | **E-15** | `PD-01` is NOT ACTIVATION-ELIGIBLE — blocking AG-03, AG-08, AG-10 | `AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md` | :341 | Governance | Resident | **CANONICAL** |
 | **E-16** | Volumes 0, 0.1, 0.2, 0.3 are referenced but not resident | repository | 3 referencing files, 0 files | — | Absence | **UNKNOWN** |

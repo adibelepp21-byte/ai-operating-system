@@ -136,17 +136,27 @@ twelve, and it was not made twelve.
 ## Summary
 
 ```text
-MISSING            G-01  G-03  G-05  G-06  G-07
-BOUNDARY CONFLICT  G-02  G-04
+MISSING            G-01  G-05  G-06  G-07
+BOUNDARY CONFLICT  G-02  G-03
 INCORRECT          G-08
+RESOLVED           G-04
 
 Blocking a canonical Platform Organization baseline  : G-01
-Blocking P10 operationalization                      : G-04
+Blocking P10 operationalization                      : none
 Founder authority required                           : G-01, G-02, G-03, G-06, G-07
-Architect authority required                         : G-02, G-03, G-04
+Architect authority required                         : G-02, G-03
 Closable by the Co-Founder alone                     : none
 ```
 
-**No gap is marked CLOSED.** None has verification evidence, and `§21` of
-`ACT-CC-P10-0` bars closure without it. Every gap above was observed during this
+> **Conformance repair, 2026-09-05** — under `FDE-P10-AUTONOMOUS-EXECUTION-01
+> §11`. This block had drifted from the sections above it: `G-03` was listed
+> MISSING after its own section was reclassified **BOUNDARY CONFLICT**, and
+> `G-04` was listed BOUNDARY CONFLICT and blocking after its own section
+> recorded it **RESOLVED** with `Blocking: NO`. The block now matches the
+> sections. **No classification was changed here** — each was already decided in
+> its own section, and this repair only stopped the summary contradicting them.
+
+**No gap is marked CLOSED.** `G-04` is marked **RESOLVED by decision**
+(`ADE-P10-G04`), which is not the same thing: closure requires verification
+evidence, and `§21` of `ACT-CC-P10-0` bars it without. Every gap above was observed during this
 Act's own discovery and reconciliation — none was inherited from a list.

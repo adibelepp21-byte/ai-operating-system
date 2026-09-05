@@ -90,21 +90,48 @@ coherence and is not reported as such.
 
 ## 5. Organizational source ≠ organizational runtime
 
-The distinction is not merely respected here; it is **enforced by the frozen
-architecture**. The Native Core holds *"exactly the eleven frozen subsystem
-boundaries — no more"* (`E-12`), and **0** references to any platform division
-exist across 179 implementation files (`E-19`). `Department` in
-`native_core/core/capability/ownership.py` is the Architecture Freeze §4
-accountability unit — a different entity (`E-13`).
+> **Conformance repair, 2026-09-05** — under `FDE-P10-AUTONOMOUS-EXECUTION-01
+> §11`. This section previously stated that `Department` in `native_core` is
+> *"a different entity"* from a Platform Division, and concluded that no bridge
+> exists and that building one *"requires a twelfth boundary."* **That was
+> wrong**, and it was wrong before this file was written: `ADR-0010`
+> (**Approved**, Founder decision **FD-6**, `GDR-0020`) had already renamed the
+> Canonical Domain Model entity to **Platform Division**, with `Department`
+> recorded as its **historical alias**. The implementation's identifier was read
+> as entity identity without checking the alias record. The correct state was
+> determined independently by `ADE-P10-G04` (Option A); this repair brings the
+> section into conformance with it and introduces no new decision.
+
+The distinction is respected here, and the boundary between them is narrower
+than this file first claimed.
+
+**One entity, not two.** Canonical Domain Model §2: *"**Platform Division** … a
+bounded, semi-autonomous unit of accountability with its own domain vocabulary.
+Owns Capabilities and Agent Definitions. **Historical alias: Department** — see
+ADR-0010."* The `Department` dataclass at
+`native_core/core/capability/ownership.py:98` implements that entity under the
+alias — its own docstring cites Freeze §4 and **INV-2**. `ADR-0010` chose
+*"bounded amendment rather than global migration"*, so the alias surviving in
+code is lawful and expected, not a defect.
+
+**`PD-01`…`PD-10` are Platform Divisions.** The organizational representation
+already exists in the frozen Domain Model spine. **No twelfth core boundary is
+required or sought**, and the Native Core still holds *"exactly the eleven frozen
+subsystem boundaries — no more"* (`E-12`).
+
+**What is genuinely absent is instances, not a type.** **0** references to any
+CPID exist across the implementation files (`E-19`, re-verified 2026-09-05:
+0 hits for `PD-01`…`PD-10` across `native_core`, `consumers` and `tools`).
 
 ```text
-PD-01 … PD-10          ORGANIZATIONAL SOURCE      documents, no runtime
+PD-01 … PD-10          ORGANIZATIONAL SOURCE      documents, no instances
         │
-        │  ← no bridge exists; building one requires a twelfth boundary
+        │  ← the entity type exists (Platform Division, alias Department);
+        │    what is absent is any instance binding a CPID to it
         ▼
 Native Core            ELEVEN FROZEN BOUNDARIES   runtime, no organization
 ```
 
-**Any organizational runtime is therefore an architectural-tier change** →
-Architecture Change Control → ADR under `Constitution §3.4` (`GDR-0032`).
-Outside this Act (`§8`), and recorded as `G-04`.
+**Binding a CPID to an instance would still be an architectural-tier change** →
+Architecture Change Control → ADR under `Constitution §3.4` (`GDR-0032`). It is
+not performed here. `G-04` is **RESOLVED**, and is no longer blocking.

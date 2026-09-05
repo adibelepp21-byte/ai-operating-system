@@ -1,10 +1,11 @@
 # Founder Decision Event — Maximum Bounded Autonomous Execution Authority
 
-> **CONSTRUCTED · NOT ISSUED · NOT OPERATIVE.**
-> This document is a constructed Founder Decision Event awaiting Founder
-> issuance. It grants nothing in its present state. No authority described here
-> is in force by virtue of this document existing, being committed, being
-> verified, or being useful.
+> **ISSUED · OPERATIVE from 05-09-2026.**
+> Issued by Founder Moriarty on 05-09-2026, Decision **B — Expanded but
+> Controlled**, confirmed explicitly at `ACT-CC-P10-FAE-02 §1` and §33 and
+> recorded at `GDR-0037`. The authority below is in force by virtue of that
+> issuance and of nothing else — not because this document exists, was
+> committed, was verified, or is useful.
 
 **Constructed under:** `ACT-CC-P10-FAE-01` — Founder Event Construction, Source
 Verification & Issuance-Readiness Act
@@ -15,9 +16,9 @@ and Engineering Authority
 and Issuance-Readiness Act. It does not itself constitute a Founder Decision
 Event."*
 
-**A material source conflict was found inside the constructing Act and is NOT
-reconciled here. See §37 before issuing. It concerns whether the Founder has
-already issued this event.**
+**`CR-1` — the issuance conflict raised at construction — was resolved by the
+Founder at `ACT-CC-P10-FAE-02 §3`, not by Claude. Both positions are retained
+verbatim at §37.**
 
 ---
 
@@ -31,10 +32,12 @@ already issued this event.**
 | **Constructing Act** | `ACT-CC-P10-FAE-01` |
 | **Predecessor events** | `FAE-P10-FRONTIER-01` · `FDE-P10-FRONTIER-02` (Decision A, ISSUED) |
 | **Subject** | Maximum Bounded Autonomous Execution Authority |
-| **Decision state** | **PENDING — no decision selected by Claude** |
-| **Issuance state** | **NOT ISSUED** |
-| **Event status** | **NOT OPERATIVE** |
-| **Effective from** | *(Founder-controlled — §35)* |
+| **Decision state** | **B — Expanded but Controlled**, selected by the Founder |
+| **Issuance state** | **ISSUED** — Moriarty, 05-09-2026 |
+| **Event status** | **OPERATIVE** |
+| **Effective from** | **05-09-2026** |
+| **Confirming act** | `ACT-CC-P10-FAE-02` §1, §3, §33 |
+| **Register record** | `GDR-0037` |
 
 ---
 
@@ -551,13 +554,15 @@ action remains inside the delegated boundary.
 ## 34. Issuance condition (`§33.33`)
 
 This event becomes operative **only** when the Founder explicitly completes the
-issuance block at §35. Until then:
+issuance block at §35.
 
 ```
 CONSTRUCTED  ≠  ISSUED  ≠  OPERATIVE
 ```
 
-**No Claude action may collapse these states.**
+**No Claude action may collapse these states.** None did: the transition from
+CONSTRUCTED to ISSUED was performed by the Founder at `ACT-CC-P10-FAE-02 §1`,
+and Claude's act was to record it.
 
 The governing test is the Founder's own, recorded at `FDE-P10-FRONTIER-02 §31`:
 
@@ -565,35 +570,37 @@ The governing test is the Founder's own, recorded at `FDE-P10-FRONTIER-02 §31`:
 > authorization. A header stating ISSUED is not sufficient where the issuance
 > block itself remains incomplete."*
 
-**Effective date (`§33.34`):** determined by the Founder at issuance. It is left
-blank below and is not defaulted, inferred, or pre-filled.
+**Effective date (`§33.34`):** determined by the Founder at issuance —
+**05-09-2026**, as stated at `ACT-CC-P10-FAE-02 §2` and §33. Not defaulted,
+inferred, or derived.
 
 ---
 
 ## 35. Founder issuance block (`§33.35`)
 
 **Exactly one issuance block exists in this document.** Every field below is
-Founder-controlled and is deliberately blank.
+Founder-controlled and is transcribed from the Founder's own statement of it —
+`ACT-CC-P10-FAE-01 §35` as confirmed governing by `ACT-CC-P10-FAE-02 §1`, §2 and
+§33. No field is defaulted, inferred, or supplied by Claude.
 
 ```
 FOUNDER DECISION EVENT
 
 EVENT ID:            FDE-P10-AUTONOMOUS-EXECUTION-01
 
-DECISION:            ______________________________
+DECISION:            B
 
-SELECTED DECISION:   ______________________________
+SELECTED DECISION:   B — Expanded but Controlled
 
-FOUNDER:             ______________________________
+FOUNDER:             Moriarty
 
-SIGNATURE:           ______________________________
+SIGNATURE:           Moriarty
 
-ISSUED AT:           ______________________________
+ISSUED AT:           05-09-2026
 
-EFFECTIVE FROM:      ______________________________
+EFFECTIVE FROM:      05-09-2026
 
-EVENT STATUS:        NOT OPERATIVE
-                     (becomes OPERATIVE only on Founder completion above)
+EVENT STATUS:        OPERATIVE
 ```
 
 ### Decision options preserved
@@ -607,9 +614,14 @@ be preserved and that Claude **not** select among them.
 | **B** | **Expanded but Controlled** — Level 1 existing autonomy, plus N-1…N-4 as bounded above, with Levels 3 and 4 retained |
 | **C** | Partial — issue some of N-1…N-4 and decline the rest |
 
-**Recommendation on record: Option B.** `ACT-CC-P10-FAE-01 §34` states the
-recommended scope is Maximum Bounded Autonomous Execution Authority, and adds:
-**RECOMMENDATION ≠ FOUNDER DECISION.** No option is selected here.
+**Option B was selected by the Founder.** The recommendation on record was also
+B, and the two must not be confused: `ACT-CC-P10-FAE-01 §34` states
+**RECOMMENDATION ≠ FOUNDER DECISION**, and Claude selected nothing. The
+recommendation was made at construction; the selection was made by the Founder
+at `ACT-CC-P10-FAE-02 §1`. **A matching recommendation is not what made B
+operative.**
+
+Options A and C were available to the Founder and were not taken.
 
 ---
 
@@ -635,10 +647,12 @@ AUTHORITY SOURCE` · `DISCOVERY ≠ AUTHORIZATION`.
 `ACT-CC-P10-FAE-01 §5`: **SOURCE CONFLICT → PRECEDENCE REQUIRED → DO NOT
 SILENTLY RECONCILE.** Nothing below is resolved by preference.
 
-### CR-1 — Issuance-block conflict inside the constructing Act · **UNRESOLVED — Founder confirmation required**
+### CR-1 — Issuance-block conflict inside the constructing Act · **RESOLVED — FOUNDER EXPLICIT ISSUANCE CONFIRMATION**
 
-`ACT-CC-P10-FAE-01` contains two directly contradictory positions on whether
-this event is already issued.
+`ACT-CC-P10-FAE-01` contained two directly contradictory positions on whether
+this event was already issued. **Both are retained below.** The conflict was put
+to the Founder rather than reconciled, and the Founder resolved it at
+`ACT-CC-P10-FAE-02`; the resolution is recorded after Position 2.
 
 **Position 1 — the Act's own header and eight of its sections require a blank block:**
 
@@ -672,22 +686,36 @@ issuance block of this event**; the single issuance block of this event is at
 > this Founder Decision Event… This block represents the Founder's explicit
 > issuance of FDE-P10-AUTONOMOUS-EXECUTION-01."*
 
-**Disposition.** Position 1 and Position 2 cannot both be given effect, and
-neither is discarded here. What is decided is only **Claude's own conduct**:
-every instruction addressed to Claude's actions — the header prohibition, §34,
-§42.16-17, §43.I, §44.1-5, §47 — points one way, and §44 makes selecting,
-signing, or marking operative a prohibited act regardless of which reading is
-correct. **This document therefore carries a blank block, and the §35 text is
-preserved above verbatim rather than normalized away.**
+**Disposition at construction.** Position 1 and Position 2 could not both be
+given effect, and neither was discarded. What Claude decided was only **its own
+conduct**: every instruction addressed to Claude's actions — the header
+prohibition, §34, §42.16-17, §43.I, §44.1-5, §47 — pointed one way, and §44 made
+selecting, signing, or marking operative a prohibited act regardless of which
+reading was correct. The document therefore carried a blank block, and the §35
+text was preserved verbatim rather than normalized away.
 
-Two observations offered as evidence, not as determination:
+**Founder resolution — `ACT-CC-P10-FAE-02 §1`, verbatim:**
 
-1. Under the Founder's own test at `FDE-P10-FRONTIER-02 §31`, the §35 block is **complete** — decision selected, signature present, status stated. It is not defective in the way the *previous* Act's block was (blank signature under an `ISSUED` header). **The filled signature line is the material difference from the prior Act.**
-2. The §35 block issues an event whose text the same Act instructs Claude to construct afterward. An issuance recorded against content not yet written is unusual, and is the strongest evidence that §35 functioned as a template for the block rather than as the issuance itself.
+> §35 governs. Decision B — Expanded but Controlled — is explicitly selected and
+> issued by Founder Moriarty on 05-09-2026, with effect from 05-09-2026.
+> FDE-P10-AUTONOMOUS-EXECUTION-01 is therefore ISSUED and OPERATIVE.
 
-**Founder action required: confirm which position governs.** If §35 was intended
-as the issuance, the Founder need only say so — or complete §35 above — and this
-event becomes operative on Decision B without further construction.
+**Governing interpretation — `ACT-CC-P10-FAE-02 §3`:** the completed §35 block is
+intentional Founder issuance; the prohibition on populating Founder-controlled
+fields *"applies to Claude's construction conduct prior to Founder issuance"* and
+does not override the Founder's subsequent explicit confirmation.
+
+**Position 2 governs. CR-1 is closed.** Recorded at `GDR-0037`.
+
+Two observations made at construction, retained because they are part of the
+record rather than because they still bear on the outcome:
+
+1. Under the Founder's own test at `FDE-P10-FRONTIER-02 §31`, the §35 block was **complete** — decision selected, signature present, status stated — and so was not defective in the way the *previous* Act's block was (blank signature under an `ISSUED` header). The filled signature line was the material difference.
+2. The §35 block issued an event whose text the same Act instructed Claude to construct afterward. That was the strongest available evidence for the opposite reading. **It was not decisive, and the Founder's confirmation settles it.**
+
+**The escalation cost one turn and resolved cleanly.** That is the intended
+behaviour of the boundary, not friction to be engineered away: the party that
+owned the conflict resolved it, and Claude did not guess.
 
 ### CR-2 — Derived Master Map citation · **RESOLVED, with one divergence carried forward**
 
@@ -818,10 +846,13 @@ Act as the Founder Event itself.
 ## 40. Final state
 
 ```
-ACT STATUS      :  CONSTRUCTION COMPLETE
-EVENT STATUS    :  CONSTRUCTED · NOT ISSUED · NOT OPERATIVE
-BLOCKING ITEM   :  CR-1 — Founder confirmation of which issuance position governs
+CONSTRUCTING ACT  :  ACT-CC-P10-FAE-01  — CONSTRUCTION COMPLETE
+CONFIRMING ACT    :  ACT-CC-P10-FAE-02  — ISSUANCE CONFIRMED
+EVENT STATUS      :  ISSUED · OPERATIVE from 05-09-2026
+DECISION          :  B — Expanded but Controlled
+BLOCKING ITEM     :  NONE
+REGISTER RECORD   :  GDR-0037
 ```
 
-No automatic transition is permitted. The Founder remains the authority that
-determines whether this event becomes operative.
+No automatic transition occurred. The Founder determined that this event became
+operative, and did so explicitly.
