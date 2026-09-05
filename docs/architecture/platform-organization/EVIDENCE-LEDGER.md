@@ -69,6 +69,18 @@ evidence of completeness.
 | **E-34** | PD-03 `A1 §21` enumerates what its baseline **does not** establish at `A1` level — detailed Governance Charter · Governance Authority Matrix · internal organizational structure · governance workflow · performance model · maturity target · certification lifecycle — and declines to claim them as canonical | Volume 3 Part A, `A1` §21 | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
 | **E-35** | PD-04 `A1` declares `CPID: PD-04` · `SOURCE-FIDELITY MODE: Bounded Canonical Synthesis` · `SOURCE SUPPORT: Strong for Identity, Bounded for Constitutional Framing` · `UNSUPPORTED AUTHORITY: NONE IDENTIFIED` · `BOUNDARY EXPANSION: NONE IDENTIFIED` | Volume 4 Part A, `A1` | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
 
+| **E-36** | Volume 3 **Part B declares `NOT FROZEN` · `BOUNDED RECORD ONLY`**, review `BLOCKED BY SOURCE IDENTITY` and `NOT COMPLETABLE FOR STRUCTURAL FREEZE`. Parts A, C, D, E, F, H declare `FROZEN`; **Part G declares `FROZEN WITH SOURCE QUALIFICATION`** | Volume 3 Parts A–H freeze records | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-37** | The volume names **three section-level source gaps of its own**: `EXPLICIT PD-03 D5 SOURCE NOT LOCATED` · `LITERAL G4 BASELINE NOT FOUND` · `LITERAL COMPLETE G6 BASELINE NOT FOUND` | Volume 3 Parts D, G | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-38** | Volume 3 Part G records `GOLD STANDARD REVIEW: PASS WITH RECONCILIATION REQUIRED` and **`CLAUDE CODE RECONCILIATION REQUIRED`**. **Recorded, not acted on** — a note inside a non-resident body is not an authorization | Volume 3 Part G | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT ACTIONABLE** |
+| **E-39** | Both volumes apply a per-Part **Source-Fidelity Mode** taxonomy: *Bounded Canonical Synthesis* · *Bounded Canonical Reconstruction* · *Bounded Domain Reconstruction* · *Source-Bounded Reference-Adapted*. **No Part claims unbounded canonical status** | Volumes 3 and 4, all Parts | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-40** | Volume 4 Part C names `PD-02 Architecture Office`, `PD-03 Governance & Compliance` and `PD-04 Knowledge & Intelligence` as authorities within PD-04's Knowledge Architecture | Volume 4 Part C | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+
+> **`E-36`…`E-40` added 2026-09-05** — the Parts `B`–`H` / `B`–`C` harvest that
+> `§19` identified as unfinished. **`E-36` confirms `E-22` from the body itself**;
+> **`E-37` records three gaps the source names against itself**; **`E-38` is a
+> task the source assigns to this role, which cannot be performed while the body
+> is non-resident.**
+
 > **`E-33`…`E-35` added 2026-09-05** under `ACT-CC-P10-C7 §36` (construction
 > depth). **`E-33` supplies PD-03's Authority, Ownership, Dependency and
 > Interface dimensions from PD-03's own corpus** — four cells the matrix recorded

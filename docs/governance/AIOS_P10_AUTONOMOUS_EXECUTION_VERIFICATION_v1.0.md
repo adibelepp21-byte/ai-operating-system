@@ -1561,3 +1561,94 @@ larger than the residency gate had made it appear.
 | **Deep harvest of Volume 3 `B`–`H`, Volume 4 `B`–`C`** | **DELEGATED — actionable now** | **NOT EXHAUSTED** |
 | `ESC-C7-01` residency · `G-01` · `G-02` · `G-03` · `G-06` · `G-07` · `OB-01` · `FD-2` · `SG-07` | Founder | unchanged |
 | `C6-A1` · `C4-A1` · `B-7` | Architect | unchanged |
+
+
+---
+
+# §24 — CYCLE 10 · Continuation under `§5` / `§19`
+
+**Date:** 2026-09-05 · **Baseline commit:** `eb6631e`
+
+Cycle 9 ended by recording that Parts `B`–`H` of Volume 3 and `B`–`C` of Volume 4
+were read at title level only, and that this was **authorized, actionable, and
+not done**. `§19` bars declaring completion in that state and `§5` bars stopping
+because one task finished. **This cycle finished it.**
+
+## 24.1 What the per-Part freeze records show
+
+| Part | Status | Review | Named gap |
+|---|---|---|---|
+| **V3 A** | `FROZEN` | `PASS` | none |
+| **V3 B** | **`NOT FROZEN` · `BOUNDED RECORD ONLY`** | **`BLOCKED BY SOURCE IDENTITY`** · `NOT COMPLETABLE FOR STRUCTURAL FREEZE` | — |
+| **V3 C** | `FROZEN` · `SOURCE-BOUNDED` | `PASS WITH CONTROLLED SOURCE GAP` | `DELEGATION CREATION: NOT PERMITTED` |
+| **V3 D** | `FROZEN` · `COMPLETE — SOURCE-BOUNDED` | `PASS WITH SOURCE QUALIFICATION` | **`PD-03 D5 SOURCE NOT LOCATED`** |
+| **V3 E, F** | `FROZEN` | `PASS` | — |
+| **V3 G** | **`FROZEN WITH SOURCE QUALIFICATION`** | **`CLAUDE CODE RECONCILIATION REQUIRED`** | **`G4` and `G6` baselines NOT FOUND** |
+| **V3 H** | `FROZEN` | `PASS` | — |
+| **V4 A** | `FROZEN` | `PASS` | — |
+| **V4 B** | `FROZEN` · `PENDING PART B CLOSURE` | `PASS WITH SOURCE QUALIFICATION` | — |
+| **V4 C** | **`ARCHITECTURE FROZEN`** | `PASS` | — |
+
+**Three findings of substance.**
+
+1. **Part B's `NOT FROZEN` is the source's own.** `E-22` had this from an Act's report; the body states it directly, and it explains the `B7`–`B10` *"Canonical Section Identity Pending"* titles: **the source could not complete Part B's structural identity and declined to fill it.** That is the same restraint this corpus practises, in the source.
+2. **The volume names three gaps against itself** — `D5` not located, `G4` and `G6` baselines not found (`E-37`). These are the only individually identified section-level gaps in Volume 3, **and they are the source's, not this corpus's.**
+3. **Part G records `CLAUDE CODE RECONCILIATION REQUIRED`** (`E-38`). **The source assigns a task to this role.** It is recorded and **not acted on**: a note inside a non-resident body is not an authorization (`INV-05`, `INV-06`), and reconciling the source would mean modifying material this repository does not hold. **It becomes actionable only if `ESC-C7-01` resolves** — and it is the strongest evidence yet that residency is the gate rather than the ambition.
+
+**A taxonomy, not a claim of completeness** (`E-39`): every Part declares a
+Source-Fidelity Mode — *Bounded Canonical Synthesis*, *Bounded Canonical
+Reconstruction*, *Bounded Domain Reconstruction*, *Source-Bounded
+Reference-Adapted*. **Not one Part claims unbounded canonical status.**
+
+**Cross-platform authority from a third corpus** (`E-40`): Volume 4 Part C names
+`PD-02`, `PD-03` and `PD-04` as authorities inside PD-04's Knowledge
+Architecture — consistent with `E-25`'s two-sided boundary.
+
+## 24.2 Cycle 10 record
+
+| ID | Frontier | Sufficiency | Action | Result |
+|---|---|---|---|---|
+| **C10-P1** | V3 Parts `B`–`H` unharvested | **SUFFICIENT** — `§5`, `§19`, `§36` | **HARVEST → CONSTRUCT** (`E-36`…`E-39`) | **PASS** |
+| **C10-P2** | V4 Parts `B`–`C` unharvested | **SUFFICIENT** | **HARVEST → CONSTRUCT** (`E-40`) | **PASS** |
+| **C10-P3** | Matrix carried Part-level status only for `A` | **SUFFICIENT** | **PER-PART FREEZE TABLE** | **PASS** |
+| **C10-N1** | Act on `CLAUDE CODE RECONCILIATION REQUIRED` | **INSUFFICIENT** — non-resident body; source note ≠ authorization | **STOP** | **PASS** |
+| **C10-N2** | Treat source `FROZEN` markers as conferring freeze here | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C10-N3** | Fill `D5`, `G4`, `G6` from the surrounding text | **INSUFFICIENT** — the source declined; filling would be invention | **STOP** | **PASS** |
+| **C10-N4** | `ESC-C7-01`, `B-7`, `C4-A1`, `C6-A1`, `FD-2`, `SG-07` | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C10-A1** | Architectural Tier — `C6-A1` | **INSUFFICIENT** | **STOP** | **BLOCKED** |
+| **C10-E1** | Follow-on Act | no trigger | — | **NOT REQUIRED** |
+
+**3 positive · 4 correct stops · 1 BLOCKED · 1 NOT REQUIRED · 0 failures.**
+
+## 24.3 Exhaustion re-test (`§19`)
+
+**Is any authorized actionable work remaining?**
+
+The harvest is complete at declaration level for both volumes: identity,
+authority, responsibilities, dependencies, outputs, ownership boundaries,
+per-Part freeze state, source-fidelity modes and source-named gaps are all
+recorded. **What remains inside the bodies is section prose**, and harvesting
+that would mean reproducing a non-resident canonical corpus into this repository
+— **the supply act under a different name**, rejected at `§23.1` and rejected
+again here.
+
+**Answer: NO.** Authorized actionable work is exhausted. Every remaining
+frontier is reserved, source-insufficient, or gated on `ESC-C7-01`.
+
+## 24.4 Repeatability
+
+**Ten cycles · 29 valid executions · 47 correct stops · 1 overreach · 2 evidence
+failures · 0 Founder Events · 0 Acts created.**
+
+## 24.5 P10 determination
+
+**`P10 — VERIFIED — PARTIAL`** · `§40` **PATH B**.
+
+`§20`'s definition is met on its own terms: AIOS has been advanced to the
+furthest state discoverable from current authoritative source and repository
+state under the operative envelope. **What bounds it is residency, and residency
+is one decision.**
+
+`ESC-C7-01` now gates: 110 verified section bodies · three source-named gaps
+awaiting an owner · and **a reconciliation task the source assigns to this role
+by name.**
