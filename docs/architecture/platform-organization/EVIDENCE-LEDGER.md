@@ -82,6 +82,24 @@ evidence of completeness.
 | **E-44** | **`GDR-0001` (Founder Decision G1′) already determined the precedence question `E-43` raises.** For **repository architecture**: `AIOS_CANONICAL_ARCHITECTURE.md` is *"**not** the semantic authority; that is the Canonical Domain Model"*, and Master Program `Pasal 7–8` are *"no longer an independent constitutional source; repository artifact precedence is **Engineering Constitution §4**."* Both retain their role **within the Master Program corpus** | `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md:181-183` | resident | **Founder Decision** | Direct read | **RESIDENT — AUTHORITATIVE** |
 | **E-45** | The **External Corpus Synchronization Ledger already records** that the Master Program (I–VIII), `AIOS_CANONICAL_ARCHITECTURE.md`, ALMM, Project Governance and the Engineering Charter are *"not present in this repository and cannot be synchronized here"*, with the required changes recorded so the requirement survives | `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md:4925-4928` | resident | Governance | Direct read | **RESIDENT** |
 
+| **E-46** | The Master Program **Progress Tracker** (snapshot **26 July 2026**) records: Phase 0–2 *Selesai* 100% · Phase 3 *Sedang Berjalan* ±75% · **Phase 4–10 *Belum Dimulai* 0%**, including **Phase 10 Department Ecosystem = 0%**. The table declares itself *"kondisi per 26 Juli 2026, **bukan status realtime**"*, and states that canonical progress is maintained in `AIOS_CANONICAL_ARCHITECTURE.md` | Master Program, Progress Tracker | supplied-source path | Program (non-resident) | Direct read | **SOURCE-VERIFIED / STALE BY DECLARATION** |
+| **E-47** | `consumers/knowledge_agent.py` cites *"Master Program Volume II §4.3"* for the Phase 6 exit condition *"Agent dapat mengambil dan memperbarui pengetahuan tervalidasi."* **Verified against the recovered body: the phrase is present and accurate.** Implementation code citing a then-non-resident source checks out | `consumers/knowledge_agent.py`; Master Program | code + source body | Verification | Direct read | **VERIFIED** |
+| **E-48** | `Constitution §6.1` binds *"Domain Model invariants **1–14**"*; the Canonical Domain Model `§7` carries **15**. Verified by direct count. Already recorded as an open item in `GOVERNANCE_INDEX §6`. **Not actionable here** — correcting the Constitution is amendment (`§16`, non-delegable); correcting the Domain Model is a semantic change (`DEL §3.2` 9) | `engineering-constitution-v1.md §6.1`; `canonical-domain-model-v1.md §7` | resident | Governance | Direct count | **VERIFIED — RESERVED** |
+
+> **`E-46` materially qualifies the word "P10" throughout this corpus.** The
+> Master Program's **Phase 10 — Department Ecosystem** stands at **0%, not
+> started**. The work this repository has executed under the label "P10" is the
+> **Platform Organization Construction Track**, which the Platform Encyclopedia
+> defines as **Track B, parallel to Phase 1–13 and explicitly not a Phase**
+> (`ACT-CC-P6-070` records that the Roman-numeral Master Program volumes and the
+> Arabic Encyclopedia volumes *"index different things"*).
+>
+> **These are two different things sharing a number.** Nothing in this corpus
+> advances Master Program Phase 10, and no statement here should be read as
+> claiming otherwise. **Phase status is the Program Owner's determination**
+> (`Master Program Volume V §3`: *"Pemilik Program (Moriarty), berdasarkan bukti
+> implementasi"*), maintained canonically in a **non-resident** document.
+
 > **`E-43`…`E-45` added 2026-09-05** under `ACT-CC-P10-FINAL §20`, which required
 > an active attempt to **falsify** the exhaustion conclusion. **The attempt
 > succeeded**: a 225 KB source this corpus had inventoried and never opened.

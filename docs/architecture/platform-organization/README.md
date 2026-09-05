@@ -65,6 +65,24 @@ finished volumes and a more useful one: it is the first resident artifact set
 for `PD-03`…`PD-10`, and it makes the absence precise enough to be closed
 deliberately rather than discovered again later.
 
+## 1a. What "P10" means here — and what it does not
+
+**Clarified 2026-09-05** (`E-46`). The Master Program's Progress Tracker records
+**Phase 10 — Department Ecosystem at 0%, *Belum Dimulai***, as of its 26 July
+2026 snapshot.
+
+**That is a different Phase 10 from the one this corpus has been built under.**
+The work here is the **Platform Organization Construction Track** — *Track B*,
+which the Platform Encyclopedia defines as running **parallel to Phase 1–13 and
+explicitly not as a Phase**. `ACT-CC-P6-070` records that the Roman-numeral
+Master Program volumes and the Arabic Encyclopedia volumes *"index different
+things."*
+
+**Two different things share the number 10.** Nothing in this corpus advances
+Master Program Phase 10, and no statement here claims to. **Phase status is the
+Program Owner's determination on implementation evidence**, maintained
+canonically in `AIOS_CANONICAL_ARCHITECTURE.md`, which is **not resident**.
+
 ## 2. Artifacts
 
 | Artifact | Function |
