@@ -26,13 +26,14 @@ twelve, and it was not made twelve.
 
 | | |
 |---|---|
-| **Classification** | **MISSING** |
-| **Current state** | `PD-03`…`PD-10`: 265 statements total, all incidental references inside `PD-01`/`PD-02` corpora or program records. No volume, no body, no section |
+| **Classification** | **PARTIAL — SUPPLY-BLOCKED** *(was MISSING)* |
+| **Current state** | **Two of the eight corpora exist and are verified; neither is resident.** `PD-03` Volume 3: Parts `A`–`H`, **80/80 sections, 3,704,607 bytes** (`E-20`). `PD-04` Volume 4: Parts `A`–`C`, **30/30 sections, 1,508,896 bytes** (`E-23`). Both located and verified 2026-09-05 in a supplied-source path under `ACT-CC-P10-C7 §8`/`§9`. **`PD-05`…`PD-10`: still no volume, no body, no section** — 265 incidental statements inside the `PD-01`/`PD-02` corpora and program records |
 | **Expected state** | A definitional corpus per division, as `PD-01` (45 bodies) and `PD-02` (50 bodies) have |
+| **What changed** | The gap was diagnosed as *absence*. For `PD-03` and `PD-04` it is **non-residency**, which is a different problem with a different and much cheaper remedy (`ESC-C7-01`) |
 | **Evidence** | `EVIDENCE-LEDGER.md` §2; **19 of 96 dimension-cells fully evidenced · 8 partial · 69 absent** *(recounted 2026-09-05; was "~15")*. **That matrix samples the frozen `PD-02` corpus only.** `E-20`…`E-26` add a materially larger PD-03/PD-04 evidence base from two resident Acts the matrix never sampled, so 96 cells is a floor, not the total |
 | **Severity** | **HIGH** — blocks any full Platform Organization baseline |
-| **Owner / Authority** | **Founder** — supply the corpora, or authorize construction of derived definitions from resident evidence |
-| **Recommended action** | Founder decision between the two paths. Neither is available to the Co-Founder: supplying source is not construction, and canonicalizing derived content requires authority this Act withholds (`§16`) |
+| **Owner / Authority** | **Founder** — `E-29`: residency is conferred by Founder supply under a named Act (`AR-PD01-P7-REC-006`; `ACT-CC-F03-009`/`010` + `SOURCE TRANSFER BATCH`), and even the namespace required `ADR-0012`, Decision Owner **Architect (Founder)** |
+| **Recommended action** | **For `PD-03`/`PD-04`: authorize residency** — the bodies are verified complete and need only a supply act (`ESC-C7-01`). **For `PD-05`…`PD-10`:** the original Founder decision still stands — supply, or authorize derived definitions. Neither is available to the Co-Founder |
 | **Blocking** | **YES** for a canonical baseline · **NO** for the derived baseline delivered here |
 
 ## G-02 — `PD-10` carries two different names in resident sources

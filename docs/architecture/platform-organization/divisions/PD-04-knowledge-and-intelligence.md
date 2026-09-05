@@ -65,8 +65,12 @@ Canonical Reconstruction · 1 FROZEN WITH QUALIFICATION · 2 unstated.** *"No
 **Part `C` is the structural difference from PD-03**: ten sections of Knowledge
 architecture, where PD-03's volume contains none.
 
-**None of the 30 bodies is resident.** The corpus was supplied to
-`ACT-CC-P6-071`; this record inventories it and reconstructs nothing.
+**None of the 30 bodies is resident — and all 30 exist.** A source-recovery pass
+under `ACT-CC-P10-C7 §9` located the three Part files and verified them:
+**30/30 section identities present, 1,508,896 bytes — an exact match to the byte
+total `ACT-CC-P6-071 §2` recorded** (`E-23`). This record inventories the corpus
+and reconstructs nothing. **Residency is a Founder supply act** (`E-29`,
+`ESC-C7-01`).
 
 ### 1.3 Ownership boundary toward PD-03 — evidenced from both sides
 

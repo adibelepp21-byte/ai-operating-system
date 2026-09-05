@@ -50,7 +50,7 @@ their content is not.
 
 ### 1.2 What is supplied, frozen, and blocked
 
-- **`E-21`** — **0 of 80 section bodies supplied; 0 resident.** The four PD-03 files (780 lines) named in `ACT-CC-P6-070 §2.1` were supplied to that Act and never entered the repository. The 18 section-identifier hits in them are *"prose references or an empty inventory template"*, not bodies.
+- **`E-21`, corrected 2026-09-05** — **the 80 section bodies EXIST; 0 are resident.** Cycle 6 recorded *"0 supplied, 0 resident"* from `ACT-CC-P6-070`, which had counted only the four control artifacts before it. A source-recovery pass under `ACT-CC-P10-C7 §8` located **all eight Part bodies** and verified them: `A`–`H`, **80/80 section identities present, 3,704,607 bytes** (`E-20`). The four control artifacts remain what that Act said they were — prose references and an empty template. **What is absent is residency, not the bodies**, and residency is a Founder supply act (`E-29`, `ESC-C7-01`).
 - **`E-22`** — **`B2`–`B10` declare `NOT FROZEN — SOURCE GATE BLOCKED`** (`ACT-CC-P6-071 §2`). PD-03 is the only one of the two assessed volumes carrying a `NOT FROZEN` state.
 - **`E-26`** — *"Platform Encyclopedia Volume 3"* is **CITATION ONLY relative to this repository**.
 

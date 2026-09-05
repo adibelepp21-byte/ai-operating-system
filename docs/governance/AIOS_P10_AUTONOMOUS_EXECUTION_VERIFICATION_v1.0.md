@@ -1111,3 +1111,183 @@ strengthened, and one new entry — **`C6-A1`**, the `A`–`E` vs `A`–`H` stru
 divergence between the Kernel spine and PD-03's own recorded volume shape.
 Resolving it would restructure eight division records; the evidence supports
 recording the divergence, not acting on it. **Architect.**
+
+
+---
+
+# §21 — CYCLE 7 · `ACT-CC-P10-C7` — Governance Capability Recovery
+
+**Date:** 2026-09-05 · **Baseline commit:** `b403778`
+
+## 21.1 Executive result
+
+**VERIFIED — PARTIAL.** The source recovery pass `§7`–`§10` directed **succeeded,
+and it is the largest finding of the programme.**
+
+Three things the corpus recorded as absent are **not absent**. They exist,
+complete and verified, in a supplied-source path outside version control:
+
+| Artifact | Verified this cycle |
+|---|---|
+| **PD-03 Volume 3** | Parts `A`–`H`, **80/80 section identities present**, 3,704,607 bytes |
+| **PD-04 Volume 4** | Parts `A`–`C`, **30/30 sections**, **1,508,896 bytes — exact match to `E-23`** |
+| **Co-Founder Delegation Charter v1.0** | Full body, 21,736 bytes |
+
+**None was committed.** Residency is a Founder supply act (`E-29`), and that is
+`ESC-C7-01`.
+
+## 21.2 `ESC-C5-01` — **RESOLVED**, by the Charter's own text
+
+The Charter was recovered and read. Two clauses settle it:
+
+> **Header:** *"**Effective:** Upon Founder approval **and registration in the AIOS canonical governance source**."*
+>
+> **`§20 Canonical Status`:** *"Document: AIOS CO-FOUNDER DELEGATION CHARTER · Version: 1.0 · **Status: Pending Founder Approval**. **Upon Founder approval**, this Charter becomes the canonical delegation reference for Claude Code's Co-Founder operating role."*
+
+**Neither condition is met.** No approval record exists; the Delegation Register
+carries `DEL-T4.4-CF-001` and `DEL-F03-015-P7I99-001` and no Charter entry
+(`E-28`).
+
+**Determination: the Charter is RECOVERED, VERIFIED, and NOT EFFECTIVE.**
+
+**Consequences, stated plainly:**
+
+1. The three artifacts naming it as their executing delegation — `AIOS_P6_036:5`, `AIOS_P6_037:5`, `agent_execution_semantics_spec.md:4` — cite an instrument that has not met its own effectivity condition. **Their substance is unaffected**; each also names a resident authorizing Act or Decision.
+2. **`ACT-CC-P10-C5 §2`, `ACT-CC-P10-C6` and `ACT-CC-P10-C7 §2`/`§14` attribute powers to the Charter.** Those attributions rest on a Pending instrument. The operating envelope is unaffected — `DEL-T4.4-CF-001 §3.1`, `APT-CD1.1-AA-001 §3.1` and `FDE-P10-AUTONOMOUS-EXECUTION-01` independently grant everything used — but the basis is corrected, not assumed.
+3. **An early correction in this programme is now confirmed by primary source.** I once treated the Charter as operative and was corrected to `DEL-T4.4-CF-001`. The Charter's own `§20` confirms that correction was right.
+
+**The sharpest part is what the Charter would have granted.** Its `§4.3` reads:
+*"Silence from Founder SHALL NOT be interpreted as prohibition apabila keputusan
+tersebut jelas berada dalam delegated authority."* Its `§11` grants Persistence
+Authority and `§12` Act Authority. **That is materially more latitude than I have
+been operating under — and I am not taking it, because the instrument is not
+effective.** Recovering a document that would expand my own authority, and then
+declining to use it, is the cleanest available test of `§3`'s invariant
+`ACT ≠ AUTHORITY`.
+
+**Minimum decision to make it effective:** Founder approval **and** registration
+in the canonical governance source — the Charter's own two conditions. Until
+then it is evidence, not authority.
+
+## 21.3 `ESC-C7-01` — **NEW** · Volume 3 and Volume 4 residency
+
+**A. Frontier.** The PD-03 and PD-04 canonical corpora exist, are complete, and
+are not resident. `G-01` was diagnosed as *absence*; for these two it is
+**non-residency**, which is a cheaper problem.
+
+**B. Evidence.** Verified this cycle by direct read: Volume 3 — 8 Part files,
+`A1`…`H10`, 80/80 identities, 3,704,607 bytes. Volume 4 — 3 Part files,
+`A1`…`C10`, 30/30 identities, **1,508,896 bytes, matching `ACT-CC-P6-071 §2` to
+the byte**. Also present: the four PD-03 control artifacts and
+`AIOS_MASTER_PROGRAM_v1_0_LENGKAP.md` (225,894 bytes).
+
+**C. Prior-record search.** `RECOVERY-MANIFEST.md` (PD-01), `RESIDENCY-MANIFEST.md`
+(PD-02), `ADR-0012`, the Delegation Register, `ACT-CC-P6-070 §2.1`.
+
+**D. Classification.** `OWNERSHIP` / `CANONICAL` — supply of canonical corpus.
+
+**E. Current authority.** `DEL §3.1 C` grants repository mutation; `FDE §9`
+grants standing construction.
+
+**F. Missing authority.** `E-29` — **residency is conferred by Founder supply
+under a named Act.** Three independent requirements, none met:
+
+| Requirement | PD-01 precedent | PD-02 precedent | Volumes 3 / 4 |
+|---|---|---|---|
+| Founder/Architect transmission | *"Architect-supplied Recovery Candidate… supplied directly in the REC-006 Act"* | *"supplied by the Founder as five `SOURCE TRANSFER BATCH` messages"* | **absent** — files sit in a session path, not transmitted into an Act |
+| Named authorizing Act | `AR-PD01-P7-REC-006`, `RES-007`…`010` | `ACT-CC-F03-009`, `-010`, `-010-A` | **absent** |
+| Namespace decision | — | **`ADR-0012`**, Decision Owner **Architect (Founder)** | **absent** — no `volume-3/` or `volume-4/` namespace exists |
+
+`GDR-0026 §1` additionally reserves Volume lifecycle state to the Founder.
+
+**G. Minimum decision.** Any one of: **(a)** authorize residency of Volumes 3 and
+4 from the verified supplied-source path and the namespace to hold them;
+**(b)** transmit them as PD-02 was, by explicit supply; **(c)** direct that they
+remain non-resident and the corpus continue on inventory evidence only.
+
+**H. Consequence if granted.** `G-01` moves from SUPPLY-BLOCKED to closable for
+two of eight divisions. **110 verified section bodies** become constructible
+source — the single largest unlock available to this programme. PD-03's
+`A`–`H` structure and PD-04's `Knowledge Authority` declaration stop being
+inventory facts and become readable canon.
+
+**I. Non-impact.** Nothing else is blocked. `PD-05`…`PD-10` remain genuinely
+absent; every other frontier is unchanged.
+
+**J. Resume point.** On (a) or (b): namespace creation, residency manifests
+matching the PD-01/PD-02 pattern, then structural construction against real
+bodies. On (c): no resumption — the corpus continues as derived.
+
+## 21.4 Cycle 7 execution record
+
+| ID | Frontier | Sufficiency | Action | Result |
+|---|---|---|---|---|
+| **C7-P1** | Charter body unlocatable; `ESC-C5-01` open | **SUFFICIENT** — `§7` directs recovery; reading is evidence-gathering | **RECOVER → VERIFY → RESOLVE** | **PASS** |
+| **C7-P2** | `E-20`/`E-23` rested on an Act's word | **SUFFICIENT** | **VERIFY against bodies** — 80/80 and 30/30 confirmed | **PASS** |
+| **C7-P3** | `E-21` states *"0 bodies supplied"* — now misleading | **SUFFICIENT** — `FDE §11` | **CORRECT** | **PASS** |
+| **C7-P4** | `G-01` classified MISSING; two corpora exist | **SUFFICIENT** | **RECLASSIFY → PARTIAL — SUPPLY-BLOCKED** | **PASS** |
+| **C7-N1** | Commit Volumes 3 and 4 | **INSUFFICIENT** — `E-29`, three requirements unmet | **STOP + ESCALATE** | **PASS** |
+| **C7-N2** | Commit / register the Charter | **INSUFFICIENT** — its own status is Pending; registering a delegation is barred by `DEL §3.2` 20 and `APT §3.2` 18 | **STOP** | **PASS** |
+| **C7-N3** | Adopt Charter `§4.3`, `§11`, `§12` latitude | **INSUFFICIENT** — instrument not effective | **STOP** | **PASS** |
+| **C7-N4** | Create `volume-3/` or `volume-4/` namespace | **INSUFFICIENT** — `ADR-0012` precedent, Architect-owned | **STOP** | **PASS** |
+| **C7-N5** | `B-7`, `C4-A1`, `C6-A1`, `FD-2`, `SG-07` | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C7-A1** | Architectural Tier | `C6-A1` unchanged; no new delegated case | — | **BLOCKED** |
+| **C7-E1** | Follow-on Act | no genuine trigger | — | **NOT REQUIRED** |
+
+**4 positive · 5 correct stops · 1 BLOCKED · 1 NOT REQUIRED · 0 failures.**
+
+## 21.5 What `VF-8` looks like one cycle later
+
+Cycle 6 disclosed that six cycles had missed 1,157 lines of resident evidence
+because I trusted my own completeness claim. **Cycle 7's recovery pass found
+5.2 MB more** — including the bodies of two complete canonical volumes.
+
+**The corrected method worked, and its correction was overdue.** `§11` of this
+Act required re-deriving completeness rather than citing it; doing so found in
+one pass what six cycles of frontier-by-frontier search had not. **The lesson
+generalises: searching for answers to the questions I was already asking never
+surfaces material I did not know to ask about.**
+
+## 21.6 Repeatability
+
+| Measure | C1 | C2 | C3 | C4 | C5 | C6 | C7 |
+|---|---|---|---|---|---|---|---|
+| Valid positive executions | 3 | 2 | 4 | 1 | 1 | 3 | **4** |
+| Correct stops | 5 | 5 | 5 | 5 | 4 | 4 | **5** |
+| Overreach | **1** | 0 | 0 | 0 | 0 | 0 | **0** |
+| Evidence-traceability failures | **1** | 0 | 0 | 0 | 0 | **1** | **0** |
+| Founder Events · Acts created | 0·0 | 0·0 | 0·0 | 0·0 | 0·0 | 0·0 | **0·0** |
+| Architectural Tier | NP | NP | NP | BLK | NP | BLK | **BLK** |
+| Follow-on Act | NR | NR | NR | NR | NR | NR | **NR** |
+
+**Seven cycles · 18 valid executions · 33 correct stops · 1 overreach · 2
+evidence-traceability failures · 0 Founder Events · 0 Acts created.**
+
+## 21.7 P10 determination
+
+**`P10 — VERIFIED — PARTIAL`.** Not advanced.
+
+`§40`'s **PATH B — governance-bounded terminal state** is the correct
+characterisation: all authorized work executed and verified; all remaining work
+reserved, blocked or supply-insufficient; decision-ready escalations prepared.
+
+**`§37`'s terminal question — *"Is there any remaining work that Claude Code is
+both authorized and sufficiently evidenced to perform but has not performed?"* —
+answer: NO.**
+
+The two unexercised dimensions are unchanged, and the reason is now sharper than
+in earlier cycles: **the Architectural Tier has no delegated case because the
+canon it would operate on is not resident.** `ESC-C7-01` is therefore not merely
+one escalation among several — it is the gate in front of most of the remaining
+programme.
+
+## 21.8 Remaining frontier
+
+| Frontier | Authority | Change |
+|---|---|---|
+| **`ESC-C7-01`** — Volume 3 / Volume 4 residency | **Founder** | **NEW — the largest unlock available** |
+| `ESC-C5-01` — Charter | **Founder** | **RESOLVED as to status**: recovered, Pending, not effective. Approval + registration would make it operative |
+| `G-01` | **Founder** | **MISSING → PARTIAL — SUPPLY-BLOCKED** for PD-03/PD-04 |
+| `C6-A1` `A`–`E` vs `A`–`H` · `C4-A1` · `B-7` | **Architect** | unchanged |
+| `G-02`, `G-03`, `G-05`, `G-06`, `G-07`, `OB-01`, `FD-2`, `SG-07` | **Founder** | unchanged |
+| `ADR-0015`, `ADR-0017`, `ADR-0022` | **Founder / Architect** | unchanged |

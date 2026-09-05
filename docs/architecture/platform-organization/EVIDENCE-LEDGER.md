@@ -38,10 +38,10 @@ evidence of completeness.
 | **E-17** | Platform Organization Master Map and Platform Encyclopedia are referenced but not resident | repository | 11 references, 0 files | — | Absence | **UNKNOWN** |
 | **E-18** | No systemic gap inventory is resident | repository | 0 matches, both phrasings | — | Absence | **UNKNOWN** |
 | **E-19** | No `PD-0x` or `Volume N` reference exists anywhere in implementation | `native_core`, `consumers`, `tools` | 0 matches / 179 `.py` files | Implementation | Observation | **RESIDENT** |
-| **E-20** | PD-03's canonical volume is **Parts A–H × 10 = 80 sections**; 80 identities and 20 titles enumerable | `ACT-CC-P6-070` | §2.2 | Act record | Resident | **RESIDENT** |
-| **E-21** | PD-03 section **bodies: 0 supplied, 0 resident**; the 18 pattern hits are prose references or an empty template | `ACT-CC-P6-070` | §2.2 | Act record | Resident | **RESIDENT** |
+| **E-20** | PD-03's canonical volume is **Parts A–H × 10 = 80 sections** — **VERIFIED against the actual bodies 2026-09-05**: 8 Part files, **80/80 section identities present**, 3,704,607 bytes | `ACT-CC-P6-070` §2.2 + direct verification | supplied-source path, **not resident** | Act record + direct | Verified | **VERIFIED / NOT RESIDENT** |
+| **E-21** | **CORRECTED 2026-09-05.** Previously: *"bodies: 0 supplied, 0 resident."* **`0 resident` remains true. `0 supplied` is now misleading** — `ACT-CC-P6-070` counted only the four control artifacts before it; the **eight Part bodies exist and were verified this cycle**. What is absent is *residency*, not the bodies | `ACT-CC-P6-070` §2.2 + direct verification | — | Act record + direct | Correction | **CORRECTED** |
 | **E-22** | PD-03 **`B2–B10` declare `NOT FROZEN — SOURCE GATE BLOCKED`** | `ACT-CC-P6-071` | §2 | Act record | Resident | **RESIDENT** |
-| **E-23** | PD-04's supplied corpus is **30/30 sections** — `A1–A10`, `B1–B10`, `C1–C10` — across 3 files, **102,540 lines / 1,508,896 bytes**; 23 FROZEN, 2 Bounded Canonical Synthesis, 2 Bounded Canonical Reconstruction, 1 FROZEN WITH QUALIFICATION, 2 unstated | `ACT-CC-P6-071` | §2 | Act record | Resident | **RESIDENT** |
+| **E-23** | PD-04's supplied corpus is **30/30 sections** — `A1–A10`, `B1–B10`, `C1–C10` — across 3 files, **102,540 lines / 1,508,896 bytes**; 23 FROZEN, 2 Bounded Canonical Synthesis, 2 Bounded Canonical Reconstruction, 1 FROZEN WITH QUALIFICATION, 2 unstated. **VERIFIED against the actual bodies 2026-09-05: 30/30 sections present, byte total 1,508,896 — exact match** | `ACT-CC-P6-071` §2 + direct verification | supplied-source path, **not resident** | Act record + direct | Verified | **VERIFIED / NOT RESIDENT** |
 | **E-24** | PD-04 **declared identity**: `Platform Authority: Knowledge Authority` · `Primary Responsibility: Knowledge, Context, Intelligence Assets` · `Primary Dependencies: AI Engineering, Runtime` | `ACT-CC-P6-071` | §2, Part A block | Act record | Resident | **RESIDENT** |
 | **E-25** | PD-03 ↔ PD-04 ownership boundary, stated consistently from both sides, **conflict NONE**: `B1 §11` *"PD-03 tidak menjadi organizational owner atas: … Knowledge & Intelligence"*; `C8` *"PD-04 owns Knowledge Integrity … PD-03 owns Governance & Compliance and provides certification/compliance"*; `C8 §36` routes certification through PD-03 with PD-04 supplying evidence | `ACT-CC-P6-071` | §12 | Act record | Resident | **RESIDENT** |
 | **E-26** | Platform Encyclopedia Volume 3 is **CITATION ONLY relative to this repository**; the four PD-03 files (780 lines) were supplied to a prior Act and are not resident | `ACT-CC-P6-070` | §2.1, :213 | Act record | Resident | **RESIDENT** |
@@ -56,6 +56,19 @@ evidence of completeness.
 > verified about* the PD-03 and PD-04 corpora. **Those corpora remain NOT
 > RESIDENT** — `G-01` is unchanged. An inventory of an absent body is evidence
 > about it, never a substitute for it, and no section body is reconstructed here.
+
+| **E-27** | The `AIOS CO-FOUNDER DELEGATION CHARTER v1.0` body is **recovered and read**. Its own header: *"**Effective:** Upon Founder approval **and registration in the AIOS canonical governance source**."* Its own `§20 Canonical Status`: *"**Status: Pending Founder Approval**"* | Charter body, supplied-source path | header, §20 | Instrument | Verified | **VERIFIED — PENDING, NOT EFFECTIVE** |
+| **E-28** | **No Charter approval or registration record exists.** The Delegation Register carries `DEL-T4.4-CF-001` and `DEL-F03-015-P7I99-001` only | `AIOS_DELEGATION_REGISTER_v1.0.md` | §3 | Governance | Absence | **RESIDENT** |
+| **E-29** | A Volume becomes resident only by **Founder supply under a named Act**: PD-01 — *"Architect-supplied Recovery Candidate (AR-PD01-P7-REC-006)… supplied directly in the REC-006 Act"*; PD-02 — *"Authorized by: FOUNDER · ACT-CC-F03-009 · ACT-CC-F03-010"*, bodies *"supplied by the Founder as five SOURCE TRANSFER BATCH messages"*. Even the **namespace** required `ADR-0012`, Decision Owner **Architect (Founder)** | `RECOVERY-MANIFEST.md`, `RESIDENCY-MANIFEST.md`, `ADR-0012` | — | Governance | Resident | **RESIDENT** |
+
+> **`E-27`…`E-29` added 2026-09-05** under `ACT-CC-P10-C7`, from the source
+> recovery pass its `§7`–`§10` direct. **`E-20`, `E-21` and `E-23` were upgraded
+> from *"an Act recorded this"* to *"verified against the actual bodies."***
+>
+> **Residency is unchanged and deliberately so.** The Volume 3 and Volume 4
+> bodies exist in a supplied-source path and are **not committed**: `E-29`
+> establishes that residency is conferred by Founder supply under a named Act,
+> and no such Act exists for either Volume. See `ESC-C7-01`.
 
 **External evidence: none.** No external repository or pattern was consulted
 (`§14`). Internal evidence was the limiting factor, and no external source could
