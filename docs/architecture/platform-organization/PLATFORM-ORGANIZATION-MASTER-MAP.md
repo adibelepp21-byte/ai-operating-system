@@ -17,7 +17,7 @@
 |---|---|---|---|---|
 | **PD-01** | Executive — frozen `A4` header: `Official Name: Executive Office` | — | reference implementation | **NOT ACTIVATION-ELIGIBLE** (`E-15`) |
 | **PD-02** | Architecture — frozen `A4` header: `Official Name: Architecture Office` | — | Architecture domain, `OA-01…OA-07` | **ACTIVE** (`E-14`, `GDR-0036`) |
-| **PD-03** | Governance & Compliance | Governance | partial · **80-section volume evidenced, `B2`–`B10` NOT FROZEN** (`E-20`, `E-22`) | not assessed |
+| **PD-03** | Governance & Compliance | Governance | **declares `Governance Authority`**; responsibilities Policy/Control/Certification; **Technical Design NOT OWNED** (`E-30`, `E-33`); 80-section volume, `B2`–`B10` NOT FROZEN (`E-20`, `E-22`) | not assessed |
 | **PD-04** | Knowledge & Intelligence | Knowledge | **declares `Knowledge Authority`** (`E-24`); 30/30 sections, 23 FROZEN (`E-23`) | not assessed |
 | **PD-05** | Runtime & Execution | Runtime | **owns Runtime** (`E-06`, `E-07`) | not assessed |
 | **PD-06** | AI Engineering | AI Engineering | **owns implementation** (`E-08`) | not assessed |
@@ -96,11 +96,11 @@ read "16 of 40", which `divisions/README.md §3`'s own enumeration contradicted.
 
 | Dimension | Result | Evidence |
 |---|---|---|
-| **Authority** | **PARTIAL** | PD-02's set is enumerated (`OA-01…OA-07`); **PD-04's corpus declares `Knowledge Authority` outright** (`E-24`) — the only division besides PD-02 with a positive authority statement. PD-03 carries fragments; five divisions carry none |
+| **Authority** | **PARTIAL** | PD-02's set is enumerated (`OA-01…OA-07`); **PD-03 and PD-04 each declare their own authority** — `Governance Authority` (`E-30`) and `Knowledge Authority` (`E-24`) — in identity headers naming their CPID. **Three of ten divisions now carry a positive authority statement**; five carry none. PD-03/PD-04 sources are **non-resident** |
 | **Ownership** | **PARTIAL** | Five divisions evidenced; **PD-08 and PD-10 have no ownership statement at all** |
 | **Capability** | **MISSING** | 0 of 8 divisions carry a capability statement |
 | **Interfaces** | **MISSING** | 1 statement across 8 divisions. `C8` Cross-Platform Architecture Governance exists but describes PD-02's responsibility, not a registry |
-| **Dependencies** | **PARTIAL** *(was MISSING)* | `PD-04 → PD-06`, `PD-04 → PD-05` self-declared (`E-24`). Seven divisions evidence none |
+| **Dependencies** | **PARTIAL** | **Five directional edges, self-declared by two divisions**: `PD-04 → PD-06`, `PD-04 → PD-05` (`E-24`); `PD-03 → PD-02`, `PD-03 → PD-08`, `PD-03 → PD-09` (`E-33`). Six divisions evidence none. Both sources **non-resident** |
 | **Boundaries** | **PARTIAL** | The architectural boundary diagram (`E-04`) separates domains; no division defines its own boundary |
 | **Lifecycle** | **PARTIAL** | Evidenced for PD-01 and PD-02 only |
 | **Terminology** | **1 CONFLICT** | PD-10 Enablement/Experience (`G-02`) |

@@ -40,7 +40,7 @@ PASS` · `Freeze Decision: APPROVED`.
 
 | Part | Subject | Sections | Source status | Construction status |
 |---|---|---|---|---|
-| **A** | Platform Identity & Strategic Foundation | `A1`–`A10` | **BODY PRESENT** · `A1` declares `FROZEN` | **SOURCE-VERIFIED** — identity harvested into the PD-03 record |
+| **A** | Platform Identity & Strategic Foundation | `A1`–`A10` | **BODY PRESENT** · `A1` declares `FROZEN`, `GOLD STANDARD REVIEW: PASS`, `FREEZE DECISION: APPROVED` | **SOURCE-VERIFIED (deep)** — identity, responsibilities, dependencies, output and negative-ownership boundary harvested, plus `A1 §21`'s own statement of what its baseline does not establish |
 | **B** | Organization Architecture | `B1`–`B10` | **PARTIAL** — `B1`–`B6` titled; **`B7`–`B10` titled *"Canonical Section Identity Pending"*** | **SOURCE-INCOMPLETE** — corroborates `E-22` (`B2`–`B10` `NOT FROZEN — SOURCE GATE BLOCKED`) |
 | **C** | Governance Architecture | `C1`–`C10` | **BODY PRESENT** · `C9` conditional on source baseline; `C10` = *Source Resolution* | **SOURCE-VERIFIED (titles)** |
 | **D** | Governance Operations | `D1`–`D10` | **BODY PRESENT** | **SOURCE-VERIFIED (titles)** |

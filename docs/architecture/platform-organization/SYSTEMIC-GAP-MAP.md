@@ -96,10 +96,10 @@ twelve, and it was not made twelve.
 
 | | |
 |---|---|
-| **Classification** | **PARTIAL** *(was MISSING)* |
-| **Current state** | **One** positive dependency is evidenced: `PD-04 → PD-06` and `PD-04 → PD-05`, declared by PD-04's own corpus. The remaining statements are still negative — numeric order is not dependency; dependency is not subordination; PD-02 owns no other domain. **No dependency is evidenced for the other seven divisions** |
-| **Evidence** | `E-24` (positive) · `E-03`, `A4.md:289` (negative) |
-| **Severity** | **MEDIUM** — one edge is not a graph. `§22.1` required a dependency graph; drawing one from a single evidenced edge would still be mostly inference |
+| **Classification** | **PARTIAL** *(was MISSING)* · **extended again 2026-09-05** |
+| **Current state** | **Five directional edges are evidenced, across two divisions**, each declared by that division's own corpus: `PD-04 → PD-06` and `PD-04 → PD-05` (`Primary Dependencies: AI Engineering, Runtime`, `E-24`); `PD-03 → PD-02`, `PD-03 → PD-08`, `PD-03 → PD-09` (`Primary Dependencies: Architecture, Security, Quality`, `E-33`). The negative rules still hold. **No dependency is evidenced for the other six divisions** |
+| **Evidence** | `E-24`, `E-33` (positive) · `E-03`, `A4.md:289` (negative) |
+| **Severity** | **MEDIUM** — five edges are still not a graph. Both dependency sets come from **non-resident** bodies (`ESC-C7-01`), and six of eight divisions evidence nothing. A graph drawn now would remain mostly inference |
 | **Owner / Authority** | Follows from `G-01` for the remaining seven |
 | **Recommended action** | Record the evidenced edge; **do not extrapolate it**. Defer the graph until the remaining corpora exist. **No graph is drawn** |
 | **Blocking** | NO |

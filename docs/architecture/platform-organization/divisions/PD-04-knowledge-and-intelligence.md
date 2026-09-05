@@ -77,6 +77,29 @@ Not Become Uncontrolled"* · *"Workforce Does Not Redefine Boundary"*.
 PD-04's own volume. They were derived here from `MASTER_ROADMAP §5` and PD-02's
 frozen text; PD-04 states them natively. **Convergent, not copied.**
 
+`A1`'s Canonical Status block adds, verbatim:
+
+```text
+CPID                 : PD-04
+AUTHORITY            : Knowledge Authority
+PRIMARY DOMAIN       : Knowledge, Context, Intelligence Assets
+SOURCE-FIDELITY MODE : Bounded Canonical Synthesis
+SOURCE SUPPORT       : Strong for Identity · Bounded for Constitutional Framing
+UNSUPPORTED AUTHORITY: NONE IDENTIFIED
+BOUNDARY EXPANSION   : NONE IDENTIFIED
+FREEZE DECISION      : APPROVED
+```
+
+**`CPID: PD-04` is stated explicitly** — the only division besides PD-02 whose own
+corpus names its CPID in an identity block.
+
+**`SOURCE-FIDELITY MODE: Bounded Canonical Synthesis`** is the source declaring
+its own construction method, and **`SOURCE SUPPORT: Strong for Identity ·
+Bounded for Constitutional Framing`** is it grading its own evidence. Together
+with `UNSUPPORTED AUTHORITY: NONE IDENTIFIED` and `BOUNDARY EXPANSION: NONE
+IDENTIFIED`, the volume runs the same checks this corpus runs — **authority not
+claimed beyond evidence, boundary not widened by construction.**
+
 **Provenance:** the source body is **NOT RESIDENT** (`ESC-C7-01`).
 
 ### 1.2 The supplied corpus — 30 sections, and its freeze state

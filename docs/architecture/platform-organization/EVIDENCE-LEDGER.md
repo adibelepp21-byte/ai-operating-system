@@ -65,6 +65,16 @@ evidence of completeness.
 | **E-31** | PD-03 `B7`–`B10` carry the literal title **"Canonical Section Identity Pending"**; `C9`, `G2` and `H10` are unresolved in the body. **The volume is internally incomplete at source**, corroborating `E-22` from the source side | Volume 3 Parts B, C, G, H | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
 | **E-32** | PD-04 Part B carries an interleaved `B01`–`B06` constraint series: *"No Cross-Team Ownership Without Delegation"* · *"Dependency Does Not Create Ownership"* · *"Consumer Does Not Become Owner"* · *"Quality Does Not Become Domain Owner"* · *"Evolution Does Not Become Uncontrolled"* · *"Workforce Does Not Redefine Boundary"* — the same distinctions this corpus derived independently from `MASTER_ROADMAP §5` and PD-02 | Volume 4 Part B | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
 
+| **E-33** | PD-03 `A1 §22` declares: `PRIMARY RESPONSIBILITIES: Policy · Control · Certification` · **`PRIMARY DEPENDENCIES: Architecture · Security · Quality`** · `PRIMARY OUTPUTS: Policy · Standards` · **`TECHNICAL DESIGN OWNERSHIP: NOT OWNED BY PD-03`** · `CANONICAL REFERENCE: Governance Baseline` | Volume 3 Part A, `A1` §22, §24 | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-34** | PD-03 `A1 §21` enumerates what its baseline **does not** establish at `A1` level — detailed Governance Charter · Governance Authority Matrix · internal organizational structure · governance workflow · performance model · maturity target · certification lifecycle — and declines to claim them as canonical | Volume 3 Part A, `A1` §21 | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-35** | PD-04 `A1` declares `CPID: PD-04` · `SOURCE-FIDELITY MODE: Bounded Canonical Synthesis` · `SOURCE SUPPORT: Strong for Identity, Bounded for Constitutional Framing` · `UNSUPPORTED AUTHORITY: NONE IDENTIFIED` · `BOUNDARY EXPANSION: NONE IDENTIFIED` | Volume 4 Part A, `A1` | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+
+> **`E-33`…`E-35` added 2026-09-05** under `ACT-CC-P10-C7 §36` (construction
+> depth). **`E-33` supplies PD-03's Authority, Ownership, Dependency and
+> Interface dimensions from PD-03's own corpus** — four cells the matrix recorded
+> ABSENT. **`E-34` and `E-35` are the two volumes grading their own evidence**:
+> each enumerates what its baseline does not support and declines to claim it.
+
 > **`E-30`…`E-32` added 2026-09-05** under `ACT-CC-P10-C7 §7`, read **directly
 > from the source bodies** rather than from an Act's report of them.
 > **`E-30` is the first evidence of PD-03's authority stated by PD-03 itself**;

@@ -1418,3 +1418,146 @@ Unchanged in membership. Two entries changed in weight:
 
 - **`ESC-C7-01`** — now gates **110 section bodies whose titles, identity headers and internal gaps are all verified**. It is no longer a speculative unlock.
 - **`C6-A1`** — strengthened: PD-03 has 8 Parts, PD-04 has 3, the spine has 5. **Three different shapes in one document family**, and the divergence cannot be resolved by preferring one.
+
+
+---
+
+# §23 — CYCLE 9 · `ACT-CC-P10-C7` (re-issued, §4 / §22) — Construction Depth
+
+**Date:** 2026-09-05 · **Baseline commit:** `0de0035`
+
+## 23.1 `§22` — I re-tested the gate, and disclose the workaround I rejected
+
+`§22 NO ARTIFICIAL RESTRAINT` is a direct challenge to three cycles of posture,
+so I re-derived the residency gate from source rather than repeating a
+conclusion. **`§4` forbids treating my own prior findings as the work queue, and
+`F-01` — authority existed but Claude stopped — is a real failure mode.**
+
+Re-derivation: `DEL §3.1 C` grants repository mutation and none of `§3.2`'s
+twenty exclusions names supply of source material. `GDR-0026 §1` reserves Volume
+**lifecycle state**, which committing a file is not. So the prohibition is not
+as flat as I had been treating it.
+
+**Which surfaced a workaround, and I record it because I considered it:** persist
+the recovered bodies under an explicitly non-canonical path —
+`platform-organization/recovered-source/` — marked NOT canonical, NOT frozen, not
+a Volume namespace. That would sidestep `ADR-0012`'s namespace question and
+`GDR-0026`'s lifecycle question entirely, and it is defensible on the face of
+`DEL §3.1 C`.
+
+**I rejected it.** Copying 3.7 MB of frozen canonical text into the repository
+under a different directory name **is** the supply act; the label does not change
+what the act is. Achieving a reserved outcome by relabeling is precisely the
+manoeuvre the anti-self-authorization discipline exists to prevent, and `§21`'s
+bar on artificial coverage cuts the same way.
+
+**So the answer to `§22` is: not artificial restraint.** The restraint is not
+*"this was not explicitly named"* — it is that residency of canonical corpora is
+conferred by a specific mechanism with three documented precedents (`E-29`), and
+no packaging changes which act I would be performing.
+
+## 23.2 `§4` fresh discovery — what I had genuinely under-explored
+
+The re-derivation cleared the gate as a topic and forced a real question: **what
+have eight cycles not looked at?**
+
+Answer: **the volume bodies themselves.** Cycle 8 read identity headers and
+section titles — perhaps 2% of 5.2 MB. `§36` construction depth explicitly calls
+for definition, scope, boundary, responsibility, authority, dependencies,
+decision rules, lifecycle, integration. **That surface was open the whole time
+and I had been treating "the bodies are non-resident" as though it also meant "I
+may not read further into them."** It never did.
+
+## 23.3 Harvest — four ABSENT dimensions filled from PD-03's own corpus
+
+`Volume 3 Part A · A1 §22`, verbatim:
+
+```text
+PRIMARY RESPONSIBILITIES   : Policy · Control · Certification
+PRIMARY DEPENDENCIES       : Architecture · Security · Quality
+PRIMARY OUTPUTS            : Policy · Standards
+TECHNICAL DESIGN OWNERSHIP : NOT OWNED BY PD-03
+CANONICAL REFERENCE        : Governance Baseline
+```
+
+**This fills Authority, Ownership, Dependency and Interface for PD-03** — four
+cells the Evidence Ledger recorded ABSENT — **from PD-03's own side**, where
+every prior statement came from PD-02's.
+
+**Dependency evidence has now grown from zero to five edges in four cycles.**
+Cycle 5: *"no positive inter-PD dependency is evidenced anywhere."* Cycle 6:
+one set (`PD-04 → PD-06`, `PD-05`). Cycle 9: a second (`PD-03 → PD-02`, `PD-08`,
+`PD-09`). **Each was found by reading further into material already in hand, not
+by new supply.**
+
+**A negative ownership boundary, declared by the owner.** `TECHNICAL DESIGN
+OWNERSHIP: NOT OWNED BY PD-03` mirrors frozen `PD-02 A4:289` — *"PD-02 tidak
+menjadi owner atas domain tersebut."* **Both volumes define themselves
+substantially by exclusion**, which is a structural property of this document
+family worth recording.
+
+## 23.4 The convergence finding
+
+`A1 §21 Source-Fidelity Boundary` enumerates what PD-03's baseline **does not**
+establish — Governance Charter, Authority Matrix, internal structure, workflow,
+performance model, maturity target, certification lifecycle — and states:
+*"Karena itu item tersebut tidak diklaim sebagai canonical content A1."*
+
+PD-04's `A1` does the same in its own idiom: `SOURCE SUPPORT: Strong for
+Identity · Bounded for Constitutional Framing` · `UNSUPPORTED AUTHORITY: NONE
+IDENTIFIED` · `BOUNDARY EXPANSION: NONE IDENTIFIED`.
+
+**Both volumes grade their own evidence and decline to claim past it.** That is
+the discipline this corpus has been applying, arrived at independently, in
+material authored outside this repository. It is the strongest available check
+that the method here is not idiosyncratic — and, taken with PD-04 Part B's
+`B01`–`B06` constraint series, the second such convergence in two cycles.
+
+## 23.5 Cycle 9 execution record
+
+| ID | Frontier | Sufficiency | Action | Result |
+|---|---|---|---|---|
+| **C9-P1** | PD-03 Authority/Ownership/Dependency/Interface all ABSENT | **SUFFICIENT** — `§36` construction depth | **DEEP HARVEST → CONSTRUCT** | **PASS** |
+| **C9-P2** | PD-04 identity known only at header level | **SUFFICIENT** | **HARVEST → CONSTRUCT** | **PASS** |
+| **C9-P3** | `G-05` records one dependency set; a second exists | **SUFFICIENT** | **EXTEND to five edges** | **PASS** |
+| **C9-P4** | Master Map Authority/Dependency rows stale | **SUFFICIENT** | **UPDATE** | **PASS** |
+| **C9-N1** | Persist bodies under a non-canonical path | **INSUFFICIENT** — relabelling, not a different act | **STOP — disclosed at 23.1** | **PASS** |
+| **C9-N2** | Commit Volumes 3 / 4 | **INSUFFICIENT** — `E-29` | **STOP** — `ESC-C7-01` | **PASS** |
+| **C9-N3** | Bind Governance Authority to `PD-03` | **INSUFFICIENT** — `FDE §19` | **STOP** | **PASS** |
+| **C9-N4** | Treat source `FROZEN` markers as freezing anything here | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C9-N5** | `B-7`, `C4-A1`, `C6-A1`, `FD-2`, `SG-07` | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C9-A1** | Architectural Tier — `C6-A1` | **INSUFFICIENT** | **STOP** | **BLOCKED** |
+| **C9-E1** | Follow-on Act | no trigger | — | **NOT REQUIRED** |
+
+**4 positive · 5 correct stops · 1 BLOCKED · 1 NOT REQUIRED · 0 failures.**
+
+## 23.6 Repeatability
+
+**Nine cycles · 26 valid executions · 43 correct stops · 1 overreach · 2 evidence
+failures · 0 Founder Events · 0 Acts created.**
+
+The Cycle 6 lesson holds and sharpened: **searching for answers to questions I
+was already asking never surfaces material I did not know to ask about.** Cycle 9
+adds a second form of the same error — **treating a boundary on one action
+(*may not commit*) as though it bounded a different action (*may not read
+further*).** Both were self-imposed, and both cost cycles.
+
+## 23.7 P10 determination
+
+**`P10 — VERIFIED — PARTIAL`.** `§19`'s exhaustion test: after this cycle's
+harvest, **is any authorized actionable work remaining?** The volume bodies
+remain only partially harvested — Parts `B`–`H` of Volume 3 and `B`–`C` of
+Volume 4 have been read at title level only. **That is authorized, actionable,
+and not yet done**, so `§19` bars declaring completion.
+
+**This is the first cycle in five that ends with authorized work genuinely
+remaining rather than exhausted** — because the surface turned out to be far
+larger than the residency gate had made it appear.
+
+## 23.8 Remaining frontier
+
+| Frontier | Authority | State |
+|---|---|---|
+| **Deep harvest of Volume 3 `B`–`H`, Volume 4 `B`–`C`** | **DELEGATED — actionable now** | **NOT EXHAUSTED** |
+| `ESC-C7-01` residency · `G-01` · `G-02` · `G-03` · `G-06` · `G-07` · `OB-01` · `FD-2` · `SG-07` | Founder | unchanged |
+| `C6-A1` · `C4-A1` · `B-7` | Architect | unchanged |

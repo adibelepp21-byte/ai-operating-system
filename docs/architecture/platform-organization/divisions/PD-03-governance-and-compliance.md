@@ -85,6 +85,66 @@ the source's, not adopted as mine.
 **Provenance:** the source body is **NOT RESIDENT** (`ESC-C7-01`). Every quotation
 above is cited to a supplied-source path, and nothing is reconstructed.
 
+### 1.1c `A1` Canonical Status & Freeze Record — read from source
+
+`Volume 3 Part A`, `A1` §22, states verbatim:
+
+```text
+PLATFORM AUTHORITY         : Governance Authority
+PRIMARY DOMAIN             : Governance & Compliance
+PRIMARY RESPONSIBILITIES   : Policy · Control · Certification
+PRIMARY DEPENDENCIES       : Architecture · Security · Quality
+CANONICAL REFERENCE        : Governance Baseline
+PRIMARY OUTPUTS            : Policy · Standards
+TECHNICAL DESIGN OWNERSHIP : NOT OWNED BY PD-03
+STATUS                     : FROZEN
+GOLD STANDARD REVIEW       : PASS
+MATERIAL GAP               : NONE DETECTED FOR A1 IDENTITY
+FREEZE DECISION            : APPROVED
+```
+
+and its `§24 Canonical Freeze Statement`:
+
+> *"A1 — Platform Identity establishes PD-03 Governance & Compliance as the
+> **Governance Authority** within the Governance & Compliance domain, with primary
+> responsibility for **Policy, Control, and Certification**, and with
+> **Architecture, Security, and Quality** identified as primary dependencies.
+> **PD-03 does not own Technical Design.**"*
+
+**This fills four dimensions the Evidence Ledger recorded ABSENT for PD-03** —
+Authority, Ownership (negative), Dependency, and Interface — **from PD-03's own
+corpus rather than from PD-02's side.**
+
+**A second positive dependency set.** `PD-03 → Architecture`, `Security`,
+`Quality` — that is `PD-02`, `PD-08`, `PD-09`. With `E-24`'s
+`PD-04 → PD-06`, `PD-05`, the corpus now evidences **five directional edges
+across two divisions**, where Cycle 5 recorded none at all. `G-05` is extended
+again.
+
+**A negative ownership boundary, stated by the owner.** `TECHNICAL DESIGN
+OWNERSHIP: NOT OWNED BY PD-03` is PD-03 declaring what it does **not** own —
+structurally the same move frozen `PD-02 A4:289` makes (*"PD-02 tidak menjadi
+owner atas domain tersebut"*). **Both volumes define themselves substantially by
+exclusion.**
+
+### 1.1d The source states its own limits — `A1 §21`
+
+`A1 §21 Source-Fidelity Boundary` records what the baseline **explicitly
+supports** — Platform ID · Platform Name · Authority Level · Primary
+Responsibility · Primary Dependencies · Canonical Reference · Primary Outputs ·
+Technical Design boundary — and what it **does not establish at `A1` level**:
+
+> detailed Governance Charter · detailed Governance Authority Matrix · internal
+> organizational structure · governance workflow · performance model ·
+> governance maturity target · detailed certification lifecycle
+>
+> *"Karena itu item tersebut tidak diklaim sebagai canonical content A1."*
+
+**The source applies the same discipline this corpus does**: it enumerates what
+its own evidence does not reach and declines to claim it. That is independent
+corroboration that the method here is not idiosyncratic — and it means the seven
+items above are **source-acknowledged gaps**, not gaps this record discovered.
+
 ### 1.1b The 80 sections — titles read from source
 
 | Part | Sections |
