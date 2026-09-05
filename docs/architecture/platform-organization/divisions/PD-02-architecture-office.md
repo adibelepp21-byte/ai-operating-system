@@ -86,6 +86,27 @@ what it records is consistently PD-02's **own limits**:
 absent:** the corpus was written from PD-02's side, and PD-02 needed to say what
 it may not do — not who each domain belongs to.
 
+## 5bis. Inbound relationship — evidenced from another division's corpus
+
+> **Added 2026-09-05** under `ACT-CC-P10-FINAL §26`. Every relationship this
+> record previously carried was stated **from PD-02's side** or derived. This one
+> is stated by **PD-03's own corpus**, naming this division. **Source body is
+> NOT RESIDENT** (`ESC-C7-01`); recorded as evidence, not as a binding.
+
+`PD-03 A1 §22` declares `PRIMARY DEPENDENCIES: Architecture · Security · Quality`
+(`E-33`). **`Architecture` is PD-02.**
+
+**This is the first statement about PD-02 originating outside PD-02's own
+corpus.** §4 above records that PD-02's 50 frozen bodies describe PD-02
+consistently in terms of its **own limits** — what it may not do. PD-03
+independently names PD-02 as something it depends on.
+
+**The two are consistent and not the same claim.** `A5:324` has PD-02 in an
+`ADVISE` posture toward Governance Policy with *"Governance Authority remains
+applicable"*; PD-03 depending on Architecture does not disturb that. **A
+dependency is not a grant of authority over the depender** (`Dependency ≠
+Ownership`), and none is asserted.
+
 ## 5. Change control
 
 Material change to PD-02's architectural content is **architectural-tier**,

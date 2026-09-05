@@ -66,6 +66,24 @@ anchoring before they support conclusions. **Any PD-09 evaluation model must
 inherit these, not re-derive them** — they were established at cost, including
 several documented failures in this program's own verification work.
 
+## 6bis. Inbound relationship — evidenced from another division's corpus
+
+> **Added 2026-09-05** under `ACT-CC-P10-FINAL §26`. Every relationship this
+> record previously carried was stated **from PD-02's side** or derived. This one
+> is stated by **PD-03's own corpus**, naming this division. **Source body is
+> NOT RESIDENT** (`ESC-C7-01`); recorded as evidence, not as a binding.
+
+`PD-03 A1 §22` declares `PRIMARY DEPENDENCIES: Architecture · Security · Quality`
+(`E-33`). **`Quality` is PD-09.**
+
+**First evidenced relationship for PD-09.** It sits alongside the resident
+`A5:331` `ADVISE / INTERFACE` posture PD-02 holds toward quality acceptance —
+two different divisions, two different relations to the same domain.
+
+**It does not bind the Quality authority to `PD-09`**, which remains open on the
+same reasoning as `G-03`: naming a domain as a dependency is not naming its
+owner.
+
 ## 6. Unresolved
 
 Binding to the Quality authority role · whether evaluation is exclusive or shared

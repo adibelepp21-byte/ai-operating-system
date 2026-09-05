@@ -1652,3 +1652,117 @@ is one decision.**
 `ESC-C7-01` now gates: 110 verified section bodies · three source-named gaps
 awaiting an owner · and **a reconciliation task the source assigns to this role
 by name.**
+
+
+---
+
+# §25 — CYCLE 11 · `ACT-CC-P10-FINAL` — Construction Over Verification
+
+**Date:** 2026-09-05 · **Baseline commit:** `238607c`
+
+## 25.1 `§6` and `§25` broke the stall — and they were right to
+
+Cycle 10 declared exhaustion. `§6` forbids using my own frontier list as the work
+queue and `§25` subordinates verification to construction. **Re-deriving from the
+current state rather than from my own conclusion found substantial unbuilt work
+immediately.**
+
+The five dependency edges harvested in Cycles 9–10 create **inbound**
+relationships for five divisions. **I had recorded the edges and never propagated
+them.** `PD-02`, `PD-05` and `PD-06` carried **zero** mentions of the divisions
+that name them. That is evidenced, authorized, unbuilt construction, and my
+exhaustion claim was wrong.
+
+## 25.2 `E-41` — a mis-citation in my own corpus, ten cycles old
+
+Verifying one claim before asserting bidirectionality exposed a real defect.
+
+*"PD-05 sebagai consumer Knowledge"* was cited in **three places** as **Frozen
+`PD-02`** evidence. **It does not occur in PD-02's corpus** — zero hits across
+`volume-1` and `volume-2`. Its actual source is **PD-04's `Volume 4 Part C` §`C3`**,
+confirmed both in the recovered body and independently at `ACT-CC-P6-071:188`.
+
+**Origin: commit `9c96ab3`**, the original `FDE-P10-FRONTIER-02` construction.
+**It survived ten cycles**, including three whose stated discipline was
+content-anchored citation checking, and including Cycle 4's citation checker —
+**which verified that quotes sat next to their citations, not that the citations
+were correct.** Precise verification of the wrong property.
+
+**The correction downgrades the evidence class** from *frozen resident* — the
+strongest this corpus holds — to *non-resident PD-04*, among the weakest. **The
+statement is real; its authority was overstated.**
+
+**And it weakens a relationship claim I had been treating as bidirectional.**
+`A1` names Runtime as a dependency, `C3` calls PD-05 a consumer — **both from
+PD-04's own corpus.** That is one division describing both ends of its own
+relationship, not two independent sides corroborating. The PD-03↔PD-04 boundary
+(`E-25`) genuinely is two-sided; this is not, and is now recorded at the lower
+strength.
+
+## 25.3 Construction executed
+
+| Artifact | Construction |
+|---|---|
+| `PD-02` | First statement about PD-02 originating **outside its own corpus** — PD-03 names Architecture as a primary dependency. Reconciled with `A5:324`'s `ADVISE` posture: a dependency is not authority over the depender |
+| `PD-05` | Inbound from PD-04; **both directions recorded at reduced strength** because both come from PD-04's corpus. `native_core/core/runtime/` boundary unchanged |
+| `PD-06` | **First evidenced relationship of any kind.** Prior evidence was one ownership statement about PD-06 alone; this is the first indication of where *"owns implementation"* is consumed — and does **not** scope it |
+| `PD-08` | **First evidenced relationship.** Explicitly does **not** bind the Security Owner role: PD-03 names Security as a **domain**, and `G-03`'s question is role-to-CPID. **`G-03` unchanged** |
+| `PD-09` | **First evidenced relationship**, alongside PD-02's `A5:331` `ADVISE / INTERFACE`. Does not bind the Quality authority |
+| Master Map §2.1 | **Partial dependency graph drawn** — 6 edges, 2 declaring divisions, 5 targets, **3 divisions absent entirely**, all sources non-resident |
+| Evidence Ledger | `E-41` correction · `E-42` propagation |
+
+**No construction order was derived from the graph.** Six edges across two
+corpora with three divisions absent would make sequencing inference dressed as
+evidence — and `§27` bars false symmetry.
+
+## 25.4 Cycle 11 record
+
+| ID | Frontier | Sufficiency | Action | Result |
+|---|---|---|---|---|
+| **C11-P1** | Five inbound edges evidenced, never propagated | **SUFFICIENT** — `§26` | **CONSTRUCT** across 5 records | **PASS** |
+| **C11-P2** | *"consumer Knowledge"* mis-cited as frozen PD-02 | **SUFFICIENT** — `FDE §11`, correct state independently determined | **CORRECT** 3 carriers | **PASS** |
+| **C11-P3** | Enough edges for a partial graph | **SUFFICIENT** | **DRAW, bounded** | **PASS** |
+| **C11-N1** | Derive construction order from 6 edges | **INSUFFICIENT** — inference | **STOP** | **PASS** |
+| **C11-N2** | Read PD-03's Security dependency as binding the Security Owner | **INSUFFICIENT** — domain ≠ role binding | **STOP** — `G-03` unchanged | **PASS** |
+| **C11-N3** | Treat PD-04's two-way self-description as two-sided corroboration | **INSUFFICIENT** | **STOP** — recorded at lower strength | **PASS** |
+| **C11-N4** | `ESC-C7-01`, `B-7`, `C4-A1`, `C6-A1`, `FD-2`, `SG-07` | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C11-A1** | Architectural Tier — `C6-A1` | **INSUFFICIENT** | **STOP** | **BLOCKED** |
+| **C11-E1** | Follow-on instrument | no genuine trigger | — | **NOT REQUIRED** |
+
+**3 positive · 4 correct stops · 1 BLOCKED · 1 NOT REQUIRED · 1 disclosed defect (`E-41`).**
+
+## 25.5 What Cycle 10's false exhaustion teaches
+
+**Three failures of the same family are now on record**, each caught one cycle
+later than it should have been:
+
+| | Failure | Form |
+|---|---|---|
+| `VF-5` (C1) | Under-searched prior records | Didn't look |
+| `VF-8` (C6) | Trusted my own completeness claim | Looked, believed myself |
+| **C10 → C11** | **Declared exhaustion with propagation unbuilt** | **Looked, believed my own conclusion about what remained** |
+
+`E-41` is the sharpest instance: **a citation checker that verified quotes sat
+beside their citations, and never that the citations were true.** The check was
+precise and measured the wrong property — the same shape as Cycle 3's precise
+count over an unrepresentative population.
+
+**The generalisation, now stated once for the record:** *every completeness or
+exhaustion claim I make about my own work is a hypothesis, and the check that
+would falsify it is almost never the check I designed.*
+
+## 25.6 Exhaustion re-test
+
+Propagation is complete across all five affected records; the graph is drawn and
+bounded; the mis-citation is corrected in all carriers. **Re-discovery after this
+construction surfaces no further evidenced-but-unbuilt relationship** — the six
+edges are now reflected in every division they name.
+
+**AUTHORIZED ACTIONABLE WORK REMAINING: NO** — with the qualification this cycle
+earned: **that is a hypothesis, and the last two times I asserted it, it was
+wrong.**
+
+## 25.7 Repeatability
+
+**Eleven cycles · 32 valid executions · 51 correct stops · 1 overreach · 3
+evidence/completeness failures · 0 Founder Events · 0 Acts created.**

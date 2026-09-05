@@ -75,6 +75,14 @@ evidence of completeness.
 | **E-39** | Both volumes apply a per-Part **Source-Fidelity Mode** taxonomy: *Bounded Canonical Synthesis* · *Bounded Canonical Reconstruction* · *Bounded Domain Reconstruction* · *Source-Bounded Reference-Adapted*. **No Part claims unbounded canonical status** | Volumes 3 and 4, all Parts | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
 | **E-40** | Volume 4 Part C names `PD-02 Architecture Office`, `PD-03 Governance & Compliance` and `PD-04 Knowledge & Intelligence` as authorities within PD-04's Knowledge Architecture | Volume 4 Part C | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
 
+| **E-41** | **CITATION CORRECTION.** *"PD-05 sebagai consumer Knowledge"* was cited in three places as **Frozen `PD-02`** evidence. **It does not occur in PD-02's corpus** — 0 hits across `volume-1` and `volume-2`. Its source is **PD-04's `Volume 4 Part C` §`C3`** (non-resident), confirmed in the recovered body and at `ACT-CC-P6-071:188`. Originated at commit `9c96ab3`; survived ten cycles | `Volume 4 C3`; `ACT-CC-P6-071:188` | source body + Act | Correction | Direct read | **CORRECTED — evidence class downgraded** |
+| **E-42** | **Five inbound dependency edges propagated** to the records of the divisions named: `PD-03 → PD-02 · PD-08 · PD-09` (`E-33`); `PD-04 → PD-06 · PD-05` (`E-24`). For **PD-02 this is the first statement originating outside its own corpus**; for **PD-06, PD-08 and PD-09 it is the first evidenced relationship of any kind** | `E-24`, `E-33` | derived propagation | Construction | Verified | **CONSTRUCTED** |
+
+> **`E-41` is a correction against this corpus's own work.** The evidence class
+> moved from *frozen resident* — the strongest this corpus holds — to
+> *non-resident PD-04*, among the weakest. **The statement is real; its authority
+> was overstated for ten cycles.**
+
 > **`E-36`…`E-40` added 2026-09-05** — the Parts `B`–`H` / `B`–`C` harvest that
 > `§19` identified as unfinished. **`E-36` confirms `E-22` from the body itself**;
 > **`E-37` records three gaps the source names against itself**; **`E-38` is a

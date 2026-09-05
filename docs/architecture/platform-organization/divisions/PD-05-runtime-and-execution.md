@@ -62,6 +62,26 @@ Collapsing them would be the single easiest error available in this
 construction, and it is barred: `Dependency ≠ Ownership`, and the frozen
 boundary set admits no organizational entity.
 
+## 5bis. Inbound relationship — evidenced from another division's corpus
+
+> **Added 2026-09-05** under `ACT-CC-P10-FINAL §26`. Every relationship this
+> record previously carried was stated **from PD-02's side** or derived. This one
+> is stated by **PD-04's own corpus**, naming this division. **Source body is
+> NOT RESIDENT** (`ESC-C7-01`); recorded as evidence, not as a binding.
+
+`PD-04 A1` declares `PRIMARY DEPENDENCIES: AI Engineering, Runtime` (`E-24`).
+**`Runtime` is PD-05.**
+
+**And PD-04's `C3` calls PD-05 a consumer of Knowledge**, so both directions are
+recorded — **but both come from PD-04's corpus**, not from two independent
+sides. PD-04 describes its own relationship in both directions; **PD-05's corpus
+does not exist to corroborate or contradict it.** That is materially weaker than
+the PD-03↔PD-04 boundary (`E-25`), which is stated independently from each side,
+and it is recorded at that lower strength deliberately.
+
+**Nothing here binds PD-05 to `native_core/core/runtime/`.** §4's boundary
+stands unchanged.
+
 ## 5. Unresolved
 
 | | |

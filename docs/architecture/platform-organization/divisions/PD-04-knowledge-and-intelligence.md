@@ -16,7 +16,26 @@
 ## 1. Established (source constraint)
 
 - Frozen `PD-02 A4:282` — domain label **Knowledge**, PD-02 owns it not.
-- Frozen `PD-02` — *"PD-05 sebagai consumer Knowledge"*: Runtime consumes Knowledge, placing PD-04 in a **provider** relation to at least one other division.
+- **`Volume 4 C3`** *(mis-attributed until 2026-09-05 — see below)* — *"PD-05 sebagai consumer Knowledge"*: Runtime consumes Knowledge, placing PD-04 in a **provider** relation to at least one other division.
+
+> **Citation corrected 2026-09-05.** This statement was cited here, and in two
+> other places, as **Frozen `PD-02`** evidence. **It is not in PD-02's corpus** —
+> zero occurrences across `volume-1` and `volume-2`. Its actual source is
+> **PD-04's own `Volume 4 Part C`, section `C3`**, confirmed both in the
+> recovered body and independently at `ACT-CC-P6-071:188`, which cites it as
+> `C3`. The error originated in the original `FDE-P10-FRONTIER-02` construction
+> (commit `9c96ab3`) and survived ten cycles.
+>
+> **The correction downgrades the citation's standing**, and that matters:
+> *frozen resident PD-02* is the strongest evidence class this corpus has;
+> *non-resident PD-04* is among the weakest. **The statement is real; its
+> authority was overstated.**
+>
+> **It also weakens the relationship claim.** `A1` names `Runtime` as a primary
+> dependency and `C3` calls PD-05 a consumer — **both from PD-04's own corpus.**
+> This is PD-04 describing both directions of its own relationship, **not two
+> independent sides corroborating each other**, which is what the PD-03↔PD-04
+> boundary (`E-25`) genuinely is.
 - `MASTER_ROADMAP §5`; `PD-01 C10:86` — own domain success criteria.
 - **84 statements counted from the frozen `PD-02` corpus** — the largest such base of the eight, and the only division carrying that corpus's sole interface and lifecycle statements. **That count measured `PD-02` only; §1.1–§1.4 below are the far larger PD-04 evidence base, harvested 2026-09-05.**
 
@@ -174,7 +193,7 @@ boundary, not PD-04's property.** No source binds them, and none is asserted.
 memory→knowledge promotion path is governed and human-decided; PD-04's domain is
 Knowledge, and nothing extends it over Memory.
 
-**Provider ≠ owner of the consumer.** *"PD-05 sebagai consumer Knowledge"*
+**Provider ≠ owner of the consumer.** *"PD-05 sebagai consumer Knowledge"* (`Volume 4 C3`, non-resident — see §1 citation correction)
 establishes a dependency, and `§13` is explicit: `Dependency ≠ Ownership`.
 
 ## 5. Unresolved

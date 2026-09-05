@@ -88,7 +88,7 @@ honest proportion.
 | PD-02 → PD-06: may not compel implementation | `A5 §12`; `D8 §70` |
 | PD-02 ↔ PD-08: Architectural Interface, authority not absorbed | `A6:671`, `A5 §12` |
 | PD-02 ↔ PD-09: `ADVISE / INTERFACE` on quality acceptance | `A5:331` |
-| PD-05 ← PD-04: Runtime consumes Knowledge | *"PD-05 sebagai consumer Knowledge"* |
+| PD-05 ← PD-04: Runtime consumes Knowledge | *"PD-05 sebagai consumer Knowledge"* — **`Volume 4 C3`, NOT RESIDENT** *(corrected 2026-09-05; previously attributed to frozen `PD-02`, where it does not occur)* |
 | Numeric order ≠ dependency; dependency ≠ subordination | `MASTER_ROADMAP §5` |
 | **PD-03 ↔ PD-04: ownership boundary, evidenced from BOTH sides, conflict NONE** | `E-25` · `ACT-CC-P6-071 §12`. `B1 §11` *"PD-03 tidak menjadi organizational owner atas: … Knowledge & Intelligence"* against `C8` *"PD-04 owns Knowledge Integrity … PD-03 owns Governance & Compliance and provides certification/compliance"* |
 | **PD-04 → PD-06 · PD-04 → PD-05: positive, self-declared dependency** | `E-24` — `Primary Dependencies: AI Engineering, Runtime` |

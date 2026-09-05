@@ -49,6 +49,50 @@ anywhere."* **One now is:** PD-04's own corpus declares
 `PD-06` and `PD-05`. The negative rules still hold: numeric order does not imply
 dependency, and PD-02 owns nothing outside its domain.
 
+### 2.1 The partial dependency graph — drawn 2026-09-05
+
+`ACT-CC-P10-FINAL §26` makes the dependency graph the determinant of
+construction order, and enough edges now exist to draw a **partial** one.
+
+```text
+        PD-03 ──── Architecture ────▶ PD-02
+          │
+          ├─────── Security ────────▶ PD-08
+          │
+          └─────── Quality ─────────▶ PD-09
+
+        PD-04 ──── AI Engineering ──▶ PD-06
+          │
+          ├─────── Runtime ─────────▶ PD-05
+          │
+          ◀─────── Knowledge ─────────┘   (C3: PD-05 as consumer)
+
+        PD-01   PD-07   PD-10        no edge evidenced in either direction
+```
+
+| Property | Value |
+|---|---|
+| Edges evidenced | **6** (5 outbound declarations + 1 consumer relation) |
+| Divisions declaring outbound dependencies | **2 of 10** — PD-03, PD-04 |
+| Divisions appearing as a target | **5** — PD-02, PD-05, PD-06, PD-08, PD-09 |
+| Divisions absent from the graph entirely | **3** — PD-01, PD-07, PD-10 |
+| Source residency | **all edges from NOT-RESIDENT bodies** (`ESC-C7-01`) |
+
+**Every edge originates in exactly two corpora.** The graph is not a survey of
+the organization; it is what PD-03 and PD-04 happen to say about themselves.
+**Eight divisions have declared nothing**, and their silence is absence of
+evidence, not evidence of independence.
+
+**The PD-04 ↔ PD-05 pair is weaker than it looks.** Both directions come from
+**PD-04's own corpus** — `A1` names Runtime as a dependency, `C3` calls PD-05 a
+consumer. That is one division describing both ends of its own relationship, and
+it is **not** the two-sided corroboration that the PD-03 ↔ PD-04 boundary
+(`E-25`) genuinely has.
+
+**No construction order is derived from this graph.** With six edges across two
+sources and three divisions absent, sequencing on it would be inference dressed
+as evidence.
+
 **One evidenced edge is not a graph**, and seven divisions still evidence none, so
 a graph drawn now would remain mostly inference. **None is drawn.** See `G-05`.
 

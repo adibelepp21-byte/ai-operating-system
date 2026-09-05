@@ -75,6 +75,28 @@ an unsupported ownership assertion."* **It is not converted.**
 
 The decision is one sentence in either direction, and it is not mine.
 
+## 5bis. Inbound relationship — evidenced from another division's corpus
+
+> **Added 2026-09-05** under `ACT-CC-P10-FINAL §26`. Every relationship this
+> record previously carried was stated **from PD-02's side** or derived. This one
+> is stated by **PD-03's own corpus**, naming this division. **Source body is
+> NOT RESIDENT** (`ESC-C7-01`); recorded as evidence, not as a binding.
+
+`PD-03 A1 §22` declares `PRIMARY DEPENDENCIES: Architecture · Security · Quality`
+(`E-33`). **`Security` is PD-08.**
+
+**This is the first evidenced relationship for PD-08**, and it is worth being
+precise about what it does and does not do for `G-03`.
+
+**It does not bind the Security Owner role to `PD-08`.** PD-03 names *Security*
+as a **domain** it depends on. `G-03`'s open question is whether `PD-08` **is**
+the Security Owner — a role-to-CPID binding — and a dependency statement from a
+third division cannot supply it. **`G-03` is unchanged.**
+
+What it does establish: the Security domain is depended upon by the Governance
+authority, which is consistent with `A6:671`'s `Security │ Security Owner │
+Architectural Interface`.
+
 ## 5. Unresolved
 
 Binding to the Security Owner role · access-control model · protection scope ·

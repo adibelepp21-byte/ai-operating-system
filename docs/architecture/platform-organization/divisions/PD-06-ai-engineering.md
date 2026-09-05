@@ -62,6 +62,25 @@ every other division's domain ownership.
 to the widest reading.** Taking the widest reading would be the convenient move
 and an unsupported one.
 
+## 5bis. Inbound relationship — evidenced from another division's corpus
+
+> **Added 2026-09-05** under `ACT-CC-P10-FINAL §26`. Every relationship this
+> record previously carried was stated **from PD-02's side** or derived. This one
+> is stated by **PD-04's own corpus**, naming this division. **Source body is
+> NOT RESIDENT** (`ESC-C7-01`); recorded as evidence, not as a binding.
+
+`PD-04 A1` declares `PRIMARY DEPENDENCIES: AI Engineering, Runtime` (`E-24`).
+**`AI Engineering` is PD-06.**
+
+**This is the first evidenced relationship PD-06 has of any kind.** Its only
+prior evidence was the frozen ownership statement *"PD-06 owns implementation"*
+(`B4:731`) — a statement about PD-06 alone. A division that owns implementation
+being depended upon by the Knowledge domain is the first indication of **where
+that implementation ownership is consumed.**
+
+**It does not resolve `§4`'s scope caution.** *"Owns implementation"* remains
+unscoped, and one inbound dependency does not bound it.
+
 ## 5. Unresolved
 
 Scope of "implementation" · relationship to the `agent` and `skill` frozen
