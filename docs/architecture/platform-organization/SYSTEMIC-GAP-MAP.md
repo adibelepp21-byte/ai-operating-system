@@ -29,7 +29,7 @@ twelve, and it was not made twelve.
 | **Classification** | **MISSING** |
 | **Current state** | `PD-03`…`PD-10`: 265 statements total, all incidental references inside `PD-01`/`PD-02` corpora or program records. No volume, no body, no section |
 | **Expected state** | A definitional corpus per division, as `PD-01` (45 bodies) and `PD-02` (50 bodies) have |
-| **Evidence** | `EVIDENCE-LEDGER.md` §2; ~15 of 96 dimension-cells evidenced |
+| **Evidence** | `EVIDENCE-LEDGER.md` §2; **19 of 96 dimension-cells fully evidenced · 8 partial · 69 absent** *(recounted 2026-09-05; was "~15")* |
 | **Severity** | **HIGH** — blocks any full Platform Organization baseline |
 | **Owner / Authority** | **Founder** — supply the corpora, or authorize construction of derived definitions from resident evidence |
 | **Recommended action** | Founder decision between the two paths. Neither is available to the Co-Founder: supplying source is not construction, and canonicalizing derived content requires authority this Act withholds (`§16`) |

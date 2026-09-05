@@ -62,9 +62,23 @@ transferred (`§6` No-Clone).
 - `PD-05` carries a boundary section the others do not, because it is the only division whose domain name collides with a frozen core subsystem.
 - `PD-07` inherits a ratified constraint no other division has: *"infrastructure facilities are never independent actors."*
 
-**Sixteen of forty derived Part slots are deliberately unfilled.** A uniform
-five-part fill across eight divisions would have been the clone this event
-prohibits.
+**Five of forty derived Part slots are left unfilled** — `PD-08` Parts D and E,
+`PD-09` Part E, `PD-10` Parts D and E — each marked *"Not derived"* in its own
+record. A uniform five-part fill across eight divisions would have been the
+clone this event prohibits; **thirty-five slots were filled**, and that is the
+honest proportion.
+
+> **Corrected 2026-09-05** under `FDE-P10-AUTONOMOUS-EXECUTION-01 §11`, by
+> counting the Part rows in the eight division records. The figure read
+> *"Sixteen of forty"* while the enumeration immediately above it named
+> **five** — the record contradicted its own count. **The correction runs
+> against the construction's own restraint claim:** far more was derived than
+> the summary admitted, and 12.5% unfilled is a materially weaker claim than
+> 40%. No Part row's content was altered; only the count that described them.
+> `PD-10` Part C is not counted here — it carries a statement (*"no resident
+> governance statement… nothing further evidenced"*) rather than a
+> *"Not derived"* marker, and counting it would be the same loose measurement
+> that produced the wrong figure.
 
 ## 4. Cross-platform relationships evidenced (not derived)
 

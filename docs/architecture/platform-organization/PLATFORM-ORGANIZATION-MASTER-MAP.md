@@ -72,8 +72,10 @@ for all ten — constraint material that did not previously exist. Records live 
 
 **`CONSTRUCTED (derived)` is not `RECONCILED`, `REVIEWED`, `VERIFIED` or
 `FROZEN`,** and asserts no canonical domain architecture: each record separates
-its Established constraints from its derivations, and **16 of 40 derived Part
-slots are deliberately unfilled** where filling them would have been invention.
+its Established constraints from its derivations, and **5 of 40 derived Part
+slots are left unfilled** where filling them would have been invention —
+`PD-08` D and E, `PD-09` E, `PD-10` D and E. *(Recounted 2026-09-05; the figure
+read "16 of 40", which `divisions/README.md §3`'s own enumeration contradicted.)*
 
 ## 4. Cross-PD Reconciliation Matrix (`§24`, `§25`)
 

@@ -19,29 +19,43 @@ the Main Capability Roadmap (`P1`…`P13`). **PD-01–PD-10 are not Phase 14.**
 anything, this Act measured how much resident evidence exists to construct
 *from*. The measurement governs everything below, so it is stated first.
 
-Across **8 platform divisions × 12 required dimensions = 96 cells**, resident
-evidence supports roughly **15**. Identity is well evidenced for all ten
-divisions. Capability is evidenced for **none**. Interface and lifecycle are
-evidenced for one each.
+Across **8 platform divisions × 12 required dimensions = 96 cells**, **19 cells
+are fully evidenced (20%)**, **8 are partial**, and **69 are absent (72%)**.
+Identity and domain purpose are evidenced for all eight. Capability,
+Organization, Boundary, Dependency and Change Control are evidenced for
+**none**.
 
 ```text
-DIMENSION          EVIDENCED (of 8)
-Identity                8
-Ownership               5   (partial)
-Authority               2   (PD-03, PD-04 only)
-Interface               1
-Lifecycle               1
-Capability              0
-Organization            0
-Boundary                0
-Dependency              0
-Governance              0
-Evidence                0
-Change Control          0
+DIMENSION          ◆ EVIDENCED   ◐ PARTIAL   ○ ABSENT   (of 8)
+Identity                8            0           0
+Purpose (domain)        8            0           0
+Ownership               3            3           2
+Authority               0            2           6
+Interface               0            1           7
+Lifecycle               0            1           7
+Governance              0            1           7
+Capability              0            0           8
+Organization            0            0           8
+Boundary                0            0           8
+Dependency              0            0           8
+Change Control          0            0           8
+                       ──           ──          ──
+                       19            8          69
 ```
 
+> **Corrected 2026-09-05** under `FDE-P10-AUTONOMOUS-EXECUTION-01 §11`, by
+> recounting `EVIDENCE-LEDGER.md §2` — the artifact of record for this
+> measurement — cell by cell. Three defects: the block listed **`Evidence`**
+> where the ledger's twelve dimensions carry **`Purpose (domain)`** (`Evidence`
+> is `K-13`, a **Kernel** dimension from §3.2, and does not belong in this
+> list); `Ownership` and `Governance` were undercounted; and the prose said
+> *"roughly 15"* against a block that summed to 17 and a ledger that counts 19.
+> **The measurement is recounted, not re-decided** — no cell in the ledger
+> changed, and `D-03`'s decision stands on the corrected figures.
+
 Constructing eight full platform architectures across those dimensions would
-require inventing roughly 85% of the content. `ACT-CC-P10-1 §44` names that
+require inventing the **72%** that is absent; **80%** of cells are not fully
+evidenced. `ACT-CC-P10-1 §44` names that
 outcome exactly — `NO EVIDENCE → FALSE CLOSURE` — and `§16` bars
 `NEED → CREATE → DECLARE CANONICAL`.
 
@@ -133,7 +147,7 @@ DECLARE NEW PD` is prohibited by `§9` and was not performed.
 |---|---|---|---|---|---|---|
 | **D-01** | Derive the Kernel from `PD-01`+`PD-02` only | Volumes 0–0.3 absent (3 referencing files, 0 resident) | Wait for Volume 0; reconstruct Volume 0 | Reconstruction would invent the ingestion source `§11` names. Absence recorded instead | Delegated (`§11`) | Kernel §3 |
 | **D-02** | Measure evidence density before constructing | `§12`, `§21`, `§44` | Construct first, assess after | Constructing first would have produced eight documents whose evidential basis was unknown until afterwards | Delegated (`§21` G1) | §1 table |
-| **D-03** | Construct evidence baselines, not eight full volumes | ~15 of 96 cells evidenced | Full eight-volume construction | Full construction requires inventing ~85% of content — `§44` `NO EVIDENCE → FALSE CLOSURE` | Delegated; the alternative exceeds authority (`§16`) | `EVIDENCE-LEDGER.md` |
+| **D-03** | Construct evidence baselines, not eight full volumes | **19 of 96 cells fully evidenced · 8 partial · 69 absent** *(recounted 2026-09-05; was "~15")* | Full eight-volume construction | Full construction requires inventing the **72%** that is absent — `§44` `NO EVIDENCE → FALSE CLOSURE` | Delegated; the alternative exceeds authority (`§16`) | `EVIDENCE-LEDGER.md` |
 | **D-04** | Status **DERIVED** on every artifact | `§27` | PROPOSED; CANONICAL | Derived from resident evidence but carrying no authority mechanism. `VERIFIED ≠ FROZEN`, `ADOPTED ≠ CANONICAL` | Delegated (`§27`) | all artifacts |
 | **D-05** | Build the Gap Map from observed reconciliation | `§26.3` | Adopt a predefined twelve-domain list | No gap inventory is resident (P10-0). A predefined list would be an assumed subsystem set, which `§26.3` forbids | Delegated | `SYSTEMIC-GAP-MAP.md` |
 | **D-06** | No PD advanced past `EVIDENCE-READY` | `§32` | Mark PDs `CONSTRUCTED` | `CONSTRUCTED` would assert a domain architecture that the evidence does not support | Delegated (`§32`) | Maturity Matrix |
