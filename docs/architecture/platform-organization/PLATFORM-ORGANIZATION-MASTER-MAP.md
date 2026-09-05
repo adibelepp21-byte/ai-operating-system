@@ -13,10 +13,10 @@
 
 ## 1. The ten platform divisions
 
-| PD | Official name (`E-01`) | Domain label, frozen corpus (`E-04`) | Ownership evidenced | Lifecycle |
+| PD | Registry name (`E-01`) | Domain label, frozen corpus (`E-04`) | Ownership evidenced | Lifecycle |
 |---|---|---|---|---|
-| **PD-01** | Executive | — | reference implementation | **NOT ACTIVATION-ELIGIBLE** (`E-15`) |
-| **PD-02** | Architecture | — | Architecture domain, `OA-01…OA-07` | **ACTIVE** (`E-14`, `GDR-0036`) |
+| **PD-01** | Executive — frozen `A4` header: `Official Name: Executive Office` | — | reference implementation | **NOT ACTIVATION-ELIGIBLE** (`E-15`) |
+| **PD-02** | Architecture — frozen `A4` header: `Official Name: Architecture Office` | — | Architecture domain, `OA-01…OA-07` | **ACTIVE** (`E-14`, `GDR-0036`) |
 | **PD-03** | Governance & Compliance | Governance | partial | not assessed |
 | **PD-04** | Knowledge & Intelligence | Knowledge | partial | not assessed |
 | **PD-05** | Runtime & Execution | Runtime | **owns Runtime** (`E-06`, `E-07`) | not assessed |
@@ -25,6 +25,15 @@
 | **PD-08** | Security | Security | **none** | not assessed |
 | **PD-09** | Quality & Evaluation | Quality | *"Evaluate Quality"* (`E-10`) | not assessed |
 | **PD-10** | Developer Experience | Developer **Enablement** — `CONFLICT` | **none** | not assessed |
+
+**Column corrected 2026-09-05.** It was headed *"Official name"* while carrying
+`MASTER_ROADMAP §5`'s compact enumeration. Only the two divisions with frozen
+corpora carry a field literally named `Official Name`, and both are longer than
+the registry form. **No name is decided, changed, or given precedence here** —
+both forms are shown, attributed to their sources. For PD-01 and PD-02 the two
+are compatible, one containing the other; **that is not true of `G-02`**, where
+*Enablement* and *Experience* are not forms of each other, and `G-02` therefore
+remains a conflict while this is a citation correction.
 
 ## 2. Structural rules — resident, not derived
 
@@ -67,6 +76,17 @@ its Established constraints from its derivations, and **16 of 40 derived Part
 slots are deliberately unfilled** where filling them would have been invention.
 
 ## 4. Cross-PD Reconciliation Matrix (`§24`, `§25`)
+
+> **These are reconciliation dimensions, not the evidence dimensions.**
+> `EVIDENCE-LEDGER §2` measures **twelve** dimensions per division (8 × 12 = 96
+> cells): Identity · Purpose · Ownership · Authority · Capability · Organization
+> · Boundary · Interface · Dependency · Lifecycle · Governance · Change Control.
+> The nine below serve a different purpose (`§24`, `§25` — cross-PD
+> reconciliation) and are not a subset of those twelve: they **omit** Identity,
+> Purpose, Organization and Change Control, and **add** Terminology, which is a
+> conflict dimension rather than an evidence dimension. Recorded 2026-09-05
+> because the two tables invite conflation and neither said so. **Neither matrix's
+> content is altered.**
 
 | Dimension | Result | Evidence |
 |---|---|---|
