@@ -25,7 +25,7 @@ governs.
 
 - Engineering Constitution — `docs/constitution/engineering-constitution-v1.md`
 - Canonical Domain Model — `docs/architecture/domain-model/canonical-domain-model-v1.md`
-- Architecture Decision Records — `docs/architecture/adr/README.md` (framework); `docs/architecture/adr/decisions/ADR-0001.md` through `ADR-0009.md`
+- Architecture Decision Records — `docs/architecture/adr/README.md` (framework); `docs/architecture/adr/decisions/ADR-0001.md` through `ADR-0028.md`. **26 carry an Approved or COMPLETE status; `ADR-0015` and `ADR-0017` remain `Proposed`**, each recording that the finding is delegated while the corrective action is Founder-reserved
 - Organization Framework — `docs/architecture/organization/README.md`
 - Agent Definition Framework — `docs/architecture/organization/agent-definitions.md`
 - Execution Artifact Repository Convention (EARC) — `docs/architecture/organization/execution-artifact-repository.md`
@@ -38,8 +38,16 @@ governs.
 - Department and Capability instances — `docs/architecture/organization/<department-slug>/`; a populated example exists at `docs/architecture/organization/platform/`
 - Agent Definition instances — `docs/architecture/organization/<department-slug>/agent-definitions/`; a populated example exists at `docs/architecture/organization/platform/agent-definitions/`
 - Skill, Workflow, Runtime, and Tool instances — governed by EARC §9; unified directory named `execution-catalog`; complete repository path not yet finalized (see Section 6, below); no instance currently exists
-- Governance Decision Register (permanent, append-only history of governance decisions that are not ADRs — principally Constitutional Tier decisions, which the ADR Framework's Validation Model excludes from the ADR instrument) — `docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md`; current entries: GDR-0001 (Founder Decision G1′, Corpus Relationship), GDR-0002 (Gate 4 Certification, Phase 4)
+- Governance Decision Register (permanent, append-only history of governance decisions that are not ADRs — principally Constitutional Tier decisions, which the ADR Framework's Validation Model excludes from the ADR instrument) — `docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md`; current entries: **GDR-0001 through GDR-0037** — beginning with GDR-0001 (Founder Decision G1′, Corpus Relationship) and GDR-0002 (Gate 4 Certification, Phase 4), and most recently GDR-0037 (Founder issuance of `FDE-P10-AUTONOMOUS-EXECUTION-01`)
 - Superseded governance artifacts (retained as historical record, never deleted) — `docs/governance/AIOS_FOUNDER_DECISION_G1_PRIME_RATIFICATION_v1.0.md`, the original standalone recording of G1′, superseded by GDR-0001
+- Delegation Register (append-only record of scoped delegations) — `docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md`; entries `DEL-T4.4-CF-001` and `DEL-F03-015-P7I99-001`
+- Appointment Register (append-only record of role appointments and their activation) — `docs/governance/AIOS_APPOINTMENT_REGISTER_v1.0.md`; entry `APT-CD1.1-AA-001`
+- Finding Register (permanent, append-only) — `docs/governance/AIOS_FINDING_REGISTER_v1.0.md`
+- Volume Activation Model — `docs/governance/AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md`; PD-02 activation gate criteria proposals `AIOS_PD02_ACTIVATION_GATE_CRITERIA_PROPOSAL_v0.1`–`v0.4` and `AIOS_PD02_FOUNDER_DECISION_PACKAGE_v1.0.md`
+- Baseline Lifecycle, Maintenance Baseline MB-01, Native Core Closeout, Implementation Constitution — `docs/governance/AIOS_BASELINE_LIFECYCLE_v1.0.md`, `AIOS_MAINTENANCE_BASELINE_MB-01_v1.0.md`, `AIOS_NATIVE_CORE_CLOSEOUT_v1.0.md`, `AIOS_IMPLEMENTATION_CONSTITUTION_v1.0.md`
+- Founder Decision Events — `docs/governance/AIOS_P10_AUTONOMOUS_EXECUTION_FOUNDER_EVENT_PROPOSAL_v1.0.md` (`FDE-P10-AUTONOMOUS-EXECUTION-01`, ISSUED and OPERATIVE from 05-09-2026; register record GDR-0037)
+- Platform Division corpora — `docs/architecture/volume-1/pd-01-executive-office/` (45 bodies) and `docs/architecture/volume-2/pd-02-architecture-office/` (50 bodies, `Status: FROZEN`)
+- Platform Organization construction artifacts — `docs/architecture/platform-organization/`, including `divisions/PD-01`–`PD-10`. **Every artifact there is self-declared `DERIVED`.** This Index records that self-declared status and assigns none: derived construction artifacts are not placed in the Section 4 tier map
 
 ## 4. Governance Tier Map
 
@@ -47,9 +55,14 @@ Per Constitution §4, governance artifacts occupy one of five tiers:
 
 - Constitutional Tier — Engineering Constitution
 - Domain Model Tier — Canonical Domain Model
-- Architectural Tier — ADR-0001 through ADR-0009
+- Architectural Tier — ADR-0001 through ADR-0028 (`ADR-0015` and `ADR-0017` are `Proposed`, not Approved)
 - Principle Documents Tier — Organization Framework, Agent Definition Framework, EARC, Skill Framework, Workflow Framework, Runtime Framework, Tool Framework
 - Implementation Tier — Department, Capability, and Agent Definition instances; Skill, Workflow, Runtime, and Tool instances (once EARC's remaining open items are resolved)
+
+Registers (Governance Decision, Delegation, Appointment, Finding) record
+decisions taken under the tiers above; they are recording instruments, and this
+Index assigns them no tier of their own. Derived construction artifacts —
+`docs/architecture/platform-organization/` — are likewise not placed in this map.
 
 See Constitution §4 for the tier definitions and the relationships
 between them. This Index does not restate them.
@@ -102,6 +115,31 @@ This document does not, and may never:
 - Name a specific technology, vendor, or model anywhere.
 
 ## 9. Status
+
+**Synchronization note — 2026-09-05.** Sections 3 and 4 had drifted materially:
+the ADR range read `ADR-0001` through `ADR-0009` against 28 resident ADRs, and
+the Governance Decision Register was recorded as holding two entries against 37.
+The Delegation Register, Appointment Register, Finding Register, Volume
+Activation Model, both Platform Division corpora, and the Platform Organization
+construction artifacts were absent entirely. This is the condition
+`AIOS_FINDING_REGISTER` classifies as **Category C — Governance Status Drift**,
+whose *"correction is documentation synchronization."*
+
+**Only synchronization was performed.** No open item in Section 6 was resolved,
+no terminology was migrated, no artifact was assigned a tier it did not already
+hold, and no position was taken on any substantive question. Performed under
+`DEL-T4.4-CF-001 §3.1 C` (documentation), within
+`FDE-P10-AUTONOMOUS-EXECUTION-01`.
+
+**One interpretive question is recorded rather than resolved:** Section 9 below
+requires *"normal Architect approval"* for updates to this Index, while also
+stating that an update *"never itself constitutes a governance decision."* Whether
+the Architecture Authority appointment (`APT-CD1.1-AA-001`, whose Constitutional
+authority is **NONE**) satisfies *"Architect"* here is **UNKNOWN and was not
+inferred**. This edit proceeded only on the half Section 9 itself describes as a
+non-decision — reflecting records already made elsewhere. Any update that would
+take a position on a substantive question was **not** performed and remains
+outside this reading.
 
 Navigation Artifact v1.0. No independent authority. Future updates to
 this document require normal Architect approval, consistent with its

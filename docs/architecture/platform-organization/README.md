@@ -59,6 +59,9 @@ deliberately rather than discovered again later.
 | `EVIDENCE-LEDGER.md` | Evidence provenance · per-PD evidence baseline across the twelve dimensions |
 | `PLATFORM-ORGANIZATION-MASTER-MAP.md` | Reconciled structure · PD Maturity Matrix · Cross-PD Reconciliation Matrix |
 | `SYSTEMIC-GAP-MAP.md` | Gaps derived from observed reconciliation, not assumed |
+| `AUTHORITY-FRONTIER-MATRIX.md` | Per-frontier authority classification and disposition |
+| `ADE-P10-G04-DECISION.md` | Architect decision resolving `G-04` (Option A) |
+| `divisions/` | `README.md` + one record per CPID, `PD-01`…`PD-10` |
 
 ## 3. Construction Kernel
 
@@ -140,6 +143,6 @@ DECLARE NEW PD` is prohibited by `§9` and was not performed.
 
 - **No canonical status is claimed or created.** `§15`, `§16`, `§27`.
 - **No PD is frozen.** `VERIFIED ≠ FROZEN` (`§18`). No freeze recommendation is made.
-- **No organizational runtime is constructed.** `§4`, `§8`. The Native Core holds exactly eleven frozen boundaries and admits no twelfth; an organizational runtime would require one, which is an architectural-tier decision (`GDR-0032` → ACC → ADR).
+- **No organizational runtime is constructed.** `§4`, `§8`. The Native Core holds exactly eleven frozen boundaries and admits no twelfth, and **none is required**: `ADE-P10-G04` (Option A) determined that `Platform Division` — historical alias `Department`, per `ADR-0010` (Approved, FD-6, `GDR-0020`) — is already the Domain Model's organizational entity. What an organizational runtime would now require is an **instance binding a CPID to that existing entity**, not a new boundary. That remains an architectural-tier decision (`GDR-0032` → ACC → ADR) and is **not made here**.
 - **No PD is activated.** Only `PD-02` is ACTIVE (`GDR-0036`). `PD-01` remains NOT ACTIVATION-ELIGIBLE.
 - **No higher-order source is modified.** Constitution, Canonical Domain Model, Architecture Freeze, both frozen volumes, and every governance record are unchanged.

@@ -96,14 +96,20 @@ New, and recorded rather than resolved:
 The frozen corpus names an owner role per domain and reliably records what PD-02
 may **not** do to it. It binds that role to a CPID in only three cases:
 
-| Domain | Owner role named | Bound to CPID |
-|---|---|---|
-| Runtime | Runtime owner | **YES** — *"PD-05 owns Runtime"* |
-| AI Engineering | AI Engineering owner | **YES** — *"PD-06 owns implementation"* |
-| Infrastructure | Infrastructure owner | **YES** — *"PD-07 tetap memiliki ownership"* |
-| **Security** | Security Owner | **NO** — `G-03` |
-| **Quality** | Quality authority | **NO** |
-| **Governance** | Governance Authority | **NO** |
+| Domain | Owner role named | Bound to CPID | Frozen citation |
+|---|---|---|---|
+| Runtime | Runtime owner | **YES** | `B7.md:212` — *"PD-05 owns Runtime."* |
+| AI Engineering | AI Engineering owner | **YES** | `B4.md:731` — *"PD-06 owns implementation."* |
+| Infrastructure | Infrastructure owner | **YES** | `C8.md:122` — *"PD-07 tetap memiliki ownership atas Infrastructure."* |
+| **Security** | Security Owner | **NO** — `G-03` | none found |
+| **Quality** | Quality authority | **NO** | none found |
+| **Governance** | Governance Authority | **NO** | none found |
+
+**Citations added 2026-09-05** under standing construction
+(`FDE-P10-AUTONOMOUS-EXECUTION-01 §9`), each re-verified against the frozen
+corpus at the line stated. **No binding was created, and the three absent
+bindings remain absent** — locating a citation is evidence work, not ownership
+assignment.
 
 **Three of six bound. None of the three unbound was bound here.**
 
