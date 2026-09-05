@@ -69,18 +69,19 @@ twelve, and it was not made twelve.
 | **Blocking** | NO |
 | **Extends to** | **`PD-09` Quality** — same pattern: *"Quality authority remains applicable"* (`A5:331`) with no binding to `PD-09` |
 
-## G-04 — No bridge exists between organizational source and runtime
+## G-04 — RESOLVED · the organizational representation already exists
+
+> **DECIDED under `ADE-P10-G04` — OPTION A**, Architect, `APT-CD1.1-AA-001`,
+> 2026-09-05. See `ADE-P10-G04-DECISION.md`.
 
 | | |
 |---|---|
-| **Classification** | **BOUNDARY CONFLICT** *(by design, not defect)* |
-| **Current state** | **0** platform-division references across 179 implementation files. Native Core holds *"exactly the eleven frozen subsystem boundaries — no more"* |
-| **Expected state** | Undetermined — no resident source establishes that organizational runtime is intended |
-| **Evidence** | `E-12`, `E-19`, `E-13` |
-| **Severity** | **HIGH** for P10 operationalization; **zero** for the current system, which functions without it |
-| **Owner / Authority** | **Architect** — a twelfth boundary is architectural-tier → ACC → ADR (`Constitution §3.4`, `GDR-0032`) |
-| **Recommended action** | Do **not** construct. Determine first whether organizational runtime is wanted; the Domain Model's `Department` may already be the intended organizational representation, in which case no twelfth boundary is needed |
-| **Blocking** | **YES** for P10 operationalization |
+| **Classification** | **RESOLVED** *(was BOUNDARY CONFLICT — the premise was wrong)* |
+| **Finding** | **`Department` and `Platform Division` are one entity, not two.** Canonical Domain Model §2: *"**Platform Division** … **Historical alias: Department** — see ADR-0010."* `ADR-0010` (**Approved**, Founder decision **FD-6**, `GDR-0020`) renamed the entity by bounded amendment across §1, §2, **INV-1** and **INV-2** |
+| **Consequence** | The representation is already in the frozen Domain Model spine — `Organization owns Platform Division`, `Capability owned by exactly one Platform Division`. **`PD-01`…`PD-10` are Platform Divisions.** No bridge is required, and **no twelfth core boundary is required or sought** |
+| **Correction** | This gap, and the P10-0/P10-1/FRONTIER-01 statements that `Department` is *"a different entity"*, were **wrong**. The implementation's identifier was read as entity identity without checking the Domain Model's alias record — the `G-08` hazard applied to a name instead of a count |
+| **Residual** | **Conformance observation, not a gap:** `ownership.py:98` still declares `class Department`. `ADR-0010` chose *"bounded amendment rather than global migration"*, so the alias in code is lawful and expected. Whether to migrate is a separate question, not decided |
+| **Blocking** | **NO** — P10 operationalization is not blocked by a missing representation |
 
 ## G-05 — No positive inter-PD dependency is evidenced
 
