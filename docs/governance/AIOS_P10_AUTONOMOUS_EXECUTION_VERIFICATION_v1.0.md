@@ -1766,3 +1766,121 @@ wrong.**
 
 **Eleven cycles · 32 valid executions · 51 correct stops · 1 overreach · 3
 evidence/completeness failures · 0 Founder Events · 0 Acts created.**
+
+
+---
+
+# §26 — CYCLE 12 · `ACT-CC-P10-FINAL` — Falsifying the Exhaustion Claim
+
+**Date:** 2026-09-05 · **Baseline commit:** `1bbc48a`
+
+## 26.1 `§20` worked — my exhaustion claim was wrong a third time
+
+`§20` requires actively attempting to falsify exhaustion rather than accepting a
+failure to find work as evidence there is none. **The attempt succeeded on the
+first probe.**
+
+**`AIOS_MASTER_PROGRAM_v1_0_LENGKAP.md` — 225,894 bytes.** I recovered it in
+Cycle 7, listed it in that cycle's inventory, and **never opened it.** Zero
+citations across the platform-organization corpus. It carries the Master Index
+for Volumes I–VIII, a Document Authority Structure, a Source of Truth
+Navigation table, the Engineering Constitution `Pasal 1–8`, a Governance
+Hierarchy and a Progress Tracker.
+
+**Three exhaustion claims, three falsifications:** Cycle 10 (propagation
+unbuilt), Cycle 11 (asserted with the caveat that it was a hypothesis), and now
+Cycle 12 — **on a source I had personally inventoried and catalogued.** The
+pattern is no longer "I did not look"; it is **"I listed it and did not read
+it."**
+
+## 26.2 What it said, and why it mattered
+
+**Document Authority Structure** — two layers: **Volume I = Constitutional**
+(`Pasal 1–8`), **Volumes II–VIII = Strategic**. *"Volume pada layer lebih rendah
+tidak dapat membatalkan aturan dari Volume pada layer lebih tinggi."*
+
+**Source of Truth Navigation** — names `AIOS_CANONICAL_ARCHITECTURE.md` as SSOT
+for **Phase Definition, Dependency, and Lifecycle Status**.
+
+**That is a direct threat to Cycle 11's dependency graph.** If the named SSOT for
+Dependency governs, the graph was built from PD-03/PD-04 corpora while the
+authority sat elsewhere — and I had **never cited that document in this corpus.**
+
+## 26.3 The doubt is retired by a Founder decision, not by my reasoning
+
+`GDR-0001` — Founder Decision G1′ — **already determined this**, and the register
+records it verbatim (`E-44`):
+
+> `AIOS_CANONICAL_ARCHITECTURE.md` — *"Self-declared SSOT for Entity, Ownership,
+> Dependency, Lifecycle, Relationship"* → **"For repository architecture, not the
+> semantic authority; that is the Canonical Domain Model."**
+>
+> Master Program `Pasal 7–8` → **"For repository architecture, no longer an
+> independent constitutional source; repository artifact precedence is
+> Engineering Constitution §4."**
+
+**Both retain their role within the Master Program corpus.** The Source of Truth
+table is therefore correct *for that corpus* and does not govern repository
+architecture.
+
+**So the dependency graph is built on the correct sources** — Canonical Domain
+Model for semantics, `Engineering Constitution §4` for precedence — which is what
+this corpus has used throughout. **The posture is confirmed, not corrected, and
+confirmed by a prior Founder decision rather than by my own analysis.**
+
+**This is the falsification test working properly in both directions:** it found
+unread material capable of overturning a conclusion, and the material turned out
+to uphold it — through a determination I should have cited eleven cycles ago and
+never did.
+
+## 26.4 A genuine source gap, correctly pre-recorded
+
+`AIOS_CANONICAL_ARCHITECTURE.md` remains **NOT RESIDENT** — 15 citations, 0
+files. Its **ARB-002-ratified `§3.1`–`§3.4` dependency principles remain a valid
+Founder-ratified record** that this corpus has never consulted because the body
+is unavailable.
+
+**That gap was already recorded.** The External Corpus Synchronization Ledger
+(`E-45`) states the Master Program, `AIOS_CANONICAL_ARCHITECTURE.md`, ALMM,
+Project Governance and the Engineering Charter *"are not present in this
+repository and cannot be synchronized here"*, with the required changes recorded
+so the requirement survives. **Not a new gap — a correctly pre-recorded one I had
+not connected to the dependency question.**
+
+## 26.5 Cycle 12 record
+
+| ID | Frontier | Sufficiency | Action | Result |
+|---|---|---|---|---|
+| **C12-P1** | 225 KB recovered source inventoried and unread | **SUFFICIENT** — `§20` falsification | **READ → HARVEST** (`E-43`) | **PASS** |
+| **C12-P2** | Named SSOT for Dependency never cited here | **SUFFICIENT** — prior-record search | **RESOLVE via `GDR-0001`** (`E-44`) | **PASS** |
+| **C12-P3** | Graph's precedence footing unstated | **SUFFICIENT** | **RECORD precedence check** | **PASS** |
+| **C12-N1** | Treat the Master Program SSOT table as governing repository architecture | **INSUFFICIENT** — `GDR-0001` decided otherwise | **STOP** | **PASS** |
+| **C12-N2** | Commit the Master Program to make it resident | **INSUFFICIENT** — `E-29`, `E-45`; same supply act | **STOP** | **PASS** |
+| **C12-N3** | Close register item `S-4` (Pasal 3 omits Capability and Workflow) | **INSUFFICIENT** — an open item in the Governance Decision Register, not mine to close | **STOP** | **PASS** |
+| **C12-N4** | `ESC-C7-01`, `B-7`, `C4-A1`, `C6-A1`, `FD-2`, `SG-07` | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C12-A1** | Architectural Tier | `C6-A1` unchanged | — | **BLOCKED** |
+| **C12-E1** | Follow-on instrument | no trigger | — | **NOT REQUIRED** |
+
+**3 positive · 4 correct stops · 1 BLOCKED · 1 NOT REQUIRED.**
+
+## 26.6 Exhaustion — tested by falsification this time
+
+Probes run against material never previously opened: the Master Program (**found
+work**), `docs/engineering/` 13 specs, `consumers/` 24 modules,
+`docs/architecture/history/`, `docs/glossary/`, `docs/principles/`, the four
+Graphify archives. **Only the Master Program yielded actionable construction**;
+the remainder are either implementation regions with no delegated defect
+outstanding, or historical material `§40` bars me from mutating.
+
+**AUTHORIZED ACTIONABLE WORK REMAINING: NO** — asserted for the third time, and
+this time **after** a deliberate falsification attempt that succeeded and was
+then exhausted, rather than before one.
+
+**The standing caveat remains and should be read as permanent:** *a failure to
+find further work is not evidence that none exists.* Three of my exhaustion
+claims have been wrong. This one is offered with that record attached.
+
+## 26.7 Repeatability
+
+**Twelve cycles · 35 valid executions · 55 correct stops · 1 overreach · 4
+completeness failures · 0 Founder Events · 0 Acts created.**

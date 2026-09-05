@@ -89,6 +89,16 @@ consumer. That is one division describing both ends of its own relationship, and
 it is **not** the two-sided corroboration that the PD-03 ↔ PD-04 boundary
 (`E-25`) genuinely has.
 
+**Precedence check, 2026-09-05.** The AIOS Master Program names
+`AIOS_CANONICAL_ARCHITECTURE.md` as Source of Truth for **Dependency** — which
+would place this graph on the wrong footing. **It does not**, on Founder
+authority: `GDR-0001` determined that **for repository architecture** that
+document is *"not the semantic authority; that is the Canonical Domain Model"*,
+and precedence is `Engineering Constitution §4` (`E-44`). **This graph is built
+on the correct sources.** Its ARB-002 `§3.1`–`§3.4` dependency principles remain
+a Founder-ratified record this corpus has never read, because the body is **not
+resident** (`E-45`).
+
 **No construction order is derived from this graph.** With six edges across two
 sources and three divisions absent, sequencing on it would be inference dressed
 as evidence.

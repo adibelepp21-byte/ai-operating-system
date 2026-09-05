@@ -78,6 +78,28 @@ evidence of completeness.
 | **E-41** | **CITATION CORRECTION.** *"PD-05 sebagai consumer Knowledge"* was cited in three places as **Frozen `PD-02`** evidence. **It does not occur in PD-02's corpus** — 0 hits across `volume-1` and `volume-2`. Its source is **PD-04's `Volume 4 Part C` §`C3`** (non-resident), confirmed in the recovered body and at `ACT-CC-P6-071:188`. Originated at commit `9c96ab3`; survived ten cycles | `Volume 4 C3`; `ACT-CC-P6-071:188` | source body + Act | Correction | Direct read | **CORRECTED — evidence class downgraded** |
 | **E-42** | **Five inbound dependency edges propagated** to the records of the divisions named: `PD-03 → PD-02 · PD-08 · PD-09` (`E-33`); `PD-04 → PD-06 · PD-05` (`E-24`). For **PD-02 this is the first statement originating outside its own corpus**; for **PD-06, PD-08 and PD-09 it is the first evidenced relationship of any kind** | `E-24`, `E-33` | derived propagation | Construction | Verified | **CONSTRUCTED** |
 
+| **E-43** | The **AIOS Master Program** (`AIOS_MASTER_PROGRAM_v1_0_LENGKAP.md`, 225,894 bytes) was recovered in Cycle 7, inventoried, and **never read until Cycle 12**. Its *Document Authority Structure* sets two layers — **Volume I = Constitutional (Pasal 1–8)**, **Volumes II–VIII = Strategic** — and its *Source of Truth Navigation* names `AIOS_CANONICAL_ARCHITECTURE.md` as SSOT for **Phase Definition, Dependency and Lifecycle Status** | Master Program, Document Authority Structure · Source of Truth Navigation | supplied-source path | Program (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-44** | **`GDR-0001` (Founder Decision G1′) already determined the precedence question `E-43` raises.** For **repository architecture**: `AIOS_CANONICAL_ARCHITECTURE.md` is *"**not** the semantic authority; that is the Canonical Domain Model"*, and Master Program `Pasal 7–8` are *"no longer an independent constitutional source; repository artifact precedence is **Engineering Constitution §4**."* Both retain their role **within the Master Program corpus** | `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md:181-183` | resident | **Founder Decision** | Direct read | **RESIDENT — AUTHORITATIVE** |
+| **E-45** | The **External Corpus Synchronization Ledger already records** that the Master Program (I–VIII), `AIOS_CANONICAL_ARCHITECTURE.md`, ALMM, Project Governance and the Engineering Charter are *"not present in this repository and cannot be synchronized here"*, with the required changes recorded so the requirement survives | `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md:4925-4928` | resident | Governance | Direct read | **RESIDENT** |
+
+> **`E-43`…`E-45` added 2026-09-05** under `ACT-CC-P10-FINAL §20`, which required
+> an active attempt to **falsify** the exhaustion conclusion. **The attempt
+> succeeded**: a 225 KB source this corpus had inventoried and never opened.
+>
+> **Reading it confirmed the current posture rather than overturning it.** The
+> Master Program names a different SSOT for Dependency and Lifecycle, which would
+> have meant the dependency graph was drawn from the wrong source — **except that
+> `GDR-0001` had already routed repository-architecture semantics to the
+> Canonical Domain Model and precedence to `Engineering Constitution §4`**, which
+> is what this corpus has used throughout. **The doubt is retired by a prior
+> Founder decision, not by my own reasoning** (`E-44`).
+>
+> **`AIOS_CANONICAL_ARCHITECTURE.md` remains NOT RESIDENT** — 15 citations, 0
+> files — and its ARB-002-ratified `§3.1`–`§3.4` dependency principles remain a
+> valid Founder-ratified record that this corpus has never consulted, because the
+> body is unavailable. **That is a genuine source gap, and it is `E-45`'s, not a
+> new one.**
+
 > **`E-41` is a correction against this corpus's own work.** The evidence class
 > moved from *frozen resident* — the strongest this corpus holds — to
 > *non-resident PD-04*, among the weakest. **The statement is real; its authority
