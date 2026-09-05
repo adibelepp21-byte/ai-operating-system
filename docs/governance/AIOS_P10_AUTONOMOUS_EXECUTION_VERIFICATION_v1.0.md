@@ -764,3 +764,172 @@ Domain Model interpretation that is Architect-reserved.
 **The honest summary is that two of the four grants under Decision B remain
 unused, and the reason is not reluctance. It is that the surface they were
 granted for is almost entirely reserved above the delegation.**
+
+
+---
+
+# §19 — CYCLE 5 · `ACT-CC-P10-C5` — Autonomous Execution Depth & Completion
+
+**Date:** 2026-09-05 · **Baseline commit:** `f8f977a`
+
+## 19.1 Executive result
+
+**VERIFIED — PARTIAL.** The authorized execution surface is **exhausted** under
+`§7`/`§48`: no authorized work remains, and every remaining frontier is reserved,
+blocked, or source-insufficient.
+
+**One new material frontier was discovered and is escalated at 19.3.** It
+concerns this Act's own stated authority basis.
+
+## 19.2 Source conflict in the Act's authority basis — reported, not normalized
+
+`ACT-CC-P10-C5 §2.2` names the **AIOS CO-FOUNDER DELEGATION CHARTER** as primary
+authority, and `§4`, `§12` and `§13` rest specific powers on it — *"The Charter
+expressly establishes Claude Code as delegated Architecture Authority"*, *"The
+Charter expressly provides broad Engineering Authority."*
+
+**Verified fresh from source this cycle: the Charter is NOT RESIDENT.** Zero files
+named Charter anywhere under `docs/`; **7 citations across 4 documents, no body.**
+
+**"Not resident" is not "does not exist."** The Charter may be a Founder-held
+document outside version control — the same condition as the 13 `SG-07` packages.
+What can be established is only this: **its content cannot be verified from the
+repository, so no power may be attributed to it here.**
+
+**Effect on this cycle: none in practice, and that is worth stating precisely.**
+Every capability `§4` enumerates is independently granted by resident
+instruments:
+
+| `§4` capability | Resident basis |
+|---|---|
+| discovery · analysis · architecture construction, decisions, resolution · ADR construction | `DEL-T4.4-CF-001 §3.1 A`; `APT-CD1.1-AA-001 §3.1 A, C, E, I` |
+| engineering · coding · refactoring · testing · debugging · dependency management · repository organization · verification | `DEL §3.1 C` |
+| documentation · execution coordination | `DEL §3.1 C, D` |
+| conformance repair | `FDE-P10-AUTONOMOUS-EXECUTION-01 §11` |
+| construction of execution instruments | `FDE §10` |
+| continuous re-discovery and continuation | `FDE §7`, `§9` |
+
+**So the envelope is unchanged; only the basis is corrected.** Execution this
+cycle proceeded on the resident instruments alone. `§25` forbids silent
+reconciliation, so the Charter is neither used nor quietly replaced — it is
+reported.
+
+## 19.3 ESCALATION — `ESC-C5-01` · Charter-based authority citations
+
+**Decision-ready, per the Act's enumerated escalation powers 6–10.**
+
+| Field | Content |
+|---|---|
+| **Frontier** | Three resident artifacts declare their executing delegation to be `AIOS CO-FOUNDER DELEGATION CHARTER v1.0`, an instrument with no resident body |
+| **Artifacts** | `docs/program/AIOS_P6_036_READINESS_REASSESSMENT_GATE_v1.0.md:5` · `docs/program/AIOS_P6_037_CAPABILITY_REFERENCE_RECONCILIATION_v1.0.md:5` · `docs/engineering/agent/agent_execution_semantics_spec.md:4` (cites **§4.1/§4.4** specifically) |
+| **Evidence** | Corpus-wide search: 0 Charter files; 7 citations; 4 citing documents |
+| **What is NOT wrong** | **Each artifact also names a resident authorizing instrument** — `ACT-CC-P6-035 §20`, `DEC-P6-033 §20`, `DEC-P6-029` with three Acts. The substance is anchored; it is the *delegation* citation that cannot be verified |
+| **What makes it material** | All three post-date `DEL-T4.4-CF-001` (2026-08-15): `P6-036` is 2026-08-23, `P6-037` is 2026-08-26. A resident, ACTIVE delegation existed and a non-resident one was cited instead |
+| **Why Claude stopped** | Re-basing these citations onto `DEL-T4.4-CF-001` would assert that the two instruments are equivalent in scope. **That is an authority determination, not a conformance repair** — `§22`.1 unmet, `§29` engaged |
+| **Authority required** | Founder — either supply the Charter body, or determine that `DEL-T4.4-CF-001` is the operative delegation these artifacts should cite |
+| **Decision owner** | Founder / Program Owner. `APT-CD1.1-AA-001 §3.2` exclusion 28 bars Claude from redefining the meaning of a Founder decision |
+| **Minimum decision to unblock** | One of: **(a)** supply the Charter body; **(b)** state that `DEL-T4.4-CF-001` is the operative delegation and authorize the citation update; **(c)** state that the citations are historical and are to be left unaltered |
+| **Blocks other work?** | **NO.** Isolated to these three citations. Per `§30`, all other authorized work continued |
+
+## 19.4 Cycle 5 execution record (`§39.C`)
+
+| ID | Frontier | Prior search | Class | Sufficiency | Action | Result |
+|---|---|---|---|---|---|---|
+| **C5-P1** | `§39` requires a consolidated report; escalation requires a decision-ready record | done | Documentation | **SUFFICIENT** — `DEL §3.1 C`; `APT §3.1 I` | **EXECUTE** | **PASS** |
+| **C5-N1** | Charter-based authority citations | done | **AUTHORITY** | **INSUFFICIENT** | **STOP + ESCALATE** (`ESC-C5-01`) | **PASS** |
+| **C5-N2** | Code region: TODO/FIXME/HACK sweep, skipped tests | done | Implementation | **N/A — nothing present** | **NO ACTION** | **NOT PRESENT** |
+| **C5-N3** | `B-7` Governance Index | Cycle 2 | Architect-reserved | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C5-N4** | 13 protected `SG-07` packages | standing | Founder-reserved | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C5-N5** | `C4-A1` — Agent Definition ↔ Runtime instance reference under `Domain Model §8` | Cycle 4 | **UNKNOWN** | **INSUFFICIENT** | **STOP** | **BLOCKED**, unchanged |
+| **C5-A1** | Architectural Tier search | ADRs, execution catalog, engineering specs, `consumers/`, `native_core/`, `tools/` | — | — | none legitimately available | **NOT PRESENT** |
+| **C5-E1** | Follow-on Act | — | — | Standing authority sufficed; `§16` forbids creating one merely because Decision B allows it | **NOT REQUIRED** |
+
+## 19.5 Self-correction before mutation (`§18`, `§19`, `§39.G`)
+
+**A `Constitution §10` conformance scan reported 155 of 433 documents lacking a
+governance anchor. It was discarded without action.**
+
+Content inspection showed the detector was mis-calibrated: its pattern omitted
+`FDE-`, so artifacts opening *"Constructed under `FDE-P10-FRONTIER-02`, Decision
+A"* were counted as unanchored — including eight of my own division records that
+plainly state what they describe. The population also included **frozen** volume-1
+and volume-2 bodies, which are untouchable regardless.
+
+**155 apparent findings, 0 acted on.** `§18` is explicit — *"Detector output is
+evidence requiring validation, not authority to mutate"* — and `§19` requires the
+population and counting method be verified before any quantitative finding is
+reported. Disclosed here rather than silently dropped.
+
+**This is the second consecutive cycle in which the cycle's own detector produced
+a false population that content-anchoring caught before mutation** (`VF-7` was the
+first). The pattern is now a standing characteristic of this work, not an
+incident.
+
+## 19.6 Verification (`§31`)
+
+Re-verified fresh, not carried from prior cycles: **0** CPID references across
+**179** implementation files · **0** TODO/FIXME/HACK in non-test code · **0**
+skipped tests · **1** documented `expectedFailure` (`P7-F-2`, `GDR-0014`) ·
+execution-catalog validator **0 error, 0 warning, 4 informational** (unchanged,
+correctly).
+
+## 19.7 Repeatability (`§39`)
+
+| Measure | C1 | C2 | C3 | C4 | C5 |
+|---|---|---|---|---|---|
+| Valid positive executions | 3 | 2 | 4 | 1 | **1** |
+| Correct stops | 5 | 5 | 5 | 5 | **4** |
+| Escalations prepared | 0 | 1 | 0 | 0 | **1** |
+| Unnecessary stops | 0 | 0 | 0 | 0 | **0** |
+| Overreach | **1** | 0 | 0 | 0 | **0** |
+| Founder Events created | 0 | 0 | 0 | 0 | **0** |
+| Acts created | 0 | 0 | 0 | 0 | **0** |
+| Architectural Tier | NP | NP | NP | **BLOCKED** | **NP** |
+| Follow-on Act | NR | NR | NR | NR | **NR** |
+
+**Five cycles · 11 valid executions · 24 correct stops · 1 overreach**, confined
+to Cycle 1 and reverted in Cycle 2. **Zero Founder Events and zero Acts created
+across all five.**
+
+## 19.8 P10 completion determination (`§36`, `§37`, `§40`)
+
+**`P10 — VERIFIED — PARTIAL`.** Not PASS.
+
+`§36`'s twelve PASS conditions: **ten are met** — repeatable execution, repeatable
+stopping, no unexplained overreach, prior-record search discipline, authority
+sufficiency discipline, genuine implementation autonomy, no authority creation, no
+self-authorization, no artificial frontier, Founder and Constitutional boundaries
+preserved.
+
+**Two are not:**
+
+- **Condition 7 — genuine architectural exercise where legitimately available.** Five cycles: `NOT PRESENT` four times, `BLOCKED` once. The one genuine case (`C4-A1`) turns on a `Domain Model §8` interpretation that is Architect-reserved.
+- **Condition 8 — Follow-on Act generation where genuinely required.** Never triggered in five cycles. Standing construction has covered every authorized execution, which is `§16`'s intended outcome and simultaneously the reason the mechanism stays untested.
+
+`§37` governs exactly this shape: correct governance behaviour with legitimate
+dimensions remaining `NOT PRESENT` / `NOT REQUIRED` / `BLOCKED`. **`§37` forbids
+converting that into PASS, and it is not converted.**
+
+**The terminal condition of `§48` is met:** no authorized work remains, no
+unresolved authorized frontier remains, and every remaining frontier is outside
+the operative envelope.
+
+## 19.9 Remaining frontier register (`§39.I`)
+
+| Frontier | Authority required |
+|---|---|
+| **`ESC-C5-01`** *(new)* — Charter-based citations in three artifacts | **Founder** |
+| `C4-A1` — Agent Definition ↔ Runtime instance under `Domain Model §8` | **Architect** |
+| `B-7` — Governance Index staleness; sync drafted at `0f452d1` | **Architect** |
+| `G-01` PD corpora · `G-06` Volumes 0–0.3 · `G-07` master artifacts | **Founder** (supply) |
+| `G-02` PD-10 name · `G-03` PD-08 Security binding, plus unbound Quality and Governance | **Founder** |
+| `G-05` positive dependencies | Follows `G-01` |
+| `OB-01` — PD-02's exercising actor | **Founder** |
+| `FD-2` — Founder ≡ Architect ratification | **Founder** |
+| `SG-07` — 13 protected packages | **Founder** |
+| `ADR-0015`, `ADR-0017`, `ADR-0022` corrective actions | **Founder** / **Architect** |
+| PD-05 binding to the frozen Runtime subsystem · PD-06 *"owns implementation"* scope | **Founder** |
+
+**Thirteen frontiers. Every one requires Founder or Architect authority. None is
+closable by the delegate.** That is the whole finding of five cycles, stated in
+one line.
