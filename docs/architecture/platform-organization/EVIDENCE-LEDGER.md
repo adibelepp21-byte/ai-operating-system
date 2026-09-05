@@ -7,7 +7,11 @@
 **Constructed under:** `ACT-CC-P10-1` · **Date:** 2026-09-04
 **Method:** every resident occurrence of `PD-03`…`PD-10` across all 489 tracked
 `docs/` files was extracted and read — **265 statements** in total. That set is
-the complete resident evidence base for eight of the ten platform divisions.
+the resident evidence base for eight of the ten platform divisions **as sampled
+from the frozen `PD-02` corpus**. It was previously described as *"the complete
+resident evidence base"*; **that claim was wrong and is withdrawn** — `E-20`…`E-26`
+were resident and unsampled throughout. A completeness claim in this file is not
+evidence of completeness.
 
 ---
 
@@ -34,6 +38,24 @@ the complete resident evidence base for eight of the ten platform divisions.
 | **E-17** | Platform Organization Master Map and Platform Encyclopedia are referenced but not resident | repository | 11 references, 0 files | — | Absence | **UNKNOWN** |
 | **E-18** | No systemic gap inventory is resident | repository | 0 matches, both phrasings | — | Absence | **UNKNOWN** |
 | **E-19** | No `PD-0x` or `Volume N` reference exists anywhere in implementation | `native_core`, `consumers`, `tools` | 0 matches / 179 `.py` files | Implementation | Observation | **RESIDENT** |
+| **E-20** | PD-03's canonical volume is **Parts A–H × 10 = 80 sections**; 80 identities and 20 titles enumerable | `ACT-CC-P6-070` | §2.2 | Act record | Resident | **RESIDENT** |
+| **E-21** | PD-03 section **bodies: 0 supplied, 0 resident**; the 18 pattern hits are prose references or an empty template | `ACT-CC-P6-070` | §2.2 | Act record | Resident | **RESIDENT** |
+| **E-22** | PD-03 **`B2–B10` declare `NOT FROZEN — SOURCE GATE BLOCKED`** | `ACT-CC-P6-071` | §2 | Act record | Resident | **RESIDENT** |
+| **E-23** | PD-04's supplied corpus is **30/30 sections** — `A1–A10`, `B1–B10`, `C1–C10` — across 3 files, **102,540 lines / 1,508,896 bytes**; 23 FROZEN, 2 Bounded Canonical Synthesis, 2 Bounded Canonical Reconstruction, 1 FROZEN WITH QUALIFICATION, 2 unstated | `ACT-CC-P6-071` | §2 | Act record | Resident | **RESIDENT** |
+| **E-24** | PD-04 **declared identity**: `Platform Authority: Knowledge Authority` · `Primary Responsibility: Knowledge, Context, Intelligence Assets` · `Primary Dependencies: AI Engineering, Runtime` | `ACT-CC-P6-071` | §2, Part A block | Act record | Resident | **RESIDENT** |
+| **E-25** | PD-03 ↔ PD-04 ownership boundary, stated consistently from both sides, **conflict NONE**: `B1 §11` *"PD-03 tidak menjadi organizational owner atas: … Knowledge & Intelligence"*; `C8` *"PD-04 owns Knowledge Integrity … PD-03 owns Governance & Compliance and provides certification/compliance"*; `C8 §36` routes certification through PD-03 with PD-04 supplying evidence | `ACT-CC-P6-071` | §12 | Act record | Resident | **RESIDENT** |
+| **E-26** | Platform Encyclopedia Volume 3 is **CITATION ONLY relative to this repository**; the four PD-03 files (780 lines) were supplied to a prior Act and are not resident | `ACT-CC-P6-070` | §2.1, :213 | Act record | Resident | **RESIDENT** |
+
+> **`E-20`…`E-26` added 2026-09-05** under `ACT-CC-P10-C6`, harvested from
+> `ACT-CC-P6-070` (590 lines) and `ACT-CC-P6-071` (567 lines) — two resident Acts
+> assessing the PD-03 and PD-04 source bases. **Neither was cited anywhere in this
+> corpus before now.** They were resident throughout the P10-1 construction and
+> were not found, which is disclosed at `§19` of the P10 verification record.
+>
+> **What these entries do and do not establish.** They record *what a resident Act
+> verified about* the PD-03 and PD-04 corpora. **Those corpora remain NOT
+> RESIDENT** — `G-01` is unchanged. An inventory of an absent body is evidence
+> about it, never a substitute for it, and no section body is reconstructed here.
 
 **External evidence: none.** No external repository or pattern was consulted
 (`§14`). Internal evidence was the limiting factor, and no external source could

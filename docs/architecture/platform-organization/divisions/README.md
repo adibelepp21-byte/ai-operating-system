@@ -90,6 +90,14 @@ honest proportion.
 | PD-02 ↔ PD-09: `ADVISE / INTERFACE` on quality acceptance | `A5:331` |
 | PD-05 ← PD-04: Runtime consumes Knowledge | *"PD-05 sebagai consumer Knowledge"* |
 | Numeric order ≠ dependency; dependency ≠ subordination | `MASTER_ROADMAP §5` |
+| **PD-03 ↔ PD-04: ownership boundary, evidenced from BOTH sides, conflict NONE** | `E-25` · `ACT-CC-P6-071 §12`. `B1 §11` *"PD-03 tidak menjadi organizational owner atas: … Knowledge & Intelligence"* against `C8` *"PD-04 owns Knowledge Integrity … PD-03 owns Governance & Compliance and provides certification/compliance"* |
+| **PD-04 → PD-06 · PD-04 → PD-05: positive, self-declared dependency** | `E-24` — `Primary Dependencies: AI Engineering, Runtime` |
+
+**Added 2026-09-05** under `ACT-CC-P10-C6`. The first two rows are materially
+different from everything above them: **every earlier relationship is stated from
+PD-02's side alone**, whereas `PD-03 ↔ PD-04` is corroborated independently from
+both corpora, and `E-24` is the corpus's **first positive dependency statement**.
+`G-05` is corrected from MISSING to PARTIAL accordingly.
 
 **No dependency was declared from logical convenience** (`§11`).
 

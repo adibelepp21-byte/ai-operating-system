@@ -18,7 +18,73 @@
 - Frozen `PD-02 A4:282` — domain label **Knowledge**, PD-02 owns it not.
 - Frozen `PD-02` — *"PD-05 sebagai consumer Knowledge"*: Runtime consumes Knowledge, placing PD-04 in a **provider** relation to at least one other division.
 - `MASTER_ROADMAP §5`; `PD-01 C10:86` — own domain success criteria.
-- **84 resident statements — the largest base of the eight**, and the only division carrying the corpus's sole interface and lifecycle statements.
+- **84 statements counted from the frozen `PD-02` corpus** — the largest such base of the eight, and the only division carrying that corpus's sole interface and lifecycle statements. **That count measured `PD-02` only; §1.1–§1.4 below are the far larger PD-04 evidence base, harvested 2026-09-05.**
+
+### 1.1 Declared identity — the first evidenced authority statement outside PD-02
+
+`ACT-CC-P6-071 §2` (resident, 567 lines) records PD-04's supplied Part A
+declaring, verbatim:
+
+```text
+Platform Authority     : Knowledge Authority
+Primary Responsibility : Knowledge, Context, Intelligence Assets
+Primary Dependencies   : AI Engineering, Runtime
+```
+
+**This is materially different in kind from every other division's evidence**
+(`E-24`). Elsewhere in this corpus, authority is described from PD-02's side —
+what PD-02 may *not* do. Here a division's own corpus **declares its authority,
+its responsibility and its dependencies**. `PD-04` is the only one of the eight
+for which that exists.
+
+**Two consequences, and one non-consequence:**
+
+- It supplies the corpus's **first positive inter-PD dependency statement** — `AI Engineering` and `Runtime`, i.e. `PD-06` and `PD-05`. `G-05` recorded that *"no positive dependency is evidenced anywhere"*; that is **no longer true**, and `G-05` is updated accordingly.
+- It supplies an **authority name** — `Knowledge Authority` — parallel to the `Governance Authority` and `Security Owner` roles named for other domains.
+- **It does not bind that authority to the CPID by this record's act.** The corpus declares it; recording a declaration is evidence, not assignment (`§19` of the operative event). The `G-03` pattern — role named, binding open — is **not** repeated here only because the declaration is PD-04's own; whether that constitutes binding is **not decided here**.
+
+**What is absent from the responsibility list is recorded as carefully as what is present:** *"Language Intelligence, and any phase."*
+
+### 1.2 The supplied corpus — 30 sections, and its freeze state
+
+`ACT-CC-P6-071 §2` (`E-23`): **30 / 30 sections accounted for** across 3 files,
+**102,540 lines / 1,508,896 bytes**, with 56 section-ID declarations resolving to
+30 distinct sections (26 declared twice).
+
+| Part | Sections | Subject |
+|---|---|---|
+| **A** | `A1`–`A10` | Platform Identity · Strategic Purpose · Mission/Vision/Values · **Knowledge & Intelligence Charter** · **Knowledge Authority & Mandate** · Organizational Boundary · Core Principles · Strategic Objectives · Success Criteria · Relationship to AIOS Architecture Baseline |
+| **B** | `B1`–`B10` | Organizational Model · Sub Division · **Capability** · Team · Role Group · Reporting · Interface · Coordination · Governance · Organizational Success |
+| **C** | `C1`–`C10` | **Knowledge Architecture Constitution** · Knowledge Model · Knowledge Asset · **Knowledge Repository** · **Knowledge Semantic** · **Knowledge Graph** · **Context Knowledge** · **Knowledge Integrity & Governance Interface** · Knowledge Evolution · **Knowledge Architecture Success** |
+
+Declared freeze state: **23 FROZEN · 2 Bounded Canonical Synthesis · 2 Bounded
+Canonical Reconstruction · 1 FROZEN WITH QUALIFICATION · 2 unstated.** *"No
+`NOT FROZEN` section exists in PD-04"* — unlike PD-03, whose `B2`–`B10` are
+`NOT FROZEN — SOURCE GATE BLOCKED`.
+
+**Part `C` is the structural difference from PD-03**: ten sections of Knowledge
+architecture, where PD-03's volume contains none.
+
+**None of the 30 bodies is resident.** The corpus was supplied to
+`ACT-CC-P6-071`; this record inventories it and reconstructs nothing.
+
+### 1.3 Ownership boundary toward PD-03 — evidenced from both sides
+
+`ACT-CC-P6-071 §12` (`E-25`):
+
+> `C8` — *"**PD-04 owns Knowledge Integrity** within the Knowledge & Intelligence domain. **PD-03 owns Governance & Compliance** and provides certification/compliance"*
+> `C8 §36` — routes certification criteria through PD-03, with PD-04 supplying evidence
+
+Against PD-03's own `B1 §11`/`B1 §12`. **Conflict: NONE.** Tested independently
+by that Act and consistent from both directions.
+
+### 1.4 What the assessment expressly refused
+
+`ACT-CC-P6-071 §12` tested and **rejected** the proposition *"PD-03 says PD-04
+owns Knowledge & Intelligence, therefore PD-04 defines Phase 6"*: PD-04 holds
+**Knowledge Authority, not phase authority.** Recorded here because the same
+inference — domain ownership read as programme authority — is exactly the
+conflation this corpus is built to avoid.
 
 ## 2. What distinguishes this division
 

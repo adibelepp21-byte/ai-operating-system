@@ -22,12 +22,67 @@
 - Frozen `PD-02 A5:324` — `Governance Policy │ ADVISE │ Governance Authority remains applicable`. PD-02 advises; it does not decide governance policy.
 - `PD-01 C10:85` — PD-03 owns its own domain success criteria.
 
+### 1.1 The canonical volume structure — evidenced 2026-09-05, **eight Parts, not five**
+
+`ACT-CC-P6-070 §2.2` (resident, 590 lines) inventories PD-03's canonical volume.
+**Its structure is `A`–`H` × 10 = 80 sections**, and the Parts are named:
+
+| Part | Subject |
+|---|---|
+| **A** | Platform Identity & Strategic Foundation |
+| **B** | Organization Architecture |
+| **C** | Governance Architecture |
+| **D** | Governance Operations |
+| **E** | Performance Architecture |
+| **F** | Lifecycle Architecture |
+| **G** | Platform Integration |
+| **H** | Platform Evolution |
+
+**This matters for §3 below.** The derived structure there uses the five-part
+`A`–`E` Kernel spine abstracted from PD-01 and PD-02. **PD-03's own recorded
+structure has eight Parts** — `F` Lifecycle, `G` Integration and `H` Evolution
+have no counterpart in the spine. The spine is therefore **not** a reduced form
+of PD-03's structure; it is a different structure, and §3's five-part derivation
+should be read as a Kernel projection rather than as PD-03's shape (`E-20`).
+
+**No Part `F`, `G` or `H` is constructed here.** Their identities are evidenced;
+their content is not.
+
+### 1.2 What is supplied, frozen, and blocked
+
+- **`E-21`** — **0 of 80 section bodies supplied; 0 resident.** The four PD-03 files (780 lines) named in `ACT-CC-P6-070 §2.1` were supplied to that Act and never entered the repository. The 18 section-identifier hits in them are *"prose references or an empty inventory template"*, not bodies.
+- **`E-22`** — **`B2`–`B10` declare `NOT FROZEN — SOURCE GATE BLOCKED`** (`ACT-CC-P6-071 §2`). PD-03 is the only one of the two assessed volumes carrying a `NOT FROZEN` state.
+- **`E-26`** — *"Platform Encyclopedia Volume 3"* is **CITATION ONLY relative to this repository**.
+
+### 1.3 Ownership boundary toward PD-04 — stated from PD-03's own side
+
+`ACT-CC-P6-071 §12` (`E-25`) records PD-03's supplied corpus stating:
+
+> `B1 §11` — *"PD-03 tidak menjadi organizational owner atas: … **Knowledge & Intelligence** …"*
+> `B1 §12` — lists **`PD-04 Knowledge & Intelligence`** as a cross-platform interface
+
+**Conflict with PD-04's own statement: NONE.** This is the first cross-platform
+ownership boundary in this corpus evidenced **from both sides independently** —
+every other relationship recorded here is stated from PD-02's side alone.
+
 ## 2. What the resident evidence establishes and does not
 
-79 resident statements — the second-largest base of the eight, and almost all of
-them describe PD-03 **from PD-02's side**: what PD-02 may not do to Governance
+79 statements were counted from the frozen `PD-02` corpus, and almost all of them
+describe PD-03 **from PD-02's side**: what PD-02 may not do to Governance
 Authority. That is real evidence of PD-03's authority **boundary**, and it is
 not evidence of PD-03's internal structure.
+
+**Materially extended 2026-09-05.** `ACT-CC-P6-070` and `ACT-CC-P6-071` add
+structural and ownership evidence stated from PD-03's *own* side — §1.1–§1.3
+above. **The count of 79 measured only the `PD-02` corpus and was never a measure
+of all resident PD-03 evidence.**
+
+**Evidenced:** identity · domain · the existence of a Governance Authority
+distinct from Architecture Authority · PD-02's advisory-only posture toward
+governance policy · **the 80-section canonical structure** · **the `NOT FROZEN`
+state of `B2`–`B10`** · **the ownership boundary toward PD-04**.
+**Absent:** all 80 section bodies · capability decomposition · sub-division
+structure · teams · roles · change control.
 
 **Evidenced:** identity · domain · the existence of a Governance Authority
 distinct from Architecture Authority · PD-02's advisory-only posture toward

@@ -29,7 +29,7 @@ twelve, and it was not made twelve.
 | **Classification** | **MISSING** |
 | **Current state** | `PD-03`…`PD-10`: 265 statements total, all incidental references inside `PD-01`/`PD-02` corpora or program records. No volume, no body, no section |
 | **Expected state** | A definitional corpus per division, as `PD-01` (45 bodies) and `PD-02` (50 bodies) have |
-| **Evidence** | `EVIDENCE-LEDGER.md` §2; **19 of 96 dimension-cells fully evidenced · 8 partial · 69 absent** *(recounted 2026-09-05; was "~15")* |
+| **Evidence** | `EVIDENCE-LEDGER.md` §2; **19 of 96 dimension-cells fully evidenced · 8 partial · 69 absent** *(recounted 2026-09-05; was "~15")*. **That matrix samples the frozen `PD-02` corpus only.** `E-20`…`E-26` add a materially larger PD-03/PD-04 evidence base from two resident Acts the matrix never sampled, so 96 cells is a floor, not the total |
 | **Severity** | **HIGH** — blocks any full Platform Organization baseline |
 | **Owner / Authority** | **Founder** — supply the corpora, or authorize construction of derived definitions from resident evidence |
 | **Recommended action** | Founder decision between the two paths. Neither is available to the Co-Founder: supplying source is not construction, and canonicalizing derived content requires authority this Act withholds (`§16`) |
@@ -83,16 +83,24 @@ twelve, and it was not made twelve.
 | **Residual** | **Conformance observation, not a gap:** `ownership.py:98` still declares `class Department`. `ADR-0010` chose *"bounded amendment rather than global migration"*, so the alias in code is lawful and expected. Whether to migrate is a separate question, not decided |
 | **Blocking** | **NO** — P10 operationalization is not blocked by a missing representation |
 
-## G-05 — No positive inter-PD dependency is evidenced
+## G-05 — Positive inter-PD dependency: **one is now evidenced**, the graph is not
+
+> **CORRECTED 2026-09-05** under `ACT-CC-P10-C6`. This gap previously read *"No
+> positive inter-PD dependency is evidenced."* **That is no longer true.**
+> `ACT-CC-P6-071 §2` records PD-04's supplied corpus declaring
+> `Primary Dependencies: AI Engineering, Runtime` — a positive, directional,
+> self-declared dependency on `PD-06` and `PD-05` (`E-24`). The prior statement
+> was accurate against the evidence then harvested and wrong against the corpus,
+> which held that Act record throughout.
 
 | | |
 |---|---|
-| **Classification** | **MISSING** |
-| **Current state** | The only resident dependency statements are **negative**: numeric order is not dependency; dependency is not subordination; PD-02 owns no other domain |
-| **Evidence** | `E-03`; `A4.md:289` |
-| **Severity** | **MEDIUM** — `§22.1` required a dependency graph; drawing one now would be wholly inferred |
-| **Owner / Authority** | Follows from `G-01` |
-| **Recommended action** | Defer until definitional corpora exist. **No graph was drawn** |
+| **Classification** | **PARTIAL** *(was MISSING)* |
+| **Current state** | **One** positive dependency is evidenced: `PD-04 → PD-06` and `PD-04 → PD-05`, declared by PD-04's own corpus. The remaining statements are still negative — numeric order is not dependency; dependency is not subordination; PD-02 owns no other domain. **No dependency is evidenced for the other seven divisions** |
+| **Evidence** | `E-24` (positive) · `E-03`, `A4.md:289` (negative) |
+| **Severity** | **MEDIUM** — one edge is not a graph. `§22.1` required a dependency graph; drawing one from a single evidenced edge would still be mostly inference |
+| **Owner / Authority** | Follows from `G-01` for the remaining seven |
+| **Recommended action** | Record the evidenced edge; **do not extrapolate it**. Defer the graph until the remaining corpora exist. **No graph is drawn** |
 | **Blocking** | NO |
 
 ## G-06 — Volume 0 / 0.1 / 0.2 / 0.3 are referenced but not resident

@@ -17,8 +17,8 @@
 |---|---|---|---|---|
 | **PD-01** | Executive — frozen `A4` header: `Official Name: Executive Office` | — | reference implementation | **NOT ACTIVATION-ELIGIBLE** (`E-15`) |
 | **PD-02** | Architecture — frozen `A4` header: `Official Name: Architecture Office` | — | Architecture domain, `OA-01…OA-07` | **ACTIVE** (`E-14`, `GDR-0036`) |
-| **PD-03** | Governance & Compliance | Governance | partial | not assessed |
-| **PD-04** | Knowledge & Intelligence | Knowledge | partial | not assessed |
+| **PD-03** | Governance & Compliance | Governance | partial · **80-section volume evidenced, `B2`–`B10` NOT FROZEN** (`E-20`, `E-22`) | not assessed |
+| **PD-04** | Knowledge & Intelligence | Knowledge | **declares `Knowledge Authority`** (`E-24`); 30/30 sections, 23 FROZEN (`E-23`) | not assessed |
 | **PD-05** | Runtime & Execution | Runtime | **owns Runtime** (`E-06`, `E-07`) | not assessed |
 | **PD-06** | AI Engineering | AI Engineering | **owns implementation** (`E-08`) | not assessed |
 | **PD-07** | Infrastructure & Platform | Infrastructure | **owns Infrastructure** (`E-09`) | not assessed |
@@ -42,11 +42,15 @@ remains a conflict while this is a citation correction.
 3. **No metric imposition.** Adaptation proceeds *"tanpa memaksakan metric PD-02"* (`E-11`).
 4. **Each division owns its own success criteria** (`E-05`).
 
-**Consequence for the dependency graph (`§22.1`):** the only resident dependency
-statement is a **negative** one — numeric order does not imply dependency, and
-PD-02 owns nothing outside its domain. **No positive inter-PD dependency is
-evidenced anywhere.** A dependency graph drawn now would be entirely inferred,
-so none is drawn.
+**Consequence for the dependency graph (`§22.1`) — updated 2026-09-05.** This
+paragraph previously read *"No positive inter-PD dependency is evidenced
+anywhere."* **One now is:** PD-04's own corpus declares
+`Primary Dependencies: AI Engineering, Runtime` (`E-24`) — a directional edge to
+`PD-06` and `PD-05`. The negative rules still hold: numeric order does not imply
+dependency, and PD-02 owns nothing outside its domain.
+
+**One evidenced edge is not a graph**, and seven divisions still evidence none, so
+a graph drawn now would remain mostly inference. **None is drawn.** See `G-05`.
 
 ## 3. PD Maturity Matrix (`§32`)
 
@@ -92,11 +96,11 @@ read "16 of 40", which `divisions/README.md §3`'s own enumeration contradicted.
 
 | Dimension | Result | Evidence |
 |---|---|---|
-| **Authority** | **PARTIAL** | Only PD-02's authority set is enumerated (`OA-01…OA-07`). PD-03/PD-04 carry fragments; five divisions carry none |
+| **Authority** | **PARTIAL** | PD-02's set is enumerated (`OA-01…OA-07`); **PD-04's corpus declares `Knowledge Authority` outright** (`E-24`) — the only division besides PD-02 with a positive authority statement. PD-03 carries fragments; five divisions carry none |
 | **Ownership** | **PARTIAL** | Five divisions evidenced; **PD-08 and PD-10 have no ownership statement at all** |
 | **Capability** | **MISSING** | 0 of 8 divisions carry a capability statement |
 | **Interfaces** | **MISSING** | 1 statement across 8 divisions. `C8` Cross-Platform Architecture Governance exists but describes PD-02's responsibility, not a registry |
-| **Dependencies** | **MISSING** | Only the negative rule (§2.2). No positive dependency evidenced |
+| **Dependencies** | **PARTIAL** *(was MISSING)* | `PD-04 → PD-06`, `PD-04 → PD-05` self-declared (`E-24`). Seven divisions evidence none |
 | **Boundaries** | **PARTIAL** | The architectural boundary diagram (`E-04`) separates domains; no division defines its own boundary |
 | **Lifecycle** | **PARTIAL** | Evidenced for PD-01 and PD-02 only |
 | **Terminology** | **1 CONFLICT** | PD-10 Enablement/Experience (`G-02`) |

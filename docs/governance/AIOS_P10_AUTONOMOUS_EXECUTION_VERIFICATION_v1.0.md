@@ -933,3 +933,181 @@ the operative envelope.
 **Thirteen frontiers. Every one requires Founder or Architect authority. None is
 closable by the delegate.** That is the whole finding of five cycles, stated in
 one line.
+
+
+---
+
+# §20 — CYCLE 6 · `ACT-CC-P10-C6` — Autonomous Completion & Encyclopedia Construction
+
+**Date:** 2026-09-05 · **Baseline commit:** `9176949`
+
+## 20.1 Executive result
+
+**VERIFIED — PARTIAL.** Cycle 6 executed the **largest evidence-grounded
+construction since the original P10-1 build** — and it did so on evidence that
+had been resident and unread through five prior cycles.
+
+**The headline is not the construction. It is `VF-8` at 20.3.**
+
+## 20.2 The mandate's own source is not resident
+
+`ACT-CC-P10-C6 §11`, `§12` and `§29` direct construction *"according to the
+Platform Encyclopedia roadmap"* and call it *"the authoritative Platform
+Encyclopedia roadmap."*
+
+**Verified fresh: the Platform Encyclopedia is NOT RESIDENT** — 0 files, ~25
+citations. And a prior Act had already determined this:
+`ACT-CC-P6-070:213` classifies *"Platform Encyclopedia Vol 3"* as **CITATION ONLY
+relative to this repository** (`E-26`).
+
+So the roadmap the Act directs construction against does not exist here.
+`§12` anticipates exactly this — *"It shall not invent unsupported architecture
+merely to fill empty sections"*, *"shall not fabricate missing source
+evidence"* — and `§22` prohibits manufacturing coverage. **No volume was
+constructed against an absent roadmap.**
+
+What *was* found is better than a roadmap: two resident Acts recording verified
+inventories of the PD-03 and PD-04 corpora.
+
+## 20.3 `VF-8` — evidence-traceability failure, **fifth-cycle recurrence**
+
+**`ACT-CC-P6-070` (590 lines) and `ACT-CC-P6-071` (567 lines) are resident Acts
+assessing the PD-03 and PD-04 source bases. Neither was cited anywhere in the
+platform-organization corpus before this cycle.**
+
+They were resident throughout:
+
+- the original `P10-1` evidence sweep that produced the Evidence Ledger;
+- the `FDE-P10-FRONTIER-02` construction of all eight division records;
+- Cycles 1–5, including three cycles whose stated discipline was prior-record search.
+
+**Class: `F-05` / evidence-traceability — the same class as `VF-5` in Cycle 1.**
+
+**Why the improved discipline did not catch it.** From Cycle 2 onward I searched
+prior records *for the frontier in front of me*. I never re-swept `docs/program/`
+for **PD-specific evidence**, because the Evidence Ledger asserted it held *"the
+complete resident evidence base for eight of the ten platform divisions."* **I
+trusted my own artifact's completeness claim instead of re-deriving it** —
+precisely what `§4` of the Cycle-5 Act forbids and what `§24` of the operative
+event means by *"Claude MUST NOT promote its own derived artifact into
+authority."*
+
+**Consequences that are now corrected but were wrong for weeks:**
+
+| Prior statement | Status |
+|---|---|
+| `G-05`: *"No positive inter-PD dependency is evidenced anywhere"* | **FALSE** — `E-24` declares `PD-04 → PD-06`, `PD-04 → PD-05` |
+| Master Map §2: same claim | **FALSE** — corrected |
+| Evidence Ledger: *"the complete resident evidence base"* | **OVERSTATED** — it sampled the frozen `PD-02` corpus only |
+| Cycle 3's `19 of 96` recount | **A FLOOR, NOT A TOTAL** — the matrix never sampled these Acts |
+| PD-03 five-part `A`–`E` derivation | **Structurally wrong shape** — PD-03's own volume is `A`–`H`, 80 sections |
+
+**The Cycle 3 recount is the sharpest instance.** I recounted that matrix cell by
+cell, disclosed the arithmetic error, and corrected three carriers — while the
+matrix's *population* was incomplete and I never questioned it. **Precise
+counting of an unrepresentative sample.** `§19` of the Cycle-5 Act requires
+verifying *"the underlying population and counting method"*; I verified the
+method and not the population.
+
+## 20.4 Construction executed (`§12`, `§29`)
+
+All within `FDE §9` standing construction + `FDE-P10-FRONTIER-02 §4` + `DEL §3.1 A`,
+on **resident** evidence only.
+
+| Artifact | Construction |
+|---|---|
+| `EVIDENCE-LEDGER.md` | **`E-20`…`E-26`** — PD-03's 80-section `A`–`H` structure · 0/80 bodies supplied or resident · `B2`–`B10` `NOT FROZEN — SOURCE GATE BLOCKED` · PD-04's 30/30 sections across 102,540 lines / 1,508,896 bytes with freeze states · PD-04's declared identity · the two-sided PD-03↔PD-04 ownership boundary · Encyclopedia Vol 3 CITATION ONLY |
+| `PD-03` record | **§1.1** the eight-Part canonical structure, with the explicit finding that the five-part Kernel spine is **a different structure, not a reduction of it** — `F` Lifecycle, `G` Integration, `H` Evolution have no spine counterpart · **§1.2** supply/freeze/blocked state · **§1.3** ownership boundary from PD-03's own side |
+| `PD-04` record | **§1.1** declared identity — `Platform Authority: Knowledge Authority`, `Primary Responsibility: Knowledge, Context, Intelligence Assets`, `Primary Dependencies: AI Engineering, Runtime` · **§1.2** the 30-section inventory and freeze states · **§1.3** two-sided ownership boundary · **§1.4** the inference the assessment expressly rejected |
+| `SYSTEMIC-GAP-MAP.md` | **`G-05` MISSING → PARTIAL**, corrected with the reason stated · evidence-scope qualification on the 96-cell figure |
+| `PLATFORM-ORGANIZATION-MASTER-MAP.md` | PD-03/PD-04 rows · dependency paragraph corrected · Authority and Dependencies dimensions upgraded |
+| `divisions/README.md` | Two new cross-platform relationship rows — the first evidenced **from both sides** rather than from PD-02's alone |
+
+**PD-04 is now the only division besides PD-02 with a positive authority
+statement**, and the only one whose corpus declares its own dependencies.
+
+## 20.5 What was NOT constructed — and why
+
+- **No section body.** 0 of PD-03's 80 and 0 of PD-04's 30 are resident. An inventory of an absent body is evidence about it, never a substitute (`E-21`, `E-23`).
+- **No Parts `F`, `G`, `H` for PD-03.** Their identities are evidenced; their content is not. Constructing them would be the invention `§12` forbids.
+- **No ownership binding.** PD-04's corpus *declares* `Knowledge Authority`. **Recording a declaration is evidence; binding it to the CPID is assignment**, reserved by `§19` of the operative event and by `§18` of this Act. Whether the self-declaration constitutes binding is **not decided here**.
+- **No re-shaping of the eight division records to `A`–`H`.** The divergence is recorded; imposing PD-03's structure on divisions with no such evidence would repeat the clone error `FDE-P10-FRONTIER-02 §6` prohibits.
+- **`G-01` is unchanged.** The corpora remain absent.
+
+## 20.6 `ESC-C5-01` updated — new evidence on the Charter
+
+`ACT-CC-P6-070 §2.1` records, verbatim:
+
+> *"A fifth file, `AIOS_COFOUNDER_DELEGATION_CHARTER_v1.0.txt`, is present in the
+> uploads directory from an earlier turn. It is not among this Act's four supplied
+> files and is excluded from every count above. **Its presence is disclosed rather
+> than used.**"*
+
+**This materially strengthens the escalation.** The Charter is not merely
+uncited — **a file of that exact name existed and was deliberately excluded from
+use by a prior Act**, on the correct ground that it was not part of that Act's
+supplied material. It has still never entered the repository.
+
+`ESC-C5-01`'s minimum decisions are unchanged; option **(a)** — supply the
+Charter body — is now known to be a matter of committing a file that has existed
+since at least the `P6-070` turn.
+
+## 20.7 Cycle 6 matrix
+
+| ID | Frontier | Prior search | Sufficiency | Action | Mutation | Result |
+|---|---|---|---|---|---|---|
+| **C6-P1** | Two resident PD-03/PD-04 assessments cited nowhere | done | **SUFFICIENT** | **HARVEST → CONSTRUCT** | 6 files | **PASS** |
+| **C6-P2** | `G-05` asserts no positive dependency; `E-24` contradicts it | done | **SUFFICIENT** | **CORRECT** | 2 files | **PASS** |
+| **C6-P3** | Master Map and divisions README carry the same superseded claim | done | **SUFFICIENT** | **CORRECT** | 2 files | **PASS** |
+| **C6-N1** | Encyclopedia roadmap absent; Act directs construction against it | done | **N/A — source absent** | **NO CONSTRUCTION** | none | **PASS** |
+| **C6-N2** | 110 section bodies inventoried, none resident | done | **INSUFFICIENT** | **STOP** | none | **PASS** |
+| **C6-N3** | PD-04 declares `Knowledge Authority` — bind it to the CPID? | done | **INSUFFICIENT** | **STOP** | none | **PASS** |
+| **C6-N4** | `B-7`, `C4-A1`, `SG-07`, `FD-2` | standing | **INSUFFICIENT** | **STOP** | none | **PASS** |
+| **C6-A1** | Architectural Tier | the `A`–`E` vs `A`–`H` divergence is **recorded**, not resolved — resolving it would restructure eight records without evidence | **INSUFFICIENT** | **STOP** | none | **BLOCKED** |
+| **C6-E1** | Follow-on Act | standing construction sufficed | — | **NOT REQUIRED** | none | **NOT REQUIRED** |
+
+**3 positive · 4 correct stops · 1 BLOCKED · 1 NOT REQUIRED · 1 disclosed failure (`VF-8`).**
+
+## 20.8 Repeatability
+
+| Measure | C1 | C2 | C3 | C4 | C5 | C6 |
+|---|---|---|---|---|---|---|
+| Valid positive executions | 3 | 2 | 4 | 1 | 1 | **3** |
+| Correct stops | 5 | 5 | 5 | 5 | 4 | **4** |
+| Overreach | **1** | 0 | 0 | 0 | 0 | **0** |
+| Evidence-traceability failures | **1** | 0 | 0 | 0 | 0 | **1 (`VF-8`)** |
+| Founder Events · Acts created | 0·0 | 0·0 | 0·0 | 0·0 | 0·0 | **0·0** |
+| Architectural Tier | NP | NP | NP | BLOCKED | NP | **BLOCKED** |
+| Follow-on Act | NR | NR | NR | NR | NR | **NR** |
+
+**Six cycles · 14 valid executions · 28 correct stops · 1 overreach · 2
+evidence-traceability failures.**
+
+**The trend on boundaries is good and the trend on evidence completeness is
+not.** Zero overreach in five consecutive cycles; but the corpus held 1,157 lines
+of directly relevant evidence that six cycles of stated search discipline did not
+surface. **Boundary discipline and search completeness are different competences,
+and this program has only demonstrated the first.**
+
+## 20.9 P10 completion determination
+
+**`P10 — VERIFIED — PARTIAL`.** Not advanced, and `VF-8` is a reason to hold it
+there independent of the two unexercised dimensions.
+
+`§28`'s condition 5 — *"mandatory prior-record search"* — is **now demonstrated as
+failed at least once at corpus scale**, not merely as satisfied per-frontier. That
+is a more demanding reading of the same condition, and it is the correct one.
+
+**Recommended standing correction to my own method, applied from here:** a
+completeness claim in my own artifact (*"the complete resident evidence base"*) is
+**not** evidence of completeness and must be re-derived, not trusted. That is
+`§24` of the operative event applied to myself, which I had been applying only to
+authority claims.
+
+## 20.10 Remaining frontier
+
+Unchanged from Cycle 5 except: **`G-05` MISSING → PARTIAL**, `ESC-C5-01`
+strengthened, and one new entry — **`C6-A1`**, the `A`–`E` vs `A`–`H` structural
+divergence between the Kernel spine and PD-03's own recorded volume shape.
+Resolving it would restructure eight division records; the evidence supports
+recording the divergence, not acting on it. **Architect.**
