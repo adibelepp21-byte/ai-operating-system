@@ -16,8 +16,8 @@ created, merged, split, or replaced.**
 
 | CPID | Established name | Record | Maturity |
 |---|---|---|---|
-| PD-01 | Executive Office | *(reference implementation — 45 resident bodies)* | REVIEWED |
-| PD-02 | Architecture Office | *(50 resident bodies, FROZEN; ACTIVE `GDR-0036`)* | VERIFIED |
+| PD-01 | Executive Office | `PD-01-executive-office.md` — **integration record**, not a reconstruction | REVIEWED |
+| PD-02 | Architecture Office | `PD-02-architecture-office.md` — **integration record**, not a reconstruction | VERIFIED |
 | PD-03 | Governance & Compliance | `PD-03-governance-and-compliance.md` | **CONSTRUCTED (derived)** |
 | PD-04 | Knowledge & Intelligence | `PD-04-knowledge-and-intelligence.md` | **CONSTRUCTED (derived)** |
 | PD-05 | Runtime & Execution | `PD-05-runtime-and-execution.md` | **CONSTRUCTED (derived)** |
@@ -27,9 +27,18 @@ created, merged, split, or replaced.**
 | PD-09 | Quality & Evaluation | `PD-09-quality-and-evaluation.md` | **CONSTRUCTED (derived, binding-open)** |
 | PD-10 | Developer Experience | `PD-10-developer-experience.md` | **CONSTRUCTED (derived, name-contested)** |
 
-**PD-01 and PD-02 were not reconstructed** (`§17`, `§18`). PD-01 remains the
-reference implementation; PD-02 remains under its established Architecture
-Authority.
+**PD-01 and PD-02 were not reconstructed** (`§17`, `§18`). Their records are
+**integration records** — what pattern was abstracted, what provenance the corpus
+has, what conformance findings exist, and what remains open — and they neither
+restate nor modify the 45 and 50 resident bodies that remain the authority for
+those divisions. PD-01 remains the reference implementation; PD-02 remains under
+its established Architecture Authority, which this construction did not enlarge.
+
+**Three conformance findings were identified and not repaired** (`§17` authorizes
+identification only): the reference implementation `PD-01` is **NOT
+ACTIVATION-ELIGIBLE** while its first adopter `PD-02` is ACTIVE · PD-01's manifest
+records validation as **pending** · `OB-01` leaves PD-02's operative authority
+**effective and unexercisable**.
 
 ## 2. Domain constraint conformance (`§25.8`)
 
