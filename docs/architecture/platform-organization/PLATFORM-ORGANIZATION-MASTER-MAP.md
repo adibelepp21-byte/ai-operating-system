@@ -47,18 +47,24 @@ States are not collapsed: `CONSTRUCTED ≠ RECONCILED ≠ REVIEWED ≠ VERIFIED 
 |---|---|---|
 | PD-01 | **REVIEWED** | 45 resident bodies; reference implementation; not activation-eligible |
 | PD-02 | **VERIFIED** *(not frozen by this Act — already FROZEN by `GDR-0026`)* | 50 bodies, manifest 50/50 byte-identical, Gate PASS `GDR-0035`, ACTIVE `GDR-0036` |
-| PD-03 | **EVIDENCE-READY** | 79 statements; identity + partial ownership/authority |
-| PD-04 | **EVIDENCE-READY** | 84 statements; richest base; sole interface + lifecycle statements |
-| PD-05 | **EVIDENCE-READY** | ownership unambiguous, everything else absent |
-| PD-06 | **EVIDENCE-READY** | ownership evidenced |
-| PD-07 | **EVIDENCE-READY** | ownership evidenced |
-| PD-08 | **DISCOVERED** | identity only; 7 statements; no ownership anywhere |
-| PD-09 | **DISCOVERED** | identity + role fragment; 8 statements |
-| PD-10 | **DISCOVERED** | identity contested; substance absent despite 40 references |
+| PD-03 | **CONSTRUCTED (derived)** | 79 statements; identity + partial ownership/authority |
+| PD-04 | **CONSTRUCTED (derived)** | 84 statements; richest base; sole interface + lifecycle statements |
+| PD-05 | **CONSTRUCTED (derived)** | ownership unambiguous, everything else absent |
+| PD-06 | **CONSTRUCTED (derived)** | ownership evidenced |
+| PD-07 | **CONSTRUCTED (derived)** | ownership evidenced |
+| PD-08 | **CONSTRUCTED (derived, binding-open)** | owner role defined in frozen corpus; binding to CPID absent |
+| PD-09 | **CONSTRUCTED (derived, binding-open)** | same pattern; role fragment only |
+| PD-10 | **CONSTRUCTED (derived, name-contested)** | substance absent despite 40 references |
 
-**No division was advanced to `CONSTRUCTED`.** `CONSTRUCTED` would assert a
-domain architecture, and for eight divisions no such architecture is evidenced
-(`D-06`).
+**Advanced from `EVIDENCE-READY`/`DISCOVERED` under `FDE-P10-FRONTIER-02`
+Decision A**, which supplied established domain and primary construction target
+for all ten — constraint material that did not previously exist. Records live in
+`divisions/`.
+
+**`CONSTRUCTED (derived)` is not `RECONCILED`, `REVIEWED`, `VERIFIED` or
+`FROZEN`,** and asserts no canonical domain architecture: each record separates
+its Established constraints from its derivations, and **16 of 40 derived Part
+slots are deliberately unfilled** where filling them would have been invention.
 
 ## 4. Cross-PD Reconciliation Matrix (`§24`, `§25`)
 
