@@ -45,6 +45,40 @@ for which that exists.
 
 **What is absent from the responsibility list is recorded as carefully as what is present:** *"Language Intelligence, and any phase."*
 
+### 1.1a Canonical identity — **read from the source body**, 2026-09-05
+
+`Volume 4 Part A`, section `A1 — Platform Identity`, declares:
+
+```text
+Platform ID        : PD-04
+Platform Name      : Knowledge & Intelligence
+Platform Authority : Knowledge Authority
+```
+
+matching the same header family as `PD-03 A1` and frozen `PD-02 A4`. **`E-24`'s
+declaration, previously known only through `ACT-CC-P6-071`'s report of it, is now
+read directly from the body.**
+
+Part C's ten section titles, read from source: Knowledge Architecture
+Constitution · Knowledge Model Architecture · Knowledge Asset Architecture ·
+Knowledge Repository Architecture · Knowledge Semantic Architecture · Knowledge
+Graph Architecture · Context Knowledge Architecture · Knowledge Integrity &
+Governance Interface · Knowledge Evolution & Improvement · Knowledge Architecture
+Success.
+
+**Part B carries a second, interleaved series `B01`–`B06`** whose titles are
+constraint statements rather than section subjects: *"No Cross-Team Ownership
+Without Delegation"* · *"Dependency Does Not Create Ownership"* · *"Consumer Does
+Not Become Owner"* · *"Quality Does Not Become Domain Owner"* · *"Evolution Does
+Not Become Uncontrolled"* · *"Workforce Does Not Redefine Boundary"*.
+
+**Those six are the same distinctions this corpus has been enforcing** —
+`Dependency ≠ Ownership`, `Collaboration ≠ Control` — stated independently inside
+PD-04's own volume. They were derived here from `MASTER_ROADMAP §5` and PD-02's
+frozen text; PD-04 states them natively. **Convergent, not copied.**
+
+**Provenance:** the source body is **NOT RESIDENT** (`ESC-C7-01`).
+
 ### 1.2 The supplied corpus — 30 sections, and its freeze state
 
 `ACT-CC-P6-071 §2` (`E-23`): **30 / 30 sections accounted for** across 3 files,

@@ -1291,3 +1291,130 @@ programme.
 | `C6-A1` `A`–`E` vs `A`–`H` · `C4-A1` · `B-7` | **Architect** | unchanged |
 | `G-02`, `G-03`, `G-05`, `G-06`, `G-07`, `OB-01`, `FD-2`, `SG-07` | **Founder** | unchanged |
 | `ADR-0015`, `ADR-0017`, `ADR-0022` | **Founder / Architect** | unchanged |
+
+
+---
+
+# §22 — CYCLE 8 · `ACT-CC-P10-C7` (re-issued) — Construction From Recovered Source
+
+**Date:** 2026-09-05 · **Baseline commit:** `33c4622`
+
+## 22.1 Executive result
+
+**VERIFIED — PARTIAL.** The re-issued Act adds `§17`, `§35` and `§36` —
+Part/Section-level assessment and construction depth. Cycle 7 had verified the
+recovered volumes' *structure* and stopped. **This cycle read the bodies.**
+
+`§7` of the Act settles what that permits: *"If the source body is recovered:
+verify provenance… **construct only what the evidence supports.**"* Reading a
+recovered body and constructing derived records from it is authorized.
+**Committing the body is a separate act** — `ESC-C7-01`, unchanged.
+
+## 22.2 What the source bodies yielded
+
+**PD-03 `A1`, verbatim:**
+
+```text
+Platform ID        : PD-03
+Platform Name      : Governance & Compliance
+Platform Type      : Platform Division
+Platform Authority : Governance Authority
+Status             : FROZEN
+Gold Standard Review : PASS
+Freeze Decision    : APPROVED
+```
+
+**Three findings of substance:**
+
+1. **`Platform Authority: Governance Authority` is declared by PD-03 itself.** Every prior statement about PD-03's authority in this corpus came from **PD-02's side** — what PD-02 may not do. The `divisions/README §6` owner table moves Governance from *unbound* to **self-declared**. `PD-03` and `PD-04` are now the only two divisions with authority stated by their own corpora.
+2. **`Platform Type: Platform Division`** — written in a corpus authored outside this repository, independently corroborating `ADR-0010` (FD-6, `GDR-0020`) and therefore `ADE-P10-G04`. **The `Department` correction is now confirmed by a second, unrelated source.**
+3. **The header format matches frozen `PD-02 A4` field for field.** Same document family, same review and freeze pattern.
+
+**PD-04 Part B** carries an interleaved `B01`–`B06` series whose titles are
+constraints, not subjects: *"Dependency Does Not Create Ownership"*, *"Consumer
+Does Not Become Owner"*, *"Quality Does Not Become Domain Owner"*, and three
+more. **These are the distinctions this corpus has been enforcing throughout**,
+derived here from `MASTER_ROADMAP §5` and PD-02's frozen text. PD-04 states them
+natively. **Convergent, not copied** — and a useful check that the derivation was
+not idiosyncratic.
+
+**PD-03's incompleteness is the source's own.** `B7`–`B10` carry the literal
+title *"Canonical Section Identity Pending"*; `C9`, `G2` and `H10` are unresolved
+in the body. That corroborates `E-22` (`B2`–`B10` `NOT FROZEN — SOURCE GATE
+BLOCKED`) **from the source side rather than from an Act's report of it.**
+
+## 22.3 `§35` — Part/Section status matrix
+
+New artifact: `VOLUME-SECTION-STATUS-MATRIX.md`. Every Part and Section of
+PD-03…PD-10 classified, with counts derived this cycle from the files per `§27`.
+
+| | PD-03 | PD-04 | PD-05…PD-10 |
+|---|---|---|---|
+| Parts | **8** (`A`–`H`) | **3** (`A`–`C`) | **unknown** |
+| Sections | **80** | **30** | **unknown** |
+| Body | exists, verified | exists, verified | **none** |
+| Residency | **NOT RESIDENT** | **NOT RESIDENT** | — |
+
+**PD-04 has three Parts where PD-03 has eight**, and both are canonical Platform
+Encyclopedia volumes. **Part count is not a fixed property of the document
+family** — which is independent reason not to impose either shape on the other
+six, and further weight behind `C6-A1`.
+
+**No Section is marked COMPLETE, and no Part was constructed for PD-05…PD-10.**
+For those six the honest status is one line: **the canonical structure is
+unknown, because no volume exists to read it from.** Inferring it from PD-03 or
+PD-04 would be the invention `§17` and `§29` prohibit.
+
+## 22.4 Cycle 8 execution record
+
+| ID | Frontier | Sufficiency | Action | Result |
+|---|---|---|---|---|
+| **C8-P1** | PD-03 authority known only from PD-02's side | **SUFFICIENT** — `§7`.10 construct from recovered evidence | **READ SOURCE → CONSTRUCT** | **PASS** |
+| **C8-P2** | PD-04 identity known only through an Act's report | **SUFFICIENT** | **READ SOURCE → CONSTRUCT** | **PASS** |
+| **C8-P3** | `§35` requires Part/Section assessment | **SUFFICIENT** | **BUILD MATRIX** | **PASS** |
+| **C8-P4** | Governance owner row reads *unbound*; source declares it | **SUFFICIENT** — recording a declaration | **UPDATE** | **PASS** |
+| **C8-N1** | Bind Governance Authority to `PD-03` as this corpus's act | **INSUFFICIENT** — `FDE §19` assignment | **STOP** | **PASS** |
+| **C8-N2** | Commit Volumes 3 / 4 | **INSUFFICIENT** — `E-29` | **STOP** — `ESC-C7-01` | **PASS** |
+| **C8-N3** | Construct Parts/Sections for PD-05…PD-10 from PD-03's shape | **INSUFFICIENT** — no source | **STOP** | **PASS** |
+| **C8-N4** | Mark any Section COMPLETE or FROZEN | **INSUFFICIENT** — freeze reserved; body non-resident | **STOP** | **PASS** |
+| **C8-N5** | `B-7`, `C4-A1`, `C6-A1`, `FD-2`, `SG-07` | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C8-A1** | Architectural Tier — `C6-A1` | **INSUFFICIENT** | **STOP** | **BLOCKED** |
+| **C8-E1** | Follow-on Act | no trigger | — | **NOT REQUIRED** |
+
+**4 positive · 5 correct stops · 1 BLOCKED · 1 NOT REQUIRED · 0 failures.**
+
+## 22.5 Repeatability
+
+| Measure | C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 |
+|---|---|---|---|---|---|---|---|---|
+| Valid positive executions | 3 | 2 | 4 | 1 | 1 | 3 | 4 | **4** |
+| Correct stops | 5 | 5 | 5 | 5 | 4 | 4 | 5 | **5** |
+| Overreach | **1** | 0 | 0 | 0 | 0 | 0 | 0 | **0** |
+| Evidence failures | **1** | 0 | 0 | 0 | 0 | **1** | 0 | **0** |
+| Founder Events · Acts | 0·0 | 0·0 | 0·0 | 0·0 | 0·0 | 0·0 | 0·0 | **0·0** |
+
+**Eight cycles · 22 valid executions · 38 correct stops · 1 overreach · 2
+evidence failures · 0 Founder Events · 0 Acts created.**
+
+## 22.6 P10 determination
+
+**`P10 — VERIFIED — PARTIAL`.** `§43`'s eleven completion conditions: **ten are
+met**, including condition 10 — *"PD-03 through PD-10 have each been assessed at
+Part/Section level"* — newly satisfied by `VOLUME-SECTION-STATUS-MATRIX.md`.
+
+**Condition 9 is not met:** *"Platform Encyclopedia construction has reached the
+maximum legitimate state available under current authority and evidence."* It has
+reached the maximum available **under current residency**. Two complete volumes
+sit one supply act away, and six have no body at all.
+
+**`§25.2`'s test — is any frontier both within delegated authority and executable
+from available evidence? — NO.** That is `§40`'s **PATH B** again, one layer
+deeper than Cycle 7: the recovered bodies were read and everything they support
+was built.
+
+## 22.7 Remaining frontier
+
+Unchanged in membership. Two entries changed in weight:
+
+- **`ESC-C7-01`** — now gates **110 section bodies whose titles, identity headers and internal gaps are all verified**. It is no longer a speculative unlock.
+- **`C6-A1`** — strengthened: PD-03 has 8 Parts, PD-04 has 3, the spine has 5. **Three different shapes in one document family**, and the divergence cannot be resolved by preferring one.

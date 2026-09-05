@@ -76,6 +76,7 @@ deliberately rather than discovered again later.
 | `AUTHORITY-FRONTIER-MATRIX.md` | Per-frontier authority classification and disposition |
 | `ADE-P10-G04-DECISION.md` | Architect decision resolving `G-04` (Option A) |
 | `divisions/` | `README.md` + one record per CPID, `PD-01`…`PD-10` |
+| `VOLUME-SECTION-STATUS-MATRIX.md` | Part/Section status for `PD-03`…`PD-10` (`ACT-CC-P10-C7 §35`) |
 
 ## 3. Construction Kernel
 

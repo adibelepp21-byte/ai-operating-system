@@ -48,6 +48,62 @@ should be read as a Kernel projection rather than as PD-03's shape (`E-20`).
 **No Part `F`, `G` or `H` is constructed here.** Their identities are evidenced;
 their content is not.
 
+### 1.1a Canonical identity — **read from the source body**, 2026-09-05
+
+`Volume 3 Part A`, section `A1 — Platform Identity`, carries this header
+verbatim:
+
+```text
+Platform ID        : PD-03
+Platform Name      : Governance & Compliance
+Platform Type      : Platform Division
+Platform Authority : Governance Authority
+Volume             : 3
+Document Type      : Platform Encyclopedia Volume
+Part               : Part A — Platform Identity & Strategic Foundation
+Section            : A1 — Platform Identity
+Status             : FROZEN
+Version            : 1.0
+Classification     : Core Platform Identity
+Reference Baseline : Governance Baseline
+Gold Standard Review : PASS
+Freeze Decision    : APPROVED
+```
+
+**Three things follow, and one deliberately does not.**
+
+1. **`Platform Authority: Governance Authority` is declared by PD-03's own corpus.** Until now this record stated that no source says *"PD-03 is the Governance Authority"* — that was true of the **resident** corpus and is **superseded** by the source body. The Governance Authority row in `divisions/README.md §6` is updated from *unbound* to **self-declared**.
+2. **`Platform Type: Platform Division`** independently corroborates `ADR-0010` (FD-6, `GDR-0020`) from a corpus written outside this repository. `ADE-P10-G04`'s determination is confirmed by a second, unrelated source.
+3. **The header format matches frozen `PD-02 A4` exactly** — same fields, same `Gold Standard Review: PASS` / `Freeze Decision: APPROVED` pattern. The two volumes are the same document family.
+
+**What does not follow: a binding performed by this record.** PD-03's corpus
+declares its own authority; recording that declaration is evidence. **Binding the
+Governance Authority role to `PD-03` as an act of this corpus would be
+assignment**, reserved by `FDE §19`. Not done — the declaration is reported as
+the source's, not adopted as mine.
+
+**Provenance:** the source body is **NOT RESIDENT** (`ESC-C7-01`). Every quotation
+above is cited to a supplied-source path, and nothing is reconstructed.
+
+### 1.1b The 80 sections — titles read from source
+
+| Part | Sections |
+|---|---|
+| **A** Platform Identity & Strategic Foundation | Platform Identity · Strategic Purpose · Mission, Vision & Core Values · Governance Charter · Authority & Mandate · Organizational Boundary · Core Principles · Strategic Objectives · Success Criteria · Relationship to AIOS Architecture Baseline |
+| **B** Organization Architecture | Governance & Compliance Organization · Sub Division · Capability · Team · Role Group · Reporting · **`B7`–`B10`: *"Canonical Section Identity Pending"*** |
+| **C** Governance Architecture | Governance Constitution · Decision · Delegation · Accountability · Authority · Review · Escalation · Cross-Platform Governance · `C9` conditional on source baseline · Source Resolution |
+| **D** Governance Operations | Operating Model · Executive Governance Interface · Platform Governance Coordination · Decision Operations · Delegation Operations · Operating Rhythm · Collaboration Architecture · Operational Control · Operating Improvement · Operating Success |
+| **E** Performance Architecture | Performance Constitution · Model · Measurement · KPI & Success Metrics · Review · Governance · Reporting · Improvement · Maturity Model · Success Constitution |
+| **F** Lifecycle Architecture | Lifecycle Constitution · Model · States · Transition · Change Governance · Review · Control · Implementation · Improvement & Maturity · Success |
+| **G** Platform Integration | Integration Constitution · `G2` · Cross-Platform Dependency Architecture · Governance Integration · Compliance Integration · Certification Integration · Shared Governance Services · Integration Contracts · Cross-Platform Integration Review · Integration Success |
+| **H** Platform Evolution | Evolution Constitution · Model · Drivers · Change Architecture · Decision Governance · Review · Control · Implementation · Improvement & Expansion · `H10` unresolved in source |
+
+**`B7`–`B10` carry the literal title *"Canonical Section Identity Pending"***, and
+`C9` and `H10` are unresolved in the body itself. This **corroborates `E-22`
+from the source side**: `B2`–`B10` were recorded `NOT FROZEN — SOURCE GATE
+BLOCKED`, and the body shows exactly that. **The volume is internally incomplete,
+and that incompleteness is the source's, not this record's.**
+
 ### 1.2 What is supplied, frozen, and blocked
 
 - **`E-21`, corrected 2026-09-05** — **the 80 section bodies EXIST; 0 are resident.** Cycle 6 recorded *"0 supplied, 0 resident"* from `ACT-CC-P6-070`, which had counted only the four control artifacts before it. A source-recovery pass under `ACT-CC-P10-C7 §8` located **all eight Part bodies** and verified them: `A`–`H`, **80/80 section identities present, 3,704,607 bytes** (`E-20`). The four control artifacts remain what that Act said they were — prose references and an empty template. **What is absent is residency, not the bodies**, and residency is a Founder supply act (`E-29`, `ESC-C7-01`).

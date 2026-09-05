@@ -61,6 +61,17 @@ evidence of completeness.
 | **E-28** | **No Charter approval or registration record exists.** The Delegation Register carries `DEL-T4.4-CF-001` and `DEL-F03-015-P7I99-001` only | `AIOS_DELEGATION_REGISTER_v1.0.md` | §3 | Governance | Absence | **RESIDENT** |
 | **E-29** | A Volume becomes resident only by **Founder supply under a named Act**: PD-01 — *"Architect-supplied Recovery Candidate (AR-PD01-P7-REC-006)… supplied directly in the REC-006 Act"*; PD-02 — *"Authorized by: FOUNDER · ACT-CC-F03-009 · ACT-CC-F03-010"*, bodies *"supplied by the Founder as five SOURCE TRANSFER BATCH messages"*. Even the **namespace** required `ADR-0012`, Decision Owner **Architect (Founder)** | `RECOVERY-MANIFEST.md`, `RESIDENCY-MANIFEST.md`, `ADR-0012` | — | Governance | Resident | **RESIDENT** |
 
+| **E-30** | PD-03's `A1` declares verbatim: `Platform ID: PD-03` · `Platform Name: Governance & Compliance` · **`Platform Type: Platform Division`** · **`Platform Authority: Governance Authority`** · `Status: FROZEN` · `Gold Standard Review: PASS` · `Freeze Decision: APPROVED` | Volume 3 Part A, `A1` | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-31** | PD-03 `B7`–`B10` carry the literal title **"Canonical Section Identity Pending"**; `C9`, `G2` and `H10` are unresolved in the body. **The volume is internally incomplete at source**, corroborating `E-22` from the source side | Volume 3 Parts B, C, G, H | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-32** | PD-04 Part B carries an interleaved `B01`–`B06` constraint series: *"No Cross-Team Ownership Without Delegation"* · *"Dependency Does Not Create Ownership"* · *"Consumer Does Not Become Owner"* · *"Quality Does Not Become Domain Owner"* · *"Evolution Does Not Become Uncontrolled"* · *"Workforce Does Not Redefine Boundary"* — the same distinctions this corpus derived independently from `MASTER_ROADMAP §5` and PD-02 | Volume 4 Part B | source body | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+
+> **`E-30`…`E-32` added 2026-09-05** under `ACT-CC-P10-C7 §7`, read **directly
+> from the source bodies** rather than from an Act's report of them.
+> **`E-30` is the first evidence of PD-03's authority stated by PD-03 itself**;
+> every prior statement about it came from PD-02's side. `Platform Type: Platform
+> Division` independently corroborates `ADR-0010` from a corpus authored outside
+> this repository.
+
 > **`E-27`…`E-29` added 2026-09-05** under `ACT-CC-P10-C7`, from the source
 > recovery pass its `§7`–`§10` direct. **`E-20`, `E-21` and `E-23` were upgraded
 > from *"an Act recorded this"* to *"verified against the actual bodies."***

@@ -125,7 +125,7 @@ may **not** do to it. It binds that role to a CPID in only three cases:
 | Infrastructure | Infrastructure owner | **YES** | `C8.md:122` — *"PD-07 tetap memiliki ownership atas Infrastructure."* |
 | **Security** | Security Owner | **NO** — `G-03` | none found |
 | **Quality** | Quality authority | **NO** | none found |
-| **Governance** | Governance Authority | **NO** | none found |
+| **Governance** | Governance Authority | **SELF-DECLARED** *(updated 2026-09-05)* | `Volume 3 Part A · A1` — `Platform ID: PD-03` and `Platform Authority: Governance Authority` in one identity header. **Source body not resident** (`ESC-C7-01`); recorded as the source's declaration, **not bound by this record** |
 
 **Citations added 2026-09-05** under standing construction
 (`FDE-P10-AUTONOMOUS-EXECUTION-01 §9`), each re-verified against the frozen
