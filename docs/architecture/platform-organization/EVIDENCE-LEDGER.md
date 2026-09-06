@@ -86,6 +86,23 @@ evidence of completeness.
 | **E-47** | `consumers/knowledge_agent.py` cites *"Master Program Volume II §4.3"* for the Phase 6 exit condition *"Agent dapat mengambil dan memperbarui pengetahuan tervalidasi."* **Verified against the recovered body: the phrase is present and accurate.** Implementation code citing a then-non-resident source checks out | `consumers/knowledge_agent.py`; Master Program | code + source body | Verification | Direct read | **VERIFIED** |
 | **E-48** | `Constitution §6.1` binds *"Domain Model invariants **1–14**"*; the Canonical Domain Model `§7` carries **15**. Verified by direct count. Already recorded as an open item in `GOVERNANCE_INDEX §6`. **Not actionable here** — correcting the Constitution is amendment (`§16`, non-delegable); correcting the Domain Model is a semantic change (`DEL §3.2` 9) | `engineering-constitution-v1.md §6.1`; `canonical-domain-model-v1.md §7` | resident | Governance | Direct count | **VERIFIED — RESERVED** |
 
+| **E-49** | The **`AIOS Volume 3 — PD-03 Canonical Source Consolidation & Claude Code Handoff Package`** exists and was **never opened until 2026-09-05**. `Target: Claude Code / AIOS Repository` · `Status: CLOSED / FROZEN / TERMINAL` · `Part I: NOT ESTABLISHED`. It supplies fuller Primary Responsibilities (**Policy · Control · Certification · Compliance · Governance Standards** — five, against `A1`'s three), a seven-item negative-ownership boundary, the canonical governance chain, and Part-specific canonical positions | Handoff Package | supplied-source path | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-50** | **Volume 3's eight-Part structure is terminal by design.** *"Part I: NOT ESTABLISHED / NOT CONSTRUCTED"*, *"Do not construct Part I. Do not treat absence of a canonical successor as a missing section."* `H10` is terminal | Handoff Package §3, §13 | supplied-source path | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED** |
+| **E-51** | **The Handoff specifies residency and carries no issuance.** `§11` accepts consolidation *"only if A1–A10 are resident … B1–B10 are resident …"*; `§12` requires a *"Volume 3 residency result"* with verdicts `ACCEPTED / ACCEPTED WITH QUALIFICATION / REQUIRES RECONCILIATION / BLOCKED`. **It contains no signature, no date, no authorizing Act ID, no issuing authority, and no target repository path** — verified by pattern search | Handoff Package §11, §12; absence verified corpus-wide | supplied-source path | Instrument | Direct read | **SPECIFICATION WITHOUT ISSUANCE** |
+
+> **`E-49`…`E-51` added 2026-09-05.** `E-51` is the one that matters for
+> `ESC-C7-01`: the Handoff is **the missing specification, not the missing
+> authority.** It states in detail what residency must achieve and how it must be
+> verified, and supplies none of the four elements `E-29` establishes as
+> conferring residency — Founder/Architect transmission into a named Act, a named
+> authorizing Act, a namespace decision, and Founder confirmation of completeness.
+> **`ADR-0012` required an Approved ADR with Decision Owner Architect (Founder)
+> merely to create the `volume-2/` namespace; no `volume-3/` namespace or ADR
+> exists.**
+>
+> **The escalation is therefore sharper, not resolved.** The Founder need only
+> issue what this package already specifies.
+
 > **`E-46` materially qualifies the word "P10" throughout this corpus.** The
 > Master Program's **Phase 10 — Department Ecosystem** stands at **0%, not
 > started**. The work this repository has executed under the label "P10" is the

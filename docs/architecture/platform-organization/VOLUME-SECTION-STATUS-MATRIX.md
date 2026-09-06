@@ -90,6 +90,12 @@ unbounded canonical status.**
 literal marker *"Canonical Section Identity Pending"*** (`B7`–`B10`) · **`3`
 unresolved in the body** (`C9`, `G2`, `H10`) · **`73` titled and bodied**.
 
+**Eight Parts is terminal by design.** The Claude Code Handoff Package records
+`Part I: NOT ESTABLISHED / NOT CONSTRUCTED` and instructs *"Do not construct
+Part I. Do not treat absence of a canonical successor as a missing section."*
+**Volume 3 is not an incomplete nine-Part volume; it is a complete eight-Part
+one**, terminating at `H10`.
+
 **Why no Section is marked COMPLETE.** The bodies exist but are **not resident**.
 Reading a non-resident source is evidence-gathering; treating it as constructed
 canon would collapse `INV-05 CITATION ≠ SOURCE BODY` in the opposite direction —

@@ -85,6 +85,68 @@ the source's, not adopted as mine.
 **Provenance:** the source body is **NOT RESIDENT** (`ESC-C7-01`). Every quotation
 above is cited to a supplied-source path, and nothing is reconstructed.
 
+### 1.1bis The Claude Code Handoff Package — read 2026-09-05
+
+A fourth PD-03 source exists and had never been opened: **`AIOS Volume 3 — PD-03
+Canonical Source Consolidation & Claude Code Handoff Package`**, `Document Type:
+Canonical Source Consolidation / Engineering Handoff`, **`Target: Claude Code /
+AIOS Repository`**, `Status: CLOSED / FROZEN / TERMINAL`.
+
+It is the most directly relevant document in the entire recovery, and it adds
+material no other source carries.
+
+**Canonical identity, fuller than `A1`'s:**
+
+```text
+Primary Authority       : Governance Authority
+Primary Domain          : Governance & Compliance
+Primary Responsibilities: Policy · Control · Certification ·
+                          Compliance · applicable Governance Standards
+```
+
+`A1 §22` lists three responsibilities; the handoff lists **five**. Both are
+source; the wider list is recorded as the handoff's, not merged silently.
+
+**What PD-03 does NOT automatically own** — the negative boundary, enumerated:
+architecture design · security execution · quality execution · runtime execution
+· engineering implementation · operational management of another Platform ·
+technical design belonging to another owner. And: *"PD-03 tidak boleh mengambil
+alih domain ownership Platform lain hanya karena memiliki governance
+authority."*
+
+**Canonical governance chain:**
+
+```text
+Requirement → Policy / Standard → Governance Action → Decision / Approval
+   → Evidence → Finding / Outcome → Corrective Action → Verification
+```
+
+**Part-specific canonical positions**, which constrain how each Part may be read:
+Part A is *"the constitutional identity layer… must not become a detailed
+operating manual"* · `B1` *"establishes the organizational model; it does not
+arbitrarily invent the final Sub Division list"*, and for PD-03 that model *"must
+derive from its actual responsibilities and boundaries rather than copying
+PD-01"* · `C1` is the Governance Constitution and parent of the governance
+architecture · Part D *"must not become an alternative governance constitution"*
+· Part E performance must remain distinct from governance authority, operational
+execution and lifecycle change authority.
+
+**`Part I` is intentionally absent** — `Part I: NOT ESTABLISHED / NOT
+CONSTRUCTED`, and *"Do not construct Part I. Do not treat absence of a canonical
+successor as a missing section."* **The eight-Part structure is terminal by
+design, not incomplete**, and `H10` is the terminal section.
+
+**The handoff independently confirms the `B1`→`B6`→`B7`–`B10` sequence** this
+record derived from section titles, and states the same source-fidelity rule this
+corpus applies: *"Do not convert B into A silently. Do not convert C into A. Do
+not fill C with model assumptions."*
+
+**On residency — see `ESC-C7-01`.** The handoff's `§11` accepts consolidation
+*"only if A1–A10 are **resident** … B1–B10 are **resident** …"* and its `§12`
+requires a *"Volume 3 residency result"*. **It specifies the outcome in detail and
+carries no issuance**: no signature, no date, no authorizing Act, no target
+repository path. It is the missing *specification*, not the missing *authority*.
+
 ### 1.1c `A1` Canonical Status & Freeze Record — read from source
 
 `Volume 3 Part A`, `A1` §22, states verbatim:

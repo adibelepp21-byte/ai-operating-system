@@ -1991,3 +1991,128 @@ attached rather than as a confident assertion.
 
 **Thirteen cycles · 38 valid executions · 58 correct stops · 1 overreach · 5
 completeness failures · 0 Founder Events · 0 Acts created.**
+
+
+---
+
+# §28 — CYCLE 14 · `ACT-CC-P10-FINAL` — The Handoff Addressed To Me
+
+**Date:** 2026-09-05 · **Baseline commit:** `201e835`
+
+## 28.1 `§22` question 7, answered honestly
+
+*"What source has been catalogued but not actually read?"*
+
+I inventoried **27 upload files in Cycle 7** and have read four. Cycle 13 opened
+repository regions and **left the upload corpus untouched.** Answering question 7
+properly surfaced the most directly relevant document in the entire recovery:
+
+**`AIOS Volume 3 — PD-03 Canonical Source Consolidation & Claude Code Handoff
+Package`** — `Target: **Claude Code / AIOS Repository**`.
+
+**A handoff addressed to this role, sitting unread for eight cycles**, while I
+escalated the very question it answers.
+
+## 28.2 What it settles, and what it does not
+
+**It settles the specification.** `§11` accepts consolidation *"only if `A1`–`A10`
+are **resident** … `B1`–`B10` are **resident** …"* through all eight Parts. `§12`
+requires a *"Volume 3 residency result"* with verdicts `ACCEPTED / ACCEPTED WITH
+QUALIFICATION / REQUIRES RECONCILIATION / BLOCKED`. `§10` sets a STOP boundary —
+no inventing sections, no Part I, no changing frozen architecture, authority or
+ownership.
+
+**It does not settle the authority.** Verified by pattern search: **no signature,
+no date, no authorizing Act ID, no issuing authority, no target repository
+path.**
+
+`E-29` establishes four elements that conferred residency on PD-01 and PD-02:
+transmission into a named Act · a named authorizing Act · a namespace decision ·
+Founder confirmation of completeness. **The Handoff supplies none of them.** And
+`ADR-0012` required an Approved ADR with **Decision Owner: Architect (Founder)**
+merely to create the `volume-2/` namespace — no `volume-3/` namespace or ADR
+exists.
+
+**So `ESC-C7-01` stands, and is now far sharper:** the Handoff is the missing
+*specification*; what is missing is the *issuance*. **The Founder need only issue
+what this package already specifies** — including the acceptance criteria and
+report format, which are already written.
+
+**I want to be plain about the pull here.** A document addressed to me, whose
+stated purpose is *"memasukkan kembali seluruh Volume 3 … ke dalam Claude Code"*,
+is the closest thing to permission this programme has produced. **Reading it as
+permission would be exactly the inference `INV-05` and `§27` forbid** — a
+specification is not an issuance, and an instruction package with no issuing
+authority does not acquire one by being addressed to its executor.
+
+## 28.3 Construction executed from the Handoff
+
+| Finding | Content |
+|---|---|
+| Fuller responsibilities | **Five**, not three: Policy · Control · Certification · **Compliance** · **applicable Governance Standards**. Recorded as the Handoff's, not merged into `A1`'s |
+| Negative ownership boundary | Seven items PD-03 does **not** automatically own, plus *"PD-03 tidak boleh mengambil alih domain ownership Platform lain hanya karena memiliki governance authority"* |
+| Canonical governance chain | Requirement → Policy/Standard → Governance Action → Decision/Approval → Evidence → Finding/Outcome → Corrective Action → Verification |
+| Part-specific canonical positions | Part A is *"the constitutional identity layer"* and must not become an operating manual · `B1` *"does not arbitrarily invent the final Sub Division list"* and must derive from PD-03's own responsibilities *"rather than copying PD-01"* · `C1` is the Governance Constitution · Part D *"must not become an alternative governance constitution"* · Part E must stay distinct from authority, execution and lifecycle change |
+| **`E-50` — terminality** | **`Part I: NOT ESTABLISHED / NOT CONSTRUCTED`.** *"Do not construct Part I. Do not treat absence of a canonical successor as a missing section."* **Volume 3 is a complete eight-Part volume, not an incomplete nine-Part one** |
+
+`E-50` corrects a latent misreading in my own matrix, which had recorded eight
+Parts without recording that eight is **terminal by design**.
+
+**The Handoff independently confirms** the `B1`→`B6`→`B7`–`B10` sequence I derived
+from section titles, and states the same source-fidelity rule this corpus
+applies: *"Do not convert B into A silently. Do not convert C into A. Do not fill
+C with model assumptions."* **Third independent convergence.**
+
+## 28.4 Cycle 14 record
+
+| ID | Frontier | Sufficiency | Action | Result |
+|---|---|---|---|---|
+| **C14-P1** | Handoff Package catalogued, never opened | **SUFFICIENT** — `§22` Q7 | **READ → HARVEST** (`E-49`) | **PASS** |
+| **C14-P2** | Matrix recorded 8 Parts without terminality | **SUFFICIENT** | **CORRECT** (`E-50`) | **PASS** |
+| **C14-P3** | `ESC-C7-01` lacked the specification half | **SUFFICIENT** | **SHARPEN** (`E-51`) | **PASS** |
+| **C14-N1** | Read the Handoff as authorizing residency | **INSUFFICIENT** — specification ≠ issuance; `E-29`'s four elements absent | **STOP** | **PASS** |
+| **C14-N2** | Create a `volume-3/` namespace | **INSUFFICIENT** — `ADR-0012` precedent, Architect-owned | **STOP** | **PASS** |
+| **C14-N3** | Merge the Handoff's five responsibilities into `A1`'s three | **INSUFFICIENT** — silent normalisation across two sources | **STOP** — both recorded, attributed | **PASS** |
+| **C14-N4** | Construct `Part I` | **INSUFFICIENT** — source forbids it | **STOP** | **PASS** |
+| **C14-N5** | `G-01`, `C6-A1`, `C4-A1`, `B-7`, `FD-2`, `SG-07` | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C14-A1** | Architectural Tier | `C6-A1` — now informed by `E-50`: PD-03's 8 Parts are terminal, so the spine divergence is not a completeness gap | **INSUFFICIENT** | **BLOCKED** |
+| **C14-E1** | Follow-on instrument | no trigger | — | **NOT REQUIRED** |
+
+**3 positive · 5 correct stops · 1 BLOCKED · 1 NOT REQUIRED.**
+
+## 28.5 Five falsifications, one lesson
+
+| Cycle | Falsified by | Same failure? |
+|---|---|---|
+| 10 | Propagation unbuilt | — |
+| 11 | Edges recorded, not propagated | — |
+| 12 | Master Program: inventoried, unread | **yes** |
+| 13 | Six regions: listed as probed, unopened | **yes** |
+| **14** | **Handoff: catalogued in Cycle 7, unread for eight cycles** | **yes** |
+
+**Three consecutive falsifications, all the same failure**, and each time the
+material was already in my own inventory. Cycle 13 opened repository regions and
+declared exhaustion **without opening the upload corpus it had itself
+catalogued.**
+
+**The corrective is now specific rather than general:** the Cycle 7 inventory
+lists 27 files. **Four have been read.** That is the measurable frontier, and it
+is recorded here so the next exhaustion claim can be checked against it rather
+than asserted.
+
+## 28.6 Exhaustion
+
+**AUTHORIZED ACTIONABLE WORK REMAINING: YES.**
+
+**Twenty-three of twenty-seven catalogued upload files remain unread**, including
+the Governance Baseline Bundle, the Terminal Architecture Closure Record, the
+Platform Encyclopedia Volume 3 extract, most of the 225 KB Master Program, and
+four Graphify archives. **Each is potentially harvestable evidence, and the last
+three cycles establish that assuming otherwise is unsafe.**
+
+**I am not declaring exhaustion this cycle.**
+
+## 28.7 Repeatability
+
+**Fourteen cycles · 41 valid executions · 63 correct stops · 1 overreach · 6
+completeness failures · 0 Founder Events · 0 Acts created.**
