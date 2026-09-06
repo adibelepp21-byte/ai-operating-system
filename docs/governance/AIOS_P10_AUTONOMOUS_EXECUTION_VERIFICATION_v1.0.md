@@ -2116,3 +2116,110 @@ three cycles establish that assuming otherwise is unsafe.**
 
 **Fourteen cycles · 41 valid executions · 63 correct stops · 1 overreach · 6
 completeness failures · 0 Founder Events · 0 Acts created.**
+
+
+---
+
+# §29 — CYCLE 15 · Continuing Into The Catalogued Corpus
+
+**Date:** 2026-09-05 · **Baseline commit:** `73203b2`
+
+Cycle 14 ended by recording **AUTHORIZED ACTIONABLE WORK REMAINING: YES** and
+naming the frontier precisely — **23 of 27 catalogued upload files unread.**
+`§31` bars stopping while such work remains. This cycle read three more.
+
+## 29.1 Governance Baseline / Canonical Architecture Bundle
+
+**Layer map** (`E-52`): Layer 2 Canonical — `AIOS_CANONICAL_ARCHITECTURE`;
+Layer 3 Governance — ALMM · AIOS Project Governance · **AIOS Claude Engineering
+Charter**; Meta — Constitution v1.4 Candidate Backlog. *"The bundle itself does
+not merge their normative authority."*
+
+**`E-55` — two different Charters.** The Bundle lists an **`AIOS Claude
+Engineering Charter`** (*"engineering behavior, constraints and escalation"*)
+**distinct from the Co-Founder Delegation Charter**, and its `§19` calls the
+latter *"current"*. **The Co-Founder Charter's own `§20` records `Status:
+Pending Founder Approval`** (`E-27`).
+
+**One source calls it current; the instrument calls itself pending.** That is a
+genuine conflict, and the Bundle's own `§17` forbids resolving conflicts by
+preferring the more convenient document. **Recorded, not reconciled.** I had also
+never distinguished the two Charters — every prior reference in this corpus to
+"the Charter" meant the delegation instrument, and a second one exists.
+
+**`E-53` — a second qualification on the dependency graph.** Bundle `§6`:
+*"Dependency relationships must be taken from Canonical Architecture rather than
+inferred solely from documentation order."* My five edges are **declared
+dependencies from each division's own corpus** — stronger than documentation
+order, still not the named authority, since that document is not resident
+(`E-45`). For **repository** architecture `GDR-0001` governs (`E-44`); the
+Bundle's rule governs within its own corpus. **Both recorded in the Master Map.**
+
+## 29.2 Terminal Architecture Closure Record (`E-54`)
+
+```text
+Status                      : CLOSED
+Freeze Status               : FROZEN
+Terminality                 : CONFIRMED
+Part I                      : NOT ESTABLISHED / NOT CONSTRUCTED
+Successor Architecture      : NOT FOUND
+Source-Fidelity             : PASS WITH QUALIFICATION
+Bounded Reconstruction      : ACCEPTED
+Authority Integrity         : PASS
+Ownership Integrity         : PASS
+Cross-Platform Boundary     : PASS
+Evidence / Traceability     : PASS
+Material Contradiction      : NONE IDENTIFIED
+Terminal Architecture Decision : APPROVED
+```
+
+All eight Parts present and PASS. **This upgrades `E-50` materially:** Volume 3's
+eight-Part terminality is not inferred from the absence of a Part I — **it is a
+completed closure review with an approved terminal decision.**
+
+## 29.3 Cycle 15 record
+
+| ID | Frontier | Sufficiency | Action | Result |
+|---|---|---|---|---|
+| **C15-P1** | Governance Baseline Bundle unread | **SUFFICIENT** | **READ → HARVEST** (`E-52`, `E-53`) | **PASS** |
+| **C15-P2** | Terminal Closure Record unread | **SUFFICIENT** | **READ → HARVEST** (`E-54`) | **PASS** |
+| **C15-P3** | Dependency graph unqualified against the Bundle rule | **SUFFICIENT** | **QUALIFY** in Master Map | **PASS** |
+| **C15-P4** | Matrix recorded terminality as design, not as reviewed decision | **SUFFICIENT** | **UPGRADE** (`E-54`) | **PASS** |
+| **C15-N1** | Resolve the Charter *current* vs *Pending* conflict | **INSUFFICIENT** — Bundle `§17`; Founder's | **STOP** — recorded as `E-55` | **PASS** |
+| **C15-N2** | Treat the Bundle's Canonical Architecture rule as overriding `GDR-0001` for repository work | **INSUFFICIENT** — `GDR-0001` is the Founder decision for repository architecture | **STOP** — both recorded | **PASS** |
+| **C15-N3** | Reconcile the Bundle's boundary list against the frozen eleven | **INSUFFICIENT** — frozen architecture; Architect | **STOP** | **PASS** |
+| **C15-N4** | `ESC-C7-01`, `G-01`, `C6-A1`, `FD-2`, `SG-07` | **INSUFFICIENT** | **STOP** | **PASS** |
+| **C15-A1** | Architectural Tier | unchanged | — | **BLOCKED** |
+| **C15-E1** | Follow-on instrument | no trigger | — | **NOT REQUIRED** |
+
+**4 positive · 4 correct stops · 1 BLOCKED · 1 NOT REQUIRED.**
+
+## 29.4 Frontier — measured, not asserted
+
+**Catalogued upload files: 27. Read: 7. Remaining: 20.**
+
+| Remaining | Size |
+|---|---|
+| Platform Encyclopedia Volume 3 extract | 13 KB |
+| Master Program — bulk beyond the sections read | ~200 KB of 226 KB |
+| Volume 3 Parts `A`–`H` — full prose | 3.7 MB (declaration level harvested) |
+| Volume 4 Parts `A`–`C` — full prose | 1.5 MB (declaration level harvested) |
+| Graphify archives ×4 | ~19 MB |
+
+**AUTHORIZED ACTIONABLE WORK REMAINING: YES.**
+
+**I am not declaring exhaustion.** Cycles 12, 13 and 14 were each falsified by
+material already in this inventory; the count above is kept so the claim can be
+checked rather than asserted.
+
+**One boundary on that frontier is already settled**: harvesting the *full prose*
+of Volumes 3 and 4 into this repository would reproduce a non-resident canonical
+corpus — the supply act under another name, declined at `§23.1` and again at
+`§24.3`. **Declaration-level harvest is the authorized depth**, and it is done.
+What remains genuinely open is the Encyclopedia extract, the Master Program bulk,
+and the Graphify archives.
+
+## 29.5 Repeatability
+
+**Fifteen cycles · 45 valid executions · 67 correct stops · 1 overreach · 6
+completeness failures · 0 Founder Events · 0 Acts created.**

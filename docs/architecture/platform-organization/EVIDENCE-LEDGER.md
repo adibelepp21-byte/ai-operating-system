@@ -90,6 +90,24 @@ evidence of completeness.
 | **E-50** | **Volume 3's eight-Part structure is terminal by design.** *"Part I: NOT ESTABLISHED / NOT CONSTRUCTED"*, *"Do not construct Part I. Do not treat absence of a canonical successor as a missing section."* `H10` is terminal | Handoff Package §3, §13 | supplied-source path | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED** |
 | **E-51** | **The Handoff specifies residency and carries no issuance.** `§11` accepts consolidation *"only if A1–A10 are resident … B1–B10 are resident …"*; `§12` requires a *"Volume 3 residency result"* with verdicts `ACCEPTED / ACCEPTED WITH QUALIFICATION / REQUIRES RECONCILIATION / BLOCKED`. **It contains no signature, no date, no authorizing Act ID, no issuing authority, and no target repository path** — verified by pattern search | Handoff Package §11, §12; absence verified corpus-wide | supplied-source path | Instrument | Direct read | **SPECIFICATION WITHOUT ISSUANCE** |
 
+| **E-52** | **Governance Baseline / Canonical Architecture Bundle** (never opened until 2026-09-05) maps five documents to layers: **Layer 2 Canonical** — `AIOS_CANONICAL_ARCHITECTURE` (Entity, Ownership, Dependency, Lifecycle, Relationship); **Layer 3 Governance** — ALMM · AIOS Project Governance · **AIOS Claude Engineering Charter**; **Meta** — Constitution v1.4 Candidate Backlog. *"The bundle itself does not merge their normative authority"* | Governance Baseline Bundle §1–§2 | supplied-source path | Program (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-53** | Bundle `§6`: *"**Dependency relationships must be taken from Canonical Architecture rather than inferred solely from documentation order.**"* Bundle `§20`: *"Canonical Architecture defines canonical entity, ownership, dependency, lifecycle, and relationship truth… No derivative artifact may silently override a higher-order authority"* | Governance Baseline Bundle §6, §20 | supplied-source path | Program (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-54** | **PD-03 Volume 3 Terminal Architecture Closure Record**: `Status: CLOSED` · `Freeze Status: FROZEN` · **`Terminality: CONFIRMED`** · `Part I: NOT ESTABLISHED / NOT CONSTRUCTED` · `Successor Architecture: NOT FOUND` · `Source-Fidelity: PASS WITH QUALIFICATION` · `Bounded Reconstruction: ACCEPTED` · Authority, Ownership, Cross-Platform Boundary, Evidence/Traceability all **PASS** · `Material Contradiction: NONE IDENTIFIED` · **`Terminal Architecture Decision: APPROVED`**. All eight Parts present, PASS | Terminal Closure Record | supplied-source path | Canonical (non-resident) | Direct read | **SOURCE-VERIFIED / NOT RESIDENT** |
+| **E-55** | The Bundle distinguishes an **`AIOS Claude Engineering Charter`** (Layer 3 Governance — *"Engineering behavior, constraints and escalation"*) from the **Co-Founder Delegation Charter**, and `§19` names the latter *"current Co-Founder Delegation Charter"*. **Two distinct Charters**, not previously distinguished in this corpus. The Co-Founder Charter's own `§20` records `Status: Pending Founder Approval` (`E-27`); the Bundle calls it current. **Tension recorded, not resolved** | Bundle §2, §19; Charter §20 | supplied-source path | Instrument | Direct read | **CONFLICT RECORDED** |
+
+> **`E-52`…`E-55` added 2026-09-05.** **`E-53` qualifies the dependency graph
+> drawn in Cycle 11**: the Bundle requires dependencies be taken from Canonical
+> Architecture, which is **not resident** (`E-45`). The graph's five edges are
+> **declared dependencies from each division's own corpus** — better than
+> documentation order, and still not the named authority. Recorded in the Master
+> Map alongside the `GDR-0001` precedence finding (`E-44`), which governs for
+> **repository** architecture.
+>
+> **`E-55` is a genuine conflict**: one source calls the Co-Founder Charter
+> *current* while the Charter itself records *Pending Founder Approval*. **Not
+> reconciled** — `§17` of the Bundle forbids resolving conflicts by preferring the
+> easier document, and the resolution is Founder's.
+
 > **`E-49`…`E-51` added 2026-09-05.** `E-51` is the one that matters for
 > `ESC-C7-01`: the Handoff is **the missing specification, not the missing
 > authority.** It states in detail what residency must achieve and how it must be

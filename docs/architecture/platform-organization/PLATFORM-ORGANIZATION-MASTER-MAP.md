@@ -99,6 +99,16 @@ on the correct sources.** Its ARB-002 `§3.1`–`§3.4` dependency principles re
 a Founder-ratified record this corpus has never read, because the body is **not
 resident** (`E-45`).
 
+**Second qualification, 2026-09-05 (`E-53`).** The Governance Baseline Bundle
+`§6` requires that *"dependency relationships must be taken from Canonical
+Architecture rather than inferred solely from documentation order."* The five
+edges here are **declared dependencies from each division's own corpus** — which
+is stronger than documentation order and **still not the named authority**, since
+`AIOS_CANONICAL_ARCHITECTURE.md` is not resident (`E-45`). For **repository**
+architecture `GDR-0001` routes semantics to the Canonical Domain Model (`E-44`);
+the Bundle's rule governs within its own corpus. **Both are recorded; neither is
+normalised away.**
+
 **No construction order is derived from this graph.** With six edges across two
 sources and three divisions absent, sequencing on it would be inference dressed
 as evidence.
