@@ -29,7 +29,7 @@ evidence of completeness.
 | **E-08** | *"PD-06 owns implementation."* | `volume-2/.../B4.md` | :731 | **FROZEN** | Resident | **CANONICAL** |
 | **E-09** | *"PD-07 tetap memiliki ownership atas Infrastructure."* | `volume-2/.../C8.md` | :122 | **FROZEN** | Resident | **CANONICAL** |
 | **E-10** | *"PD-09 — Evaluate Quality"* | `volume-2/.../C8.md` | :303 | **FROZEN** | Resident | **CANONICAL** |
-| **E-11** | *"PD-03 hingga PD-10 dengan domain adaptation"* · *"tanpa memaksakan metric PD-02"* | `volume-2/.../E4.md`, `D4.md` | :1431, :1125 | **FROZEN** | Resident | **CANONICAL** |
+| **E-11** | *"PD-03 hingga PD-10 dengan domain adaptation"* · *"tanpa memaksakan metric PD-02"* | `volume-2/.../E4.md`, `volume-2/.../D4.md` | :1431, :1125 | **FROZEN** | Resident | **CANONICAL** |
 | **E-12** | Native Core holds *"exactly the eleven frozen subsystem boundaries — no more"* | `AIOS_NATIVE_CORE_BLUEPRINT_v1.0.md` | :31 | Canonical Architecture | Resident | **CANONICAL** |
 | **E-13** | `Department` is the Freeze §4 accountability unit owned by exactly one Organization. **Corrected 2026-09-05** (`FDE-P10-AUTONOMOUS-EXECUTION-01 §11`): this row previously read *"— not a platform division"*, which contradicted `ADR-0010` (Approved, FD-6, `GDR-0020`). `Platform Division` **is** the entity; `Department` is its recorded historical alias, and this class implements it under that alias. See `ADE-P10-G04-DECISION.md` | `native_core/core/capability/ownership.py` | :98 | Implementation | Implementation | **RESIDENT** |
 | **E-14** | `PD-02` is ACTIVE | `GDR-0036` | Register | Founder | Governance | **CANONICAL** |
@@ -1025,7 +1025,7 @@ written and **never read for content**.
 
 ## `E-93` — a resident, frozen Performance Architecture, declared a reference pattern
 
-**Source:** `volume-1/…/E1.md`–`E10.md`. **Class: [A] canonical (frozen).**
+**Source:** `volume-1/…/E1.md` through `volume-1/…/E10.md`. **Class: [A] canonical (frozen).**
 
 `E1` header: `Status: FROZEN` · `Gold Standard Review: PASS` · `Freeze Decision:
 APPROVED` · `Reference Implementation: Yes` · **`Applies To: PD-01 Executive
@@ -1046,7 +1046,7 @@ strategy, governance, architecture, ownership, or execution authority"*:
 
 ## `E-94` — a resident Operating Architecture, domain-adapted
 
-**Source:** `volume-1/…/D1.md`–`D10.md`. **Class: [A] canonical.**
+**Source:** `volume-1/…/D1.md` through `volume-1/…/D10.md`. **Class: [A] canonical.**
 
 *"Part D defines the canonical Operating Architecture … Part D defines **HOW the
 organization operates**."* Chain: *D1 Operating Model Constitution → D2 Executive
