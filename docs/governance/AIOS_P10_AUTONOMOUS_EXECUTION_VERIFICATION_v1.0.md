@@ -2758,3 +2758,94 @@ The failure count rises by two — both **self-caught in this cycle, before
 commit**, and both arithmetic rather than citation. **The count is kept on a
 basis that makes it go up when I look harder**, which is the only basis on which
 it means anything.
+
+---
+
+# 33. Cycle 19 — a defect in the tooling, and the first code change
+
+**Date:** 2026-09-06 · **Instrument:** `ACT-CC-P10-FINAL §10`, `§23` ·
+**Authority:** `DEL-T4.4-CF-001 §3.1 C`; `Engineering Constitution §3.3`
+(Implementation Tier — *"no additional approval required beyond ordinary
+review"*).
+
+**Executive result:** `tools/validators/` and `tools/bounded_exception/` read —
+the last frontier `§32.8` named. **One real defect found and fixed**; one
+apparent defect eliminated as a false positive. **This is the first change to
+executable code in nineteen cycles.**
+
+## 33.1 The defect
+
+`tools/validators/runner.py` opened *"Orchestrates all **six** validators"*
+while `VALIDATORS` registers **seven** — `canonical_key`, `cross_reference`,
+`relative_link`, `duplicate_key`, `orphan`, `integrity`, **`agent_integration`**.
+`tools/validate_execution_catalog.py` repeated *"Runs all six validators."*
+
+**Not drift.** `git log --diff-filter=A` shows `runner.py` and
+`agent_integration.py` were added in the **same commit** (`a05f857`), so the
+count was wrong from the start rather than stale after an addition. The seventh
+is a fully-specified validator with a documented purpose and scope, invoked on
+every run — the registry is right and the prose was wrong.
+
+**Fix:** both docstrings now read *"every validator registered in `VALIDATORS`"*
+/ *"every registered validator."* **Count-free deliberately** — a hard-coded
+count is what failed here, and replacing `six` with `seven` would leave the same
+defect armed for the next addition.
+
+**This is not a conformance test weakened to make an implementation pass.** No
+test was touched, no check relaxed; documentation was corrected to match
+verified behaviour.
+
+## 33.2 The false positive, eliminated
+
+A third `six` appeared at `tools/validators/link_classifier.py:13`. **It is not
+about validators:** *"Two of the six **categories the Architect named** (Skill
+invocation, Tool invocation)."* Six link categories. **Untouched.**
+
+Three grep hits, two real, one not — eliminated by reading rather than by
+pattern.
+
+## 33.3 Tooling state, measured
+
+`python3 tools/validate_execution_catalog.py` → **4 findings: 0 error, 0
+warning, 4 informational**, all of one kind: catalog artifacts *"not referenced
+by any other catalog artifact or Agent Definition"* (three `runtime/`
+substrates, one `tool/` interface). Informational by the suite's own
+classification; **not repaired**, because orphan status may be intended and the
+suite does not treat it as a fault.
+
+`python3 -m tools.bounded_exception` → **register check passed.**
+
+**`tools/bounded_exception/` is worth recording for what it is:** an
+*"identity-based, append-only, fail-closed record of conformance exceptions that
+a governance act has explicitly tolerated."* Its identity rule is deliberately
+strict — a site that moves scope is reported as both an absent registration and
+an unregistered site, because *"a structural reorder is observable architectural
+change and requires re-authorization."* **Exception-tolerance is itself
+governed, append-only, and fails closed.**
+
+## 33.4 Why this was decided rather than escalated
+
+`ACT-CC-P10-FINAL §23` bars asking the Founder *"merely because a technical
+choice exists"*; `§10` assigns technical solutions and remediation strategies to
+this delegation. A stale docstring in `tools/` is Implementation Tier under
+`Constitution §3.3`. **Escalating it would have been the error.**
+
+Equally, it is recorded here rather than fixed silently, because it is a defect
+in the repository's own verification tooling — the class this corpus is required
+to disclose.
+
+## 33.5 Regression
+
+`tools` **198 OK** · `native_core` **801 OK** (1 expected failure) · `consumers`
+**276 OK**. Validator CLI and bounded-exception verifier both run clean.
+
+## 33.6 Falsifying exhaustion
+
+**Not claimed.** Remaining and identified: the **nine `§16` dimensions** across
+ten divisions (the largest open surface); `Freeze §2` and `§10`–end unread;
+whether any `G-05` edge is a Capability dependency, still determinable and
+undetermined; the four informational orphan findings, unexamined as to whether
+they are intended.
+
+**Nineteen cycles · 55 valid executions · 77 correct stops · 1 overreach · 10
+disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**

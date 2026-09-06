@@ -1,5 +1,5 @@
-"""Orchestrates all six validators and produces a single structured
-Report (see models.py)."""
+"""Orchestrates every validator registered in VALIDATORS and produces a
+single structured Report (see models.py)."""
 
 from . import agent_integration, canonical_key, cross_reference, duplicate_key, integrity, orphan, relative_link
 from .catalog import catalog_files

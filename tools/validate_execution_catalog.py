@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 CLI entry point for the execution-catalog validation tooling
-(tools/validators/). Runs all six validators and prints a structured
+(tools/validators/). Runs every registered validator and prints a structured
 report. Entirely read-only: no file is ever modified by this script or
 anything it imports.
 
