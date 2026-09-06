@@ -3588,3 +3588,90 @@ findings.
 **Twenty-four cycles · 67 valid executions · 88 correct stops · 1 overreach ·
 15 disclosed failures · 0 Founder Events · 0 Acts created · 2 code changes ·
 1 tool built · 6 tests added.**
+
+---
+
+# 39. Cycle 25 — INTEGRATE: the model series reaches the division records
+
+**Date:** 2026-09-06 · **Instrument:** `ACT-CC-P10-FINAL §6` (INTEGRATE), `§15`,
+`§26`, `§32` · **Authority:** `DEL-T4.4-CF-001 §3.1 A/C`.
+
+**INTERIM EXECUTION STATE.** Construction cycle.
+
+## 39.1 What was integrated
+
+`§38.8` classified this as the largest queued **INTEGRATE** item: four model
+artifacts built in Cycles 20–23 sat in the parent directory while **ten division
+records still read as though none of it existed.** Pieces existed and were not
+joined — `§6`'s INTEGRATE class exactly.
+
+**All ten records now carry a `Model layer` section** stating the eleven
+canonical facts that hold for **every** Platform Division — what it owns
+(exactly two entity types), what it may never own (Skill, Workflow, Tool,
+Runtime, Trace), that its own creation and naming are architect-approved, that
+its one affirmative discretion is Agent Definitions, and that `governs ≠ owns ≠
+lifecycle authority`.
+
+**Five records also carry division-specific integration**, each closing a
+question that record had left open:
+
+| Record | Item closed or sharpened |
+|---|---|
+| `PD-01` | `G-10` recorded against its own corpus; `Domain Model §4`'s *Organization may not act as executor* (`E-81`); its Parts D/E supplied Operation and Performance for the whole series |
+| `PD-03` | **`Policy` is placed, not merely excluded** — *"modeled as a category of Knowledge"* (`E-92`); Sub Divisions meet the three-level Spine |
+| `PD-05` | The *"PD-05 owns Runtime"* citation **reconciled** — `domain accountability ≠ entity ownership` (`E-79`); the *"Runtime owner"* question sharpened by `governs ≠ owns` |
+| `PD-07` | Its `§5` **UNKNOWN** — *"binding to the `infrastructure` frozen subsystem"* — answered as far as authority allows: name correspondence, **binding unmade** |
+| `PD-10` | **`G-02` now unavailable on a second ground** — naming is architect-approved lifecycle (`E-83`) |
+
+**No division advanced in content, and none was declared complete.**
+`ACT-CC-P10-FINAL §26` is quoted in each record: a division is **not** complete
+because one dimension is.
+
+## 39.2 The tool built last cycle validated this cycle's work
+
+The integration introduced **51 new citations** (140 → 191 checked).
+`tools/corpus_citation_audit.py` reports **0 errors** across all of them.
+
+**And one new citation was verified against the line it names:**
+`volume-2/…/B7.md:212` reads exactly ***"PD-05 owns Runtime."*** — the quote this
+corpus has carried since `PD-05`'s record was written, now confirmed at line
+precision rather than assumed.
+
+**This is the BUILD → VERIFY → FIX loop closing on itself in one cycle**: a tool
+built to catch a defect class caught nothing, because the work it checked was
+correct — which is the only way a green check means anything.
+
+## 39.3 Status dimensions (`§8`, `§30`)
+
+| Dimension | Status |
+|---|---|
+| **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED.** Untouched by this cycle |
+| **Platform Organization Construction — PD-01–PD-10** | **ACTIVE.** Model layer complete **and now integrated into all ten records**. Per-division content blocked at `G-01`/`ESC-C7-01`; assignment reserved at `G-09`/`G-10` |
+| **Autonomous Execution Programme** | **ACTIVE — not exhausted** |
+
+## 39.4 Regression
+
+`tools` **204 OK** · `native_core` **801 OK** (1 expected failure) · `consumers`
+**276 OK** · citation audit **191 checked, 0 errors, 2 known warnings**.
+
+## 39.5 Re-discovery (`§17`)
+
+**What the integration revealed:** the division records' **`§5 Unresolved`** and
+**`§6 Not constructed`** sections were written before the model series and are
+now **partly superseded in place** — `PD-07`'s *"binding to the `infrastructure`
+frozen subsystem"* still reads `UNKNOWN and material` above a section that
+answers it. **Reconciling those two sections within each record is newly
+actionable FIX work**, created by this cycle's own construction, exactly as `§18`
+anticipates.
+
+**Also still open:** ~69,000 lines of resident cited corpus (`volume-1/` 41
+bodies, `volume-2/` 51 files); `RECOVERY-MANIFEST.md`; extending the citation
+auditor to `docs/governance/`; the four informational orphan findings.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.**
+
+## 39.6 Repeatability
+
+**Twenty-five cycles · 69 valid executions · 90 correct stops · 1 overreach ·
+15 disclosed failures · 0 Founder Events · 0 Acts created · 2 code changes ·
+1 tool built · 6 tests added.**
