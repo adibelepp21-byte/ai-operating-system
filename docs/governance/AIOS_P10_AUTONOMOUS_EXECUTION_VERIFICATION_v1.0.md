@@ -3018,3 +3018,131 @@ the four informational orphan findings; `INV-15` minimal-cardinality question
 
 **Twenty cycles · 57 valid executions · 79 correct stops · 1 overreach · 11
 disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**
+
+---
+
+# 35. Cycle 21 — Lifecycle and Authority, by the method Cycle 20 established
+
+**Date:** 2026-09-06 · **Instrument:** `ACT-CC-P10-FINAL §16`, `§19`, `§23` ·
+**Authority:** as `§34`.
+
+**Executive result:** `DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md` (211 lines) —
+**two more `§16` dimensions answered at model level.** Four evidence entries
+(`E-83`…`E-86`). One citation error in my own draft caught by verification
+before commit. **Zero Founder Events. Zero Acts. Nothing assigned to any
+division.**
+
+## 35.1 The method generalized, as predicted
+
+`§34.8` predicted that Lifecycle and Authority were *"likely answerable at model
+level by the same method, and have not been attempted."* **They were.** The
+sources were resident throughout: `canonical-domain-model-v1.md §4` and `§6` —
+the document that sits **second in precedence** under `Engineering Constitution
+§4`, below only the Constitution.
+
+**Five of the ten `§16` dimensions are now answered at model level:** Identity,
+Ownership, Authority, Lifecycle, Integration. **Five remain:** Capability,
+Architecture, Operation, Performance, Evolution.
+
+## 35.2 What the corpus learned about its own authority
+
+**`Domain Model §6`: a Platform Division is *"created/retired via architectural
+decision, architect approval."*** Its own existence is Architect-reserved.
+
+**This settles `G-02` as to disposition.** The `PD-10` *Developer
+Enablement*/*Developer Experience* divergence is a **naming question about an
+architect-approved entity**. It was already recorded as unresolvable for want of
+a precedence rule; it is now unavailable on a second and independent ground.
+
+**And it locates the one affirmative authority a Division holds.** `Domain Model
+§6`: Agent Definitions are *"created/deprecated at **Platform Division
+discretion** within Capability governance."*
+
+**That asymmetry is the substance of the model:** a Division has **no** authority
+over its own existence or over the Capabilities it owns, and **full discretion**
+over the Definitions that implement them. Twenty-one cycles of recording what
+this corpus may not do finally produced a precise statement of what a Division
+**may**.
+
+## 35.3 The Domain Model states the corpus's own distinction, in canon
+
+`canonical-domain-model-v1.md §4`:
+
+> *"`governs` does not imply ownership … `A governs B` must never be read as
+> `A owns B`."*
+> *"`governs` does not by itself confer lifecycle authority … **Lifecycle
+> authority is only what §6 already assigns.**"*
+
+```text
+governs   ≠   owns   ≠   lifecycle authority
+```
+
+**`E-79` derived the specific case independently last cycle** —
+`domain accountability ≠ entity ownership`, for `PD-05` and Runtime. The Domain
+Model had the general form all along, one section away from a table this corpus
+had already read.
+
+**That is the cycle's real lesson and it is not flattering:** reading `§6` for
+lifecycle while not reading `§4` for relationships is the same partial-read
+failure as Cycles 12–14, at finer grain. The corpus now reads adjacent sections
+rather than the cited one alone.
+
+## 35.4 A citation error, caught by verification
+
+The draft cited the `governs` clauses as `Domain Model §5`. **They are in `§4
+Relationships`.** Three occurrences, corrected before commit.
+
+**Found by verifying the section attribution rather than by re-reading the
+sentence** — the check `VF-9` showed was missing, now run as a matter of course.
+The quoted text was accurate; only the location was wrong. **Recorded anyway:
+a wrong pointer to right text is still a citation defect**, and `E-41` began
+exactly there.
+
+## 35.5 A document cited for shape and not for authority
+
+`AIOS_BASELINE_LIFECYCLE_v1.0.md` records a **six-stage** lifecycle —
+authorization, implementation, automated verification, **Architect acceptance**,
+commit & freeze, transport.
+
+**Its scope is Native Core work units, not Platform Divisions**, and it
+disclaims authority in its own header: it *"does not create, amend, or delegate
+authority."* **No claim is made that it governs division construction** — the
+temptation to treat the one operated lifecycle as the general one is exactly the
+`E-41` move. It is recorded for shape: construction bracketed by two authority
+gates.
+
+## 35.6 Status dimensions, separately (`§14`, `§15`, `§29`)
+
+| Dimension | Status |
+|---|---|
+| **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED.** Unchanged |
+| **Platform Organization Construction — PD-01–PD-10** | **ACTIVE.** 5 of 10 `§16` dimensions answered at model level; 5 remain. Per-division assignment blocked at `G-09`; per-division content at `G-01`/`ESC-C7-01`. **`G-02` now doubly unavailable** (`E-83`) |
+| **Autonomous Execution Programme** | **ACTIVE — not exhausted** |
+
+## 35.7 Regression
+
+`native_core` **801 OK** (1 expected failure) · `consumers` **276 OK** · `tools`
+**198 OK**.
+
+## 35.8 Falsifying exhaustion (`§13`, `§28`)
+
+**Not claimed.** The `§34.8` prediction was tested and held, which means the
+method has further reach and the remaining five dimensions must be attempted
+before any exhaustion claim:
+
+- **Capability** — `Freeze §4` and `Domain Model §6` both carry Capability
+  clauses already quoted here; a model-level answer is plausible.
+- **Architecture / Operation / Performance / Evolution** — no attempt yet made
+  at model level; **the Encyclopedia handoff (`E-56`, `E-57`) carries Part
+  registries naming exactly these**, which is a lead, not a result.
+
+Also open: the `INV-15` minimal-cardinality question, deliberately unspecified;
+whether any `G-05` edge is specifically a Capability dependency; the four
+informational orphan findings.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.**
+
+## 35.9 Repeatability
+
+**Twenty-one cycles · 59 valid executions · 81 correct stops · 1 overreach · 12
+disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**

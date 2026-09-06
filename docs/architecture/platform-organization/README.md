@@ -133,6 +133,7 @@ measurable form. **Neither is available to this delegation.**
 | `README.md` (this file) | Baseline, Construction Kernel, Construction Decision Log |
 | `EVIDENCE-LEDGER.md` | Evidence provenance · per-PD evidence baseline across the twelve dimensions |
 | `DIVISION-OWNERSHIP-MODEL.md` | What any Platform Division owns, does not own, and is forbidden — from frozen `Freeze §2`–`§6`. **Assigns nothing to any division** |
+| `DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md` | Division lifecycle (architect-approved) · the one discretion a division holds · `governs ≠ owns ≠ lifecycle authority`. **Assigns nothing** |
 | `IMPLEMENTATION-CORRESPONDENCE-MAP.md` | Implemented `native_core/` boundaries · Platform Division ↔ boundary name correspondence · the Layer 4 join point. **Asserts no ownership binding** |
 | `PLATFORM-ORGANIZATION-MASTER-MAP.md` | Reconciled structure · PD Maturity Matrix · Cross-PD Reconciliation Matrix |
 | `SYSTEMIC-GAP-MAP.md` | Gaps derived from observed reconciliation, not assumed |

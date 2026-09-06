@@ -820,3 +820,83 @@ attested in a second location; already escalated, amendment being non-delegable.
 (b) `G-05`'s derived edges fall in the **inferred** category, which is
 `[O]` **Architect-reserved and not frozen** — a third independent reason the
 edges stay derived.
+
+---
+
+# Cycle 21 — `E-83` … `E-86`
+
+## `E-83` — a division's own lifecycle is architect-approved
+
+**Source:** `canonical-domain-model-v1.md §6`, row 1. **Class: [A] canonical
+(precedence 2 under `Engineering Constitution §4`).**
+
+> **Platform Division, Capability** — *"Created/retired via **architectural
+> decision, architect approval**. Capability deprecation requires a defined
+> sunset path. A Capability with zero active Agent Definitions implementing it
+> is an invalid steady state and **must be flagged for governance review** — it
+> is not silently acceptable."*
+
+`Freeze §4` says the same at lower resolution (*"Lifecycle: governed"*); the
+Domain Model supplies the gate.
+
+**Consequence [C]:** no Platform Division may be created, retired, renamed,
+split, merged or dissolved by this delegation. **`G-02`** — the `PD-10`
+*Enablement*/*Experience* naming divergence — is therefore a naming question
+about an **architect-approved** entity, and is unavailable here on any reading.
+
+**`INV-14` is procedural, not automatic:** *"must be flagged for governance
+review"*, not deleted. No division record enumerates Capabilities, so nothing is
+flaggable yet.
+
+## `E-84` — the one affirmative discretion a division holds
+
+**Source:** `Domain Model §6`, row 2. **Class: [A] canonical.**
+
+> **Agent Definition** — *"Versioned; created/deprecated at **Platform Division
+> discretion** within Capability governance. Its version is bound to the
+> Capability contract version it implements."*
+
+**The first affirmative authority this corpus has located for a Platform
+Division in canonical source.** A Division does not merely *own* Agent
+Definitions (`INV-2`) — it **creates and deprecates** them at its own
+discretion, bounded by Capability governance and version binding.
+
+**The asymmetry is the model:** no authority over its own existence or over its
+Capabilities; full discretion over the Definitions implementing them.
+
+## `E-85` — `governs ≠ owns ≠ lifecycle authority`
+
+**Source:** `canonical-domain-model-v1.md §4 Relationships`. **Class: [C]
+canonical constraint.**
+
+> *"`governs` is distinct from `owns`. They are separate relationship types.
+> Neither is an alias, a merger, or a specialization of the other."*
+> *"`governs` does not imply ownership. A governor may bound the discretion of an
+> entity it does not possess. `A governs B` must never be read as `A owns B`."*
+> *"`governs` does not by itself confer lifecycle authority … **Lifecycle
+> authority is only what §6 already assigns.**"*
+
+The Domain Model records both `Organization **owns** Platform Division` and
+`Organization **governs** Platform Division` (§4). **The `governs` edge confers
+no authority to create, retire or mutate a Division** — that sits in `§6`, with
+the Architect.
+
+**This states in canon the parent form of a distinction this corpus derived
+independently.** `E-79` found `domain accountability ≠ entity ownership` for
+`PD-05`/Runtime; `§4` gives the general rule and adds a third term.
+
+## `E-86` — the six-stage baseline lifecycle, cited for shape only
+
+**Source:** `AIOS_BASELINE_LIFECYCLE_v1.0.md`. **Class: [E] empirical.**
+
+Six stages: *Implementation Authorization → Implementation → Automated
+Verification → **Architect Acceptance** → Commit & Freeze → Transport.*
+
+**Scope is Native Core work units, not Platform Divisions**, and the document
+disclaims authority: it *"records the baseline lifecycle … it does not create,
+amend, or delegate authority."* **No claim is made that it governs division
+construction.**
+
+Recorded because it is the one construction lifecycle this repository has
+actually operated, and it brackets construction between **two authority gates**
+— Stage 1 and Stage 4.
