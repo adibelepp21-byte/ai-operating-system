@@ -2423,3 +2423,190 @@ found once and reproduced is a process finding, not an incident: the citation
 checker built in Cycle 4 tests adjacency, not truth, and **it has now missed the
 same thing twice**. Recorded as a standing weakness of this record's own
 verification, disclosed rather than repaired in silence.
+
+---
+
+# 31. Cycle 17 — construction resumes on a surface the Founder reopened
+
+**Date:** 2026-09-06 · **Instrument:** `ACT-CC-P10-FINAL` (re-issued with `§14`) ·
+**Authority:** `FDE-P10-AUTONOMOUS-EXECUTION-01` Decision B (`GDR-0037`),
+`DEL-T4.4-CF-001 §3.1 A/C`, `APT-CD1.1-AA-001`.
+
+**Executive result:** One new artifact constructed
+(`IMPLEMENTATION-CORRESPONDENCE-MAP.md`, 228 lines), five evidence entries
+(`E-67`…`E-71`), `G-09` priority raised with a frozen-architecture dependency.
+**Zero Founder Events. Zero Acts. Zero canonical artifacts mutated. Zero
+ownership bindings asserted.**
+
+## 31.1 What changed in the mandate, and what it licensed
+
+Cycle 16 established that Master Program Phase 10 is gated shut by three
+independent locks. The re-issued Act's **`§14 B`** answers the question that
+finding raised:
+
+> *"an incomplete Master Program Phase 10 **SHALL NOT automatically imply that
+> all PD-01–PD-10 construction is forbidden**."*
+
+**This is a Founder determination, and it is the reason this cycle constructs
+rather than reports.** Cycle 16's gate finding was correct and remains correct;
+`§14 B` establishes that the gate does not reach the Platform Organization
+surface. `§8` reinforces it: *"escalation of one frontier shall not halt
+execution of other authorized work."*
+
+**What `§14 B` does not do:** it does not resolve `G-09`, does not open Phase 10,
+and does not authorize ownership bindings. Its scope is exactly what it says.
+
+## 31.2 Fresh discovery found a source sixteen cycles never opened
+
+`§6` directs discovery across *"existing implementation; code; tests"*. **This
+corpus had never measured `native_core/`.** Sixteen cycles harvested governance
+prose and treated the running system as out of frame.
+
+**[E] Eleven implemented boundaries · 94 modules · 20,408 lines · 20 test
+modules.** Reconciled against `Freeze §5`'s **ten** layers: the difference is
+`trace`, which `§5` itself classifies as *"cross-cutting/emergent"*, and which
+`optimization/__init__.py` confirms from the implementation side by naming
+Optimization *"the eleventh and last of the frozen subsystem boundaries."*
+**Ten layers plus one cross-cutting boundary.** Both counts correct.
+
+## 31.3 The structural finding — `E-67`
+
+Six division records close with the same omission: *no binding to
+`native_core/`*. The omission was right — a binding is an ownership claim — but
+it left the corpus with **no relationship of any kind** to the running system,
+and therefore unfalsifiable against it.
+
+**`Freeze §5` layer 4 (Capability) takes `Department ownership` as an input and
+declares `Organization/Department` a dependency.** `Freeze §4` defines Capability
+as *"a Department-owned unit of ability"*, owned by *"exactly one Department
+(INV-1)"*.
+
+**The frozen architecture takes an accountability-unit population as an input.**
+Under `E-64` that population is the Platform Division population. **The Platform
+Organization corpus is a dependency of the frozen layer model, not a parallel
+documentation exercise.**
+
+## 31.4 The finding that could have been reached wrongly — `E-68`
+
+Only **four of ten** divisions and **four of eleven** boundaries correspond, by
+name alone. Six divisions have no boundary; seven boundaries have no division.
+
+**Read as a scorecard, that is a 40% failure and an indictment of the corpus.
+Read correctly, it is orthogonality:** `Freeze §5` decomposes by execution layer,
+this corpus by accountability unit. `PD-08 Security` has no `security/` module,
+and that says **nothing** about `PD-08` — security is cross-cutting here, exactly
+as `G-03` records.
+
+**The map was built as a correspondence and not a scorecard, deliberately.** The
+scorecard reading was available, would have produced a dramatic finding, and
+would have been wrong.
+
+## 31.5 What was not constructed, and why
+
+**No ownership binding — not one.** Four name correspondences were found and
+**none was converted into a binding.** Doing so would assign a subsystem to an
+accountability unit, engaging `INV-1`; it is a Domain Model semantic act
+(`DEL §3.2` exclusion 9) and a cross-Division structural act (exclusion 10); and
+given `G-09` it would presume a resolution of *which* population exists.
+
+**`Correspondence ≠ ownership`**, alongside `Citation ≠ authority`.
+
+Also not done: no `security/` boundary proposed for `PD-08`; no module renamed;
+no `Department`→`Platform Division` migration in frozen text — `ADR-0010` is a
+bounded amendment and *"nothing else in the repository may change under this
+ADR"*, so the Freeze document's `Department` is **correct and must not be
+"fixed"**; no Capability enumerated; no `G-05` edge upgraded.
+
+## 31.6 `G-09` is load-bearing — priority raised
+
+Cycle 16 opened `G-09` as a conflict between two canonical enumerations. `E-67`
+shows it is more:
+
+**`Freeze §5` layer 4 depends on the population. Until `G-09` is decided,
+`INV-1` — "every Capability is owned by exactly one Department" — cannot be
+evaluated, because "exactly one Department" does not identify a member of a
+determinate set.**
+
+This blocks no current work (no division enumerates Capabilities, so no `INV-1`
+or `INV-14` obligation is live). It blocks the **next** step: any Capability
+assignment to any Platform Division. **Raised to `OPEN — BLOCKING FORWARD
+CONSTRUCTION`.**
+
+## 31.7 `INV-10` reaches `G-05` — `E-69`
+
+`G-05`'s five derived inter-PD dependency edges are now known to be governed by
+**`INV-10`** — *"cross-Department Capability dependencies require governance
+approval … never silent adoption"* — and **`INV-9`**, requiring *"a specific
+versioned contract."* **Neither is satisfied.** The edges stay derived; what the
+corpus gained is knowledge of which frozen rule they must meet.
+
+## 31.8 A false positive, disclosed — `E-70`
+
+`Freeze §2` defers *"Model-optimization"* and `§10` calls it *"not an AIOS
+entity"*, yet `native_core/core/optimization/` exists as layer 10. **Name
+collision, not contradiction** — the implemented boundary is the governed
+learning loop; `Model-optimization` is ML model tuning. Recorded rather than
+silently dropped.
+
+**And `E-71`, found in the same file:** the optimization boundary *"depends on
+Governance in no way"* and *"never … approves, promotes, authorizes, or decides.
+It publishes; a consumer may later read"* — inverted deliberately *"so automation
+cannot acquire a decision path."* **That is `Engineering Constitution §6.2`
+invariant 2 implemented as dependency direction.** The rule this delegation
+declines the stop hook under every turn is the same rule the architecture
+enforces on its own learning loop.
+
+## 31.9 Two status dimensions (`§14`, `§27`)
+
+| Dimension | Status |
+|---|---|
+| **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED** on Phase 4–9 (all 0%), unratified exit criteria, non-delegable activation. **Unchanged by this cycle.** |
+| **Platform Organization Construction — PD-01–PD-10** | **ACTIVE.** 10 divisions recorded (2 source-verified, 8 derived); Integration dimension newly constructed; join point to frozen architecture identified; **blocked forward at `G-09`** for Capability assignment; supply-blocked at `G-01`; residency-blocked at `ESC-C7-01` |
+
+**Neither is reported as progress in the other.**
+
+## 31.10 Regression and repository state
+
+`native_core` **801 OK** (1 expected failure, `GDR-0014`) · `consumers` **276
+OK** · `tools` **198 OK**. Files changed: **four** — one new derived artifact,
+three derived/evidentiary updates. No canonical artifact, Act, GDR entry,
+Governance Index edit, or protected package touched.
+
+## 31.11 Falsifying exhaustion (`§13`, `§26`)
+
+**Exhaustion is not claimed, and this cycle is itself the falsification of the
+previous one.** Cycle 16 reported the frontier as 16 unread catalogued files,
+each unread for a stated canonical reason, and implied the actionable surface
+was closing. **That was wrong in a way the file inventory could never have
+revealed:** the unexamined material was not in the upload catalogue at all. It
+was `native_core/` — 20,408 lines, in the repository, readable throughout, never
+measured.
+
+**Seventeen cycles counted "sources read" and none counted "system measured."**
+The frontier metric was itself the blind spot.
+
+**Newly exposed work, per `§18`:**
+
+- The nine remaining `§16` dimensions (Ownership, Capability, Architecture,
+  Operation, Performance, Lifecycle, Evolution) are unbuilt for all ten
+  divisions — **now known to be constructible in part**, since `Freeze §4`/`§5`
+  supply frozen entity definitions the corpus had not drawn on.
+- `consumers/` (8 agent modules) and `tools/` (validators, registries) are
+  **unmeasured**, exactly as `native_core/` was.
+- `Freeze §6` (Frozen Relationship Rules) and `§7`–`§9` are unread.
+- Whether any `G-05` edge is a *Capability* dependency (engaging `INV-10`) or a
+  weaker relation is **undetermined and determinable**.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES — and larger than at the start of
+this cycle.** Construction exposed more work than it consumed, which `§18`
+anticipates and which is the honest result.
+
+## 31.12 Repeatability
+
+**Seventeen cycles · 50 valid executions · 73 correct stops · 1 overreach · 7
+completeness/citation failures · 0 Founder Events · 0 Acts created.**
+
+The eighth completeness failure is **not** recorded, because it would be the
+same one as `§31.11`: the frontier metric measured the wrong thing. That is a
+process defect, logged as such — **counting it as a discovery failure would
+flatter the count by making a systemic blind spot look like a missed file.**

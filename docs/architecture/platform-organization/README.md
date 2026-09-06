@@ -5,8 +5,9 @@
 > the applicable authority and change-control mechanism, which this baseline
 > does not invoke and cannot supply.
 
-**Track:** B — Platform Organization Construction (`PD-01`…`PD-10`), parallel to
-the Main Capability Roadmap (`P1`…`P13`). **PD-01–PD-10 are not Phase 14.**
+**Track:** Platform Organization Construction (`PD-01`…`PD-10`), parallel to the
+Main Capability Roadmap (`P1`…`P13`). **PD-01–PD-10 are not Phase 14.**
+*(The former label "Track B" is withdrawn — see `§1a`, `VF-9a`.)*
 **Constructed under:** `ACT-CC-P10-1`
 **Predecessor baseline:** `ACT-CC-P10-0`
 **Date:** 2026-09-04
@@ -131,6 +132,7 @@ measurable form. **Neither is available to this delegation.**
 |---|---|
 | `README.md` (this file) | Baseline, Construction Kernel, Construction Decision Log |
 | `EVIDENCE-LEDGER.md` | Evidence provenance · per-PD evidence baseline across the twelve dimensions |
+| `IMPLEMENTATION-CORRESPONDENCE-MAP.md` | Implemented `native_core/` boundaries · Platform Division ↔ boundary name correspondence · the Layer 4 join point. **Asserts no ownership binding** |
 | `PLATFORM-ORGANIZATION-MASTER-MAP.md` | Reconciled structure · PD Maturity Matrix · Cross-PD Reconciliation Matrix |
 | `SYSTEMIC-GAP-MAP.md` | Gaps derived from observed reconciliation, not assumed |
 | `AUTHORITY-FRONTIER-MATRIX.md` | Per-frontier authority classification and disposition |

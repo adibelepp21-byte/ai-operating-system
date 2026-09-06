@@ -514,3 +514,99 @@ External Repository Audit dibuka … Pemilik Program (Moriarty)"*).
 **This is why the Graphify archives are catalogued and not opened further.** It
 is not an exhaustion claim and not restraint by preference — it is the admission
 rule.
+
+---
+
+# Cycle 17 — `E-67` … `E-71`
+
+Five entries from a source this corpus had **never systematically read: the
+repository's own implemented architecture.** Sixteen cycles harvested governance
+prose; none measured `native_core/`.
+
+## `E-67` — Layer 4 is where the Platform Organization enters the running system
+
+**Source:** `AIOS_ARCHITECTURE_FREEZE_v1.0.md §5`, `§4`. **Class: [A] canonical
+(frozen).**
+
+`§5` layer 4 (Capability), verbatim: **Inputs — `Department ownership`;
+Dependencies — `Organization/Department`; Forbidden — `cross-Dept dep without
+governance (INV-10)`.**
+
+`§4` Spine: Capability is *"a Department-owned unit of ability"*, ownership
+*"exactly one Department (INV-1)"*; Department is an *"accountability unit …
+owns Capabilities and Agent Definitions … owned by Organization."*
+
+**Consequence [D]:** the frozen architecture does not merely tolerate an
+accountability-unit population — it **takes one as an input**. Under `E-64`
+(`Department` = `Platform Division` = the Master Program's `Department`, one
+entity), **the Platform Organization corpus is a dependency of the frozen layer
+model**, not a parallel documentation exercise. **`G-09` priority raised
+accordingly.**
+
+## `E-68` — the two decompositions are orthogonal, and the asymmetry is expected
+
+**Class: [E] empirical · [D] derived.**
+
+Four of ten Platform Divisions and four of eleven implemented boundaries
+correspond **by name only**: `PD-03`↔`governance`, `PD-04`↔`knowledge`,
+`PD-05`↔`runtime`, `PD-07`↔`infrastructure`. Six divisions have no boundary;
+seven boundaries have no division.
+
+`Freeze §5` decomposes by **execution layer**; this corpus decomposes by
+**accountability unit**. **Neither is a defective version of the other.**
+
+**Consequence [D]:** absence of a module named for a division is **not** evidence
+against the division. `PD-08 Security` has no `security/` boundary and this says
+nothing about `PD-08` — security is cross-cutting here, consistent with `G-03`.
+**A conclusion this corpus could easily have reached wrongly**, had the map been
+built as a scorecard rather than a correspondence.
+
+## `E-69` — `INV-10` governs `G-05`, and the requirement is unmet
+
+**Source:** `Freeze §3` (verbatim from ratified Canonical Domain Model §7).
+**Class: [C] canonical constraint.**
+
+> **INV-10** — *"Cross-Department Capability dependencies require governance
+> approval through the Decision-Making Process — **never silent adoption**."*
+> **INV-9** — *"Every Capability-to-Capability dependency must be explicit and
+> must reference a specific versioned contract."*
+> **INV-14** — *"An unimplemented capability is an invalid steady state."*
+
+`G-05` records five derived inter-PD dependency edges. **If those are Capability
+dependencies, `INV-10` requires governance approval that has not been given, and
+`INV-9` requires a versioned contract that does not exist.**
+
+**Not converted.** The edges remain derived. What changes is that the corpus now
+knows *which frozen rule* they must satisfy, and that they do not yet satisfy it.
+
+**`INV-14` is a forward obligation:** no division record enumerates owned
+Capabilities, so nothing is currently in violation — and nothing may be added
+casually.
+
+## `E-70` — a checked non-defect: `optimization` vs `Model-optimization`
+
+**Class: [E] empirical, false positive eliminated.**
+
+`Freeze §2` defers *"Model-optimization"*; `§10 Deferred Architecture (Architect
+Reserved)` calls it *"external concern; not an AIOS entity."* Yet
+`native_core/core/optimization/` exists at 1,604 lines as **layer 10**.
+
+**Name collision, not contradiction.** The implemented boundary is the *"governed
+learning loop, detect-only"*; `Model-optimization` is ML model tuning.
+**Disclosed rather than dropped**, per false-positive discipline — a grep-level
+hit that content-anchored reading eliminates is evidence about the detector.
+
+## `E-71` — `§6.2` invariant 2, implemented as dependency direction
+
+**Source:** `native_core/core/optimization/__init__.py`. **Class: [E] empirical.**
+
+The optimization boundary *"depends on Governance in no way"* (`P7-I27 Conflict
+A` ruling) and *"never submits, sends, notifies, requests, approves, promotes,
+authorizes, or decides. It publishes; a consumer may later read."* The direction
+is inverted deliberately *"so automation cannot acquire a decision path."*
+
+**This is `Engineering Constitution §6.2` invariant 2 — *automation may request,
+automation may recommend, automation may not override governance authority* —
+enforced structurally in code rather than by policy.** The constraint this
+delegation operates under every turn is the same one the architecture enforces
+on its own learning loop.

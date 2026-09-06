@@ -192,6 +192,30 @@ conflict is reported, not absorbed.
 **Escalated to:** Founder (Program Owner). `Master Program Volume V §3` reserves
 every status and criteria determination to *"Pemilik Program (Moriarty)"*.
 
+### Priority raised 2026-09-06 — `G-09` is load-bearing on the frozen architecture
+
+`E-67` (Cycle 17). `G-09` was opened as a documentation conflict between two
+canonical enumerations. It is more than that.
+
+`AIOS_ARCHITECTURE_FREEZE_v1.0.md §5` **layer 4 (Capability)** takes
+**`Department ownership`** as its *input* and declares **`Organization/Department`**
+its *dependency*. `Freeze §4` defines Capability as *"a Department-owned unit of
+ability"* whose ownership is *"exactly one Department (INV-1)."*
+
+**The frozen architecture therefore depends on the accountability-unit
+population being settled.** Two canonical sources enumerate it incompatibly —
+six Departments (`Master Program Volume VII §3`) against ten Platform Divisions.
+Until `G-09` is decided, **`INV-1` cannot be evaluated for any Capability**,
+because "exactly one Department" does not identify a member of a determinate
+set.
+
+**This does not block current construction** — no division record enumerates
+owned Capabilities, so no `INV-1` or `INV-14` obligation is currently live
+(`IMPLEMENTATION-CORRESPONDENCE-MAP.md §6`). It blocks the *next* step: any
+Capability assignment to any Platform Division.
+
+**Priority: raised from OPEN to OPEN — BLOCKING FORWARD CONSTRUCTION.**
+
 ---
 
 ## Summary
