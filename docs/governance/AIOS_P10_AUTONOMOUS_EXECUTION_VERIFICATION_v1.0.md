@@ -3312,3 +3312,152 @@ has not been substantively tested since the last material construction.
 
 **Twenty-two cycles · 62 valid executions · 84 correct stops · 1 overreach · 13
 disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**
+
+---
+
+# 37. Cycle 23 — the last two dimensions, and the conclusion they falsified
+
+**Date:** 2026-09-06 · **Instrument:** `ACT-CC-P10-CONSTRUCTION-EXECUTION v2.0`
+`§13`, `§15`, `§19` · **Authority:** as `§36`.
+
+**INTERIM EXECUTION STATE** (`§24`).
+
+**Constructed:** `DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md` (241 lines) —
+**the final two `§16` dimensions**, completing **10 of 10** at model level. Three
+evidence entries (`E-93`…`E-95`), one new gap (`G-10`). **Zero Founder Events.
+Zero Acts. Nothing assigned. Nothing in `volume-1/` modified.**
+
+## 37.1 The previous cycle's conclusion was wrong, and the Act's method found it
+
+`§36.10` recorded that for Operation and Performance *"whether a model-level
+answer exists is **genuinely open** — asserted neither way."*
+
+**Both had complete, resident, frozen sources.**
+`docs/architecture/volume-1/pd-01-executive-office/` holds **45 section bodies,
+12,946 lines**, with **Part D — Operating Architecture (`D1`–`D10`)** and
+**Part E — Performance Architecture (`E1`–`E10`)**.
+
+**This corpus has named that directory since `PD-01`'s record was written:**
+*"PD-01's own **45 resident bodies** are the authority for PD-01."* It abstracted
+a five-part spine from the volume as **pattern** and **never read Parts D or E
+for content** — while recording the two dimensions those Parts answer as
+unresolved.
+
+**Failure class: Cycles 12–14, at a new address.** Catalogued, named, cited,
+unread. `§19` requires falsification to be substantive rather than
+inventory-based — *"a file is 'probed' only when its relevant content has
+actually been examined."* **Twenty-two cycles satisfied the inventory test and
+failed the probe test on a directory this corpus itself cites.**
+
+**The honest generalization:** the corpus repeatedly treated *"I have cited this
+source"* as *"I have read this source."* `E-41`, `§34.2`, `§36.6` and now this
+are one failure wearing four costumes.
+
+## 37.2 What the two dimensions actually are
+
+**Performance — a chain, corroborated across two divisions.** `E1` is
+`FROZEN`, `Gold Standard Review: PASS`, and explicitly `Applies To: PD-01
+Executive Office **and Performance Architecture Reference Pattern**`. Its
+`E1`→`E10` chain is **identical** to the chain `E-56` records for **PD-03** from
+the Encyclopedia handoff. **Two divisions, one chain, two independent sources**
+— that is what makes it model level rather than a PD-01 fact.
+
+**Operation — a position and a shape, not common content.** PD-01's Part D is
+*"Operating Architecture"*; PD-03's is *"Governance Operations"*. **Part E
+generalizes; Part D's content does not.** That is `MASTER_ROADMAP §5`'s *"domain
+adaptation, not content copy"* showing up as evidence rather than as doctrine.
+
+**Recording Part D as fully generalized would have been the easy and wrong
+result** — it would have manufactured commonality the evidence contradicts.
+
+## 37.3 `G-10` — the reference implementation's ownership vocabulary
+
+`volume-1/…/B3.md §4` assigns ten Capabilities to ten **Sub Divisions**
+(`ESD-01`…`ESD-10`); `B4` and `B5` add **Team** and **Role Group**.
+
+`Domain Model §7` invariant 1: *"Every Capability is owned by **exactly one
+Platform Division**."* **None of those three is a Platform Division, and none is
+among the twelve ratified entities** (`Freeze §4`: *"No new entity"*).
+
+**Two readings.** Internal stewardship inside PD-01 — `B2` classifies Sub
+Divisions as *"Organizational Structure Architecture"* **inside** PD-01, and
+invariant 1 holds. Or a **fourth Spine level**, against `Domain Model §8`'s
+*"three levels … not to be deepened or bypassed without an architectural
+decision."*
+
+**Reading 1 is more natural and probably intended. Neither is adopted** — the
+choice is a Canonical Domain Model semantic determination (`DEL §3.2` exclusion
+9; `Freeze §8` wall 5).
+
+**It reaches past PD-01.** PD-01 is the Gold Standard Reference Implementation
+that `PD-02`–`PD-10` follow *"by domain adaptation"* — so an unreconciled
+ownership vocabulary in the pattern **is inherited by every division adapted
+from it.**
+
+**Recorded exactly as the Encyclopedia instructs** (`Volume 3 §15` rule 7):
+*"Treat repository discrepancies as reconciliation findings"*; rule 6: *"Do not
+redesign frozen architecture."* **No invariant is declared violated** — the
+finding is that the question is unanswered, not that canon is broken.
+
+## 37.4 The dimension series is complete
+
+**All ten** — Identity, Authority, Ownership, Capability, Architecture,
+Operation, Performance, Lifecycle, Integration, Evolution — **answered at model
+level from canonical and frozen resident source, assigning nothing to any
+division.** Four artifacts, `~910` lines, Cycles 20–23.
+
+**Three statements that must not be collapsed:**
+
+```text
+the model is complete          (this series)
+the content is supply-blocked  (G-01, ESC-C7-01)
+the assignment is reserved     (G-09, G-10)
+```
+
+**None implies the others**, and *"the dimension work is finished"* is not
+*"Platform Organization construction is finished."*
+
+## 37.5 Status dimensions, separately (`§12`, `§23`)
+
+| Dimension | Status |
+|---|---|
+| **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED.** Unchanged by this cycle and by the whole dimension series |
+| **Platform Organization Construction — PD-01–PD-10** | **ACTIVE. Model layer complete (10/10).** Per-division content blocked at `G-01`/`ESC-C7-01`; assignment reserved at `G-09`/`G-10` |
+| **Autonomous Execution Programme** | **ACTIVE — not exhausted** |
+
+## 37.6 Regression
+
+`native_core` **801 OK** (1 expected failure, `GDR-0014`) · `consumers` **276
+OK** · `tools` **198 OK**.
+
+## 37.7 Re-discovery after construction (`§17`)
+
+**Reading `volume-1/` opened more than it closed.** Newly identified and
+genuinely actionable:
+
+- **41 further PD-01 bodies unread** — `A1`–`A10`, `B1`–`B5`, `C1`–`C10`, and
+  the remaining `D`/`E` sections. Parts A, B and C have **not** been read for
+  content at all, and `B3` alone produced `G-10`.
+- **`volume-2/pd-02-architecture-office/` — 51 files, 56,259 lines.** This corpus
+  cites it constantly (`A5:329`, `B7:212`, `C8:122`, `A4:285`) — **line-level
+  citations into a corpus it has read only in fragments.** Four times the size of
+  `volume-1`.
+- **`RECOVERY-MANIFEST.md`** in `volume-1/` — 408 lines, unread, and its name
+  suggests it bears on `ESC-C7-01`'s residency question.
+- **`C6-A1`** (the open Architect question of 8 vs 3 vs 5 Parts) is now
+  answerable *as evidence*: PD-01 has **5 Parts (A–E)**, PD-03 has **8 (A–H)**
+  per `E-56`. That is data for the Architect, not a resolution by me.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES — and materially larger than at the
+start of this cycle.** Completing a ten-part series revealed roughly **69,000
+lines** of resident, cited, unread canonical corpus.
+
+## 37.8 Repeatability
+
+**Twenty-three cycles · 64 valid executions · 86 correct stops · 1 overreach ·
+14 disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**
+
+The fourteenth is `§37.1`: **a conclusion published one cycle ago, falsified by
+a directory this corpus cites by name.** It is counted because the Act requires
+falsification to be substantive, and a count that only rises when someone else
+finds the error measures nothing.

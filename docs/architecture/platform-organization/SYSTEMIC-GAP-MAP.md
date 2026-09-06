@@ -218,6 +218,55 @@ Capability assignment to any Platform Division.
 
 ---
 
+## G-10 — the reference implementation assigns Capability ownership to non-entities
+
+**Opened 2026-09-06 · Cycle 23 · `E-95` · Status: OPEN — FOUNDER / ARCHITECT
+RESERVED**
+
+`volume-1/pd-01-executive-office/B3.md §4` carries a **Capability Ownership
+Matrix** assigning ten Capabilities to ten **Sub Divisions** (`ESD-01`…`ESD-10`),
+not to `PD-01` itself. `B4` and `B5` add **Team** and **Role Group**.
+
+**Against canon.** `Domain Model §7` invariant 1: *"Every Capability is owned by
+**exactly one Platform Division**."* **`Sub Division`, `Team` and `Role Group`
+are not Platform Divisions and are not among the twelve ratified entities**;
+`Freeze §4` states *"No new entity."*
+
+### Two readings, neither adopted
+
+| | Reading | Consequence |
+|---|---|---|
+| **1** | Sub Divisions are internal structure — `B2` classifies them *"Organizational Structure Architecture"* **inside** PD-01 — so all ten Capabilities remain owned by PD-01 and the `Owner` column is internal stewardship | **Invariant 1 satisfied** |
+| **2** | Sub Divisions own Capabilities in the Domain-Model sense | **A fourth Spine level**, against `Domain Model §8`'s *"three levels … not to be deepened or bypassed without an architectural decision"* |
+
+**Reading 1 is the more natural and is probably intended. It is not adopted**,
+because adopting it is a Canonical Domain Model semantic determination —
+`DEL-T4.4-CF-001 §3.2` exclusion 9, `Freeze §8` wall 5 (*Domain-Model change …
+not delegable*).
+
+### Why this reaches past PD-01
+
+PD-01 is the **Gold Standard Reference Implementation**; `MASTER_ROADMAP §5` has
+`PD-02`–`PD-10` follow it *"by domain adaptation, not content copy."*
+**An unreconciled Capability-ownership vocabulary in the reference pattern is
+inherited by every division adapted from it.**
+
+### What was done
+
+Recorded, per the Encyclopedia's own rule (`Volume 3 §15` rule 7): *"Treat
+repository discrepancies as reconciliation findings"*, and rule 6: *"Do not
+redesign frozen architecture during repository handoff."*
+
+**Nothing in `volume-1/` modified.** No Capability reassigned. No Sub Division
+endorsed or denied. **No invariant declared violated** — the finding is that the
+question is unanswered, not that canon is broken.
+
+**Minimum decision required:** an Architect determination whether `Sub Division`
+is (a) internal structure carrying no Domain-Model ownership, or (b) a proposed
+fourth Spine level requiring an architectural decision under `Domain Model §8`.
+
+---
+
 ## Summary
 
 ```text

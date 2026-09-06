@@ -1014,3 +1014,70 @@ concepts"* — bearing on `PD-07`'s open *"Infrastructure & **Platform**"* scope
 question, which it does not resolve but does bar answering by constructing a
 `Platform` entity; *Process* is not distinct from Workflow; *ADR/RFC* are
 process artifacts about the model, not in it.
+
+---
+
+# Cycle 23 — `E-93` … `E-95`
+
+**Source:** `docs/architecture/volume-1/pd-01-executive-office/` — **45 resident
+section bodies, 12,946 lines**, named by this corpus since `PD-01`'s record was
+written and **never read for content**.
+
+## `E-93` — a resident, frozen Performance Architecture, declared a reference pattern
+
+**Source:** `volume-1/…/E1.md`–`E10.md`. **Class: [A] canonical (frozen).**
+
+`E1` header: `Status: FROZEN` · `Gold Standard Review: PASS` · `Freeze Decision:
+APPROVED` · `Reference Implementation: Yes` · **`Applies To: PD-01 Executive
+Office and Performance Architecture Reference Pattern`.**
+
+The chain: *E1 Performance Constitution → E2 Model → E3 Measurement → E4 KPI &
+Success Metrics → E5 Review → E6 Governance → E7 Reporting → E8 Improvement →
+E9 Maturity → E10 Performance Success Constitution.*
+
+**Corroborated independently:** `E-56`'s Encyclopedia handoff records the **same
+ten-link chain** for **PD-03** Volume 3 Part E. **Two divisions, one chain, two
+sources** — which is what makes it a model-level answer rather than a PD-01 fact.
+
+`E1 §1` positions performance against **governance** and against **operation** as
+distinct concerns. With `E-56`'s *"performance assessment does not create
+strategy, governance, architecture, ownership, or execution authority"*:
+**`Measurement ≠ authority`.**
+
+## `E-94` — a resident Operating Architecture, domain-adapted
+
+**Source:** `volume-1/…/D1.md`–`D10.md`. **Class: [A] canonical.**
+
+*"Part D defines the canonical Operating Architecture … Part D defines **HOW the
+organization operates**."* Chain: *D1 Operating Model Constitution → D2 Executive
+Operating → D3 Platform Coordination → D4 Work Management → D5 Operational
+Decision → D6 Operating Rhythm → D7 Collaboration → D8 Operational Control →
+D9 Operating Improvement → D10 Operating Success.*
+
+**Part D's name is not common across divisions**: PD-01's is *"Operating
+Architecture"*, PD-03's (per `E-56`) is *"Governance Operations"*. **Part E's
+chain generalizes; Part D's content does not** — which is `MASTER_ROADMAP §5`'s
+*"domain adaptation, not content copy"* visible in evidence.
+
+**The Operation dimension is therefore answered as a position and a ten-section
+shape, not as common content.**
+
+## `E-95` — Capability ownership assigned to non-entities · `G-10`
+
+**Source:** `volume-1/…/B3.md §4`. **Class: [E] verified · [U] unresolved.**
+
+The **Capability Ownership Matrix** assigns ten Capabilities to ten **Sub
+Divisions** (`ESD-01`…`ESD-10`). `B4` adds **Team**, `B5` **Role Group**.
+
+`Domain Model §7` invariant 1: *"Every Capability is owned by **exactly one
+Platform Division**."* **None of Sub Division, Team or Role Group is a Platform
+Division or one of the twelve ratified entities** (`Freeze §4`: *"No new
+entity"*).
+
+**Two readings** — internal stewardship inside PD-01 (invariant 1 satisfied), or
+a fourth Spine level (against `Domain Model §8`). **Neither adopted**: the choice
+is a Domain Model semantic determination, `DEL §3.2` exclusion 9.
+
+**Reaches past PD-01:** it is the Gold Standard Reference Implementation that
+`PD-02`–`PD-10` follow *"by domain adaptation"*, so the unreconciled vocabulary
+is inherited. **Opened as `G-10`. Nothing in `volume-1/` modified.**
