@@ -2610,3 +2610,151 @@ The eighth completeness failure is **not** recorded, because it would be the
 same one as `§31.11`: the frontier metric measured the wrong thing. That is a
 process defect, logged as such — **counting it as a discovery failure would
 flatter the count by making a systemic blind spot look like a missed file.**
+
+---
+
+# 32. Cycle 18 — the remaining regions, and `B-7` made actionable
+
+**Date:** 2026-09-06 · **Instrument:** `ACT-CC-P10-FINAL` · **Authority:** as
+`§31`.
+
+**Executive result:** `consumers/` and `tools/` measured — the two regions `§31.11`
+named as unmeasured. `Freeze §6`, `§7`, `§8`, `§9` read. Six evidence entries
+(`E-72`…`E-77`), `IMPLEMENTATION-CORRESPONDENCE-MAP.md` extended to 398 lines,
+**`B-7` quantified for the first time**. Two arithmetic errors in my own Cycle 18
+draft found and corrected before commit. **Zero Founder Events. Zero Acts. Zero
+ownership bindings. No Governance Index edit.**
+
+## 32.1 `B-7` is no longer a qualitative complaint
+
+`B-7` has been carried for many cycles as *"the Governance Index is stale."*
+The `tools/governance_index.py` discovery aid reports **358 governance records
+across 311 sources**. Measured against `docs/governance/GOVERNANCE_INDEX.md`:
+
+| Class | Exists | Indexed | Unlisted |
+|---|---:|---:|---:|
+| GDR entries | **37** | **2** | **35** |
+| ADR decisions | **28** | **9** (stated as a range) | **19** |
+| Acts | **25** | **0** | **25** |
+
+**The file is untouched and must stay untouched.** `GOVERNANCE_INDEX §9`
+requires *"normal Architect approval"*; `ACT-CC-CD1.1:172` records *"Did not: …
+modify the Governance Index"* in the very Act that created the Architecture
+Authority appointment; and **`VF-4` — this corpus's single overreach — was
+committed on this exact file and reverted byte-identical.**
+
+**What a measurement changes is whose problem it is.** An Architect can now act
+on `B-7` without re-deriving it. That is the whole of what this delegation can
+legitimately contribute here, and it is worth more than an edit would have been.
+
+## 32.2 A correspondence declined, on the same reasoning as `VF-9`
+
+`consumers/` contains `cognitive_intelligence_agent.py` and
+`engineering_intelligence_agent.py`. `Master Program Volume VI §3` enumerates
+**eight** Intelligence categories, two of which are Cognitive and Engineering.
+
+**"2 of 8 Intelligence categories implemented" was available, is quotable, and is
+false.** The region's own docstring calls these *"`ExecutionConsumer`
+realizations"* — implementations of a core contract — and `Volume II §4.3`
+records Phase 5 as *"Konsep selesai, implementasi belum dimulai."*
+
+**This is the `E-41`/`VF-9` failure mode presenting itself a third time, and
+being refused on arrival.** Two cycles ago it was found after the fact; here it
+was caught before it entered the record. The name match is recorded as a name
+match.
+
+## 32.3 Two arithmetic errors in this cycle's own draft
+
+**Found by re-measuring rather than by re-reading.**
+
+| Claim as drafted | Actual | Cause |
+|---|---|---|
+| `tools/` — 3,395 lines | **3,075** | summation error |
+| `consumers/` — 8 files | **9** | `__init__.py` omitted from the count but included in the line total |
+
+Additionally, Part I's `native_core` figures (94 modules / 20,408 lines) and Part
+II's region figures used **different bases** — Part I counted the eleven
+subsystem directories excluding `__init__.py` but including tests. Both are
+correct for their scope; the 109-line gap to the region total is
+`native_core/__init__.py` and `shared/`. **The basis is now stated in the
+document, and Part I is left unchanged** as the finer measurement.
+
+**Neither error was load-bearing on any conclusion.** They are recorded because
+a corpus that reports its own citation defects and not its own arithmetic
+defects is selecting which failures to disclose.
+
+## 32.4 The frozen rules reached this corpus's conclusions independently
+
+`Freeze §6` freezes *Organization owns Department* and *Department owns
+Capability* (`INV-1`), and closes with: *"**Inferred relationships are NOT
+frozen** (§2; reserved)."*
+
+**`G-05`'s five derived inter-PD edges are inferred relationships — a reserved
+category.** `E-69` had established they were unapproved under `INV-10`; `E-75`
+establishes the category itself is reserved. **Two independent reasons, same
+restraint.**
+
+`Freeze §8` names five *"load-bearing walls"*, of which **wall 5** states:
+*"architectural change and **Domain-Model change** require the governance process
+… **not delegable where the Constitution says non-delegable**."*
+
+**`G-09` is a Domain-Model change.** The conclusion this corpus reached from
+`DEL-T4.4-CF-001 §3.2` exclusion 9 is now reached again from ratified frozen
+architecture, by a different document and a different route. **A restraint that
+two independent authorities require is not over-caution.**
+
+**Wall 3 — the Human-Authority boundary** — *"automation may
+request/recommend/detect; it may not decide governance or override it"* — is
+`Constitution §6.2` invariant 2, and is the rule under which the repository's
+stop-hook prompt is declined each turn. `Freeze §7` lists it as principle **4.
+Human Authority**, beside **9. Detect, Don't Decide**.
+
+## 32.5 One ownership statement found and left unclaimed
+
+`Freeze §6`'s Memory→Knowledge row assigns ownership **"Knowledge home-Dept."**
+That is a frozen ownership statement bearing on `PD-04 Knowledge &
+Intelligence` — **the first ownership assignment this corpus has found in frozen
+source for any division.**
+
+**It is not acted on.** Which population supplies the "Dept" is `G-09`,
+unresolved. Recording it and stopping is the entire authorized action.
+
+## 32.6 Two status dimensions (`§14`, `§27`)
+
+| Dimension | Status |
+|---|---|
+| **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED.** Unchanged. Phase 5 also confirmed unstarted per `Volume II §4.3`, against a tempting contrary reading refused at `§32.2` |
+| **Platform Organization Construction — PD-01–PD-10** | **ACTIVE.** Integration dimension complete across all four regions; frozen relationship rules and governance boundaries mapped; `B-7` quantified. **Blocked forward at `G-09`** for any Capability or Knowledge ownership assignment |
+
+## 32.7 Regression and state
+
+`native_core` **801 OK** (1 expected failure) · `consumers` **276 OK** · `tools`
+**198 OK**. Three files changed, all derived or evidentiary.
+
+## 32.8 Falsifying exhaustion (`§13`, `§26`)
+
+**Not claimed.** `§31.11` predicted work would grow; it did, and the two named
+frontiers are now closed. What remains actionable and identified:
+
+- **The nine remaining `§16` dimensions** (Ownership, Capability, Architecture,
+  Operation, Performance, Lifecycle, Evolution) across ten divisions — the
+  largest open construction surface. `Freeze §4`/`§6`/`§7` supply frozen entity
+  definitions this corpus has only begun to draw on.
+- **`tools/validators/`** (18 modules) and **`tools/bounded_exception/`** —
+  measured but not read; they encode conformance rules that may bear on the
+  corpus.
+- **`Freeze §2`, `§10`–end** — unread.
+- Whether any `G-05` edge is a *Capability* dependency or a weaker relation —
+  determinable, undetermined.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.**
+
+## 32.9 Repeatability
+
+**Eighteen cycles · 53 valid executions · 76 correct stops · 1 overreach · 9
+completeness/citation/arithmetic failures · 0 Founder Events · 0 Acts created.**
+
+The failure count rises by two — both **self-caught in this cycle, before
+commit**, and both arithmetic rather than citation. **The count is kept on a
+basis that makes it go up when I look harder**, which is the only basis on which
+it means anything.

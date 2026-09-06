@@ -610,3 +610,117 @@ automation may recommend, automation may not override governance authority* —
 enforced structurally in code rather than by policy.** The constraint this
 delegation operates under every turn is the same one the architecture enforces
 on its own learning loop.
+
+---
+
+# Cycle 18 — `E-72` … `E-77`
+
+## `E-72` — `consumers/` measured, and a correspondence declined
+
+**Source:** `consumers/__init__.py`; measurement 2026-09-06. **Class: [E]/[A].**
+
+Nine files, 1,691 lines (24 / 5,532 with tests). The region is
+*"concrete implementations of Native Core contracts"*, authorized by
+`DEC-P6-042`, with a one-way dependency: *"The core must never learn that a
+consumer exists."*
+
+**Two module names match two of `Master Program Volume VI §3`'s eight
+Intelligence categories** — `cognitive_intelligence_agent.py`,
+`engineering_intelligence_agent.py`. **The status correspondence is declined.**
+The region's own docstring calls these *"`ExecutionConsumer` realizations"*, and
+`Volume II §4.3` records Phase 5 as *"Konsep selesai, implementasi belum
+dimulai."* Claiming *"2 of 8 Intelligence categories implemented"* would be the
+`E-41` failure — a name match reported as a source claim.
+
+**Also recorded:** a consumer *"owns only its own behaviour … holds no governance
+authority, authors no Trace, and grants itself nothing"*; a bound `Execution` is
+***"entry, not authority"*** (`agent_execution_semantics_spec §13.1`).
+
+## `E-73` — two artifacts are called "the governance index"
+
+**Class: [E] empirical.**
+
+`tools/governance_index.py` (817 lines, `ACT-CC-P6-066-R2`) is a **read-only JSON
+discovery aid**; `docs/governance/GOVERNANCE_INDEX.md` (110 lines) is the
+**canonical Markdown index** that `B-7` concerns and that `§9` puts under
+*"normal Architect approval."* **Distinct artifacts, distinct authority, one
+name.**
+
+The tool states this corpus's own discipline in its header: `INDEX != AUTHORITY`
+· `INDEX != CANONICAL SOURCE` · `INDEX != GOVERNANCE DECISION` ·
+`CHRONOLOGY != SUPERSESSION` · `RETRIEVAL != AUTHORIZATION`. It *"never infers a
+missing field"*; an unstated field is reported **`ABSENT`** — *"never filled
+in."*
+
+## `E-74` — `B-7` quantified
+
+**Class: [E] empirical.** The tool reports **358 governance records / 311
+sources**. Against `GOVERNANCE_INDEX.md`:
+
+| Class | Exists | Indexed | Unlisted |
+|---|---:|---:|---:|
+| GDR entries | **37** | **2** | **35** |
+| ADR decisions | **28** | **9** (as a range) | **19** |
+| Acts | **25** | **0** | **25** |
+
+**No edit made.** `GOVERNANCE_INDEX §9` requires Architect approval;
+`ACT-CC-CD1.1:172` records *"Did not: … modify the Governance Index"*; `VF-4`
+was this corpus's one overreach, on this exact file, reverted byte-identical.
+**The escalation gains figures; the file gains nothing.**
+
+**Detector defect disclosed:** the first GDR count returned **0** because the
+pattern assumed `##` headings where the register uses `###`. A false zero,
+caught before it became a finding.
+
+## `E-75` — `Freeze §6` freezes the ownership chain, and reserves inferred edges
+
+**Source:** `AIOS_ARCHITECTURE_FREEZE_v1.0.md §6`. **Class: [A] canonical
+(frozen).**
+
+Frozen rows: *Organization owns Department* (`Org→Dept`); *Department owns
+Capability* (`Dept→Cap`, INV-1), forbidding `Dept→other-Dept Capability`;
+*Capability depends-on Capability* — governed and versioned (INV-9/10),
+forbidding *"silent / cross-Dept ungoverned"*; *Memory promoted-to Knowledge* —
+ownership **"Knowledge home-Dept."**
+
+Direction summary, frozen: *"authority ↓, execution ↓, information/knowledge ↑
+through the single governed promotion gate (INV-8), Trace immutable (INV-5)."*
+
+**The decisive clause for `G-05`:** *"**Inferred relationships are NOT frozen**
+(§2; reserved)."* The five derived inter-PD edges are inferred relationships —
+**a reserved category**, not merely unapproved. `E-69` and this entry give two
+independent reasons the edges stay derived.
+
+**`Knowledge home-Dept` is an unclaimed ownership statement** touching `PD-04`.
+Not acted on: which population supplies "Dept" is `G-09`.
+
+## `E-76` — the five load-bearing walls
+
+**Source:** `Freeze §8`. **Class: [C] canonical constraint.**
+
+Five boundaries *"cannot be bypassed by any implementation … the load-bearing
+walls of AIOS. Bypassing any one collapses a defining guarantee"*: **Trace**,
+**Knowledge-Promotion**, **Human-Authority**, **Tool**, **Governance**.
+
+**Wall 5 independently confirms this corpus's central restraint:**
+*"architectural change and **Domain-Model change** require the governance
+process (Constitution §3; INV-10); **not delegable where the Constitution says
+non-delegable (§3.2)**."* `G-09` is a Domain-Model change. The conclusion
+reached from `DEL-T4.4-CF-001 §3.2` exclusion 9 is reached again from ratified
+frozen architecture, by a different route.
+
+**Wall 3:** *"automation may request/recommend/detect; it may not decide
+governance or override it"* (`Constitution §6.2 invariant 2`; `PR-3`).
+
+## `E-77` — twelve Frozen Native Principles
+
+**Source:** `Freeze §7`. **Class: [A] canonical (frozen).**
+
+*Governance First · Immutable Trace · Memory before Knowledge · **Human
+Authority** · Capability First · Execution Isolation · Single External Boundary ·
+Evidence First · **Detect, Don't Decide** · Fail Closed · Capture, Don't
+Reference · Single Responsibility.* Each *"is now a **rule** implementation must
+satisfy, not a preference."*
+
+**`Capability First` (INV-1/2) is a further frozen dependency on the
+accountability-unit population**, reinforcing `E-67` and `G-09`.
