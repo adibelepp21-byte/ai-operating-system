@@ -3146,3 +3146,169 @@ informational orphan findings.
 
 **Twenty-one cycles · 59 valid executions · 81 correct stops · 1 overreach · 12
 disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**
+
+---
+
+# 36. Cycle 22 — three dimensions, from four unread canonical sections
+
+**Date:** 2026-09-06 · **Instrument:** `ACT-CC-P10-CONSTRUCTION-EXECUTION v2.0`
+`§13`, `§15`, `§17` · **Authority:** `FDE-P10-AUTONOMOUS-EXECUTION-01` Decision
+B; `DEL-T4.4-CF-001 §3.1 A/C`.
+
+**INTERIM EXECUTION STATE** (`§24` — the term *final report* is reserved for
+actual exhaustion, which is not claimed).
+
+**Constructed:** `DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md` (275
+lines) — **three `§16` dimensions answered at model level**: Capability,
+Architecture, Evolution. Six evidence entries (`E-87`…`E-92`). One over-clean
+verification claim in my own draft corrected before commit. **Zero Founder
+Events. Zero Acts. Nothing assigned to any division.**
+
+**Source:** `canonical-domain-model-v1.md §7`–`§10` — **unread until this
+cycle**, in the document that sits second in precedence under `Engineering
+Constitution §4`.
+
+## 36.1 The Charter determination is confirmed by the Act itself
+
+`§2` of this Act instructs: record the governance state, **do not self-register
+the Charter**, do not manufacture effective status, do not halt unrelated work,
+and include the minimum registration action in escalation.
+
+**That is precisely what `§34.1` did**, one cycle before the instruction
+existed. The determination stands unchanged: **approval satisfied, registration
+outstanding, not mine to perform**, non-blocking.
+
+## 36.2 A claim in the Act that I can use but must not re-cite
+
+`§12` states: *"The Platform Encyclopedia explicitly identifies two roadmap
+layers: 1. Main Capability Roadmap — Phase 1–13; 2. Platform Organization
+Construction Track — PD-01 through PD-10."*
+
+**`VF-9b` withdrew almost exactly this sentence** as a false attribution — the
+string had **zero occurrences in any source**, and the Platform Encyclopedia is
+not resident (`ESC-C7-01`), so it could not have been read from there.
+
+**The distinction is now Founder-stated, and that is a different warrant.** I
+adopt the **separation** on the authority of this Act, which is verifiable
+because it is in front of me. **I do not restore the citation to the Platform
+Encyclopedia**, because that document remains non-resident and unverifiable.
+
+```text
+Founder states it        → usable, cited to this Act
+Encyclopedia said it     → still unverified, still withdrawn
+```
+
+**`VF-9b`'s correction is not reversed by the Founder happening to agree with
+the withdrawn sentence.** What changed is the source of authority, not the state
+of the evidence.
+
+## 36.3 Canon states the boundary this corpus has been operating under
+
+`Domain Model §10`: *"Capability creation is **intentionally, not accidentally,
+restricted to architect-approved decisions** … **a deliberate constraint for the
+foreseeable future, not a gap.**"*
+
+**Twenty-two cycles of declining to create Capabilities were not excess
+caution.** The restriction is declared deliberate in the canonical model, and
+the trigger for revisiting it is stated: higher autonomy in which an Agent may
+***propose*** new Capabilities. **Propose, not create** — `Recommendation ≠
+Decision`, in canonical text rather than in this corpus's own vocabulary.
+
+## 36.4 The invariant escalation sharpens from a count to an identity
+
+`Domain Model §7` carries **fifteen** invariants; `Constitution §6.1` binds
+*"invariants 1–14"*. **The unbound one is #15 — minimal cardinality.**
+Previously escalated as *"the counts differ"*; now escalated as a **named
+invariant with its text**. Amendment is `Constitution §16`, Architect-exclusive,
+so no repair is attempted.
+
+**A related finding, recorded so nobody "fixes" it:** `Freeze §3` presents the
+invariants as *"quoted verbatim"*, but invariants 1, 2 and 10 now read
+*Platform Division* in the Domain Model and *Department* in the Freeze. **That
+is `ADR-0010` working exactly as specified** — bounded amendment, *"nothing else
+in the repository may change."* **The Freeze must keep its wording.**
+
+## 36.5 Canon confirms the correspondence map's central restraint
+
+`Domain Model §8`: *"This document defines the conceptual domain only. It does
+not define, imply, or constrain **repository layout** … those are separate,
+later artifacts that will be **projections of this model, not extensions to
+it**."*
+
+`IMPLEMENTATION-CORRESPONDENCE-MAP.md §7` found four Division↔boundary name
+correspondences and converted **none** into ownership. **The Domain Model states
+the reason independently.** `Correspondence ≠ ownership` is a canonical
+architectural boundary, not this corpus's caution.
+
+## 36.6 A dead end that was not one
+
+`E-80` recorded that `Policy` is a reserved concept with no ratified entity while
+being a PD-03 domain concern, and stopped there. **`Domain Model §9` says
+more:** *"Policy … **modeled as a category of Knowledge**."*
+
+**`E-80` was correct and incomplete.** No `Policy` entity may be constructed —
+that stands — but the corpus had recorded a dead end where canon supplies a
+mapping: Policy is representable as Knowledge, homed to a Division, entered only
+through governed promotion.
+
+**This is the second time in three cycles that a "blocked" finding was narrower
+than recorded** (`§34.2` was the first). The pattern is now explicit: **this
+corpus has repeatedly mistaken *"I cannot construct X"* for *"canon says nothing
+about X."***
+
+## 36.7 A verification claim written before the verification — third occurrence
+
+The draft stated: *"No division record in this corpus does — verified by
+inspection, not assumed."* **I then inspected.** Five hits, all `Claude` /
+`Claude Code` — a provenance heading, quoted document metadata, and quoted
+governance constraints. **None is a definitional reference**, which is what
+`§8` actually constrains, so the underlying claim holds — but not as stated.
+
+**Corrected to state the actual result.** This is the **third consecutive cycle**
+in which I wrote *"verified"* prospectively and the inspection returned something
+requiring qualification (`§34.3`, `§35.4`, here). **The pattern is systematic,
+not incidental**, and is recorded as such: the word "verified" is being produced
+by the drafting habit rather than by the check. Each instance has been caught
+pre-commit; **that is a mitigation, not a fix.**
+
+## 36.8 Status dimensions, separately (`§12`, `§23`)
+
+| Dimension | Status |
+|---|---|
+| **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED.** Unchanged. Gates: Phase 4–9 all 0%; exit criteria unratified; activation non-delegable |
+| **Platform Organization Construction — PD-01–PD-10** | **ACTIVE. 8 of 10 dimensions answered at model level** — Identity, Authority, Ownership, Capability, Architecture, Lifecycle, Integration, Evolution. Per-division assignment blocked at `G-09`; per-division content at `G-01`/`ESC-C7-01` |
+| **Autonomous Execution Programme** | **ACTIVE — not exhausted** |
+
+**Neither is reported as the other.**
+
+## 36.9 Regression
+
+`native_core` **801 OK** (1 expected failure, `GDR-0014`) · `consumers` **276
+OK** · `tools` **198 OK**.
+
+## 36.10 Re-discovery after construction (`§17`)
+
+**What this construction revealed:**
+
+- **Operation and Performance are the only two dimensions left**, and
+  `canonical-domain-model-v1.md` is now read **in full** (`§1`–`§11`) without
+  treating either. **Whether a model-level answer exists for them is genuinely
+  open** — asserted neither way. The Encyclopedia's PD-03 Part D and Part E
+  address them per-division and non-residently.
+- **`G-05` now stands against four distinct rules** (invariant 10, invariant 11,
+  `Freeze §6`, `Freeze §2`), one of them a **positive obligation** — the
+  dependency graph *"must remain queryable and observable at all times"*.
+- **A Sub Division would be a fourth Spine level**, behind an architectural
+  decision (`Domain Model §8`) — a constraint on work the Encyclopedia defers to
+  *"later architecture layers"*.
+- `PD-07`'s *"Infrastructure & **Platform**"* scope question is **not** resolvable
+  by constructing a `Platform` entity — `§9` makes `Platform` a posture of a
+  Capability.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.** Exhaustion is not claimed and
+has not been substantively tested since the last material construction.
+
+## 36.11 Repeatability
+
+**Twenty-two cycles · 62 valid executions · 84 correct stops · 1 overreach · 13
+disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**

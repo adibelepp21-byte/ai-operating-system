@@ -900,3 +900,117 @@ construction.**
 Recorded because it is the one construction lifecycle this repository has
 actually operated, and it brackets construction between **two authority gates**
 — Stage 1 and Stage 4.
+
+---
+
+# Cycle 22 — `E-87` … `E-92`
+
+**Source:** `canonical-domain-model-v1.md §7`–`§10`, previously unread.
+
+## `E-87` — Capability creation is restricted by design, and canon says so
+
+**Source:** `Domain Model §10`, *Autonomous Capability Creation*. **Class: [A]
+canonical.**
+
+> *"Capability creation is **intentionally, not accidentally, restricted to
+> architect-approved decisions** … **This is a deliberate constraint for the
+> foreseeable future, not a gap.**"*
+
+Trigger for revisiting: *"only if AIOS moves toward higher autonomy where an
+Agent may need to **propose** new Capabilities rather than operate solely within
+architect-defined ones."*
+
+**The most direct canonical statement of the boundary this corpus operates
+under.** And note the verb — even under future higher autonomy, an Agent
+***proposes***. **`Recommendation ≠ Decision`, in canonical text.**
+
+## `E-88` — fifteen invariants, no `INV-` prefix, and one identified gap
+
+**Class: [E] verified.**
+
+`Domain Model §7` states **fifteen** invariants as a plain numbered list. **The
+token `INV-` occurs zero times in the Canonical Domain Model** — that notation
+is `Freeze §3`'s.
+
+**(a)** `Freeze §3` presents them as *"quoted verbatim"*, but invariants 1, 2 and
+10 now diverge: `Domain Model §7` #10 reads *"**Cross-Platform-Division**
+Capability dependencies"* where `Freeze §3` has *"**Cross-Department**"*. **This
+is `ADR-0010` working as designed** — a bounded amendment to the Domain Model
+only, with *"nothing else in the repository may change."* **No correction
+proposed; the Freeze must retain its wording.**
+
+**(b)** `Constitution §6.1` binds *"invariants 1–14"*. The unbound fifteenth is
+**minimal cardinality**: *"An Agent Definition may specify zero or more Skills
+and zero or more Workflows … No minimum cardinality is required."* **Previously
+escalated as a count discrepancy; now escalated as a specific invariant.**
+Amendment is `Constitution §16`, Architect-exclusive.
+
+## `E-89` — invariant 11: the dependency graph must be observable
+
+**Class: [C] canonical constraint.** *"The full graph of Capability dependencies
+must remain **queryable and observable at all times** — no undocumented
+dependencies."*
+
+A **positive obligation** not previously recorded here. `G-05` now stands
+against four distinct rules: invariant 10 (approval), `Freeze §6` (inferred
+relationships not frozen), `Freeze §2` (`[O]` reserved), and invariant 11
+(documented and queryable). **Not currently violable** — no Capability is
+assigned to any Division — and live the moment `G-09` resolves.
+
+## `E-90` — repository layout is a projection, not part of the model
+
+**Source:** `Domain Model §8`. **Class: [A] canonical.**
+
+> *"This document defines the conceptual domain only. It does not define, imply,
+> or constrain **repository layout** … those are separate, later artifacts that
+> will be **projections of this model, not extensions to it**."*
+
+**Direct canonical confirmation of `IMPLEMENTATION-CORRESPONDENCE-MAP.md §7`.**
+That map found four Division↔boundary name correspondences and declined to
+convert any into ownership. **`Correspondence ≠ ownership` is the Domain Model's
+own boundary, not this corpus's caution.**
+
+`§8` also fixes two further constraints: the **Spine is three levels** and *"not
+to be deepened or bypassed without an architectural decision"* — so a **Sub
+Division would be a fourth level**, behind an architectural decision (bearing on
+`E-56`, where PD-03 `A6` defers Sub Divisions to *"later architecture layers"*);
+and **only Runtime and Tool** may name external technology.
+
+## `E-91` — `home ≠ ownership ≠ privacy`
+
+**Source:** `Domain Model §8`. **Class: [C] canonical constraint.**
+
+> *"Substrate entities are cross-cutting … **not owned by, or private to, any
+> single Platform Division**, Capability, or Agent."*
+
+Paired with `§5` — each Knowledge item *"has a home Platform Division"* — this
+adds a third term to `DIVISION-OWNERSHIP-MODEL.md §1`'s `home ≠ ownership`.
+**A home Division is a locus of accountability, not a boundary of access.**
+**A strengthening of that model, not a correction** — nothing in it becomes
+wrong.
+
+**Also corroborating:** `Domain Model §5` states the full ownership table in
+**current `Platform Division` terminology**, matching the model built last cycle
+from `Freeze §4`'s `Department` wording, row for row.
+
+## `E-92` — `Policy` is placed, not merely excluded
+
+**Source:** `Domain Model §9`. **Class: [A] canonical.**
+
+> *"**Policy** as a top-level entity — **modeled as a category of Knowledge**."*
+
+**`E-80` was correct and incomplete.** No `Policy` **entity** may be constructed
+— that stands. But `E-80` recorded a dead end where canon supplies a **mapping**:
+PD-03's `Policy` domain concern is representable as **Knowledge**, homed to a
+Division (`§5`), entered only via governed promotion (invariant 8), durable
+(invariant 7).
+
+**Not acted on** — assigning a home requires knowing which Division (`G-09`).
+The mechanism is recorded; no assignment is made.
+
+**Three further non-goals recorded:** *Product/Service/**Platform**/Ecosystem*
+are *"exposure/maturity postures of a Capability, not new structural
+concepts"* — bearing on `PD-07`'s open *"Infrastructure & **Platform**"* scope
+question, which it does not resolve but does bar answering by constructing a
+`Platform` entity; *Process* is not distinct from Workflow; *ADR/RFC* are
+process artifacts about the model, not in it.
