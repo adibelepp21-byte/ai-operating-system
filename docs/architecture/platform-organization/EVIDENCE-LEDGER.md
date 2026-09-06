@@ -724,3 +724,99 @@ satisfy, not a preference."*
 
 **`Capability First` (INV-1/2) is a further frozen dependency on the
 accountability-unit population**, reinforcing `E-67` and `G-09`.
+
+---
+
+# Cycle 20 — `E-78` … `E-82`
+
+## `E-78` — the frozen ownership model, complete
+
+**Source:** `AIOS_ARCHITECTURE_FREEZE_v1.0.md §4`. **Class: [A] canonical
+(frozen).**
+
+Twelve ratified entities, each carrying an explicit *Ownership* clause. A
+Platform Division owns **exactly two** entity types — **Capability** (`INV-1`,
+*"exactly one Department"*) and **Agent Definition** (`INV-2`, *"exactly one
+Department"*).
+
+Three further relations are **not** ownership: Agent Instance is *"not owned —
+transient, accountable to the Department owning its Definition"*; Memory is
+*"scoped by the producing Agent Instance/Department"*; Knowledge is owned
+*"collectively by the Organization, each item with a home Department."*
+
+Five entities are *"owned centrally"* — **Skill, Workflow, Tool, Runtime** (plus
+Organization as root). **Trace is *"owned by no one — governed only by retention
+policy."***
+
+**Constructed into `DIVISION-OWNERSHIP-MODEL.md`.** The `§16` Ownership
+dimension is now answered at **model level** for all ten divisions, from frozen
+source, **assigning nothing to any division.**
+
+## `E-79` — *"owns Runtime"* means two different things in two frozen sources
+
+**Class: [E] verified · [U] latent collision.**
+
+`Freeze §4`: the **Runtime entity** is *"owned centrally"*, *"a facility, not an
+actor."* Frozen `PD-02 B7:212`: ***"PD-05 owns Runtime."***
+
+**Not a violation — `domain accountability ≠ entity ownership`.** `PD-05`'s
+record had already drawn the distinction before this artifact existed
+(*"organizational division that owns the Runtime **domain**"*;
+`owns the Runtime DOMAIN` vs `implements runtime BEHAVIOUR`), and `Freeze §4`
+confirms that reading.
+
+**Recorded as latent:** a reader taking *"PD-05 owns Runtime"* as **entity**
+ownership would contradict frozen canon. A sweep of `divisions/` confirms **no
+other record claims ownership over any of the five centrally-owned entities.**
+
+## `E-80` — `Policy` and `Permission` are reserved non-entities
+
+**Source:** `Freeze §2`, Vocabulary Freeze §3.3. **Class: [C] canonical
+constraint · `[O]` Architect-reserved.**
+
+*"Reserved concepts with no ratified entity — Identity, Context, State-as-entity,
+Resource, Artifact, Task, Goal, Event, Checkpoint, **Permission**, **Policy**."*
+
+`E-56` records PD-03's canonical domain as *"**Policy** · Standards · Approval ·
+Control · Certification · Compliance."*
+
+**Not a contradiction, and must not be reported as one.** A Division may govern
+a domain without that domain being a Domain-Model entity — `E-56`'s own
+principle, *"governance responsibility is distinct from execution ownership."*
+
+**Operative constraint:** **no `Policy` or `Permission` entity may be
+constructed** for PD-03 or any Division. `Freeze §4` states **"No new
+entity."** Verified: no such entity exists anywhere in this corpus.
+
+## `E-81` — the Organization may not execute
+
+**Source:** `Freeze §4`, Organization. **Class: [C] canonical constraint.**
+
+*Organization — "hierarchy root … accountability root. **Forbidden** [A]: acting
+as an executor; mutating Trace."* Only an Agent Instance acts — *"the only
+actor"* — producing *"exactly one Trace"* unconditionally (`INV-4`).
+
+**Bearing on `PD-01 Executive Office` [D]:** whatever an Executive Office is, it
+cannot be the Organization acting. **Not resolved** — `PD-01` is an integration
+record and `G-09` leaves *Executive Office* shared across two populations.
+Recorded as a constraint future `PD-01` construction must satisfy.
+
+## `E-82` — the freeze boundary, stated explicitly
+
+**Source:** `Freeze §2`. **Class: [A] canonical.**
+
+Frozen: twelve entities · Observed relationships · Vocabulary · ten layers ·
+responsibilities · **"all fifteen Domain-Model invariants"** · governance
+boundaries · building blocks · ten native systems.
+
+**Explicitly outside:** the **Inferred** relationships — *Capability↔Skill/
+Workflow; Agent-Instance↔Skill/Knowledge; Runtime↔Workflow* — marked **`[O]`
+reserved, "not frozen"**; the eleven reserved concepts (`E-80`); deferred
+architecture; and **all implementation (§9)**.
+
+**Two consequences.** (a) `Freeze §2` says **fifteen** invariants while
+`Constitution §6.1` binds *"invariants 1–14"* — the Cycle 13 finding, now
+attested in a second location; already escalated, amendment being non-delegable.
+(b) `G-05`'s derived edges fall in the **inferred** category, which is
+`[O]` **Architect-reserved and not frozen** — a third independent reason the
+edges stay derived.

@@ -2849,3 +2849,172 @@ they are intended.
 
 **Nineteen cycles · 55 valid executions · 77 correct stops · 1 overreach · 10
 disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**
+
+---
+
+# 34. Cycle 20 — the Ownership dimension, answered from frozen source
+
+**Date:** 2026-09-06 · **Instrument:** `ACT-CC-P10-FINAL` (re-issued, 35
+sections) · **Authority:** `FDE-P10-AUTONOMOUS-EXECUTION-01` Decision B,
+`DEL-T4.4-CF-001 §3.1 A/C`, `APT-CD1.1-AA-001`.
+
+**Executive result:** `Freeze §2` and `§4` read in full — the last unread
+sections of the ratified freeze. **One `§16` construction dimension answered**:
+`DIVISION-OWNERSHIP-MODEL.md` (187 lines). Five evidence entries (`E-78`…`E-82`).
+One over-clean claim in my own draft caught and corrected before commit. **Zero
+Founder Events. Zero Acts. Zero ownership assignments.**
+
+## 34.1 The Charter approval, and why it is recorded but not acted on
+
+**`§1` of this Act does something no prior Act did:** it explicitly approves and
+activates the **AIOS Co-Founder Delegation Charter v1.0** by name, and `§34`
+records `Decision: APPROVED` over the Founder's signature.
+
+`ESC-C5-01` found the Charter non-effective on two grounds. **One is now
+resolved and one is not.** Re-read from source, the Charter's own header states:
+
+> *"**Effective:** Upon Founder approval **and** registration in the AIOS
+> canonical governance source"*
+
+and its `§20` still records `Status: Pending Founder Approval`.
+
+| Condition | State |
+|---|---|
+| Founder approval | **SATISFIED** — this Act, `§1` and `§34` |
+| Registration in the canonical governance source | **NOT SATISFIED** — no Charter entry exists in the Delegation Register |
+
+**The conditions are conjunctive.** Approval alone does not make it effective by
+its own terms.
+
+**I am not registering it, and the reason is the whole point of the instrument.**
+Registration would make effective a Charter that **expands my own authority** —
+its `§4.3` provides that *"silence from Founder SHALL NOT be interpreted as
+prohibition"*, and its `§11`/`§12` grant Persistence and Act authority beyond
+what I now hold. Performing that registration myself would be self-activation in
+substance whatever its clerical form, and `DEL-T4.4-CF-001 §3.2` **exclusion 19**
+bars a delegation activating itself. `Freeze §8` wall 5 says the same from
+ratified architecture.
+
+**This is emphatically not a blocking escalation, and this cycle proves it.**
+Nothing in the work graph required the Charter's additional latitude; a full
+construction dimension was completed under existing authority in the same cycle.
+`ACT-CC-P10-FINAL §9` — *escalation of one frontier must not halt execution of
+other authorized work* — is satisfied by continuing, not by pausing.
+
+**The minimum Founder action, if the Charter is intended to be operative:** a
+registration entry in the canonical governance source. **One line. Not mine to
+write.**
+
+## 34.2 A dimension that was answerable for twenty cycles
+
+`§16` names **Ownership** among the construction dimensions. This corpus has
+recorded Ownership as *evidenced for 3 divisions, partial for 3, absent for 2* —
+and treated it as supply-blocked at `G-01`.
+
+**The corpus was asking a per-division question and calling the general question
+blocked.** `Freeze §4` ratifies twelve entities, **each with an explicit
+Ownership clause**, and together they state exactly what any Platform Division
+owns, does not own, and may never own — for all ten, without naming one.
+
+**A Platform Division owns exactly two entity types:** Capability (`INV-1`) and
+Agent Definition (`INV-2`), each *"exactly one Department"*. Three further
+relations are **not** ownership — Agent Instance is *accountable-to*, Memory is
+*scoped-by*, Knowledge has a *home*. **Five entities are owned centrally** —
+Skill, Workflow, Tool, Runtime — and **Trace is owned by no one.**
+
+**This is the `§16` Ownership dimension, answered at model level, from frozen
+source, assigning nothing.** The per-division assignments remain `G-01`,
+`ESC-C7-01` and `G-09`. **What was blocked was narrower than what was being
+called blocked** — a `§13` falsification result that no inventory of unread
+files would have produced.
+
+## 34.3 An over-clean claim in my own draft
+
+The draft asserted: *"No division record in this corpus makes such a claim —
+verified, not assumed."* **I then verified it, and it was not that clean.**
+
+`PD-05-runtime-and-execution.md:22` quotes frozen `PD-02 B7:212`: ***"PD-05 owns
+Runtime."*** `Freeze §4` says the **Runtime entity** is *"owned centrally."*
+
+**Not a violation — `domain accountability ≠ entity ownership`** — and `PD-05`'s
+record had **already** drawn that distinction before this artifact existed,
+carrying `owns the Runtime DOMAIN` against `implements runtime BEHAVIOUR`.
+`Freeze §4` confirms the reading.
+
+**The claim was corrected to state what is actually there**, with the collision
+recorded as latent (`E-79`): a reader taking *"PD-05 owns Runtime"* as entity
+ownership would contradict frozen canon. **The word "verified" was written
+before the verification.** Catching it required running the check rather than
+trusting the sentence — the same failure class as `VF-9`, caught one step
+earlier.
+
+## 34.4 `Policy` is PD-03's domain and not an entity
+
+`Freeze §2` lists eleven *"reserved concepts with no ratified entity"*,
+including **`Policy`** and **`Permission`**. `E-56` records PD-03's canonical
+domain as *"**Policy** · Standards · Approval · Control · Certification ·
+Compliance."*
+
+**A contradiction was available here and would have been wrong.** A Division may
+govern a domain without that domain being a Domain-Model entity — which is
+`E-56`'s own principle, *"governance responsibility is distinct from execution
+ownership."*
+
+**The real constraint:** no `Policy` or `Permission` **entity** may be
+constructed, for PD-03 or anyone. `Freeze §4`: **"No new entity."** Verified —
+none exists in this corpus.
+
+## 34.5 A third independent reason `G-05` stays derived
+
+`Freeze §2` places the **Inferred** relationships explicitly outside the freeze,
+marked **`[O]` reserved, *"not frozen"***. `G-05`'s five derived inter-PD edges
+are inferred relationships.
+
+**Three independent bases now, from three documents:** `INV-10` requires
+governance approval (`E-69`); `Freeze §6` says inferred relationships are not
+frozen (`E-75`); `Freeze §2` marks the category `[O]` Architect-reserved
+(`E-82`). **A restraint that three ratified sources independently require is not
+excess caution.**
+
+## 34.6 Status dimensions, separately (`§14`, `§15`, `§29`)
+
+| Dimension | Status |
+|---|---|
+| **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED.** Unchanged by this cycle. Gates: Phase 9 immaturity (Phase 4–9 all 0%), unratified exit criteria, non-delegable activation |
+| **Platform Organization Construction — PD-01–PD-10** | **ACTIVE.** Integration dimension complete (Cycle 17–18); **Ownership dimension complete at model level (this cycle)**. Per-division assignment blocked at `G-09`; per-division content blocked at `G-01`/`ESC-C7-01` |
+| **Autonomous Execution Programme** | **ACTIVE — not exhausted.** See `§34.8` |
+
+**Neither construction dimension is reported as progress in the other, and
+neither is reported as Phase 10 progress.**
+
+## 34.7 Regression
+
+`native_core` **801 OK** (1 expected failure, `GDR-0014`) · `consumers` **276
+OK** · `tools` **198 OK**.
+
+## 34.8 Falsifying exhaustion (`§13`, `§28`)
+
+**Not claimed.** This cycle is itself a `§13` result: **a dimension recorded as
+blocked for twenty cycles was answerable from a document already resident.** The
+block was real for the per-division question and false for the general one, and
+no file-inventory falsification would have found that — only re-asking what the
+dimension was actually asking.
+
+**That generalizes, and is the honest next step:** the remaining `§16` dimensions
+— **Authority, Capability, Architecture, Operation, Performance, Lifecycle,
+Integration, Evolution** — have each been treated as per-division and therefore
+blocked. `Freeze §4` supplies *Lifecycle* (**"governed"** for every Spine
+entity, *"ephemeral"* for Instance, *"permanent"* for Trace) and *Responsibility*
+clauses per entity. **At least Lifecycle and Authority are likely answerable at
+model level by the same method, and have not been attempted.**
+
+Also open: whether any `G-05` edge is a Capability dependency specifically;
+the four informational orphan findings; `INV-15` minimal-cardinality question
+(`DIVISION-OWNERSHIP-MODEL.md §7`), deliberately left unspecified.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.**
+
+## 34.9 Repeatability
+
+**Twenty cycles · 57 valid executions · 79 correct stops · 1 overreach · 11
+disclosed failures · 0 Founder Events · 0 Acts created · 1 code change.**
