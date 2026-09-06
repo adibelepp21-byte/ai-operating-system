@@ -124,10 +124,21 @@ evidence of completeness.
 > **`E-46` materially qualifies the word "P10" throughout this corpus.** The
 > Master Program's **Phase 10 — Department Ecosystem** stands at **0%, not
 > started**. The work this repository has executed under the label "P10" is the
-> **Platform Organization Construction Track**, which the Platform Encyclopedia
-> defines as **Track B, parallel to Phase 1–13 and explicitly not a Phase**
-> (`ACT-CC-P6-070` records that the Roman-numeral Master Program volumes and the
-> Arabic Encyclopedia volumes *"index different things"*).
+> **Platform Organization Construction Track**. `ACT-CC-P6-070` records that the
+> Roman-numeral Master Program volumes and the Arabic Encyclopedia volumes
+> *"index different things."*
+>
+> **Warrant corrected 2026-09-06 — `VF-9`.** This entry previously added *"which
+> the Platform Encyclopedia defines as **Track B, parallel to Phase 1–13 and
+> explicitly not a Phase**."* **That clause is withdrawn as false.** The string
+> occurs only in this repository's own derived files — **zero occurrences in any
+> source** — and the Platform Encyclopedia is not resident, so it could not have
+> been read from there. The nearest true statement, `Master Program Volume II
+> §8`, concerns **Track Graphify** and says **Phase 0-13**. The *"Track B"* label
+> is separately withdrawn: `ACT-CC-REM-003.0 §9` uses **Track B for Native Core**
+> and **Track A** for this documentation work — the inverse. **`E-46`'s
+> conclusion is unchanged and is now carried by `E-59`, `E-60` and `E-65`, which
+> are source-anchored.**
 >
 > **These are two different things sharing a number.** Nothing in this corpus
 > advances Master Program Phase 10, and no statement here should be read as
@@ -279,3 +290,227 @@ closes the roster with *"PD-02 tidak menjadi owner atas domain tersebut"* —
 PD-02 is not the owner of those domains. That is `E-03`'s non-subordination rule
 stated independently inside the **frozen** corpus, so the rule rests on two
 sources of different authority rather than one.
+
+---
+
+# Cycle 16 — `E-56` … `E-66`
+
+Eleven entries from three catalogued-but-unread sources: the **Platform
+Encyclopedia Volume 3 Handoff Edition**, the **AIOS Master Program v1.0
+(complete)**, and an **archive-level assessment** of the four Graphify bundles.
+
+## `E-56` — PD-03 canonical identity, from the Encyclopedia itself
+
+**Source:** `AIOS Platform Encyclopedia — Volume 3, PD-03 Governance &
+Compliance` (Handoff Edition), §1. **Class: [A] canonical.**
+
+PD-03's canonical authority is **Governance Authority**. Its documented domain:
+*"Policy · Standards · Approval · Control · Certification · Compliance."* The
+stated canonical principle is:
+
+> **"Governance responsibility is distinct from execution ownership."**
+
+§1 further records that PD-03 governance responsibility *"does not automatically
+transfer ownership of Architecture, Security, Quality, technical execution, or
+operational management belonging to other Platform Divisions."* This is `E-03`'s
+non-subordination rule appearing a **third** time, now in the Encyclopedia's own
+handoff artifact.
+
+## `E-57` — the three source-fidelity classes, and a named Class C section
+
+**Source:** same, §14 and §11. **Class: [A] canonical.**
+
+Volume 3 declares three source-fidelity classes: **A** Direct / Strong Source
+Support · **B** Bounded Canonical Synthesis · **C** Bounded Reconstruction.
+Class C is admissible *only* when all four hold: source-supported principles
+exist; domain boundaries are preserved; unsupported authority is not introduced;
+**the qualification is explicitly disclosed.**
+
+**One section is named as Class C:** §11 records that **`H1` — Evolution
+Constitution** *"was constructed as Bounded Domain Reconstruction because an
+exact literal H1 source section was not found in the available baseline. That
+qualification is part of the canonical record and must not be silently
+removed."*
+
+**This is the first section-level source-fidelity qualification this corpus has
+held from a canonical source.** Recorded into
+`VOLUME-SECTION-STATUS-MATRIX.md`.
+
+## `E-58` — the Encyclopedia forbids the workaround this corpus twice declined
+
+**Source:** same, §17 *Handoff Rule*. **Class: [C] canonical constraint.**
+
+> **"This handoff file must not be used to reconstruct missing prose by
+> inference."**
+
+§17 adds that the *"complete section bodies already established in the project
+source/repository remain the authoritative payload"*, and that a divergence is
+to be *"classif[ied]"* and *"report[ed]"* — *"Do not silently rewrite the
+canonical source."* §15 rule 7 restates it: *"Treat repository discrepancies as
+reconciliation findings."*
+
+**Bearing on `ESC-C7-01`:** the reconstruction workaround declined at `§23.1`
+and again at `§24.3` is now **independently prohibited by the canonical source
+itself**, not merely by this delegation's restraint. The escalation stands
+unchanged; its correctness is no longer resting on my judgement alone.
+
+## `E-59` — Phase 10 is six Departments, and they are named
+
+**Source:** `Master Program Volume II §4.3`; `Volume VII §1.1`, `§3`.
+**Class: [A] canonical.**
+
+Phase 10's deliverable is *"Department Ecosystem: **Executive Office,
+Engineering, Finance, Research, Marketing, Content**"*. Exit criterion:
+*"Minimal satu Department beroperasi dengan SOP dan workflow sendiri."* Status:
+*"Konsep contoh tersedia; SOP/workflow/capability belum dibuat."* `Volume VII
+§1.1` states it is *"rincian dari Phase 10 pada Volume II."*
+
+`Volume VII §2.1` defines a Department as *"kumpulan agent yang terorganisir di
+sekitar satu fungsi bisnis, beroperasi dengan SOP dan workflow sendiri, namun
+tetap tunduk penuh pada Governance Layer."*
+
+## `E-60` — Phase 10 is gated on Phase 9, and Phase 4–9 are all 0%
+
+**Source:** `Volume VII §1.2`; `Volume II §5`; `Volume I` Progress Tracker.
+**Class: [A] canonical.**
+
+`Volume VII §1.2`: Department (Phase 10) *"**baru sah dibangun** setelah
+Workflow Ecosystem (Phase 9) matang"* — only **lawfully** built after Phase 9
+matures — *"Department pada dasarnya adalah kumpulan workflow multi-agent yang
+terorganisir di sekitar satu fungsi bisnis, bukan struktur yang berdiri sendiri
+di luar Workflow Ecosystem."* The same section records: *"Per 26 Juli 2026,
+Phase 4-9 seluruhnya masih 0%. Volume VII karena itu bersifat **cetak biru
+struktural, bukan spesifikasi siap-implementasi**."*
+
+`Volume II §5` states the dependency `10 Department Ecosystem ← Phase 9`. The
+Progress Tracker records Phase 4, 5, 6, 7, 8, 9 each at **0% / Belum Dimulai**.
+
+**Consequence [D]:** Phase 10 construction is **canonically barred**, and the
+bar is a source rule rather than a restraint decision of this delegation.
+
+## `E-61` — Department activation authority is non-delegable
+
+**Source:** `Volume VII §4.1`. **Class: [C] canonical constraint.**
+
+> *"seluruh keputusan yang mengesahkan sebuah Department mulai beroperasi (SOP
+> disetujui, workflow diverifikasi) tetap berada pada **Pemilik Program**, bukan
+> didelegasikan ke Department itu sendiri atau ke Executive Office — **bahkan
+> setelah Executive Office diimplementasikan**. Delegasi otoritas semacam itu
+> baru relevan pada tahap Autonomous Organization (Phase 11), dan itu pun tetap
+> dalam batas yang ditetapkan governance manusia."*
+
+`§2.2` adds that a Department *"tidak dapat mengubah SOP-nya sendiri secara
+sepihak"* and *"tidak dapat memanggil kapabilitas di luar yang diizinkan
+Governance Layer, walau secara teknis kapabilitas tersebut tersedia."*
+**Capability ≠ Authority, stated in the Master Program's own words.**
+
+## `E-62` — Phase 5–13 exit criteria are unratified, and ratification is reserved
+
+**Source:** `Volume V §3` gate table. **Class: [A] canonical.**
+
+Every row of the Volume V authority column reads **"Pemilik Program
+(Moriarty)"**. The row *"Exit criteria Phase 5-13 disahkan menjadi kriteria
+terukur"* is triggered only when *"Phase yang bersangkutan akan dimulai dalam
+waktu dekat (H-1 Phase pada Progress Tracker)"*. §3.1: *"setiap keputusan
+penting tetap satu tangan."*
+
+**Consequence [D]:** Phase 10's exit criterion is not yet ratified as a
+measurable criterion. Its ratification trigger — being next in line — has not
+occurred.
+
+## `E-63` — the two-Charter finding, now corroborated at Constitutional layer
+
+**Source:** `Master Program Volume I, Pasal 7` (as amended v1.3).
+**Class: [A] canonical.**
+
+Pasal 7's Layer 3 (Governance Layer) is enumerated as *"AIOS Leadership Maturity
+Model (ALMM), AIOS Project Governance, Engineering Charters (**mis. AIOS Claude
+Engineering Charter**)"*.
+
+**This corroborates `E-55` from a higher layer than the Bundle did.** The
+`AIOS Claude Engineering Charter` is a distinct instrument from the
+`AIOS Co-Founder Delegation Charter` (`ESC-C5-01`, recovered, self-recorded
+*Pending Founder Approval*). The conflict recorded at `E-55` is unchanged; only
+its evidential basis is now stronger.
+
+Pasal 7 also places **Master Program (Volume II–VIII) at Layer 5, Strategic** —
+below Canonical and Governance. This is consistent with `GDR-0001`, which
+already determined that for repository artifacts precedence runs by
+`Engineering Constitution §4`.
+
+## `E-64` — the Master Program's spine chain matches the Domain Model's
+
+**Source:** `Volume II §8.1` (Graphify G1 output); `canonical-domain-model-v1.md`
+§1, §7. **Class: [D] derived from two canonical sources.**
+
+Graphify phase **G1** produces *"Peta AIOS resmi:
+**Organization→Department→Capability→Agent→Execution→Runtime**"*. The Canonical
+Domain Model's Spine reads *"Organization, Platform Division, Capability"*, with
+*"Organization **owns** Platform Division"* and *"Platform Division **owns**
+Capability"*.
+
+**The chains are identical once `ADR-0010`'s rename is applied.** `ADR-0010`
+records `Department` as the **historical alias** of `Platform Division` for the
+same entity. So the Master Program's `Department` and this corpus's
+`Platform Division` denote **the same entity type**.
+
+## `E-65` — same entity type, two irreconcilable populations
+
+**Class: [D] derived · escalated as `G-09`.**
+
+| | Population | Count |
+|---|---|---|
+| `Master Program Volume VII §3` | Executive Office · Engineering · Finance · Research · Marketing · Content | **6** |
+| Platform Organization corpus | Executive Office · Architecture Office · Governance & Compliance · Knowledge & Intelligence · Runtime & Execution · AI Engineering · Infrastructure & Platform · Security · Quality & Evaluation · Developer Experience | **10** |
+
+**Exactly one name appears in both: `Executive Office`.** Five of the six
+Departments — Engineering, Finance, Research, Marketing, Content — have no
+Platform Division counterpart, and Finance, Marketing and Content are absent
+from the Platform Division population entirely. Nine of the ten Platform
+Divisions have no Department counterpart.
+
+**Not resolved here.** `E-64` establishes these are populations of the *same
+entity type*; two canonical sources therefore enumerate that type
+incompatibly. Resolution is a **Canonical Domain Model semantic** determination,
+which `DEL-T4.4-CF-001 §3.2` **exclusion 9** withholds from this delegation, and
+`APT-CD1.1-AA-001 §3.2` exclusion 25 withholds from the Architecture Authority
+as to Volume 1. Escalated as **`G-09`**.
+
+**The `Executive Office` overlap is the sharper half:** `PD-01` is recorded in
+this corpus as an **integration record, REVIEWED**. Whether `PD-01 Executive
+Office` and `Volume VII §3.1 Executive Office` are one unit or two homonyms is
+**not determinable from resident sources** and is not assumed either way.
+
+## `E-66` — the Graphify archives sit at Intake, and Audit is barred
+
+**Source:** `Volume I Pasal 5`; `Volume III §4.1`; `Volume II §8.2`.
+**Class: [A] canonical · [E] empirical.**
+
+**[E]** Four distinct Graphify bundles are present as archives (with duplicates):
+`Graphify-2` (121 files), `Graphify-8/8_2` (626–922 files), `graphify-main`
+(948 files). Contents are source trees — TypeScript, Python, Markdown — not
+governance artifacts.
+
+**[A]** `Pasal 5`: a repository *"hanya dapat diproses menjadi bagian dari corpus
+AIOS setelah (a) AIOS native core selesai, dan (b) ada kebutuhan kapabilitas
+nyata."* `Volume III §4.1` defines the admission stages — **Intake → Audit →
+Reverse Engineering → Mapping → Integrasi** — where Intake is *"repository
+dicatat dan arsipnya dikumpulkan; **belum ada analisis**"*, and closes:
+
+> *"Tahap **Audit ke atas tidak akan dimulai untuk repository mana pun** di
+> registry sampai AIOS native core (Phase 2-4) selesai dan kebutuhan kapabilitas
+> nyata muncul."*
+
+Phase 4 stands at **0%**. `Volume II §8.2` records all Graphify phases G0–G8 as
+*Belum Dimulai*, and `Volume V §4.1` notes Graphify *"masih menunggu klasifikasi
+domain"*.
+
+**Determination [D]:** the archives are correctly at **Intake**. Analysing them
+further, or admitting any part into the repository, would begin the **Audit**
+stage — barred for **every** repository in the registry until Phase 2–4
+complete, and gated on Founder authority in any case (`Volume V §3`: *"Gate 2 —
+External Repository Audit dibuka … Pemilik Program (Moriarty)"*).
+
+**This is why the Graphify archives are catalogued and not opened further.** It
+is not an exhaustion claim and not restraint by preference — it is the admission
+rule.

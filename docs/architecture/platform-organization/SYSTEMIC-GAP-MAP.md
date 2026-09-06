@@ -142,6 +142,58 @@ twelve, and it was not made twelve.
 
 ---
 
+## G-09 — Two canonical sources enumerate the same entity type incompatibly
+
+**Opened 2026-09-06 · Cycle 16 · `E-64`, `E-65` · Status: OPEN — FOUNDER /
+ARCHITECT RESERVED**
+
+`ADR-0010` records `Department` as the **historical alias** of `Platform
+Division` — one entity, two names. `E-64` confirms the identity independently:
+the Master Program's Graphify `G1` spine chain
+*"Organization→Department→Capability→Agent→Execution→Runtime"* is the Canonical
+Domain Model's chain *"Organization owns Platform Division; Platform Division
+owns Capability"*.
+
+**Two canonical sources then populate that one entity type differently:**
+
+| Source | Members | Count |
+|---|---|---|
+| `Master Program Volume VII §3` (Phase 10) | Executive Office · Engineering · Finance · Research · Marketing · Content | **6** |
+| Platform Organization Encyclopedia (`PD-01…PD-10`) | Executive Office · Architecture Office · Governance & Compliance · Knowledge & Intelligence · Runtime & Execution · AI Engineering · Infrastructure & Platform · Security · Quality & Evaluation · Developer Experience | **10** |
+
+**Overlap: one name — `Executive Office`.** Whether that is one unit or two
+homonyms is **not determinable from resident sources**, and neither reading is
+adopted here.
+
+### Why this is not resolved in this corpus
+
+Resolution requires deciding what the Domain Model's organizational-unit entity
+enumerates. That is a **Canonical Domain Model semantic** determination:
+
+- `DEL-T4.4-CF-001 §3.2` **exclusion 9** withholds Domain Model semantic changes
+  from this delegation;
+- `APT-CD1.1-AA-001 §3.2` **exclusion 25** withholds Volume 1 modification from
+  the Architecture Authority;
+- `Engineering Constitution §4` places the Canonical Domain Model second in
+  precedence, below the Constitution only.
+
+**No repair is manufactured.** Recording the conflict is the whole of the
+authorized action.
+
+### What this does *not* license
+
+It does not license renaming `PD-01`, adding Finance / Marketing / Content /
+Research as Platform Divisions, dropping any of the ten, or asserting that
+either list supersedes the other. `Volume III` Encyclopedia `§15` rule 3 —
+*"Do not silently broaden PD-03 authority"* — and rule 9 — *"Use higher-order
+canonical authority when resolving conflicts"* — both point the same way: the
+conflict is reported, not absorbed.
+
+**Escalated to:** Founder (Program Owner). `Master Program Volume V §3` reserves
+every status and criteria determination to *"Pemilik Program (Moriarty)"*.
+
+---
+
 ## Summary
 
 ```text

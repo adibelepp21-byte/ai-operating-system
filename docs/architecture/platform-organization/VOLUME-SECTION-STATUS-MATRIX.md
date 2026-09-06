@@ -183,3 +183,56 @@ derived five-part records stand as derived, and remain marked so.
 
 **None of the three is available to the Co-Founder.** All are recorded, none is
 acted on.
+
+---
+
+## 6. Cycle 16 addendum — PD-03's canonical Part registry, and one Class C section
+
+**Added 2026-09-06 · source: `AIOS Platform Encyclopedia — Volume 3, PD-03`
+(Handoff Edition), §2, §3, §11, §12, §14, §16 · `E-56`, `E-57`.**
+
+The Encyclopedia's own handoff artifact supplies PD-03's **canonical Part
+registry with architectural roles** — the first time this corpus has held it
+from a canonical source rather than derived it.
+
+| Part | Name | Status | Architectural role (canonical wording) |
+|---|---|---|---|
+| A | Platform Identity & Strategic Foundation | FROZEN | Identity, mandate, authority, boundary, principles, objectives, success |
+| B | Organization Architecture | FROZEN | Organizational model and structure |
+| C | Governance Architecture | FROZEN | Governance constitution, authority, decision, accountability, review, escalation, cross-platform governance |
+| D | Governance Operations | FROZEN | Governance operating mechanisms |
+| E | Performance Architecture | FROZEN | Performance constitution, measurement, review, governance, reporting, improvement, maturity, success |
+| F | Lifecycle Architecture | FROZEN | Controlled creation, restructuring, transition, retirement, dissolution and lifecycle governance |
+| G | Platform Integration | FROZEN | Platform integration and cross-platform relationship |
+| H | Platform Evolution | FROZEN | Controlled governance evolution, change, review, control, implementation, improvement and success |
+
+The terminal chain is `H1 → … → H10 — Evolution Success`, and §13 records **Part
+I as `NOT ESTABLISHED / NOT CONSTRUCTED`** — *"This is not an unresolved gap"* —
+with the instruction that Part I *"must not be inferred from alphabetic
+continuation or from a generic Platform taxonomy."*
+
+### `H1` is canonically qualified as Bounded Reconstruction
+
+**`E-57`.** §11 records that `H1 — Evolution Constitution` *"was constructed as
+Bounded Domain Reconstruction because an exact literal H1 source section was not
+found in the available baseline. **That qualification is part of the canonical
+record and must not be silently removed.**"*
+
+Under §14's three-class model — **A** Direct / Strong Source Support, **B**
+Bounded Canonical Synthesis, **C** Bounded Reconstruction — `H1` is the one
+section named **Class C**. Volume 3's overall source-fidelity is accordingly
+recorded as **`PASS WITH QUALIFICATION`**, not plain PASS.
+
+**Matrix consequence:** `PD-03 / Part H / H1` carries a **canonical
+source-fidelity qualification** that this corpus is required to preserve and
+forbidden to drop. It is the only section in either volume with such a marking.
+
+### What this does not change
+
+- **`C6-A1` remains open.** The registry confirms PD-03 has Parts A–H; it says
+  nothing about PD-04's three or the derived five, so the `A`–`E` vs `A`–`H`
+  question is untouched and still Architect-reserved.
+- **`ESC-C7-01` remains open.** §17 states the *"complete section bodies …
+  remain the authoritative payload"* and that this handoff file *"must not be
+  used to reconstruct missing prose by inference."* The registry is structure,
+  not body. **No Part or Section body was constructed from it.**

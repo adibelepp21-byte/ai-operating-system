@@ -67,21 +67,63 @@ deliberately rather than discovered again later.
 
 ## 1a. What "P10" means here — and what it does not
 
-**Clarified 2026-09-05** (`E-46`). The Master Program's Progress Tracker records
-**Phase 10 — Department Ecosystem at 0%, *Belum Dimulai***, as of its 26 July
-2026 snapshot.
+**Clarified 2026-09-05 (`E-46`). Warrant corrected 2026-09-06 (`VF-9`).** The
+Master Program's Progress Tracker records **Phase 10 — Department Ecosystem at
+0%, *Belum Dimulai***, as of its 26 July 2026 snapshot.
 
 **That is a different Phase 10 from the one this corpus has been built under.**
-The work here is the **Platform Organization Construction Track** — *Track B*,
-which the Platform Encyclopedia defines as running **parallel to Phase 1–13 and
-explicitly not as a Phase**. `ACT-CC-P6-070` records that the Roman-numeral
-Master Program volumes and the Arabic Encyclopedia volumes *"index different
-things."*
+The conclusion holds and is now evidenced directly rather than by label. Two
+independent source-anchored tests establish it:
 
-**Two different things share the number 10.** Nothing in this corpus advances
-Master Program Phase 10, and no statement here claims to. **Phase status is the
-Program Owner's determination on implementation evidence**, maintained
+**1. The populations do not match.** `Master Program Volume II §4.3` enumerates
+Phase 10's Department Ecosystem as exactly six units — *"Executive Office,
+Engineering, Finance, Research, Marketing, Content"* — detailed in `Volume VII
+§3` as **six** Departments. This corpus carries **ten** Platform Divisions
+(`PD-01…PD-10`). **Exactly one name is common to both lists: Executive Office.**
+Finance, Marketing, Content and Research have no Platform Division counterpart;
+nine Platform Divisions have no Department counterpart.
+
+**2. Phase 10 is gated, and the gate is shut.** `Volume VII §1.2`: Department
+(Phase 10) *"baru sah dibangun setelah Workflow Ecosystem (Phase 9) matang"* —
+only lawfully built after Phase 9 matures. `Volume II §5` states the dependency
+`10 ← 9`. The Progress Tracker records **Phase 4 through Phase 9 all at 0%**.
+Nothing this corpus contains could advance Phase 10, because Phase 10 cannot
+lawfully begin.
+
+### The label "Track B" is withdrawn from this corpus
+
+`VF-9a`. This corpus previously called the Platform Organization Construction
+Track *"Track B"*. That collides with, and **inverts**, the prior usage in
+`ACT-CC-REM-003.0 §9`, where **Track B is Native Core** and the Platform
+Organization Encyclopedia work is **Track A**. A third, unrelated *"Track B"*
+denotes a deferred bundling decision in `AIOS_DEC_F03_053` and
+`ACT_CC_F03_054`. **Three incompatible referents for one label**; this corpus
+drops it and uses **Platform Organization Construction Track** in full.
+
+### A citation this corpus asserted, and could not have held
+
+`VF-9b`. The earlier text read: *"which the Platform Encyclopedia defines as
+running parallel to Phase 1–13 and explicitly not as a Phase."* **That
+attribution is false and is withdrawn.** The string occurs **only in this
+repository's own derived files — zero occurrences in any source**. The Platform
+Encyclopedia is **not resident** (`ESC-C7-01`), so no such definition could have
+been read from it. The nearest true source statement is about a **different
+workstream** and a **different range**: `Master Program Volume II §8` says
+**Track Graphify** runs *"paralel dengan **Phase 0-13**, bukan sebagai Phase
+tersendiri."* Separately, `§4.2` records **Era 2** — the Master Program
+documentation activity — as *"bukan Phase teknis"*, running alongside Phase 3
+onward. Neither concerns the Platform Organization.
+
+The failure class is `E-41`'s: a citation that sat beside a true-sounding quote
+and was never tested for whether the cited source says it. **The conclusion
+survived the collapse of its stated warrant** — which is precisely why the
+warrant had to be checked rather than trusted.
+
+**Phase status remains the Program Owner's determination**, maintained
 canonically in `AIOS_CANONICAL_ARCHITECTURE.md`, which is **not resident**.
+`Master Program Volume V §3` reserves to *"Pemilik Program (Moriarty)"* both
+Phase status transitions and the ratification of Phase 5–13 exit criteria into
+measurable form. **Neither is available to this delegation.**
 
 ## 2. Artifacts
 
