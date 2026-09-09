@@ -156,6 +156,63 @@ def _has_section(path: Path, number: str) -> bool:
     return False
 
 
+# --- Ledger table check (Master Roadmap §27) -------------------------------
+#
+# Most canonical citations in the Evidence Ledger are table rows that carry the
+# quotation and the line number in *different columns*:
+#
+#   | **E-04** | Domain roster naming PD-03...PD-10 | `...A4.md` | :281-288 | ...
+#
+# The adjacency-based check cannot pair those, and that is exactly the shape of
+# the E-11 defect: a quotation attributed to a file and line that did not carry
+# it, undetected for twenty-six cycles. This check pairs them explicitly.
+
+LEDGER_ROW = re.compile(r"^\|\s*\*\*(E-\d+)\*\*\s*\|")
+LOCATION = re.compile(r":(\d+)(?:\s*[-\u2013\u2014]\s*(\d+))?")
+LEDGER_WINDOW = 2
+
+# Phrases that mark a quotation as *historical* — text the corpus is recording
+# as withdrawn, superseded, or corrected away, rather than attributing to the
+# cited source. E-13 quotes a phrase it explicitly says the row "previously
+# read"; pairing that with the row's line citation and reporting a mismatch
+# would be the checker misreading a correction as a claim. A corpus that
+# records its own retractions must not be penalised for doing so.
+# A source cell may name more than one file — E-11 carries two, paired
+# positionally with its two quotations and two line citations. Taking a prefix
+# of the cell yields a malformed path and a spurious "resolves to no file".
+SOURCE_TOKEN = re.compile(r"`([^`]+?)`")
+
+RETRACTION = re.compile(
+    r"(previously read|previously said|previously stated|formerly read|"
+    r"withdrawn|no longer reads|used to read|was corrected|is withdrawn)",
+    re.IGNORECASE,
+)
+
+
+def _ledger_rows(path: Path):
+    """Yield (line_no, id, claim, source, location) for each ledger table row.
+
+    ``same`` in the source column is a carry-forward to the previous row's
+    source; resolving it is required, not optional — a parser that treated it
+    as a filename would silently check nothing.
+    """
+    previous_source = None
+    for lineno, raw in enumerate(_lines(path), 1):
+        if not LEDGER_ROW.match(raw):
+            continue
+        cells = [c.strip() for c in raw.strip().strip("|").split("|")]
+        if len(cells) < 4:
+            continue
+        identifier = cells[0].strip("* ")
+        claim, source, location = cells[1], cells[2], cells[3]
+        bare = source.strip("`* ")
+        if bare.lower() == "same":
+            source = previous_source
+        elif bare:
+            previous_source = source
+        yield lineno, identifier, claim, source, location
+
+
 def _lines(path: Path) -> list[str]:
     """Split on newlines only — never ``str.splitlines()``.
 
@@ -323,8 +380,81 @@ def audit(roots: list[str]) -> dict:
                                 "message": "section heading not located (convention varies; unconfirmed, not disproved)",
                             })
 
+    # Ledger table rows: pair quotation with line citation across columns.
+    ledger = REPO_ROOT / "docs/architecture/platform-organization/EVIDENCE-LEDGER.md"
+    ledger_checked = 0
+    if ledger.is_file() and any((REPO_ROOT / r) in ledger.parents or
+                                str(ledger).startswith(str(REPO_ROOT / r))
+                                for r in roots):
+        rel = ledger.relative_to(REPO_ROOT).as_posix()
+        for lineno, ident, claim, source, location in _ledger_rows(ledger):
+            if not source:
+                continue
+            quotes = [" ".join(q.split()) for q in QUOTE.findall(claim)]
+            spans = LOCATION.findall(location)
+            if not quotes or not spans:
+                continue
+            sources = [t.strip() for t in SOURCE_TOKEN.findall(source)]
+            if not sources:
+                bare = source.strip("`* ").split()
+                sources = [bare[0]] if bare else []
+            if not sources:
+                continue
+            historical = bool(RETRACTION.search(claim))
+            for position, quote in enumerate(quotes):
+                if position >= len(spans):
+                    break
+                if historical:
+                    findings.append({
+                        "severity": "INFO", "source": f"{rel}:{lineno}",
+                        "citation": ident,
+                        "message": "HISTORICAL QUOTATION \u2014 row records a retraction; "
+                                   "quoted text is not attributed to the cited source",
+                    })
+                    continue
+                start = int(spans[position][0])
+                end = int(spans[position][1] or spans[position][0])
+                needle = quote.rstrip(".").strip()
+                if not needle:
+                    continue
+                cited = sources[position] if position < len(sources) else sources[0]
+                if cited in NON_RESIDENT:
+                    continue
+                kind, targets = _resolve(cited, index)
+                if not targets:
+                    findings.append({
+                        "severity": "ERROR", "source": f"{rel}:{lineno}",
+                        "citation": f"{ident} -> {cited}",
+                        "message": "ledger row cites a path that resolves to no file",
+                    })
+                    continue
+                ledger_checked += 1
+                hit = None
+                for candidate in targets:
+                    body = _lines(candidate)
+                    lo = max(0, start - 1 - LEDGER_WINDOW)
+                    hi = min(len(body), end + LEDGER_WINDOW)
+                    window = " ".join(" ".join(body[lo:hi]).split())
+                    if needle in window:
+                        hit = candidate
+                        break
+                if hit is not None:
+                    findings.append({
+                        "severity": "INFO", "source": f"{rel}:{lineno}",
+                        "citation": f"{ident} {cited}:{start}",
+                        "message": f"LEDGER TEXT VERIFIED \u2014 \u201c{quote[:55]}\u201d",
+                    })
+                else:
+                    findings.append({
+                        "severity": "ERROR", "source": f"{rel}:{lineno}",
+                        "citation": f"{ident} {cited}:{start}"
+                                    + (f"\u2013{end}" if end != start else ""),
+                        "message": f"LEDGER TEXT MISMATCH \u2014 quoted text not found in the cited range: \u201c{quote[:55]}\u201d",
+                    })
+
     return {
         "documents_scanned": scanned,
+        "ledger_quotes_checked": ledger_checked,
         "citations_checked": citations,
         "findings": findings,
         "errors": sum(1 for f in findings if f["severity"] == "ERROR"),
@@ -332,8 +462,11 @@ def audit(roots: list[str]) -> dict:
         "non_resident": sum(1 for f in findings
                             if f["severity"] == "INFO" and "NON-RESIDENT" in f["message"]),
         "text_verified": sum(1 for f in findings
-                             if f["severity"] == "INFO" and "TEXT VERIFIED" in f["message"]),
+                             if f["severity"] == "INFO"
+                             and "TEXT VERIFIED" in f["message"]
+                             and "LEDGER" not in f["message"]),
         "text_mismatch": sum(1 for f in findings if "TEXT MISMATCH" in f["message"]),
+        "ledger_verified": sum(1 for f in findings if "LEDGER TEXT VERIFIED" in f["message"]),
     }
 
 
@@ -352,6 +485,7 @@ def main(argv: list[str]) -> int:
     print(f"warnings          : {report['warnings']}")
     print(f"non-resident      : {report['non_resident']}  (cited by record, not defects)")
     print(f"text verified     : {report['text_verified']}  (quotation confirmed at the cited line)")
+    print(f"ledger quotes     : {report['ledger_quotes_checked']} checked, {report['ledger_verified']} verified")
     if report["findings"]:
         print()
         for f in report["findings"]:

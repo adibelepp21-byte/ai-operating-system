@@ -4046,3 +4046,114 @@ all at 0% — which is a **canonical prerequisite, not a delegation limit**.
 
 `tools` **207 OK** · `native_core` **801 OK** (1 expected failure) · `consumers`
 **276 OK**.
+
+---
+
+# 43. Cycle 28 — the cross-column check, and three false positives it produced first
+
+**Date:** 2026-09-09 · **Instrument:** `ACT-CC-P10-FINAL §6` (BUILD/FIX),
+`Master Roadmap §27` · **Authority:** `DEL-T4.4-CF-001 §3.1 C`.
+
+**INTERIM EXECUTION STATE.** Construction cycle.
+
+## 43.1 The gap `§41.7` named
+
+`E-11` was wrong for twenty-six cycles in a specific shape: **quotation in the
+claim column, file and line in two other columns.** The adjacency check could not
+pair them, and `E-11` was caught only because it was hand-checked. **Most of this
+ledger is that shape.**
+
+**Built:** a ledger-table-aware check that parses each `E-nn` row, pairs
+quotations with line citations positionally across columns, and verifies the text
+occurs within the cited range (±2 lines).
+
+## 43.2 Coverage is bounded by the ledger's own format, and is reported as such
+
+Of **55** table rows: **10 carry both a quotation and a line span**, 17 carry a
+quotation with no line span, 5 a span with no quotation.
+
+**Only those 10 are mechanically checkable, and the tool checks exactly those.**
+The other 22 quotation-bearing rows cite sections or ranges in forms that do not
+pair mechanically. **That is a real limit and is stated rather than papered
+over** — reporting "the ledger is verified" on 10 of 32 quotation-bearing rows
+would be the overstatement this tool exists to prevent.
+
+## 43.3 Three false positives, all mine, all fixed in the tool
+
+**(a) `E-13` — a retraction read as a claim.** The row quotes *"— not a platform
+division"* and says in the same cell that it *"previously read"* that phrase,
+which *"contradicted `ADR-0010`"*. **The checker paired a withdrawn phrase with
+the row's line citation and reported a mismatch.**
+
+Fixed with a `RETRACTION` marker set, documented in-code: *a corpus that records
+its own retractions must not be penalised for doing so.* **This corpus is full of
+correction notes by design; a checker that treats them as claims would punish
+exactly the discipline it is meant to support.**
+
+**(b) `E-11` — multi-source cell truncated.** The row legitimately names **two**
+sources for its two quotations. The parser took `split()[0]`, producing a
+malformed path and a spurious *"resolves to no file"*. Fixed to extract all
+backticked tokens and pair them positionally with quotations and spans.
+
+**(c) A double-count in my own metric.** `text_verified` counted `LEDGER TEXT
+VERIFIED` findings too, because one string contains the other — inflating 3 to
+11. Fixed. **A verifier reporting inflated counts about itself is the least
+excusable defect available.**
+
+## 43.4 Result: 10 of 10, including last cycle's correction
+
+**0 errors · 10 ledger quotations checked · 10 verified.**
+
+Nine distinct canonical citations are now machine-verified at the **text** level:
+`E-03`, `E-06`, `E-07`, `E-08`, `E-09`, `E-10`, `E-11` (**both**), `E-12`.
+
+**`E-11`'s corrected pointer — `volume-2/…/E3.md:1500` — verifies.** The
+correction made in Cycle 27 by hand is now confirmed by machine, through the
+same check that would have caught the original defect.
+
+## 43.5 Tests
+
+**Four added; suite 207 → 211.** One asserts the check is actually running
+(guarding a silent pass), one asserts zero mismatches, one asserts every paired
+quotation verified, and one asserts the **`same` carry-forward is resolved** —
+*a parser treating it as a filename would check nothing while reporting success*,
+which is the failure mode that test exists to prevent.
+
+## 43.6 Status dimensions (`§2`, `§51`)
+
+**Master Program Phase 10 — Department Ecosystem and Platform Organization
+PD-01–PD-10 are separate construction surfaces. Neither status is used as
+evidence of the other.**
+
+| Surface | Status |
+|---|---|
+| **MASTER PROGRAM PHASE 10 — Department Ecosystem** | **BLOCKED.** 0% · six Departments · gated on Phase 4–9 (all 0%). Untouched |
+| **PLATFORM ORGANIZATION PD-01–PD-10** | **PARTIAL.** Model layer complete and integrated; **10 canonical ledger citations now text-verified**; content `SOURCE-INSUFFICIENT`; assignment `RESERVED` |
+
+## 43.7 Regression
+
+`tools` **211 OK** (+4) · `native_core` **801 OK** (1 expected failure) ·
+`consumers` **276 OK** · audit **195 citations · 0 errors · 10/10 ledger
+quotations verified**.
+
+## 43.8 Re-discovery (`§17`)
+
+**22 quotation-bearing ledger rows remain mechanically unpairable** — they cite
+`§`-sections or bare ranges. Extending the checker to resolve section citations
+to line ranges would bring most of them into scope; that is the next
+`BUILD`/`FIX` item on this thread and it is **not** claimed as done.
+
+**Also open:** stale `§5 Unresolved` sections in the ten division records;
+`derived_views.py`'s latent line-number exposure; the two completion matrices
+(`Roadmap §32`); extending the auditor to `docs/governance/`; `RECOVERY-MANIFEST.md`.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.**
+
+## 43.9 Repeatability
+
+**Twenty-eight cycles · 75 valid executions · 96 correct stops · 1 overreach ·
+22 disclosed failures · 0 Founder Events · 0 Acts created · 4 code changes ·
+1 tool built · 13 tests added · 1 canonical citation corrected.**
+
+Failures 20–22 are `§43.3`(a), (b) and (c) — **all three in my own verifier,
+all three surfaced by running it against real data rather than by reading it.**

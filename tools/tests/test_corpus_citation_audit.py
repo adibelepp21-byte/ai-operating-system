@@ -134,3 +134,50 @@ class QuotationTruthTests(unittest.TestCase):
             report["text_verified"], 0,
             "no quotation was verified — the §27 check may have stopped running",
         )
+
+
+class LedgerTableTests(unittest.TestCase):
+    """The cross-column check: quotation and line citation in different cells.
+
+    E-11 was wrong for twenty-six cycles in exactly this shape — a quotation in
+    the claim column attributed to a file and line in two other columns, which
+    the adjacency check could not pair.
+    """
+
+    def test_ledger_quotations_are_checked(self):
+        report = json.loads(run("--json").stdout)
+        self.assertGreater(
+            report["ledger_quotes_checked"], 0,
+            "no ledger quotation was paired — the cross-column check may have stopped running",
+        )
+
+    def test_no_ledger_text_mismatches(self):
+        report = json.loads(run("--json").stdout)
+        bad = [f for f in report["findings"] if "LEDGER TEXT MISMATCH" in f["message"]]
+        self.assertEqual(
+            bad, [],
+            "ledger rows whose quotation is absent from the cited range:\n"
+            + "\n".join(f"  {f['source']}  {f['citation']}  {f['message']}" for f in bad),
+        )
+
+    def test_every_paired_ledger_quotation_verified(self):
+        report = json.loads(run("--json").stdout)
+        self.assertEqual(report["ledger_quotes_checked"], report["ledger_verified"])
+
+    def test_carry_forward_source_is_resolved(self):
+        """`same` in the source column means the previous row's source.
+
+        A parser treating it as a filename would check nothing while reporting
+        success — the failure mode this test exists to prevent.
+        """
+        sys.path.insert(0, str(REPO_ROOT / "tools"))
+        import corpus_citation_audit as audit_mod
+        ledger = REPO_ROOT / "docs/architecture/platform-organization/EVIDENCE-LEDGER.md"
+        rows = list(audit_mod._ledger_rows(ledger))
+        self.assertGreater(len(rows), 20)
+        for _, ident, _, source, _ in rows:
+            if source:
+                self.assertNotEqual(
+                    source.strip("`* ").lower(), "same",
+                    f"{ident}: carry-forward source was not resolved",
+                )
