@@ -112,20 +112,9 @@ GENERIC = {"__init__.py", "README.md"}
 def _tracked_files() -> set:
     """Paths git tracks, as repo-relative POSIX strings.
 
-    The audit reads ONLY tracked files. This is a hard scope guard, not a
-    convenience filter.
-
-    Why it exists: ``docs/program/`` holds thirteen untracked protected packages
-    that governance forbids this programme to stage, commit, modify, relocate,
-    rename, delete, persist, normalize, inspect for commit convenience, or use
-    as implicit authority. An earlier version of this tool had no scope guard
-    and read all thirteen during a directory-wide scan (``VF-10``). No content
-    was quoted, persisted, or used — but a verifier that *can* wander into
-    protected paths is a hazard whatever the intent of the run.
-
-    Tracked-only is also the principled scope: the corpus of record is what the
-    repository has committed. Untracked material is, by definition, not yet part
-    of it.
+    Used to decide whether an *untracked* file sits in a protected area. It is
+    NOT itself the scope guard — see ``_is_readable`` for why that distinction
+    matters.
     """
     try:
         out = subprocess.run(
@@ -137,17 +126,50 @@ def _tracked_files() -> set:
     return {p for p in out.split("\0") if p}
 
 
+# Areas whose UNTRACKED contents this programme may not read at all.
+# ``docs/program/`` holds thirteen untracked protected packages that governance
+# forbids staging, committing, modifying, relocating, renaming, deleting,
+# persisting, normalizing, inspecting for commit convenience, or using as
+# implicit authority. Its *tracked* contents are ordinary repository records.
+PROTECTED_UNTRACKED_PREFIXES = ("docs/program/",)
+
+
+def _is_readable(path: Path, tracked: set) -> bool:
+    """Whether the audit may read this file.
+
+    Containment is keyed on **path policy**, not on tracked status.
+
+    ``VF-10`` added a guard that scanned tracked files only. That contained the
+    protected packages — but it used "tracked" as a *proxy* for "not protected",
+    and the proxy fails **open** in the direction that matters most: every file
+    this programme writes is untracked until it is staged, so a newly authored
+    artifact was silently skipped and its citations never checked. A probe
+    carrying a deliberately broken citation reported ``0 errors`` while
+    untracked and ``1 error`` once staged (``VF-11``).
+
+    **A verifier that silently ignores the newest work reports the safety of the
+    previous state as though it were the safety of the current one.**
+
+    So: untracked files under a protected prefix are refused; everything else in
+    the audit root is read, tracked or not.
+    """
+    rel = path.relative_to(REPO_ROOT).as_posix()
+    if rel in tracked:
+        return True
+    return not rel.startswith(PROTECTED_UNTRACKED_PREFIXES)
+
+
 def _iter_markdown(root: Path):
     tracked = _tracked_files()
     if not tracked:
         raise SystemExit(
-            "refusing to scan: could not determine tracked files, and the audit "
-            "reads only tracked paths (see _tracked_files)."
+            "refusing to scan: could not determine tracked files, so protected "
+            "untracked paths cannot be identified (see _is_readable)."
         )
     for path in sorted(root.rglob("*.md")):
         if any(part in SKIP_DIRS for part in path.parts):
             continue
-        if path.relative_to(REPO_ROOT).as_posix() not in tracked:
+        if not _is_readable(path, tracked):
             continue
         yield path
 

@@ -243,7 +243,17 @@ class ScopeGuardTests(unittest.TestCase):
             + "\n".join(f"  {p}" for p in sorted(touched)),
         )
 
-    def test_scan_is_restricted_to_tracked_files(self):
+    def test_no_finding_comes_from_a_protected_untracked_path(self):
+        """Narrowed 2026-09-09 (VF-11).
+
+        This previously asserted that every finding came from a *tracked* path.
+        That was true only while containment was keyed on tracked status — a
+        proxy that failed open on new work, since everything this programme
+        writes is untracked until staged. Containment is now keyed on path
+        policy, so untracked files outside protected prefixes are legitimately
+        scanned. The assertion that matters — nothing is ever read from a
+        protected untracked path — is unchanged and still runs.
+        """
         tracked = set(subprocess.run(
             ["git", "ls-files", "-z"], cwd=str(REPO_ROOT),
             capture_output=True, text=True,
@@ -251,7 +261,30 @@ class ScopeGuardTests(unittest.TestCase):
         report = json.loads(run("--json", "docs/program").stdout)
         for finding in report["findings"]:
             source = finding["source"].split(":")[0]
-            self.assertIn(
-                source, tracked,
-                f"audit reported a finding from an untracked path: {source}",
+            if source in tracked:
+                continue
+            self.assertFalse(
+                source.startswith("docs/program/"),
+                f"audit read a protected untracked path: {source}",
             )
+
+    def test_untracked_new_work_is_still_scanned(self):
+        """Regression for VF-11: the guard must not fail open on new work.
+
+        A verifier that silently ignores newly authored files reports the safety
+        of the previous state as though it were the safety of the current one.
+        """
+        probe = REPO_ROOT / "docs" / "architecture" / "platform-organization" / "ZZ-VF11-PROBE.md"
+        probe.write_text(
+            "# probe\nBroken: `docs/architecture/NO_SUCH_FILE_vf11.md`\n",
+            encoding="utf-8",
+        )
+        try:
+            report = json.loads(run("--json").stdout)
+            sources = {f["source"].split(":")[0] for f in report["findings"]}
+            self.assertIn(
+                "docs/architecture/platform-organization/ZZ-VF11-PROBE.md", sources,
+                "an untracked, non-protected new file was not scanned",
+            )
+        finally:
+            probe.unlink(missing_ok=True)

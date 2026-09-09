@@ -4742,3 +4742,132 @@ this programme's reach entirely, and I built a tool that could reach them and
 then pointed it at them. **The defect was mine, the guard did not exist, and a
 corpus that discloses its citation errors but not its containment failures is
 choosing which failures to admit.**
+
+---
+
+# 50. `VF-11` — the guard I added one cycle ago failed open on new work
+
+**Date:** 2026-09-09 · **Act:** `ACT-CC-CONTINUATION-POST-EXECUTION-DISCOVERY`
+`§1` fresh discovery, `§5` protected-scope safety, `§10A` P3 verified defect ·
+**Baseline:** `2770d8a`.
+
+**INTERIM EXECUTION STATE.**
+
+## 50.1 `§5` guard verification came first, and then found a second defect
+
+`§5` requires verifying the effective scope **before** any scan. Both `VF-10`
+guard tests pass. But verification of a guard is not the same as verification of
+what the guard *lets through*, so the guard was probed rather than trusted.
+
+**Hypothesis:** `VF-10`'s guard scanned **tracked files only**. Everything this
+programme writes is untracked until staged. Therefore a newly authored artifact
+would be **silently skipped**.
+
+**Probe — a file carrying one deliberately broken citation:**
+
+```text
+untracked   →  23 documents scanned  ·  0 errors      ← broken citation invisible
+staged      →  24 documents scanned  ·  1 error       ← caught
+```
+
+**Confirmed.** The guard failed **open** in the direction that matters most:
+**the newest, least-verified work was the only work it could not see.**
+
+## 50.2 Root cause — containment keyed on a proxy
+
+`VF-10` used **tracked status** as a proxy for **not protected**. The proxy
+contained the thirteen protected packages correctly, and failed everywhere else.
+
+**Fixed by keying containment on path policy instead**
+(`PROTECTED_UNTRACKED_PREFIXES`): untracked files under a protected prefix are
+refused; **everything else in the audit root is read, tracked or not.** The tool
+still **fails closed** if tracked files cannot be determined, because protected
+paths could not then be identified.
+
+**Both properties now verified independently:**
+
+| Property | Result |
+|---|---|
+| New untracked work is scanned | **24 documents · 1 error** on the probe |
+| Protected untracked paths never read | **0** protected files in `docs/program/` findings |
+
+**`VF-10`'s containment is preserved; `VF-11`'s blindness is removed.**
+
+## 50.3 A stale test of my own, narrowed not deleted
+
+`test_scan_is_restricted_to_tracked_files` asserted that every finding came from
+a tracked path — **true only while containment was keyed on tracked status.**
+The design change made my own test wrong.
+
+**Narrowed to the assertion that actually matters** — nothing is ever read from
+a protected untracked path — with the change and its date in the test's own
+docstring. **A new regression test covers `VF-11` directly:** an untracked probe
+in the corpus must appear in the findings.
+
+**This is the second time a capability change invalidated one of my own tests**
+(`§40.4` was the first). Both were narrowed to their real intent rather than
+deleted, and both said so in the test.
+
+## 50.4 What this says about the previous cycle's reported result
+
+`§49` reported *"platform-organization audit 0 errors"* **after** the `VF-10`
+guard was in place. **That figure was correct** — every corpus file was tracked
+and committed at that moment, so nothing was skipped.
+
+**But it was correct by accident of timing, not by construction.** Had that run
+occurred with any new artifact unstaged, `0 errors` would have meant *"the
+previous state was clean"* while presenting as *"the current state is clean."*
+**The number would have been true and the claim it implied would have been
+false.**
+
+## 50.5 Return contract (`§16` / required return)
+
+```text
+A. FRESH DISCOVERY   The VF-10 guard, added one cycle ago, fails open on
+                     untracked new work. Found by probing the guard rather
+                     than trusting its passing tests.
+B. RANKED CANDIDATES P3 verified defect — guard fails open (SELECTED)
+                     P9 derived_views.py latent line-number exposure
+                     P9 ERROR-severity calibration for external citations
+                     P9 four informational orphan findings
+                     (G-01/G-09/ESC-C7-01/SG-01 remain blocked or reserved)
+C. SELECTED ACTION   FIX — re-key audit containment from tracked-status proxy
+                     to explicit path policy.
+                     CLASS: FIX · PRIORITY: P3 (verified defect)
+                     EVIDENCE: probe, 0 errors untracked vs 1 error staged
+                     AUTHORITY: DEL §3.1 C, Implementation Tier
+                     DEPENDENCIES: satisfied
+                     EFFECT: restores verification coverage of all new work
+                     while preserving VF-10 containment
+                     ALTERNATIVES: three P9 hardening items — none affects
+                     whether verification results can be trusted, and a
+                     defective verifier undermines every other result, so
+                     P3 outranked all of them
+D. EXECUTION         _is_readable() added; _tracked_files() demoted to a
+                     helper; one stale test narrowed; one regression added
+E. VERIFICATION      tools 216 OK (+1) · native_core 801 OK (1 expected
+                     failure) · consumers 276 OK · audit 0 errors,
+                     198 citations, 4 text-verified, 12/12 ledger quotations
+                     · guard: both properties independently probed
+F. STATE DELTA       Resolved:   VF-11 (guard blindness) — fixed and tested
+                     Narrowed:   none
+                     Unresolved: G-01,02,03,05,06,08,09,10; ESC-C7-01;
+                                 SG-01; invariant-15 binding; B-7
+                     Newly blocked:    none
+                     Newly executable: none
+G. BLOCKERS          SG-01 — SOURCE GAP (Founder supply; never resident)
+                     G-09 — ARCHITECT/FOUNDER RESERVED
+                     G-01, ESC-C7-01 — SOURCE-INSUFFICIENT
+                     P10 entry — CANONICAL PREREQUISITE (Phase 9 at 0%)
+                     B-7 — ARCHITECT RESERVED
+H. NEXT FRONTIER     Only P9 hardening remains executable: derived_views.py
+                     latent exposure, ERROR-severity calibration, four
+                     informational orphans. None is verdict-sensitive and
+                     none unblocks other work.
+I. EXHAUSTION        BLOCKED BUT INDEPENDENT WORK CONTINUES
+```
+
+**`§8` distinction, stated deliberately:** this is **not** yet
+`NO MATERIAL EXECUTABLE FRONTIER IDENTIFIED`. Three P9 hardening items remain
+genuinely executable. **No BUILD action was manufactured to avoid that state**,
+and none will be.
