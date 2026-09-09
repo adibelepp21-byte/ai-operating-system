@@ -5605,3 +5605,123 @@ NEXT         No verdict-sensitive evidence frontier remains. What is left is
              H-1/H-2/H-4 (reserved), CD-3 (authority-held), SG-02 (source
              required), and non-verdict-sensitive hardening.
 ```
+
+---
+
+# 57. `ACT-CC-AIOS-FULL-SYSTEM-RESOLUTION` — wave 1: candidate v2, an authority conflict routed into an ADR, and two required artifacts that had never been built
+
+**Date:** 2026-09-09 · **Baseline:** `b0f6dec`
+
+## 57.1 Guard first (`ACT §5`), probed both directions
+
+| Direction | Result |
+|---|---|
+| Protected content → not read | **0** findings sourced from `docs/program/` |
+| Authorized new work → visible | untracked probe in an audit root **caught, 1 ERROR** |
+
+Probes deleted; untracked back to **13**.
+
+## 57.2 Intake — both artifacts persisted byte-exact
+
+| Artifact | `sha256` | Result |
+|---|---|---|
+| The Act | `788bc8f5…` | persisted at `docs/governance/acts/` |
+| Candidate **v2.0** | `417f9dfe…` | persisted; **v1.0 retained** |
+
+**All three v1.0 intake defects are resolved at source:** **0** non-newline
+separators (was 329), **0** `U+FFFC` (was 32), **0** collapsed tables or fences
+(was 6 and 30), and line counts now **identical under both splitting rules**.
+
+**v2.0 is not written to `AIOS_CANONICAL_ARCHITECTURE.md`.** `ACT §9` and the
+candidate's own `§55` forbid inferring adoption from filename or repository
+location. Writing it there would perform by layout the adoption the Founder
+withheld by authority.
+
+## 57.3 Five of six contradictions closed by the Founder's revision
+
+`CD-1` (no competing enumeration; `§1` defers to the frozen sources) · `CD-2`
+(no constitutional attribution) · `CD-3` (the three disputed entities: **0
+occurrences**) · `CD-5` (`parallel`: **0**) · `CD-6` (no absolute upward rule).
+The candidate also adopts this programme's `§16` finding verbatim at its `§38`:
+**`PHASE CERTIFIED ≠ PHASE MATURE`**.
+
+## 57.4 `CD-4` — my own verdict withdrawn, and the conflict routed into an ADR
+
+**`CD-RESOLUTION-GATE-v1.0.md §F` returned `CD-4 RESOLVED` and moved `H-5` off
+the Founder's desk. That is withdrawn.** It conflated two questions that `G-09`
+had already separated:
+
+| Question | Status |
+|---|---|
+| Is `Department` the same **entity type** as `Platform Division`? | **SETTLED** — `ADR-0010` Approved; `FD-6`; `E-64` |
+| Do the Phase 10 population and the ten PDs denote the same **set**? | **OPEN — RESERVED** (`G-09`, since 2026-09-06) |
+
+**`G-09` and `ADR-0010` were both in this corpus and I cited neither.** It is
+the mirror of the same report's other error: there I called settled matters
+contradictions; here I called a reserved matter settled.
+
+**v2.0 makes it an authority conflict, not a slip.** `§17` states a
+**many-to-many** relation — coherent only between distinct entity types — and
+**`ACT §20` asserts the same distinction**. Two Founder-issued instruments,
+same date.
+
+**Routed, not resolved.** By the Act's own `§2` stack, Founder Decisions outrank
+the Act; `§7(6)`/`§7(9)`/`§7(10)` reserve exactly this; and `Constitution §5`
+names the only mechanism — an ADR under `§3.4`. **`ADR-0029` is Proposed, states
+the exact question, gives three options with costs, recommends `Option C`, and
+decides nothing.**
+
+**Load-bearing:** `Freeze §5` layer 4 takes `Department ownership` as input and
+`INV-1` requires *"exactly one Department."* **Until the population is settled,
+`INV-1` cannot be evaluated for any Capability.**
+
+## 57.5 The anchoring gap — v2.0's largest open property
+
+| Resident authority | Occurrences in v2.0 |
+|---|---:|
+| Canonical Domain Model · Architecture Freeze · Engineering Constitution | **0 · 0 · 0** |
+| `invariant` / `INV-` | **0 / 0** |
+
+**v1.0 cited resident authorities and cited them wrongly; v2.0 cites none.** A
+real gain in truthfulness, a real loss in anchorage — a control surface naming
+no authority cannot be conformance-tested against one. Recorded as `MA-11`,
+**fully recoverable**, and the **anchoring map** built this cycle binds 23 of
+v2.0's sections to named resident sources.
+
+## 57.6 Two required artifacts, required since the Blueprint, built now
+
+Both were named requirements in the `P10–P13 Blueprint`, the `Gap Closure
+Roadmap`, `ACT §19`/`§20`, and candidate `§21`/`§22` — and **neither existed**.
+
+**`CROSS-PD-INTERFACE-REGISTRY.md`** — **five** evidenced edges, from **two** of
+ten divisions; **8 declare none**; **5.6 %** of the 90 ordered pairs; **0** edges
+carry an interface, version, or governing mechanism. Whether those five are
+`INV-10` exposures is **not asserted** — it is undeterminable until `ADR-0029`.
+
+**`PHASE-PD-CAPABILITY-AND-DEPENDENCY-MAP.md`** — the headline result is
+**negative and that is the point**: **no resident source assigns a Phase to a PD
+as provider**, and the inference was **already tested and rejected** by
+`ACT-CC-P6-071 §12` (*"PD-04 holds Knowledge Authority, not phase authority"*).
+The one evidenced join is structural — `Freeze §5` layer 4 taking organizational
+ownership as an input.
+
+**Any future construction assuming a Phase is "owned" by a PD now contradicts a
+recorded rejection rather than filling a blank.**
+
+## 57.7 Verification
+
+```text
+audit        74 documents · 669 citations · 0 errors · 45 WARN (correct class)
+tools        232 OK
+native_core  801 OK (1 expected failure)
+consumers    276 OK
+```
+
+## 57.8 State
+
+```text
+EXHAUSTION   AUTHORITY-BLOCKED + INDEPENDENT EVIDENCE WORK CONTINUES
+P10          UNCHANGED — BLOCKED (Volume VII §1.2; P9 maturity NOT ESTABLISHED)
+CANDIDATE    AUDIT COMPLETE — AUTHORITY INPUT REQUIRED (byte-unchanged)
+RESERVED     ADR-0029 (G-09 population) · H-1 · H-2 · H-4
+```

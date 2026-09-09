@@ -318,3 +318,37 @@ Closable by the Co-Founder alone                     : none
 (`ADE-P10-G04`), which is not the same thing: closure requires verification
 evidence, and `§21` of `ACT-CC-P10-0` bars it without. Every gap above was observed during this
 Act's own discovery and reconciliation — none was inherited from a list.
+
+---
+
+# `G-09` — update 2026-09-09 · the question now has an instrument
+
+**Status unchanged: OPEN — FOUNDER / ARCHITECT RESERVED.** What changed is that
+the question is now carried by the mechanism that can decide it.
+
+**`ADR-0029` (Proposed, not Approved)** states the exact question, records the
+authority conflict, and sets out three options with their costs. It decides
+nothing.
+
+**Why it was raised now.** Two Founder-issued instruments dated 2026-09-09 —
+`ACT-CC-AIOS-FULL-SYSTEM-RESOLUTION…-v1.0 §20` and reconstituted candidate
+**v2.0 `§17`** — assert `Department ≠ PD`, the candidate adding a **many-to-many
+relation** that is coherent only between distinct entity types. `ADR-0010`
+(**Approved**) holds they are **one entity, two names**.
+
+**`Constitution §5` names the only route:** the Canonical Domain Model is
+amended *"only through an Architecture Decision Record approved under Section
+3.4."* An Act is not that route. **So the conflict was routed into an ADR rather
+than resolved, absorbed, or reported and dropped.**
+
+**A correction to this corpus's own prior verdict is recorded with it.**
+`CD-RESOLUTION-GATE-v1.0.md §F` returned `CD-4 RESOLVED — CANDIDATE CORRECTED BY
+EVIDENCE` and moved `H-5` off the Founder's desk. **That verdict is withdrawn.**
+It conflated two questions `G-09` had already separated: the **entity-type
+identity** (settled by `ADR-0010`) and the **population** (open and reserved
+here). The original text stands; see `CANDIDATE-V2-RECONCILIATION-v1.0.md §3.1`.
+
+**New this cycle:** `CROSS-PD-INTERFACE-REGISTRY.md §3` records that whether the
+five evidenced cross-division edges are `INV-10` exposures **cannot be
+determined until `ADR-0029` settles the population** — a second place where
+`G-09` blocks an invariant from being evaluated. The first is `INV-1`.
