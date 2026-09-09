@@ -67,6 +67,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -108,9 +109,45 @@ NON_RESIDENT = {
 GENERIC = {"__init__.py", "README.md"}
 
 
+def _tracked_files() -> set:
+    """Paths git tracks, as repo-relative POSIX strings.
+
+    The audit reads ONLY tracked files. This is a hard scope guard, not a
+    convenience filter.
+
+    Why it exists: ``docs/program/`` holds thirteen untracked protected packages
+    that governance forbids this programme to stage, commit, modify, relocate,
+    rename, delete, persist, normalize, inspect for commit convenience, or use
+    as implicit authority. An earlier version of this tool had no scope guard
+    and read all thirteen during a directory-wide scan (``VF-10``). No content
+    was quoted, persisted, or used — but a verifier that *can* wander into
+    protected paths is a hazard whatever the intent of the run.
+
+    Tracked-only is also the principled scope: the corpus of record is what the
+    repository has committed. Untracked material is, by definition, not yet part
+    of it.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "ls-files", "-z"], cwd=str(REPO_ROOT),
+            capture_output=True, text=True, check=True,
+        ).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return set()
+    return {p for p in out.split("\0") if p}
+
+
 def _iter_markdown(root: Path):
+    tracked = _tracked_files()
+    if not tracked:
+        raise SystemExit(
+            "refusing to scan: could not determine tracked files, and the audit "
+            "reads only tracked paths (see _tracked_files)."
+        )
     for path in sorted(root.rglob("*.md")):
         if any(part in SKIP_DIRS for part in path.parts):
+            continue
+        if path.relative_to(REPO_ROOT).as_posix() not in tracked:
             continue
         yield path
 

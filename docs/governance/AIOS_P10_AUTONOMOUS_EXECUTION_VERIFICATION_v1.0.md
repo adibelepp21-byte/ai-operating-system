@@ -4638,3 +4638,107 @@ G. NEXT FRONTIER  Audit the three docs/program/ artifacts (P6) — now the
                   highest-ranked unblocked candidate.
 H. EXHAUSTION     BLOCKED BUT INDEPENDENT WORK CONTINUES
 ```
+
+---
+
+# 49. `VF-10` — my auditor read all thirteen protected packages
+
+**Date:** 2026-09-09 · **Act:** `ACT-CC-CONTINUATION-POST-EXECUTION-DISCOVERY`
+`§10A` (P6 verify high-impact claims) · **Authority:** existing envelope.
+
+**INTERIM EXECUTION STATE.** **This cycle's principal finding is an overreach of
+my own.**
+
+## 49.1 What happened
+
+`§48.5 G` nominated auditing the persisted `docs/program/` artifacts as the next
+ranked frontier. I ran the auditor against `docs/program/`.
+
+**That directory holds the thirteen protected packages.** The scan read **86
+documents — all thirteen among them.**
+
+**What did not happen:** nothing was staged, committed, modified, relocated,
+renamed, deleted, persisted, or normalized; no content was quoted into any
+record; nothing was used as authority; the JSON was never written to disk. The
+run was read-only and the output stayed in the terminal.
+
+**What did happen is still an overreach.** `SG-07` exists to keep those files
+untouched, and **my tool had no scope guard at all** — the same command with
+`out_dir`-style output would have written their content into a report. **A
+verifier that *can* reach protected paths is a hazard regardless of the intent of
+any particular run.**
+
+**This is the second overreach in forty-nine cycles** (`VF-4`, the Governance
+Index edit, was the first). It is recorded with the same weight.
+
+## 49.2 Fixed — a hard scope guard, not a filter
+
+`_tracked_files()` added: **the audit now reads only files git tracks.**
+Untracked paths are skipped before any read. If tracked files cannot be
+determined, the tool **refuses to scan** rather than falling back to a
+directory walk.
+
+**Tracked-only is also the principled scope**, not merely the safe one: the
+corpus of record is what the repository has committed, and untracked material is
+by definition not yet part of it.
+
+**Verified: 86 → 73 documents · protected files in findings: 0.**
+
+**Two regression tests added** (`tools`: 213 → 215): protected untracked files
+are never scanned, and every reported finding comes from a tracked path. **The
+docstring records `VF-10` by name**, so the next reader of `_tracked_files()`
+meets the reason it exists.
+
+## 49.3 The audit result itself — 10 errors, zero corpus defects
+
+Scoped correctly, tracked `docs/program/` yields **10 errors**. **None is a
+defect in the corpus**, and none is repaired:
+
+| Cited | Verdict |
+|---|---|
+| `extract.py`, `llm.py`, `watch.py` | **Correct** — verified present in `graphify-8/graphify/` inside the Graphify archive. External corpus at **Intake** (`E-66`) |
+| `requirements.txt`, `setup.py`, `factory.py` | Same class — Graphify verification/feasibility documents citing an external repository |
+| `AIOS_COFOUNDER_DELEGATION_CHARTER_v1.0.txt` | **Correct** — the Charter is non-resident (`ESC-C5-01`) |
+| two `*.md:line` citations | Both target files **are tracked**; resolver limitation, not a missing source |
+
+**These artifacts are not edited.** `Roadmap §28`: *"frozen canonical bodies
+SHALL NOT be modified merely to make a new checker happy. **Evidence must control
+the detector, not the reverse.**"*
+
+**Consequent tool finding, recorded not acted on:** `ERROR` is the wrong severity
+for a document that legitimately cites an external corpus. **`docs/program/` is
+therefore not added to the default audit root** — the platform-organization
+corpus cites only within this repository and its recorded non-residencies;
+these historical artifacts do not, and were never written to that standard.
+
+## 49.4 Return contract (`§16`)
+
+```text
+A. STATE          Unchanged: R3 P10 BLOCKED · Track B PARTIAL-ACTIVE ·
+                  R8 active · R22 not reached
+B. FRESH DISCOVERY  My own verification tool had no protected-path guard
+C. ACTIONS        VERIFY: docs/program audit — 10 errors, 0 corpus defects
+                  FIX:    tracked-only scope guard + 2 regression tests
+                  (no artifact edited; no protected file persisted)
+D. VERIFICATION   tools 215 OK (+2) · native_core 801 OK (1 expected failure) ·
+                  consumers 276 OK · platform-organization audit 0 errors
+E. BLOCKERS       Unchanged: SG-01 SOURCE-GAP · G-09 RESERVED ·
+                  G-01/ESC-C7-01 SOURCE-INSUFFICIENT · P10 gate CANONICAL
+F. DELTA          Newly resolved: none.
+                  Newly narrowed: none.
+                  Newly disclosed: VF-10 (overreach, fixed, tested).
+G. NEXT FRONTIER  derived_views.py latent line-number exposure (P9), and the
+                  ERROR-severity calibration for external-corpus citations.
+                  Both are hardening; neither is verdict-sensitive.
+H. EXHAUSTION     BLOCKED BUT INDEPENDENT WORK CONTINUES
+```
+
+## 49.5 Why this is recorded at full weight
+
+The run was read-only and harmless in its effects. **It would have been easy to
+note the scope, fix the tool, and not name it as an overreach at all.** But the
+protection is not "do not persist those files" — it is that they are outside
+this programme's reach entirely, and I built a tool that could reach them and
+then pointed it at them. **The defect was mine, the guard did not exist, and a
+corpus that discloses its citation errors but not its containment failures is
+choosing which failures to admit.**

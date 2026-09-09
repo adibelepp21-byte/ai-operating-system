@@ -206,3 +206,52 @@ class EmphasisNormalizationTests(unittest.TestCase):
                     if "LEDGER TEXT VERIFIED" in f["message"]}
         for ident in ("E-44", "E-45"):
             self.assertIn(ident, verified, f"{ident} quotation is no longer verified")
+
+
+class ScopeGuardTests(unittest.TestCase):
+    """Regression for VF-10: the auditor read thirteen protected packages.
+
+    ``docs/program/`` holds untracked protected packages that governance forbids
+    this programme to touch. An earlier version of this tool had no scope guard
+    and read all thirteen during a directory-wide scan. Nothing was quoted or
+    persisted, but a verifier that *can* reach protected paths is a hazard
+    regardless of the intent of any particular run.
+
+    The guard is tracked-only scanning, which is also the principled scope: the
+    corpus of record is what the repository has committed.
+    """
+
+    def _untracked_program_files(self):
+        out = subprocess.run(
+            ["git", "status", "--porcelain=v1"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True,
+        ).stdout
+        return {
+            line[3:] for line in out.splitlines()
+            if line.startswith("?? docs/program/")
+        }
+
+    def test_protected_untracked_files_are_never_scanned(self):
+        protected = self._untracked_program_files()
+        if not protected:
+            self.skipTest("no untracked docs/program/ files present in this tree")
+        report = json.loads(run("--json", "docs/program").stdout)
+        touched = {f["source"].split(":")[0] for f in report["findings"]} & protected
+        self.assertEqual(
+            touched, set(),
+            "auditor read protected untracked files:\n"
+            + "\n".join(f"  {p}" for p in sorted(touched)),
+        )
+
+    def test_scan_is_restricted_to_tracked_files(self):
+        tracked = set(subprocess.run(
+            ["git", "ls-files", "-z"], cwd=str(REPO_ROOT),
+            capture_output=True, text=True,
+        ).stdout.split("\0")) - {""}
+        report = json.loads(run("--json", "docs/program").stdout)
+        for finding in report["findings"]:
+            source = finding["source"].split(":")[0]
+            self.assertIn(
+                source, tracked,
+                f"audit reported a finding from an untracked path: {source}",
+            )
