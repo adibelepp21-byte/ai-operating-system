@@ -263,12 +263,47 @@ class UnmarkedHeadingConventionTests(unittest.TestCase):
         self.assertTrue(self.mod._has_bare_heading(lines, "4"))
         self.assertFalse(self.mod._has_bare_heading(lines, "5"))
 
-    def test_the_whole_corpus_reports_no_warnings_now(self):
-        """The two standing WARNs were the only ones; this pins that."""
-        proc = run("--json")
+    def test_the_derived_corpus_reports_no_warnings(self):
+        """The two standing WARNs were the only ones in the derived corpus.
+
+        **Narrowed 2026-09-09** (`ACT §5.1`). This asserted zero warnings over
+        *all* default roots until `docs/governance` was added, which brought 45
+        ambiguous-basename WARNs with it. Those are **correct** findings — `§5.3`
+        of that Act states a basename match alone is insufficient evidence, and
+        WARN means *could not confirm*, not *is wrong*. Widening a root must not
+        be paid for by weakening what the original roots promise, so the
+        assertion is kept and scoped to the roots it was written about.
+        """
+        proc = run("docs/architecture/platform-organization",
+                   "docs/architecture/candidates", "--json")
         report = json.loads(proc.stdout)
         self.assertEqual(report["warnings"], 0, report["findings"])
         self.assertEqual(report["errors"], 0, report["findings"])
+
+    def test_the_governance_root_is_scanned_and_has_no_errors(self):
+        """Regression for the root that was missing (`ACT §5.1`)."""
+        self.assertIn("docs/governance", self.mod.DEFAULT_ROOTS)
+        proc = run("docs/governance", "--json")
+        report = json.loads(proc.stdout)
+        self.assertGreater(report["documents_scanned"], 10, report)
+        self.assertEqual(report["errors"], 0, report["findings"])
+
+    def test_a_registry_entry_cannot_silence_a_path_that_resolves(self):
+        """`ACT §5.4` in code: the registry speaks only after resolution fails.
+
+        `setup.py` and `requirements.txt` are registered as external-corpus
+        names. If either ever exists here, it must be checked normally rather
+        than waved through — so the registry is consulted **only** on the
+        not-found branch.
+        """
+        import inspect
+
+        source = inspect.getsource(self.mod.audit)
+        not_found = source.index("if not targets:")
+        self.assertGreater(
+            source.index("cited in NON_RESIDENT"), not_found,
+            "the registry is consulted before resolution; it could mask a real path",
+        )
 
 
 class ScopeGuardTests(unittest.TestCase):

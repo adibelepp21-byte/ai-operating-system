@@ -5430,3 +5430,102 @@ DISCLOSED    Seventh "verified before verifying"; first one to reach a commit
 NEW          One recommendation to the Founder (54.5); no BUILD action
 EXHAUSTION   BLOCKED BUT INDEPENDENT WORK CONTINUES
 ```
+
+---
+
+# 55. `ACT-CC-…-AUTHORITY-EVIDENCE-RESOLUTION-GATE` — three of four contradictions dissolve, and the P10 figure I used was false
+
+**Date:** 2026-09-09 · **Baseline:** `bd55316`
+**Full report:** `docs/architecture/candidates/CD-RESOLUTION-GATE-v1.0.md`.
+
+## 55.1 Result
+
+```text
+CD-1  RESOLVED — CANDIDATE CORRECTED BY EVIDENCE   (Freeze §5 governs; S-4 Open)
+CD-2  RESOLVED — AUDIT FINDING WAS INCORRECT       (two taxonomies, different scopes)
+CD-3  NARROWED — MATERIAL AUTHORITY QUESTION REMAINS
+CD-4  RESOLVED — CANDIDATE CORRECTED BY EVIDENCE   (FD-6, DECIDED)
+H-3   EVIDENCE RESOLVED · H-5 AUTHORITY RESOLVED · H-1, H-4 narrowed · H-2 SOURCE DEPENDENCY
+```
+
+**Three of five Founder questions came off the desk, and two of the four
+contradictions were errors of mine rather than defects of the candidate.**
+
+## 55.2 Why the audit got CD-1 and CD-2 wrong — one cause, twice
+
+Both were already settled in `docs/governance/` — by **`G1′`** and its External
+Corpus Synchronization Ledger:
+
+- **`S-4`** records *"Pasal 3's eight-layer chain omits Capability and Workflow,
+  which Architecture Freeze §5 carries as frozen layers 4 and 6"* — **Open**.
+  The divergence I reported as newly discovered has been on the record since
+  `G1′` validation, and `G1′` separately holds that differing layer
+  **enumerations** are *"multiple projections of one model… not a conflict."*
+- **`S-3`** records that `Pasal 7`'s six-class precedence table *"is not an
+  independent constitutional source"* for repository architecture. **The
+  candidate's six classes are `Pasal 7`'s** — a different taxonomy in a
+  different scope, not a rival to `Constitution §4`.
+
+**The cause is the same in both: `docs/governance/` was outside the auditor's
+roots** (`§53.5`). I disclosed that as a defect and then produced a
+Founder-facing audit whose two weakest findings were caused by it.
+
+## 55.3 The §16 finding — the Phase figure I have been using is false
+
+`S-9` and `S-13`…`S-17` record the Master Program's **0% figures for Phases 4
+through 9** as *"superseded by fact"*, each against a named, dated, resident
+Founder Decision — Phase 9's is **`FD-P9-002`, 2026-09-03**.
+
+**`R3`'s `P10 Entry Baseline` states *"Phase 9 stands at 0%"*.** It took that
+from the **26 July snapshot** — the very figure `S-17` supersedes, and one this
+corpus had already labelled `STALE BY DECLARATION` (`E-46`). **I used a source I
+had myself marked stale, and the record that corrects it was in the repository
+the whole time.**
+
+**The verdict does not move.** `Volume VII §1.2` requires Phase 9 to be
+***matang*** — mature. `S-17` establishes only that it is **not zero**.
+**NOT ZERO ≠ MATURE**, and `§16` forbids altering the P10 verdict on recovered
+Phase state. **P10 STATUS: UNCHANGED — BLOCKED.**
+
+**What changes is the basis:** from *"Phase 9 is 0%"* (**false**) to *"Phase 9
+maturity is not established"* (**true, and weaker**). A weaker basis for the
+same verdict is still a correction.
+
+## 55.4 Infrastructure
+
+Governance root added — **25 → 69 documents, 222 → 641 citations**. It surfaced
+**10 ERRORs, all miscalibrated severity, 0 corpus defects**: the Graphify
+external archive, a non-resident supplied upload, an ADR template placeholder,
+and one path belonging to `1jehuang/jcode` (`EAI-0001`) — confirmed never to
+have existed in this repository's history.
+
+**The registry was restructured so it cannot silence anything**: it is now
+consulted only after resolution fails, with a test asserting that order
+structurally. **45 ambiguous-basename WARNs were left standing** — `§5.3` says a
+basename alone is insufficient evidence, so WARN is correct.
+
+**And the auditor flagged my own gate report**, because I had named two bare
+basenames as examples. **The prose was changed, not the detector.**
+
+## 55.5 `§52.1` is falsified
+
+It reclassified the ERROR-severity item `NO DEFECT IN SCOPE`, partly because the
+evidence supposedly sat behind a protected boundary. **There was a defect, it
+was in scope, and the boundary was never in the way — the audit root was wrong.**
+That is the third consequence traced to the same misdescription.
+
+## 55.6 Return
+
+```text
+A. GUARD          probed both directions: 0 protected reads, probe caught
+B. INFRASTRUCTURE governance root added; 10 ERRORs calibrated; registry
+                  restructured; 1 stale test narrowed, not deleted
+C-F. CD-1..CD-4   3 resolved by evidence, 1 narrowed under §9's safeguard
+G. AUTHORITY      H-3, H-5 off the desk; H-1, H-4 narrowed; H-2 source gap
+H. SOURCE GAPS    SG-01 original (≥9 sections now identifiable by number);
+                  SG-02 the 53-section Roadmap — SOURCE REQUIRED, not rebuilt
+I. CANDIDATE      AUDIT COMPLETE — AUTHORITY INPUT REQUIRED; byte-unchanged
+J. P10            UNCHANGED — BLOCKED, with NEW VERDICT-SENSITIVE EVIDENCE
+K. NEXT           FIX: reconcile the P10 baseline against S-9 / S-13..S-17
+EXHAUSTION        AUTHORITY-BLOCKED + INDEPENDENT EVIDENCE WORK CONTINUES
+```

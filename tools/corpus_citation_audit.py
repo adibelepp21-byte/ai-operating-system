@@ -79,6 +79,11 @@ DEFAULT_ROOTS = (
     # A candidate for the architecture SSOT is exactly the document whose
     # pointers must resolve before anyone proposes ratifying it.
     "docs/architecture/candidates",
+    # Added under `ACT-CC-…-AUTHORITY-EVIDENCE-RESOLUTION-GATE §5.1`. This root
+    # holds the Governance Decision Register, the Founder Decisions, and the
+    # execution record — **the documents that carry the most citations in the
+    # repository, and the ones the citation checker could not see.**
+    "docs/governance",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a
@@ -106,10 +111,37 @@ SKIP_DIRS = {".git", "__pycache__", "node_modules", ".venv"}
 # must be documented as non-resident in the corpus itself; adding a path here to
 # silence an error, rather than because the corpus records the gap, would make
 # this tool complicit in the defect it exists to catch.
+#: Cited paths that name a source **outside this repository**. Each value must
+#: name the governance record that establishes the non-residency — an entry is
+#: never added to make an ERROR go away, only because a record already says the
+#: source is external.
+#:
+#: The registry is consulted **only after resolution fails** (see ``audit``). A
+#: path that resolves is checked normally no matter what is listed here, so a
+#: generic key like ``setup.py`` can never silence a real, resolvable citation.
 NON_RESIDENT = {
     "AIOS_CANONICAL_ARCHITECTURE.md": "NEVER resident — absent from full git history and from the archived corpus review's verified inventory; see SG-01, G-07",
     "AIOS_MASTER_PROGRAM_v1_0_LENGKAP.md": "Architect-supplied upload, outside the repository",
+    "AIOS_COFOUNDER_DELEGATION_CHARTER_v1.0.txt": "supplied upload, outside the repository — ESC-C5-01; presence disclosed at ACT-CC-P6-070 §2.1",
+    # The Graphify archive, external corpus at Intake (E-66). Verified present
+    # in `graphify-8/graphify/` and recorded at VERIFICATION §49.
+    "extract.py": "Graphify external archive (graphify-8/graphify/) — E-66, Intake",
+    "llm.py": "Graphify external archive (graphify-8/graphify/) — E-66, Intake",
+    "watch.py": "Graphify external archive (graphify-8/graphify/) — E-66, Intake",
+    "requirements.txt": "Graphify external archive — E-66, Intake",
+    "setup.py": "Graphify external archive — E-66, Intake",
+    "factory.py": "Graphify external archive — E-66, Intake",
+    # EAI-0001 reviewed the external repository `1jehuang/jcode` at a pinned
+    # revision (GDR-0012 §3.12). Confirmed by direct search: this basename has
+    # never existed anywhere in this repository's history, and `dd8755f7` is not
+    # a commit here.
+    "scripts/check_dependency_boundaries.py": "external repository `1jehuang/jcode` reviewed as EAI-0001 — GDR-0012",
 }
+
+#: A cited route carrying a literal placeholder is a **template**, not a pointer.
+#: `docs/architecture/adr/decisions/ADR-NNNN.md` is the ADR naming convention,
+#: not a file anyone expects to exist.
+PLACEHOLDER = re.compile(r"(?:NNNN|XXXX|<[^>]+>|\{[^}]+\})")
 
 # Basenames too generic for a bare citation to identify anything. The corpus
 # cites these fully elsewhere; a bare mention is prose, not a pointer.
@@ -394,14 +426,6 @@ def audit(roots: list[str]) -> dict:
 
                     if cited in GENERIC and "/" not in cited:
                         continue
-                    if cited in NON_RESIDENT:
-                        findings.append({
-                            "severity": "INFO", "source": f"{rel}:{lineno}",
-                            "citation": cited,
-                            "message": f"NON-RESIDENT by record — {NON_RESIDENT[cited]}",
-                        })
-                        continue
-
                     kind, targets = _resolve(cited, index)
 
                     # A line citation disambiguates duplicate basenames: only a
@@ -416,11 +440,26 @@ def audit(roots: list[str]) -> dict:
                             targets = long_enough
 
                     if not targets:
-                        findings.append({
-                            "severity": "ERROR", "source": f"{rel}:{lineno}",
-                            "citation": cited,
-                            "message": "cited path resolves to no file in the repository",
-                        })
+                        # Resolution failed. Only now may the registries speak —
+                        # so an entry can never mask a citation that resolves.
+                        if cited in NON_RESIDENT:
+                            findings.append({
+                                "severity": "INFO", "source": f"{rel}:{lineno}",
+                                "citation": cited,
+                                "message": f"NON-RESIDENT by record — {NON_RESIDENT[cited]}",
+                            })
+                        elif PLACEHOLDER.search(cited):
+                            findings.append({
+                                "severity": "INFO", "source": f"{rel}:{lineno}",
+                                "citation": cited,
+                                "message": "TEMPLATE ROUTE — carries a literal placeholder; not a pointer to a file",
+                            })
+                        else:
+                            findings.append({
+                                "severity": "ERROR", "source": f"{rel}:{lineno}",
+                                "citation": cited,
+                                "message": "cited path resolves to no file in the repository",
+                            })
                         continue
                     if kind == "basename" and len(targets) > 1:
                         findings.append({
