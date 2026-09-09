@@ -5833,3 +5833,68 @@ consumers    276 OK
 
 **All ten now have a verifier, and each verifier has a test that can observe the
 defect it claims to detect.**
+
+---
+
+# 59. Wave 3 and the `§31` exhaustion test
+
+**Date:** 2026-09-09 · **Baseline:** `30bd5ec`
+
+## 59.1 `EVIDENCE-FABRIC.md` — the `§25` chain tested link by link
+
+**4 established · 2 indirect · 4 unknown.**
+
+**A method discarded before it reached the page:** the first draft ranked the
+eleven nodes by how many documents mention each. Under that measure **every link
+looked strong, including the ones with no relation at all.** It was replaced
+with per-link citation of `Freeze §4`/`§5`/`§6` relation rows.
+
+**The finding:** `Intelligence` occurs **0 times** in `Freeze §4` and **0 times**
+in `Freeze §5`. **It is neither a frozen entity nor a frozen layer** — so links
+4 and 5 are unknown for a structural reason, not for want of searching. The
+chain names a node the frozen architecture does not define. `P5 Intelligence
+Ecosystem` is a **Phase**, and a Phase is not an entity.
+
+**Two independent measurements agree.** The weakest region of the fabric —
+Runtime through Memory, by way of Intelligence and Tools — is exactly `P5`–`P8`,
+the Phases whose certifications exist and whose **maturity is unevidenced**. The
+part of AIOS with the least frozen architecture is the part whose Phase state is
+least established. Neither measurement was taken looking for the other.
+
+## 59.2 `§31` EXHAUSTION TEST — performed, not asserted
+
+| # | Question | Answer |
+|---|---|---|
+| 1 | Unresolved actionable gaps? | **No.** `G-01`…`G-10`: `G-04` resolved; `G-09` → `ADR-0029`; the rest source-insufficient or reserved |
+| 2 | Authorized BUILD actions? | **No.** The three artifacts the Act names as required are built |
+| 3 | Authorized FIX actions? | **No.** Stale assertions 10 → 0; citation errors 0 |
+| 4 | Authorized INTEGRATE actions? | **No.** Registry, map and fabric integrated and registered |
+| 5 | Authorized VERIFY actions? | **No.** All ten `§26` properties have a verifier with an observable-defect test |
+| 6 | Recoverable source gaps? | **No.** `SG-01` exhausted across four surfaces; `SG-02` **not reconstructed**, by rule |
+| 7 | Unverified conformance gaps? | **Yes — and blocked.** Fabric links 4, 5, 7 have no establishing source; introducing one is a Domain Model amendment |
+| 8 | Unverified runtime paths? | **No** new ones. `native_core` 801 green; `GDR-0014` remains the one expected failure |
+| 9 | Unintegrated Phase↔PD dependencies? | **Mapped, and the provider relation is refused** by `ACT-CC-P6-071 §12` |
+| 10 | Unresolved cross-PD interfaces? | **Yes — 5 declared, 0 defined.** Blocked on non-resident Volume 1/2 corpora |
+| 11 | Stale current-state records? | **No. Zero**, measured by a detector that did not exist two waves ago |
+| 12 | Newly discovered dependencies? | **Yes, and recorded:** `INV-1` and the `INV-10` question both depend on `ADR-0029` |
+| 13 | Outstanding governance reconciliation items? | **Yes — `S-1`…`S-17`, all Open.** All are synchronizations **to the non-resident Master Program**; none is editable from this repository |
+
+**Every remaining YES is blocked, reserved, or source-gapped. No remaining item
+is executable within delegated authority.**
+
+## 59.3 State
+
+```text
+AUTHORIZED WORK EXHAUSTED
++ FOUNDER-RESERVED ITEMS REMAIN   (ADR-0029 · H-1 · H-2 · H-4 · adoption)
++ SOURCE-GAPS REMAIN              (SG-01 · SG-02 · ESC-C7-01 · S-1..S-17)
++ DEPENDENCY-BLOCKED              (P10 on Volume VII §1.2; P11-P13 transitively)
+```
+
+**This is `§32`'s valid mixed state.** `NO MATERIAL EXECUTABLE FRONTIER
+IDENTIFIED` is **not** claimed as a bare verdict: the exhaustion procedure was
+performed above, question by question, and three questions returned YES.
+
+**No work was manufactured to avoid the state, and none was skipped to reach
+it.** `§34` Return Package and `§35` Handoff are persisted at
+`candidates/RETURN-PACKAGE-AND-HANDOFF-v1.0.md`.
