@@ -537,6 +537,8 @@ Phase 4 stands at **0%**. `Volume II §8.2` records all Graphify phases G0–G8 
 *Belum Dimulai*, and `Volume V §4.1` notes Graphify *"masih menunggu klasifikasi
 domain"*.
 
+> *Superseded figure, preserved as history (`ACT §16`, `§47`). `S-9` records it as **superseded by fact**; the live correction is at `§55.3` / `§56`. **Not a current-state claim.***
+
 **Determination [D]:** the archives are correctly at **Intake**. Analysing them
 further, or admitting any part into the repository, would begin the **Audit**
 stage — barred for **every** repository in the registry until Phase 2–4

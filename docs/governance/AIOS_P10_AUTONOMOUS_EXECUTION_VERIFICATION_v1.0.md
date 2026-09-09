@@ -2320,6 +2320,7 @@ independent locks:
 
 1. **Sequencing** — `Volume VII §1.2` makes Phase 9 maturity a condition of
    lawful construction (*"baru sah dibangun"*). Phase 9 is 0%.
+                     ^ superseded figure — see §55.3/§56; not current state
 2. **Criteria** — `Volume V §3` reserves ratification of Phase 5–13 exit
    criteria into measurable form to *"Pemilik Program (Moriarty)"*, triggered
    only at `H-1 Phase`. Phase 10 is not next in line.
@@ -2373,6 +2374,7 @@ artifacts. `Volume III §4.1` closes the admission flow:
 > registry sampai AIOS native core (Phase 2-4) selesai."*
 
 Phase 4 is **0%**. Gate 2 opens only on Founder authority (`Volume V §3`). The
+> *Superseded figure, preserved as history (`ACT §16`, `§47`). `S-9` records it as **superseded by fact**; the live correction is at `§55.3` / `§56`. **Not a current-state claim.***
 archives sit correctly at **Intake** — *"arsipnya dikumpulkan; belum ada
 analisis."*
 
@@ -2561,6 +2563,7 @@ enforces on its own learning loop.
 | Dimension | Status |
 |---|---|
 | **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED** on Phase 4–9 (all 0%), unratified exit criteria, non-delegable activation. **Unchanged by this cycle.** |
+> *Superseded figure, preserved as history (`ACT §16`, `§47`). `S-9` records it as **superseded by fact**; the live correction is at `§55.3` / `§56`. **Not a current-state claim.***
 | **Platform Organization Construction — PD-01–PD-10** | **ACTIVE.** 10 divisions recorded (2 source-verified, 8 derived); Integration dimension newly constructed; join point to frozen architecture identified; **blocked forward at `G-09`** for Capability assignment; supply-blocked at `G-01`; residency-blocked at `ESC-C7-01` |
 
 **Neither is reported as progress in the other.**
@@ -2724,6 +2727,7 @@ unresolved. Recording it and stopping is the entire authorized action.
 | Dimension | Status |
 |---|---|
 | **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED.** Unchanged. Phase 5 also confirmed unstarted per `Volume II §4.3`, against a tempting contrary reading refused at `§32.2` |
+> *Superseded figure, preserved as history (`ACT §16`, `§47`). `S-13` records it as **superseded by fact**; the live correction is at `§55.3` / `§56`. **Not a current-state claim.***
 | **Platform Organization Construction — PD-01–PD-10** | **ACTIVE.** Integration dimension complete across all four regions; frozen relationship rules and governance boundaries mapped; `B-7` quantified. **Blocked forward at `G-09`** for any Capability or Knowledge ownership assignment |
 
 ## 32.7 Regression and state
@@ -2981,6 +2985,7 @@ excess caution.**
 | Dimension | Status |
 |---|---|
 | **Master Program Phase 10 — Department Ecosystem** | **0% · Belum Dimulai · BLOCKED.** Unchanged by this cycle. Gates: Phase 9 immaturity (Phase 4–9 all 0%), unratified exit criteria, non-delegable activation |
+> *Superseded figure, preserved as history (`ACT §16`, `§47`). `S-9` records it as **superseded by fact**; the live correction is at `§55.3` / `§56`. **Not a current-state claim.***
 | **Platform Organization Construction — PD-01–PD-10** | **ACTIVE.** Integration dimension complete (Cycle 17–18); **Ownership dimension complete at model level (this cycle)**. Per-division assignment blocked at `G-09`; per-division content blocked at `G-01`/`ESC-C7-01` |
 | **Autonomous Execution Programme** | **ACTIVE — not exhausted.** See `§34.8` |
 
@@ -4128,6 +4133,7 @@ evidence of the other.**
 | Surface | Status |
 |---|---|
 | **MASTER PROGRAM PHASE 10 — Department Ecosystem** | **BLOCKED.** 0% · six Departments · gated on Phase 4–9 (all 0%). Untouched |
+> *Superseded figure, preserved as history (`ACT §16`, `§47`). `S-9` records it as **superseded by fact**; the live correction is at `§55.3` / `§56`. **Not a current-state claim.***
 | **PLATFORM ORGANIZATION PD-01–PD-10** | **PARTIAL.** Model layer complete and integrated; **10 canonical ledger citations now text-verified**; content `SOURCE-INSUFFICIENT`; assignment `RESERVED` |
 
 ## 43.7 Regression
@@ -4431,6 +4437,7 @@ returned: `docs/program/roadmap-execution/R3-P10-ENTRY-BASELINE.md`.
 
 **Determining condition:** `Volume VII §1.2` — Department (P10) *"baru sah
 dibangun setelah Workflow Ecosystem (Phase 9) matang."* **Phase 9 stands at 0%,
+> *Superseded figure, preserved as history (`ACT §16`, `§47`). `S-17` records it as **superseded by fact**; the live correction is at `§55.3` / `§56`. **Not a current-state claim.***
 as do Phases 4–8.**
 
 **Reaching a negative verdict here is executing `R3`, not declining it.** The
@@ -4859,6 +4866,7 @@ G. BLOCKERS          SG-01 — SOURCE GAP (Founder supply; never resident)
                      G-09 — ARCHITECT/FOUNDER RESERVED
                      G-01, ESC-C7-01 — SOURCE-INSUFFICIENT
                      P10 entry — CANONICAL PREREQUISITE (Phase 9 at 0%)
+                     ^ superseded figure — see §55.3/§56; not current state
                      B-7 — ARCHITECT RESERVED
 H. NEXT FRONTIER     Only P9 hardening remains executable: derived_views.py
                      latent exposure, ERROR-severity calibration, four
@@ -5003,6 +5011,7 @@ G. BLOCKERS          SG-01 — SOURCE GAP (Founder supply; never resident)
                      G-09 — ARCHITECT/FOUNDER RESERVED
                      G-01, ESC-C7-01 — SOURCE-INSUFFICIENT
                      P10 entry — CANONICAL PREREQUISITE (Phase 9 at 0%)
+                     ^ superseded figure — see §55.3/§56; not current state
                      B-7 — ARCHITECT RESERVED
 H. NEXT FRONTIER     Two P9 hardening items remain: ERROR-severity
                      calibration for external-corpus citations, and the
@@ -5725,3 +5734,102 @@ P10          UNCHANGED — BLOCKED (Volume VII §1.2; P9 maturity NOT ESTABLISHE
 CANDIDATE    AUDIT COMPLETE — AUTHORITY INPUT REQUIRED (byte-unchanged)
 RESERVED     ADR-0029 (G-09 population) · H-1 · H-2 · H-4
 ```
+
+---
+
+# 58. Wave 2 — the tenth verifier, and ten stale assertions it found in this corpus
+
+**Date:** 2026-09-09 · **Act:** `ACT-CC-AIOS-FULL-SYSTEM-RESOLUTION §26`, `§16`, `§47`
+**Baseline:** `216ff5b`
+
+## 58.1 Why this was the next ranked action
+
+`ACT §26` lists ten properties a verifier must itself be verified for. **Nine had
+coverage. `stale-state detection` had none** — and it is the class that reached a
+live verdict **twice** in this programme: `R3`'s *"Phase 9 stands at 0%"* and
+`E-60`'s heading, both sourced from a snapshot this corpus had itself labelled
+`STALE BY DECLARATION`.
+
+**A defect class that has already produced two live errors and has no detector
+outranks every other open item.** `§10` PRIORITY 8, reached because PRIORITY 1–7
+held nothing executable that was not already routed to `ADR-0029`.
+
+## 58.2 `tools/stale_state_audit.py` — the corpus supplies its own superseded set
+
+**Nothing is hard-coded.** The checker reads the External Corpus Synchronization
+Ledger's `S-` rows from the Governance Decision Register — the rows recorded
+under Founder Decision `G1′` that say a figure is *"superseded by fact"* — and
+looks for those figures asserted **live** elsewhere. **Delete a row and the
+corresponding check disappears with it**, which is correct: the Register is the
+authority for what is superseded, not the tool.
+
+**6 claims extracted · 439 documents scanned.** A run that extracts **zero**
+claims **reports itself inert and exits 2** rather than reporting a clean corpus
+— the failure mode that would otherwise look like success.
+
+## 58.3 Two defects in the checker, found before it shipped
+
+| # | Defect | Cause | Caught by |
+|---|---|---|---|
+| 1 | **`0%` matched inside `100%`** | no left boundary on the figure | reading a flagged line rather than trusting the count |
+| 2 | **A phase and a figure 200 characters apart on one line counted as a claim** | same-line proximity assumed | the same read |
+
+**Both produced one false positive**, on a line stating *"Phase 6/7/8 work added
+documentation"* and, separately, *"coverage is currently **100%**"*. **Two
+unrelated facts sharing a long line.** Fixed with a boundary-anchored figure
+pattern and an **80-character proximity rule**, both carrying the false positive
+in their comments, and both pinned by tests that reconstruct it.
+
+**A third defect, in my own test:** the guard test compared `source` — which
+carries a `:line` suffix — against the tracked-file set, so every tracked file
+under `docs/program/` looked untracked. **Third occurrence of comparing a
+decorated value against an undecorated set.** Fixed, and a **positive** guard
+probe added beside it: an untracked file planted under the protected prefix must
+not be read, asserted by planting one rather than by observing an absence.
+
+## 58.4 Ten stale assertions, all true positives, all remediated by marking
+
+| Site | Class |
+|---|---|
+| `EVIDENCE-LEDGER.md` — *"Phase 4 stands at 0%"* | **live evidence artifact** — the most serious; `E-60`'s sibling, missed by `§56` |
+| `VERIFICATION` ×9 — cycle-history prose and return blocks | history **without a local marker** |
+
+**`§56` reasoned that the historical sites were "already corrected forward".**
+The detector shows why that was not enough: **a correction 3,000 lines away does
+not prevent a figure acting as current state where it sits.** `ACT §16` requires
+a historical figure to be *preserved* **and** *prevented from acting as current
+state* — two obligations, and only the first was met.
+
+**Remedy: a local dated marker beside each, and not one word of the original
+altered** (`§16`, `§47`). Result: **10 stale assertions → 0 · 41 → 51 historical
+uses.** The figures are all still there; none of them can now be read as
+current.
+
+**One error of mine in the remediation itself:** the first insertion pass put a
+marker **mid-sentence** in the Evidence Ledger, splitting a paragraph. Caught by
+reading the result, repaired by moving it below the paragraph. **Disclosed
+rather than quietly re-run.**
+
+## 58.5 Verification
+
+```text
+stale-state  6 claims · 439 documents · 0 stale assertions · 51 historical uses
+citation     74 documents · 678 citations · 0 errors · 45 WARN (correct class)
+tools        243 OK (+11)
+native_core  801 OK (1 expected failure)
+consumers    276 OK
+```
+
+## 58.6 `§26` coverage after this wave
+
+| Property | Covered by |
+|---|---|
+| guard effectiveness · protected-path exclusion · untracked new work visibility | `ScopeGuardTests`; live probes in both checkers |
+| positive detection · negative detection | `ItSeesTheDefectItClaimsToDetect`; four negative cases in the heading tests |
+| citation resolution · basename ambiguity | `corpus_citation_audit` — 0 errors, 45 WARN held deliberately |
+| line-number coherence | `test_line_numbering_coherence.py` |
+| **stale-state detection** | **`stale_state_audit.py` — new this wave** |
+| regression integrity | every fix above carries a test that reconstructs its defect |
+
+**All ten now have a verifier, and each verifier has a test that can observe the
+defect it claims to detect.**
