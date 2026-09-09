@@ -4273,3 +4273,126 @@ evidence of the other.**
 
 `tools` **211 OK** · `native_core` **801 OK** (1 expected failure) · `consumers`
 **276 OK** · citation audit **0 errors · 10/10 ledger quotations verified**.
+
+---
+
+# 45. Cycle 30 — my own "next step" was wrong, and the real ceiling is `ESC-C7-01`
+
+**Date:** 2026-09-09 · **Instrument:** `ACT-CC-P10-FINAL §6`; `Master Roadmap
+§19`, `§27` · **Authority:** `DEL-T4.4-CF-001 §3.1 C`.
+
+**INTERIM EXECUTION STATE.** Construction cycle.
+
+## 45.1 The prediction, falsified by measuring it
+
+`§43.8` stated: *"22 quotation-bearing ledger rows remain mechanically
+unpairable… Extending the checker to resolve section citations to line ranges
+would bring **most of them** into scope; that is the next `BUILD`/`FIX` item."*
+
+**Measured before building. It would have brought in zero.**
+
+| Category | Rows |
+|---|---|
+| Line number sits in the **source** column, not the location column | **3** |
+| **Section citation** resolvable to a line range | **0** |
+| Neither — location is `—`, `source body`, or `resident` | **13** |
+
+**The proposed extension was the wrong one**, and building it first would have
+produced a tool feature that covered nothing. **Measuring the coverage gain
+before writing the code is the only reason that did not happen.**
+
+## 45.2 What the ceiling actually is
+
+**Those 13 rows are uncheckable because the sources they cite are not
+resident.** They point at *"Volume 3 Parts B, C, G, H"*, *"Volume 4 Part B"*,
+*"Volume 4 C3"*, *"source body"* — the corpus behind **`ESC-C7-01`**.
+
+**So the limit on citation verification in this ledger is not the tooling. It is
+the residency gap.** That gives `ESC-C7-01` a measurable cost it did not have
+before: **13 canonical citations that cannot be verified by any tool until the
+volumes are resident.** An escalation with a number attached is a different
+object from one without.
+
+## 45.3 Built: the 3 that were real
+
+Extended the ledger check to read line citations from the **source** column, and
+fixed two parser defects it exposed — a source token carrying its own
+`:181–183` suffix (the range became part of the filename), and a fallback that
+accepted `Volume` as a path because it took the first whitespace token.
+
+**A path is now required to carry a file extension**, so a prose source
+reference like `Volume 4 C3` is treated as the non-resident reference it is
+rather than a broken path.
+
+## 45.4 A false positive that was nearly a real finding
+
+The extension immediately flagged `E-44` and `E-45` as **TEXT MISMATCH** against
+the Governance Decision Register.
+
+**The citations are true.** The Register reads *"For repository architecture,
+not the semantic authority; that is the Canonical Domain Model."* The ledger
+quotes it as *"**not** the semantic authority…"* — **emphasis added by this
+corpus inside the quotation.**
+
+**The checker was comparing typography, not text.** Fixed with a `_plain()`
+normalizer that strips emphasis markers before comparison, documented in-code:
+*§27 asks whether the source supports the claim, not whether the citer
+reproduced its formatting.*
+
+**This one was worth pausing over.** A checker strict about asterisks would have
+generated a steady stream of "defects" in true citations — and the fastest way
+to make a verification tool useless is to make it cry wolf.
+
+**Noted for the corpus, not fixed:** adding emphasis inside a quotation without
+marking *(emphasis added)* is a minor fidelity looseness. It is recorded here
+rather than silently normalised away in 55 rows.
+
+## 45.5 Result
+
+**0 errors · 12 ledger quotations checked · 12 verified** (was 10/10).
+`E-44` and `E-45`, both into the Governance Decision Register, are newly
+verified at text level.
+
+**Tests: 211 → 213.** One asserts `_plain()` strips emphasis; one asserts
+`E-44`/`E-45` **verify**, not merely fail to error — a test that only checked
+for absence of errors would pass if the check silently stopped running.
+
+## 45.6 Status dimensions (`§8`, `§51`)
+
+| Surface | Status |
+|---|---|
+| **MASTER PROGRAM P10–P13** | **BLOCKED.** All 0%; chain `P13 ← P12 ← P4–P11 ← P10 ← P9 ← P5–P8 ← P4` (`E-60`, `E-96`). Untouched |
+| **PLATFORM ORGANIZATION PD-01–PD-10** | **PARTIAL.** 12 canonical ledger citations text-verified; **13 unverifiable pending `ESC-C7-01`**; content `SOURCE-INSUFFICIENT`; assignment `RESERVED` |
+| **`ACT-CC-P10–P13-PO-CONSTRUCTION-MANDATE`** | **PENDING FOUNDER AUTHORIZATION · NOT EXECUTED** |
+
+## 45.7 Regression
+
+`tools` **213 OK** (+2) · `native_core` **801 OK** (1 expected failure) ·
+`consumers` **276 OK** · audit **195 citations · 0 errors · 12/12 ledger
+quotations verified**.
+
+## 45.8 Re-discovery (`§17`)
+
+**Ledger citation verification has reached its ceiling** at 12 of 32
+quotation-bearing rows — **and the remaining 20 are limited by residency and
+row format, not by the checker.** Further tooling work on this thread would be
+building against a wall.
+
+**Still open and actionable:** the stale `§5 Unresolved` sections in the ten
+division records (`§39.5`); `derived_views.py`'s latent line-number exposure;
+extending the auditor to `docs/governance/` and `docs/program/` (the two newly
+persisted artifacts are unaudited); the two completion matrices (`Roadmap §32`);
+`RECOVERY-MANIFEST.md`.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.**
+
+## 45.9 Repeatability
+
+**Thirty cycles · 78 valid executions · 99 correct stops · 1 overreach ·
+26 disclosed failures · 0 Founder Events · 0 Acts created · 5 code changes ·
+1 tool built · 15 tests added · 1 canonical citation corrected.**
+
+Failures 23–26: the falsified `§43.8` prediction, and three parser/comparison
+defects in my own checker. **The prediction is the one that matters** — it was
+published as a plan, and only measuring it first prevented building the wrong
+thing.

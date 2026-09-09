@@ -181,3 +181,28 @@ class LedgerTableTests(unittest.TestCase):
                     source.strip("`* ").lower(), "same",
                     f"{ident}: carry-forward source was not resolved",
                 )
+
+
+class EmphasisNormalizationTests(unittest.TestCase):
+    """Quotations are compared as text, not as typography.
+
+    E-44 quotes the Register's "not the semantic authority" as "**not** the
+    semantic authority" — emphasis added by the citing document. The substance
+    is verbatim. Comparing raw strings reported a true citation as a defect.
+    """
+
+    def test_plain_strips_emphasis_markers(self):
+        sys.path.insert(0, str(REPO_ROOT / "tools"))
+        import corpus_citation_audit as audit_mod
+        self.assertEqual(
+            audit_mod._plain("**not** the `semantic` _authority_"),
+            "not the semantic authority",
+        )
+
+    def test_emphasised_quotation_still_verifies(self):
+        """The E-44/E-45 case: both must verify, not merely avoid erroring."""
+        report = json.loads(run("--json").stdout)
+        verified = {f["citation"].split()[0] for f in report["findings"]
+                    if "LEDGER TEXT VERIFIED" in f["message"]}
+        for ident in ("E-44", "E-45"):
+            self.assertIn(ident, verified, f"{ident} quotation is no longer verified")

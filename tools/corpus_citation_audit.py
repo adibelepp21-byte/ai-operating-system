@@ -213,6 +213,19 @@ def _ledger_rows(path: Path):
         yield lineno, identifier, claim, source, location
 
 
+def _plain(text: str) -> str:
+    """Strip Markdown emphasis so a quotation is compared as *text*.
+
+    This corpus adds emphasis inside quotations — `E-44` quotes the Register's
+    "not the semantic authority" as "**not** the semantic authority". The
+    substance is verbatim; the asterisks are the citing document's own
+    typography. §27 asks whether the source supports the claim, not whether the
+    citer reproduced its formatting, so comparison is done on stripped text.
+    Anything stronger would report true citations as defects.
+    """
+    return " ".join(re.sub(r"[*`_]+", "", text).split())
+
+
 def _lines(path: Path) -> list[str]:
     """Split on newlines only — never ``str.splitlines()``.
 
@@ -243,13 +256,13 @@ def _check_quote(candidates, want: int, needle: str):
             continue
         if want > len(lines):
             continue
-        exact = " ".join(lines[want - 1].split())
-        if needle in exact:
+        exact = _plain(lines[want - 1])
+        if _plain(needle) in exact:
             return "exact", candidate
         lo = max(0, want - 1 - QUOTE_WINDOW)
         hi = min(len(lines), want + QUOTE_WINDOW)
-        window = " ".join(" ".join(lines[lo:hi]).split())
-        if needle in window and near_hit is None:
+        window = _plain(" ".join(lines[lo:hi]))
+        if _plain(needle) in window and near_hit is None:
             near_hit = candidate
     if near_hit is not None:
         return "near", near_hit
@@ -391,13 +404,27 @@ def audit(roots: list[str]) -> dict:
             if not source:
                 continue
             quotes = [" ".join(q.split()) for q in QUOTE.findall(claim)]
-            spans = LOCATION.findall(location)
+            # A row may carry its line number in the *source* cell rather than
+            # the location cell (`FILE.md:1234`). Measured: 3 rows do. Reading
+            # only the location cell left those unchecked while the tool
+            # reported success on the rest.
+            spans = LOCATION.findall(location) or LOCATION.findall(source)
             if not quotes or not spans:
                 continue
-            sources = [t.strip() for t in SOURCE_TOKEN.findall(source)]
+            # A source token may carry its own line suffix (`FILE.md:181-183`);
+            # strip it before resolving, or the range becomes part of the
+            # filename and nothing resolves. And a token with no file extension
+            # is a prose reference to a source (`Volume 4 C3`), not a path —
+            # those are non-resident by definition and are not errors.
+            sources = []
+            for token in SOURCE_TOKEN.findall(source):
+                token = re.sub(r":\d+(?:\s*[-\u2013\u2014]\s*\d+)?\s*$", "", token.strip())
+                if re.search(r"\.(md|py|txt)$", token):
+                    sources.append(token)
             if not sources:
-                bare = source.strip("`* ").split()
-                sources = [bare[0]] if bare else []
+                bare = [t for t in source.strip("`* ").split()
+                        if re.search(r"\.(md|py|txt)$", t)]
+                sources = bare[:1]
             if not sources:
                 continue
             historical = bool(RETRACTION.search(claim))
@@ -434,8 +461,8 @@ def audit(roots: list[str]) -> dict:
                     body = _lines(candidate)
                     lo = max(0, start - 1 - LEDGER_WINDOW)
                     hi = min(len(body), end + LEDGER_WINDOW)
-                    window = " ".join(" ".join(body[lo:hi]).split())
-                    if needle in window:
+                    window = _plain(" ".join(body[lo:hi]))
+                    if _plain(needle) in window:
                         hit = candidate
                         break
                 if hit is not None:
