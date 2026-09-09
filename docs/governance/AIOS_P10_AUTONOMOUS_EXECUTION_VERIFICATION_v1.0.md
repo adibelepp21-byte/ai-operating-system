@@ -4871,3 +4871,147 @@ I. EXHAUSTION        BLOCKED BUT INDEPENDENT WORK CONTINUES
 `NO MATERIAL EXECUTABLE FRONTIER IDENTIFIED`. Three P9 hardening items remain
 genuinely executable. **No BUILD action was manufactured to avoid that state**,
 and none will be.
+
+---
+
+# 51. Cycle 31 — the deriver and the verifier now agree by test, and five defects of mine on the way there
+
+**Date:** 2026-09-09 · **Act:** `ACT-CC-CONTINUATION-POST-EXECUTION-DISCOVERY`
+`§10A.2` P9 hardening, ranked highest of the three remaining items ·
+**Baseline:** `30cb56a`.
+
+**INTERIM EXECUTION STATE.**
+
+## 51.1 What was executed
+
+`§50`'s return named three remaining P9 hardening items and ranked
+`tools/derived_views.py` first. That module derives
+`source = f"{REGISTER}:{number}"` from `str.splitlines()` — a **citable
+governance pointer produced by the line-counting rule Cycle 26 had already
+found wrong** for this repository's bodies.
+
+**Fix.** A `_lines()` helper splitting on newlines only, and all three
+`splitlines()` call sites re-keyed to it (`decision_lineage`,
+`unbridged_gates`, `self_knowledge`).
+
+**Latent, not active.** The Governance Decision Register carries **no**
+non-newline separators today, so no emitted pointer was ever wrong. This closes
+an exposure, it does not correct a defect in output.
+
+## 51.2 The claim was verified against `HEAD`, not against a remembered number
+
+The natural check — "the digest is the same as last time" — was **not
+available**: the digest recipe used in the previous cycle is not recorded, and
+reproducing a number from memory would be exactly the reconstruction this
+programme forbids.
+
+**So `HEAD`'s module was loaded alongside the working one and both were
+exercised in the same process, under one recipe defined at comparison time:**
+
+| View | `HEAD` vs working |
+|---|---|
+| `decision_lineage` | **9 edges, identical** — `01c88d2a0eb156f9` both sides |
+| `unbridged_gates` | identical |
+| `self_knowledge` | identical |
+| `boundary_consumers` | identical |
+
+**A remembered digest would have proved nothing about either version.**
+
+## 51.3 The coherence property, asserted instead of assumed
+
+`derived_views` emits `REGISTER:<number>`; `corpus_citation_audit` verifies
+citations of exactly that shape. **Two modules whose docstrings agree is not the
+same as two modules that agree.** Had they diverged, both would have reported
+success while pointing at different text — a *silent* failure.
+
+`tools/tests/test_line_numbering_coherence.py` asserts it directly: the two
+`_lines` implementations must return the same list for a hostile fixture, for
+the Register the deriver actually cites, and for each separator individually;
+and neither module may contain a `.splitlines(` call at all, so the agreement
+holds **by construction rather than by coincidence**.
+
+**The fixture is built with `chr()` at import time.** Literal separators were
+attempted first and the harness **refused the command** — *"contains control
+characters that would be hidden in the approval dialog."* The refusal was
+correct and was not worked around; the constraint improved the test, since
+characters a terminal renders invisibly are also characters an editor can
+silently drop.
+
+## 51.4 Five defects of mine, disclosed — four in the code, one in this section
+
+**None of these reached a commit.** They are recorded because a defect in
+verification code is disclosed, never silently corrected.
+
+| # | Defect | Caught by |
+|---|---|---|
+| 1 | An assertion `'splitlines()' not in source` fired on **my own docstring**, which discusses `splitlines` in prose | running it |
+| 2 | The `_lines` helper was inserted **between `@dataclass(frozen=True)` and its class**, breaking the module (`'function' object has no attribute '__mro__'`); a blind re-patch also missed | import failure; restored with `git checkout` and re-applied against a real anchor |
+| 3 | The helper's docstring cited **`E-41`** for the wrong-line correction. `E-41` is a wrong-*source* correction (PD-05 as Knowledge consumer). The wrong-*line* case is **`E-11`**, corrected in **Cycle 27**, `EVIDENCE-LEDGER.md:296` ff. | reading the ledger before trusting the citation |
+| 4 | The new guard's pattern `\.splitlines\s*\(` **could never have matched a real call**: the token-stripper joins tokens with a space, so the source reads `text . splitlines ( )`. The guard passed while being incapable of failing | the meta-test written beside it, which asserts the check still rejects a known-bad input |
+
+**Defect 4 is the one worth keeping.** It is `VF-11`'s shape again — *a check
+that passes because it cannot see*, not because the property holds. It was
+caught only because a **second test asserts the first test can still fail**.
+That pattern is now in the file and should be the default for any guard added
+here.
+
+**Defect 3 is the "verified before verifying" pattern** recorded at `§34.3`,
+`§35.4` and `§36.7` — the fourth occurrence, and again caught pre-commit by
+re-reading the source rather than the memory of it.
+
+**And a fifth, in the sentence above.** That reference was first written as
+*"`§38`, `§39` and `§40`"* — the numbering of Cycles 24–26, not of the three
+cycles that actually record this pattern. **The paragraph describing the defect
+contained the defect**, and it was corrected the same way as the other four:
+by opening the record and reading its headings instead of recalling them.
+Occurrences three, four and five were all caught before commit; **occurrence
+one stood for ten cycles and occurrence two for twenty-six.** The pattern is
+not going away, and the only thing that has changed is the latency.
+
+**Negative probe.** With `return text.split("\n")` mutated back to
+`return text.splitlines()`, the guard flags the module; unmutated, it does not.
+**The check is real.**
+
+## 51.5 Return contract (`§16` / required return)
+
+```text
+A. FRESH DISCOVERY   Two tools that both cite lines had never been tested
+                     for agreeing on what a line is. The agreement held,
+                     but only by coincidence of two independent edits.
+B. RANKED CANDIDATES P9 derived_views.py latent exposure (SELECTED — §50's
+                       own ranking, highest of three)
+                     P9 ERROR-severity calibration for external-corpus
+                       citations
+                     P9 four informational orphan findings
+C. SELECTION REASON  Only this item touched a value that is emitted as a
+                     governance citation; the other two change reporting
+                     severity, not correctness of a pointer
+D. EXECUTION         _lines() added to derived_views.py; three call sites
+                     re-keyed; docstring citation corrected E-41 → E-11;
+                     new coherence test module (7 tests) incl. a meta-test
+E. VERIFICATION      tools 223 OK (+7) · native_core 801 OK (1 expected
+                     failure) · consumers 276 OK · audit 23 documents,
+                     198 citations, 0 errors · HEAD-vs-working output
+                     identical across all four derived views
+F. STATE DELTA       Resolved:   derived_views line-number exposure
+                     Narrowed:   none
+                     Unresolved: G-01,02,03,05,06,08,09,10; ESC-C7-01;
+                                 SG-01; invariant-15 binding; B-7
+                     Newly blocked:    none
+                     Newly executable: none
+G. BLOCKERS          SG-01 — SOURCE GAP (Founder supply; never resident)
+                     G-09 — ARCHITECT/FOUNDER RESERVED
+                     G-01, ESC-C7-01 — SOURCE-INSUFFICIENT
+                     P10 entry — CANONICAL PREREQUISITE (Phase 9 at 0%)
+                     B-7 — ARCHITECT RESERVED
+H. NEXT FRONTIER     Two P9 hardening items remain: ERROR-severity
+                     calibration for external-corpus citations, and the
+                     four informational orphan findings. Neither is
+                     verdict-sensitive; neither unblocks other work.
+I. EXHAUSTION        BLOCKED BUT INDEPENDENT WORK CONTINUES
+```
+
+**`§8` distinction, stated deliberately:** still **not**
+`NO MATERIAL EXECUTABLE FRONTIER IDENTIFIED`. Two P9 items remain genuinely
+executable. **No BUILD action was manufactured**, and the P10 boundary
+(`ACT-CC-P10-CONSTRUCTION-EXECUTION v2.0 §14`) was not approached.

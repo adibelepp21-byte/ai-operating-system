@@ -74,6 +74,28 @@ class Fact:
         return self.status != UNKNOWN
 
 
+def _lines(text: str) -> list:
+    """Split on newlines only — never Python's line-splitting default.
+
+    ``str.splitlines`` also breaks on U+2028, U+0085 and related separators that
+    ``sed``, editors, and the line numbers this repository cites do not treat as
+    line breaks. Fifty Markdown bodies under ``docs/architecture/volume-2/``
+    contain them, and the difference has already changed a governance citation:
+    the corrected pointer for ``E-11`` — ``volume-2/.../E3.md:1500`` — resolves
+    to the quoted sentence only under a newline-only split. That file carries
+    220 ``U+2028`` separators, and under ``str.splitlines`` its line 1500 is
+    ``'Relationship:'`` instead (`EVIDENCE-LEDGER.md:296` ff., Cycle 27).
+
+    This matters here because ``decision_lineage`` emits ``REGISTER:<number>``
+    as a **citable governance pointer**. The Governance Decision Register holds
+    no such separators today, so the numbers are correct — but a deriver and a
+    verifier that disagree about what a line *is* would make one tool's output
+    uncheckable by the other. ``corpus_citation_audit`` splits on newlines only;
+    so does this.
+    """
+    return text.split("\n")
+
+
 # --------------------------------------------------------------------------
 # View A — decision lineage (§20–§22)
 # --------------------------------------------------------------------------
@@ -106,7 +128,7 @@ def decision_lineage(root: Path = REPO_ROOT) -> List[LineageEdge]:
     """
     register = root / REGISTER
     edges: List[LineageEdge] = []
-    for number, line in enumerate(register.read_text(encoding="utf-8").splitlines(), 1):
+    for number, line in enumerate(_lines(register.read_text(encoding="utf-8")), 1):
         match = _SUBRECORD_RE.match(line)
         if match is None or not match.group("identifier").startswith("GDR-"):
             continue
@@ -140,7 +162,7 @@ def unbridged_gates(root: Path = REPO_ROOT) -> List[str]:
     bridged = {edge.gate for edge in decision_lineage(root)}
     heading_registered = set()
     register = (root / REGISTER).read_text(encoding="utf-8")
-    for line in register.splitlines():
+    for line in _lines(register):
         if line.startswith("### FD-"):
             heading_registered.add(line.split()[1])
     referenced = set()
@@ -326,7 +348,7 @@ def self_knowledge(
 
     open_sync = [
         line.split("|")[1].strip()
-        for line in register_text.splitlines()
+        for line in _lines(register_text)
         if line.startswith("| S-") and line.rstrip().endswith("| Open |")
     ]
     facts.append(
