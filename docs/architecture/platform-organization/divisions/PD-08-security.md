@@ -104,6 +104,20 @@ relationship to `native_core` security surfaces (none identified) · whether
 "controls" here means the same controls PD-03 defines under compliance — a
 possible **PD-03/PD-08 boundary question**, recorded, not resolved.
 
+> **Narrowed 2026-09-09 by the model layer — not resolved.**
+> **"Relationship to `native_core` security surfaces (none identified)"** is now
+> **confirmed and explained rather than merely observed.** There is no
+> `security/` boundary among the eleven, and `E-68` establishes why that is
+> expected: `Freeze §5` decomposes by **execution layer**, this corpus by
+> **accountability unit**, and the two are orthogonal. **The absence of a module
+> named for PD-08 is not evidence against PD-08.** Security is cross-cutting
+> here — `Freeze §8` names a **Tool boundary** and a **Governance boundary**
+> among the five load-bearing walls, neither owned by a Division.
+> **Binding to the Security Owner role** (`G-03`), **access-control model**,
+> **protection scope**, and the **PD-03/PD-08 boundary question** all stand
+> unchanged. **`Permission` is additionally barred as an entity** — `Freeze §2`
+> lists it among reserved concepts with no ratified entity (`E-80`).
+
 ## 6. Not constructed
 
 No Security authority declared. No ownership model asserted. No canonical

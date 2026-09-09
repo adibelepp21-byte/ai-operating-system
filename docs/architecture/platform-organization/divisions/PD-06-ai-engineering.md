@@ -88,6 +88,17 @@ subsystems · whether "AI Engineering owner" (`A5:328`) is PD-06 — **suggested
 adjacency, not stated** · boundary with PD-05 where execution meets
 implementation.
 
+> **Narrowed 2026-09-09 by the model layer — not resolved.**
+> **Relationship to the `agent` and `skill` frozen subsystems:** both exist in
+> `native_core/core/`, and **neither corresponds to PD-06 by name** — PD-06 is
+> among the six divisions with no corresponding boundary (`E-68`). **That
+> absence is not evidence against PD-06**: `Freeze §5` decomposes by execution
+> layer, this corpus by accountability unit, and `Domain Model §8` places
+> repository layout outside the model. **Also constraining:** `Freeze §4` holds
+> **Skill** *"owned centrally"*, so no Division owns it.
+> **Whether "AI Engineering owner" (`A5:328`) is PD-06** stands unchanged —
+> *"suggested by adjacency, not stated"*. **Boundary with PD-05** unchanged.
+
 ## 6. Not constructed
 
 No scope assigned to "implementation". No binding to `native_core` subsystems.

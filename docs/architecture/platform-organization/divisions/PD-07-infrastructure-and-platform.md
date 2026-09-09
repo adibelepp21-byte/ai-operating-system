@@ -65,6 +65,19 @@ scope) — **UNKNOWN and material** · binding to the `infrastructure` frozen
 subsystem · relationship to PD-05 where runtime meets substrate · what
 "foundational platform services" enumerates.
 
+> **Narrowed 2026-09-09 by the model layer — not resolved.**
+> **"Infrastructure & Platform" — one domain or two:** still **UNKNOWN and
+> material**. One wrong way to close it is now excluded — `Domain Model §9`
+> makes *Product/Service/**Platform**/Ecosystem* *"exposure/maturity postures of
+> a Capability, not new structural concepts"*, so the question **cannot** be
+> answered by constructing a `Platform` entity (`E-92`).
+> **Binding to the `infrastructure` frozen subsystem:** the subsystem exists
+> (14 modules, 2,651 lines, layer 9). The relationship is **name correspondence,
+> not ownership** (`E-90`); **the binding remains unmade** and would engage
+> `INV-1` and `DEL §3.2` exclusions 9 and 10.
+> **Relationship to PD-05** and **what "foundational platform services"
+> enumerates** stand unchanged.
+
 ## 6. Not constructed
 
 No facility granted actor status, authority, or governance capacity. No binding

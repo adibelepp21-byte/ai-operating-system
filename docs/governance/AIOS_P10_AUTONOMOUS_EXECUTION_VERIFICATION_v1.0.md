@@ -4479,3 +4479,64 @@ active (1 of 10 gaps resolved, 9 with terminal classification); `R11` active.
 
 **`AUTHORIZED ACTIONABLE WORK REMAINING`: YES** — `R8` and its dependents.
 Exhaustion is not claimed and `R22` is not reached.
+
+---
+
+# 47. `R8` continues — the stale sections my own integration created
+
+**Date:** 2026-09-09 · **Roadmap step:** `R8` / `R15` (master artifact
+reconciliation) · **Authority:** `ACT-CC-GAP-CLOSURE-…-ROADMAP-AUTHORIZATION`;
+`DEL-T4.4-CF-001 §3.1 A/C`.
+
+**INTERIM EXECUTION STATE.**
+
+## 47.1 The defect was mine, and recent
+
+Cycle 25 integrated the model layer into all ten division records. **It did not
+touch their `§5 Unresolved` sections**, which predate the model series — so
+`PD-07` has read *"binding to the `infrastructure` frozen subsystem — **UNKNOWN
+and material**"* directly above a section that addresses it. `§39.5` recorded
+this as newly created FIX work; this closes it.
+
+**Six records annotated. Nothing deleted.** Every original item is preserved
+verbatim; each annotation states **what narrowed, what did not, and why** —
+under an explicit heading *"Narrowed … — not resolved."*
+
+## 47.2 What narrowed, precisely
+
+| Record | Narrowed | Still open |
+|---|---|---|
+| `PD-03` | `Policy` is **placed**, not a dead end — *"modeled as a category of Knowledge"* (`E-92`); no `Policy` entity constructible | Constitution relationship (Architect-exclusive); compliance scope; CPID binding |
+| `PD-04` | Knowledge binding is **name correspondence, not ownership** (`E-90`); `home ≠ ownership ≠ privacy` (`E-91`) | Whether *"Intelligence"* is a second domain — **one wrong answer now excluded**: `Ecosystem` is a posture, not an entity |
+| `PD-05` | **The record's own most consequential question, sharpened on both sides.** Three readings are now *distinguishable*: domain accountability (supported), entity ownership (**contradicted** — `Freeze §4` holds Runtime *"owned centrally"*), lifecycle authority (**excluded** — `Domain Model §6`) | Which one `B7:212` asserts is **still not stated**; *"suggestion is not evidence"* stands |
+| `PD-06` | No `agent`/`skill` correspondence — and **that absence is not evidence against PD-06** (`E-68`); `Skill` is *"owned centrally"* | *"AI Engineering owner"* binding; PD-05 boundary |
+| `PD-07` | `Platform` **cannot** be answered by constructing a `Platform` entity (`E-92`); infrastructure binding recorded as correspondence, **unmade** | One domain or two — unchanged and material; PD-05 relationship; service enumeration |
+| `PD-08` | *"No `native_core` security surfaces"* is now **explained, not merely observed** — orthogonal decompositions (`E-68`); `Permission` barred as an entity | `G-03` binding; access-control model; protection scope; PD-03/PD-08 boundary |
+
+**Not one item was moved to resolved.** The distinction between *narrowed* and
+*resolved* is the whole content of this cycle — a corpus that let the first
+quietly become the second would be inflating status, which `Roadmap §6`
+prohibits by name.
+
+## 47.3 The tool checked the work as it was written
+
+The annotations added citations; the auditor reports **0 errors, 196 citations**,
+and `text verified` rose **3 → 4** — the `volume-2/.../B7.md:212` quotation
+introduced in `PD-05`'s annotation was **machine-verified against the line it
+names** at the moment it was written.
+
+## 47.4 Status
+
+| Surface | Status |
+|---|---|
+| **MASTER PROGRAM P10–P13** | **BLOCKED** — `R3` verdict unchanged |
+| **PLATFORM ORGANIZATION PD-01–PD-10** | **PARTIAL — ACTIVE.** Model layer integrated **and its consequences propagated into the open-question records** |
+| **Roadmap** | `R8` active · `R15` advanced · `R22` not reached |
+
+`tools` **213 OK** · `native_core` **801 OK** (1 expected failure) · `consumers`
+**276 OK** · audit **0 errors · 12/12 ledger quotations verified**.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.** The three `docs/program/`
+artifacts persisted this session sit outside the audit root and are unaudited;
+`derived_views.py` retains a latent line-number exposure; `G-01`–`G-10` remain
+as classified.

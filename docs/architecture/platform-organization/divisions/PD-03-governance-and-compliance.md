@@ -301,6 +301,17 @@ division's execution.
 | **Relationship to the Constitution** | Whether PD-03's governance authority sits under, beside, or partly over the Engineering Constitution is **UNKNOWN**. Constitutional tier is Architect-exclusive (`§3.1`), so this is a boundary question requiring authority |
 | **Compliance scope** | Whether "compliance" means internal conformance, external regulatory, or both — **UNKNOWN** |
 
+> **Narrowed 2026-09-09 by the model layer — not resolved.**
+> **Compliance scope** and **Relationship to the Constitution** stand unchanged;
+> the latter is Architect-exclusive (`Constitution §3.1`).
+> **What did narrow:** PD-03's domain term `Policy` is not a dead end. `Domain
+> Model §9` places it — *"**Policy** as a top-level entity — **modeled as a
+> category of Knowledge**"* (`E-92`). So PD-03's policy concern has a canonical
+> representation (Knowledge, homed to a Division, entered via governed promotion,
+> inv. 8) **without any `Policy` entity being constructible** — `Freeze §4`:
+> *"No new entity."* **The binding of the Governance Authority to the CPID
+> remains unasserted.**
+
 ## 6. Not constructed
 
 No governance authority declared or bound. No relationship to the Constitution

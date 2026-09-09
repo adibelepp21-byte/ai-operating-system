@@ -203,6 +203,21 @@ second domain (the P5 Intelligence Ecosystem) or qualifies Knowledge — **UNKNO
 and material**: if two domains, the decomposition above is incomplete · capability
 decomposition · sub-division structure.
 
+> **Narrowed 2026-09-09 by the model layer — not resolved.**
+> **Binding to the Knowledge subsystem:** `native_core/core/knowledge/` exists
+> (layer 8). The relationship is **name correspondence, not ownership** —
+> `Domain Model §8` places repository layout outside the model as a *projection*
+> (`E-90`). **The binding itself remains unmade.**
+> **Whether "Intelligence" denotes a second domain** stands unchanged and
+> material. One wrong way to close it is now excluded: `Domain Model §9` makes
+> *Product/Service/Platform/**Ecosystem*** *"exposure/maturity postures of a
+> Capability, not new structural concepts"* — so the P5 **Intelligence
+> Ecosystem** cannot be answered by constructing an `Ecosystem` entity.
+> **Also relevant:** `Freeze §6` gives Knowledge a **home Platform Division**,
+> while `Domain Model §8` holds substrate *"not owned by, or private to, any
+> single Platform Division"* — `home ≠ ownership ≠ privacy` (`E-91`). No home is
+> assigned; `G-09` controls.
+
 ## 6. Not constructed
 
 No binding to `native_core/core/knowledge/`. No change to the ratified admission

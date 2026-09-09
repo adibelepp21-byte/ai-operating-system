@@ -90,6 +90,22 @@ stands unchanged.
 | **Runtime owner ↔ PD-05** | `A5:327` names a *"Runtime owner"* role. `B7:212` says PD-05 owns Runtime. Whether these are the same is **strongly suggested and not stated** — and suggestion is not evidence |
 | **Contract authority** | Whether PD-05 may define execution contracts, or only operate them — **UNKNOWN** |
 
+> **Narrowed 2026-09-09 by the model layer — not resolved.**
+> **"Whether PD-05 owns, governs, or merely names the Runtime subsystem"** — the
+> record's own most consequential question — is now sharper on both sides.
+> `Freeze §4` holds the **Runtime entity** *"owned centrally"* and *"a facility,
+> not an actor"*; frozen `volume-2/.../B7.md:212` says *"PD-05 owns Runtime."*
+> **`domain accountability ≠ entity ownership`** (`E-79`), and `Domain Model §4`
+> states the general form: **`governs ≠ owns ≠ lifecycle authority`**, adding
+> that `governs` *"establishes no creation, retirement, deprecation, or
+> unilateral mutation authority."*
+> **So three readings are now distinguishable where the record could only name
+> them:** domain accountability (supported), entity ownership (**contradicted**
+> by `Freeze §4`), and lifecycle authority (**excluded** — `Domain Model §6`
+> reserves it). **Which one `B7:212` asserts is still not stated**, and
+> *"suggestion is not evidence"* stands.
+> **Contract authority** unchanged.
+
 ## 6. Not constructed
 
 No binding between PD-05 and any `native_core` package. No claim to the frozen
