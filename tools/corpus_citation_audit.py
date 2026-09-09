@@ -99,7 +99,7 @@ SKIP_DIRS = {".git", "__pycache__", "node_modules", ".venv"}
 # silence an error, rather than because the corpus records the gap, would make
 # this tool complicit in the defect it exists to catch.
 NON_RESIDENT = {
-    "AIOS_CANONICAL_ARCHITECTURE.md": "recorded non-resident; see G-07 and README §1a",
+    "AIOS_CANONICAL_ARCHITECTURE.md": "NEVER resident — absent from full git history and from the archived corpus review's verified inventory; see SG-01, G-07",
     "AIOS_MASTER_PROGRAM_v1_0_LENGKAP.md": "Architect-supplied upload, outside the repository",
 }
 

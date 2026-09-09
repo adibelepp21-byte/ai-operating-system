@@ -128,6 +128,30 @@ twelve, and it was not made twelve.
 | **Recommended action** | Decide whether the derived artifacts are the intended objects or placeholders for absent canon |
 | **Blocking** | NO |
 
+### `G-07` sharpened 2026-09-09 — never resident, not merely non-resident
+
+`SG-01` searched four surfaces: working tree, **full git history across all
+branches**, the 27 Architect-supplied uploads, and the four Graphify archives.
+**`AIOS_CANONICAL_ARCHITECTURE.md` has never existed in this repository's
+history** — the only blob ever bearing a similar name is
+`AIOS_CANONICAL_ARCHITECTURE_REVIEW_v1.0.md`, a *review*.
+
+**The review is itself evidence.** It opens with a *"Corpus inventory
+(verified)"* enumerating the architecture corpus and **never names the
+document** — a verified inventory that does not list it is independent evidence
+it was not there to list.
+
+```text
+NOT RESIDENT    → may be locatable or awaiting persistence
+NEVER RESIDENT  → must originate with the Founder or from outside
+```
+
+**"Recover it" is no longer an available action.** Supply is the only path.
+**Not concluded:** that the document does not exist — `Pasal 7` names it Layer 2
+Canonical and `E-52` corroborates. It has never existed *here*.
+
+---
+
 ## G-08 — Reference count is not evidence of definition
 
 | | |

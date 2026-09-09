@@ -4540,3 +4540,101 @@ names** at the moment it was written.
 artifacts persisted this session sit outside the audit root and are unaudited;
 `derived_views.py` retains a latent line-number exposure; `G-01`–`G-10` remain
 as classified.
+
+---
+
+# 48. `ACT-CC-CONTINUATION-POST-EXECUTION-DISCOVERY` — `SG-01` recovery, negative
+
+**Date:** 2026-09-09 · **Act:** `§4` fresh post-execution discovery, `§8` source
+recovery, `§10A` action selection · **Authority:** existing envelope, unchanged.
+
+**INTERIM EXECUTION STATE.**
+
+## 48.1 Action selected by `§10A` ranking, not by convenience
+
+`§10A` ranks **P1 unblock verified dependencies** and **P5 verdict-sensitive
+source gaps** above all else. Three lower-priority candidates were available and
+were **not** selected: auditing the three `docs/program/` artifacts (P6, affects
+no verdict), the `derived_views.py` latent exposure (P9, correct today), further
+division construction (blocked at `G-01`/`G-09`).
+
+**The selected action was the one most likely to overturn my own `R3` verdict** —
+which is what `§8.3`–`§8.4` require before a source gap may be classified, and
+what my own escalation had already recommended.
+
+## 48.2 Result — negative, and sharper than the claim it replaces
+
+Four surfaces searched by independent methods:
+
+| Surface | Result |
+|---|---|
+| Working tree | only `AIOS_CANONICAL_ARCHITECTURE_**REVIEW**_v1.0.md` |
+| **Full git history, all branches** | **the document has never existed in this repository** |
+| 27 Architect-supplied uploads | absent |
+| 4 Graphify archives | absent |
+
+**The archived review is itself the strongest evidence.** It opens with a
+*"Corpus inventory (verified)"* enumerating the architecture corpus — *"~42
+architecture/governance documents"* — and **never names the document, zero
+occurrences.** A verified inventory that omits it is independent evidence it was
+not there to omit.
+
+**`G-07` sharpens from *not resident* to *never resident*.** The distinction is
+operational, not semantic:
+
+```text
+NOT RESIDENT    → may be locatable, misplaced, awaiting persistence
+NEVER RESIDENT  → must originate with the Founder or from outside
+```
+
+**My own `R3` escalation recommended "make that source resident" as the option
+most likely to change the verdict. That option is now closed as a retrieval
+task.** Supply is the only path.
+
+## 48.3 Three conclusions deliberately not drawn
+
+- **The `R3` verdict is unchanged.** `P10 BLOCKED` rests on `Volume VII §1.2` and
+  `Volume II §5`, both resident. This removes a recovery option; it does not
+  touch the gate.
+- **It is not concluded that the document does not exist.** It has never existed
+  *here*. `Pasal 7` names it Layer 2 Canonical; `E-52` corroborates from the
+  Governance Baseline Bundle. **Absence of evidence in one repository is not
+  evidence of absence** — `Roadmap §5`, *"No invented precedence."*
+- **No Phase state was inferred, adjusted, or substituted.** Reserved to the
+  Program Owner (`Volume V §3`).
+
+**Recording this as "recovered", or treating the review as the document, would
+have been the exact failure the artifact exists to prevent** — `§8.5`, *"do not
+manufacture the missing fact."*
+
+## 48.4 Propagated
+
+`SG-01` recorded at `docs/program/roadmap-execution/`. `G-07` sharpened in the
+gap map. **The auditor's `NON_RESIDENT` registry reason updated** from *"recorded
+non-resident"* to *"NEVER resident — absent from full git history and from the
+archived corpus review's verified inventory"* — a tool that carries a reason must
+carry the true one.
+
+## 48.5 Return contract (`§16`)
+
+```text
+A. STATE          R3: P10 BLOCKED (unchanged) · Track B PARTIAL-ACTIVE
+                  Roadmap: R0 substantial · R1 active · R3 complete ·
+                  R4-R7 blocked · R8 active · R22 not reached
+B. FRESH DISCOVERY  One archived artifact never examined by this corpus;
+                  full-history search never previously run
+C. ACTIONS        SOURCE-GAP: SG-01 recovery attempted, negative, classified
+                  FIX: auditor registry reason corrected; G-07 sharpened
+D. VERIFICATION   tools 213 OK · native_core 801 OK (1 expected failure) ·
+                  consumers 276 OK · audit 0 errors, 196 citations,
+                  4 text-verified, 12/12 ledger quotations
+E. BLOCKERS       SG-01 SOURCE-GAP (Founder supply) · G-09 RESERVED ·
+                  G-01/ESC-C7-01 SOURCE-INSUFFICIENT · P10 gate CANONICAL
+F. DELTA          Newly resolved: none.
+                  Newly narrowed: G-07 (not resident -> never resident).
+                  Still unresolved: G-01,02,03,05,06,08,09,10; ESC-C7-01;
+                  invariant-15 binding; B-7.
+G. NEXT FRONTIER  Audit the three docs/program/ artifacts (P6) — now the
+                  highest-ranked unblocked candidate.
+H. EXHAUSTION     BLOCKED BUT INDEPENDENT WORK CONTINUES
+```
