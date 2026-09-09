@@ -29,7 +29,7 @@ evidence of completeness.
 | **E-08** | *"PD-06 owns implementation."* | `volume-2/.../B4.md` | :731 | **FROZEN** | Resident | **CANONICAL** |
 | **E-09** | *"PD-07 tetap memiliki ownership atas Infrastructure."* | `volume-2/.../C8.md` | :122 | **FROZEN** | Resident | **CANONICAL** |
 | **E-10** | *"PD-09 — Evaluate Quality"* | `volume-2/.../C8.md` | :303 | **FROZEN** | Resident | **CANONICAL** |
-| **E-11** | *"PD-03 hingga PD-10 dengan domain adaptation"* · *"tanpa memaksakan metric PD-02"* | `volume-2/.../E4.md`, `volume-2/.../D4.md` | :1431, :1125 | **FROZEN** | Resident | **CANONICAL** |
+| **E-11** | *"PD-03 hingga PD-10 dengan domain adaptation"* · *"tanpa memaksakan metric PD-02"* | `volume-2/.../E4.md`, `volume-2/.../E3.md` | :1431, :1500 | **FROZEN** | Resident | **CANONICAL** |
 | **E-12** | Native Core holds *"exactly the eleven frozen subsystem boundaries — no more"* | `AIOS_NATIVE_CORE_BLUEPRINT_v1.0.md` | :31 | Canonical Architecture | Resident | **CANONICAL** |
 | **E-13** | `Department` is the Freeze §4 accountability unit owned by exactly one Organization. **Corrected 2026-09-05** (`FDE-P10-AUTONOMOUS-EXECUTION-01 §11`): this row previously read *"— not a platform division"*, which contradicted `ADR-0010` (Approved, FD-6, `GDR-0020`). `Platform Division` **is** the entity; `Department` is its recorded historical alias, and this class implements it under that alias. See `ADE-P10-G04-DECISION.md` | `native_core/core/capability/ownership.py` | :98 | Implementation | Implementation | **RESIDENT** |
 | **E-14** | `PD-02` is ACTIVE | `GDR-0036` | Register | Founder | Governance | **CANONICAL** |
@@ -290,6 +290,38 @@ closes the roster with *"PD-02 tidak menjadi owner atas domain tersebut"* —
 PD-02 is not the owner of those domains. That is `E-03`'s non-subordination rule
 stated independently inside the **frozen** corpus, so the rule rests on two
 sources of different authority rather than one.
+
+---
+
+# Correction to `E-11` — 2026-09-09, Cycle 27
+
+**`E-11`'s second citation was wrong in both file and line, and is corrected
+above.**
+
+| | Recorded | Actual |
+|---|---|---|
+| Source | `volume-2/.../D4.md` | **`volume-2/.../E3.md`** |
+| Line | `:1125` | **`:1500`** |
+
+The quoted text — *"tanpa memaksakan metric PD-02"* — **does not occur anywhere
+in `volume-2/.../D4.md`.** That line reads *"Reference pattern memang dirancang untuk
+diwariskan ke PD-02–PD-10 dengan domain-specific adapt…"* — topically adjacent,
+textually different. The text occurs once in the corpus, at `volume-2/.../E3.md:1500`:
+
+> `26. framework dapat diwariskan ke PD-03 hingga PD-10 tanpa memaksakan metric PD-02.`
+
+**The claim `E-11` makes is unchanged and remains true** — the frozen corpus does
+say the framework is inheritable to `PD-03`–`PD-10` without imposing PD-02's
+metrics. **Only the pointer was wrong**, and it was wrong for twenty-six cycles.
+
+**Found by the `§27` quotation check built in Cycle 26**, not by re-reading. It
+is the `E-41` class — a true statement behind a false pointer — and it is the
+first instance this corpus caught by machine rather than by accident.
+
+**A second finding sits inside the first.** That file contains **220 `U+2028`
+separators**. Under `str.splitlines()` its "line 1500" is `'Relationship:'`;
+under a newline-only split it is the quoted text. **The Cycle 26 line-counting
+bug was not theoretical — it lands on the exact file this correction concerns.**
 
 ---
 

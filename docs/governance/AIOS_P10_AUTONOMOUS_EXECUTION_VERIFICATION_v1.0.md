@@ -3799,3 +3799,134 @@ extending the auditor to `docs/governance/`; the two completion matrices
 Failures 16 and 17 are `§40.2`(a) and (b) — **both in my own verification tool,
 both found by running it rather than by reading it**, and both disclosed rather
 than quietly corrected.
+
+---
+
+# 41. Cycle 27 — the tool catches a real mis-citation, twenty-six cycles old
+
+**Date:** 2026-09-09 · **Instrument:** `AIOS-MASTER-ROADMAP-P10-PLATFORM-CONSTRUCTION`
+`§5` (FIX), `§26`, `§27`, `§34` · **Authority:** `DEL-T4.4-CF-001 §3.1 A/C`.
+
+**INTERIM EXECUTION STATE.** Construction cycle — one real defect found and
+fixed.
+
+## 41.1 The `splitlines()` sweep: mostly a non-finding, honestly reported
+
+`§40.7` flagged that the Cycle 26 line-counting bug might reach other tooling.
+**Swept, and it largely does not.** Eleven `splitlines()` sites:
+
+| Site | Verdict |
+|---|---|
+| `tools/governance_index.py` (×2) | **Not a defect** — slices the same list it builds; emits no external line numbers |
+| `tools/derived_views.py` (×3) | **Correct today** — its register target contains **zero** separators. **Latent**: line numbers would silently shift if one were ever introduced |
+| `tools/tests/*` (×5) | **Not a defect** — self-consistent within each test |
+| `tools/bounded_exception/provenance.py` | **Not a defect** — no line numbering |
+
+**A measurement error of my own, disclosed.** An early sweep reported the
+Governance Decision Register as containing **97,162** separators against a
+one-line discrepancy — an incoherent pair I nearly recorded. The literal in that
+throwaway script had been mangled and was counting **ordinary spaces**. The
+register contains **zero** separators. **The incoherence was visible in the
+numbers and was chased rather than filed.**
+
+**What is real:** **50 Markdown files contain `U+2028`**, 200–250 each, and they
+are almost entirely `volume-2/pd-02-architecture-office/` — **the corpus this
+Evidence Ledger cites by line number.**
+
+## 41.2 So the citations into that corpus were checked — and one was wrong
+
+`E-11` has been in the Evidence Ledger since early construction, marked
+**`FROZEN` · `Resident` · `CANONICAL`**, carrying two quotations and two line
+citations.
+
+| Quotation | Cited | Actual |
+|---|---|---|
+| *"PD-03 hingga PD-10 dengan domain adaptation"* | `volume-2/…/E4.md:1431` | **verified exact** |
+| *"tanpa memaksakan metric PD-02"* | `volume-2/…/D4.md:1125` | **wrong file and wrong line** |
+
+**The quoted text does not occur anywhere in `D4.md`.** `D4.md:1125` reads
+*"Reference pattern memang dirancang untuk diwariskan ke PD-02–PD-10 dengan
+domain-specific adapt…"* — topically adjacent, textually different. The text
+occurs once in the corpus, at **`volume-2/…/E3.md:1500`**:
+
+> `26. framework dapat diwariskan ke PD-03 hingga PD-10 tanpa memaksakan metric PD-02.`
+
+**`E-11`'s claim is unchanged and remains true.** The frozen corpus does say the
+framework is inheritable to `PD-03`–`PD-10` without imposing PD-02's metrics.
+**Only the pointer was wrong — for twenty-six cycles.**
+
+**This is the `E-41` class caught by machine for the first time.** `E-41` itself
+was found by accident, ten cycles late. This one was found because a tool built
+two cycles ago now checks the thing that matters.
+
+## 41.3 The two defects intersect exactly
+
+`volume-2/…/E3.md` contains **220 `U+2028` separators**.
+
+```text
+str.splitlines()  → line 1500 is 'Relationship:'
+split("\n")       → line 1500 is the quoted text
+```
+
+**The Cycle 26 line-counting bug was not theoretical.** Had it not been fixed
+first, this correction would have been impossible to make — the verifier would
+have pointed at the wrong line of the right file while correcting a citation
+that pointed at the wrong file entirely.
+
+## 41.4 Fixed
+
+`E-11` corrected in place to `volume-2/.../E3.md:1500`, with a dated correction
+note recording what was wrong, what the text actually is, and that the claim
+survived. **The prior state is recorded, not overwritten silently.**
+
+**And the correction note broke its own rule**, introducing two unqualified
+`D4.md` / `E3.md` references that the auditor immediately flagged as ambiguous.
+Qualified. **A note about citation precision is the last place to be imprecise**,
+and the tool caught it in the same run.
+
+## 41.5 Status dimensions (`§2`, `§51`)
+
+**Master Program Phase 10 — Department Ecosystem and Platform Organization
+PD-01–PD-10 are separate construction surfaces. Neither status is used as
+evidence of the other.**
+
+| Surface | Status |
+|---|---|
+| **MASTER PROGRAM PHASE 10 — Department Ecosystem** | **BLOCKED.** 0% · *Belum Dimulai* · six Departments · gated on Phase 4–9 (all 0%). Untouched |
+| **PLATFORM ORGANIZATION PD-01–PD-10** | **PARTIAL.** Model layer complete and integrated; **one canonical citation corrected**; citation integrity machine-verified. Content `SOURCE-INSUFFICIENT`; assignment `RESERVED` |
+
+## 41.6 Regression
+
+`tools` **207 OK** · `native_core` **801 OK** (1 expected failure) · `consumers`
+**276 OK** · citation audit **195 checked · 0 errors · 3 text verified · 2 known
+warnings**.
+
+## 41.7 Re-discovery (`§11`)
+
+**The obvious next step, now that the check exists and works:** `E-11` was
+caught because its quotation sat adjacent to its citation. **Most ledger entries
+carry quotation and line number in *separate table columns*, where the current
+check cannot pair them.** `E-11`'s defect was in exactly that shape and was
+found only because it was hand-checked here.
+
+**Extending the auditor to pair quotations with line numbers across table
+columns is the highest-value remaining FIX/BUILD item** — it would cover the
+majority of this corpus's canonical citations, which are currently unverified in
+the one way that matters.
+
+**Also open:** stale `§5 Unresolved` sections in the ten division records;
+`derived_views.py`'s latent line-number exposure; ~69,000 lines of resident
+cited corpus; `RECOVERY-MANIFEST.md`; the two completion matrices
+(`Roadmap §32`).
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.**
+
+## 41.8 Repeatability
+
+**Twenty-seven cycles · 73 valid executions · 94 correct stops · 1 overreach ·
+19 disclosed failures · 0 Founder Events · 0 Acts created · 3 code changes ·
+1 tool built · 9 tests added · 1 canonical citation corrected.**
+
+Failures 18 and 19: the `97,162` measurement artifact (`§41.1`), and `E-11`
+itself — **a defect of mine from early construction, found by a tool of mine
+from two cycles ago.**
