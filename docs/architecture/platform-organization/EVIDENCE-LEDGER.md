@@ -1113,3 +1113,32 @@ is a Domain Model semantic determination, `DEL §3.2` exclusion 9.
 **Reaches past PD-01:** it is the Gold Standard Reference Implementation that
 `PD-02`–`PD-10` follow *"by domain adaptation"*, so the unreconciled vocabulary
 is inherited. **Opened as `G-10`. Nothing in `volume-1/` modified.**
+
+---
+
+# Cycle 29 — `E-96`
+
+## `E-96` — the Track A gate chain, end to end
+
+**Source:** `Master Program Volume II §5` dependency map; Progress Tracker.
+**Class: [A] canonical.**
+
+| Phase | Depends on | Stated reason |
+|---|---|---|
+| **11** Autonomous Organization | **Phase 10** | *"Otonomi lintas-department memerlukan department yang sudah berjalan"* |
+| **12** AI Operating System | **Phase 4-11 (seluruh layer)** | *"AIOS adalah integrasi penuh, bukan penjumlahan sederhana"* |
+| **13** Super Intelligence Ecosystem | **Phase 12** | *"Didefinisikan setelah AIOS penuh beroperasi"* |
+
+Combined with `E-60` (Phase 10 ← Phase 9; *"baru sah dibangun setelah Workflow
+Ecosystem matang"*) the full chain is:
+
+```text
+P13 ← P12 ← P4–P11 ← P10 ← P9 ← P5–P8 ← P4
+```
+
+**Every phase in that chain stands at 0% · *Belum Dimulai*.**
+
+**Consequence [D]:** `P11`, `P12` and `P13` are gated **transitively behind the
+same unopened gate as `P10`**. This is the Master Program's own dependency map,
+not a delegation limit — and `Volume V §3` reserves Phase status determination to
+*"Pemilik Program (Moriarty)"*.

@@ -4157,3 +4157,119 @@ to line ranges would bring most of them into scope; that is the next
 
 Failures 20–22 are `§43.3`(a), (b) and (c) — **all three in my own verifier,
 all three surfaced by running it against real data rather than by reading it.**
+
+---
+
+# 44. `ACT-CC-P10–P13-PO-CONSTRUCTION-MANDATE` — Blueprint persisted, Act recorded PENDING
+
+**Date:** 2026-09-09 · **Authority for this cycle:**
+`FDE-P10-AUTONOMOUS-EXECUTION-01` Decision B; `DEL-T4.4-CF-001 §3.1 A/C`;
+the previously **approved** Construction Execution Acts. **Not** the Act below.
+
+## 44.1 The Act's own status
+
+**`ACT-CC-P10–P13-PO-CONSTRUCTION-MANDATE` records itself as
+`PENDING FOUNDER AUTHORIZATION`** — in its header and again at `§33`
+(*"UPON APPROVAL: AUTHORIZED FOR EXECUTION"*). `§32` makes the grant explicitly
+conditional: *"**Dengan approval terhadap Act ini**, Founder memberikan
+authorization…"*.
+
+**No approval block is completed.** Every previously operative Act in this
+programme carried a filled block — `Founder: Moriarty` · `Decision: APPROVED`.
+This one does not.
+
+**Determination:** the Act is **received and recorded, not operative.**
+Treating its arrival as its approval would be `PROPOSED → AUTHORIZED` — the
+silent promotion this programme forbids, and the same shape as `CR-1`
+(`ACT-CC-P10-FAE-01`), which was resolved only by an explicit Founder
+confirmation Act.
+
+**This blocks nothing.** Existing approved authority already covers everything
+currently actionable, and this cycle executed under it.
+
+## 44.2 Blueprint persisted
+
+| | |
+|---|---|
+| **Path** | `docs/program/AIOS_PHASE_10_13_PLATFORM_ORGANIZATION_BLUEPRINT_v1.0.md` |
+| **Version** | `v1.0` — *Draft for Founder Review* |
+| **Body** | 773 lines, 26,626 bytes, **verbatim** |
+| **`sha256` (body)** | `841bb7582a1de7ed4f031c51c3deef9e452a6abc76794587704b8ba26af0f45e` |
+
+**Integrity verified:** persisted-body digest equals supplied-file digest, so the
+provenance header is provably additive. Substantive rules preserved and checked
+present: `PD ≠ Phase`; *No endless reading*; `NO EVIDENCE → NO CLOSURE`;
+*Rule 10 — Continue Until Exhausted*; *"P13 tidak boleh ditutup hanya karena
+daftar fitur awal habis"*; `CROSS-PD INTERFACE REGISTRY`; `PHASE–PD CAPABILITY
+& DEPENDENCY MAP`.
+
+**Persisting the work surface is not executing the Act that names it**, and the
+provenance header says so in the artifact itself.
+
+## 44.3 What the Act would add, and what is gated regardless — `E-96`
+
+**Track B (PD-01–PD-10) is already authorized** and is what this programme has
+been constructing for twenty-eight cycles.
+
+**Track A beyond P10 is new scope — and `E-96` shows it is transitively gated.**
+`Master Program Volume II §5`, verbatim:
+
+| Phase | Depends on |
+|---|---|
+| **11** Autonomous Organization | **Phase 10** |
+| **12** AI Operating System | **Phase 4-11 (seluruh layer)** |
+| **13** Super Intelligence Ecosystem | **Phase 12** |
+
+With `E-60` the chain is `P13 ← P12 ← P4–P11 ← P10 ← P9 ← P5–P8 ← P4`, and
+**every phase in it stands at 0% · *Belum Dimulai***.
+
+**So the actionable delta from approving this Act is smaller than its scope
+suggests, and saying so is more useful than accepting the scope at face value.**
+`P11`–`P13` construction is barred by the Master Program's own dependency map —
+a **canonical prerequisite, not a delegation limit** — and Phase status is
+reserved to *"Pemilik Program (Moriarty)"* (`Volume V §3`).
+
+**What would become actionable on approval:** the Blueprint's Track B artifacts
+that this corpus has not yet built — `CROSS-PD INTERFACE REGISTRY` (`§14`) and
+`PHASE–PD CAPABILITY & DEPENDENCY MAP` (`§15`). **Both are already partially
+covered** by `PLATFORM-ORGANIZATION-MASTER-MAP.md` and
+`IMPLEMENTATION-CORRESPONDENCE-MAP.md`, and both are constrained by `G-09`
+(which population) and `G-05`/`INV-10` (cross-division dependencies require
+governance approval).
+
+## 44.4 Escalation package (`§26` decision-ready form)
+
+```text
+ISSUE               ACT-CC-P10–P13-PO-CONSTRUCTION-MANDATE records itself
+                    PENDING FOUNDER AUTHORIZATION; no approval block completed.
+EVIDENCE            Act header; §32 ("Dengan approval terhadap Act ini");
+                    §33 STATUS / UPON APPROVAL.
+AUTHORITY BOUNDARY  Founder. An Act cannot authorize itself, and receipt is not
+                    approval (Silence ≠ Approval; PROPOSED ≠ AUTHORIZED).
+OPTIONS             A. Complete the approval block → Act becomes operative.
+                    B. Leave PENDING → construction continues under the
+                       existing approved Acts, as it did this cycle.
+IMPACT              A adds Track A P11–P13 scope, which E-96 shows is
+                    transitively gated at 0% regardless, plus two Track B
+                    registry artifacts already partially covered.
+                    B changes nothing currently actionable.
+EXACT DECISION      Complete the approval block, or confirm the Act stays
+                    PENDING. Neither answer blocks present work.
+```
+
+## 44.5 Status dimensions (`§8`, `§51`)
+
+**Master Program Phase 10 — Department Ecosystem and Platform Organization
+PD-01–PD-10 are separate construction surfaces. Neither status is used as
+evidence of the other.**
+
+| Surface | Status |
+|---|---|
+| **MASTER PROGRAM P10–P13** | **BLOCKED.** All 0% · *Belum Dimulai*. `P10 ← P9`; `P11 ← P10`; `P12 ← P4–P11`; `P13 ← P12` (`E-60`, `E-96`). Untouched |
+| **PLATFORM ORGANIZATION PD-01–PD-10** | **PARTIAL.** Model layer complete (10/10) and integrated; citation integrity machine-verified; content `SOURCE-INSUFFICIENT`; assignment `RESERVED` |
+| **This Act** | **RECEIVED · PENDING FOUNDER AUTHORIZATION · NOT EXECUTED** |
+
+## 44.6 Regression
+
+`tools` **211 OK** · `native_core` **801 OK** (1 expected failure) · `consumers`
+**276 OK** · citation audit **0 errors · 10/10 ledger quotations verified**.
