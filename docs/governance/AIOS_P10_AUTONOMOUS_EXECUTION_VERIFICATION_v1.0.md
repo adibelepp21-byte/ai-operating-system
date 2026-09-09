@@ -5219,6 +5219,12 @@ most transferable thing this audit produced.
 
 ## 53.4 Defect — eight of my own citations point at sections that do not exist
 
+> **CORRECTED THE SAME DAY BY `§54`. The count and the severity below are
+> wrong.** Seven of the ten name a supplied source that was never persisted —
+> a recognised class in this corpus — and three were correct all along against a
+> second resident roadmap I did not test. The section is left standing, not
+> rewritten, and `§54` carries the measurement.
+
 `AIOS_MASTER_ROADMAP_PHASE10_PLATFORM_ORGANIZATION_CONSTRUCTION_v1.0.md`
 (sha `c6c32a23…`, persisted under `ACT-CC-P10-001`) has **seventeen sections,
 `§0`–`§17`**, and **zero occurrences of "detector"**.
@@ -5308,3 +5314,119 @@ J. MY OWN DEFECTS    3 disclosed (53.4, 53.5, 53.6); none corrected here
 are now named and uncorrected, and correcting them is authorized work.** `§52`'s
 declaration was honest when made and is superseded by evidence, not withdrawn as
 an error.
+
+---
+
+# 54. Correction to `§53` — I published a citation defect by committing one
+
+**Date:** 2026-09-09 · **Corrects:** `§53.4`, `§53.5`, and `PR-3` of
+`CANONICAL-ARCHITECTURE-CANDIDATE-AUDIT-v1.0.md` · **Baseline:** `5ec7dc7`.
+
+## 54.1 What I published, and why it was wrong
+
+`§53.4` reported **eight `Roadmap §NN` citations that cannot resolve**, on the
+evidence that `AIOS_MASTER_ROADMAP_PHASE10_PLATFORM_ORGANIZATION_CONSTRUCTION_v1.0.md`
+has seventeen sections and no `§27`, `§28` or `§32`.
+
+**That measurement was correct. The conclusion drawn from it was not.** I
+matched the string `"Roadmap §NN"` and tested it against **one** artifact.
+
+| Artifact | Sections | Status |
+|---|---:|---|
+| `AIOS_MASTER_ROADMAP_PHASE10_PLATFORM_ORGANIZATION_CONSTRUCTION_v1.0.md` | **17** | resident |
+| `AIOS_GAP_CLOSURE_P10_P13_CONSTRUCTION_ROADMAP_v1.0.md` | **37** | **resident — never checked** |
+| The 53-section *Master Roadmap* issued in the Act stream | 53 | **never persisted** |
+
+**The word "Roadmap" in this record denotes three different documents.**
+
+## 54.2 The corrected measurement
+
+| Citation | Sites | True referent | Resolves? |
+|---|---:|---|---|
+| `Roadmap §32` — two completion matrices | 4 | 53-section message (`§32` in Gap Closure is `R24 Return Package`) | **Non-resident source** |
+| `Master Roadmap §27` — Citation Truth Rule | 1 | 53-section message (`§27` there is `R19`) | **Non-resident source** |
+| `Roadmap §28` — *"control the detector"* | 2 | 53-section message; in **neither** persisted roadmap | **Non-resident source** |
+| `Roadmap §28` — *"a blocked item does not stop the program"* | 1 | **Gap Closure `§28` = `R20 Blocker Handling`** | **✅ correct** |
+| `Roadmap §5` — *"No invented precedence."* | 1 | **Gap Closure `§5`:74** — verbatim | **✅ correct** |
+| `Roadmap §6` — status inflation | 1 | **Gap Closure `§6`:89** — `FROZEN ≠ VERIFIED` | **✅ correct** |
+
+**Seven name a non-resident supplied source. Three were right.** Not eight
+unresolvable.
+
+**Why the class matters.** A citation to a **non-resident supplied source** is
+legitimate here — the Master Program and the Encyclopedia are cited that way,
+and the auditor keeps a `NON_RESIDENT` registry for exactly it. A citation to a
+**nonexistent section of a resident document** is a defect. **I reported the
+second where the evidence supported the first**, which converts a bookkeeping
+gap into an integrity failure that did not occur.
+
+**What survives.** `§27` still cannot be opened from this repository, and
+`§40`'s heading still names *"the `§27` Citation Truth check"*. The check built
+to catch mis-citation was introduced citing something nobody here can read.
+**That observation stands. The count and the severity do not.**
+
+## 54.3 Seventh occurrence, and this one is different in kind
+
+`§34.3` · `§35.4` · `§36.7` · `§51.4` defect 3 · `§51.4` defect 5 · `§53.4` ·
+**here.**
+
+The first six were caught **before commit**. This one was **published, pushed,
+and reported to the Founder in a return contract** — and it was published
+**inside a section whose subject is this exact pattern**, alongside a paragraph
+observing that the citation-truth check was itself introduced under a
+mis-citation.
+
+**The generalisation I keep making is not "cite carelessly". It is: match a
+string, find one candidate, and stop.** `§40`'s duplicate-basename bug, `VF-11`'s
+tracked-status proxy, `§51.4`'s regex that could not match, and this — **all four
+are one candidate accepted where the search space held more than one.**
+
+**What actually caught it:** not a tool. I went to correct the defect I had
+reported and grepped for the quoted string across the whole corpus instead of
+one file — and it was there, in the other roadmap. **The correction attempt was
+the audit.**
+
+## 54.4 What this changes for the Founder-facing audit
+
+`PR-3` of the candidate audit is **corrected in place with a dated block**; the
+original text is left standing above it, per the `VF-9` / `E-11` precedent that
+findings are annotated rather than rewritten.
+
+**The candidate audit's verdict is unaffected.** `PR-3` was a provenance finding
+about *my* record, not about the submitted candidate. `NOT READY` rests on
+`CD-1`–`CD-4` and `MA-01`–`MA-10`, none of which touch this.
+
+**One thing the correction strengthens.** `§53.3` said the candidate *"inherited
+my mis-citation"* at its §11. It did — but the inheritance is now precisely
+describable: the candidate cites a rule whose only home is a **document the
+Founder issued and this repository never persisted.** **The remedy is not to
+correct the candidate. It is to persist the 53-section Master Roadmap** — see
+`54.5`.
+
+## 54.5 The one action this correction actually recommends
+
+```text
+RECOMMENDED   Persist the 53-section Master Roadmap issued in the Act stream,
+              as a tracked artifact, the way ACT-CC-P10-001 persisted the
+              17-section one.
+WHY           Seven citations in this record and one in the Founder's own
+              candidate point at it. It is the most-cited unpersisted
+              document in the programme.
+AUTHORITY     Founder supply — it is the Founder's artifact, and ACT §5's
+              no-reconstruction rule forbids my reproducing it from the Act
+              stream or from memory.
+STATUS        RECOMMENDATION, not a decision. Recommendation ≠ Decision.
+```
+
+## 54.6 Return delta
+
+```text
+CORRECTED    §53.4 count 8 → 7 non-resident + 3 correct
+             §53.5 stands unchanged (auditor roots still exclude docs/governance)
+             §53.6 stands unchanged (protected-boundary misdescription)
+             PR-3 corrected in place; audit verdict unaffected
+DISCLOSED    Seventh "verified before verifying"; first one to reach a commit
+             and a return contract rather than being caught pre-commit
+NEW          One recommendation to the Founder (54.5); no BUILD action
+EXHAUSTION   BLOCKED BUT INDEPENDENT WORK CONTINUES
+```

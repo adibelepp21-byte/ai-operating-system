@@ -144,16 +144,47 @@ detector, not the reverse."*
 repository's record has been citing it to an artifact that does not contain
 it.** Measured across my own governance record:
 
-| Citation form | Occurrences | Resolves in the persisted Roadmap? |
-|---|---:|---|
-| `Roadmap §32` | 4 | **No** — §32 does not exist |
-| `Roadmap §28` | 3 | **No** — §28 does not exist |
-| `Roadmap §27` | 1 | **No** — §27 does not exist |
-| `Roadmap §5`, `Roadmap §6` | 2 | Sections exist; content not re-verified here |
+> ### CORRECTION — 2026-09-09, same day, before this audit was acted on
+>
+> **The table below as first published was wrong, and the error was mine.** It
+> tested `"Roadmap §NN"` against **one** artifact. This repository persists
+> **two** roadmaps, and the Founder issued a **third** that was never persisted:
+>
+> | Artifact | Sections | Status |
+> |---|---:|---|
+> | `AIOS_MASTER_ROADMAP_PHASE10_PLATFORM_ORGANIZATION_CONSTRUCTION_v1.0.md` | **17** (`§0`–`§17`) | resident |
+> | `AIOS_GAP_CLOSURE_P10_P13_CONSTRUCTION_ROADMAP_v1.0.md` | **37** (`§1`–`§37`) | resident |
+> | The 53-section *Master Roadmap* issued in the Act stream | 53 | **never persisted — non-resident** |
+>
+> **Re-measured against all three**, the ten citations split three ways:
 
-**Eight unresolvable citations, standing since Cycle 26.** `§40`'s own heading
-names *"the `§27` Citation Truth check"*. **The check built to catch mis-citation
-was itself introduced under a mis-citation.**
+| Citation | Sites | True referent | Resolves? |
+|---|---:|---|---|
+| `Roadmap §32` — *"two completion matrices"* | 4 | the **53-section message**; `§32` of the Gap Closure Roadmap is `R24 Return Package` | **Non-resident source** |
+| `Master Roadmap §27` — Citation Truth Rule | 1 | the **53-section message**; `§27` there is `R19 Founder Escalation Boundary` | **Non-resident source** |
+| `Roadmap §28` — *"evidence must control the detector"* | 2 | the **53-section message**; present in **neither** persisted roadmap | **Non-resident source** |
+| `Roadmap §28` — *"a blocked item does not stop the program"* | 1 | **Gap Closure `§28` = `R20 Blocker Handling`** | **✅ Correct** |
+| `Roadmap §5` — *"No invented precedence."* | 1 | **Gap Closure `§5` = Non-Negotiable Controls**, line 74 — quotation present verbatim | **✅ Correct** |
+| `Roadmap §6` — status inflation | 1 | **Gap Closure `§6` = State Model**, line 89 — `FROZEN ≠ VERIFIED` etc. | **✅ Correct** |
+
+**Corrected finding: seven citations name a supplied source that was never
+persisted; three were correct all along.** Not "eight unresolvable".
+
+**The distinction matters and is not a technicality.** A citation to a
+**non-resident supplied source** is a recognised, legitimate class in this corpus
+— the Master Program and the Platform Encyclopedia are cited the same way, and
+the auditor carries a `NON_RESIDENT` registry precisely for it. A citation to a
+**nonexistent section of a resident document** is a defect. **I reported the
+second where the evidence supports the first.**
+
+**What survives the correction:** `§40`'s heading still names *"the `§27`
+Citation Truth check"*, and `§27` still cannot be opened from this repository.
+The check built to catch mis-citation was introduced citing a source nobody here
+can read. **That was worth saying; the number and the severity were not.**
+
+**This is the seventh occurrence of "verified before verifying"** — and it was
+committed **inside a finding about that same pattern**, one commit before this
+correction. `§34.3`, `§35.4`, `§36.7`, `§51.4`×2, `§53.4`, here.
 
 **This is `E-41`'s exact class — a true statement behind a false pointer — and
 it is the sixth occurrence of the "verified before verifying" pattern**
@@ -445,7 +476,7 @@ work are **disclosed, never silently corrected**.
 
 | # | Defect | Where |
 |---|---|---|
-| 1 | **Eight `Roadmap §27/§28/§32` citations that cannot resolve** — the persisted Roadmap has only §0–§17. Standing since Cycle 26; used twice in this session, most recently two commits ago | `PR-3` |
+| 1 | **Seven `Roadmap §27/§28/§32` citations naming a supplied source that was never persisted** — and, in first publishing this finding, **I reported eight unresolvable citations by testing only one of the two resident roadmaps**. Three of the ten were correct all along | `PR-3` + its correction |
 | 2 | **My corpus citation auditor has never scanned `docs/governance/`** — its root is `docs/architecture/platform-organization/` only. The record carrying the most citations is the one the citation checker cannot see. **Same failure shape as `VF-11`: a guard that passes because it cannot look** | `PR-3` |
 | 3 | **I described `docs/program/` as a protected directory in four return contracts.** It is not — protection is keyed on *untracked* paths there. Tracked artifacts including the Blueprint and both Roadmaps were readable all along, and `§52.1` reclassified a frontier item partly on the strength of that misdescription | `§0` |
 
