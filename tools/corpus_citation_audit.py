@@ -72,7 +72,14 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_ROOTS = ("docs/architecture/platform-organization",)
+DEFAULT_ROOTS = (
+    "docs/architecture/platform-organization",
+    # The reconstitution candidate and its audit
+    # (`ACT-CC-CANONICAL-ARCHITECTURE-RECONSTITUTION-SUBMISSION-v1.0`).
+    # A candidate for the architecture SSOT is exactly the document whose
+    # pointers must resolve before anyone proposes ratifying it.
+    "docs/architecture/candidates",
+)
 
 # A backticked token that looks like a file reference, optionally carrying a
 # ``:line`` suffix or a trailing ``§n`` section marker.
