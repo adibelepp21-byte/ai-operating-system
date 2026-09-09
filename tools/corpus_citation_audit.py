@@ -197,6 +197,22 @@ def _resolve(cited: str, index: dict[str, list[Path]]) -> tuple[str, list[Path]]
     return "basename", index.get(cited, [])
 
 
+#: Some frozen Volume 1 bodies carry headings with **no ``#`` marker at all** —
+#: ``4. Capability Ownership Matrix`` alone on its line. ``B3.md`` uses this
+#: form for all eleven of its sections, and ``A1.md`` switches to it partway
+#: through the same file, after a ``⸻`` rule.
+#:
+#: Accepting bare numbered lines unconditionally would confirm ordinary list
+#: items as sections: **92 of 172** bodies under ``docs/architecture`` contain
+#: restarting ``N.`` runs. So the form is accepted only when the line is
+#: surrounded by blank lines, opens with a capital, and carries no sentence
+#: punctuation. Measured against the same corpus: **45** files match, and in
+#: every one the numbers are strictly increasing — the restart signature of a
+#: list never appears. The strictness costs recall, never precision: a heading
+#: this misses stays a WARN, which already means *unconfirmed, not disproved*.
+BARE_HEADING = re.compile(r"^(\d+)\.\s+[A-Z][^.!?]*$")
+
+
 def _has_section(path: Path, number: str) -> bool:
     """True if the file carries a heading introducing the given section."""
     try:
@@ -211,6 +227,19 @@ def _has_section(path: Path, number: str) -> bool:
     )
     for pattern in patterns:
         if re.search(pattern, text, re.MULTILINE):
+            return True
+    return _has_bare_heading(text.split("\n"), number)
+
+
+def _has_bare_heading(lines: list[str], number: str) -> bool:
+    """The unmarked convention, accepted only under the guard described above."""
+    for index, line in enumerate(lines):
+        match = BARE_HEADING.match(line)
+        if match is None or match.group(1) != number:
+            continue
+        before = lines[index - 1].strip() if index else ""
+        after = lines[index + 1].strip() if index + 1 < len(lines) else ""
+        if before == "" and after == "":
             return True
     return False
 

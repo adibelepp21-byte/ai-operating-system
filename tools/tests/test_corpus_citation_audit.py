@@ -208,6 +208,69 @@ class EmphasisNormalizationTests(unittest.TestCase):
             self.assertIn(ident, verified, f"{ident} quotation is no longer verified")
 
 
+class UnmarkedHeadingConventionTests(unittest.TestCase):
+    """Some frozen bodies write section headings with no ``#`` at all.
+
+    Two citations of ``volume-1/pd-01-executive-office/B3.md §4`` stood as
+    WARN — *"section heading not located"* — while the section is plainly
+    there: line 96 reads ``4. Capability Ownership Matrix``. The corpus was
+    right and the detector was short, which is the direction the Master
+    Roadmap `§28` names: **evidence controls the detector, not the reverse.**
+
+    The risk in accepting bare numbered lines is confirming a *list item* as a
+    section. That is what these tests exist to prevent, and why the negative
+    cases outnumber the positive one.
+    """
+
+    def setUp(self):
+        sys.path.insert(0, str(REPO_ROOT / "tools"))
+        import corpus_citation_audit as audit_mod
+
+        self.mod = audit_mod
+
+    def test_the_real_body_that_produced_the_warning_is_now_located(self):
+        body = REPO_ROOT / "docs/architecture/volume-1/pd-01-executive-office/B3.md"
+        self.assertTrue(body.is_file(), body)
+        self.assertTrue(self.mod._has_section(body, "4"))
+        self.assertTrue(self.mod._has_section(body, "11"))
+
+    def test_a_section_the_body_does_not_have_is_still_not_located(self):
+        body = REPO_ROOT / "docs/architecture/volume-1/pd-01-executive-office/B3.md"
+        self.assertFalse(self.mod._has_section(body, "12"))
+
+    def test_a_list_item_is_not_a_section(self):
+        lines = [
+            "PD-01 menjalankan:",
+            "",
+            "1. enterprise leadership",
+            "2. Strategic Direction",
+            "3. Governance",
+            "",
+        ]
+        # Item 2 looks like a heading in isolation; its neighbours say otherwise.
+        self.assertFalse(self.mod._has_bare_heading(lines, "2"))
+
+    def test_a_sentence_is_not_a_section(self):
+        lines = ["", "4. Capability ownership is defined here.", ""]
+        self.assertFalse(self.mod._has_bare_heading(lines, "4"))
+
+    def test_a_lowercase_continuation_is_not_a_section(self):
+        lines = ["", "4. capability ownership matrix", ""]
+        self.assertFalse(self.mod._has_bare_heading(lines, "4"))
+
+    def test_the_accepted_form_is_the_one_the_corpus_actually_uses(self):
+        lines = ["", "4. Capability Ownership Matrix", ""]
+        self.assertTrue(self.mod._has_bare_heading(lines, "4"))
+        self.assertFalse(self.mod._has_bare_heading(lines, "5"))
+
+    def test_the_whole_corpus_reports_no_warnings_now(self):
+        """The two standing WARNs were the only ones; this pins that."""
+        proc = run("--json")
+        report = json.loads(proc.stdout)
+        self.assertEqual(report["warnings"], 0, report["findings"])
+        self.assertEqual(report["errors"], 0, report["findings"])
+
+
 class ScopeGuardTests(unittest.TestCase):
     """Regression for VF-10: the auditor read thirteen protected packages.
 

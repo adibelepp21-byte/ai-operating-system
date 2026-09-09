@@ -5015,3 +5015,140 @@ I. EXHAUSTION        BLOCKED BUT INDEPENDENT WORK CONTINUES
 `NO MATERIAL EXECUTABLE FRONTIER IDENTIFIED`. Two P9 items remain genuinely
 executable. **No BUILD action was manufactured**, and the P10 boundary
 (`ACT-CC-P10-CONSTRUCTION-EXECUTION v2.0 §14`) was not approached.
+
+---
+
+# 52. Cycle 32 — the second P9 item was not a defect, and the third was one the tool had been reporting for cycles
+
+**Date:** 2026-09-09 · **Act:** `ACT-CC-CONTINUATION-POST-EXECUTION-DISCOVERY`
+`§10A.2` P9 hardening · **Baseline:** `8e81afc`.
+
+**INTERIM EXECUTION STATE.**
+
+## 52.1 The ERROR-severity calibration item — NOT EXECUTABLE, and why that is not a dodge
+
+`§49` recorded the item as *"ERROR-severity calibration for external-corpus
+citations,"* from a run that reported **10 errors, 0 corpus defects** over
+`docs/program/`. **That run was `VF-10` — the overreach.**
+
+Two things follow, and they point the same way:
+
+1. **The evidence for the item exists only inside the overreach.** Acting on it
+   means either re-reading the thirteen protected packages, which `§5` forbids,
+   or reconstructing the ten errors from a summary, which the no-reconstruction
+   rule forbids. **Both routes are closed, and neither closure is a technicality.**
+2. **In scope, there is nothing to calibrate.** Measured this cycle over the
+   audit's actual roots:
+
+   | Severity | Count |
+   |---|---|
+   | ERROR | **0** |
+   | WARN | 2 (see `52.2`) |
+   | INFO | 27 |
+
+   The `NON_RESIDENT` registry's **two** entries account for **10** of those
+   INFO findings, and they are exactly the two non-resident sources the
+   in-scope corpus cites. **The registry is neither short nor padded.**
+
+**And `§49` had already said so.** Its own text records that *"`docs/program/`
+is therefore **not** added to the default audit root"*, because the
+platform-organization corpus *"cites only within this repository and its
+recorded non-residencies."* **The item was carried forward as pending in four
+return contracts after the record already contained the reason it could not be
+acted on.** Nobody re-read it, including me.
+
+**Reclassified: `NO DEFECT IN SCOPE` — not "pending".** The item is removed
+from the frontier on evidence, not deferred.
+
+## 52.2 The two standing WARNs were a detector gap, and the corpus was right
+
+Both name `volume-1/pd-01-executive-office/B3.md §4`. **The section is there:**
+line 96 reads `4. Capability Ownership Matrix`, and the file carries all eleven
+of its sections in that unmarked form — no `#`, no `§`. `A1.md` **switches
+conventions inside a single file**, using `# 1. Purpose` early and bare
+`5. Fundamental Boundary` after a `⸻` rule.
+
+**Master Roadmap `§28` decides the direction of the fix**: *"frozen canonical
+bodies SHALL NOT be modified merely to make a new checker happy. Evidence must
+control the detector, not the reverse."* So the detector learned the
+convention.
+
+## 52.3 The unconditional version of that fix would have been worse than the gap
+
+Accepting any `N.` line as a heading confirms **list items** as sections.
+Measured before writing the code, not after:
+
+| Measurement over `docs/architecture` | Result |
+|---|---|
+| Files containing bare `N.` lines | **172** |
+| Of those, files whose runs restart (the list signature) | **92** |
+| Files matching the **guarded** form | **45** |
+| Of those, files whose numbers are not strictly increasing | **0** |
+
+**The guard is: blank line either side, opening capital, no sentence
+punctuation.** It costs recall and never precision — a heading it misses stays
+a WARN, which already means *unconfirmed, not disproved*. **A false confirmation
+has no such fallback**, which is why the recall was the side that gave way.
+
+**Result: warnings 2 → 0, errors unchanged at 0.** Six new tests, of which
+**four are negative** — a list item, a sentence, a lowercase continuation, and
+a section number the body does not have — plus the real `B3.md` as the positive
+case, so the test is anchored to the body that produced the warning rather than
+to a fixture built to pass.
+
+## 52.4 What this cycle did not do
+
+**No frozen body was touched.** **No citation in this corpus was rewritten to
+suit the tool.** **`docs/program/` was not read.** The `§10A` frontier shrank
+by two items: one fixed, one **shown not to exist in scope** — and the second
+is the more important of the two, because *"pending"* had been carried forward
+in four consecutive return contracts on the strength of a measurement taken
+where I should not have been measuring.
+
+## 52.5 Return contract (`§16` / required return)
+
+```text
+A. FRESH DISCOVERY   One of the two remaining frontier items was never a
+                     defect in scope; its only evidence came from the VF-10
+                     overreach. The other was a detector gap the tool had
+                     been reporting honestly as WARN for cycles.
+B. RANKED CANDIDATES P9 ERROR-severity calibration (EXAMINED — no defect)
+                     P9 two standing WARNs (SELECTED — fixed)
+                     P9 four informational orphan findings (already closed
+                       as NO ACTION at C4-N1; not re-opened)
+C. SELECTION REASON  The WARNs were the only in-scope item with a checkable
+                     property and a fix that does not touch frozen bodies
+D. EXECUTION         BARE_HEADING + _has_bare_heading() added to
+                     corpus_citation_audit.py; 6 tests (4 negative)
+E. VERIFICATION      tools 230 OK (+7) · native_core 801 OK (1 expected
+                     failure) · consumers 276 OK · audit 23 documents,
+                     198 citations, 0 errors, 0 warnings
+F. STATE DELTA       Resolved:   two standing WARNs (detector gap)
+                     Reclassified: ERROR-severity calibration →
+                                 NO DEFECT IN SCOPE
+                     Unresolved: G-01,02,03,05,06,08,09,10; ESC-C7-01;
+                                 SG-01; invariant-15 binding; B-7
+                     Newly blocked:    none
+                     Newly executable: none
+G. BLOCKERS          SG-01 — SOURCE GAP (Founder supply; never resident)
+                     G-09 — ARCHITECT/FOUNDER RESERVED
+                     G-01, ESC-C7-01 — SOURCE-INSUFFICIENT
+                     P10 entry — CANONICAL PREREQUISITE (Phase 9 at 0%)
+                     B-7 — ARCHITECT RESERVED
+H. NEXT FRONTIER     None identified in the P9 hardening class. The
+                     remaining named items are all reserved, source-gapped,
+                     or gated by a canonical prerequisite this programme
+                     cannot satisfy on its own authority.
+I. EXHAUSTION        NO MATERIAL EXECUTABLE FRONTIER IDENTIFIED
+```
+
+**`§8` distinction, stated deliberately and for the first time.** Previous
+cycles held `BLOCKED BUT INDEPENDENT WORK CONTINUES` because named executable
+items remained. **They no longer do.** The three P9 items are now: one fixed
+last cycle, one fixed this cycle, and one shown to have no in-scope defect.
+
+**This is a report of a state, not a request for one.** The remaining work is
+`SG-01` (Founder source supply), `G-09` and `B-7` (Architect-reserved),
+`G-01` / `ESC-C7-01` (source-insufficient), and Phase 10 entry (gated by
+`Volume VII §1.2`, Phase 9 at 0%). **None of these is unblocked by anything I
+am authorized to do**, and no BUILD action was manufactured to avoid saying so.
