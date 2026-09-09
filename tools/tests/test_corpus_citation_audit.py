@@ -60,12 +60,18 @@ class CorpusCitationAuditTests(unittest.TestCase):
         self.assertNotEqual(proc.returncode, 0)
 
     def test_non_resident_citations_are_not_counted_as_errors(self):
-        """A deliberately cited absent authority is a finding, not a defect."""
+        """A deliberately cited absent authority is a finding, not a defect.
+
+        Narrowed 2026-09-09: this previously asserted that *every* INFO finding
+        was a non-residency, which was true only while INFO had one meaning. The
+        §27 quotation check now also reports INFO. The assertion that matters —
+        that a recorded non-residency is never an ERROR — is unchanged.
+        """
         report = json.loads(run("--json").stdout)
         self.assertGreater(report["non_resident"], 0)
         for finding in report["findings"]:
-            if finding["severity"] == "INFO":
-                self.assertIn("NON-RESIDENT", finding["message"])
+            if "NON-RESIDENT" in finding["message"]:
+                self.assertEqual(finding["severity"], "INFO")
 
     def test_section_misses_are_warnings_not_errors(self):
         """Heading conventions vary; 'unconfirmed' must not be reported as 'wrong'."""
@@ -78,3 +84,53 @@ class CorpusCitationAuditTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class LineCountingTests(unittest.TestCase):
+    """Regression for a bug that made the auditor manufacture defects.
+
+    ``str.splitlines()`` splits on U+2028, U+0085 and other Unicode separators
+    that ``sed``, editors, and the line numbers this corpus cites do not treat
+    as line breaks. Several canonical bodies contain them, so a file counted
+    with ``splitlines()`` disagreed with its own citations — and the auditor
+    reported TEXT MISMATCH against three citations that were correct.
+    """
+
+    def test_lines_helper_ignores_unicode_separators(self):
+        sys.path.insert(0, str(REPO_ROOT / "tools"))
+        import corpus_citation_audit as audit_mod
+
+        import tempfile
+        text = "alpha\nbeta still-beta\ngamma\n"
+        with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False,
+                                         encoding="utf-8") as handle:
+            handle.write(text)
+            path = Path(handle.name)
+        try:
+            self.assertEqual(len(text.splitlines()), 4, "precondition: splitlines over-counts")
+            lines = audit_mod._lines(path)
+            self.assertEqual(lines[1], "beta still-beta")
+            self.assertEqual(len([l for l in lines if l]), 3)
+        finally:
+            path.unlink()
+
+
+class QuotationTruthTests(unittest.TestCase):
+    """The §27 check: a quotation must occur at the line its citation names."""
+
+    def test_no_text_mismatches_in_the_corpus(self):
+        report = json.loads(run("--json").stdout)
+        mismatches = [f for f in report["findings"] if "TEXT MISMATCH" in f["message"]]
+        self.assertEqual(
+            mismatches, [],
+            "quotations attributed to lines that do not carry them:\n"
+            + "\n".join(f"  {f['source']}  {f['message']}" for f in mismatches),
+        )
+
+    def test_quotations_are_actually_being_verified(self):
+        """Guards against a silent pass from the check never firing."""
+        report = json.loads(run("--json").stdout)
+        self.assertGreater(
+            report["text_verified"], 0,
+            "no quotation was verified — the §27 check may have stopped running",
+        )

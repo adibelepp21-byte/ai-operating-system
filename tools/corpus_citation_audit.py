@@ -32,6 +32,11 @@ Three mechanically decidable properties, and no others:
 1. **Path resolution** — a cited file path resolves to exactly one real file.
 2. **Line citations** (``A4.md:289``) — the file has at least that many lines.
 3. **Section citations** (``file.md §7``) — a heading for that section exists.
+4. **Quotation truth** (Master Roadmap §27) — where a citation carries a line
+   number and an adjacent quotation, that text must actually occur at or near
+   the cited line. This is the check the first three miss, and it is the
+   ``E-41`` class exactly: a plausible quote beside a real pointer that does
+   not carry it.
 
 What this deliberately does NOT check
 -------------------------------------
@@ -76,6 +81,13 @@ CITATION = re.compile(
     r"(?P<tail>[^`]*)`"
 )
 SECTION = re.compile(r"§\s*(\d+)")
+
+# A quotation attributed to a citation on the same line: *"..."* or **"..."**.
+QUOTE = re.compile(r"\*{1,2}\s*[\u201c\"]([^\u201d\"]{8,})[\u201d\"]\s*\*{1,2}")
+
+# How far from the cited line a quotation may legitimately sit. A cited line is
+# a pointer into a passage, not always the exact line of every quoted clause.
+QUOTE_WINDOW = 3
 
 # Directories that are not part of the repository's own source of truth.
 SKIP_DIRS = {".git", "__pycache__", "node_modules", ".venv"}
@@ -144,6 +156,49 @@ def _has_section(path: Path, number: str) -> bool:
     return False
 
 
+def _lines(path: Path) -> list[str]:
+    """Split on newlines only — never ``str.splitlines()``.
+
+    ``splitlines()`` also breaks on U+2028, U+0085 and friends, which several
+    canonical bodies in this repository contain. A file counted that way
+    disagrees with ``sed``, every editor, and the line numbers the corpus cites,
+    which made the auditor report TEXT MISMATCH against citations that were
+    correct. A verifier that miscounts lines manufactures the defect it is
+    supposed to detect.
+    """
+    return path.read_text(encoding="utf-8", errors="replace").split("\n")
+
+
+def _check_quote(candidates, want: int, needle: str):
+    """Test a quotation against every candidate file.
+
+    Returns ``("exact"|"near"|"mismatch", matched_path_or_None)``. A duplicated
+    basename is resolved *by the quotation itself*: the file that actually
+    carries the text at the cited line is the file that was meant.
+    """
+    if not needle:
+        return "skip", None
+    near_hit = None
+    for candidate in candidates:
+        try:
+            lines = candidate.read_text(encoding="utf-8", errors="replace").split("\n")
+        except OSError:
+            continue
+        if want > len(lines):
+            continue
+        exact = " ".join(lines[want - 1].split())
+        if needle in exact:
+            return "exact", candidate
+        lo = max(0, want - 1 - QUOTE_WINDOW)
+        hi = min(len(lines), want + QUOTE_WINDOW)
+        window = " ".join(" ".join(lines[lo:hi]).split())
+        if needle in window and near_hit is None:
+            near_hit = candidate
+    if near_hit is not None:
+        return "near", near_hit
+    return "mismatch", None
+
+
 def audit(roots: list[str]) -> dict:
     index: dict[str, list[Path]] = {}
     for path in REPO_ROOT.rglob("*"):
@@ -167,7 +222,7 @@ def audit(roots: list[str]) -> dict:
         for doc in _iter_markdown(root):
             scanned += 1
             rel = doc.relative_to(REPO_ROOT).as_posix()
-            for lineno, text in enumerate(doc.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+            for lineno, text in enumerate(doc.read_text(encoding="utf-8", errors="replace").split("\n"), 1):
                 for match in CITATION.finditer(text):
                     citations += 1
                     cited = match.group("path")
@@ -190,7 +245,7 @@ def audit(roots: list[str]) -> dict:
                         want = int(match.group("line"))
                         long_enough = [
                             t for t in targets
-                            if len(t.read_text(encoding="utf-8", errors="replace").splitlines()) >= want
+                            if len(t.read_text(encoding="utf-8", errors="replace").split("\n")) >= want
                         ]
                         if len(long_enough) == 1:
                             targets = long_enough
@@ -214,7 +269,7 @@ def audit(roots: list[str]) -> dict:
 
                     if match.group("line"):
                         want = int(match.group("line"))
-                        have = len(target.read_text(encoding="utf-8", errors="replace").splitlines())
+                        have = len(target.read_text(encoding="utf-8", errors="replace").split("\n"))
                         if want > have:
                             findings.append({
                                 "severity": "ERROR", "source": f"{rel}:{lineno}",
@@ -222,6 +277,42 @@ def audit(roots: list[str]) -> dict:
                                 "message": f"line {want} exceeds file length ({have} lines)",
                             })
                             continue
+
+                    # §27 Citation Truth Rule: a quotation attributed to a
+                    # line citation must actually occur at or near that line.
+                    # This is the check that path-and-line verification misses,
+                    # and it is the E-41 class: a plausible quote beside a real
+                    # pointer that does not carry it.
+                    if match.group("line") and target.suffix in (".md", ".txt"):
+                        quote = QUOTE.search(text[match.end():])
+                        if quote:
+                            claimed = " ".join(quote.group(1).split())
+                            needle = claimed.rstrip(".").strip()
+                            want = int(match.group("line"))
+                            # A quotation disambiguates a duplicated basename:
+                            # test every candidate rather than an arbitrary
+                            # first pick. Testing one guess and reporting a
+                            # mismatch would be the detector inventing a defect.
+                            result, matched = _check_quote(targets, want, needle)
+                            where = matched.relative_to(REPO_ROOT).as_posix() if matched else cited
+                            if result == "exact":
+                                findings.append({
+                                    "severity": "INFO", "source": f"{rel}:{lineno}",
+                                    "citation": f"{cited}:{want}",
+                                    "message": f"TEXT VERIFIED at {where}:{want} \u2014 \u201c{claimed[:60]}\u201d",
+                                })
+                            elif result == "near":
+                                findings.append({
+                                    "severity": "INFO", "source": f"{rel}:{lineno}",
+                                    "citation": f"{cited}:{want}",
+                                    "message": f"TEXT VERIFIED within \u00b1{QUOTE_WINDOW} lines at {where}:{want}",
+                                })
+                            elif result == "mismatch":
+                                findings.append({
+                                    "severity": "ERROR", "source": f"{rel}:{lineno}",
+                                    "citation": f"{cited}:{want}",
+                                    "message": f"TEXT MISMATCH \u2014 quoted text not found at or near line {want} in any candidate file: \u201c{claimed[:60]}\u201d",
+                                })
 
                     section = SECTION.search(match.group("tail") or "")
                     if section and target.suffix == ".md":
@@ -238,7 +329,11 @@ def audit(roots: list[str]) -> dict:
         "findings": findings,
         "errors": sum(1 for f in findings if f["severity"] == "ERROR"),
         "warnings": sum(1 for f in findings if f["severity"] == "WARN"),
-        "non_resident": sum(1 for f in findings if f["severity"] == "INFO"),
+        "non_resident": sum(1 for f in findings
+                            if f["severity"] == "INFO" and "NON-RESIDENT" in f["message"]),
+        "text_verified": sum(1 for f in findings
+                             if f["severity"] == "INFO" and "TEXT VERIFIED" in f["message"]),
+        "text_mismatch": sum(1 for f in findings if "TEXT MISMATCH" in f["message"]),
     }
 
 
@@ -256,6 +351,7 @@ def main(argv: list[str]) -> int:
     print(f"errors            : {report['errors']}")
     print(f"warnings          : {report['warnings']}")
     print(f"non-resident      : {report['non_resident']}  (cited by record, not defects)")
+    print(f"text verified     : {report['text_verified']}  (quotation confirmed at the cited line)")
     if report["findings"]:
         print()
         for f in report["findings"]:

@@ -3675,3 +3675,127 @@ auditor to `docs/governance/`; the four informational orphan findings.
 **Twenty-five cycles · 69 valid executions · 90 correct stops · 1 overreach ·
 15 disclosed failures · 0 Founder Events · 0 Acts created · 2 code changes ·
 1 tool built · 6 tests added.**
+
+---
+
+# 40. Cycle 26 — the §27 Citation Truth check, and a bug that faked its own findings
+
+**Date:** 2026-09-09 · **Instrument:** `AIOS-MASTER-ROADMAP-P10-PLATFORM-CONSTRUCTION`
+`§4`, `§24`, `§26`, `§27`, `§34` · **Authority:** `DEL-T4.4-CF-001 §3.1 C`;
+`Engineering Constitution §3.3`.
+
+**INTERIM EXECUTION STATE.** Construction cycle — implementation, not
+documentation.
+
+## 40.1 What the Roadmap asked for that did not exist
+
+`§27` **Citation Truth Rule** requires tooling to distinguish *missing source ·
+ambiguous source · invalid location · **exact text mismatch** · unsupported
+claim*, and states: *"a mechanically valid citation is not necessarily a
+substantively true citation."*
+
+**The auditor built in Cycle 24 checked the first three and not the fourth** —
+which is the `E-41` class exactly: a plausible quotation beside a real pointer
+that does not carry it. `§24` puts **implementation above documentation**, so
+this was built before anything else this cycle.
+
+**Added:** where a citation carries a line number and an adjacent quotation, the
+tool now verifies that the text actually occurs at or within ±3 lines of the
+cited line, reporting `TEXT VERIFIED` or `TEXT MISMATCH`.
+
+## 40.2 First run: 3 errors, and both were my own detector
+
+**Reported `TEXT MISMATCH` on three citations I had verified by hand.** Two
+distinct defects, both in the tool:
+
+**(a) Arbitrary candidate selection.** For a duplicated basename the tool tested
+the *first* candidate. `volume-1/…/C8.md:122` reads `PD-01`; `volume-2/…/C8.md:122`
+carries the quoted text. **Testing one guess and reporting a mismatch is a
+detector inventing a defect.** Fixed so the **quotation disambiguates**: every
+candidate is tested, and the file that carries the text at the cited line is the
+file that was meant. `B4.md` — genuinely ambiguous across both volumes —
+resolved correctly this way.
+
+**(b) `str.splitlines()` — the real one.** Python splits on `U+2028`, `U+0085`
+and other Unicode separators that `sed`, editors, and the line numbers this
+corpus cites **do not** treat as breaks. Several canonical bodies contain them.
+`volume-2/…/B7.md` counts **1,318** lines by `splitlines()`, and its line 212 is
+`⸻` — while the real line 212 is *"PD-05 owns Runtime."*
+
+**The auditor was miscounting line numbers in every file containing those
+characters**, which also silently corrupted the line-length check used for
+disambiguation. Replaced with a documented `_lines()` helper splitting on `\n`
+only.
+
+**A verifier that miscounts lines manufactures the defect it exists to
+detect.** That sentence is now in the tool's source, where the next reader of
+`_lines()` will meet it.
+
+## 40.3 Then it verified, for the first time, three ownership claims
+
+**0 errors · 2 known warnings · 3 `TEXT VERIFIED`.**
+
+| Citation | Resolved to | Text at that line |
+|---|---|---|
+| `B7.md:212` | `volume-2/…/B7.md` | *"PD-05 owns Runtime."* |
+| `B4.md:731` | `volume-2/…/B4.md` | *"PD-06 owns implementation."* |
+| `volume-2/.../C8.md:122` | `volume-2/…/C8.md` | *"PD-07 tetap memiliki ownership atas Infrastructure."* |
+
+**`B4.md:731` had never been checked in twenty-six cycles.** All three are the
+ownership bindings `divisions/README.md` rests on, and all three are true — at
+the line, in the text, in the right file.
+
+## 40.4 A stale test, narrowed rather than deleted
+
+Adding the check broke `test_non_resident_citations_are_not_counted_as_errors`,
+which asserted that **every** `INFO` finding was a non-residency — true only
+while `INFO` had one meaning.
+
+**Narrowed to its actual intent:** a recorded non-residency is never an `ERROR`.
+The assertion that mattered is unchanged and still runs. **This is not a
+conformance test weakened to let an implementation pass** — the test's premise
+was superseded by a capability it predates, and the narrowing is recorded in the
+test's own docstring with its date.
+
+## 40.5 Status dimensions (`§2`, `§51`)
+
+**Master Program Phase 10 — Department Ecosystem and Platform Organization
+PD-01–PD-10 are separate construction surfaces. Neither status is used as
+evidence of the other.**
+
+| Surface | Status |
+|---|---|
+| **MASTER PROGRAM PHASE 10 — Department Ecosystem** | **BLOCKED.** 0% · *Belum Dimulai*. Six Departments (Executive Office, Engineering, Finance, Research, Marketing, Content). Gates: Phase 4–9 all 0%; exit criteria unratified; activation non-delegable. **Untouched by this cycle** |
+| **PLATFORM ORGANIZATION PD-01–PD-10** | **PARTIAL.** Model layer complete (10/10 dimensions) and integrated into all ten records; **citation integrity now machine-verified including quotation truth**. Per-division content `SOURCE-INSUFFICIENT` (`G-01`, `ESC-C7-01`); assignment `RESERVED` (`G-09`, `G-10`) |
+
+## 40.6 Regression
+
+`tools` **207 OK** (was 204; +3) · `native_core` **801 OK** (1 expected failure)
+· `consumers` **276 OK** · citation audit **191 checked · 0 errors · 3 text
+verified**.
+
+## 40.7 Re-discovery (`§11`)
+
+**What this execution revealed:** the `splitlines()` defect is **not confined to
+this tool.** Any code in this repository that counts lines in canonical bodies
+with `splitlines()` will disagree with the line numbers those bodies are cited
+by. **`tools/governance_index.py` and `tools/validators/` read Markdown and are
+now worth checking for the same pattern** — newly actionable `FIX` work created
+by this cycle's own construction.
+
+**Still open:** the stale `§5 Unresolved` sections in the ten division records
+(`§39.5`); ~69,000 lines of resident cited corpus; `RECOVERY-MANIFEST.md`;
+extending the auditor to `docs/governance/`; the two completion matrices
+(`Roadmap §32`); the four informational orphan findings.
+
+**`AUTHORIZED ACTIONABLE WORK REMAINING`: YES.**
+
+## 40.8 Repeatability
+
+**Twenty-six cycles · 71 valid executions · 92 correct stops · 1 overreach ·
+17 disclosed failures · 0 Founder Events · 0 Acts created · 3 code changes ·
+1 tool built · 9 tests added.**
+
+Failures 16 and 17 are `§40.2`(a) and (b) — **both in my own verification tool,
+both found by running it rather than by reading it**, and both disclosed rather
+than quietly corrected.
