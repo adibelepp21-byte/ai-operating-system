@@ -3930,3 +3930,119 @@ cited corpus; `RECOVERY-MANIFEST.md`; the two completion matrices
 Failures 18 and 19: the `97,162` measurement artifact (`§41.1`), and `E-11`
 itself — **a defect of mine from early construction, found by a tool of mine
 from two cycles ago.**
+
+---
+
+# 42. `ACT-CC-P10-001` — submission and persistence of the Phase 10 + Platform Organization roadmap
+
+**Date:** 2026-09-09 · **Instrument:** `ACT-CC-P10-001` (Construction Control
+Act — submission/persistence) · **Authority:** `§7` delegated technical handling;
+`DEL-T4.4-CF-001 §3.1 C`.
+
+**This is a persistence Act, not an execution Act.** `§6`: persistence *"does
+not automatically authorize"* construction of PD-02–PD-10 or Phase 10. **No
+roadmap execution was begun from this submission.**
+
+## 42.1 Persistence
+
+| | |
+|---|---|
+| **Path** | `docs/program/AIOS_MASTER_ROADMAP_PHASE10_PLATFORM_ORGANIZATION_CONSTRUCTION_v1.0.md` |
+| **Document ID** | `AIOS-MASTER-ROADMAP-P10-POC-001` |
+| **Version** | `v1.0` — *Canonical Planning Draft — Founder Review* |
+| **Body** | 623 lines, 30,270 bytes, **verbatim** |
+| **`sha256` (body)** | `c6c32a23c9e3e6bda9074f796334c560ec472fc8eddbdfb950e01aff5b9e5e14` |
+
+**Location decision (`§7`, delegated).** `docs/program/` is the established
+tracked location for Founder-supplied roadmap artifacts — precedent
+`AIOS_MASTER_ROADMAP_CONSOLIDATED_v1.0.md`, which also carries a provenance
+header. The same convention was followed: a clearly demarcated provenance block,
+then the body **below a rule, byte-for-byte**. **The digest of the persisted body
+equals the digest of the supplied file**, so the header is provably additive.
+
+## 42.2 Validation (`§8`)
+
+| | Check | Result |
+|---|---|---|
+| **V1** | Persisted artifact corresponds to supplied v1.0 | **PASS** — identical `sha256` |
+| **V2** | Exists at the selected canonical location | **PASS** |
+| **V3** | Substantive roadmap intact | **PASS** — all `WP-00`…`WP-10`; all `EXH-01`…`EXH-07`; `INV-01` (Phase 10 ≠ Platform Organization), `INV-04` (No Endless Reading), `INV-06` (No Micro-Act) present verbatim |
+| **V4** | Phase 10 / Platform Organization distinction intact | **PASS** — `INV-01` present; *"not Phase 14"* present; `Phase 1–13` retained (6 occurrences) |
+| **V5** | Subordination preserved | **PASS** — `§16` hierarchy Mission → Constitution → Canonical Architecture → Master Program → … intact |
+| **V6** | Version identity | **PASS** — `Version: 1.0`; **zero** occurrences of `v2.0`; not promoted |
+
+## 42.3 Conflicts (`§9`)
+
+**Two findings. Neither is a duplicate and neither was silently reconciled.**
+
+### C-1 — `PARALLEL` · `AIOS_MASTER_ROADMAP_CONSOLIDATED_v1.0.md`
+
+A tracked roadmap-class artifact already exists at `docs/program/`. It is
+**121 lines**, styled *"CONSOLIDATED MASTER ROADMAP — DECISION/IMPLEMENTATION
+REFERENCE… **NOT** CANONICAL MASTER ROADMAP v2.0"*, supplied 2026-08-20, and
+carries **no `WP-nn` structure**.
+
+**Classification: `PARALLEL`.** Different Document ID, different scope
+(consolidated reference vs. P10+PD construction execution), different structure.
+**Neither supersedes the other**, and neither claims to. **No overwrite
+performed.**
+
+### C-2 — unverifiable source attribution, reported not altered
+
+The artifact's `§1` states: *"The AIOS Platform Encyclopedia establishes two
+roadmap layers: Main Capability Roadmap: Phase 1–13; Platform Organization
+Construction Track: PD-01–PD-10."*
+
+**This is the attribution `VF-9b` withdrew.** The Platform Encyclopedia is **not
+resident** (`ESC-C7-01`), so the claim **cannot be verified against the source it
+names**. The corresponding string has zero occurrences in any resident source.
+
+**Reported, not altered** — `§5` forbids silently rewriting the artifact, and the
+distinction itself is Founder-stated in this Act and its predecessors, so it is
+**usable on Founder authority**. What remains unverified is the *attribution to
+the Encyclopedia*, not the distinction. **The position is unchanged from `§36.2`.**
+
+### Corroboration worth recording
+
+`§1` also places Phase 10 *"downstream of Phase 9 Workflow Ecosystem and upstream
+of Phase 11 Autonomous Organization"* — **independently consistent with `E-60`**,
+derived from `Master Program Volume VII §1.2` and `Volume II §5`. The roadmap and
+the Master Program agree on the gate.
+
+## 42.4 Registration — one thing deliberately not done
+
+`§7` permits delegated *"indexing/registration mechanics"*. **The Governance
+Index was not touched.** `GOVERNANCE_INDEX §9` requires *"normal Architect
+approval"*, and `VF-4` — this corpus's single overreach — was committed on
+exactly that file. **Architecture Authority ≠ Architect.** The persistence is
+recorded here instead.
+
+## 42.5 Return package (`§11`)
+
+```text
+A. SUBMISSION STATUS      RECEIVED = YES · PERSISTED = YES · STATUS = VERIFIED
+B. CANONICAL LOCATION     docs/program/AIOS_MASTER_ROADMAP_PHASE10_
+                          PLATFORM_ORGANIZATION_CONSTRUCTION_v1.0.md
+C. VERSION                v1.0  (AIOS-MASTER-ROADMAP-P10-POC-001)
+D. INTEGRITY              CONTENT_INTEGRITY       = PASS
+                          ARCHITECTURAL_INTEGRITY = PASS
+                          GOVERNANCE_INTEGRITY    = PASS
+                          VERSION_INTEGRITY       = PASS
+E. CONFLICT               2 — C-1 PARALLEL (no overwrite)
+                              C-2 unverifiable attribution (reported)
+F. REPOSITORY STATE       NEW
+G. NEXT EXECUTION STATE   Subsequent execution authorization REQUIRED.
+                          Roadmap not executed from this submission.
+TERMINAL STATUS           PERSISTED · VERIFIED
+```
+
+**Next construction gate (`§11 G`).** The artifact's own `§17` names its next
+operational artifact as a *"Construction Execution Act / execution directive,
+when the applicable authority and activation gates are satisfied."* Its `WP-06`
+(Phase 10 Department Ecosystem) additionally remains gated by `E-60` — Phase 4–9
+all at 0% — which is a **canonical prerequisite, not a delegation limit**.
+
+## 42.6 Regression
+
+`tools` **207 OK** · `native_core` **801 OK** (1 expected failure) · `consumers`
+**276 OK**.
