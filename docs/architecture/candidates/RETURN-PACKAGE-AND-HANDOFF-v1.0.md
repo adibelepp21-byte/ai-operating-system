@@ -102,7 +102,12 @@ observe the defect it claims to detect** (`§26`, all ten properties).
 P5–P9 maturity. **Blockers:** P9 maturity; non-resident Volume 1/2 corpora.
 **Founder-reserved:** `ADR-0029`, `H-1`, `H-2`, `H-4`, adoption.
 **Source gaps:** `SG-01`, `SG-02`, `ESC-C7-01`.
-**Technical debt:** 45 ambiguous-basename WARNs, **held deliberately**.
+**Technical debt:** none outstanding. The 45 ambiguous-basename WARNs are
+classified under `§15` in `AIOS_CITATION_WARN_DISPOSITION_v1.0.md` — **44
+`NOT-A-GAP`, 1 `UNKNOWN WITH DOCUMENTED BASIS`**. That record raises **17**
+further warnings of its own by quoting the basenames it classifies, all
+`NOT-A-GAP` by the same rule; **the clean-run total is 62**. *"Held deliberately"* was
+not a `§15` disposition and is withdrawn.
 
 ---
 

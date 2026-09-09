@@ -5898,3 +5898,75 @@ performed above, question by question, and three questions returned YES.
 **No work was manufactured to avoid the state, and none was skipped to reach
 it.** `§34` Return Package and `§35` Handoff are persisted at
 `candidates/RETURN-PACKAGE-AND-HANDOFF-v1.0.md`.
+
+---
+
+# 60. `§15` disposition of the 45 warnings — and a claim that was false one run later
+
+**Date:** 2026-09-09 · **Baseline:** `46f7512`
+
+## 60.1 Why this was executed after the exhaustion test
+
+`§31` returned three blocked YESes and the state was declared. **But `§15`
+requires every active gap to reach one of eleven named dispositions**, and three
+return packages had recorded the 45 warnings as *"technical debt, held
+deliberately."* **That is not one of the eleven.** `§15` also forbids a gap
+disappearing because *"its status became ambiguous"* — which is what a
+non-disposition does.
+
+**So the item was not exhausted. It was unclassified, and reading it as
+exhausted was my error.**
+
+## 60.2 Result — 44 `NOT-A-GAP`, 1 `UNKNOWN WITH DOCUMENTED BASIS`
+
+**30** are settled by context in the citing passage — the sentence names the
+volume, and the tool does not read sentences. **15 were read individually**, and
+**four of them turned out not to be citations at all**: a negative existence
+claim (*"no `composition.py`"*), an authorization scope naming its subjects, a
+legend row mapping section codes to meanings, and prose describing the warning
+itself.
+
+**One is real:** `Register:3260`, `D2.md`, with no volume, division, or path
+anywhere near it. **Not fixed, because choosing a volume would be guessing which
+file was meant** — `§15` forbids a gap vanishing for inconvenience; it does not
+require inventing a referent.
+
+## 60.3 The meta-finding, demonstrated three times over
+
+**The checker cannot distinguish a citation from a mention of a citation.**
+Observed when the `CD-RESOLUTION-GATE` report tripped it, again in four of the
+fifteen sites, and **again in the disposition record itself** — writing it took
+the corpus from **45 to 62** warnings, 17 of them raised by quoting the
+basenames being classified.
+
+**This is not a defect to repair.** A detector that tried to tell a pointer from
+a mention would have to interpret prose, and would then be **wrong silently
+instead of uncertain loudly**. It is exactly why the finding is `WARN` — *could
+not confirm*, never *is wrong*.
+
+## 60.4 A claim of mine that was false one run later — seventh occurrence
+
+The record's first draft closed: *"Re-running the auditor tomorrow must produce
+the same 45."* **It produced 62, on the first run after the file was written.**
+
+I asserted a number without re-measuring after the change that altered it —
+**and the change was the document making the assertion.** Corrected in place
+with the measured figure and the reason, and the return package's figure with
+it.
+
+**Seventh occurrence of the verify-before-verifying pattern** (`§34.3`, `§35.4`,
+`§36.7`, `§51.4` ×2, `§53.4`). The latency keeps shrinking — this one survived a
+single command — but the pattern does not go away, and pretending otherwise
+would be the eighth.
+
+## 60.5 Verification
+
+```text
+citation     77 documents · 717 citations · 0 errors · 62 WARN (all classified)
+stale-state  0 assertions · 51 historical uses
+tools        243 OK · native_core 801 OK (1 expected) · consumers 276 OK
+```
+
+**`§15` compliance:** every active gap in this corpus now carries one of the
+eleven dispositions. **No detector was narrowed, no severity lowered, and no
+finding suppressed** to achieve it.
