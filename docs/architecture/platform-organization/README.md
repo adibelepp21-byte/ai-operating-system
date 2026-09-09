@@ -91,6 +91,13 @@ only lawfully built after Phase 9 matures. `Volume II §5` states the dependency
 Nothing this corpus contains could advance Phase 10, because Phase 10 cannot
 lawfully begin.
 
+> **Corrected 2026-09-09.** The Progress Tracker sentence is accurate about the
+> **26 July 2026 snapshot** and **superseded as current state**: `S-9` and
+> `S-13`–`S-17` record all six figures as *"superseded by fact"* against named
+> Founder Decisions, Phase 9's being **`FD-P9-002`**. **The conclusion is
+> unchanged** — `Volume VII §1.2` requires Phase 9 to be ***matang***, and
+> **not zero is not mature.** See the `E-60` correction in the Evidence Ledger.
+
 ### The label "Track B" is withdrawn from this corpus
 
 `VF-9a`. This corpus previously called the Platform Organization Construction

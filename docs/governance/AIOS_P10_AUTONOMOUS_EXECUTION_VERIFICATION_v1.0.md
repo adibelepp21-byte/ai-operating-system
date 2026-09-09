@@ -5529,3 +5529,79 @@ J. P10            UNCHANGED — BLOCKED, with NEW VERDICT-SENSITIVE EVIDENCE
 K. NEXT           FIX: reconcile the P10 baseline against S-9 / S-13..S-17
 EXHAUSTION        AUTHORITY-BLOCKED + INDEPENDENT EVIDENCE WORK CONTINUES
 ```
+
+---
+
+# 56. `K` executed — the false Phase figure corrected at all three load-bearing sites
+
+**Date:** 2026-09-09 · **Action:** `§55.6 K` (FIX, `§6` PRIORITY 4) ·
+**Baseline:** `a209445`.
+
+## 56.1 Where the figure was load-bearing, and where it was not
+
+Measured across the corpus, not assumed:
+
+| Site | Kind | Action |
+|---|---|---|
+| `R3-P10-ENTRY-BASELINE.md:139` | **Operative verdict basis** | **Corrected in place**, dated block, original standing |
+| `EVIDENCE-LEDGER.md` `E-60` | **Evidence entry read as current** | **Correction section appended** |
+| `platform-organization/README.md:90` | **Corpus front matter** | **Annotated in place** |
+| `VERIFICATION` §§2322, 4433, 4861, 5005, 5136 | **Cycle history** | **Left standing** — narrative of past cycles, already corrected forward at `§55.3` |
+
+**The distinction is the whole of this action.** A stale figure inside a record
+of what I concluded on 2026-09-06 is history and must not be rewritten. The same
+figure inside a verdict document that future cycles read as current state is a
+live defect. **Three sites were live; five were history.**
+
+## 56.2 What was corrected
+
+```text
+WAS:  Phase 9 stands at 0% · Belum Dimulai. So do Phases 4, 5, 6, 7 and 8.
+IS:   Phase 9 maturity is not established.
+```
+
+`S-9`, `S-13`–`S-17` record all six figures as *"superseded by fact"* against
+named resident Founder Decisions — `PHASE 4.6 CLOSED`, `FD-P5-001`,
+`FD-P6-002`, `FD-P7-003`, `FD-P8-002`, and **`FD-P9-002`** (2026-09-03).
+
+**`R3`'s closing clause was corrected with it.** *"it requires Phases 4–9 to be
+built"* overstated what remains: **Phase 4 is closed at 4.6 and Phases 5–9 each
+carry a certification.** P10 waits on Phase 9 **maturity**, not Phase 9
+**existence**.
+
+## 56.3 `E-60` — one entry that fused two different kinds of claim
+
+`E-60` quotes `Volume VII §1.2` **verbatim and dated**: *"Per 26 Juli 2026,
+Phase 4-9 seluruhnya masih 0%."* **That quotation is correct evidence and
+stays.** Its *heading* — *"Phase 4–9 are all 0%"* — restates the same words as a
+standing fact.
+
+**Evidence class corrected: `[A]` canonical prerequisite **plus**
+`HISTORICAL SNAPSHOT` for its percentages.** They were fused in one entry, and
+**fusing them is what let a stale figure act as a current one.** That is the
+transferable finding — not the arithmetic.
+
+## 56.4 What did not change
+
+**`P10 BLOCKED` stands, unaltered.** `Volume VII §1.2` requires Phase 9 to be
+***matang***; the ledger establishes only that it is **not zero**;
+**NOT ZERO ≠ MATURE** and no resident source establishes maturity. `§16` of the
+authorizing Act forbids moving the verdict on recovered Phase state, and it was
+not moved. The three secondary conditions are untouched. `CD-3` still holds the
+candidate. The candidate remains **byte-for-byte unchanged**.
+
+**`P10 BLOCKED` had a false ground and now has a true one. That is the entire
+delta.**
+
+## 56.5 Return
+
+```text
+CORRECTED    3 live sites; 5 historical sites left standing and traceable
+UNCHANGED    P10 BLOCKED · CD-3 narrowed · H-1/H-2/H-4 open · candidate byte-identical
+VERIFICATION audit 69 documents / 642 citations / 0 errors / 45 WARN (correct)
+             tools 232 OK · native_core 801 OK (1 expected failure) · consumers 276 OK
+EXHAUSTION   AUTHORITY-BLOCKED + INDEPENDENT EVIDENCE WORK CONTINUES
+NEXT         No verdict-sensitive evidence frontier remains. What is left is
+             H-1/H-2/H-4 (reserved), CD-3 (authority-held), SG-02 (source
+             required), and non-verdict-sensitive hardening.
+```

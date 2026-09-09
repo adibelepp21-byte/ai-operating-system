@@ -138,6 +138,49 @@ Phase 9 matures.** `Volume II §5` states the dependency `10 ← 9`.
 
 **Phase 9 stands at 0% · Belum Dimulai. So do Phases 4, 5, 6, 7 and 8.**
 
+> ### CORRECTION — 2026-09-09 · the sentence above is FALSE
+>
+> **Act:** `ACT-CC-CANONICAL-ARCHITECTURE-AUTHORITY-EVIDENCE-RESOLUTION-GATE-v1.0 §16`.
+> The original sentence is left standing rather than rewritten, per `§5.4`:
+> a corrected finding must remain traceable to the finding it corrects.
+>
+> **Those figures came from the 26 July Progress Tracker snapshot**, which this
+> corpus had **already** labelled `SOURCE-VERIFIED / STALE BY DECLARATION`
+> (`E-46`) and which declares itself *"bukan status realtime"*. **A source
+> marked stale was used as current state.**
+>
+> **The External Corpus Synchronization Ledger, under Founder Decision `G1′`,
+> records every one of those figures as superseded by fact:**
+>
+> | Item | Statement | Certification |
+> |---|---|---|
+> | `S-9` | *"AI Runtime (Phase 4) — 0%"* superseded by fact | Gate 4; **`PHASE 4.6 CLOSED`**, 2026-07-30 |
+> | `S-13` | *"Intelligence Ecosystem (Phase 5) — … 0%"* superseded by fact | `FD-P5-001` |
+> | `S-14` | *"Knowledge Ecosystem (Phase 6) — … 0%"* superseded by fact | `FD-P6-002` |
+> | `S-15` | *"Memory Ecosystem (Phase 7) — … 0%"* superseded by fact | `FD-P7-003` |
+> | `S-16` | *"Tool Ecosystem (Phase 8) — … 0%"* superseded by fact | `FD-P8-002` |
+> | **`S-17`** | ***"Workflow Ecosystem (Phase 9) — Belum Dimulai / 0%" superseded by fact*** | **`FD-P9-002`**, 2026-09-03 |
+>
+> **THE VERDICT DOES NOT CHANGE.** `Volume VII §1.2` conditions P10 on Phase 9
+> being ***matang*** — **mature**. The ledger establishes only that Phase 9 is
+> **not zero**. **NOT ZERO ≠ MATURE**, and no resident source establishes Phase 9
+> maturity. `§16` of the authorizing Act forbids altering the P10 verdict on
+> recovered Phase state, and it is not altered.
+>
+> **CORRECTED BASIS — this is what condition 0 now rests on:**
+>
+> ```text
+> WAS:  Phase 9 stands at 0%.                    ← FALSE
+> IS:   Phase 9 maturity is not established.     ← TRUE, and weaker
+> ```
+>
+> **The closing clause of `§8` is corrected with it.** *"it requires Phases 4–9
+> to be built"* overstates what remains: Phase 4 is **closed at 4.6**, and
+> Phases 5–9 each carry a certification. **What P10 waits on is Phase 9
+> *maturity*, not Phase 9 *existence*.**
+>
+> **`P10 BLOCKED` stands. Its stated ground was wrong and is now right.**
+
 **This Roadmap's own `R3` places `P10 BLOCKED` among its four valid outcomes and
 instructs "Do not manufacture readiness."** The verdict is the instruction
 followed, not refused.

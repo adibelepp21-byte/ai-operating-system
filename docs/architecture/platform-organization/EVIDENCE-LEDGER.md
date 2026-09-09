@@ -1142,3 +1142,38 @@ P13 ← P12 ← P4–P11 ← P10 ← P9 ← P5–P8 ← P4
 same unopened gate as `P10`**. This is the Master Program's own dependency map,
 not a delegation limit — and `Volume V §3` reserves Phase status determination to
 *"Pemilik Program (Moriarty)"*.
+
+---
+
+# Correction to `E-60` — 2026-09-09, Cycle 34
+
+**`E-60`'s heading asserts a standing fact that resident Founder decisions
+supersede. The quotation inside it is accurate; the standing claim is not.**
+
+**What is accurate and stays:** `Volume VII §1.2` does say *"Per **26 Juli
+2026**, Phase 4-9 seluruhnya masih 0%"*. `E-60` quotes it verbatim and dates it.
+**A dated quotation of a dated source is correct evidence.**
+
+**What is superseded:** the heading — *"Phase 4–9 are all 0%"* — and the
+consequence drawn from it, both of which read the snapshot as **current state**.
+The External Corpus Synchronization Ledger, under Founder Decision `G1′`,
+records every one of those figures as **superseded by fact**: `S-9` (Phase 4,
+against `PHASE 4.6 CLOSED`), `S-13` (`FD-P5-001`), `S-14` (`FD-P6-002`), `S-15`
+(`FD-P7-003`), `S-16` (`FD-P8-002`), and **`S-17` (Phase 9, against
+`FD-P9-002`, 2026-09-03)**.
+
+**`E-60`'s conclusion survives; its stated ground does not.** Phase 10 remains
+canonically barred, because `Volume VII §1.2` conditions it on Phase 9 being
+***matang*** — **mature** — and **NOT ZERO ≠ MATURE**. No resident source
+establishes Phase 9 maturity.
+
+**The same correction applies to the chain claim** — *"Every phase in that chain
+stands at 0% · Belum Dimulai"* — for the same reason and on the same evidence.
+
+**Evidence class change:** `E-60` moves from **`[A]` canonical standing fact**
+to **`[A]` canonical prerequisite + `HISTORICAL SNAPSHOT` for its percentages.**
+The two were fused in one entry, and fusing them is what let a stale figure act
+as a current one.
+
+**Neither the entry nor the heading is rewritten** — a corrected finding must
+stay traceable to what it corrects.
