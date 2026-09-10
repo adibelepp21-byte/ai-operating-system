@@ -6223,3 +6223,119 @@ P5–P9   CERTIFIED / COMPLETE  (P7, P8, P9 governance CLOSED)
 P10     AUTHORITY-BLOCKED — no Phase 10 authorization instrument exists
 EXHAUSTION  AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
 ```
+
+---
+
+# 63. `ACT-CC-P10-AUTHORIZATION` — P10 authorized, and the mechanism turns out to be built and empty
+
+**Date:** 2026-09-10 · **Baseline:** `4864845`
+
+## 63.1 Intake
+
+**The instrument recorded as absent at `§62.3` has been supplied.** Persisted at
+`docs/governance/acts/ACT-CC-P10-AUTHORIZATION-v1.0.md`.
+
+**Disclosed: this is a transcription, not a byte-exact copy.** The Act arrived
+**inline**, not as an upload — unlike the two artifacts persisted on 2026-09-09,
+whose hashes match their uploads exactly. Structure was normalized to Markdown;
+**no clause, boundary, priority, prohibition or distinction was altered, added,
+or dropped.** The conversation is the authoritative original.
+
+## 63.2 `§27.5` — reading bodies, not identifiers
+
+The Act's `§27.5` requires consuming sources *"by reading their actual bodies,
+not merely their identifiers"* — the instruction that answers the defect
+disclosed at `§61`/`§62`. Executed: `department_spec.md`, `ownership.py`,
+`test_ownership_conformance.py`, and the five phase certifications, all read
+rather than cited.
+
+**It immediately paid.** `department_spec §13A` **already resolves** the
+Department implementation location — `native_core/core/capability/ownership.py`,
+*inside* the Capability boundary, because Blueprint `§4` fixes the core at
+*"exactly the eleven frozen subsystem boundaries — no more"*. **A naive P10
+construction would have created `core/department/` and violated that on the
+first commit.**
+
+## 63.3 The finding
+
+```text
+DEPARTMENT MECHANISM   : IMPLEMENTED and VERIFIED
+                         ownership.py — 520 lines; Organization, Department,
+                         DepartmentIdentity, OwnershipGraph
+                         58 conformance tests · INV-1 ×6 · INV-2 ×4
+                         negative control: two departments claiming one
+                         Capability FAILS CLOSED
+
+DEPARTMENT POPULATION  : EMPTY
+                         zero Department instances outside ownership.py and
+                         its tests; OwnershipGraph( never constructed by any
+                         non-test code; no resident catalog or data file
+
+ORGANIZATIONAL RUNTIME : NOT OPERATIONAL
+```
+
+**The organization exists as a capability of the system, not as an instance of
+one.** Everything buildable without knowing *which* Departments exist is built
+and proven; nothing requiring that knowledge is.
+
+**This is not a defect** — it is the shape a correctly-sequenced system takes
+when its mechanism is complete and its population is reserved. **And it is
+exactly the distinction `ACT §5` demands be preserved**
+(`CANONICAL DEFINITION ≠ RUNTIME STATE`), now measured with numbers on both
+sides rather than asserted as a caution.
+
+## 63.4 `§6.2`'s nine elements, mapped to frozen boundaries
+
+**Six of nine have a frozen home** — Delegation (Governance), Coordination
+(Workflow, `INV-13`), Execution (Runtime+Agent+Workflow), Escalation
+(`Constitution §14.2` Trace escalation status), Observation (Trace, `INV-4/5`),
+Feedback (Memory→Knowledge→Optimization, `INV-8`). **Handoff is partial.**
+
+**`WORK INTAKE` and `STATE` have none** — both are `Freeze §2` *reserved
+concepts with no ratified entity* and `§10` deferred architecture. **Building
+either would introduce an entity into a model that says "No new entity."**
+
+**The code agrees with the architecture, independently measured:**
+
+```text
+intake 0 · feedback 0 · improve 0   ← exactly the elements with no frozen home
+observation 25 · delegation 10 · coordination 8 · handoff 1 · escalation 1
+```
+
+## 63.5 One blocking item, already escalated
+
+**Populating the ownership graph requires the Department population** — `G-09`,
+Architect-reserved, carried by `ADR-0029`. `INV-1` requires *"exactly one
+Department"*; **an invariant stated over a set cannot be satisfied while the set
+is indeterminate**, which is why the graph is complete and empty rather than
+partly filled.
+
+**`ADR-0029` narrowed, not resolved.** `ACT §5` supplies new evidence — the
+Platform Divisions are the organizational **source** for the Department
+Ecosystem — which reads naturally under Options A and C and awkwardly under
+Option B. **It is not a decision:** `ACT §5`'s stated inequality is
+`PD ≠ P10` (Platform Division versus **Phase**, never in dispute), it does not
+address the six-name `Volume VII §3` list, and `ACT §11` forbids inventing the
+decision. **NARROWED ≠ RESOLVED.**
+
+**No population was invented to make the graph non-empty.** Doing so would
+breach `INV-1` the instant a Capability resolved to a Department no authority
+had established.
+
+## 63.6 Verification
+
+```text
+native_core  801 OK (1 expected failure)   tools 248 OK   consumers 276 OK
+citation     79 documents · 0 errors · 64 WARN
+stale-state  0 stale assertions
+```
+
+## 63.7 State
+
+```text
+P10 AUTHORIZED    yes — ACT-CC-P10-AUTHORIZATION
+P10 CONSTRUCTED   mechanism already constructed and conformance-verified
+P10 OPERATIONAL   NO — population empty
+P10 STATE         AUTHORITY-BLOCKED at ONE named, already-escalated point
+EXHAUSTION        AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
+```
