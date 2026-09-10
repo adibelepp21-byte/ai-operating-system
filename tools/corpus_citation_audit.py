@@ -84,6 +84,12 @@ DEFAULT_ROOTS = (
     # execution record — **the documents that carry the most citations in the
     # repository, and the ones the citation checker could not see.**
     "docs/governance",
+    # Added under `ACT-CC-P11-001` in the same change that created
+    # `docs/architecture/p11/`. A new directory outside these roots is invisible
+    # to this auditor — `VF-11`'s failure shape, *a guard that passes because it
+    # cannot see the newest work*. Adding the root alongside the directory means
+    # the blind spot never exists in a committed state.
+    "docs/architecture/p11",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a
@@ -122,6 +128,12 @@ SKIP_DIRS = {".git", "__pycache__", "node_modules", ".venv"}
 NON_RESIDENT = {
     "AIOS_CANONICAL_ARCHITECTURE.md": "NEVER resident — absent from full git history and from the archived corpus review's verified inventory; see SG-01, G-07",
     "AIOS_MASTER_PROGRAM_v1_0_LENGKAP.md": "Architect-supplied upload, outside the repository",
+    # Supplied with `ACT-CC-P11-001` as the P11 Roadmap / PRD / Construction
+    # Blueprint. Recorded non-resident rather than persisted into the repository:
+    # `ACT-CC-P11-001 §5` forbids turning a supplied source copy into a canonical
+    # artifact, and the document's own header states it is `Draft for Founder
+    # Review / Authority Ratification Required Before Construction`.
+    "AIOS_PHASE_11___AUTONOMOUS_ORGANIZATION.txt": "Founder-supplied upload, outside the repository — P11 Blueprint, Draft, ACT-CC-P11-001",
     "AIOS_COFOUNDER_DELEGATION_CHARTER_v1.0.txt": "supplied upload, outside the repository — ESC-C5-01; presence disclosed at ACT-CC-P6-070 §2.1",
     # The Graphify archive, external corpus at Intake (E-66). Verified present
     # in `graphify-8/graphify/` and recorded at VERIFICATION §49.

@@ -7851,3 +7851,93 @@ P10 = CERTIFIED   P11 = NOT AUTHORIZED   P12/P13 = NOT AUTHORIZED
 GOVERNANCE = NOT CLOSED   CONSTRUCTION = NONE
 13 protected packages: UNREAD · UNINSPECTED · UNSTAGED · UNCOMMITTED · UNMODIFIED
 ```
+
+
+---
+
+# 79. `ACT-CC-P11-001` — the P11 Blueprint reconciled, and two frontiers it did not surface
+
+Eight registers:
+[`P11-RECONCILIATION-REGISTERS.md`](../architecture/p11/P11-RECONCILIATION-REGISTERS.md).
+
+> **`T2` — BLUEPRINT ALIGNED WITH BOUNDED OPEN AUTHORITY**
+> **`T6` — P11 AUTHORIZATION NOT YET GRANTED** (asserted as `§31` requires)
+
+## 79.1 The Blueprint's source claims are accurate
+
+Every `SOURCE-CANONICAL` item was checked against the **resident** P10–13
+Blueprint. `P11-W1`…`W7` and the eight-dimension `P11 Exit` match **verbatim** —
+all five coordination surfaces, all five planning surfaces, all five delegation
+surfaces, the six-step execution loop, the six performance states, and
+*planning · delegation · execution · coordination · observation · verification ·
+escalation · accountability*.
+
+**And it does not over-claim.** It flags its own boundary unprompted in five
+places — `§0.2` class C, `§12.2`, `§20.1`, `§31`, Appendix A — including the line
+that no threshold *"should be treated as canonical unless separately ratified."*
+**A blueprint that polices itself is rarer than one that is merely correct.**
+
+## 79.2 Two frontiers it does not fully surface — both Architect-reserved
+
+**`AF-03` — P11 has no frozen home.** `P11-W2` Planning, `W3` Delegation and `W6`
+Performance need a subsystem, and Native Core Blueprint `§4` says: *"The core
+region contains exactly the eleven frozen subsystem boundaries — **no more** (no
+new entity/subsystem may be introduced)."* Verified by listing: `native_core`
+holds exactly those eleven. The Register adds that a twelfth *"would require a
+separate architectural decision under Engineering Constitution §3.4."*
+
+**Three answers exist and I chose none:** build outside the core as P10 did
+(`tools/organization_catalog.py` exists for exactly that reason), fit within
+existing boundaries, or admit a twelfth. **The first needs no new authority; the
+third amends a frozen baseline.** That difference is the decision.
+
+**`AF-04` — 13 of the 16 entities in `§15` are not ratified.** Only `Organization`,
+`Department` and `Capability` are among the frozen twelve. Four map directly onto
+**explicitly reserved** concepts: `OrganizationGoal`→`Goal`, `WorkItem`→`Task`,
+`OrganizationalState`→`State-as-entity`, `Observation`→`Event`.
+
+## 79.3 Five findings from ten attacks
+
+`§25`'s prove-me-wrong produced substance rather than confirmation:
+
+- **`D-15`** — *unified system-wide state* is **`P12-W2`**, not P11
+- **`G-04`** — the Blueprint's own graph puts **W7 last**; dependency argues
+  **first**. *A boundary built after the thing it bounds is not a boundary*
+- **`G-05`** — the eight `E11` candidates measure **capability only**. None
+  measures the `§28` negative controls — that the organization *cannot*
+  self-authorize. `E10-06` carried exactly that. Surfaced into the ratification
+  decision; **not added, because ratification is the Founder's**
+- **`G-03`**, **`G-01`** — the two frontiers above
+
+## 79.4 What already exists and must not be rebuilt
+
+`§16`'s *integrate before duplicate* has real purchase: **escalation** already
+runs through Trace (`Constitution §14.2`, and all three P10 Agent Definitions
+record it); **`NC-05` — memory must not become authority — is already `INV-8`**,
+which forbids self-promotion and requires governed review. **P11 need not invent
+either.**
+
+## 79.5 Construction, and a guard that caught me immediately
+
+**No P11 feature built.** Two verification changes only: the new `docs/architecture/p11/`
+directory was added to the citation auditor's roots **in the same change that
+created it**, and the supplied Blueprint was recorded **non-resident** rather than
+persisted — `§5` forbids turning a source copy into a canonical artifact.
+
+**The new root worked on its first run**, flagging an unresolved citation in the
+very document being written. **A root added and its finding suppressed would have
+been worse than no root at all.**
+
+## 79.6 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+catalog 0 error / 0 warning · citation 92 documents / 0 errors
+stale-state 457 documents / 0 assertions
+native_core subsystems: exactly eleven, verified by listing
+P10 runtime unchanged: 2 departments · 3 capabilities · 3 agent definitions · 5 chains
+
+P10 CERTIFIED = TRUE · P11 AUTHORIZED = FALSE · P11 CONSTRUCTED = FALSE
+E11 RATIFIED = FALSE · P12 AUTHORIZED = FALSE
+CANONICAL MUTATION = 0 · PROTECTED BOUNDARY VIOLATION = 0
+```
