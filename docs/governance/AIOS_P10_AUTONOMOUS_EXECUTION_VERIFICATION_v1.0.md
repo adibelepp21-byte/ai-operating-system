@@ -8031,3 +8031,86 @@ DP-03 = NOT DECIDED · DP-04 = NOT DECIDED · NEW SUBSYSTEM = NOT CREATED
 NEW ENTITY = NOT CREATED · FREEZE = NOT MODIFIED · BLUEPRINT = NOT MUTATED
 ARCHITECT AUTHORITY = NOT SELF-EXERCISED · PROTECTED PACKAGES = UNTOUCHED
 ```
+
+
+---
+
+# 81. `DP-04` prepared as an instrument — **`DECISION-PENDING`, not issued**
+
+[`DP-04-P11-ORGANIZATIONAL-ENTITY-MODEL.md`](../architecture/p11/DP-04-P11-ORGANIZATIONAL-ENTITY-MODEL.md).
+
+The Architect Decision instrument arrived with `§14`, `§15`, `§21` and `§22`
+**unfilled**. Those four are the Architect's; everything else is evidence.
+**I filled the evidence and left the decision empty.**
+
+## 81.1 A discrepancy in the instrument, flagged not fixed
+
+**`§0` says the status becomes `ISSUED` once the Architect choice is entered in
+*"Section 13."*** But **`§13` is `CO-FOUNDER RECOMMENDATION`** — the choice
+belongs in `§14`, which `§23` confirms by requiring *"Sections 14, 15, 21, and
+22."*
+
+**Read literally, `§0` would place the Architect's decision inside the
+Co-Founder's recommendation section** — the exact confusion the instrument exists
+to prevent. **Reported rather than renumbered:** relocating a section of an
+Architect instrument is not a delegated act. `§23`'s enumeration is treated as
+governing.
+
+## 81.2 The sixteen, reconciled against actual bodies
+
+**3 FROZEN · 3 IMPLEMENTED · 1 PROJECTION · 3 NON-ENTITY · 6 UNRESOLVED.**
+
+The three already-implemented findings were verified at definition, not by name,
+as `§7.1` demands:
+
+- **`Escalation`** — `trace/record.py:31`,
+  `VALID_STATUSES = frozenset({"success", "failure", "escalation"})`, annotated
+  *"Domain Model §2.1"*. **A ratified Trace status, not an entity.**
+- **`Observation` / `PerformanceRecord`** — both map to `ObservationPublication`
+  in `optimization/contract.py`, with a `PassiveObservationPublication`
+  realization.
+- **`Organization` / `Department`** — `capability/ownership.py`, reconciled
+  against the existing ownership model.
+
+**And `§19`'s ADR sweep came back empty: none of the 29 ADRs decides `Goal`,
+`Plan`, `Delegation` or organizational state.** The frontier is real.
+
+## 81.3 Why I recommended on twelve and declined on four
+
+`§13` invites a recommendation; **`§1.1` warns the Architect *"must not merely
+approve the Co-Founder recommendation."*** Recommending on all four would work
+against that warning, because **the evidence does not separate the options** —
+three sit on reserved concepts where "projection" is merely the cheap answer and
+"new entity" is the one I am forbidden to select.
+
+**So the recommendation covers the twelve and stops.** What I offer for the four
+is a principle, not a choice: prefer the minimum canonical surface that preserves
+semantic correctness.
+
+## 81.4 The contradiction that survived
+
+`§19` requires surviving contradictions be reported. One did:
+
+> **`NO-NEW-ENTITY` and semantic correctness genuinely conflict for
+> `Delegation`.** Its semantics match `governance` — which *"holds authority over
+> decisions"*, decides *"nothing automatically"* and *"fails closed"* — but
+> `governance` *"imports nothing from Workflow, Agent, Runtime, or Optimization"*,
+> which delegation must span. No other boundary claims it, and no projection over
+> Trace obviously reconstructs **authority conferred within bounds** as distinct
+> from **authority exercised**.
+
+**This is the strongest case among the four for Option D — a new entity — and I
+did not select it.** `NC-05` forbids forcing it the other way to satisfy the
+constraint; `§11` reserves Option D to the Architect. **Both pressures point at
+me and the answer to both is the same: not mine.**
+
+## 81.5 Verification
+
+```text
+native_core 801 OK (1 expected failure) · tools 294 OK
+citation 94 documents / 0 errors · stale-state 459 documents / 0 assertions
+native_core subsystems: exactly eleven  (NC-07)
+
+DP-04 = DECISION-PENDING · §14/§15/§21/§22 unfilled
+NC-01..NC-15 = all NOT DONE · no artifact mutated (§16)
+```
