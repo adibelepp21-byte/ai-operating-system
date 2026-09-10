@@ -8271,3 +8271,86 @@ native_core subsystems: exactly eleven
 DP-04 = ISSUED (unchanged)   DP-03 = DECISION-PENDING
 NC-01..NC-18 = all TRUE · §16-§19 untouched by Claude
 ```
+
+
+---
+
+# 84. `DP-03` ISSUED — the P11 architectural frontier is closed
+
+**Architect, 2026-09-10.** Persisted verbatim at
+[`DP-03`](../architecture/p11/DP-03-P11-ORGANIZATIONAL-ARCHITECTURAL-SURFACE.md),
+`sha256 86ad297e…`. All Architect-reserved sections completed **by the Architect**.
+
+| | Decision |
+|---|---|
+| **`W1`** Coordination | **CONFIRMED — Workflow** |
+| **`W2`** Planning | **Organizational-layer Planning surface**, `PLAN → SEQUENCE → ADAPT → REVISE` |
+| **`W3`** Delegation | **Governed organizational record/relation** outside the core |
+| **`W6`** Performance | **CONFIRMED — Optimization/Observation, DETECT-ONLY** |
+| **Native Core #12** | **NOT CREATED** — eleven boundaries stand |
+
+## 84.1 Both objections I raised were answered on their merits
+
+**The falsification that survived against my own recommendation.** I recommended
+`Option C` for both Planning and Delegation, then reported that it **partially
+fails for Planning** — a Delegation record fits P10's pattern, but plans are
+mutable while those records are static declarations read by a loader.
+
+**`DP-03 §13`, verbatim: *"The Architect accepts this objection as valid."***
+`§8.4` resolves it by separating **persisted representation** from **lifecycle** —
+`organizational record ≠ static immutable Plan` — and requires the mutable cycle.
+
+**So my recommendation was adopted for Delegation and deliberately not for
+Planning.** That is the right outcome: **the decision followed the evidence rather
+than the recommendation**, which is what reporting a weakness against your own
+proposal is for.
+
+**The prioritization boundary I flagged.** I warned that `W6` sits safely in
+`optimization` only while detect-only, and that `W2` needs *prioritization* —
+which that same boundary reserves, unimplemented. **`§7` closes it:**
+*"Performance evidence may inform Planning but does not become Planning
+authority"*, with the reserved models left outside the confirmation.
+
+**Neither concern was waved through.** A weakened recommendation and a flagged
+boundary risk each got a specific architectural answer.
+
+## 84.2 What issuance does not do
+
+`§0.1` and `§18`, unchanged by issuance:
+
+```text
+P11 AUTHORIZATION        = NOT GRANTED
+E11 RATIFICATION         = NOT GRANTED
+P11 CONSTRUCTION         = NOT AUTHORIZED
+P12 CONSTRUCTION         = NOT AUTHORIZED
+NATIVE CORE MODIFICATION = NOT AUTHORIZED
+```
+
+`§15`: *"DP-03 does not declare P11 operational."* `§20`: **the Architect decides
+the architectural boundary; the Founder decides whether the programme may
+proceed.**
+
+## 84.3 Verification — nothing was built
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+citation 95 documents / 0 errors · stale-state 460 documents / 0 assertions
+native_core boundaries: 11        planning/delegation classes: 0
+
+DP-04 = ISSUED · DP-03 = ISSUED · NC-01..NC-18 all TRUE
+```
+
+**`NC-13` measured, not asserted:** zero `Plan`, `Goal` or `Delegation` classes
+exist. Two issued architecture decisions changed the *design*; they built nothing,
+which is exactly what `ARCHITECT DECISION ≠ FOUNDER AUTHORIZATION` means.
+
+## 84.4 The next legitimate frontier
+
+`§19` fixes it: **`DP-01` Founder P11 Authorization**, then **`DP-02` Founder E11
+Ratification**, then construction. **Both are the Founder's**, and neither may be
+inferred from two issued Architect decisions.
+
+**One carry-forward from `ACT-CC-P11-002 §25`, still standing:** `DP-01` and
+`DP-02` were flagged as *not final* pending the architectural answers. **Those
+answers now exist**, so both packages can be re-examined against `DP-03`/`DP-04`
+whenever the Founder calls for them.

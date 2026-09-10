@@ -1,14 +1,46 @@
 # P11 Architect Decision Packages — DP-03 and DP-04
 
 > **Executed under `ACT-CC-P11-002`** — 2026-09-10.
-> **`DP-04 = ISSUED` — Architect, 2026-09-10, OPTION C.**
-> **`DP-03 = DECISION-PENDING`, and materially narrowed by it — see the banner
-> immediately below.**
+> **`DP-04 = ISSUED` · `DP-03 = ISSUED` — Architect, both 2026-09-10.**
+> **The P11 architectural frontier is closed. `P11 AUTHORIZATION` remains NOT
+> GRANTED** — `DP-03 §0.1`.
 >
+> ~~`DP-03 = DECISION-PENDING`, materially narrowed.~~
 > ~~`DP-03 = DECISION-PENDING` · `DP-04 = DECISION-PENDING`.~~
 > Every recommendation below is labelled **`CO-FOUNDER RECOMMENDATION — NOT
 > ARCHITECT DECISION`**, as `§12`/`§22` require. **No decision was taken, no
 > subsystem created, no entity created, nothing built** (`§4`, `§28`).
+
+---
+
+## Both decisions ISSUED — the architectural frontier is closed
+
+| Decision | Status | Outcome |
+|---|---|---|
+| **`DP-04`** | **ISSUED** 2026-09-10 | Option C — organizational-layer representation outside the frozen Native Core |
+| **`DP-03`** | **ISSUED** 2026-09-10 | `W1`→Workflow (confirmed) · `W2`→organizational Planning surface, **mutable lifecycle** · `W3`→governed organizational record/relation · `W6`→Optimization, **detect-only** · **Native Core #12 = NOT CREATED** |
+
+**Everything in this document below the banner is superseded where it differs.**
+It is retained as the record of the preparation that preceded issuance.
+
+### Both objections I raised were answered, not waved through
+
+**The falsification that survived against my own recommendation** —
+that a Delegation record fits the P10 pattern **but a mutable Plan does not** —
+is accepted verbatim at `DP-03 §13`: *"The Architect accepts this objection as
+valid."* `§8.4` resolves it by separating **persisted representation** from
+**lifecycle**: `organizational record ≠ static immutable Plan`, with
+`PLAN → SEQUENCE → ADAPT → REVISE` required.
+
+**The prioritization boundary I flagged** — that `W6` is safely home in
+`optimization` only while detect-only, while `W2` needs *prioritization*, which
+that boundary reserves — is closed at `DP-03 §7`: *"Performance evidence may
+inform Planning but does not become Planning authority."*
+
+**My `Option C` recommendation was adopted for Delegation and deliberately not
+for Planning.** That is the correct outcome: I had recommended it for both and
+then reported evidence weakening it for one. **The decision followed the evidence
+rather than the recommendation.**
 
 ---
 
