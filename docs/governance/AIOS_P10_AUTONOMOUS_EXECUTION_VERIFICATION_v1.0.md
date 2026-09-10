@@ -9204,3 +9204,122 @@ E11 RATIFIED = FALSE    ·  P12 AUTHORIZED = FALSE
 `0 citation errors` means every pointer resolves — not that the cited sources
 support the claims made about them. `0 stale assertions` means no **registered**
 superseded claim is restated — not that the corpus is clean.
+
+# 91. Handoff integrity, and the boundary W4 cannot cross
+
+**Act:** `ACT-CC-P11-007`. **Verdict `T2`.** Five frontiers executed; **W4 is
+`AUTHORIZED + BLOCKED`** on a genuine authority boundary. Full package at
+`docs/architecture/p11/P11-HANDOFF-INTEGRITY-AND-W4-BLOCKER.md`.
+
+## 91.1 A control that generalized over the wrong thing
+
+`ACT-CC-P11-006` fixed two forgeable authority fields and generalized the
+control — **over the directory the examples lived in.** `§8` of this Act forbids
+a control that *"passes only because the known example is hard-coded"*, and a
+probe settled it: adding `authority_cited: str` to a genuine P11 handoff surface
+outside `tools/planning/` produced **no failure at all.**
+
+Generalizing to a directory is not generalizing to a class. The control now
+covers a declared surface set with a completeness guard — and **that guard caught
+`escalation_register.py` on the run that created it**, before I had thought to
+declare it. `§90.6` argued that the remedy which works is the assertion rather
+than the recollection; this is the first time the assertion collected.
+
+## 91.2 The finding that reversed my own classification
+
+`ACT-CC-P11-006` recorded `PLAN → WORKFLOW` as `AUTHORIZED + ACTIONABLE` — an
+implementation gap awaiting code. **It is `AUTHORIZED + BLOCKED`, and blocked
+correctly.**
+
+`WorkflowStep` requires *who performs it* and *which Skill it composes*. A
+`PlanStep` carries neither and cannot: naming the actor is **allocating work to
+an actor**, which is delegation. `DP-04 §8.2` fixes `GOAL → PLAN → DELEGATION →
+EXECUTION`, so Plan reaches Execution **through** Delegation.
+
+I had classified a correctly-closed gate as an unbuilt integration. The error was
+inferring a code gap from two modules not touching, without reading what the
+receiving surface actually requires.
+
+**And the gate turned out to be architectural, not type-enforced:** Workflow
+rejects an *empty* actor key but **accepts an invented one**. Nothing stopped a
+future increment from "completing" the integration by inventing instance keys. So
+the gate was given an enforcer — no P11 surface may construct an actor
+assignment — probed by making Planning fabricate one.
+
+## 91.3 W4 is blocked, and what is missing is not code
+
+```text
+Departments 2 · Capabilities 3 · Agent Definitions 3
+Agent Instances 0 · Delegations 0   →  DELEGATE traversable: False
+```
+
+The delegation mechanism exists and is tested. What does not exist is a
+*delegation* — and authoring one is an exercise of the authority being delegated.
+There is also **no Agent Instance anywhere in the repository**, so even a
+would-be delegator has nothing legitimate to delegate to.
+
+This is `§33`'s hard stop: the blocker is identified, classified, and written up
+for decision. It is **not** raised as a Micro Act — `§22` bars escalating
+ordinary engineering, and this is not ordinary engineering. It is the creation of
+organizational authority.
+
+## 91.4 Escalation persisted — and Trace correctly declined
+
+Classified before building. Authorized (`DP-01 §3 W1` lists escalation),
+materially required (W4's loop terminates in `ESCALATE`, and today the exception
+is raised and lost).
+
+**Trace ratifies `escalation` as an outcome, which made it the obvious home — and
+the wrong one.** `TraceRecord` requires `agent_definition_version`,
+`agent_instance` and `runtime`: it records what an agent *did*. A planning
+escalation has no instance and no runtime. Writing one there means fabricating
+both — the same fabrication `§91.2`'s control forbids.
+
+`ESCALATION ≠ APPROVAL` holds structurally: nothing in the module can close an
+escalation; a response requires a `HumanAuthority` that automation cannot
+synthesise; the response is a new file **beside** the record, never over it; and
+the status vocabulary contains no `APPROVED`.
+
+## 91.5 Continuity, not resurrection
+
+W5 planning continuity was selected because nothing blocks it. Its load-bearing
+property: **authority is re-validated on restore, not restored.** A plan whose
+cited instrument no longer resolves does not come back — it fails closed rather
+than returning well-formed while asserting a source that is gone.
+
+Storage is the easiest place for `MEMORY ≠ AUTHORITY` to fail, because a
+serialized plan looks identical whether its authority still exists or not.
+
+## 91.6 A fourth defective probe, by a fourth mechanism
+
+Four Acts, four defective mutation probes, **each failing differently**: a no-op
+expression; a dataclass field-ordering error; an anchor that never matched; and
+now an anchor that matched *the wrong place* — `authority = AuthorityProvenance(`
+is a substring of `goal_authority = AuthorityProvenance(`, so `replace` mutated a
+different block and produced unparseable code. The suite crashed and printed no
+verdict, which reads as silence.
+
+Patching each mechanism as it appeared was never going to converge. The harness
+now refuses to run unless the anchor matches **exactly once**, the mutation
+**changes something**, and the result **still parses**, restoring the file in a
+`finally`. **Each of those three checks corresponds to one probe that previously
+failed silently** — the fourth is covered by the parse check.
+
+## 91.7 A near-miss from an identifier collision
+
+I had recorded W5 as not started partly on a grep for `continuity`, which hit
+`w4_continuity` in `tools/organization_catalog.py`. **That is P10's W4 chain
+check, not P11-W5 work.** Reading the function settled it. The two programmes
+both number work packages `W1…W7`, and the collision will recur.
+
+## 91.8 State integrity, measured
+
+```text
+native_core boundaries : 11   departments : 2   delegations : 0   instances : 0
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 488 OK
+citation 149 documents / 0 errors · stale-state 463 documents / 0 assertions
+
+P11 AUTHORIZED = TRUE   ·  P11 CONSTRUCTED = PARTIAL (W2, W3, W5, W6, W7)
+W1 = gated by delegation ·  W4 = AUTHORIZED + BLOCKED
+E11 RATIFIED = FALSE    ·  P12 AUTHORIZED = FALSE ·  13 protected packages untouched
+```

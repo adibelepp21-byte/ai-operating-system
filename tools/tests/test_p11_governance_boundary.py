@@ -362,6 +362,39 @@ class DelegationMustNotCreateAuthority(unittest.TestCase):
 
 PLANNING = REPO_ROOT / "tools" / "planning"
 
+#: Every P11 organizational-layer surface across which authority may travel.
+#:
+#: Declared as a set rather than a directory because **the directory was the
+#: bug**. `ACT-CC-P11-006` fixed two forgeable authority fields inside
+#: `tools/planning/` and generalized the control — but only over that package.
+#: `ACT-CC-P11-007 §8` requires the control to cover *"the class of defect
+#: rather than one known instance"*, and a probe proved it did not: adding an
+#: ``authority_cited: str`` field to `tools/performance_evidence.py`, a genuine
+#: P11 handoff surface, produced **no failure at all**.
+#:
+#: The membership guard below is what keeps this honest. A hand-maintained list
+#: rots the moment someone adds a surface and forgets it — which is the same
+#: failure one level up.
+P11_SURFACES = (
+    REPO_ROOT / "tools" / "planning",
+    REPO_ROOT / "tools" / "performance_evidence.py",
+    # Declared because the completeness guard below caught it, not because it was
+    # remembered. `ACT-CC-P11-007` created this surface and the guard failed on
+    # the same run — which is the whole argument for having written the guard
+    # rather than the lesson.
+    REPO_ROOT / "tools" / "escalation_register.py",
+    REPO_ROOT / "tools" / "planning_continuity.py",
+)
+
+
+def _p11_modules():
+    """Every module on a declared P11 surface."""
+    for surface in P11_SURFACES:
+        if surface.is_dir():
+            yield from sorted(surface.glob("*.py"))
+        elif surface.is_file():
+            yield surface
+
 
 class TheBoundaryAlsoConstrainsCapabilityBuiltAfterIt(unittest.TestCase):
     """`ACT-CC-P11-006 §15` — W7 must hold against newly constructed capability.
@@ -423,6 +456,28 @@ class TheBoundaryAlsoConstrainsCapabilityBuiltAfterIt(unittest.TestCase):
             requirement.as_delegation_record()
         self.assertEqual(read_delegations(), [])
 
+    def test_the_declared_p11_surface_set_is_complete(self):
+        """A surface missing from the list is a surface nothing checks.
+
+        Any module under `tools/` that imports the planning package participates
+        in a P11 handoff and must be declared. Without this, the provenance
+        control silently narrows every time a new surface is added — which is
+        exactly how it came to miss `performance_evidence.py`.
+        """
+        declared = {p.resolve() for p in _p11_modules()}
+        undeclared = []
+        for path in sorted((REPO_ROOT / "tools").rglob("*.py")):
+            if "tests" in path.parts or path.resolve() in declared:
+                continue
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.ImportFrom) and node.module \
+                        and "planning" in node.module:
+                    undeclared.append(str(path.relative_to(REPO_ROOT)))
+                    break
+        self.assertEqual(undeclared, [],
+                         f"P11 handoff surfaces not declared: {undeclared}")
+
     def test_every_authority_field_crossing_a_boundary_is_a_verified_citation(self):
         """The generalization of a defect, not a patch for one instance.
 
@@ -440,7 +495,7 @@ class TheBoundaryAlsoConstrainsCapabilityBuiltAfterIt(unittest.TestCase):
         unverifiable provenance is fabricated provenance.
         """
         offenders = []
-        for path in sorted(PLANNING.glob("*.py")):
+        for path in sorted(_p11_modules()):
             tree = ast.parse(path.read_text(encoding="utf-8"))
             for node in ast.walk(tree):
                 if not isinstance(node, ast.ClassDef):

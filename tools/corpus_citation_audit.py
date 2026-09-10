@@ -114,6 +114,10 @@ DEFAULT_ROOTS = (
     # change that created it. Named as a file for the reason given in
     # `_iter_markdown`.
     "tools/performance_evidence.py",
+    # `ACT-CC-P11-007 §26`: added with the surface, not after it. Both modules
+    # carry their governing citations in docstrings and nowhere else.
+    "tools/escalation_register.py",
+    "tools/planning_continuity.py",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a

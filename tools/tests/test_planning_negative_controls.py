@@ -209,6 +209,57 @@ class NC_W2_09_10_11_12_ObservationCannotAuthorize(unittest.TestCase):
             [m for m in _imported_modules() if "optimization" in m], [])
 
 
+class NC_W2_25_AuthorityCannotBeForged(unittest.TestCase):
+    """`ACT-CC-P11-007 §6` — forge authority provenance, by name.
+
+    *"Each must fail wherever a validated authority provenance object is
+    required. The test must demonstrate behavioral failure."*
+
+    Every string below names a real authority in this programme, which is what
+    makes them the right probes: a forgery that reads as nonsense proves
+    nothing, while one that reads exactly like the genuine article is what a
+    consumer would actually be fooled by. **Before `ACT-CC-P11-006`, all four
+    were accepted at both handoff boundaries.**
+    """
+
+    FORGERIES = ("Founder Reserved Authority", "Architect Authority",
+                 "Governance Authority", "System Authority")
+
+    def test_no_named_authority_can_be_asserted_as_a_bare_string(self):
+        for claim in self.FORGERIES:
+            with self.subTest(claim=claim):
+                with self.assertRaises(TypeError):
+                    WorkPreparation(plan_key="p", step_key="s",
+                                    statement="do it", authority=claim)
+                with self.assertRaises(TypeError):
+                    DelegationRequirement(plan_key="p", step_key="s",
+                                          scope_described="anything",
+                                          authority=claim)
+
+    def test_a_forged_citation_cannot_be_smuggled_through_the_provenance_type(self):
+        """The type is not a wrapper to launder a claim through.
+
+        `AuthorityProvenance` requires a record that resolves, so naming a real
+        authority while citing nothing is refused — the instrument must exist.
+        """
+        for claim in self.FORGERIES:
+            with self.subTest(claim=claim):
+                with self.assertRaises(InvalidGoal):
+                    AuthorityProvenance(claim, "docs/no-such-instrument.md")
+
+    def test_what_this_does_not_prevent_is_stated_rather_than_implied(self):
+        """A citation to a *real* instrument is accepted even if that instrument
+        grants nothing of the sort.
+
+        Resolution proves the pointer is real. Whether the cited body authorizes
+        the claim is a reading, and readings are human acts — the same limit
+        `AuthorityProvenance` and the corpus auditor both state. Asserted here so
+        the forgery controls above are not mistaken for more than they are.
+        """
+        overreaching = AuthorityProvenance("Founder Reserved Authority", AUTHORITY)
+        self.assertIn("Founder Reserved Authority", overreaching.cited())
+
+
 class NC_W2_13_PrioritizationRemainsReserved(unittest.TestCase):
     def test_no_planning_type_carries_a_ranking_field(self):
         offenders = [f"{cls}.{f}" for cls, f in _annotated_fields()
