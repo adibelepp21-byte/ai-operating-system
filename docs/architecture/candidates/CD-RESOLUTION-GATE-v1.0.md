@@ -442,6 +442,14 @@ automatically alter the P10 verdict.
 
 **What changes is the basis, not the conclusion:** from *"Phase 9 is 0%"*
 (**false**) to *"Phase 9 maturity is not established"* (**true, and weaker**).
+
+> **Corrected forward 2026-09-10.** *"Phase 9 maturity is not established"*
+> is **also false**. `FD-P9-002 §10` — resident at `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md:6840`
+> and read for the first time on 2026-09-10 — records **`PHASE 9 — WORKFLOW
+> ECOSYSTEM: CERTIFIED / COMPLETE`** and governance **`CLOSED`**. P10 is
+> withheld instead by `FD-P9-002 §8`, which lists `Phase 10` among what
+> certification does not authorize. **Prerequisite blocker → authority
+> blocker.** This section is left as written; see `§61` of the execution record.
 A weaker basis for the same verdict is still a correction, and it is recorded as
 one.
 

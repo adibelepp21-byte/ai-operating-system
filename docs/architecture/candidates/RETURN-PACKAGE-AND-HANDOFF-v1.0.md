@@ -16,7 +16,7 @@
 | **Final current state** | Three execution waves completed. Candidate v2.0 audited and reconciled; one authority conflict routed into `ADR-0029`; three previously-required artifacts built; the tenth verifier built and ten stale assertions remediated |
 | **Completed scope** | Guard verification · candidate v2.0 intake and reconciliation · `CD-1`…`CD-6` re-test · anchoring map · `ADR-0029` · Cross-PD Interface Registry · Phase–PD Map · Evidence Fabric · stale-state detector · stale remediation |
 | **Verified scope** | `tools 243 OK` · `native_core 801 OK` (1 expected failure) · `consumers 276 OK` · citation audit **74 docs / 678 citations / 0 errors** · stale-state **0 assertions / 51 historical uses** |
-| **Blocked scope** | P10 entry (`Volume VII §1.2` — P9 **maturity** not established) · P11–P13 (transitively) · cross-PD interface definition (non-resident Volume 1/2 corpora) |
+| **Blocked scope** | **P10 entry — `AUTHORITY-BLOCKED`.** *Corrected 2026-09-10:* `Volume VII §1.2` sequencing is **satisfied** (`FD-P9-002 §10`: Phase 9 **CERTIFIED / COMPLETE**, governance **CLOSED**); Phase 10 is withheld by `FD-P9-002 §8`. · P11–P13 (transitively) · cross-PD interface definition (non-resident Volume 1/2 corpora) |
 | **Reserved scope** | `ADR-0029` (`G-09` population) · `H-1` · `H-2` · `H-4` · candidate adoption |
 | **Out of scope** | Amending the Constitution, the Domain Model, or the Architecture Freeze |
 

@@ -181,6 +181,54 @@ Phase 9 matures.** `Volume II §5` states the dependency `10 ← 9`.
 >
 > **`P10 BLOCKED` stands. Its stated ground was wrong and is now right.**
 
+> ### CORRECTION — 2026-09-10 · the basis changes again; the verdict does not
+>
+> **Act:** `ACT-CC-AIOS-DECISION-INTAKE-…-GATE-v1.0 §21` (prove-me-wrong), `§26`
+> (correct forward, preserve history), `§38` (self-correction disclosure).
+>
+> **`FD-P9-002` is fully resident** at `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md:6840`
+> — *"Founder Decision · Phase 9 Certification & Governance Closure"*. **Until
+> now this programme had read only its row in a date index.**
+>
+> **`§10 Effect`, verbatim:**
+>
+> ```text
+> PHASE 9 — WORKFLOW ECOSYSTEM: CERTIFIED / COMPLETE
+> PHASE 9 GOVERNANCE STATUS:    CLOSED
+> PHASE 10:                     NOT AUTHORIZED
+> ```
+>
+> **`§7 Founder rationale`, verbatim:** *"The Founder determines that the
+> canonical Phase 9 exit condition 'Workflow lintas-agent dapat dijalankan dan
+> dipantau' **is satisfied** …"*
+>
+> **So the sequencing condition is SATISFIED, not pending.** `Volume VII §1.2`
+> requires Phase 9 to be *matang* before Phase 10 may lawfully be built. Phase 9
+> is **CERTIFIED / COMPLETE** and its governance status is **CLOSED** by Founder
+> Decision. **"Phase 9 maturity is not established" is FALSE and is withdrawn.**
+>
+> **P10 is still not authorized — by an entirely different instrument.**
+> `FD-P9-002 §8` (*"Explicit non-authorization"*) affirms
+> **`CERTIFICATION ≠ CAPABILITY EXPANSION`** and lists, among the things
+> certification does **not** authorize: **`Phase 10`**.
+>
+> ```text
+> WAS:  P10 BLOCKED — prerequisite deficiency (Phase 9 not mature)
+> IS:   P10 AUTHORITY-BLOCKED — Phase 9 complete; Founder expressly
+>       withholds Phase 10 authorization (FD-P9-002 §8, §10)
+> ```
+>
+> **And a prior conclusion of mine is falsified with it.** This baseline reasoned
+> that `P10 BLOCKED` outranked `P10 REQUIRES FOUNDER DECISION` *"because
+> condition 0 — Phase 9 immaturity — is **not resolvable by a Founder decision
+> alone**; it requires Phases 4–9 to be built."* **Phase 9 was built, and a
+> Founder decision is exactly what resolved it.** The reasoning was wrong on both
+> halves.
+>
+> **The three secondary conditions are untouched** and remain independently
+> sufficient. **Nothing above is rewritten** — the original text stands.
+
+
 **This Roadmap's own `R3` places `P10 BLOCKED` among its four valid outcomes and
 instructs "Do not manufacture readiness."** The verdict is the instruction
 followed, not refused.

@@ -90,8 +90,8 @@ PLATFORM ORGANIZATION  →  owns Capability  →  Freeze §5 layer 4  →  runni
 | P6 | Knowledge Ecosystem | `UNKNOWN` — inference **rejected** (`§2`) | `UNKNOWN` | `native_core/core/knowledge/` | — | **`FD-P6-002`**; `S-14`; `GDR-0028` |
 | P7 | Memory Ecosystem | `UNKNOWN` | `UNKNOWN` | `native_core/core/memory/` | — | **`FD-P7-003`**; `S-15` |
 | P8 | Tool Ecosystem | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | — | **`FD-P8-002`**; `S-16` |
-| **P9** | **Workflow Ecosystem** | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | **the Phase itself** | **`FD-P9-002`** 2026-09-03; `S-17` supersedes the 0%. **Maturity NOT ESTABLISHED** |
-| **P10** | **Department Ecosystem** | n/a — construction target | **undetermined (`G-09`)** | — | — | **BLOCKED** — `Volume VII §1.2` requires P9 *matang* |
+| **P9** | **Workflow Ecosystem** | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | **the Phase itself** | **`FD-P9-002`** 2026-09-03 — **CERTIFIED / COMPLETE · governance CLOSED** (`§10`) |
+| **P10** | **Department Ecosystem** | n/a — construction target | **undetermined (`G-09`)** | — | — | **AUTHORITY-BLOCKED** — `Volume VII §1.2` sequencing **satisfied**; `FD-P9-002 §8`/`§10` expressly withhold Phase 10 |
 | P11 | Autonomous Organization | n/a | `UNKNOWN` | — | — | gated behind P10 |
 | P12 | AI Operating System | n/a | `UNKNOWN` | — | — | gated `P4–P11` |
 | P13 | Super Intelligence Ecosystem | n/a | `UNKNOWN` | — | — | gated `P12`; discovery-driven |
@@ -119,3 +119,20 @@ It does not assign a PD to any Phase; does not treat domain ownership as
 programme authority; does not treat a certification as maturity
 (**`PHASE CERTIFIED ≠ PHASE MATURE`**, candidate v2.0 `§38`); and does not
 alter the P10 verdict, which remains **BLOCKED** on `Volume VII §1.2`.
+
+---
+
+## 7. Correction — 2026-09-10
+
+**The `P9` and `P10` rows above were changed, and the reason is a document this
+map cited without reading.** `FD-P9-002` is resident in full at
+`AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md:6840`; this map previously cited only
+its date-index row.
+
+**`§10`:** `PHASE 9 — WORKFLOW ECOSYSTEM: CERTIFIED / COMPLETE` ·
+`PHASE 9 GOVERNANCE STATUS: CLOSED` · `PHASE 10: NOT AUTHORIZED`.
+
+**`Volume VII §1.2`'s sequencing condition is satisfied.** P10 is withheld by
+`FD-P9-002 §8`, which lists `Phase 10` among what certification does **not**
+authorize. **A prerequisite blocker became an authority blocker**, and the two
+are not the same state.

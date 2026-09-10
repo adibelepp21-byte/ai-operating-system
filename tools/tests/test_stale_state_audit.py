@@ -16,6 +16,8 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from tools.stale_state_audit import (  # noqa: E402
     PROXIMITY,
+    ScopeUndeterminable,
+    _tracked,
     ZERO_FIGURE,
     audit,
     superseded_claims,
@@ -110,6 +112,63 @@ class TheCorpusIsCurrentlyClean(unittest.TestCase):
         self.assertGreater(
             result["historical_uses"], 0,
             "zero historical uses would mean the figures were deleted, not marked",
+        )
+
+
+class ItRefusesRatherThanDegrading(unittest.TestCase):
+    """`ACT §19` PRIORITY 2 names *"false clean result"* as its own defect.
+
+    The first version returned an empty tracked set when git failed. Containment
+    stayed safe — everything under a protected prefix became unreadable — but
+    the scan then silently covered **369 documents instead of 439** and still
+    printed ``0 stale assertions``. **A false clean is worse than a refusal.**
+    """
+
+    def test_an_indeterminate_tracked_set_refuses_the_scan(self):
+        import tools.stale_state_audit as mod
+
+        original = mod._tracked
+        mod._tracked = lambda: (_ for _ in ()).throw(
+            ScopeUndeterminable("simulated git failure")
+        )
+        try:
+            with self.assertRaises(ScopeUndeterminable):
+                mod.audit()
+        finally:
+            mod._tracked = original
+
+    def test_an_empty_tracked_set_is_itself_treated_as_undeterminable(self):
+        """Zero tracked files cannot be true of this repository."""
+        import subprocess
+        from unittest import mock
+
+        import tools.stale_state_audit as mod
+
+        completed = subprocess.CompletedProcess(args=[], returncode=0, stdout="")
+        with mock.patch.object(subprocess, "run", return_value=completed):
+            with self.assertRaises(ScopeUndeterminable):
+                mod._tracked()
+
+    def test_the_real_tracked_set_is_non_empty(self):
+        self.assertGreater(len(_tracked()), 100)
+
+
+class TheDetectorDoesNotContaminateItsOwnResult(unittest.TestCase):
+    """`ACT §25.8` — self-reporting contamination."""
+
+    def test_no_finding_comes_from_the_detector_or_its_tests(self):
+        for finding in audit()["findings"]:
+            self.assertNotIn("stale_state_audit", finding["source"], finding)
+
+    def test_the_record_it_writes_into_yields_only_historical_uses(self):
+        record = [
+            f for f in audit()["findings"]
+            if "AIOS_P10_AUTONOMOUS" in f["source"]
+        ]
+        self.assertTrue(record, "the record should contain marked historical uses")
+        self.assertEqual(
+            {f["severity"] for f in record}, {"INFO"},
+            "a figure in the execution record is reporting as a live claim",
         )
 
 

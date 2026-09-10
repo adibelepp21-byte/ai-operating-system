@@ -76,15 +76,38 @@ def _lines(path: Path) -> list[str]:
     return path.read_text(encoding="utf-8", errors="replace").split("\n")
 
 
+class ScopeUndeterminable(RuntimeError):
+    """Raised when tracked status cannot be established, so scope is unknown."""
+
+
 def _tracked() -> set:
+    """Paths git tracks. **Raises rather than degrading.**
+
+    The first version returned an empty set on failure. That is *safe* in the
+    containment direction — everything under a protected prefix becomes
+    unreadable — but it is **not safe in the reporting direction**: the scan
+    silently covered 369 documents instead of 439 and still printed
+    ``0 stale assertions``. **A false clean is worse than a refusal**, and
+    `ACT §19` PRIORITY 2 names *"false clean result"* as a system-integrity
+    defect in its own right.
+    """
     try:
         out = subprocess.run(
             ["git", "ls-files", "-z"], cwd=str(REPO_ROOT),
             capture_output=True, text=True, check=True,
         ).stdout
-    except (OSError, subprocess.CalledProcessError):
-        return set()
-    return {p for p in out.split("\0") if p}
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise ScopeUndeterminable(
+            "refusing to scan: could not determine tracked files, so protected "
+            "untracked paths cannot be identified"
+        ) from exc
+    tracked = {p for p in out.split("\0") if p}
+    if not tracked:
+        raise ScopeUndeterminable(
+            "refusing to scan: git reported zero tracked files, which cannot be "
+            "true of this repository and means scope is undeterminable"
+        )
+    return tracked
 
 
 def _is_readable(rel: str, tracked: set) -> bool:
@@ -180,7 +203,11 @@ def audit(root: Path = REPO_ROOT) -> dict:
 
 
 def main(argv: list[str]) -> int:
-    result = audit()
+    try:
+        result = audit()
+    except ScopeUndeterminable as exc:
+        print(exc)
+        return 2
     print(f"superseded claims  : {result['claims_extracted']}  (read from the Register)")
     print(f"documents scanned  : {result['documents_scanned']}")
     print(f"stale assertions   : {result['errors']}")

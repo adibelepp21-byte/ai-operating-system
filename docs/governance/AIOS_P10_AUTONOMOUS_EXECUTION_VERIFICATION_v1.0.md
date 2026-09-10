@@ -5970,3 +5970,145 @@ tools        243 OK · native_core 801 OK (1 expected) · consumers 276 OK
 **`§15` compliance:** every active gap in this corpus now carries one of the
 eleven dispositions. **No detector was narrowed, no severity lowered, and no
 finding suppressed** to achieve it.
+
+---
+
+# 61. `§21` prove-me-wrong worked — Phase 9 is CERTIFIED, and I had never read the decision
+
+**Date:** 2026-09-10 · **Act:** `ACT-CC-AIOS-DECISION-INTAKE-FULL-SYSTEM-RECONCILIATION-AND-AUTONOMOUS-CONTINUATION-GATE-v1.0`
+**Baseline:** `2a96dc2`
+
+## 61.1 `§9` DECISION INTAKE — the intake is empty, and that is the first finding
+
+The Act's own header reads `READY FOR EXECUTION AFTER FOUNDER / ARCHITECT
+DECISION INPUT`. **`§3` lists what may be supplied; nothing was.** No Founder
+Decision, Architect Decision, ADR ratification, source artifact, or Phase-state
+declaration accompanied it.
+
+```text
+DECISIONS SUPPLIED : 0
+INTAKE RECORDS     : 0
+ADR-0029 STATUS    : unchanged — Proposed, awaiting Architect/Founder
+```
+
+**`§4` forbids reconstructing a decision from prior conversational wording or
+previous Act text.** The Act is the gate; the decision is the input. **The gate
+is open and empty**, so no decision-derived mutation occurred — and per `§36`
+that blocked branch did not stop the independent branches below.
+
+## 61.2 `§5` guard — and the fail-closed proof never previously performed
+
+| Requirement | Result |
+|---|---|
+| `§5.2`–`§5.4` both directions | protected leak **0** · new untracked work **seen** |
+| `§5.5` path-based, not tracked-status | confirmed — tracked files under the prefix stay readable |
+| **`§5.6` fail-closed when status indeterminate** | **PROVEN for the first time** — the citation auditor **refuses to scan** |
+
+## 61.3 `§19` PRIORITY 2 — a false-clean defect in my own detector
+
+**Probed rather than assumed** (`§25.6`). With the tracked set forced
+indeterminate, `stale_state_audit.py` **scanned 369 documents instead of 439 and
+still printed `0 stale assertions`.** Containment held; **reporting did not**.
+
+**A false clean is worse than a refusal**, and `§19` names *"false clean
+result"* as a system-integrity defect in its own right. **Fixed:** the detector
+now raises `ScopeUndeterminable` and refuses, exactly as the citation auditor
+does. An empty tracked set is treated as undeterminable rather than as a
+repository with no files. **Five regressions added**, including `§25.8`
+self-contamination (**0** findings from the detector's own files).
+
+## 61.4 The finding — `§21` pointed at the one document capable of overturning the verdict
+
+`§21` requires the first candidate investigated to be *the evidence most capable
+of proving the current conclusion wrong*. For `P10 BLOCKED — Phase 9 maturity
+not established`, that is **`FD-P9-002`**.
+
+**It is resident in full** at `AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md:6840`
+— *"Founder Decision · Phase 9 Certification & Governance Closure"*, 163 lines.
+**This programme had only ever read its row in a date index.** I cited it
+**eight times** across six artifacts as a bare identifier.
+
+**`§7` Founder rationale, verbatim:**
+
+> *"The Founder determines that the canonical Phase 9 exit condition 'Workflow
+> lintas-agent dapat dijalankan dan dipantau' **is satisfied** when a Workflow
+> genuinely composes and coordinates multiple Agent Instances and the resulting
+> Workflow execution path can be executed and monitored."*
+
+**`§10` Effect, verbatim:**
+
+```text
+PHASE 9 — WORKFLOW ECOSYSTEM: CERTIFIED / COMPLETE
+PHASE 9 GOVERNANCE STATUS:    CLOSED
+PHASE 10:                     NOT AUTHORIZED
+```
+
+## 61.5 What this changes
+
+**`"Phase 9 maturity is not established"` is FALSE and is withdrawn.**
+`Volume VII §1.2` requires Phase 9 to be *matang*; it is **CERTIFIED / COMPLETE**
+and **CLOSED** by Founder Decision. **The sequencing condition is satisfied.**
+
+**P10 is still not authorized — by a different instrument.** `FD-P9-002 §8`
+affirms **`CERTIFICATION ≠ CAPABILITY EXPANSION`** and lists **`Phase 10`**
+among what certification does not authorize.
+
+```text
+WAS:  P10 BLOCKED           — prerequisite deficiency
+IS:   P10 AUTHORITY-BLOCKED — prerequisite satisfied; Founder expressly
+                              withholds Phase 10 (FD-P9-002 §8, §10)
+```
+
+**`§17`/`§27` are honoured, in the direction that costs me the conclusion.**
+`PHASE CERTIFIED ≠ PHASE MATURE` is a rule against inflating certification into
+maturity. **Here the Founder determined the exit condition itself satisfied and
+closed the Phase's governance** — that is not an inference from certification,
+it is the decision's own text. **And it still does not make P10 ready**, because
+the same decision says so in terms.
+
+## 61.6 A prior conclusion of mine, falsified
+
+`R3` reasoned that `P10 BLOCKED` outranked `P10 REQUIRES FOUNDER DECISION`
+*"because condition 0 — Phase 9 immaturity — is **not resolvable by a Founder
+decision alone**; it requires Phases 4–9 to be built."*
+
+**Phase 9 was built, and a Founder decision is precisely what resolved it.**
+**Wrong on both halves.**
+
+**Third successive correction to the same verdict's basis**, each stronger than
+the last: `Phase 9 = 0%` (false figure) → `maturity not established` (false
+claim) → **`certified, complete, closed — and Phase 10 expressly withheld`**.
+**The verdict never moved. Its stated reason was wrong every time until now.**
+
+**The pattern is one thing throughout: I cited an identifier instead of reading
+the instrument.** `E-11`, `Roadmap §27/§28/§32`, and now `FD-P9-002` — the same
+defect at three different scales, and this one sat behind the programme's
+central verdict for the entire session.
+
+## 61.7 Corrected forward (`§26`) — three live sites, no history rewritten
+
+`R3-P10-ENTRY-BASELINE.md` · `PHASE-PD-CAPABILITY-AND-DEPENDENCY-MAP.md` (P9 and
+P10 rows) · `RETURN-PACKAGE-AND-HANDOFF-v1.0.md`. `CD-RESOLUTION-GATE-v1.0.md`
+carries a forward-correction note beside its superseded sentence. **No original
+wording was altered anywhere.**
+
+## 61.8 Verification, measured after the final mutation (`§24`, `§43`)
+
+```text
+citation     77 documents · 0 errors · 64 WARN  (62 → 64: this cycle's text
+                                                 adds two basename mentions —
+                                                 measured, not carried forward)
+stale-state  442 documents · 0 stale assertions · 53 historical uses
+tools        248 OK (+5)
+native_core  801 OK (1 expected failure)
+consumers    276 OK
+```
+
+## 61.9 State
+
+```text
+DECISIONS SUPPLIED  0 — the gate is open and empty (§9)
+P10                 AUTHORITY-BLOCKED  (FD-P9-002 §8, §10 — not a deficiency)
+P9                  CERTIFIED / COMPLETE · governance CLOSED
+EXHAUSTION          AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
+```
