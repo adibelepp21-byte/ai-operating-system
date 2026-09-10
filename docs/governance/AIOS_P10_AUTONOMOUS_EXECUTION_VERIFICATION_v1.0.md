@@ -7941,3 +7941,93 @@ P10 CERTIFIED = TRUE · P11 AUTHORIZED = FALSE · P11 CONSTRUCTED = FALSE
 E11 RATIFIED = FALSE · P12 AUTHORIZED = FALSE
 CANONICAL MUTATION = 0 · PROTECTED BOUNDARY VIOLATION = 0
 ```
+
+
+---
+
+# 80. `ACT-CC-P11-002` — two Architect packages, and my own frontier narrowed
+
+[`P11-ARCHITECT-DECISION-PACKAGES.md`](../architecture/p11/P11-ARCHITECT-DECISION-PACKAGES.md).
+
+> **`DP-03 = DECISION-PENDING` · `DP-04 = DECISION-PENDING`.** Neither decision
+> taken; every recommendation carries **`CO-FOUNDER RECOMMENDATION — NOT ARCHITECT
+> DECISION`**. Nothing built.
+
+## 80.1 My `ACT-CC-P11-001` finding was too strong
+
+I reported that `P11-W2`/`W3`/`W6` have *"no frozen subsystem home."*
+**Four of `§10`'s ten attacks landed against that claim:**
+
+- **`W1` Coordination is not merely housed — `INV-13` *forces* it.** `Workflow` is
+  *"the SOLE sanctioned multi-agent channel"*; cross-department coordination
+  routed anywhere else **violates an invariant**.
+- **`W6` Performance has a strong existing candidate.** `optimization` is the
+  *"governed learning loop, detect-only"* that observes Trace and Memory and
+  publishes — and `W6`'s *"improvement opportunities"* **is** its stated purpose.
+- **Organizational structure is already inside a frozen boundary.**
+  `Organization` and `Department` are implemented in
+  `native_core/core/capability/ownership.py`.
+- **Option A has working precedent.** `tools/organization_catalog.py` sits outside
+  the core by explicit reasoning about the same `§4` constraint.
+
+**The frontier survives, but only for `W2` Planning and `W3` Delegation** — and
+`prioritization model` is already **Architect-Reserved inside `optimization`**.
+
+**Answer type: `DP03-D` — multi-home. The three capabilities do not share a
+home**, which is exactly what `§10.10` asked and what I had not established.
+
+## 80.2 DP-04 — three concepts already exist, verified at source
+
+Of sixteen conceptual entities: **3 frozen · 3 already implemented · 1 projection
+· 3 not entities at all · 6 needing an Architect decision.**
+
+The three that already exist are the useful finding:
+
+- **`Escalation` is a ratified Trace outcome** — `trace/record.py`:
+  `VALID_STATUSES = frozenset({"success", "failure", "escalation"})`, annotated
+  *"Domain Model §2.1"*.
+- **`Observation` and `PerformanceRecord`** both map to `ObservationPublication`,
+  implemented in `optimization/contract.py`.
+
+**And the Blueprint never claimed `§15` was a schema** — it says *"conceptual
+entities"*, *"where applicable"*. Treating it as sixteen entity-creation requests
+would have manufactured a conflict it did not raise.
+
+**Four residual — `Goal`, `Plan`, `Delegation`, `OrganizationalState` — are left
+unresolved rather than dissolved into projections they do not obviously fit.**
+`§17` forbids re-categorizing merely to comply with *"No new entity"*, and it was
+not done.
+
+## 80.3 The sequencing finding
+
+> **`DP-04 → DP-03`.** The entity model should be decided **first**.
+
+**Argued, not preferred.** The two residues are **the same residue**: DP-03's
+homeless capabilities are Planning and Delegation; DP-04's unresolved entities are
+Goal, Plan, Delegation, OrganizationalState. If `Delegation` resolves to a
+**projection**, `W3` needs no home and DP-03 shrinks to `W2` alone. **The entity
+answer changes the home question; the home answer does not change what the
+entities are.** Deciding DP-03 first risks choosing a home for something that
+turns out not to exist.
+
+## 80.4 And the Founder packages are not final
+
+`§25` required this be determined rather than assumed. **`DP-01` is materially
+affected** — construction scope differs between *outside the core* and *a twelfth
+subsystem*. **`DP-02` is partially affected** — `E11-02` Delegation and `E11-05`
+Observation are measured differently depending on DP-04's answer.
+
+**So the two Founder decisions I previously reported as prepared should not be
+treated as final until the Architect has ruled.**
+
+## 80.5 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+citation 93 documents / 0 errors · stale-state 458 documents / 0 assertions
+native_core subsystems: exactly eleven, verified by listing
+
+DP-03 = NOT DECIDED · DP-04 = NOT DECIDED · NEW SUBSYSTEM = NOT CREATED
+NEW ENTITY = NOT CREATED · FREEZE = NOT MODIFIED · BLUEPRINT = NOT MUTATED
+ARCHITECT AUTHORITY = NOT SELF-EXERCISED · PROTECTED PACKAGES = UNTOUCHED
+```
