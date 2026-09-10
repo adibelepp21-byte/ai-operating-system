@@ -8601,3 +8601,204 @@ limitation of an instrument I wrote and have repeatedly cited as evidence of
 corpus health. Its 0-assertion result means *no registered superseded claim is
 restated* — it does **not** mean the corpus contains no stale state. I have
 been reporting that number without that qualification.
+
+# 87. `P11-W3` Delegation — the mechanism, built empty
+
+**Authority:** `DP-01 §20` — *"Following issuance, Claude Code may begin P11
+construction within this authorization surface"* — work package `§3 W3`,
+executed as a Micro Act under `§11`.
+**Result:** mechanism constructed and proven; **resident population 0**.
+
+## 87.1 Why `W3` was ranked first
+
+`§11` prescribes `DISCOVER → CLASSIFY → RANK → SELECT → EXECUTE → VERIFY →
+PERSIST → REDISCOVER → CONTINUE`. Of the seven authorized packages, `W3` is the
+only one whose representation is **already fully fixed by issued architecture**:
+
+* `DP-04 §8.3` fixes the record shape — `AUTHORITY SOURCE → AUTHORIZED SCOPE →
+  DELEGATED ACTOR / UNIT → BOUNDARY → ACCOUNTABILITY → VERIFICATION`;
+* `DP-03 §8.2` fixes the surface — `ORGANIZATIONAL-LAYER GOVERNED RECORD /
+  RELATION`, adding that reuse of the P10 pattern *"does not authorize creation
+  of a Native Core entity or subsystem."*
+
+Nothing in it required an architectural choice I would have had to make myself.
+`W2` Planning, by contrast, carries the mutable lifecycle `DP-03 §8.4`
+separated from persisted representation — real design latitude, correctly taken
+second.
+
+## 87.2 The population is empty, and that is the deliverable
+
+`DP-01 §3 W3` authorizes constructing delegation records, tracking, boundaries
+and verification. **It does not make me a delegator.**
+
+Writing a file that says *"Engineering delegates capability X to agent Y"* is
+not a technical act. It is an exercise of the very authority being delegated,
+and `DP-01 §3 W3` fixes that delegation *"does not create authority"* and *"does
+not authorize itself"*, while `DP-04 §8.3` forbids it to *"create authority that
+does not already exist."* **A record I authored would be a delegation whose only
+authority source is the executor who wrote it** — the precise condition this
+mechanism exists to detect.
+
+So: mechanism, tests, zero records, and the count reported as `0` in the loader's
+own output rather than left to inference. This mirrors P10, where the ownership
+loader existed before `FD-P10-003` authorized the population it would read.
+**Mechanism before population is the correct order; the reverse is authority
+manufactured by writing it down.**
+
+## 87.3 What was built
+
+```text
+docs/architecture/organization/delegations/README.md   the record shape + why it is empty
+tools/delegation_catalog.py                            loader + eight structural checks
+tools/tests/test_delegation_catalog.py                 22 tests, every check proven able to fire
+```
+
+Every check compares **two independent statements**. None matches prose, so none
+can be satisfied by wording:
+
+| Defect | Clause enforced | Source |
+|---|---|---|
+| `scope-not-owned` | *"does not create authority"* | `DP-01 §3 W3` |
+| `authority-source-unknown` | *"does not expand constitutional authority"* | `DP-01 §3 W3` |
+| `accountability-transferred` | *"transfer ultimate accountability"* | `DP-04 §8.3` |
+| `authorizing-instrument-unresolvable` | *"does not authorize itself"* | `DP-01 §3 W3` |
+| `self-delegation` · `actor-unknown` · `verification-unresolvable` · `missing-section` · `empty-section` | structural | — |
+
+**`scope-not-owned` is load-bearing.** A delegation from Engineering of a
+Capability that Platform owns fails — against the ownership graph frozen in P10,
+not against anything asserted in the new directory.
+
+`## Authorizing Instrument` is **not a seventh concept.** `DP-04 §8.3` lists
+what a delegation records; that section is how a record is made to obey `DP-01
+§3 W3`'s *"does not authorize itself."* Without it a self-authorizing delegation
+is not merely undetected — it is **unrepresentable**, so no check could find one.
+
+## 87.4 Zero defects from an empty corpus is not evidence — so it was falsified
+
+Each check was disabled in turn and the suite re-run. **Every one failed the
+suite when removed:**
+
+```text
+disable scope-not-owned            -> FAILED    disable actor-unknown            -> FAILED
+disable accountability-transferred -> FAILED    disable authority-source-unknown -> FAILED
+disable self-delegation            -> FAILED    collapse empty into missing      -> FAILED
+stop resolving pointers            -> FAILED (2)
+```
+
+The positive control is asserted first, so a negative control cannot pass
+because the fixture is broken. The fixture is hermetic — its resolvable pointers
+target a file inside the temp tree, not the repository, so no later change can
+move them out from under it.
+
+## 87.5 The new directory would have become an unauthorized Department
+
+`docs/architecture/organization/delegations/` carries a `README.md` with an H1 —
+**exactly the shape `read_departments` reads as a Department.**
+
+`test_no_directory_is_left_unaccounted_for` failed on the run that created the
+directory, before any README existed. Had that guard not been written during
+P10, the first P11 construction step would have introduced an unauthorized
+Department: `FD-P10-004 §5` condition 3 failing silently, by a directory nobody
+declared, with the population count showing 3 instead of 2 and nothing to say
+why.
+
+**The exclusion is the fix, and the guard is what found it.** A P10 control
+caught a P11 defect on the day P11 construction began. It is also the second
+time this session that the `NON_DEPARTMENT_DIRS` guard has earned itself — the
+first was removing `platform-runtime`, an exclusion I had invented for a
+directory that never existed.
+
+## 87.6 A blind spot older than the change that exposed it
+
+`tools/corpus_citation_audit.py` carries my own rule, written under
+`ACT-CC-P11-001`: *"A new directory outside these roots is invisible to this
+auditor … Adding the root alongside the directory means the blind spot never
+exists in a committed state."*
+
+Applying it here revealed that **`docs/architecture/organization/` had never
+been in `DEFAULT_ROOTS` at all.** That root holds the P10 Department,
+Capability and Agent Definition records — *the evidence the ownership graph is
+built from* — and no version of this auditor had ever read them. Every
+"0 errors" I have reported was computed without them.
+
+Adding the root took the audit from **97 to 136 documents** and surfaced one
+finding, `docs/architecture/organization/README.md:72`.
+
+## 87.7 That finding was a false positive in my auditor, not a corpus defect
+
+The line names a capabilities route ending in *governance-artifact-maintenance*,
+which does not exist. **It is not a citation.** It is the worked example in the
+*Naming Convention* section, and the same sentence invents a Department named
+*"Architecture"* — equally hypothetical, equally absent. `governance-artifact-
+integrity` is the real Capability; *maintenance* was never a thing.
+
+Eliminated by content-anchored reading, **not by loosening the check**. An
+explicit `ILLUSTRATIVE` registry now records the exemption, keyed by
+`(source, cited token)` so it exempts one illustration rather than a filename
+everywhere, consulted **only after resolution fails** so it can never mask a
+citation that resolves, and carrying a written reason.
+
+**The auditor then caught this section.** My first draft of the paragraph above
+put the route in a backticked span, and the widened root flagged it here, in the
+evidence record — correctly, because a backticked route in a governance document
+reads as a pointer whatever the surrounding sentence says. I rewrote the prose
+rather than add a second `ILLUSTRATIVE` entry for my own convenience: the
+registry's rule is that an entry is *"never added to make an ERROR go away"*,
+and exempting my own commentary would have been exactly that.
+
+A guard asserts every entry **still** fails to resolve. That lesson is
+`NON_DEPARTMENT_DIRS`: an exemption naming nothing is harmless until something
+takes the name, and then it suppresses it silently. The guard was mutation-
+tested — pointed at a real file, it fails with *"now resolves — it must be
+checked, not exempted."*
+
+## 87.8 Three misattributed quotations in my own new files
+
+Before committing, I checked every quotation in the new files against its cited
+source. **Three were wrong, all in the same direction:** prohibitions worded by
+`DP-01 §3 W3` were attributed to `DP-04 §8.3`.
+
+```text
+"does not authorize itself"                  attributed to DP-04 §8.3 — appears only in DP-01 §3 W3
+"does not transfer ultimate accountability"  attributed to DP-04 §8.3 — appears in NEITHER instrument
+"does not create authority"                  attributed to DP-04 §8.3 — appears only in DP-01 §3 W3
+```
+
+The two instruments prohibit overlapping things in **different words**, and I
+had merged them. `DP-04 §8.3` lists bare items under *"Delegation shall NOT"* —
+*"transfer ultimate accountability"*, *"create authority that does not already
+exist"*, *"expand constitutional or Founder authority."* `DP-01 §3 W3` states
+its own five in *"does not …"* form and carries one `DP-04 §8.3` does not have
+at all: *"does not authorize itself."*
+
+**The middle one is the serious case: I quoted a sentence that exists in no
+instrument.** It reads as canonical, it is formatted as canonical, and it is
+mine.
+
+One substring check nearly hid it. `"does not create authority"` **is** present
+in `DP-04` — at line 277, *"Goal does not create authority by itself"*, in
+`§8.1`, about **Goal**, sixty lines before `§8.3` and about a different concept.
+A grep hit confirmed my attribution; **reading the line refuted it.** This is
+the false-positive discipline running in the direction that matters — against a
+conclusion I wanted.
+
+All corrected in place, and the source column now names which instrument each
+quotation comes from.
+
+## 87.9 State integrity, measured
+
+```text
+native_core boundaries : 11        planning/delegation/goal classes : 0
+departments            : 2 (unchanged)   delegation records : 0
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 318 OK
+citation 136 documents / 0 errors · stale-state 463 documents / 0 assertions
+
+P11 AUTHORIZED = TRUE   ·  P11 CONSTRUCTED = PARTIAL (W3 mechanism only)
+E11 RATIFIED   = FALSE  ·  P12 AUTHORIZED  = FALSE
+NATIVE CORE MODIFIED = FALSE  ·  13 protected packages untouched
+```
+
+**`P11 CONSTRUCTED` is not TRUE and must not be read as approaching it.** One of
+seven work packages has a mechanism with no population. `DP-01 §13`:
+authorization is not construction, operational, verified, exhausted, complete or
+certified.

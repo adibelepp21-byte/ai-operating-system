@@ -304,6 +304,41 @@ class UnmarkedHeadingConventionTests(unittest.TestCase):
             source.index("cited in NON_RESIDENT"), not_found,
             "the registry is consulted before resolution; it could mask a real path",
         )
+        self.assertGreater(
+            source.index("(rel, cited) in ILLUSTRATIVE"), not_found,
+            "ILLUSTRATIVE is consulted before resolution; it could mask a real path",
+        )
+
+    def test_the_organization_root_is_audited(self):
+        """It was outside the roots until the first P11 construction step.
+
+        `docs/architecture/organization/` holds the P10 Department, Capability
+        and Agent Definition records — the evidence the ownership graph is built
+        from — and no version of this auditor had ever read them. The blind spot
+        was older than the change that exposed it.
+        """
+        self.assertIn("docs/architecture/organization", self.mod.DEFAULT_ROOTS)
+
+    def test_every_illustrative_entry_still_fails_to_resolve(self):
+        """A stale exemption is a live citation waved through.
+
+        The lesson is `NON_DEPARTMENT_DIRS`, which carried an entry naming a
+        directory that never existed: harmless until something took the name,
+        then silently suppressing it. An `ILLUSTRATIVE` entry whose route
+        becomes a real file would exempt that file from checking forever, and
+        the passing audit would look identical either way.
+        """
+        for (source_path, cited), reason in self.mod.ILLUSTRATIVE.items():
+            with self.subTest(citation=cited):
+                self.assertTrue(
+                    (REPO_ROOT / source_path).is_file(),
+                    f"exemption names a source that does not exist: {source_path}")
+                resolved = REPO_ROOT / (REPO_ROOT / source_path).parent.relative_to(
+                    REPO_ROOT) / cited
+                self.assertFalse(
+                    resolved.is_file(),
+                    f"{cited} now resolves — it must be checked, not exempted")
+                self.assertTrue(reason.strip(), "an exemption must state its reason")
 
 
 class ScopeGuardTests(unittest.TestCase):

@@ -43,7 +43,16 @@ ORGANIZATION_ROOT = REPO_ROOT / "docs/architecture/organization"
 #: the exact mirror of admitting an unauthorized one. ``platform-runtime`` was
 #: such an entry, speculatively added here and never a directory anywhere in
 #: this repository; it was removed once the guard was written.
-NON_DEPARTMENT_DIRS = {"execution-catalog"}
+#:
+#: ``delegations`` holds the P11 organizational delegation records placed here
+#: by `DP-04 §8.3` and `DP-03 §8.2` — the organizational layer, outside the
+#: frozen Native Core. It carries a ``README.md`` with an H1, which is exactly
+#: the shape this loader reads as a Department, so **without this entry the
+#: first P11 construction step would have introduced an unauthorized
+#: Department** — `FD-P10-004 §5` condition 3 failing silently, by a directory
+#: nobody declared. The guard below caught it on the run that created the
+#: directory; this entry is the fix, and it names a directory that exists.
+NON_DEPARTMENT_DIRS = {"execution-catalog", "delegations"}
 
 NAME_SECTION = re.compile(r"^## Name\s*\n\s*\n(.+?)\s*$", re.M)
 

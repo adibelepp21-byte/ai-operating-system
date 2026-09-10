@@ -90,6 +90,13 @@ DEFAULT_ROOTS = (
     # cannot see the newest work*. Adding the root alongside the directory means
     # the blind spot never exists in a committed state.
     "docs/architecture/p11",
+    # Added under `DP-01 §3 W3` in the same change that created
+    # `docs/architecture/organization/delegations/`, for the reason stated
+    # directly above. This root had **never been audited** — it holds the P10
+    # Department, Capability and Agent Definition records, whose cross-references
+    # are the evidence the ownership graph is built from. The blind spot was
+    # older than the directory that exposed it.
+    "docs/architecture/organization",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a
@@ -148,6 +155,29 @@ NON_RESIDENT = {
     # never existed anywhere in this repository's history, and `dd8755f7` is not
     # a commit here.
     "scripts/check_dependency_boundaries.py": "external repository `1jehuang/jcode` reviewed as EAI-0001 — GDR-0012",
+}
+
+#: Routes that **illustrate a convention** rather than point at a file, keyed by
+#: ``(source path, cited token)``.
+#:
+#: A naming-convention section that says *a Capability named "X" is recorded at
+#: ``capabilities/x.md``* is describing a rule with a worked example. The example
+#: names nothing real **by design** — the sentence beside it names a Department
+#: "Architecture", which is equally hypothetical and equally absent.
+#:
+#: Same discipline as ``NON_RESIDENT``: consulted **only after resolution
+#: fails**, so an entry can never mask a citation that resolves; keyed by source
+#: as well as token, so it exempts one illustration rather than a filename
+#: everywhere; and **never added to make an ERROR go away** — only because the
+#: cited text is demonstrably an example rather than a pointer. A test asserts
+#: every entry still fails to resolve, so an entry that becomes real is caught
+#: instead of silently exempting a live file.
+ILLUSTRATIVE = {
+    ("docs/architecture/organization/README.md",
+     "capabilities/governance-artifact-maintenance.md"):
+        'worked example in the "Naming Convention" section — the Capability '
+        '"Governance Artifact Maintenance" does not exist and is not claimed to; '
+        "the same sentence invents a Department named \"Architecture\"",
 }
 
 #: A cited route carrying a literal placeholder is a **template**, not a pointer.
@@ -454,7 +484,13 @@ def audit(roots: list[str]) -> dict:
                     if not targets:
                         # Resolution failed. Only now may the registries speak —
                         # so an entry can never mask a citation that resolves.
-                        if cited in NON_RESIDENT:
+                        if (rel, cited) in ILLUSTRATIVE:
+                            findings.append({
+                                "severity": "INFO", "source": f"{rel}:{lineno}",
+                                "citation": cited,
+                                "message": f"ILLUSTRATIVE — {ILLUSTRATIVE[(rel, cited)]}",
+                            })
+                        elif cited in NON_RESIDENT:
                             findings.append({
                                 "severity": "INFO", "source": f"{rel}:{lineno}",
                                 "citation": cited,
