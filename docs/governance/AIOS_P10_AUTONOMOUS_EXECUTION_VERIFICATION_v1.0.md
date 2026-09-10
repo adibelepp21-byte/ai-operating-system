@@ -8191,3 +8191,83 @@ DP-04 = ISSUED       DP-03 = DECISION-PENDING (narrowed)
 DP-01 = Founder      DP-02 = Founder
 P11 CONSTRUCTED = FALSE · E11 RATIFIED = FALSE · FREEZE UNMODIFIED
 ```
+
+
+---
+
+# 83. `ACT-CC-P11-003` — `DP-03` prepared; one falsification test survived against me
+
+[`DP-03-P11-ORGANIZATIONAL-ARCHITECTURAL-SURFACE.md`](../architecture/p11/DP-03-P11-ORGANIZATIONAL-ARCHITECTURAL-SURFACE.md).
+**`DP-03 = DECISION-PENDING`.** `§16`–`§19` untouched, **including `§16.5`** where
+the answer is obvious and the Act forbids pre-filling *"even if its
+recommendation is obvious."*
+
+## 83.1 The decisive negative finding
+
+**No `Plan`, `Goal`, or `Delegation` class exists anywhere** — searched by class
+definition across `native_core/`, `consumers/`, `tools/`.
+
+**This constrains the options table more than any argument does.** `Option C`'s
+*"maximum reuse"* cannot mean reusing a planning or delegation implementation,
+because none exists. It can only mean reusing the **organizational record +
+loader pattern P10 already built** — `docs/architecture/organization/` records
+read by `tools/organization_catalog.py`, constructing the *frozen*
+`OwnershipGraph`, creating no entity and adding no boundary.
+
+## 83.2 W6 and W1 — confirm, do not construct
+
+**`W6`:** the optimization boundary **already enforces every negative control
+`§10` demands**, in its own contract rather than by convention — *"never submits,
+sends, notifies, requests, approves, promotes, authorizes, or decides"*, and *"it
+depends on Governance in no way"* with the dependency **inverted** so *"automation
+cannot acquire a decision path."* `E-56` adds that performance assessment *"does
+not create strategy, governance, architecture, ownership, or execution
+authority"*, and `Measurement ≠ authority`.
+
+**One constraint the Architect should make explicit:** optimization reserves
+*prioritization model*, *ranking model* and *decision heuristics* — unimplemented.
+**`W6` is safely home only while detect-only, and `P11-W2` needs prioritization,
+which is on that reserved list.**
+
+**`W1`:** `INV-13` does not merely permit Workflow, it **forces** it. `§11`'s
+condition for proposing an alternative is not met; the evidence proves the
+opposite.
+
+## 83.3 The test that survived — against my own recommendation
+
+`§20` requires updating the recommendation if falsification succeeds. **Test 1
+partially succeeded:**
+
+> A Delegation **record** maps cleanly onto the P10 pattern. **A Plan does not
+> obviously.** Plans are **mutable** — resequenced, re-prioritized, adapted
+> (`P11-W4` ends in `ADAPT`, and `DP-04 §8.2` names *"adaptation"* among Plan's
+> semantics) — while P10's records are **static declarations read by a loader**.
+> **Whether a static-record surface carries a mutating plan lifecycle without
+> distortion is not established.**
+
+**So `Option C` is recommended *with that qualification*, not unconditionally**,
+and the plan-lifecycle question is carried into `§15` as unresolved rather than
+argued away. Six of seven tests failed to break the recommendation; the seventh
+weakened it and is reported.
+
+## 83.4 The guard caught me reformatting quotations
+
+**Verification failed on first run — two citation ERRORs, both mine, both
+`TEXT MISMATCH`.** I had quoted PD-01 `D3.md` and the Gap Closure Roadmap while
+**reformatting them**: a bullet list collapsed to one line, `·` separators
+inserted, bold added that the source lacks.
+
+**The substance was never wrong** — every phrase is there. **The presentation
+was**, and a quotation that has been tidied is no longer a quotation. Fixed by
+quoting exact substrings, **not by loosening the check**.
+
+## 83.5 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+citation 95 documents / 0 errors · stale-state 460 documents / 0 assertions
+native_core subsystems: exactly eleven
+
+DP-04 = ISSUED (unchanged)   DP-03 = DECISION-PENDING
+NC-01..NC-18 = all TRUE · §16-§19 untouched by Claude
+```
