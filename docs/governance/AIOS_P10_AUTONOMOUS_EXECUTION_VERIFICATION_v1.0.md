@@ -7120,12 +7120,30 @@ The claim survived an attack that could genuinely have broken it. **This is the
 seventh negative claim tested across this program and the second to survive** —
 and, as before, surviving sharpened it rather than merely confirming it.
 
+## 71.3a The loop ran again, and caught me
+
+`§18` forbids stopping because the first pass succeeded. It ran again **after
+`E10-01` had already been recorded PASS**, and found a defect **in my own
+loader**: `read_departments` accepted a Department directory citing **no
+establishing ADR**, recorded an empty tuple, and said nothing. A fabricated
+`marketing/` directory was read and counted.
+
+So `§5` condition 3 — *"no unauthorized Department has been introduced"* — had
+been evidenced **only by the resident population happening to be clean**. **A
+check that cannot fail is not evidence.** `unestablished()` now reports
+Departments and Capabilities citing no establishing ADR, with controls both
+ways; the resident answer is **0 and 0**, the same as before, but now for a
+reason that could have been otherwise.
+
+**The correction is recorded in the package rather than edited out of it.** The
+verdict did not change. The ground under it did.
+
 ## 71.4 Where this leaves P10
 
 ```text
 E10               RATIFIED (FD-P10-004, DECIDED)
 E10-01..E10-06    PASS, verified against the ratified text
-GAPS              1 found, 1 closed; 4 reserved, 1 out-of-boundary, 1 not-required
+GAPS              2 found, 2 closed; 4 reserved, 1 out-of-boundary, 1 not-required
 P1-P9             no regression
 COMPLETION        recommended as a determination
 CERTIFICATION     PENDING — Founder authority, withheld from me by §17
@@ -7139,7 +7157,7 @@ and states **`PREPARED ≠ CERTIFIED`** on its first line, as `§24` requires.
 ## 71.5 Verification
 
 ```text
-native_core 801 OK (1 expected failure) · consumers 276 OK · tools 283 OK
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 287 OK
 execution-catalog 0 error 0 warning · citation 85 documents 0 errors
 stale-state 450 documents 0 assertions
 ```

@@ -22,6 +22,7 @@ from tools.organization_catalog import (  # noqa: E402
     report,
     w4_chain,
     w4_continuity,
+    unestablished,
     WorkEntry,
     WorkEntryUnresolved,
     resolve_work_entry,
@@ -255,6 +256,60 @@ class TheW4ChainClosesAndCanFail(unittest.TestCase):
             links, defects = w4_chain(read_departments(root), root)
             self.assertEqual(defects, [], "fixture is broken, not the checker")
             self.assertEqual(len(links), 1)
+
+
+class AnUnauthorizedPopulationEntryIsSeen(unittest.TestCase):
+    """`FD-P10-004 §5` condition 3 — *"no unauthorized Department"*.
+
+    Regression for a defect in this loader found by the `§14` fresh pass **after
+    E10 had already been recorded as passing**. `read_departments` accepted a
+    directory whose README cited no establishing ADR, recorded an empty
+    ``establishing_adrs`` tuple, and said nothing. The condition was therefore
+    evidenced only by the resident population happening to be clean — and
+    `§10` condition 4 asks that mechanisms *"actually test the claimed
+    invariants."* This one could not fail, so it was not evidence.
+    """
+
+    def test_the_resident_population_is_fully_established(self):
+        bare_departments, bare_capabilities = unestablished(read_departments())
+        self.assertEqual(bare_departments, [])
+        self.assertEqual(bare_capabilities, [])
+
+    def _corpus(self, tmp, *, dept_adr=True, cap_adr=True):
+        root = Path(tmp)
+        dept = root / "platform"
+        (dept / "capabilities").mkdir(parents=True)
+        (dept / "agent-definitions").mkdir(parents=True)
+        established = (
+            "This Department was established by [ADR-0003](x).\n" if dept_adr else "")
+        (dept / "README.md").write_text(
+            f"# Platform\n\n{established}\n## Name\n\nPlatform\n", encoding="utf-8")
+        (dept / "capabilities" / "cap-one.md").write_text(
+            "# cap-one\n\n"
+            + ("This Capability was established by [ADR-0003](x).\n" if cap_adr else "")
+            + "\n## Name\n\ncap-one\n", encoding="utf-8")
+        return root
+
+    def test_a_department_citing_no_establishing_adr_is_seen(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp, dept_adr=False)
+            bare_departments, _ = unestablished(read_departments(root), root)
+            self.assertEqual(bare_departments, ["platform"])
+
+    def test_a_capability_citing_no_establishing_adr_is_seen(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp, cap_adr=False)
+            _, bare_capabilities = unestablished(read_departments(root), root)
+            self.assertEqual(bare_capabilities, [("platform", "cap-one")])
+
+    def test_the_positive_control_reports_nothing(self):
+        """Guard: the fixture must be capable of producing a clean result."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp)
+            bare_departments, bare_capabilities = unestablished(
+                read_departments(root), root)
+            self.assertEqual((bare_departments, bare_capabilities), ([], []),
+                             "fixture is broken, not the checker")
 
 
 class TheChainContinuesIntoWorkflowAndCanFail(unittest.TestCase):

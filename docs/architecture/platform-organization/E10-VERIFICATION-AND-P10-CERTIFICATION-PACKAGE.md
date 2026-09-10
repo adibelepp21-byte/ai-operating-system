@@ -10,7 +10,7 @@
 > **Measuring instrument:** [`FD-P10-004`](../../governance/acts/FD-P10-004-RATIFICATION-OF-MEASURABLE-PHASE-10-EXIT-CRITERIA.md),
 > Status `DECIDED`. **Verified against its ratified text**, recovered verbatim,
 > not against my superseded candidate wording.
-> **Verification date:** 2026-09-10 · **Verifier:** Claude Code / Co-Founder
+> **Verification date:** 2026-09-10 (two discovery cycles) · **Verifier:** Claude Code / Co-Founder
 
 ---
 
@@ -29,11 +29,18 @@ P10 CERTIFICATION  = PENDING  <- Founder authority required
 P10 GOVERNANCE CLOSURE = PENDING  <- Founder/governance authority required
 ```
 
+**The loop ran twice, and the second cycle mattered.** `§18` forbids stopping
+because the first pass succeeded; the second cycle found a defect in my own
+loader that the first had passed over (`§3.4`). **Both discovery cycles are
+recorded, including the one that made this document wrong before it made it
+right.**
+
 **The ratification did not make P10 pass.** `§32`: *"The purpose of E10
 ratification is not to make P10 appear complete. The purpose is to make P10
-completion objectively testable."* The fresh pass `§14` mandates **found a real
-verification gap and closed it** (§4.4 below); had it not been closable within
-delegated authority, this document would have read `P10 NOT COMPLETE`.
+completion objectively testable."* The fresh discovery `§14` mandates **found
+two real verification gaps and closed both** (`§4.4`, `§3.4`); had either been
+unclosable within delegated authority, this document would have read
+`P10 NOT COMPLETE`.
 
 ---
 
@@ -48,10 +55,12 @@ not as a restatement of one already answered.
 |---|---|---|
 | `§5(5)` *"population survives negative/falsification testing"* | Partly | Existing negative controls found; the missing-Department claim re-attacked from sources — **§3.1** |
 | `§6` Agent Instance must not be misclassified as an Agent Definition | **No** | Now structurally verified — **§3.2** |
-| `§10(4)` *"verification mechanisms actually test the claimed invariants"* | **No** | **Gap found and closed** — **§4.4** |
+| `§10(4)` *"verification mechanisms actually test the claimed invariants"* | **No** | **Two gaps found and closed** — **§4.4**, **§3.4** |
 
-**One gap was discovered, and it was a gap in the verification itself**, which
-is the class `§14` exists to catch.
+**Both gaps discovered were gaps in the verification itself**, which is the
+class `§14` exists to catch. The second was found by the `§18` loop **after this
+document had already recorded `E10-01 = PASS`** — see `§3.4`, which is left
+standing as a correction rather than edited away.
 
 ---
 
@@ -112,6 +121,35 @@ against itself and pass by construction. **A check that cannot fail is not
 evidence.** The decline is printed in the tool's own output, not buried here.
 `§6`'s concern is met by §3.2 instead, which can fail.
 
+### 3.4 A defect in my own verification, found after I had recorded PASS
+
+`§18` requires the loop to continue *"not stop simply because the first E10
+verification pass is successful."* It did, and it caught a defect **in my own
+loader** that this document's first version had already passed over.
+
+**`read_departments` accepted a Department directory whose README cites no
+establishing ADR** — recording an empty `establishing_adrs` tuple, counting it in
+the population, and saying nothing. Demonstrated directly: a fabricated
+`marketing/` directory with no ADR was read and accepted.
+
+So `§5` condition 3 — *"no unauthorized Department has been introduced"* — was
+evidenced **only by the observation that the resident population happens to be
+clean**. `§10(4)` asks that mechanisms *"actually test the claimed invariants."*
+**A check that cannot fail is not evidence**, and this one could not fail.
+
+`unestablished()` now reports Departments **and** Capabilities citing no
+establishing ADR, with negative controls in both directions and a positive
+control proving the fixture can come back clean. The resident population reports
+**0 and 0** — the same answer as before, but now for a reason that could have
+been otherwise.
+
+**This correction is recorded, not applied silently.** The first version of this
+package stated condition 3's evidence as *"Population = 2; both ADR-established."*
+That was a true observation resting on a mechanism that could not detect its own
+falsification, and `E10-01` was **under-evidenced when first recorded as PASS**.
+It is now properly evidenced. The verdict is unchanged; **the ground under it is
+not**, and the difference is exactly what `§14` was written to expose.
+
 ---
 
 ## 4. E10 results
@@ -122,7 +160,7 @@ evidence.** The decline is printed in the tool's own output, not buried here.
 |---|---|
 | 1. traceable to legitimate authority | Engineering ← `ADR-0008` (**Approved**); Platform ← `ADR-0003` (**Approved**). Read from each record's own *"established by"* sentence, not from any ADR merely mentioned nearby — a defect corrected earlier and regression-tested. |
 | 2. no required Department missing | **§3.1**, attacked and survived |
-| 3. no unauthorized Department introduced | Population = 2; both ADR-established. `execution-catalog/` is excluded as catalog material, and the exclusion is explicit, not incidental |
+| 3. no unauthorized Department introduced | `unestablished()` reports **0 departments, 0 capabilities** citing no establishing ADR — **a mechanism that can fail**, with negative controls both ways. **This replaces the bare observation first recorded here; see `§3.4`.** `execution-catalog/` is excluded as catalog material, and the exclusion is explicit, not incidental |
 | 4. identity consistent with canonical architecture | Organization root `aios` **derived from the Domain Model's own Organization row**, failing closed when absent |
 | 5. survives negative/falsification testing | `AMentionIsNotAnEstablishment`, `ItNeverConvertsAPlatformDivisionIntoADepartment`, `TheRootIsDerivedFromTheDomainModel` (2 fail-closed controls), plus §3.1 |
 
@@ -212,7 +250,7 @@ Architect-reserved and deliberately undecided here.
 | 2. traceable | Every claim cites a resident instrument or a runnable command |
 | 3. current | **All evidence re-run today**, not carried forward — `§13` |
 | 4. mechanisms actually test the invariants | **The one gap found — §4.4** |
-| 5. negative controls exist | 5 defect kinds on the new verifier, each with a control |
+| 5. negative controls exist | 5 defect kinds on the continuity verifier plus 2 on the establishment check, each with a control, each with a positive control proving its fixture can come back clean |
 | 6. detector integrity verified | Each control confirmed to fire **alone**; a control passing because a *different* check tripped would prove nothing about its branch |
 | 7. historical ≠ current | **§3.1** (Home Department); stale-state audit **0** live stale assertions across 449 documents, 54 historical uses correctly preserved |
 | 8. filename/index ≠ canonical | Citation audit **84 documents, 0 errors**; the audit prints that a resolved citation proves the pointer real, **not** that the source supports the claim |
@@ -247,7 +285,7 @@ Run fresh after every change in this pass:
 |---|---|
 | `native_core` | **801 OK** (1 expected failure, `GDR-0014`, pre-existing and expected) |
 | `consumers` | **276 OK** |
-| `tools` | **283 OK** (272 before; +11 this pass) |
+| `tools` | **287 OK** (272 before; +15 this pass) |
 | Execution-catalog validators | **0 error, 0 warning**, 4 informational |
 | Citation audit | 84 documents, **0 errors** |
 | Stale-state audit | 449 documents, **0 stale assertions** |
@@ -263,6 +301,7 @@ remains **CLOSED** per `FD-P9-002`; nothing here reaches into it.
 | # | Gap | Class | State |
 |---|---|---|---|
 | G-A | Chain join between `w4_chain` and the Agent Integration Validator unverified | `E10-IN-BOUNDARY / ACTIONABLE` | **RESOLVED** — §4.4 |
+| G-I | Department/Capability with no establishing ADR silently accepted | `E10-IN-BOUNDARY / ACTIONABLE` | **RESOLVED** — §3.4. Found by the `§18` loop **after** `E10-01` was first recorded PASS |
 | G-B | `disputed_agent_definition_ownership` circular, cannot run | `E10-IN-BOUNDARY / ACTIONABLE` | **RESOLVED by substitution** — §3.2 provides a check that *can* fail; the decline stays disclosed |
 | G-C | `Department` vs `Platform Division` semantics (`AR-001`) | `E10-IN-BOUNDARY / ARCHITECT-RESERVED` | **OPEN** — `ADR-0029` Proposed. Does **not** block: both Departments are ADR-established under either reading |
 | G-D | Security Owner, Quality Authority bindings (`AR-002`/`AR-003`) | `E10-IN-BOUNDARY / FOUNDER-RESERVED` | **OPEN** — `FD-P10-003 §10`. Both options drafted at `G-03`; no Capability requires them today |

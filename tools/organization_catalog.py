@@ -108,6 +108,38 @@ DECLARED_DEPARTMENT = re.compile(r"^## Owning Department\s*\n\s*\n\[?([^\]\n(]+)
 DECLARED_CAPABILITY = re.compile(r"^## Implemented Capability\s*\n\s*\n\[?([^\]\n(]+)", re.M)
 
 
+def unestablished(departments, root: Path = ORGANIZATION_ROOT):
+    """Departments and Capabilities that cite **no establishing ADR**.
+
+    `FD-P10-004 §5` condition 3 requires that *"no unauthorized Department has
+    been introduced"*, and until this existed that condition was evidenced only
+    by the observation that the resident population happens to be clean. **An
+    observation is not a mechanism.** A directory added under the organization
+    root with a README that never says *"established by"* was read, counted, and
+    given an empty ``establishing_adrs`` tuple — silently, with nothing to
+    distinguish it from an ADR-established one.
+
+    `FD-P10-003 §4.1` fixes the permitted sources of the population, and
+    `§24` says *"DO NOT INVENT THE DEPARTMENT MODEL."* A record that names no
+    establishing authority has not been established by any of those sources.
+
+    Returns ``(departments_without_adr, capabilities_without_adr)``. Reported,
+    never raised: `PR-3` is detect-don't-decide, and refusing to load the
+    population would hide the finding rather than surface it.
+    """
+    bare_departments = [r.key for r in departments if not r.establishing_adrs]
+    bare_capabilities = []
+    for record in departments:
+        base = root / record.key / "capabilities"
+        for key in record.capabilities:
+            path = base / f"{key}.md"
+            if not path.is_file():
+                continue
+            if not ESTABLISHED_BY.search(path.read_text(encoding="utf-8")):
+                bare_capabilities.append((record.key, key))
+    return bare_departments, bare_capabilities
+
+
 def w4_chain(departments, root: Path = ORGANIZATION_ROOT):
     """`P10-W4`: DEPARTMENT → CAPABILITY → (work → execution → verification).
 
@@ -524,6 +556,9 @@ def report(root: Path = ORGANIZATION_ROOT) -> dict:
     # a real second declaration — the record's ``## Owner`` section — and is
     # cross-checked above.
     result["inv2_disputed"] = "NOT RUN — would be circular; see source"
+    bare_departments, bare_capabilities = unestablished(departments, root)
+    result["unestablished_departments"] = bare_departments
+    result["unestablished_capabilities"] = bare_capabilities
     links, defects = w4_chain(departments, root)
     result["w4_links"] = links
     result["w4_defects"] = defects
@@ -547,6 +582,13 @@ def main(argv: List[str]) -> int:
               f"agent_definitions={len(record.agent_definitions)} "
               f"established_by={','.join(record.establishing_adrs)}")
     print(f"capabilities owned   : {result['capabilities']}")
+    bare_d = result.get("unestablished_departments", [])
+    bare_c = result.get("unestablished_capabilities", [])
+    print(f"unestablished        : {len(bare_d)} department(s), {len(bare_c)} capability(ies)")
+    for key in bare_d:
+        print(f"    UNAUTHORIZED DEPARTMENT — {key} cites no establishing ADR")
+    for dept, key in bare_c:
+        print(f"    UNAUTHORIZED CAPABILITY — {dept}/{key} cites no establishing ADR")
     print(f"agent definitions    : {result['agent_definitions']}")
     print(f"organization root    : {result['organization_root'] or 'NOT ESTABLISHED'}")
     print(f"graph constructed    : {result['graph_constructed']}")
