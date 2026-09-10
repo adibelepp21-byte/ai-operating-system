@@ -7483,3 +7483,88 @@ INV-1 0 unowned / 0 disagreements · unestablished 0/0
 W4 3 links · continuity 5 chains 12 skill links 0 defects
 Protected: 13 untracked packages unread, unstaged, unmodified
 ```
+
+
+---
+
+# 75. `ACT-CC-P10-007` — handoff, and the list it is not on
+
+Narrow coverage gate: do `P10-W1`…`W8` have sufficient coverage by ratified
+`E10-01`…`E10-06`? Full matrix:
+[`BLUEPRINT-TO-E10-COVERAGE.md`](../architecture/platform-organization/BLUEPRINT-TO-E10-COVERAGE.md).
+
+## 75.1 The distinction the answer turns on
+
+`P10-W1`…`W8` is the Blueprint's **Claude Code Work** list. `P10 Exit` is a
+**different list in the same Blueprint**, and it is the exit test — nine
+dimensions. **`handoff` is not among them. `coordination` is**, and
+`FD-P10-004 §11` maps coordination to `E10-04`/`E10-05`.
+
+## 75.2 The Blueprint never defines the handoff it lists
+
+`handoff` appears six times. In `P10-W5` and `P10-W6` it is a **bare one-word
+bullet** — no function, no trigger, no participants, no invariant. Per `§4` an
+absent body is **UNKNOWN, not ABSENT**, and may not be reconstructed, so no
+definition was supplied for it.
+
+**Where the word *is* defined, it means something else.** `§25 Post-Construction
+Handoff` — the only defined Handoff in the Blueprint — is *program* handoff:
+Claude leaving AIOS continuable at end of mandate, requiring Current State,
+Completed Construction, Canonical Changes, Implementation Changes, Evidence,
+Decisions, Open Gaps. **That is what every return package in this programme has
+been producing.**
+
+**And the multi-Department sense is placed in P11 by the Blueprint itself** —
+`P11-W1 — Organizational Coordination` lists *cross-department coordination …
+handoff*. `Volume VII §2.3` agrees: multi-Department operation is *"di luar
+cakupan Volume VII dan baru relevan mendekati Phase 11."*
+
+## 75.3 Result — recorded NOT COVERED, then tested
+
+`handoff` is **not** argued into coverage. Within-Department coordination is
+covered (Workflow is *"an Execution-layer coordination primitive"*, `ADR-0004`;
+5 verified compositions). **Between-Department handoff is NOT COVERED.**
+
+`§20`'s seven-condition blocking test then fails on four: not within P10 scope,
+not authority-binding, not exit-relevant, and scenario-dependent.
+→ **`NOT PROVEN BLOCKING`**, classified **`CG-3` scenario-dependent**.
+
+**No handoff mechanism was built.** `§21` does not authorize construction merely
+because the first branch was unproven, and with three Capabilities each owned and
+implemented inside one Department there is no cross-Department work to hand off.
+
+## 75.4 The guard caught this document, twice, inside the same Act
+
+`§24`'s verification **failed on first run** — one WARN sourced from the file I
+had just written, where I cited the workflow lifecycle module by bare filename
+and three files share that basename.
+
+**Then it caught the fix**: my correction wrote a sentence *about* the bare
+filename that itself contained it in a code span. Flagged again, correctly.
+
+**Both were my defects; neither was worked around, and the test was never
+touched.** This is `VF-11`'s failure mode inverted — *a guard that passes because
+it cannot see the newest work* — and it saw the newest work twice.
+
+## 75.5 Determination
+
+> **CERTIFICATION READY — HANDOFF NON-BLOCKING**
+
+Chosen over `COVERAGE CONFIRMED` deliberately: handoff **is** genuinely
+unimplemented and unevidenced, and the state name should say so.
+
+```text
+E10-01..E10-06 = PASS         UNCLASSIFIED COVERAGE GAPS = 0
+CG-3 : handoff · cross-department request
+CG-4 : work state · completion state   (Freeze reserves State-as-entity)
+CG-6 : 0                               (no E10 amendment question arises)
+FD-P10-005 NOT EXECUTED BY THIS ACT
+```
+
+## 75.6 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+execution-catalog 0 error 0 warning · citation 89 documents 0 errors
+stale-state 454 documents 0 assertions
+```
