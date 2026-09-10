@@ -7568,3 +7568,79 @@ native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
 execution-catalog 0 error 0 warning · citation 89 documents 0 errors
 stale-state 454 documents 0 assertions
 ```
+
+
+---
+
+# 76. `FD-P10-005` arrived unsigned — **P10 is not certified**
+
+The certification instrument was supplied. **Its decision block is blank.**
+
+```text
+Decision Status: PENDING FOUNDER APPROVAL
+...
+Founder Decision Date: __________________
+Founder Signature / Approval: __________________
+Decision: ☐ APPROVED — CERTIFY P10 AS COMPLETE
+Decision: ☐ WITHHELD — SEE §19
+```
+
+**Neither box is ticked; there is no date and no signature.** `§19` requires the
+Founder to *"select exactly one"*, and no selection was made. The transcript
+holds **one** supplied copy, and it is this one.
+
+Persisted as **PENDING** at
+[`FD-P10-005`](acts/FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM.md),
+verbatim, `sha256 e9367383…`, with the non-issuance marked **before its first
+line** rather than in a footnote.
+
+## 76.1 Why this is the moment the programme was built for
+
+Every Act since `FD-P10-004` has been narrowing toward a state where certifying
+would look justified: `E10` all PASS, exhaustion established, coverage gaps zero,
+the handoff challenge answered adversarially. **The instrument that would convert
+that into `CERTIFIED` then arrived with an empty signature line.**
+
+`Silence ≠ Approval`, and **an unticked checkbox is silence.** `FD-P10-004 §17`,
+`ACT-CC-P10-006 §17` and `ACT-CC-P10-007 §29` each withhold certification from me
+independently. **Reading an unsigned instrument as issued would be
+self-certification wearing the Founder's letterhead** — the precise failure all
+three sections exist to prevent.
+
+**The precedent is the Founder's own and was verified two Acts ago.**
+`FAE-P10-FRONTIER-01` was supplied first with `Status: ISSUED / NOT ISSUED`, then
+**re-sent** with `Status: ISSUED`, the copies differing on that line alone.
+**The signature block issues these instruments.** This one's is empty.
+
+## 76.2 What was verified rather than accepted
+
+`§11` asserts figures attributed to the readiness execution. **Every one re-run
+fresh, and every one matches:**
+
+```text
+native_core 801 (1 expected failure) · consumers 276 OK · tools 294 OK
+catalog 0 error / 0 warning · citation 89 documents / 0 errors
+stale-state 454 documents / 0 assertions
+INV-1 0 unowned / 0 disagreements · 5 chains · 0 defects
+```
+
+The Decision's own `§11` calls these *"evidence snapshots … not permanent system
+constants"*, which is the correct reading; they were re-measured rather than
+carried.
+
+## 76.3 State — unchanged
+
+```text
+AUTHORIZED yes · CONSTRUCTED yes · OPERATIONAL yes · VERIFIED yes
+EXHAUSTED  yes
+COMPLETE   determination prepared and evidenced
+CERTIFIED  NO  — FD-P10-005 §23 incomplete
+GOVERNANCE NOT CLOSED
+P11-P13    NOT AUTHORIZED
+```
+
+**`ACT-CC-P10-007`'s terminal state stands: `CERTIFICATION READY`, not certified.**
+
+**To issue it:** return `FD-P10-005` with `§23` completed — date, signature, and
+exactly one box ticked. Nothing else is required of me, and nothing else may be
+inferred.
