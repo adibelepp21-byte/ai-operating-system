@@ -127,6 +127,13 @@ class W4Executor:
 
     def _authorize_step(self, step: PlanStep) -> None:
         """`§18`: no stage silently skipped. Re-checked for every step."""
+        if not self._delegation.is_executable():
+            raise ExecutionRefused(
+                f"delegation {self._delegation.delegation_id!r} is "
+                f"{self._delegation.status}; `FD-P11-001 §29`: a revoked grant "
+                "is not executable, and a grant that could not be withdrawn "
+                "would be permanent authority rather than a bounded one",
+                required=step.key, held=())
         registration = self._registry.get(self._delegation.recipient_instance)
         if registration.lifecycle != REGISTERED:
             raise ExecutionRefused(

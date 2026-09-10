@@ -77,7 +77,8 @@ def _delegation(delegations, instance_key, *, work_scope=("a", "b"),
         output_expectation="an outcome per step",
         verification_requirement="every outcome carries a ratified status",
         escalation_condition="any step outside the delegated work scope",
-        accountable_party=AUTHORIZED_DELEGATOR)
+        accountable_party=AUTHORIZED_DELEGATOR,
+        termination_condition="on completion of the bound plan, or on revocation")
 
 
 def _stack():
@@ -173,7 +174,8 @@ class NC_W4_04_05_06_NothingCascadesAutomatically(unittest.TestCase):
                 work_scope=("a",), lifecycle_boundary="l",
                 resource_boundary="r", output_expectation="o",
                 verification_requirement="v", escalation_condition="e",
-                accountable_party=AUTHORIZED_DELEGATOR)
+                accountable_party=AUTHORIZED_DELEGATOR,
+                termination_condition="t")
 
     def test_registering_an_instance_issues_no_delegation(self):
         """`NC-W4-06`. The stages are separate objects, separately created."""
@@ -233,7 +235,8 @@ class NC_W4_08_09_10_TheDelegatorIsNamedNotAssumed(unittest.TestCase):
                         work_scope=("a",), lifecycle_boundary="l",
                         resource_boundary="r", output_expectation="o",
                         verification_requirement="v", escalation_condition="e",
-                        accountable_party=AUTHORIZED_DELEGATOR)
+                        accountable_party=AUTHORIZED_DELEGATOR,
+                        termination_condition="t")
 
 
 class NC_W4_16_17_18_AccountabilityAndSelfDelegation(unittest.TestCase):
@@ -250,7 +253,8 @@ class NC_W4_16_17_18_AccountabilityAndSelfDelegation(unittest.TestCase):
                 work_scope=("a",), lifecycle_boundary="l",
                 resource_boundary="r", output_expectation="o",
                 verification_requirement="v", escalation_condition="e",
-                accountable_party=registration.instance_key)
+                accountable_party=registration.instance_key,
+                termination_condition="t")
 
     def test_an_instance_cannot_be_accountable_to_itself_at_registration(self):
         registry = AgentInstanceRegistry()
@@ -393,10 +397,12 @@ class Section26_ADelegationMissingAnyComponentIsBlocked(unittest.TestCase):
             objective="o", capability_scope=("engineering-intelligence",),
             work_scope=("a",), lifecycle_boundary="l", resource_boundary="r",
             output_expectation="oe", verification_requirement="v",
-            escalation_condition="e", accountable_party=AUTHORIZED_DELEGATOR)
+            escalation_condition="e", accountable_party=AUTHORIZED_DELEGATOR,
+            termination_condition="t")
         for element in ("objective", "lifecycle_boundary", "resource_boundary",
                         "output_expectation", "verification_requirement",
-                        "escalation_condition", "accountable_party"):
+                        "escalation_condition", "accountable_party",
+                        "termination_condition"):
             with self.subTest(element=element):
                 incomplete = dict(complete, **{element: ""})
                 with self.assertRaises(DelegationError):
@@ -459,6 +465,57 @@ class Section18_TheFullChainExecutes(unittest.TestCase):
         surface, plan = _plan()
         with self.assertRaises(TypeError):
             W4Executor(None, registry).execute_plan(plan, lambda s: "done")
+
+
+class Section29_DelegationIsALifecycleObject(unittest.TestCase):
+    """`§29`: a Delegation is *"a controlled lifecycle object rather than a
+    permanent authority grant."*
+
+    **This was missing until `ACT-CC-P11-008` read `§13` item 14.** The
+    delegation carried a `lifecycle_boundary` describing when it should end and
+    **no way to end it** — a grant that cannot be withdrawn is the unrestricted
+    authority `§11` forbids, wearing a boundary as description.
+    """
+
+    def test_a_revoked_delegation_cannot_execute(self):
+        registry, registration, delegations, delegation = _stack()
+        surface, plan = _plan()
+        delegations.revoke(delegation.delegation_id, reason="Proof complete.")
+        revoked = delegations.get(delegation.delegation_id)
+        self.assertFalse(revoked.is_executable())
+        report = W4Executor(revoked, registry).execute_plan(
+            plan, lambda step: "should not run")
+        self.assertEqual(report.statuses(), (ESCALATION, ESCALATION))
+
+    def test_revocation_preserves_the_terms_that_were_in_force(self):
+        registry, registration, delegations, delegation = _stack()
+        revoked = delegations.revoke(delegation.delegation_id, reason="Done.")
+        self.assertEqual(revoked.capability_scope, delegation.capability_scope)
+        self.assertEqual(revoked.authority.instrument,
+                         delegation.authority.instrument)
+        self.assertEqual(revoked.delegation_id, delegation.delegation_id)
+
+    def test_an_unexplained_revocation_is_refused(self):
+        registry, registration, delegations, delegation = _stack()
+        with self.assertRaises(DelegationError):
+            delegations.revoke(delegation.delegation_id, reason="  ")
+
+    def test_a_termination_condition_is_required_at_issue(self):
+        """`§13` item 14. A boundary nobody can act on is a description."""
+        registry = AgentInstanceRegistry()
+        registration = _registered(registry)
+        delegations = W4DelegationRegistry(registry)
+        with self.assertRaises(DelegationError):
+            delegations.issue(
+                delegator=AUTHORIZED_DELEGATOR,
+                recipient_instance=registration.instance_key,
+                authority=AuthorityProvenance("FD-P11-001 §9", FD),
+                objective="o", capability_scope=("engineering-intelligence",),
+                work_scope=("a",), lifecycle_boundary="l",
+                resource_boundary="r", output_expectation="o",
+                verification_requirement="v", escalation_condition="e",
+                accountable_party=AUTHORIZED_DELEGATOR,
+                termination_condition="")
 
 
 class ExecutionIsNotAuthority(unittest.TestCase):

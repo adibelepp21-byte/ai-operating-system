@@ -388,6 +388,7 @@ P11_SURFACES = (
     REPO_ROOT / "tools" / "agent_instance_registry.py",
     REPO_ROOT / "tools" / "w4_delegation.py",
     REPO_ROOT / "tools" / "w4_execution.py",
+    REPO_ROOT / "tools" / "w4_first_run.py",
 )
 
 

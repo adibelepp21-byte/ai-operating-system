@@ -9426,3 +9426,112 @@ FD-P11-001 = ISSUED     W4 AUTHORITY = RESOLVED    W4 CONSTRUCTED = TRUE
 W4 OPERATIONAL = FALSE  W4 CERTIFIED = FALSE
 E11 RATIFIED = FALSE    P12 AUTHORIZED = FALSE     13 protected packages untouched
 ```
+
+# 93. The first real W4 execution — and four defects only running it could find
+
+**Act:** `ACT-CC-P11-008`. **`FIRST REAL W4 PROOF = ESTABLISHED`** ·
+**`W4 OPERATIONAL = TRUE`** · `P11 OPERATIONAL = FALSE`. Package at
+`docs/architecture/p11/W4-FIRST-REAL-EXECUTION.md`.
+
+## 93.1 What ran
+
+```text
+delegation:fd1f1302b0224b97 → delegator:Claude Code / AIOS Co-Founder
+                            → decision:FD-P11-001 §9 → founder:Founder
+```
+
+`engineering-intelligence-agent` → `engineering-intelligence-instance-001` →
+one bounded delegation → a real plan → the resident consumer verifying
+`tools/w4_delegation.py` against `FD-P11-001 §13`. **13/13 criteria satisfied**,
+no boundary crossed.
+
+Scope narrows at every level: capability ⊃ definition ⊃ instance ⊃ delegation ⊃
+work scope. The delegation granted **two named plan steps**.
+
+## 93.2 `§21` earned its own requirement
+
+*"Test-only execution does not satisfy this gate."* The first real run failed
+immediately — `verify()` takes the artifact and criteria as arguments, not from
+the constructor — and the failure was recorded as a **ratified `failure` status,
+not a crash.**
+
+**A test with a stubbed agent would have passed forever.** The requirement to run
+against actual machinery is what found the mismatch, and the executor's outcome
+vocabulary is what kept the failure legible instead of aborting the run.
+
+## 93.3 An invariant written before W4 existed caught me wiring it wrong
+
+`tools/w4_first_run.py` imported `consumers/`. That edge is forbidden — and so is
+the reverse, asserted by three consumer suites. **The two regions are mutually
+isolated**, and the assertions are AST-based, so even a `__main__`-guarded import
+violates them. That strictness is correct: an import inside a guard is still an
+edge in the dependency graph.
+
+Neither region may wire itself to the other, so the entry point moved to the
+repository root — the only place outside both.
+
+**The resolution improved the design.** `run()` now takes an **injected
+performer**, so the machinery enforcing the authority chain no longer knows which
+module performs the work. That matches what a Delegation actually names: an
+*instance and a capability*, never an implementation. The invariant did not just
+catch an error; it corrected a coupling I had not noticed I was creating.
+
+## 93.4 A termination condition with no mechanism is a description
+
+`FD-P11-001 §13` item 14 requires a *"revocation/termination condition"*. My
+delegation carried a `lifecycle_boundary` describing when it should end **and no
+way to end it** — which is the unrestricted authority `§11` forbids, wearing a
+boundary as prose.
+
+Then re-running proved the point operationally: three successive runs each issued
+a fresh grant and left the previous one `ACTIVE`. Nothing used them; nothing would
+have withdrawn them. **A grant nobody ends is permanent in practice.**
+
+Four grants are now `REVOKED`, each carrying its reason; one is `ACTIVE`; the
+runner supersedes stale grants on re-run and reports what it withdrew; and a
+control asserts at most one may be live.
+
+## 93.5 Two probes returned findings rather than confirmations
+
+`NC03` reported `OK`. Measured rather than assumed: with the organizational
+identity check disabled, the **frozen core** still refuses `""`, `"   "` and
+`None`, while `UPPERCASE`, `has spaces`, `-leading-hyphen` and an over-length key
+are **accepted**. So the `OK` was not a missing control but a **test-scope**
+finding — the attack tried only cases the core also covers, and therefore could
+not observe whether the organizational layer did anything. Widened to the four
+cases that layer alone catches.
+
+`NC11` errored: the core refuses a Definition implementing **no** Capability
+(`INV-2`) before my registry is reached. **The canonical boundary is stricter
+than the control I wrote to back it up** — the right order, recorded rather than
+papered over.
+
+Neither is the class of probe defect that dogged the previous four Acts. The
+harness held; what moved was my understanding of which layer enforces what.
+
+## 93.6 What this does not establish
+
+`§33`: the eight P11 dimensions do not collapse into this one. Planning,
+delegation, execution, observation, verification and accountability were
+exercised. **Coordination was not** — `PLAN → WORKFLOW` stays gated because no
+unit-level delegator exists, and a W4 *operational* grant does not create one.
+**Escalation** appeared only as refusal, not as a persisted organizational
+escalation.
+
+`W4 OPERATIONAL ≠ P11 OPERATIONAL` · `W4 VERIFIED ≠ P11 COMPLETE` ·
+`FIRST AGENT INSTANCE ≠ AUTONOMOUS ORGANIZATION COMPLETE`.
+
+## 93.7 State integrity, measured
+
+```text
+native_core boundaries : 11   Agent Definitions : 3   Agent Instances : 1
+W4 delegations : 5 (1 ACTIVE, 4 REVOKED)   W3 organizational : 0
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 559 OK
+citation 156 documents / 0 errors · stale-state 463 / 0 assertions
+
+W4 OPERATIONAL = TRUE    W4 CERTIFIED = FALSE    P11 OPERATIONAL = FALSE
+E11 RATIFIED = FALSE     P12 AUTHORIZED = FALSE  13 protected packages untouched
+```
+
+**`§49` exhaustion: NOT EXHAUSTED.** Authorized actionable work remains — wiring
+the escalation register into the W4 loop, and W5 evidence continuity across runs.

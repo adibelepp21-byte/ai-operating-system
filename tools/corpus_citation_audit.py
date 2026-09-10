@@ -121,6 +121,7 @@ DEFAULT_ROOTS = (
     "tools/agent_instance_registry.py",
     "tools/w4_delegation.py",
     "tools/w4_execution.py",
+    "tools/w4_first_run.py",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a

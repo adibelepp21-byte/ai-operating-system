@@ -73,8 +73,15 @@ REQUIRED_ELEMENTS = (
     "delegation_id", "delegator", "recipient_instance", "authority_provenance",
     "objective", "capability_scope", "work_scope", "lifecycle_boundary",
     "resource_boundary", "output_expectation", "verification_requirement",
-    "escalation_condition", "accountable_party",
+    "escalation_condition", "accountable_party", "termination_condition",
 )
+
+#: `§29`: a Delegation is *"a controlled lifecycle object rather than a
+#: permanent authority grant."* A grant that cannot be withdrawn is exactly the
+#: unrestricted authority `FD-P11-001 §11` forbids — so revocation is not an
+#: optional convenience, it is what makes the grant bounded in time as well as
+#: in scope.
+ACTIVE, REVOKED = "ACTIVE", "REVOKED"
 
 
 class DelegationError(RuntimeError):
@@ -98,7 +105,15 @@ class W4Delegation:
     verification_requirement: str
     escalation_condition: str
     accountable_party: str
+    termination_condition: str
     issued_at: str
+    status: str = ACTIVE
+
+    def is_executable(self) -> bool:
+        """Whether this grant may still be acted on. **Not a permission check
+        for anything else** — a revoked delegation authorizes nothing, and an
+        active one authorizes only what its scope names."""
+        return self.status == ACTIVE
 
     def authority_chain(self) -> Tuple[str, ...]:
         """`§24`'s required trace, bottom-up. Evidence, not permission."""
@@ -127,6 +142,8 @@ class W4Delegation:
             "verification_requirement": self.verification_requirement,
             "escalation_condition": self.escalation_condition,
             "accountable_party": self.accountable_party,
+            "termination_condition": self.termination_condition,
+            "status": self.status,
             "issued_at": self.issued_at,
             "authority_chain": list(self.authority_chain()),
         }
@@ -148,8 +165,8 @@ class W4DelegationRegistry:
               capability_scope: Tuple[str, ...], work_scope: Tuple[str, ...],
               lifecycle_boundary: str, resource_boundary: str,
               output_expectation: str, verification_requirement: str,
-              escalation_condition: str,
-              accountable_party: str) -> W4Delegation:
+              escalation_condition: str, accountable_party: str,
+              termination_condition: str) -> W4Delegation:
         """Issue one bounded delegation. Every `§13` element is required."""
         # `§14`: the delegator is the one the Decision names.
         if delegator != AUTHORIZED_DELEGATOR:
@@ -209,6 +226,7 @@ class W4DelegationRegistry:
             verification_requirement=verification_requirement,
             escalation_condition=escalation_condition,
             accountable_party=accountable_party,
+            termination_condition=termination_condition,
         )
         missing = [name for name in REQUIRED_ELEMENTS
                    if not values.get(name)]
@@ -228,6 +246,7 @@ class W4DelegationRegistry:
             verification_requirement=verification_requirement,
             escalation_condition=escalation_condition,
             accountable_party=accountable_party,
+            termination_condition=termination_condition,
             issued_at=datetime.now(timezone.utc).isoformat())
         self._issued[delegation.delegation_id] = delegation
         if self._root is not None:
@@ -235,6 +254,31 @@ class W4DelegationRegistry:
              ).write_text(json.dumps(delegation.to_payload(), indent=2),
                           encoding="utf-8")
         return delegation
+
+    def revoke(self, delegation_id: str, *, reason: str) -> W4Delegation:
+        """Withdraw a grant. `§29`: `INVALID / REVOKED → NOT EXECUTABLE`.
+
+        Replaces the record with a revoked successor rather than editing it, so
+        the terms that were in force remain readable — the same append-only
+        discipline the escalation register and the plan chain both follow.
+
+        Revocation is an act of the **delegator**, and it removes authority
+        rather than granting any, so it needs no new provenance: nothing can be
+        done with a revoked delegation that could not be done with none at all.
+        """
+        current = self.get(delegation_id)
+        if not reason or not reason.strip():
+            raise DelegationError("revocation must record why the grant ended")
+        revoked = W4Delegation(
+            **{**{f: getattr(current, f) for f in current.__dataclass_fields__},
+               "status": REVOKED})
+        self._issued[delegation_id] = revoked
+        if self._root is not None:
+            payload = revoked.to_payload()
+            payload["revocation_reason"] = reason
+            (self._root / f"{delegation_id}.delegation.json").write_text(
+                json.dumps(payload, indent=2), encoding="utf-8")
+        return revoked
 
     def get(self, delegation_id: str) -> W4Delegation:
         if delegation_id not in self._issued:

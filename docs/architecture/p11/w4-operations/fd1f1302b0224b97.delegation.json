@@ -1,0 +1,30 @@
+{
+  "delegation_id": "fd1f1302b0224b97",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "recipient_instance": "engineering-intelligence-instance-001",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "objective": "Verify tools/w4_delegation.py against the FD-P11-001 \u00a713 conformance criteria, and report the result.",
+  "capability_scope": [
+    "engineering-intelligence"
+  ],
+  "work_scope": [
+    "verify-delegation-elements",
+    "report-conformance"
+  ],
+  "lifecycle_boundary": "one execution of plan w4-first-execution-proof-plan-0",
+  "resource_boundary": "read-only access to tools/w4_delegation.py; no network; no governance artifact is written",
+  "output_expectation": "one conformance result per criterion",
+  "verification_requirement": "every criterion reported satisfied or not, and every outcome carrying a ratified status",
+  "escalation_condition": "any step outside the delegated work scope, or a revoked delegation, or a retired instance",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "termination_condition": "on completion of the bound plan, or on revocation by the authorized delegator",
+  "status": "ACTIVE",
+  "issued_at": "2026-09-10T20:00:17.279669+00:00",
+  "authority_chain": [
+    "delegation:fd1f1302b0224b97",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ]
+}
