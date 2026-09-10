@@ -7406,3 +7406,80 @@ native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
 execution-catalog 0 error 0 warning · INV-1 0 unowned / 0 disagreements
 unestablished 0/0 · W4 3 links · continuity 5 chains 0 defects
 ```
+
+
+---
+
+# 74. `ACT-CC-P10-006` — the boundary settles NARROW, and the rule that moved the verdict
+
+Four gates, one orchestration path. Full record:
+[`P10-AUTHORITY-CLOSURE-AND-READINESS.md`](../architecture/platform-organization/P10-AUTHORITY-CLOSURE-AND-READINESS.md).
+
+## 74.1 Gate A — the boundary I flagged is **NARROW**
+
+Protection covers the **13 untracked packages**, not all 78 paths matching
+`docs/program/AIOS_*`. The basis is read, not preferred: `VF-11` keyed
+containment on **path policy for untracked files** after the tracked-status proxy
+failed open; `§53.6` already corrected this exact over-reading once, recording
+that *"the Blueprint, both Roadmaps and `SG-01` are tracked and have always been
+readable."*
+
+**`ACT-CC-P10-005 §5` neither widened it nor tried to.** It says *"wajib
+**mempertahankan** perlindungan"* — **maintain**. An Act ranks below the
+Constitution in its own hierarchy and could not extend such a boundary anyway,
+and its closing clause warns against using protection as a shield. The glob is
+the same shorthand `§53.6` already flagged as over-wide.
+
+**No prior conclusion needs re-verification** — reading less than permitted
+cannot corrupt one. But the caution cost a search surface, so it was swept.
+
+## 74.2 The unlocked surface held nothing — and caught a figure of mine
+
+All 65 tracked files: **0** genuine `Volume VII`, **0** `Security Owner`, **0**
+`Quality Authority`, **0** `ADR-0029`. One substantive hit **corroborates** the
+standing position — the Encyclopedia, via `AIOS_P6_070`: governance responsibility
+*"does not automatically transfer ownership of Architecture, Security, Quality."*
+
+**And my published Volume VII citation count was inflated by a substring.** The
+pattern `Volume VII` matches inside `Volume VIII`; every apparent hit in the
+tracked `AIOS_*` corpus was in fact Volume VIII. **150 genuine citations across
+19 files**, word-boundary measured. Corrected in place rather than restated.
+
+## 74.3 Gate D — `P10 CERTIFICATION READY`
+
+D1–D7 pass. This differs from `ACT-CC-P10-005`'s `NOT READY — AUTHORITY`, and
+the reason matters: that determination turned on a question I declined to settle
+in my own favour — whether reserved-but-non-blocking matters count as
+P10-critical. **`ACT-CC-P10-006 §19` settles it**, requiring every blocker claim
+to name the criterion that fails without it, and `NOT PROVEN BLOCKING` otherwise.
+
+**No evidence changed between the two Acts. The test applied to it did, and the
+test came from the Founder.**
+
+## 74.4 One thing the Founder should see before certifying
+
+The `§15` falsification attempt went at the Blueprint's `P10-W5`/`W6` work
+packages, which enumerate integration items `E10` does not name. Most are
+present; `escalation` is evidenced in all three Agent Definitions.
+
+**`work state` and `completion state` are absent and must stay absent** —
+`Freeze §2` reserves State-as-entity and `FD-P10-004 §27` forbids constructing
+one. Their absence is architecturally required.
+
+**`handoff` is genuinely unevidenced and not forbidden.** No `E10` criterion
+names it, so it is `NOT PROVEN BLOCKING` under `§19`. **I did not build one** —
+with two Departments and no cross-department work in flight there is nothing to
+hand off, and a mechanism with no traffic is cosmetic construction. **If `E10`
+was meant to cover the work packages fully, this is a gap in that coverage rather
+than in the implementation.**
+
+## 74.5 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+execution-catalog 0 error 0 warning · citation 87 documents 0 errors
+stale-state 452 documents 0 assertions
+INV-1 0 unowned / 0 disagreements · unestablished 0/0
+W4 3 links · continuity 5 chains 12 skill links 0 defects
+Protected: 13 untracked packages unread, unstaged, unmodified
+```

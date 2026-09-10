@@ -206,7 +206,7 @@ reserves permanently.
 | Filename search, whole tree | **Absent.** Only `volume-1/`, `volume-2/` exist |
 | `VII` / `vol7` / `volume-7` | **Nothing** |
 | Volume index / activation model | **No Volume VII row** |
-| Reference search | **124 citations across 26 files** — measured, and the figure I first wrote here (46/10) was wrong and is corrected. The count includes this document's own references |
+| Reference search | **150 genuine citations across 19 files** (word-boundary measured, 2026-09-10). **Two corrections:** the figure first written here (46/10) was wrong, and its replacement (124/26) was **inflated by a substring** — the pattern `Volume VII` also matches inside `Volume VIII`. See `P10-AUTHORITY-CLOSURE-AND-READINESS.md §A.5` |
 | Event-ID search | n/a — Volume VII is a Master Program volume, not an event |
 | Protected-package exposure | **None.** Every file matching `Volume VII` was checked against the tracked set; **no `docs/program/AIOS_*` protected package was among them**, so `§17`'s no-inspection boundary was not crossed by this search |
 
