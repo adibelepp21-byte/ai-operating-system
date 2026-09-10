@@ -154,6 +154,126 @@ def w4_chain(departments, root: Path = ORGANIZATION_ROOT):
     return links, defects
 
 
+#: Section headings an Agent Definition uses to declare what it may invoke, and
+#: the execution-catalog subdirectory each one must point into.
+PERMITTED_SECTIONS = {"Permitted Skills": "skill", "Permitted Workflows": "workflow"}
+
+#: The bullet a Workflow record uses to name its invoker. `Domain Model §4` fixes
+#: the relationship as **Workflow-invokes-Agent-Instance** — an *Instance*, never
+#: a Definition. `FD-P10-004 §6` requires that distinction be held: *"Agent
+#: Instance objects that are explicitly transient and non-owned must not be
+#: misclassified as Agent Definitions."*
+INVOKER_BULLET = re.compile(
+    r"^-\s+\*\*Invokes Agent Instance:\*\*(.*?)(?=^-\s+\*\*|\Z)", re.M | re.S)
+CONTAINS_SKILL_BULLET = re.compile(
+    r"^-\s+\*\*Contains Skill:\*\*(.*?)(?=^-\s+\*\*|\Z)", re.M | re.S)
+INSTANCE_PHRASE = re.compile(r"Agent Instance of", re.I)
+MD_LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+
+
+def _section(text: str, heading: str) -> str:
+    """The body of ``## <heading>``, up to the next ``## `` or end of document."""
+    match = re.search(
+        r"^##\s+" + re.escape(heading) + r"\s*$(.*?)(?=^##\s|\Z)", text, re.M | re.S)
+    return match.group(1) if match else ""
+
+
+def _catalog_links(section: str, source: Path, kind: str) -> List[Path]:
+    """Links in ``section`` that resolve inside ``execution-catalog/<kind>/``.
+
+    Every other link is **ignored as incidental prose**, not treated as a
+    declaration — these sections routinely cite the ADR that resolved minimum
+    cardinality, and a citation is not a permission. This is the same rule
+    `tools/validators/agent_integration.py` already applies; the two agree by
+    construction rather than by coincidence.
+    """
+    found = []
+    for target in MD_LINK.findall(section):
+        resolved = (source.parent / target.split("#", 1)[0]).resolve()
+        if resolved.parent.name == kind and resolved.parent.parent.name == "execution-catalog":
+            found.append(resolved)
+    return found
+
+
+def w4_continuity(links, root: Path = ORGANIZATION_ROOT):
+    """Continue each `w4_chain` link into WORKFLOW → SKILL, and close the join.
+
+    `w4_chain` ends at the Agent Definition and the Agent Integration Validator
+    begins there; **nothing joined them**, so the composed path a Department
+    actually originates was evidenced only by two independently verified halves
+    sitting next to each other. This walks the whole thing as one chain, which
+    is what `FD-P10-004 §8` asks to be evidenced and what `§10` condition 4
+    means by *"verification mechanisms actually test the claimed invariants."*
+
+    Four things can fail, and each is a real structural claim:
+
+    1. a declared Workflow has no record on disk;
+    2. a declared Workflow does not cite back to the Agent Definition that
+       declared it — the reciprocity that makes the join sound rather than
+       assumed;
+    3. a Workflow names its invoker **without** the words *Agent Instance* —
+       `Domain Model §4` fixes the relationship as Workflow-invokes-*Instance*,
+       and a Workflow invoking a Definition directly would be precisely the
+       misclassification `FD-P10-004 §6` forbids;
+    4. a Skill a Workflow **contains** is not among the Skills its invoking
+       Agent Definition **permits** — a Workflow may not smuggle in a capability
+       its invoker was never granted.
+
+    Returns ``(chains, terminal, defects)``. ``terminal`` lists Agent Definitions
+    that declare no Workflow: that is **not a defect**. `Domain Model §7`
+    invariant 15 and `ADR-0007` make an empty declaration a valid architectural
+    state, and manufacturing a Workflow to lengthen a chain would be the
+    cosmetic construction `FD-P10-004 §27` forbids. Defects are returned, never
+    raised — `PR-3` is detect-don't-decide.
+    """
+    catalog = root / "execution-catalog"
+    chains, terminal, defects = [], [], []
+    for department, capability, agent_definition in links:
+        source = root / department / "agent-definitions" / f"{agent_definition}.md"
+        if not source.is_file():
+            defects.append(("missing-agent-definition", agent_definition, department, None))
+            continue
+        text = source.read_text(encoding="utf-8")
+        permitted_skills = {
+            p.stem for p in _catalog_links(_section(text, "Permitted Skills"), source, "skill")}
+        workflows = _catalog_links(_section(text, "Permitted Workflows"), source, "workflow")
+        if not workflows:
+            terminal.append((department, capability, agent_definition))
+            continue
+        for workflow in workflows:
+            if not workflow.is_file():
+                defects.append(("workflow-missing", workflow.stem, agent_definition, None))
+                continue
+            body = workflow.read_text(encoding="utf-8")
+            invoker = INVOKER_BULLET.search(body)
+            if invoker is None:
+                defects.append(("workflow-names-no-invoker", workflow.stem, agent_definition, None))
+            else:
+                cited = {
+                    (workflow.parent / t.split("#", 1)[0]).resolve()
+                    for t in MD_LINK.findall(invoker.group(1))
+                }
+                if source.resolve() not in cited:
+                    defects.append(
+                        ("workflow-not-reciprocal", workflow.stem, agent_definition, None))
+                if not INSTANCE_PHRASE.search(invoker.group(1)):
+                    defects.append(
+                        ("workflow-invokes-definition-directly", workflow.stem,
+                         agent_definition, None))
+            contained = CONTAINS_SKILL_BULLET.search(body)
+            skills = (
+                [p.stem for p in _catalog_links(contained.group(1), workflow, "skill")]
+                if contained else [])
+            for skill in skills:
+                if not (catalog / "skill" / f"{skill}.md").is_file():
+                    defects.append(("skill-missing", skill, workflow.stem, agent_definition))
+                elif skill not in permitted_skills:
+                    defects.append(
+                        ("skill-not-permitted", skill, workflow.stem, agent_definition))
+            chains.append((department, capability, agent_definition, workflow.stem, tuple(skills)))
+    return chains, terminal, defects
+
+
 def _owner_disagreements(departments, root: Path):
     """Capability records whose stated Owner differs from their nesting."""
     disagreements = []
@@ -407,6 +527,10 @@ def report(root: Path = ORGANIZATION_ROOT) -> dict:
     links, defects = w4_chain(departments, root)
     result["w4_links"] = links
     result["w4_defects"] = defects
+    chains, terminal, continuity_defects = w4_continuity(links, root)
+    result["continuity_chains"] = chains
+    result["continuity_terminal"] = terminal
+    result["continuity_defects"] = continuity_defects
     result["resolutions"] = {
         key: graph.owner_of(key).identity.department_key
         for record in departments for key in record.capabilities
@@ -444,6 +568,20 @@ def main(argv: List[str]) -> int:
             print(f"    {kind}: {key} ({dept}) {extra or ''}")
         for dept, cap, agent in sorted(result["w4_links"]):
             print(f"    {dept} -> {cap} -> {agent}")
+        print()
+        print("continuity — ... -> AGENT DEFINITION -> WORKFLOW -> SKILL")
+        print(f"  closed chains      : {len(result['continuity_chains'])}")
+        print(f"  defects            : {len(result['continuity_defects'])}")
+        for kind, key, owner, extra in result["continuity_defects"]:
+            print(f"    {kind}: {key} ({owner}) {extra or ''}")
+        for dept, cap, agent, workflow, skills in sorted(result["continuity_chains"]):
+            print(f"    {dept} -> {cap} -> {agent} -> {workflow} -> {len(skills)} skill(s)")
+        print(f"  terminal at agent definition: {len(result['continuity_terminal'])}")
+        for dept, cap, agent in sorted(result["continuity_terminal"]):
+            print(f"    {dept} -> {cap} -> {agent} (declares no Workflow)")
+        if result["continuity_terminal"]:
+            print("    ^ valid per Domain Model INV-15 / ADR-0007; not a defect,")
+            print("      and no Workflow was manufactured to lengthen these chains.")
         print()
         print("resolved ownership:")
         for capability, department in sorted(result["resolutions"].items()):

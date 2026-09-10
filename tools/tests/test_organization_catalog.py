@@ -21,6 +21,7 @@ from tools.organization_catalog import (  # noqa: E402
     read_departments,
     report,
     w4_chain,
+    w4_continuity,
     WorkEntry,
     WorkEntryUnresolved,
     resolve_work_entry,
@@ -254,6 +255,166 @@ class TheW4ChainClosesAndCanFail(unittest.TestCase):
             links, defects = w4_chain(read_departments(root), root)
             self.assertEqual(defects, [], "fixture is broken, not the checker")
             self.assertEqual(len(links), 1)
+
+
+class TheChainContinuesIntoWorkflowAndCanFail(unittest.TestCase):
+    """`FD-P10-004 §8` — DEPARTMENT → ... → WORKFLOW → SKILL, as one chain.
+
+    `w4_chain` ended at the Agent Definition and the Agent Integration Validator
+    began there. Both passed, and **neither joined them**, so the composed path
+    a Department originates was evidenced only by two verified halves lying
+    adjacent. These tests are the join, and the negative controls are what make
+    it evidence: `FD-P10-004 §10` condition 5 requires them, and condition 4
+    requires the mechanism to *"actually test the claimed invariants."*
+    """
+
+    def test_the_real_continuity_closes_with_no_defects(self):
+        links, _ = w4_chain(read_departments())
+        chains, terminal, defects = w4_continuity(links)
+        self.assertEqual(defects, [])
+        self.assertEqual(len(chains), 5, chains)
+        self.assertEqual(
+            {c[3] for c in chains},
+            {"governance-corpus-health-check", "governance-synchronization-review",
+             "post-amendment-consistency-sweep", "pre-ratification-validation",
+             "terminology-audit"},
+        )
+
+    def test_every_contained_skill_is_one_the_invoker_permits(self):
+        """The invariant itself, stated over the real corpus rather than a fixture."""
+        links, _ = w4_chain(read_departments())
+        chains, _, _ = w4_continuity(links)
+        contained = {skill for chain in chains for skill in chain[4]}
+        self.assertEqual(len(contained), 10, sorted(contained))
+
+    def test_the_engineering_chains_are_terminal_and_that_is_not_a_defect(self):
+        """`Domain Model INV-15` / `ADR-0007`: an empty declaration is valid.
+
+        This is asserted so that a later change which quietly manufactures a
+        Workflow to lengthen these chains fails a test instead of passing one —
+        `FD-P10-004 §27` forbids exactly that construction.
+        """
+        links, _ = w4_chain(read_departments())
+        _, terminal, defects = w4_continuity(links)
+        self.assertEqual({t[0] for t in terminal}, {"engineering"}, terminal)
+        self.assertEqual(len(terminal), 2, terminal)
+        self.assertNotIn("workflow-missing", [d[0] for d in defects])
+
+    def _corpus(self, tmp, *, invoker_link="../../platform/agent-definitions/some-agent.md",
+                invoker_phrase="an Agent Instance of the",
+                contains_skill="skill-one", declare_workflow=True,
+                permitted_skills=("skill-one",), workflow_exists=True):
+        root = Path(tmp)
+        dept = root / "platform"
+        (dept / "capabilities").mkdir(parents=True)
+        (dept / "agent-definitions").mkdir(parents=True)
+        catalog = root / "execution-catalog"
+        (catalog / "workflow").mkdir(parents=True)
+        (catalog / "skill").mkdir(parents=True)
+        (dept / "README.md").write_text(
+            "# Platform\n\nThis Department was established by [ADR-0003](x).\n"
+            "\n## Name\n\nPlatform\n", encoding="utf-8")
+        (dept / "capabilities" / "cap-one.md").write_text(
+            "# cap-one\n\n## Name\n\ncap-one\n", encoding="utf-8")
+        for skill in ("skill-one", "skill-two"):
+            (catalog / "skill" / f"{skill}.md").write_text(
+                f"# {skill}\n", encoding="utf-8")
+        permitted = "\n".join(
+            f"- [{k}](../../execution-catalog/skill/{k}.md)" for k in permitted_skills)
+        workflows = (
+            "- [wf-one](../../execution-catalog/workflow/wf-one.md)"
+            if declare_workflow else "None declared.")
+        (dept / "agent-definitions" / "some-agent.md").write_text(
+            "# Some Agent\n\n## Owning Department\n\n[Platform](../README.md)\n\n"
+            "## Implemented Capability\n\n[Cap One](../capabilities/cap-one.md)\n\n"
+            f"## Permitted Skills\n\n{permitted}\n\n"
+            f"## Permitted Workflows\n\n{workflows}\n\n## Runtime Requirements\n\nx\n",
+            encoding="utf-8")
+        if workflow_exists:
+            (catalog / "workflow" / "wf-one.md").write_text(
+                "# wf-one\n\n## Composed Elements\n\n"
+                f"- **Contains Skill:**\n  [s](../skill/{contains_skill}.md)\n"
+                f"- **Invokes Agent Instance:** invoked by {invoker_phrase}\n"
+                f"  [Some Agent]({invoker_link})\n\n## Compatibility\n\nx\n",
+                encoding="utf-8")
+        return root
+
+    def _run(self, root):
+        links, _ = w4_chain(read_departments(root), root)
+        return w4_continuity(links, root)
+
+    def test_the_positive_control_passes_on_the_same_fixture_shape(self):
+        """Guard: the fixture must be capable of producing zero defects."""
+        with tempfile.TemporaryDirectory() as tmp:
+            chains, terminal, defects = self._run(self._corpus(tmp))
+            self.assertEqual(defects, [], "fixture is broken, not the checker")
+            self.assertEqual(len(chains), 1)
+            self.assertEqual(terminal, [])
+
+    def test_a_declared_workflow_with_no_record_is_seen(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, _, defects = self._run(self._corpus(tmp, workflow_exists=False))
+            self.assertIn("workflow-missing", [d[0] for d in defects], defects)
+
+    def test_a_workflow_that_does_not_cite_its_declarer_back_is_seen(self):
+        """Reciprocity: without it the join is assumed rather than evidenced."""
+        with tempfile.TemporaryDirectory() as tmp:
+            _, _, defects = self._run(self._corpus(
+                tmp, invoker_link="../../platform/agent-definitions/other-agent.md"))
+            self.assertIn("workflow-not-reciprocal", [d[0] for d in defects], defects)
+
+    def test_a_workflow_invoking_a_definition_rather_than_an_instance_is_seen(self):
+        """`FD-P10-004 §6` — an Agent Instance must not be read as a Definition.
+
+        `Domain Model §4` fixes the relationship as Workflow-invokes-Agent-*
+        Instance*. A record naming the Definition as its direct invoker has
+        collapsed the two, which is the misclassification the Decision forbids.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            _, _, defects = self._run(self._corpus(
+                tmp, invoker_phrase="the Agent Definition"))
+            self.assertIn(
+                "workflow-invokes-definition-directly", [d[0] for d in defects], defects)
+
+    def test_a_workflow_that_names_no_invoker_at_all_is_seen(self):
+        """The remaining branch. A defect kind never shown to fire is not evidence."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp)
+            workflow = root / "execution-catalog/workflow/wf-one.md"
+            body = workflow.read_text(encoding="utf-8")
+            workflow.write_text(
+                body[:body.index("- **Invokes Agent Instance:**")]
+                + "\n## Compatibility\n\nx\n", encoding="utf-8")
+            _, _, defects = self._run(root)
+            self.assertEqual(
+                [d[0] for d in defects], ["workflow-names-no-invoker"], defects)
+
+    def test_a_workflow_containing_a_skill_its_invoker_may_not_use_is_seen(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _, _, defects = self._run(self._corpus(tmp, contains_skill="skill-two"))
+            self.assertIn("skill-not-permitted", [d[0] for d in defects], defects)
+
+    def test_an_agent_definition_declaring_no_workflow_is_terminal_not_defective(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            chains, terminal, defects = self._run(
+                self._corpus(tmp, declare_workflow=False))
+            self.assertEqual(defects, [], defects)
+            self.assertEqual(chains, [])
+            self.assertEqual(len(terminal), 1, terminal)
+
+    def test_prose_citations_in_a_permission_section_are_not_read_as_declarations(self):
+        """An ADR citation inside ``## Permitted Workflows`` is not a Workflow."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp, declare_workflow=False)
+            record = root / "platform/agent-definitions/some-agent.md"
+            record.write_text(record.read_text(encoding="utf-8").replace(
+                "## Permitted Workflows\n\nNone declared.",
+                "## Permitted Workflows\n\nNone declared. Per "
+                "[ADR-0007](../../../adr/decisions/ADR-0007.md) an empty "
+                "declaration is valid."), encoding="utf-8")
+            chains, terminal, defects = self._run(root)
+            self.assertEqual(defects, [], defects)
+            self.assertEqual(len(terminal), 1, terminal)
 
 
 class WorkEntersTheDepartmentEcosystem(unittest.TestCase):
