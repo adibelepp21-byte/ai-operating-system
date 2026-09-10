@@ -6690,3 +6690,112 @@ P11–P13   NOT AUTHORIZED (FD-P10-003 §20)
 RESERVED  ADR-0029 (population semantics) · the three owner-to-CPID roles
 EXHAUSTION  AUTHORIZED WORK EXHAUSTED for this cycle's surface
 ```
+
+---
+
+# 67. `ACT-CC-P10-002` — the required Department Ecosystem is the one that exists
+
+**Date:** 2026-09-10 · **Baseline:** `3c710b0`
+
+## 67.1 `§3` answered — new Departments required: 0
+
+**And zero is a conclusion, not an absence of effort.** Four tests, each with a
+way to come out differently:
+
+| Test | Result |
+|---|---|
+| Capabilities with no owning Department | **0** |
+| Agent Definitions with no owning Department | **0** |
+| Capability `## Owner` vs Department nesting | **0 disagreements** |
+| A responsibility no existing Department can absorb (`§22`) | **none found** |
+
+**`ACT §22`'s three-part conjunction fails at its first clause**, so no creation
+follows. `§23` — nothing built for symmetry.
+
+## 67.2 One candidate orphan, investigated and disproved
+
+`knowledge-consuming-agent` appears at `consumers/knowledge_agent.py:186`, owned
+by neither Department — which would be an `INV-2` breach.
+
+**It is an `agent_instance` argument to `TracedAction`, not an Agent
+Definition**, and `Freeze §4` makes Agent Instance *"not owned — transient"*.
+`INV-2` does not reach it. **A name that looks like a definition is not a
+definition** — the same content-anchored discipline that governs citations.
+
+## 67.3 The half of `P10-W1` that is easy to skip
+
+The Blueprint's `P10-W1` asks two things: which Departments are canonical, **and
+"platform function apa yang bukan department"**. The second is now on the record
+with lineage, as `FD-P10-003 §6` requires for **every Department included *or
+excluded***.
+
+**`PD-01`…`PD-10` — rejected on four independent grounds**, each from a
+different instrument: the Blueprint's own sentence, `ACT §15`, `FD-P10-003 §5`,
+and `ACT-CC-P10-AUTHORIZATION §5`.
+
+**Security Owner · Quality Authority · Governance Authority — NOT REQUIRED as
+Departments.** These were the strongest candidates and the evidence disproves
+them: `G-03` establishes they are **Platform-Division-layer roles whose
+*binding* is unmade**, not unowned Department responsibilities. **Creating a
+Security Department would manufacture a second home for a responsibility that
+already has a layer** — while the binding question is Founder-reserved.
+
+## 67.4 `§25` Authority Resolution Queue — five items, none blocked-by-default
+
+**`§24` bars writing `AUTHORITY-BLOCKED` before this exists.** Every item records
+what was inspected, which delegated paths were tested, and what package exists:
+
+```text
+AR-001  Department/PD semantics      E — ARCHITECT   ADR-0029 PREPARED, not authorized
+AR-002  Security Owner → CPID        D — FOUNDER     READY FOR FOUNDER (both options recorded)
+AR-003  Quality Authority → CPID     D — FOUNDER     READY FOR FOUNDER
+AR-004  Governance Authority         D — FOUNDER     FOUNDER-RESERVED (§10 withholds expressly)
+AR-005  Population beyond the two    F — SOURCE      SOURCE-BLOCKED (Volume VII non-resident)
+```
+
+**No item is class `G` or `H`.** Every one has an identified holder and a stated
+next step. **`AR-005` is the only one no decision can close** — a decision cannot
+establish a population whose source is absent.
+
+## 67.5 `§28` P10 completion reassessment — states kept separate
+
+```text
+AUTHORIZED   YES    OPERATIONAL  YES    COMPLETE   NOT ESTABLISHED
+CONSTRUCTED  YES    VERIFIED     YES    CERTIFIED  NOT ESTABLISHED
+                                        CLOSED     NOT ESTABLISHED
+```
+
+**`§29`'s completion evidence is not satisfied, and the two failing items are
+both outside my authority:**
+
+* **`Work integrated`** — `WORK INTAKE` and `STATE` have **no frozen home**;
+  `Freeze §2` reserves them as *concepts with no ratified entity* and `§10`
+  defers them. Building either introduces an entity into a model that says
+  **"No new entity."**
+* **`cross-PD relationships reconciled`** — 5 evidenced edges, **0 with a defined
+  interface**; the declarations live in the non-resident Volume 1/2 corpora.
+
+**P10 is not complete, and nothing I can legitimately build would complete it.**
+That is a different statement from *"P10 is blocked"*, and it is the accurate one.
+
+## 67.6 Verification (`§27`, `§34`)
+
+```text
+native_core 801 OK (1 expected failure) · tools 262 OK · consumers 276 OK
+organization_catalog constructs · citation 81 documents · 0 errors · 65 WARN
+stale-state 0 assertions · execution catalog 0 error / 0 warning / 4 informational
+```
+
+## 67.7 `§36.H` exhaustion
+
+```text
+NEW REQUIRED DEPARTMENT      0
+NEW REQUIRED AUTHORITY GAP   0   (five known, all classified, none new)
+NEW AUTHORITY-RESOLUTION PATH 0  (every delegated path tested and exhausted)
+NEW P10 CONSTRUCTION GAP     0
+NEW DEPENDENCY GAP           0
+NEW INTEGRITY DEFECT         0
+```
+
+**`P10 EXHAUSTED`** for the authorized surface — with every remaining item
+carrying a genuinely non-delegated authority or source dependency.
