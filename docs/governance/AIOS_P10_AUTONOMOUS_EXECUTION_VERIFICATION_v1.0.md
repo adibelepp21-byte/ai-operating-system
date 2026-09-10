@@ -8931,3 +8931,145 @@ NATIVE CORE MODIFIED = FALSE  ·  13 protected packages untouched
 **Two of seven work packages are touched, one with no population and one that
 builds no capability at all.** `DP-01 §13`: authorization is not construction,
 operational, verified, exhausted, complete or certified.
+
+# 89. `P11-W2` Planning — a lifecycle, not a record
+
+**Act:** `ACT-CC-P11-005`. **Verdict: `T2` — CONSTRUCTED WITH NON-BLOCKING
+RESERVED FRONTIERS.** Implementation `tools/planning/`; **83 tests**; full
+evidence at `docs/architecture/p11/W2-CONSTRUCTION-EVIDENCE.md`.
+
+## 89.1 The sentence that decided the design
+
+`DP-03 §8.4` requires *"the mutable Plan lifecycle"* and states that a Plan is
+*"not constrained to the semantics of a static declaration loaded once."*
+
+**That rules out the pattern W3 used.** `DP-01 §3 W3` had permitted reuse of the
+P10 record/loader pattern *"where technically appropriate"*; for W2 it is not
+appropriate, and the instrument saying so is the one the Architect issued **after
+accepting my objection** that a static surface could not carry `ADAPT` and
+`REVISE`. Reusing the loader here would have satisfied the word *record* and
+failed the word *lifecycle* — which is precisely what `§20` Test A exists to
+catch.
+
+## 89.2 Immutable versions, mutable chain
+
+A `Plan` is frozen; `adapt()` and `revise()` construct successors; supersession
+is **derived** from the chain rather than stamped onto the record it retires.
+
+`ACT-CC-P11-005 §16` forbids erasing the prior/current distinction, forbids
+presenting a revised plan as the original, and forbids mutating history to make a
+plan appear continuous. **None of the three is reachable, because no operation
+writes to an existing version.** The guarantee is an absent capability, not a
+remembered rule — `plan.steps = (...)` raises `FrozenInstanceError`, asserted as
+a test because being overwritable is the defining property of a static record.
+
+## 89.3 The line between sequencing and prioritization
+
+`DP-01 §3 W2` holds the prioritization/ranking/decision-heuristic frontier
+reserved. The distinction implemented is exact:
+
+**Sequencing** derives order from *declared dependencies*, ties broken by
+*declaration order*. **Prioritization** derives order from *computed
+desirability*. Declaration order reads a fact the author stated; any computed
+tie-break would be the module judging what matters more. *The difference is not
+the sophistication of the rule — it is whether the order comes from the author or
+from the code.*
+
+`PlanStep` carries no score, weight, rank, priority or urgency field. Such a
+field would not merely enable prioritization later: **its presence is the
+judgement**, because something must set it. A dependency cycle raises rather than
+resolving, since a cycle declares no order and inventing one enters the reserved
+frontier through the back door.
+
+## 89.4 Eleven attacks, all failed
+
+`§20` required active falsification. Tests A–K each attempt the forbidden thing;
+**all eleven failed to break the architecture.** The sharpest was Test D: take
+what Planning can produce, render the most generous delegation record a planner
+could write, and feed it to the real W3 catalog — **which rejects it.** The
+resident W3 population is still `0`.
+
+`DelegationRequirement` has **no delegator field, and that absence is the
+control**: a field would have to be filled, Planning has nobody legitimate to
+fill it with, and a guessed delegator is the impersonation `§11` forbids.
+
+Evidence was tested at the extreme — twenty observations authorize exactly as
+much as zero, and evidence claiming a source of *"founder"* carries no more
+weight than any other. `EVIDENCE ≠ AUTHORIZATION`.
+
+## 89.5 Two of my six mutation probes were defective
+
+Zero failures from a suite that has never failed is not evidence, so each control
+was broken deliberately. Six probes; **two were wrong.**
+
+```text
+adapt() gains authority   -> reported OK   (walrus expression evaluated to the original value)
+delegator field added     -> no verdict    (defaulted field before non-defaulted; suite ERRORED)
+```
+
+The first is the dangerous one. **A defective probe reporting `OK` is
+indistinguishable from a genuinely dead control** — it says *this control cannot
+fire*, which is the conclusion that would have let a real gap through. The second
+errored rather than failed, producing no verdict line at all, which a
+`grep "^FAILED"` would have read as silence.
+
+Both were rewritten and both then failed correctly. **The original results are
+recorded beside the corrected ones rather than replaced by them**, because the
+lesson is about the probe, not the control.
+
+This continues a pattern now four Acts long: **every defect I have found in my
+own verification has failed by looking like verification.** A gimmick test that
+could never pass. A stale-state zero whose scope limit I omitted. An audit root
+that had never included the records it was auditing. Now a probe that reported
+success for doing nothing.
+
+## 89.6 A blind spot the Act's own §23 exposed
+
+`§23` requires audit roots covering *"all repository surfaces that materially
+participate."* Applying it revealed that `tools/corpus_citation_audit.py` scanned
+**`*.md` only**.
+
+W2's decisive citations — `DP-01 §3 W2`, `DP-03 §8.4`, `DP-04 §8.2` — live in
+module docstrings. **Not one had ever been auditable**, and neither had any
+docstring citation anywhere in this repository. Two Acts ago I widened the roots
+to include the organization directory and called that blind spot older than the
+work that exposed it; **this one was older still, and orthogonal — not a missing
+directory but a missing file type.**
+
+Measured before deciding: `tools/planning` 6/0, `native_core` 122/0, `tools`
+54/**5**. The five are the auditor documenting its own citation grammar, its
+`ILLUSTRATIVE` worked example, and the VF-11 fixture that exists *because* it
+must not resolve. **Clearing them would mean five exemptions added so the tool
+could read itself** — the pressure the registries exist to resist. Python
+scanning is in; the root is scoped to `tools/planning` as `§23` asks; the five
+are classified and left for a change that is about them (`§28`).
+
+## 89.7 Two things reported rather than taken
+
+**Residency.** `consumers/` is a top-level region only because `DEC-P6-042`
+authorized it. A dedicated organizational-layer region would need its own
+decision, which this Act does not grant. `tools/` is correct today; whether the
+organizational layer deserves its own region is a decision, and not mine.
+
+**No persisted plan-record directory was created.** `DP-03 §8.4` permits records
+*where appropriate*; the lifecycle is a runtime chain. Creating a store for
+records that will never exist would have been cosmetic construction of exactly
+the kind the empty W3 population was built to avoid.
+
+## 89.8 State integrity, measured
+
+```text
+native_core boundaries : 11        departments : 2        delegation records : 0
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 424 OK
+citation 144 documents / 0 errors · stale-state 463 documents / 0 assertions
+
+P11 AUTHORIZED = TRUE   ·  P11 CONSTRUCTED = PARTIAL (W2, W3, W7 of seven)
+W2 CONSTRUCTED = TRUE   ·  E11 RATIFIED    = FALSE
+P12 AUTHORIZED = FALSE  ·  NATIVE CORE MODIFIED = FALSE
+13 protected packages untouched
+```
+
+**`0 citation errors` means every pointer resolves — not that the cited sources
+support the claims made about them. `0 stale assertions` means no *registered*
+superseded claim is restated — not that the corpus is clean.** Both limits are
+stated because `§23` requires the semantic meaning of every metric to be accurate.

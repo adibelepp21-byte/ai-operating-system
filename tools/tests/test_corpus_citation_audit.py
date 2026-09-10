@@ -319,6 +319,22 @@ class UnmarkedHeadingConventionTests(unittest.TestCase):
         """
         self.assertIn("docs/architecture/organization", self.mod.DEFAULT_ROOTS)
 
+    def test_python_sources_are_scanned_not_only_markdown(self):
+        """W2's architectural citations live in docstrings, not documents.
+
+        `DP-01 §3 W2`, `DP-03 §8.4` and `DP-04 §8.2` are cited in
+        `tools/planning/` module docstrings and nowhere else in that surface.
+        While this auditor read only `*.md`, every one of them was unverifiable —
+        a blind spot of exactly the shape it exists to prevent.
+        """
+        proc = run("tools/planning", "--json")
+        report = json.loads(proc.stdout)
+        self.assertGreaterEqual(report["documents_scanned"], 5, report)
+        self.assertEqual(report["errors"], 0, report["findings"])
+
+    def test_the_w2_planning_surface_is_a_default_root(self):
+        self.assertIn("tools/planning", self.mod.DEFAULT_ROOTS)
+
     def test_every_illustrative_entry_still_fails_to_resolve(self):
         """A stale exemption is a live citation waved through.
 

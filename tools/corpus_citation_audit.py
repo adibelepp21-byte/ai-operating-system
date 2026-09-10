@@ -97,6 +97,19 @@ DEFAULT_ROOTS = (
     # are the evidence the ownership graph is built from. The blind spot was
     # older than the directory that exposed it.
     "docs/architecture/organization",
+    # Added under `ACT-CC-P11-005 §23` in the same change that created
+    # `tools/planning/`. The W2 surface carries its architectural citations in
+    # docstrings, so it is a root in its own right.
+    #
+    # **Scoped deliberately to this package rather than to `tools/`.** Scanning
+    # all of `tools/` surfaces five findings, every one of them the auditor
+    # documenting its own citation grammar (`file.md`, `FILE.md`), the
+    # `ILLUSTRATIVE` registry's own worked example, or the VF-11 regression
+    # fixture that exists precisely *because* it must not resolve. Clearing them
+    # would mean five exemptions added so the tool could read itself — which is
+    # the pressure `NON_RESIDENT` is written to resist. The finding is recorded
+    # in the W2 evidence package and left for a change that is about it.
+    "tools/planning",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a
@@ -247,7 +260,12 @@ def _iter_markdown(root: Path):
             "refusing to scan: could not determine tracked files, so protected "
             "untracked paths cannot be identified (see _is_readable)."
         )
-    for path in sorted(root.rglob("*.md")):
+    # Python is scanned as well as Markdown. `ACT-CC-P11-005 §23` requires the
+    # roots to cover *"all repository surfaces that materially participate"* in
+    # the work being verified, and W2's decisive citations — `DP-01 §3 W2`,
+    # `DP-03 §8.4`, `DP-04 §8.2` — live in module docstrings, not in any
+    # document. Scanning only Markdown made every one of them invisible.
+    for path in sorted(list(root.rglob("*.md")) + list(root.rglob("*.py"))):
         if any(part in SKIP_DIRS for part in path.parts):
             continue
         if not _is_readable(path, tracked):
