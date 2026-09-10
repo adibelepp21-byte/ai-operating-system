@@ -8802,3 +8802,132 @@ NATIVE CORE MODIFIED = FALSE  ·  13 protected packages untouched
 seven work packages has a mechanism with no population. `DP-01 §13`:
 authorization is not construction, operational, verified, exhausted, complete or
 certified.
+
+# 88. `P11-W7` — the boundary, built before the capability it constrains
+
+**Authority:** `DP-01 §3 W7`, AUTHORIZED — *"P11 construction must preserve the
+constitutional human governance boundary."* Micro Act under `§11`.
+**Result:** 21 executable controls over the eight prohibitions `W7` names.
+**Four are structural; four are representative, and the suite says so.**
+
+## 88.1 Why the boundary was ranked ahead of the remaining capability
+
+`W1`, `W2`, `W4` and `W5` all build organizational capability. `W7` builds the
+constraint on it. **A control written after the thing it constrains is written
+against a system that already works without it** — and the ordering the
+Engineering Constitution `§6.2` invariant 2 exists to prevent is exactly the one
+where capability arrives first and governance catches up.
+
+## 88.2 It closes a gap I have flagged repeatedly and never closed
+
+I have written, more than once, that the eight candidate `E11` criteria measure
+**capability only** — planning, delegation, execution, coordination, observation,
+verification, escalation, accountability — and that **none of them tests that the
+organization cannot self-authorize, that memory cannot become authority, or that
+failure cannot present as completion.** `E10-06` carried exactly that shape for
+P10.
+
+Flagging it repeatedly was not closing it. `W7` is the authorized place to close
+it, and this suite is that. **It is offered as evidence toward `E11`, not as
+ratification of it** — `DP-01 §20` reserves that to `DP-02` and the Founder.
+
+## 88.3 The rule is read from the instrument, not transcribed
+
+The eight prohibitions are parsed from `DP-01 §3 W7` at test time. If the Founder
+amends `W7`, `TheProhibitionListMatchesTheInstrument` fails until this module is
+brought into agreement.
+
+**That failure is a stop condition, not a test to edit into agreement.** A
+control that hard-codes the rule it enforces stops being a control the moment the
+rule changes — which is how a suite keeps passing after the thing it guards has
+moved.
+
+## 88.4 Coverage, stated honestly per prohibition
+
+| `W7` prohibition | Control | Coverage |
+|---|---|---|
+| self-authorize | delegation citing no external instrument is rejected | STRUCTURAL |
+| self-expand authority | delegating beyond what is owned is rejected | STRUCTURAL |
+| modify Founder Reserved Authority | authority without a human identity is invalid | REPRESENTATIVE |
+| modify constitutional boundaries | the core holds exactly the eleven | STRUCTURAL |
+| convert operational success into authorization | Optimization reaches Governance in no way | REPRESENTATIVE |
+| convert memory into authority | Memory does not import Governance | STRUCTURAL |
+| convert performance evidence into authority | reserved scoring frontier still unimplemented | REPRESENTATIVE |
+| convert delegation into authority creation | no delegation exists in core or population | REPRESENTATIVE |
+
+**Four of eight are representative**, meaning one mechanism would have to break
+first — *not* that the prohibition is proven to hold everywhere. Each such class
+states in its own docstring what is **not** controlled. Two examples: nothing
+here prevents text being written into a Founder Reserved section of a document,
+and nothing here prevents a future consumer from reading an Optimization
+publication and treating it as a decision. Both remain review obligations.
+
+**Claiming eight-of-eight would be *failure presenting as completion* — the
+precise thing `W7` exists to make impossible.** So the honest count is asserted
+by a test: relabeling a representative control as structural requires editing a
+named line, not moving a number.
+
+## 88.5 Falsified, not asserted
+
+Each structural control was tested by introducing the violation it guards:
+
+```text
+twelfth boundary added under native_core/core   -> FAILED
+delegation class defined inside the core        -> FAILED
+ranking surface added to Optimization           -> FAILED
+Memory importing Governance                     -> FAILED
+```
+
+All four probes were removed and the tree verified clean. Import analysis is
+done through the **AST**, not a text search: a regex over import lines counts a
+module named in a docstring or comment, and an isolation claim is exactly where
+a false positive would be believed.
+
+## 88.6 A test of mine that could never have passed
+
+My first version of `WhatThisSuiteDoesNotEstablish` scanned the module's own
+source for a string asserting `E11` ratification — **a string the assertion
+itself contained**, so the test could never pass. It failed immediately, which is
+the only reason it was caught.
+
+It was not merely broken. **It was a gimmick that constrained nothing and would
+have read as coverage** in any summary of this suite. Replaced with a control
+that does constrain something: the four representative prohibitions are named
+explicitly, so promoting one to structural shows up as a diff on a named line
+rather than as a count that still says four.
+
+This is the third defect of my own found in two Acts, and the second whose
+failure mode was *looking like verification*. The first was a stale-state audit
+whose zero I had been reporting without its scope limit.
+
+## 88.7 A quotation reformatted while quoting — the third time
+
+I wrote that the core *"remains at 11 frozen subsystem boundaries."* `DP-01 §4`
+does not contain that sentence. It reads *"The existing Native Core remains
+at:"* with the figure standing alone on the line beneath.
+
+The substring check passed on the fragment and would have passed forever;
+**reading the instrument refuted the joined form.** Corrected to two fragments
+rather than one sentence the instrument does not contain.
+
+This is the same error I made on the PD-01 coordination constraints and on the
+Gap Closure Roadmap. **Three occurrences is a pattern, not a slip:** every one
+happened when I quoted across a line break in a source that uses standalone
+lines for emphasis, and every one produced text that read more fluently than the
+original. The fluency is the tell.
+
+## 88.8 State integrity, measured
+
+```text
+native_core boundaries : 11        delegation records : 0
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 339 OK
+citation 136 documents / 0 errors · stale-state 463 documents / 0 assertions
+
+P11 AUTHORIZED = TRUE   ·  P11 CONSTRUCTED = PARTIAL (W3 mechanism, W7 controls)
+E11 RATIFIED   = FALSE  ·  P12 AUTHORIZED  = FALSE
+NATIVE CORE MODIFIED = FALSE  ·  13 protected packages untouched
+```
+
+**Two of seven work packages are touched, one with no population and one that
+builds no capability at all.** `DP-01 §13`: authorization is not construction,
+operational, verified, exhausted, complete or certified.
