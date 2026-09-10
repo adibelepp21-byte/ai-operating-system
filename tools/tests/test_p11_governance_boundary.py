@@ -46,6 +46,14 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from native_core.core.governance import HumanAuthority, InvalidAuthority  # noqa: E402
 from tools.delegation_catalog import read_delegations, verify  # noqa: E402
+from tools.planning import (  # noqa: E402
+    AuthorityProvenance,
+    EscalationRequired,
+    Goal,
+    Plan,
+    PlanStep,
+    PlanningSurface,
+)
 from tools.tests.test_delegation_catalog import (  # noqa: E402
     _build_organization,
     _record,
@@ -350,6 +358,105 @@ class DelegationMustNotCreateAuthority(unittest.TestCase):
                 if isinstance(node, ast.ClassDef) and "delegation" in node.name.lower():
                     found.append(f"{path.relative_to(CORE)}:{node.name}")
         self.assertEqual(found, [], f"delegation entered the frozen core: {found}")
+
+
+PLANNING = REPO_ROOT / "tools" / "planning"
+
+
+class TheBoundaryAlsoConstrainsCapabilityBuiltAfterIt(unittest.TestCase):
+    """`ACT-CC-P11-006 §15` — W7 must hold against newly constructed capability.
+
+    **When this class was written, it did not.** W7 was built before W2 and did
+    not import the planning surface, so every control here described a system in
+    which Planning did not exist. A governance boundary that only constrains the
+    capability present when it was written stops being a boundary the moment the
+    next package lands — and `§15` says plainly: *"Do not weaken W7 to enable
+    capability."* The inverse obligation is this class.
+    """
+
+    def _surface(self):
+        surface = PlanningSurface()
+        authority = AuthorityProvenance(
+            "DP-01 §3 W2",
+            "docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md")
+        surface.declare(Goal("g", "Intent.", authority))
+        plan = surface.adopt(Plan(
+            key="p", goal_key="g", authority=authority,
+            steps=(PlanStep("a", "A.", requires_delegation=True),)))
+        return surface, plan
+
+    def test_the_planning_surface_grants_no_permission(self):
+        """`W7`: *"self-authorize"*, applied to the newest capability."""
+        offenders = []
+        for path in sorted(PLANNING.glob("*.py")):
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+            for node in ast.walk(tree):
+                if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef,
+                                     ast.ClassDef)):
+                    if any(v in node.name.lower() for v in
+                           ("authorize", "authorise", "approve", "permit",
+                            "grant")):
+                        offenders.append(f"{path.name}:{node.name}")
+        self.assertEqual(offenders, [])
+
+    def test_a_history_of_successful_planning_authorizes_nothing(self):
+        """`W7`: *"convert operational success into authorization"*.
+
+        The W2 suite asserts this from inside Planning. Asserted here too,
+        because the prohibition belongs to the governance boundary and must not
+        depend on the constrained package testing itself.
+        """
+        surface, plan = self._surface()
+        current = plan
+        for i in range(5):
+            current = surface.adapt(current, steps=current.steps,
+                                    reason=f"Successful change {i}.")
+        with self.assertRaises(EscalationRequired):
+            surface.adapt(current, steps=current.steps, reason="Now?",
+                          required_authority="DP-02")
+
+    def test_planning_cannot_convert_a_plan_into_a_delegation(self):
+        """`W7`: *"convert delegation into authority creation"*."""
+        surface, plan = self._surface()
+        requirement = surface.delegation_requirements(plan)[0]
+        with self.assertRaises(NotImplementedError):
+            requirement.as_delegation_record()
+        self.assertEqual(read_delegations(), [])
+
+    def test_every_authority_field_crossing_a_boundary_is_a_verified_citation(self):
+        """The generalization of a defect, not a patch for one instance.
+
+        `ACT-CC-P11-006 §17` found that both P11 handoff types carried
+        ``authority_cited: str`` — a **validated citation flattened into free
+        text** at the moment authority crossed a boundary. Anything could be
+        constructed saying anything, and no consumer could tell it from a
+        genuine handoff.
+
+        Fixing the two instances would leave the *class* of defect open, and the
+        next handoff type would reintroduce it. So this asserts the rule: **any
+        field named for authority, on any type in the planning package, must be
+        annotated `AuthorityProvenance`** — the type that refuses a record which
+        does not resolve. A `str` there is unverifiable provenance, and
+        unverifiable provenance is fabricated provenance.
+        """
+        offenders = []
+        for path in sorted(PLANNING.glob("*.py")):
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.ClassDef):
+                    continue
+                for item in node.body:
+                    if not (isinstance(item, ast.AnnAssign)
+                            and isinstance(item.target, ast.Name)):
+                        continue
+                    if not item.target.id.lower().startswith("authority"):
+                        continue
+                    annotation = ast.unparse(item.annotation)
+                    if "AuthorityProvenance" not in annotation:
+                        offenders.append(
+                            f"{path.name}:{node.name}.{item.target.id}"
+                            f": {annotation}")
+        self.assertEqual(offenders, [], f"unverifiable provenance: {offenders}")
 
 
 class WhatThisSuiteDoesNotEstablish(unittest.TestCase):

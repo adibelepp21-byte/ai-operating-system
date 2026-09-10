@@ -25,6 +25,7 @@ from tools.delegation_catalog import read_delegations, verify  # noqa: E402
 from tools.planning import (  # noqa: E402
     AuthorityProvenance,
     DelegationRequirement,
+    WorkPreparation,
     EscalationRequired,
     Goal,
     InvalidGoal,
@@ -160,12 +161,12 @@ class NC_W2_06_07_08_PlanningCannotDelegate(unittest.TestCase):
         self.assertNotIn("delegator", fields)
         self.assertNotIn("authority_source", fields)
         self.assertEqual(sorted(fields),
-                         ["authority_cited", "plan_key", "scope_described",
+                         ["authority", "plan_key", "scope_described",
                           "step_key"])
 
     def test_planning_refuses_to_render_a_delegation_record(self):
         _, plan = _surface()
-        requirement = DelegationRequirement("p", "b", "B.", "DP-01 §3 W2 (...)")
+        requirement = DelegationRequirement("p", "b", "B.", _authority())
         with self.assertRaises(NotImplementedError):
             requirement.as_delegation_record()
 
@@ -275,7 +276,34 @@ class NC_W2_16_WorkflowRemainsDistinct(unittest.TestCase):
     def test_prepared_work_carries_authority_provenance_forward(self):
         surface, plan = _surface()
         for item in surface.prepare_for_workflow(plan):
-            self.assertIn("DP-01 §3 W2", item.authority_cited)
+            self.assertIs(item.authority, plan.authority)
+            self.assertIn("DP-01 §3 W2", item.authority_cited())
+
+    def test_provenance_crosses_the_boundary_as_a_verified_citation(self):
+        """The correction of `ACT-CC-P11-006 §17`'s finding.
+
+        Both handoff types once carried the *formatted string* rather than the
+        citation, so a consumer received text it could not verify and anyone
+        could construct one saying whatever they liked. Passing the object costs
+        no capability — it is frozen, with one method returning that same string
+        — and buys the guarantee that the cited record resolves.
+        """
+        surface, plan = _surface()
+        for item in surface.prepare_for_workflow(plan):
+            self.assertIsInstance(item.authority, AuthorityProvenance)
+        for item in surface.delegation_requirements(plan):
+            self.assertIsInstance(item.authority, AuthorityProvenance)
+
+    def test_a_citation_that_is_only_text_is_refused_at_both_boundaries(self):
+        """Forgery, attempted directly. Before the fix, both of these
+        succeeded and were indistinguishable from a genuine handoff."""
+        with self.assertRaises(TypeError):
+            WorkPreparation(plan_key="p", step_key="s", statement="x",
+                            authority="Founder Reserved Authority")
+        with self.assertRaises(TypeError):
+            DelegationRequirement(plan_key="p", step_key="s",
+                                  scope_described="x",
+                                  authority="Constitutional Authority")
 
 
 class NC_W2_17_DelegationRemainsDistinct(unittest.TestCase):

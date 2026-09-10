@@ -110,6 +110,10 @@ DEFAULT_ROOTS = (
     # the pressure `NON_RESIDENT` is written to resist. The finding is recorded
     # in the W2 evidence package and left for a change that is about it.
     "tools/planning",
+    # The W6 → W2 evidence path, added under `ACT-CC-P11-006 §26` in the same
+    # change that created it. Named as a file for the reason given in
+    # `_iter_markdown`.
+    "tools/performance_evidence.py",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a
@@ -265,7 +269,15 @@ def _iter_markdown(root: Path):
     # the work being verified, and W2's decisive citations — `DP-01 §3 W2`,
     # `DP-03 §8.4`, `DP-04 §8.2` — live in module docstrings, not in any
     # document. Scanning only Markdown made every one of them invisible.
-    for path in sorted(list(root.rglob("*.md")) + list(root.rglob("*.py"))):
+    # A root may name a single file. Directory roots are the norm, but a module
+    # that materially participates in P11 while sitting in a directory whose
+    # other contents are out of scope has no directory of its own to name —
+    # `tools/performance_evidence.py` is exactly that. Without this, the choice
+    # would be between leaving its citations unaudited and adopting all of
+    # `tools/`, whose five self-referential findings are documented above.
+    candidates = ([root] if root.is_file()
+                  else list(root.rglob("*.md")) + list(root.rglob("*.py")))
+    for path in sorted(candidates):
         if any(part in SKIP_DIRS for part in path.parts):
             continue
         if not _is_readable(path, tracked):

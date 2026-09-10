@@ -10,7 +10,43 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional, Tuple
+from typing import Tuple
+
+from .goal import AuthorityProvenance
+
+
+def _require_provenance(value, what: str) -> None:
+    """Refuse a citation that is merely *shaped* like one.
+
+    **This guard is the correction of a defect in the first W2 increment.** Both
+    handoff types originally carried ``authority_cited: str`` — the formatted
+    output of `AuthorityProvenance.cited()`. That flattened a **validated
+    citation** into **free text** at the exact moment authority crossed a
+    boundary, and a plain string field accepts anything:
+
+        WorkPreparation(..., authority_cited="Founder Reserved Authority")
+
+    was constructible, and **indistinguishable to any consumer from a genuine
+    handoff.** `ACT-CC-P11-006 §17` names that failure directly — authority
+    *fabricated*, or *lost*, at a transition — and `§19` criterion 7 is why it
+    had to be fixed before W4: the autonomous loop passes authority across every
+    one of these transitions, so a forgeable citation at the first handoff
+    becomes a forgeable citation throughout.
+
+    Carrying the object costs nothing. `AuthorityProvenance` is frozen and has a
+    single method returning a string; passing it adds **no capability**, only the
+    guarantee that the cited record resolves. The string bought nothing and gave
+    up the check.
+
+    **What this still does not establish:** that the cited instrument grants what
+    the citing artifact claims. Resolution proves the pointer is real. That
+    reading remains a human act, exactly as `AuthorityProvenance` itself says.
+    """
+    if not isinstance(value, AuthorityProvenance):
+        raise TypeError(
+            f"{what} requires an AuthorityProvenance, not {type(value).__name__} "
+            "— a citation that is only text cannot be verified by whoever "
+            "receives it, and unverifiable provenance is fabricated provenance")
 
 
 @dataclass(frozen=True)
@@ -34,8 +70,15 @@ class WorkPreparation:
     plan_key: str
     step_key: str
     statement: str
-    authority_cited: str
+    authority: AuthorityProvenance
     depends_on: Tuple[str, ...] = ()
+
+    def __post_init__(self):
+        _require_provenance(self.authority, "prepared work")
+
+    def authority_cited(self) -> str:
+        """What this preparation claims as its authority. Not a permission check."""
+        return self.authority.cited()
 
 
 @dataclass(frozen=True)
@@ -65,7 +108,14 @@ class DelegationRequirement:
     plan_key: str
     step_key: str
     scope_described: str
-    authority_cited: str
+    authority: AuthorityProvenance
+
+    def __post_init__(self):
+        _require_provenance(self.authority, "a delegation requirement")
+
+    def authority_cited(self) -> str:
+        """What this requirement claims as its authority. Not a permission check."""
+        return self.authority.cited()
 
     def as_delegation_record(self):  # pragma: no cover - intentionally absent
         raise NotImplementedError(

@@ -275,7 +275,7 @@ class PlanningSurface:
                 plan_key=plan.key,
                 step_key=step.key,
                 statement=step.statement,
-                authority_cited=plan.authority_provenance(),
+                authority=plan.authority,
                 depends_on=step.depends_on,
             )
             for step in sequence(plan)
@@ -296,7 +296,7 @@ class PlanningSurface:
                 plan_key=plan.key,
                 step_key=step.key,
                 scope_described=step.statement,
-                authority_cited=plan.authority_provenance(),
+                authority=plan.authority,
             )
             for step in sequence(plan) if step.requires_delegation
         )

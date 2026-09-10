@@ -181,7 +181,7 @@ class TestD_DelegationBoundaryChallenge(unittest.TestCase):
             "## Boundary\n\nAs described by the plan.\n\n"
             "## Verification\n\nSee the plan.\n\n"
             "## Authorizing Instrument\n\n"
-            f"{requirement.authority_cited}\n\n"
+            f"{requirement.authority_cited()}\n\n"
         )
         (self.delegations / "from-a-plan.md").write_text(record, encoding="utf-8")
         defects = verify(read_delegations(self.delegations), self.org,

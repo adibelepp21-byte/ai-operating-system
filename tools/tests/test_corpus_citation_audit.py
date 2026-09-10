@@ -335,6 +335,30 @@ class UnmarkedHeadingConventionTests(unittest.TestCase):
     def test_the_w2_planning_surface_is_a_default_root(self):
         self.assertIn("tools/planning", self.mod.DEFAULT_ROOTS)
 
+    def test_a_root_may_name_a_single_file(self):
+        """`tools/performance_evidence.py` has no directory of its own.
+
+        Without file roots the choice would be between leaving a materially
+        participating module unaudited and adopting all of `tools/`, whose only
+        findings are the auditor reading its own documentation.
+        """
+        self.assertIn("tools/performance_evidence.py", self.mod.DEFAULT_ROOTS)
+        proc = run("tools/performance_evidence.py", "--json")
+        report = json.loads(proc.stdout)
+        self.assertEqual(report["documents_scanned"], 1, report)
+        self.assertEqual(report["errors"], 0, report["findings"])
+
+    def test_every_default_root_exists(self):
+        """An exclusion naming nothing suppresses silently; so does a root.
+
+        The `NON_DEPARTMENT_DIRS` lesson, applied to roots: a root that resolves
+        to nothing scans nothing and reports success, so the surface it was added
+        to protect stays unwatched while the metric says it is covered.
+        """
+        missing = [r for r in self.mod.DEFAULT_ROOTS
+                   if not (REPO_ROOT / r).exists()]
+        self.assertEqual(missing, [], f"roots naming nothing: {missing}")
+
     def test_every_illustrative_entry_still_fails_to_resolve(self):
         """A stale exemption is a live citation waved through.
 

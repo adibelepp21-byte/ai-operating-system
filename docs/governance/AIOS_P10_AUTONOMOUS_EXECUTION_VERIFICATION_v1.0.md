@@ -9073,3 +9073,134 @@ P12 AUTHORIZED = FALSE  ·  NATIVE CORE MODIFIED = FALSE
 support the claims made about them. `0 stale assertions` means no *registered*
 superseded claim is restated — not that the corpus is clean.** Both limits are
 stated because `§23` requires the semantic meaning of every metric to be accurate.
+
+# 90. Post-W2 rediscovery — the defect I had just shipped
+
+**Act:** `ACT-CC-P11-006`. **Verdict `T2`** — rediscovery complete, next frontier
+in progress. Four increments executed after selection. Full inventory at
+`docs/architecture/p11/P11-FRONTIER-REDISCOVERY.md`.
+
+## 90.1 W4 was the obvious selection and the wrong one
+
+W4 Autonomous Execution is the next numbered package and the most attractive.
+`§12` warns against exactly that reasoning, and rediscovery supplied the concrete
+reason to refuse it.
+
+W4's loop is `PLAN → DELEGATE → EXECUTE → OBSERVE → VERIFY → ADAPT →
+CONTINUE / ESCALATE`. **Every transition passes authority across a boundary.**
+And the boundaries, as I had shipped them one commit earlier, carried authority
+as a **plain string**.
+
+## 90.2 The defect: provenance flattened at the handoff
+
+`WorkPreparation` and `DelegationRequirement` both carried
+`authority_cited: str` — the *formatted output* of `AuthorityProvenance.cited()`.
+`AuthorityProvenance` validates that its record resolves. A string validates
+nothing. Demonstrated before changing anything:
+
+```text
+WorkPreparation(..., authority_cited="Founder Reserved Authority")     -> ACCEPTED
+DelegationRequirement(..., authority_cited="Constitutional Authority") -> ACCEPTED
+```
+
+Both constructible, and **indistinguishable to any consumer from a genuine
+handoff.** `ACT-CC-P11-006 §17` names the failure directly: authority
+*fabricated*, or *lost*, at a transition.
+
+I wrote a module whose entire premise is that a plan cites authority rather than
+holding it, gave the citation a type that refuses an unresolvable record — **and
+then dropped that type at the exact moment the citation left the module.** The
+guarantee held everywhere except where it mattered.
+
+Carrying the object costs no capability: it is frozen, with one method returning
+that same string. **The string bought nothing and gave up the check.**
+
+## 90.3 The fix was generalized, not patched
+
+Correcting two fields would leave the *class* open, and the next handoff type
+would reintroduce it. So W7 now asserts the rule: **any field named for
+authority, on any type in the planning package, must be annotated
+`AuthorityProvenance`.**
+
+Verified by reintroducing the original defect verbatim — the control names both
+instances:
+
+```text
+['interfaces.py:WorkPreparation.authority_cited: str',
+ 'interfaces.py:DelegationRequirement.authority_cited: str']
+```
+
+## 90.4 W7 had gone stale the moment W2 landed
+
+`§15` requires W7's controls to hold against newly constructed capability.
+**They did not.** W7 was written before W2 and never imported it, so all 21
+controls described a system in which Planning did not exist.
+
+This is a structural hazard, not a one-off: **a governance boundary written
+before a capability does not constrain that capability, and nothing about it
+fails when the capability arrives.** The suite kept passing. It was measuring an
+older system.
+
+## 90.5 Existence is not connection
+
+`§16` forbids concluding `A → B` from `A exists` and `B exists`. Applying it
+found that `OptimizationObservation` and `PlanningEvidence` both existed and
+**nothing joined them** — `OBSERVE → ADAPT` was a transition on a diagram.
+
+`tools/performance_evidence.py` now joins them, sitting outside both endpoints so
+neither depends on the other: Optimization's boundary requires that no subsystem
+import it, and the W2 controls require Planning to import neither Optimization
+nor Governance. Asserted end-to-end that ten genuine Optimization observations
+still escalate. `PERFORMANCE EVIDENCE ≠ PLANNING AUTHORITY`.
+
+`PLAN → WORKFLOW` remains **unconnected** and is reported as such — prepared work
+is produced and nothing consumes it. That is the next frontier, not a claim of
+completion.
+
+## 90.6 A third defective mutation probe — with the guard already written
+
+A probe reported `OK` against the reintroduced defect. **The control was fine.
+The probe never mutated anything**: its anchor did not match and `str.replace`
+silently no-opped.
+
+This is the third defective probe, and the second with this signature. I recorded
+the lesson one Act ago in `§89.5`, **and the helper I wrote then carried
+`assert anchor in text`.** This probe was written inline without it. The guard
+existed, was known to be necessary, and was omitted.
+
+The pattern I named at `§89.5` — *every defect I find in my own verification
+fails by looking like verification* — now has a second layer: **knowing the
+failure mode did not prevent repeating it.** What prevented it the first time was
+a guard in the code, not a lesson in a document. The remedy that works is the
+assertion; the remedy that did not work is remembering.
+
+## 90.7 A guard that looked unreachable and was not
+
+The adapter refuses an observation whose source Optimization does not observe.
+The frozen boundary already refuses that at construction, so the guard looked
+like a check that cannot fail — the class I have flagged repeatedly.
+
+Tested rather than assumed either way: `OptimizationObservation` is a frozen
+dataclass, and `object.__setattr__` bypasses frozen validation, so a mutated
+observation **can** reach the adapter. The guard is genuine defence in depth, and
+the test now exercises the route that actually reaches it.
+
+**I nearly deleted a working control for looking like a dead one.** The reflex
+against unfalsifiable checks is correct and would have been wrong here.
+
+## 90.8 State integrity, measured
+
+```text
+native_core boundaries : 11    departments : 2    delegation records : 0
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 442 OK
+citation 146 documents / 0 errors · stale-state 463 documents / 0 assertions
+
+P11 AUTHORIZED = TRUE   ·  P11 CONSTRUCTED = PARTIAL (W2, W3, W6→W2, W7)
+W1 = architecturally satisfied, not integrated     W4, W5 = NOT STARTED
+E11 RATIFIED = FALSE    ·  P12 AUTHORIZED = FALSE
+13 protected packages untouched
+```
+
+`0 citation errors` means every pointer resolves — not that the cited sources
+support the claims made about them. `0 stale assertions` means no **registered**
+superseded claim is restated — not that the corpus is clean.
