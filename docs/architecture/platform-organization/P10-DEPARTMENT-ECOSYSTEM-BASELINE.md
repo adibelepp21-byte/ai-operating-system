@@ -80,9 +80,48 @@ repository, Approved, and cited by records on disk.
 ```text
 CANONICAL POPULATION   : NON-EMPTY — Platform, Engineering
                          3 Capabilities · 3 Agent Definitions
-DEPARTMENT MECHANISM   : IMPLEMENTED and VERIFIED (unchanged)
-RUNTIME OWNERSHIP GRAPH: NOT CONSTRUCTED
-ORGANIZATION ROOT      : NOT ESTABLISHED  ← the actual remaining blocker
+DEPARTMENT MECHANISM   : IMPLEMENTED and VERIFIED
+ORGANIZATION ROOT      : aios — derived from the Canonical Domain Model
+RUNTIME OWNERSHIP GRAPH: CONSTRUCTED · INV-1 and INV-2 verified
+P10                    : OPERATIONAL
+```
+
+> **Second correction, same day.** The block above first read
+> `ORGANIZATION ROOT: NOT ESTABLISHED ← the actual remaining blocker`. **That was
+> an over-reading and is withdrawn.**
+>
+> `canonical-domain-model-v1.md` — sole semantic authority under
+> `Constitution §5` — defines the entity in its own table: **"Organization | The
+> whole of AIOS. Single root identity; ultimate accountable body."** For an
+> entity so defined, **the type and its sole instance coincide**; there cannot be
+> a second, so instantiating it chooses nothing. `organization_spec §12` reserves
+> *"Multi-Organization topology **beyond a single root**"* — a sentence that
+> presupposes the root it reserves everything past.
+>
+> Representing that identity as the slug `aios` is a **projection**
+> (`Domain Model §8`: later artifacts *"will be projections of this model, not
+> extensions to it"*), under the Organization Framework's ratified naming
+> convention. **It is not an establishment, and no ADR was needed for it.**
+>
+> **The alternative reading is recorded rather than buried:** if the Founder or
+> Architect holds that instantiating the root requires its own ADR,
+> `organization_catalog.organization_key()` is the single place to change, and
+> the derivation fails closed if the Domain Model row is altered.
+
+### Measured, after construction
+
+```text
+INV-1  unowned capabilities 0 · record/nesting disagreements 0
+INV-2  unowned agent definitions 0
+       (the disputed check is NOT RUN — the only declaration these records
+        carry is the nesting, so the check would compare nesting against
+        itself and pass by construction. A check that cannot fail is not
+        evidence, so it is declined and the decline is stated.)
+
+resolved ownership
+  governance-artifact-integrity -> platform
+  engineering-intelligence      -> engineering
+  cognitive-intelligence        -> engineering
 ```
 
 **`tools/organization_catalog.py`** (built this cycle, 13 tests) reads the

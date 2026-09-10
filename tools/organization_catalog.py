@@ -98,6 +98,30 @@ def _establishing_adr(readme: Path) -> Tuple[str, ...]:
     return (match.group(1),) if match else ()
 
 
+OWNER_SECTION = re.compile(r"^## Owner\s*\n\s*\n(.+?)\s*$", re.M)
+
+
+def _owner_disagreements(departments, root: Path):
+    """Capability records whose stated Owner differs from their nesting."""
+    disagreements = []
+    for record in departments:
+        directory = (root / record.key / "capabilities")
+        for key in record.capabilities:
+            path = directory / f"{key}.md"
+            if not path.is_file():
+                continue
+            match = OWNER_SECTION.search(path.read_text(encoding="utf-8"))
+            if match is None:
+                disagreements.append((key, None, record.key))
+                continue
+            stated = match.group(1).strip()
+            # Records write "Platform Department"; the slug is the first token.
+            stated_key = _slug(stated.replace(" Department", ""))
+            if stated_key != record.key:
+                disagreements.append((key, stated, record.key))
+    return disagreements
+
+
 def read_departments(root: Path = ORGANIZATION_ROOT) -> List[DepartmentRecord]:
     """Every Department that has a resident record. No inference, no defaults."""
     departments: List[DepartmentRecord] = []
@@ -128,32 +152,71 @@ def read_departments(root: Path = ORGANIZATION_ROOT) -> List[DepartmentRecord]:
 
 
 class OrganizationRootNotEstablished(RuntimeError):
-    """No Organization instance is canonically established.
+    """The Domain Model's Organization row is absent or no longer a single root."""
 
-    `Freeze §4` makes a Department *"owned by an Organization"*, and
-    ``ownership.Department`` requires exactly one ``OrganizationIdentity`` and
-    fails closed without one. **No resident ADR establishes an Organization
-    instance**, and `organization_spec §12` records new Organizations as an
-    extension mechanism rather than an existing fact.
 
-    Naming one here would be creating an organizational unit — `FD-P10-003 §4.1`
-    reserves that to an explicit Founder or Architect decision. **So this module
-    refuses rather than supplying a root**, and the refusal is the finding.
-    """
+DOMAIN_MODEL = REPO_ROOT / "docs/architecture/domain-model/canonical-domain-model-v1.md"
+
+#: The Canonical Domain Model's entity row for Organization. The row must both
+#: name the whole and assert a *single root identity*; either half missing means
+#: the premise this derivation rests on has changed.
+ORGANIZATION_ROW = re.compile(
+    r"^\|\s*\*\*Organization\*\*\s*\|\s*The whole of\s+(?P<name>[^.|]+)\.\s*"
+    r"(?P<rest>[^|]*)\|",
+    re.M,
+)
 
 
 def organization_key(root: Path = ORGANIZATION_ROOT) -> str:
-    """The canonically established Organization instance, if one exists."""
-    for path in sorted(root.rglob("*.md")) if root.is_dir() else []:
-        text = path.read_text(encoding="utf-8")
-        match = re.search(r"^## Organization\s*\n\s*\n(.+?)\s*$", text, re.M)
-        if match:
-            return _slug(match.group(1))
-    raise OrganizationRootNotEstablished(
-        "no resident record names an Organization instance; a Department cannot "
-        "be constructed without one (Freeze §4). Establishing one is an "
-        "architectural decision under Constitution §3.4 and Domain Model §6."
-    )
+    """The single root Organization, **derived from the Domain Model**.
+
+    An earlier version of this module refused here, reporting that no resident
+    source established an Organization instance. **That was an over-reading, and
+    it is corrected rather than kept.**
+
+    `canonical-domain-model-v1.md` — the sole semantic authority under
+    `Constitution §5` — defines the entity in its own table:
+
+        | **Organization** | The whole of AIOS. Single root identity;
+                             ultimate accountable body. |
+
+    **For an entity whose definition is "the whole of AIOS" with a "single root
+    identity", the type and its sole instance coincide.** There cannot be a
+    second, so instantiating it is not choosing among alternatives and not
+    creating an organizational unit. `organization_spec §12` confirms the
+    direction of the reservation: what is *"not established"* is
+    **"Multi-Organization topology *beyond a single root*"** — the single root
+    is presupposed by the sentence that reserves everything past it.
+
+    Representing that identity as a slug is a **projection**, not an
+    establishment: `Domain Model §8` states that repository layout artifacts
+    *"will be projections of this model, not extensions to it"*, and the
+    Organization Framework's Naming Convention fixes slugs as *"lowercase,
+    hyphenated slugs derived from their names."*
+
+    **The reading is exposed rather than assumed.** If the Founder or Architect
+    holds that instantiating the root requires its own ADR, this function is the
+    single place to change, and `P10-DEPARTMENT-ECOSYSTEM-BASELINE.md` records
+    the alternative reading alongside this one.
+
+    Fails closed if the Domain Model row is absent or no longer asserts a single
+    root — the premise would then be gone, and inventing a root is exactly what
+    `FD-P10-003 §4.1` forbids.
+    """
+    if not DOMAIN_MODEL.is_file():
+        raise OrganizationRootNotEstablished(f"{DOMAIN_MODEL} is not resident")
+    match = ORGANIZATION_ROW.search(DOMAIN_MODEL.read_text(encoding="utf-8"))
+    if match is None:
+        raise OrganizationRootNotEstablished(
+            "the Canonical Domain Model's Organization entity row was not found "
+            "in the expected form; the derivation's premise is gone"
+        )
+    if "single root identity" not in match.group("rest").lower():
+        raise OrganizationRootNotEstablished(
+            "the Domain Model no longer asserts a single root identity for "
+            "Organization; a root may not be chosen without it"
+        )
+    return _slug(match.group("name"))
 
 
 def build_graph(root: Path = ORGANIZATION_ROOT):
@@ -201,8 +264,40 @@ def report(root: Path = ORGANIZATION_ROOT) -> dict:
     except OrganizationRootNotEstablished as exc:
         result["blocked_reason"] = str(exc)
         return result
-    build_graph(root)
+    graph = build_graph(root)
     result["graph_constructed"] = True
+    # INV-1 / INV-2 evidence, from the frozen graph's own queries — this module
+    # asserts nothing about the invariants, it reports what the graph reports.
+    result["inv1_unowned_capabilities"] = list(
+        graph.unowned_capabilities(tuple(
+            key for record in departments for key in record.capabilities
+        ))
+    )
+    # Two-sided cross-check, done here rather than through
+    # ``graph.disputed_ownership`` because that query takes Capability objects
+    # and this module holds records, not entities. The property tested is the
+    # same: does the Capability record's own ``## Owner`` section agree with the
+    # Department directory it is nested under? `Organization Framework` calls
+    # that nesting *"a direct filesystem projection of the Canonical Domain
+    # Model's ownership relationship"*, so a disagreement is a real defect.
+    result["inv1_disputed"] = _owner_disagreements(departments, root)
+    result["inv2_unowned_agent_definitions"] = list(
+        graph.unowned_agent_definitions(tuple(
+            key for record in departments for key in record.agent_definitions
+        ))
+    )
+    # ``disputed_agent_definition_ownership`` takes (definition, named-department)
+    # declarations. The only declaration these records carry **is** the nesting,
+    # so feeding it back would compare nesting against itself and pass by
+    # construction. **A check that cannot fail is not evidence**, so it is not
+    # run, and its absence is stated rather than hidden. The Capability side has
+    # a real second declaration — the record's ``## Owner`` section — and is
+    # cross-checked above.
+    result["inv2_disputed"] = "NOT RUN — would be circular; see source"
+    result["resolutions"] = {
+        key: graph.owner_of(key).identity.department_key
+        for record in departments for key in record.capabilities
+    }
     return result
 
 
@@ -218,6 +313,20 @@ def main(argv: List[str]) -> int:
     print(f"agent definitions    : {result['agent_definitions']}")
     print(f"organization root    : {result['organization_root'] or 'NOT ESTABLISHED'}")
     print(f"graph constructed    : {result['graph_constructed']}")
+    if result["graph_constructed"]:
+        print()
+        print("INV-1 — every Capability owned by exactly one Department")
+        print(f"  unowned            : {len(result['inv1_unowned_capabilities'])}")
+        print(f"  record/nesting disagreements: {len(result['inv1_disputed'])}")
+        for capability, stated, nested in result["inv1_disputed"]:
+            print(f"    {capability}: record says {stated!r}, nested under {nested!r}")
+        print("INV-2 — every Agent Definition owned by exactly one Department")
+        print(f"  unowned            : {len(result['inv2_unowned_agent_definitions'])}")
+        print(f"  disputed           : {result['inv2_disputed']}")
+        print()
+        print("resolved ownership:")
+        for capability, department in sorted(result["resolutions"].items()):
+            print(f"  {capability:<32} -> {department}")
     if not result["graph_constructed"]:
         print()
         print("BLOCKED — " + result["blocked_reason"])

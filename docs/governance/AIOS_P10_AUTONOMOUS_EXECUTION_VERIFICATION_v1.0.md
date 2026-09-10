@@ -6574,3 +6574,119 @@ EXHAUSTION             AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
 from *"which Departments exist"* (answered), through *"may ownership be
 assigned"* (answered), to *"what is the Organization they hang from"* — a single
 `ADR`-shaped question about the hierarchy root.
+
+---
+
+# 66. P10 is operational — the last blocker was an over-reading of mine
+
+**Date:** 2026-09-10 · **Baseline:** `338f4ac`
+
+## 66.1 The blocker dissolved on being read
+
+`§65` closed with *"no canonically established Organization instance"* as the
+one remaining blocker. **It was an over-reading, and `§21`'s rule found it in a
+single search.**
+
+`canonical-domain-model-v1.md` — sole semantic authority under
+`Constitution §5` — carries the answer in its own entity table:
+
+> **Organization** | **The whole of AIOS. Single root identity; ultimate
+> accountable body.**
+
+**For an entity whose definition is "the whole of AIOS" with a "single root
+identity", the type and its sole instance coincide.** There cannot be a second,
+so instantiating it is not choosing among alternatives and not creating an
+organizational unit.
+
+**`organization_spec §12` confirms the direction of the reservation.** What is
+*"not established"* is **"Multi-Organization topology *beyond a single root*"**
+— a sentence that presupposes the root it reserves everything past. I had read
+that clause as reserving the root; it reserves what lies past it.
+
+**Representing the identity as the slug `aios` is a projection, not an
+establishment** — `Domain Model §8`: later artifacts *"will be projections of
+this model, not extensions to it"*.
+
+## 66.2 P10 OPERATIONAL
+
+```text
+departments           2   Platform (ADR-0003) · Engineering (ADR-0008)
+capabilities          3   agent definitions 3
+organization root     aios — derived from the Domain Model, never chosen
+graph constructed     TRUE
+
+INV-1  unowned 0 · record/nesting disagreements 0
+INV-2  unowned 0
+
+resolved ownership
+  governance-artifact-integrity -> platform
+  engineering-intelligence      -> engineering
+  cognitive-intelligence        -> engineering
+```
+
+**The organizational runtime is constructible from canonical records, and the
+two frozen ownership invariants hold over the real population.** That is the
+`ACT-CC-P10-AUTHORIZATION §4` chain — DISCOVERED → DESIGNED → CONSTRUCTED →
+INTEGRATED → VERIFIED → PERSISTED → **OPERATIONALIZED** — reached on evidence.
+
+## 66.3 Three disciplines that shaped the result rather than decorating it
+
+**The derivation is read, not hard-coded.** `organization_key()` parses the
+Domain Model's Organization row and **fails closed** if the row is absent or no
+longer asserts a single root. Two tests plant each failure.
+
+**A check that cannot fail is not evidence.** `disputed_agent_definition_ownership`
+was **not run**: the only declaration those records carry *is* the nesting, so
+feeding it back would compare nesting against itself and pass by construction.
+**The decline is printed in the tool's own output**, not omitted. The Capability
+side has a genuine second declaration — the record's `## Owner` section — and is
+cross-checked, at **0 disagreements**.
+
+**The alternative reading is recorded, not buried.** If the Founder or Architect
+holds that instantiating the root needs its own ADR, `organization_key()` is the
+single place to change, and the baseline says so.
+
+## 66.4 Tests narrowed, not deleted
+
+Three tests asserted the loader *refuses* for want of a root. **My own change
+made them wrong.** They are **narrowed to the property that actually matters** —
+the root is derived and the derivation fails closed — with the date and the
+reasoning in the class docstring. **The original intent survives; the false
+assertion does not.**
+
+## 66.5 Four over-readings in one day, and what they have in common
+
+```text
+§61  "Phase 9 maturity not established"      → certified, complete, closed
+§62  "the Founder expressly withholds P10"   → idiomatic closing clause
+§65  "the Department population is empty"    → established by two Approved ADRs
+§66  "no Organization instance established"  → defined in the Domain Model table
+```
+
+**Every one was a negative claim, and every one was false.** The verdicts I got
+wrong this session were **all of the form "X does not exist"** — never a positive
+claim. A positive claim carries its own evidence and gets checked; a negative
+claim is a statement about the *absence* of evidence, and its quality is the
+quality of the search behind it. **Four searches, four holes.**
+
+**The discipline that would have caught all four is the one `§21` states:** when
+the verdict is BLOCKED or NOT ESTABLISHED, spend the next cycle trying to
+falsify it rather than confirming it.
+
+## 66.6 Verification
+
+```text
+tools 262 OK · native_core 801 OK (1 expected) · consumers 276 OK
+citation 79 documents · 0 errors · 65 WARN · stale-state 0 assertions
+```
+
+## 66.7 State
+
+```text
+P10   AUTHORIZED · CONSTRUCTED · OPERATIONAL · VERIFIED
+      NOT complete, NOT certified — FD-P10-003 §16 keeps those separate
+      and neither is claimed.
+P11–P13   NOT AUTHORIZED (FD-P10-003 §20)
+RESERVED  ADR-0029 (population semantics) · the three owner-to-CPID roles
+EXHAUSTION  AUTHORIZED WORK EXHAUSTED for this cycle's surface
+```

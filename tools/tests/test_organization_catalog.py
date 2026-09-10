@@ -89,25 +89,72 @@ class ItNeverConvertsAPlatformDivisionIntoADepartment(unittest.TestCase):
         self.assertNotIn("platform-organization", source)
 
 
-class ItRefusesRatherThanInventingARoot(unittest.TestCase):
-    """`FD-P10-003 §4.1` / `§24` — the population may not be invented."""
+class TheRootIsDerivedFromTheDomainModel(unittest.TestCase):
+    """**Narrowed 2026-09-10.** These three tests previously asserted that the
+    loader *refuses* because no Organization instance was established.
 
-    def test_no_organization_instance_is_currently_established(self):
-        with self.assertRaises(OrganizationRootNotEstablished):
-            organization_key()
+    That was an over-reading and it is corrected rather than kept. The Canonical
+    Domain Model's own entity table defines Organization as *"The whole of AIOS.
+    Single root identity; ultimate accountable body"* — for an entity so
+    defined, the type and its sole instance coincide. `organization_spec §12`
+    reserves *"Multi-Organization topology **beyond a single root**"*, which
+    presupposes the root it reserves everything past.
 
-    def test_graph_construction_refuses_without_a_root(self):
-        with self.assertRaises(OrganizationRootNotEstablished):
-            build_graph()
+    **What the tests assert now is the property that actually matters:** the root
+    is *derived from the Domain Model*, never chosen, and the derivation fails
+    closed the moment its premise is gone.
+    """
 
-    def test_the_report_says_blocked_rather_than_empty(self):
+    def test_the_root_comes_from_the_domain_model_row(self):
+        self.assertEqual(organization_key(), "aios")
+
+    def test_the_derivation_fails_closed_without_the_row(self):
+        import tools.organization_catalog as mod
+
+        with tempfile.TemporaryDirectory() as tmp:
+            empty = Path(tmp) / "no-domain-model.md"
+            empty.write_text("# nothing here\n", encoding="utf-8")
+            original = mod.DOMAIN_MODEL
+            mod.DOMAIN_MODEL = empty
+            try:
+                with self.assertRaises(OrganizationRootNotEstablished):
+                    organization_key()
+            finally:
+                mod.DOMAIN_MODEL = original
+
+    def test_the_derivation_fails_closed_without_a_single_root_assertion(self):
+        import tools.organization_catalog as mod
+
+        with tempfile.TemporaryDirectory() as tmp:
+            altered = Path(tmp) / "domain-model.md"
+            altered.write_text(
+                "| **Organization** | The whole of AIOS. Many roots. |\n",
+                encoding="utf-8",
+            )
+            original = mod.DOMAIN_MODEL
+            mod.DOMAIN_MODEL = altered
+            try:
+                with self.assertRaises(OrganizationRootNotEstablished):
+                    organization_key()
+            finally:
+                mod.DOMAIN_MODEL = original
+
+    def test_the_graph_now_constructs_over_the_real_population(self):
         result = report()
-        self.assertFalse(result["graph_constructed"])
-        self.assertIn("blocked_reason", result)
-        self.assertGreater(len(result["departments"]), 0,
-                           "blocked must not be reported as an empty population")
+        self.assertTrue(result["graph_constructed"])
+        self.assertEqual(result["inv1_unowned_capabilities"], [])
+        self.assertEqual(result["inv1_disputed"], [])
+        self.assertEqual(result["inv2_unowned_agent_definitions"], [])
+        self.assertEqual(
+            result["resolutions"],
+            {
+                "governance-artifact-integrity": "platform",
+                "engineering-intelligence": "engineering",
+                "cognitive-intelligence": "engineering",
+            },
+        )
 
-    def test_a_supplied_root_would_construct_the_graph(self):
+    def test_a_supplied_root_constructs_a_graph_over_a_temp_corpus(self):
         """Proves the refusal is about the missing root, not a broken loader."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
