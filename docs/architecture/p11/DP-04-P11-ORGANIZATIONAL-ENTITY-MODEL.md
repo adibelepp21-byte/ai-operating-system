@@ -1,374 +1,792 @@
-# ADR / ARCHITECT DECISION — DP-04
+<!-- PROVENANCE BLOCK — added at persistence, NOT part of the supplied artifact. -->
 
-## P11 Organizational Entity Model
-
-| Field | Value |
-|---|---|
-| **Decision ID** | `DP-04` |
-| **Domain** | Phase 11 — Autonomous Organization |
-| **Decision Class** | Architecture / Canonical Entity Model |
-| **Authority** | **Architect Reserved Authority** |
-| **Status** | **`DECISION-PENDING`** |
-| **Version** | 1.0 |
-| **Effective Date** | *[TO BE FILLED AFTER ARCHITECT DECISION]* |
-| **Architect** | *[TO BE FILLED]* |
-
-> # ⚠ `DECISION-PENDING` — NOT ISSUED
+> # ISSUED — Architect Decision, 2026-09-10
 >
-> **`§14`, `§15`, `§21` and `§22` are unfilled and are the Architect's alone.**
-> Everything below them is evidence prepared under delegated authority; **none of
-> it is a decision.** `§23`: this status *"does NOT mean approved · accepted ·
-> authorized · adopted · frozen · implemented."*
+> **`§14` OPTION C · `§21` 2026-09-10 · `§22` ISSUED BY ARCHITECT · `§23` STATUS: ISSUED.**
+> All five sections `§0` requires — `§14`, `§15`, `§21`, `§22`, `§23` — are complete.
 >
-> **Prepared by:** Claude Code / Co-Founder · **2026-09-10**
-> **Evidence sections filled:** `§4.2`, `§5`, `§6`, `§7`, `§12`, `§13`, `§19`.
-> **Architect sections untouched:** `§14`, `§15`, `§21`, `§22`.
-
----
-
-## Discrepancy in the supplied instrument — reported, not corrected
-
-**`§0` states the status may change to `ISSUED` once the Architect choice *"is
-explicitly entered in Section 13."*** But **`§13` is `CO-FOUNDER
-RECOMMENDATION`**; the Architect's choice belongs in **`§14 EXPLICIT ARCHITECT
-CHOICE`**, which `§23` then confirms by requiring *"Sections 14, 15, 21, and 22"*.
-
-**Read literally, `§0` would place the Architect's decision inside the
-Co-Founder's recommendation section.** That is exactly the confusion this
-instrument exists to prevent, so it is **flagged rather than silently
-renumbered** — `§13`'s content is not mine to relocate, and correcting an
-Architect instrument is not a delegated act. **`§23`'s enumeration is treated as
-governing**, and `§14` is left as the choice section.
-
----
-
-## 1. Exact decision question
-
-Reproduced from the instrument. The four concepts it names as requiring
-resolution are **`Goal`**, **`Plan`**, **`Delegation`**, **`OrganizationalState`**.
-
----
-
-## 4.2 Sixteen-item canonical reconciliation (`§4`)
-
-Items reproduced **exactly** from the actual P11 Blueprint `§15` body, in its
-order. `§4.1` forbids manufacturing an entity from entity-like terminology, and
-none was manufactured.
-
-| # | Exact `§15` concept | Canonical meaning | Frozen entity / structure | Status | Reserved? | New entity required? | Evidence | Architect decision? |
-|---|---|---|---|---|---|---|---|---|
-| 01 | `Organization` | hierarchy root; owns Departments | **Organization** — frozen | **FROZEN ENTITY** | no | **NO** | `Freeze §4`; `native_core/core/capability/ownership.py` | **NO** |
-| 02 | `OrganizationGoal` | organizational objective | none | **UNRESOLVED — REQUIRES ARCHITECT DECISION** | **`Goal` reserved** | **UNKNOWN** | `Freeze §2` reserved list | **YES** |
-| 03 | `Plan` | planned decomposition | none | **UNRESOLVED — REQUIRES ARCHITECT DECISION** | no counterpart | **UNKNOWN** | no frozen counterpart found | **YES** |
-| 04 | `PlanStep` | step within a plan | none | **UNRESOLVED — REQUIRES ARCHITECT DECISION** | no counterpart | **UNKNOWN** | as `Plan` | **YES** |
-| 05 | `WorkItem` | unit of organizational work | none; `WorkEntry` resolves without one | **UNRESOLVED — REQUIRES ARCHITECT DECISION** | **`Task` reserved** | **UNKNOWN** | `Freeze §2`; `WorkEntry` docstring: *"This is not a Work entity"* | **YES** |
-| 06 | `Department` | accountability unit | **Department** — frozen | **FROZEN ENTITY** | no | **NO** | `Freeze §4`; `capability/ownership.py` | **NO** |
-| 07 | `Capability` | Department-owned unit of ability | **Capability** — frozen | **FROZEN ENTITY** | no | **NO** | `Freeze §4` | **NO** |
-| 08 | `Dependency` | relation between capabilities | — | **NON-ENTITY / CONCEPT** — a relationship | no | **NO** | `INV-9` versioned dependency; `INV-10` cross-Dept governance | **NO** |
-| 09 | `Delegation` | authority passed within bounds | none | **UNRESOLVED — REQUIRES ARCHITECT DECISION** | no counterpart | **UNKNOWN** | no frozen counterpart found | **YES** |
-| 10 | `Execution` | act of running work | — | **NON-ENTITY / CONCEPT** — `Freeze §5` **layer 2** | no | **NO** | `Freeze §5` layer table | **NO** |
-| 11 | `Observation` | what the system noticed | **`ObservationPublication`** | **IMPLEMENTED STRUCTURE** | `Event` reserved, **but not the counterpart** | **NO** | `native_core/core/optimization/contract.py:59`; `composition.py:97` `PassiveObservationPublication` | **NO** — confirmation only |
-| 12 | `Verification` | act of verifying | — | **NON-ENTITY / CONCEPT** — an activity | no | **NO** | no frozen entity; verification is performed, not held | **NO** |
-| 13 | `Escalation` | boundary reached, raised | **Trace status** | **IMPLEMENTED STRUCTURE** | no | **NO** | `native_core/core/trace/record.py:31` — `VALID_STATUSES = frozenset({"success", "failure", "escalation"})`, annotated *"Domain Model §2.1"* | **NO** — confirmation only |
-| 14 | `Evidence` | record supporting a claim | — | **PROJECTION / DERIVED VIEW** | `Artifact` reserved | **NO** | evidence records are produced, not a frozen entity | **NO** |
-| 15 | `OrganizationalState` | organization-level state | none | **UNRESOLVED — REQUIRES ARCHITECT DECISION** | **`State-as-entity` reserved** | **UNKNOWN** | `Freeze §2`; `P12-W2` boundary — `§10` | **YES** |
-| 16 | `PerformanceRecord` | record of organizational performance | **`ObservationPublication`** | **IMPLEMENTED STRUCTURE** | no | **NO** | `optimization/contract.py` | **NO** — confirmation only |
-
-**Tally:** 3 **FROZEN** · 3 **IMPLEMENTED** · 1 **PROJECTION** · 3 **NON-ENTITY**
-· **6 UNRESOLVED**.
-
-**`§4.2`'s constraint is honoured: no concept was classified merely to eliminate a
-conflict.** The six unresolved are left unresolved.
-
----
-
-## 5. The twelve frozen entities (`§5`)
-
-Reproduced from the **actual body** of `AIOS_ARCHITECTURE_FREEZE_v1.0.md §4`, as
-`§5` requires — **not** from filenames, classes, or directories.
-
-| # | Frozen entity | Canonical definition (`Freeze §4`) | Layer (`Freeze §5`) | Relationship to `§15` |
-|---|---|---|---|---|
-| 01 | **Organization** | *"hierarchy root … owns Departments; accountability root"* | above layer 4 | **is** item 01 |
-| 02 | **Department** | *"accountability unit … owns Capabilities and Agent Definitions"* | above layer 4 | **is** item 06 |
-| 03 | **Capability** | *"a Department-owned unit of ability"*; owned by *"exactly one Department (INV-1)"* | 4 | **is** item 07 |
-| 04 | **Agent Definition** | *"the template of an agent; implements ≥1 Capability (INV-2)"* | 3 | not in `§15` |
-| 05 | **Agent Instance** | *"a runtime execution of exactly one Definition … **the only actor**"* | 3 | not in `§15` |
-| 06 | **Skill** | *"a reusable unit of ability"* | 5 | not in `§15` |
-| 07 | **Workflow** | *"governed composition; the sanctioned multi-agent channel (INV-13)"* | 6 | bears on coordination, not `§15` |
-| 08 | **Tool** | *"the only entity permitted a direct external/vendor dependency (INV-12)"* | 9 | not in `§15` |
-| 09 | **Runtime** | *"hosts Agent Instances (INV-3); a facility, not an actor"* | 2 | not in `§15` |
-| 10 | **Knowledge** | *"durable, authoritative, versioned understanding; entered only via governed promotion (INV-8)"* | 8 | not in `§15` |
-| 11 | **Memory** | *"derived, provisional, retention-bounded record (INV-7)"* | 7 | bears on item 15 |
-| 12 | **Trace** | *"the immutable, append-only, unconditional record of one Agent-Instance action (INV-4/5)"* | cross-cutting | **carries item 13**; underwrites item 14 |
-
-**`§5`'s constraint respected:** their frozen status is an **input**, not a
-question. Only nine of the twelve bear on `§15` at all.
-
----
-
-## 6. Reserved concepts (`§6`)
-
-| Reserved concept | Canonical location | Meaning | Implemented? | Authority | Relationship to `§15` |
-|---|---|---|---|---|---|
-| **`Goal`** | `Freeze §2` — *"Reserved concepts with no ratified entity"* | no ratified entity | **NO** | Architect | **item 02** |
-| **`Task`** | `Freeze §2` | no ratified entity | **NO** | Architect | **item 05** |
-| **`State-as-entity`** | `Freeze §2` | no ratified entity | **NO** | Architect | **item 15** |
-| **`Event`** | `Freeze §2` | no ratified entity | **NO** | Architect | item 11 — **but item 11 maps to an existing publication instead** |
-| **`Artifact`** | `Freeze §2` | no ratified entity | **NO** | Architect | item 14 |
-| **prioritization model** | `optimization/__init__.py`, citing `optimization_spec §12/§14`, `P7-I27 Conflict B` | *"NOT implemented here — **Architect Reserved**"* | **NO** | **Architect** | bears on `P11-W2`, **not on `§15`** |
-| **decision heuristics** | same | same list | **NO** | **Architect** | bears on `P11-W2` |
-| **ranking model · recommendation engine · evaluation scoring · signal catalogue · optimization algorithm · promotion strategy** | same | same list | **NO** | **Architect** | bear on `W2`/`W6` |
-
-**Verbatim, from the optimization boundary:** *"No scoring, ranking, or
-recommendation surface exists, and none can be added without extending the
-contract under a future authorization."*
-
-**`§6`'s rule is honoured:** none was promoted. **`ARCHITECT-RESERVED ≠
-IMPLEMENTED ≠ CANONICAL ENTITY`.**
-
----
-
-## 7. Implemented / projection / non-entity reconciliation (`§7`)
-
-### 7.1 Implemented structures — verified at definition, not by name
-
-| Concept | Actual definition | Reconciliation |
-|---|---|---|
-| **`Escalation`** | `trace/record.py:30-31`: *"Ratified action outcomes (Domain Model §2.1: success / failure / escalation)"*, `VALID_STATUSES = frozenset({"success", "failure", "escalation"})` | **Escalation is a ratified Trace *status*, not an entity.** `§7`'s instruction to reconcile it with the Trace status model is satisfied: it is already there |
-| **`Observation` / `PerformanceRecord`** | `optimization/contract.py:59` `class ObservationPublication(abc.ABC)`; `composition.py:97` `PassiveObservationPublication` | Both map to the **existing publication contract**. The optimization boundary *"observes Trace and Memory and publishes what it observed"* |
-| **`Organization` / `Department`** | `capability/ownership.py:71`, `:98` with `OrganizationIdentity`, `DepartmentIdentity`, `OwnershipGraph` | Reconciled with the **existing capability/ownership model**, exactly as `§7.1` directs |
-
-### 7.2 Projections (`§7.2`)
-
-**`Evidence`** — the only item classified as a projection:
-
-```text
-SOURCE            Trace (immutable, INV-4/INV-5) + persisted records
-DERIVATION RULE   select records supporting a specific claim
-PROJECTION        an evidence view
-CONSUMER          verification, audit, certification packages
-```
-
-**`Accountability`**, though not a `§15` item, derives the same way — Trace is
-immutable and append-only, so *who decided, delegated, executed and verified* is
-**reconstructable without any new entity**.
-
-### 7.3 Non-entity concepts (`§7.3`)
-
-`Dependency` — a **relationship** (`INV-9`, `INV-10`).
-`Execution` — a **layer** (`Freeze §5` layer 2).
-`Verification` — an **activity**, performed rather than held.
-
-**The Blueprint's own words support this reading:** `§15` says *"P11 should expose,
-at minimum **where applicable**, the following **conceptual entities**."*
-**`CONCEPTUAL ENTITY MENTION ≠ MANDATORY RUNTIME ENTITY`**, as `§7.3` states.
-
----
-
-## 8. The four unresolved concepts — evidence only, no classification proposed
-
-**`§8` forbids silent reclassification. None is offered.** What follows is the
-evidence bearing on each; the classification lines remain the Architect's.
-
-**`Goal`** — `Freeze §2` reserves it. No frozen counterpart. No prior ADR decides
-it (`§19`). Bears on `P11-W2` goal decomposition.
-**Architect decision required:** *[TO BE DECIDED]*
-
-**`Plan` / `PlanStep`** — no reserved counterpart and no frozen counterpart. The
-adjacent reserved material sits in `optimization` (*prioritization model*). Could
-be persistent state, transient structure, projection, or documentation artifact.
-**Architect decision required:** *[TO BE DECIDED]*
-
-**`Delegation`** — no frozen counterpart. The nearest existing semantics are
-`governance`, which *"holds authority over decisions"*, decides *"nothing
-automatically"* (`PR-3`) and *"fails closed"* (`PR-4`) — **but imports nothing
-from Workflow, Agent, Runtime or Optimization**, which delegation must span.
-**Architect decision required:** *[TO BE DECIDED]*
-
-**`OrganizationalState`** — `State-as-entity` is reserved. Directly engages the
-`P12-W2` boundary (`§10`).
-**Architect decision required:** *[TO BE DECIDED]*
-
----
-
-## 10. P12 boundary (`§10`)
-
-| Information | Class |
-|---|---|
-| Organizational goals, plans, delegation, coordination, org-level continuity | **P11** |
-| Accountability reconstruction | **P11** |
-| `OrganizationalState` scoped to **one organization** | **P11 — if ratified** |
-| `OrganizationalState` widened to **P4–P11** | **P12** — `P12-W2` *Unified Operational State* |
-| System self-model | **P12** — `P12-W5` |
-
-> **The line is scope, not concept.** The same mechanism is P11 at organization
-> scope and P12 at system scope. **`§10` therefore requires the Architect to
-> state which scope is ratified** — otherwise `P11 ORGANIZATIONAL STATE ≠ P12
-> UNIFIED OPERATIONAL STATE` erodes by drift rather than by decision.
-
----
-
-## 12. Consequence analysis (`§12`)
-
-| Dimension | **A — Existing entity** | **B — Projection** | **C — Non-entity semantic** | **D — New entity** |
-|---|---|---|---|---|
-| Frozen architecture impact | **none** | **none** | **none** | **amends `Freeze §4`** |
-| Canonical complexity | lowest | low | low | **highest** |
-| Implementation impact | reuse | derivation rules required | contracts required | new surface + migration |
-| Runtime impact | none | low | low | **high** |
-| State architecture impact | none | none | none | **engages `P12-W2`** |
-| P12 impact | none | none | none | **may pre-empt `P12-W2`** |
-| Governance impact | none | none | none | **Architect authority required** |
-| Evidence / traceability | existing suites | derivable from Trace | contract tests | **new negative controls required** |
-| **Reversibility** | n/a | **high** — delete the view | **high** | **LOW** |
-| Future integration risk | **semantic overload** if forced | derivation must stay precise | persistence may still be needed | **lowest distortion, highest cost** |
-
-**The honest asymmetry:** A, B and C are cheap and reversible **but may distort
-semantics if forced**; D is semantically cleanest **and least reversible**. `§9`
-is explicit that `NO-NEW-ENTITY ≠ FORCE FIT EVERY CONCEPT`.
-
----
-
-## 13. CO-FOUNDER RECOMMENDATION
-
-> # CO-FOUNDER RECOMMENDATION — **NOT ARCHITECT DECISION**
-
-**For the twelve resolved items: A + B + C as classified in `§4.2`.** Three are
-frozen entities, three already exist as implemented structures, one is a
-projection, three are relationships/layers/activities. **This needs no new
-entity and creates no Freeze conflict.**
-
-**For the four unresolved: I make no recommendation, and that is deliberate.**
-
-`§13` invites a recommendation and `§1.1` warns that *"the Architect must not
-merely approve the Co-Founder recommendation."* **Recommending on all four would
-work against that warning**, because the evidence does not separate the options:
-
-- **`Goal`, `Plan`, `OrganizationalState`** each sit on or beside a **reserved
-  concept**. Recommending "projection" would be choosing the cheap option;
-  recommending "new entity" would be choosing the one `§20` of the preparing Act
-  forbids me to select. **Neither is evidence-driven.**
-- **`Delegation`** has a real tension I can state but not resolve: its semantics
-  match `governance`, and `governance`'s isolation forbids it the spanning role.
-  **That is an architectural trade-off, not a fact.**
-
-**What I do recommend is a principle**, matching `§13.1`'s preliminary text:
-**prefer the minimum canonical surface that preserves semantic correctness** —
-reuse where semantics genuinely match, project where derivation is exact, and
-**introduce a new entity only where representation without it would distort
-meaning.** Whether any of the four crosses that line is the Architect's judgement.
-
----
-
-## 14. EXPLICIT ARCHITECT CHOICE
-
-*This section MUST remain unfilled until the Architect actually decides.*
-
-```text
-ARCHITECT DECISION:
-[  ] OPTION A — EXISTING-ENTITY / EXISTING-STRUCTURE RECONCILIATION
-[  ] OPTION B — PROJECTION / DERIVED-MODEL APPROACH
-[  ] OPTION C — EXPLICIT NON-ENTITY SEMANTIC MODEL
-[  ] OPTION D — ARCHITECT-AUTHORIZED NEW ENTITY
-[  ] OTHER — ONLY IF EXPLICITLY DEFINED BY ARCHITECT:
-    ___________________________________________
-```
-
-**Goal** — CLASSIFICATION: *[TO BE FILLED BY ARCHITECT]* · CANONICAL HOME: *[TO BE FILLED]* · RATIONALE: *[TO BE FILLED]*
-**Plan** — CLASSIFICATION: *[TO BE FILLED BY ARCHITECT]* · CANONICAL HOME: *[TO BE FILLED]* · RATIONALE: *[TO BE FILLED]*
-**Delegation** — CLASSIFICATION: *[TO BE FILLED BY ARCHITECT]* · CANONICAL HOME: *[TO BE FILLED]* · RATIONALE: *[TO BE FILLED]*
-**OrganizationalState** — CLASSIFICATION: *[TO BE FILLED BY ARCHITECT]* · CANONICAL HOME: *[TO BE FILLED]* · P11/P12 BOUNDARY: *[TO BE FILLED]* · RATIONALE: *[TO BE FILLED]*
-
-## 15. ARCHITECT RATIONALE
-
-*[TO BE FILLED BY ARCHITECT]*
-
-## 21. EFFECTIVE DATE
-
-*[TO BE FILLED ONLY AFTER ACTUAL ARCHITECT DECISION]*
-
-## 22. ARCHITECT SIGNATURE
-
-```text
-Name:                [TO BE FILLED]
-Role:                ARCHITECT
-Decision ID:         DP-04
-Decision:            [TO BE FILLED]
-Date:                [TO BE FILLED]
-Signature/Approval:  [TO BE FILLED]
-```
-
----
-
-## 19. Prove-me-wrong (`§19`)
-
-| Test | Result |
-|---|---|
-| Could an existing frozen entity already provide this semantic? | **YES for 3** — Organization, Department, Capability. **No** for the four unresolved |
-| Could this be only a projection? | **YES for `Evidence`.** For `Goal`/`Plan`/`OrganizationalState` — **UNKNOWN**, and not asserted |
-| Could this be only a relationship? | **YES for `Dependency`** (`INV-9`/`INV-10`). Plausible for `Delegation` — **unproven** |
-| Could this be only an operational state? | **YES for `Escalation`** — verified as a Trace status |
-| Could this be a P12 concern? | **YES for `OrganizationalState` at system scope** — `P12-W2` |
-| Could treating this as an entity violate No-New-Entity? | **YES** for all six unresolved — `Freeze §4` *"No new entity"* |
-| Could refusing a new entity create semantic distortion? | **YES — and this survives.** `Delegation` has no frozen counterpart and the nearest boundary structurally cannot host it. **Forcing it into a projection may distort meaning** |
-| Could an existing ADR already decide this? | **NO — searched all 29 ADRs; none decides `Goal`, `Plan`, `Delegation` or organizational state** |
-| Could a frozen definition contradict the proposed classification? | **NO contradiction found** for the twelve classified items |
-
-> ### Surviving contradiction, reported as `§19` requires
+> **The decision is the Architect's.** My prepared instrument recommended on
+> twelve of sixteen concepts and **declined to recommend on the four unresolved**;
+> the Architect decided all four. `§1.1` of the pending instrument warned that
+> *"the Architect must not merely approve the Co-Founder recommendation"*, and the
+> issued decision does not — **it resolves the contradiction I could only report.**
 >
-> **`NO-NEW-ENTITY` and semantic correctness genuinely conflict for
-> `Delegation`.** Its semantics match `governance`; `governance`'s isolation
-> forbids it the spanning role; no other boundary claims it; and no projection
-> over Trace obviously reconstructs *authority conferred within bounds* as
-> opposed to *authority exercised*.
+> ---
 >
-> **This is the strongest case among the four for Option D — and I do not select
-> it.** `§11` reserves that to the Architect and `§18 NC-05` forbids me forcing it
-> the other way to satisfy the constraint.
+> ## Supersession of the PENDING copy — disclosed
+>
+> | | `sha256` | Status | `§14` |
+> |---|---|---|---|
+> | First | `b6ef9669c330…` | `DECISION-PENDING` | unfilled |
+> | **Second — operative** | `cfe6c573b032e807…` | **`ISSUED`** | **OPTION C, all four concepts decided** |
+>
+> **The issued text is a rewrite, not a countersignature** — 17 632 bytes against
+> 25 864. The same pattern as `FD-P10-005`: the deliberative scaffolding is
+> replaced by a decision taken. **The PENDING copy is preserved in git history**
+> and superseded, not deleted.
+>
+> ---
+>
+> ## Source verification performed before acting on it
+>
+> `§3.5` and `§15` rest on a claim about **PD-01**. Verified at source rather
+> than accepted:
+>
+> - **`Governance ≠ Execution`** is in PD-01's own volume —
+>   `docs/architecture/volume-1/pd-01-executive-office/A1.md:94` and `A10.md:201`.
+> - **All five distinctions together**, verbatim, at
+>   `docs/program/AIOS_GAP_CLOSURE_P10_P13_CONSTRUCTION_ROADMAP_v1.0.md:370`:
+>   *"Governance ≠ Execution · Authority ≠ Ownership · Delegation ≠ Transfer of
+>   Ultimate Accountability · Coordination ≠ Ownership · Compliance ≠ Operational
+>   Execution."*
+>
+> **The claim holds.** One attribution nuance recorded for accuracy: the decision
+> attributes the full set to PD-01, and the complete block is resident in the Gap
+> Closure Roadmap while PD-01's volume carries part of it. **Both are resident and
+> the substance is verified** — this is a citation-precision note, not a defect.
+>
+> ---
+>
+> **Supplied by:** Architect · **Persisted by:** Claude Code / Co-Founder
+> **Persisted:** 2026-09-10 · **Status (its own):** ISSUED
+>
+> **VERBATIM COPY.** Recovered from the session transcript, the primary record —
+> **not reconstructed**. `sha256` of the recovered body, excluding the single
+> trailing newline this file appends:
+> `cfe6c573b032e807b61d85ed6c3b9db9c84b30d61cac01d5d05e48569f5dab4d`
+>
+> ---
+>
+> ## What this decision does NOT do — from its own text
+>
+> `§2`: does **not** authorize P11 construction, `E11` ratification, P12
+> construction, Native Core modification, a new subsystem, or **DP-03**.
+> `§25`: P11 authorization and `E11` ratification **remain separate Founder
+> Decisions**; DP-03 **remains a separate Architect Decision**.
+> `§26`: `ARCHITECT DECISION ≠ FOUNDER AUTHORIZATION`.
 
 ---
 
-## 18. Negative controls (`§18`)
+ADR / ARCHITECT DECISION
 
-```text
-NC-01 recommendation treated as decision        NOT DONE — §13 labelled, §14 unfilled
-NC-02 DECISION-PENDING treated as approval      NOT DONE
-NC-03 silence treated as approval               NOT DONE
-NC-04 entity created from a §15 mention         NOT DONE — 3 non-entity, 1 projection
-NC-05 concept forced into an existing entity    NOT DONE — 6 left unresolved
-NC-06 frozen architecture modified              NOT DONE
-NC-07 Native Core subsystem created             NOT DONE — still exactly eleven
-NC-08 DP-04 used to decide DP-03                NOT DONE — §2 scope respected
-NC-09 technical necessity used as authority     NOT DONE
-NC-10 implementation treated as canonical       NOT DONE — implemented ≠ canonical, §6
-NC-11 projection treated as canonical entity    NOT DONE — Evidence marked projection
-NC-12 concept treated as runtime entity         NOT DONE
-NC-13 P11 state expanded into P12               NOT DONE — §10 boundary preserved
-NC-14 DP-04 treated as P11 authorization        NOT DONE
-NC-15 DP-04 treated as E11 ratification         NOT DONE
-```
+DP-04 — P11 Organizational Entity Model
 
-## 16. Affected artifacts (`§16`)
+Document Type: Architect Decision Record
+Decision ID: DP-04
+Phase: P11 — Autonomous Organization
+Status: ISSUED
+Decision Authority: Architect
+Effective Date: 2026-09-10
 
-**No artifact was mutated** — `§16`: *"No artifact SHALL be mutated merely because
-this decision is pending."*
+⸻
 
-| Artifact | Current | Effect of DP-04 | Authority |
-|---|---|---|---|
-| P11 Blueprint `§15` | Draft, conceptual | classification recorded **elsewhere**; Blueprint untouched | Founder/Architect |
-| Canonical entity model | 12 frozen | **unchanged unless Option D** | Architect |
-| Architecture Freeze | frozen | **unchanged unless Option D** | Architect |
-| P12 boundary | `P12-W2` defined | clarified **only if** `OrganizationalState` scope is stated | Architect |
-| `DP-03` | DECISION-PENDING | **takes DP-04 as input** (`§25`) | Architect |
-| `DP-01` / `DP-02` | prepared | **not final** until DP-04/DP-03 issue | Founder |
+§0 — DECISION STATUS RULE
 
-## 23. Final status
+This document constitutes an actual Architect Decision.
 
-> # `STATUS = DECISION-PENDING`
->
-> `§23`: *"Architect decision has not yet been issued."* It does **not** mean
-> approved, accepted, authorized, adopted, frozen, or implemented.
->
-> **To issue:** complete `§14`, `§15`, `§21`, `§22`. Without all four, `§23`
-> requires the status remain `DECISION-PENDING`.
+The Architect Decision becomes authoritative upon completion of:
+
+* §14 — Architect Choice
+* §15 — Architect Rationale
+* §21 — Effective Date
+* §22 — Architect Signature
+* §23 — Final Status
+
+No implementation may treat a prior recommendation, analysis, candidate model, or decision package as equivalent to this issued decision.
+
+⸻
+
+§1 — EXACT DECISION QUESTION
+
+§1.1
+
+How shall the P11 organizational conceptual model represent Goal, Plan, Delegation, and OrganizationalState while remaining semantically correct, preserving the frozen Native Core boundary, respecting the No-New-Entity constraint, and maintaining the P11 → P12 boundary?
+
+Specifically:
+
+1. Which P11 concepts are canonical organizational concepts?
+2. Which concepts are already represented by frozen or implemented AIOS structures?
+3. Which concepts are projections rather than independent entities?
+4. Which concepts may exist outside Native Core?
+5. Does P11 require creation of a new Native Core entity or subsystem?
+6. How shall the model preserve authority, accountability, governance, execution, and organizational semantics without silently modifying frozen architecture?
+
+⸻
+
+§2 — DECISION SCOPE
+
+This decision covers the organizational entity/concept model required for P11.
+
+It does NOT:
+
+* authorize P11 construction;
+* authorize E11 ratification;
+* authorize P12 construction;
+* modify the Constitution;
+* modify Founder Reserved Authority;
+* create a new Founder authority;
+* modify the frozen Native Core;
+* authorize a new Native Core subsystem;
+* decide DP-03;
+* authorize runtime implementation by itself.
+
+DP-03 remains a separate Architect Decision and shall consume this decision as authoritative input.
+
+⸻
+
+§3 — AUTHORITATIVE SOURCE BASIS
+
+The decision is based on the verified architectural evidence that:
+
+1. P11 is the Autonomous Organization layer built above the P10 Department Ecosystem.
+2. P11 explicitly requires:
+    * planning;
+    * delegation;
+    * execution;
+    * coordination;
+    * observation;
+    * verification;
+    * escalation;
+    * accountability.
+3. P12 is the integration phase for P4–P11 and explicitly owns Unified Operational State.
+4. Platform Organization distinguishes authority, ownership, execution, governance, coordination, and delegation.
+5. PD-01 establishes the organizational pattern and explicitly preserves:
+    * separation of authority and execution;
+    * Authority ≠ Ownership;
+    * Delegation ≠ Transfer of Ultimate Accountability;
+    * Coordination ≠ Ownership;
+    * Governance ≠ Execution.
+6. The frozen Native Core currently has exactly eleven subsystem boundaries.
+7. The verified architectural freeze does not authorize creation of an additional Native Core subsystem through this decision.
+
+P11 requirements are explicitly documented as organizational capabilities, including planning and delegation.
+
+The P12 boundary explicitly assigns Unified Operational State to P12-W2.
+
+PD-01 explicitly establishes the distinction between authority, ownership, delegation, coordination, governance, and execution.
+
+⸻
+
+§4 — CANONICAL RECONCILIATION OF P11 CONCEPTUAL MODEL
+
+The previously verified reconciliation produced:
+
+3 FROZEN
+3 IMPLEMENTED
+1 PROJECTION
+3 NON-ENTITY
+6 UNRESOLVED
+----------------
+16 CONCEPTUAL ITEMS
+
+This 16-item inventory is treated as a conceptual reconciliation surface, not as a requirement that all sixteen become runtime entities.
+
+The phrase “conceptual entity” shall therefore not be interpreted as:
+
+concept mentioned in Blueprint
+        ↓
+mandatory runtime entity
+
+Instead:
+
+P11 conceptual model
+        ↓
+semantic classification
+        ↓
+frozen entity / implemented structure /
+projection / non-entity / organizational concept
+
+No entity shall be manufactured merely to make the count complete.
+
+⸻
+
+§5 — FROZEN ENTITY MODEL
+
+The twelve previously verified frozen organizational/core entities remain unchanged.
+
+This decision does NOT:
+
+* rename them;
+* split them;
+* merge them;
+* create successors;
+* create a twelfth Native Core subsystem;
+* reinterpret the Architecture Freeze.
+
+The existing frozen model remains authoritative.
+
+⸻
+
+§6 — RESERVED CONCEPTS
+
+The following concepts remain architectural concepts requiring explicit semantic placement:
+
+* Goal
+* Plan
+* Delegation
+* OrganizationalState
+
+Their semantic necessity does not by itself constitute authority to create a new Native Core entity.
+
+⸻
+
+§7 — IMPLEMENTED / PROJECTION / NON-ENTITY CLASSIFICATION
+
+The previously verified implementation findings remain valid:
+
+Escalation
+
+Escalation is represented as a ratified Trace status rather than an independent organizational entity.
+
+Observation
+
+Observation is represented through the existing observation publication mechanism.
+
+PerformanceRecord
+
+Performance information is represented through the existing performance/observation mechanism rather than requiring a new Native Core entity.
+
+Organizational State
+
+Organizational state shall not be elevated into a separate P11 Native Core entity.
+
+It shall remain compatible with the P12 Unified Operational State boundary.
+
+⸻
+
+§8 — FOUR UNRESOLVED CONCEPTS
+
+§8.1 Goal
+
+Architect Decision:
+
+Goal is a legitimate P11 organizational concept.
+
+It shall not be created as a new Native Core subsystem/entity.
+
+Its purpose is to represent organizational intent that can be decomposed and translated into plans and executable organizational work.
+
+Therefore:
+
+GOAL
+  ↓
+P11 ORGANIZATIONAL CONCEPT
+  ↓
+PLAN
+
+Goal does not create authority by itself.
+
+A Goal cannot:
+
+* expand Founder authority;
+* expand constitutional authority;
+* self-authorize;
+* override governance;
+* override architecture;
+* create permissions.
+
+⸻
+
+§8.2 Plan
+
+Architect Decision:
+
+Plan is a legitimate P11 organizational concept.
+
+Plan shall exist in the organizational layer outside the frozen Native Core.
+
+Plan represents the structured decomposition and sequencing of organizational work.
+
+Its semantics include:
+
+* decomposition;
+* sequencing;
+* dependency awareness;
+* execution preparation;
+* adaptation.
+
+Plan does not constitute authority.
+
+Therefore:
+
+GOAL
+  ↓
+PLAN
+  ↓
+DELEGATION
+  ↓
+EXECUTION
+
+A Plan cannot authorize itself.
+
+⸻
+
+§8.3 Delegation
+
+Architect Decision:
+
+Delegation is a first-class P11 organizational concept represented as a governed organizational relation/record outside the frozen Native Core.
+
+This is the critical architectural decision.
+
+Delegation shall NOT:
+
+* become Governance;
+* become Ownership;
+* become Execution;
+* become a replacement for authority;
+* transfer ultimate accountability;
+* create authority that does not already exist;
+* expand constitutional or Founder authority.
+
+Delegation records:
+
+AUTHORITY SOURCE
+        ↓
+AUTHORIZED SCOPE
+        ↓
+DELEGATED ACTOR / UNIT
+        ↓
+BOUNDARY
+        ↓
+ACCOUNTABILITY
+        ↓
+VERIFICATION
+
+The organizational layer may therefore represent:
+
+A delegates B
+for capability/work X
+within authority boundary Y
+under accountability condition Z
+
+without introducing another Native Core subsystem.
+
+This resolves the previously identified architectural conflict.
+
+The correct interpretation is:
+
+Delegation semantics
+        ≠
+Governance entity
+Delegation semantics
+        ≠
+Execution entity
+Delegation semantics
+        ≠
+new Native Core subsystem
+
+Instead:
+
+P11 ORGANIZATION
+       │
+       └── DELEGATION RELATION / RECORD
+                    │
+                    ├── authority boundary
+                    ├── scope
+                    ├── actor
+                    ├── accountability
+                    └── verification
+
+This preserves the frozen architecture while retaining semantic correctness.
+
+⸻
+
+§8.4 OrganizationalState
+
+Architect Decision:
+
+OrganizationalState is NOT an independent P11 Native Core entity.
+
+It shall be treated as a bounded organizational state projection whose eventual system-wide representation belongs to the P12 integration model.
+
+Therefore:
+
+P11
+ORGANIZATIONAL STATE
+        ↓
+bounded organizational projection
+        ↓
+P12 UNIFIED OPERATIONAL STATE
+
+P11 may expose the state necessary for organizational continuity and operation.
+
+P11 shall not independently create a competing system-wide state authority.
+
+⸻
+
+§9 — NO-NEW-ENTITY CONSTRAINT
+
+The No-New-Entity constraint remains in force.
+
+This decision does NOT create:
+
+* Native Core entity #13;
+* Native Core subsystem #12;
+* Governance subsystem;
+* Delegation subsystem inside Native Core;
+* independent P11 state subsystem.
+
+The architectural solution is therefore:
+
+SEMANTIC REQUIREMENT
+        ↓
+ORGANIZATIONAL DOMAIN CONCEPT
+        ↓
+OUTSIDE FROZEN NATIVE CORE
+        ↓
+NO NEW CORE SUBSYSTEM
+
+The constraint is preserved without forcing semantic concepts to disappear.
+
+⸻
+
+§10 — P12 BOUNDARY
+
+P11 owns organizational behavior.
+
+P12 owns system-wide integration.
+
+Therefore:
+
+P11
+├── Goal
+├── Plan
+├── Delegation
+├── Organizational coordination
+├── Organizational execution
+├── Organizational observation
+└── Organizational performance
+              ↓
+P12
+└── Unified Operational State
+
+P11 must not establish an alternative system-wide operational state that competes with P12.
+
+P12 remains the integration layer for P4–P11.
+
+⸻
+
+§11 — OPTIONS CONSIDERED
+
+Option A — Force all concepts into existing frozen entities
+
+Rejected.
+
+Reason:
+
+It risks semantic distortion, especially for Delegation.
+
+Delegation is not equivalent to Governance, Ownership, Execution, or Coordination.
+
+⸻
+
+Option B — Treat all unresolved concepts as projections
+
+Rejected as a universal solution.
+
+OrganizationalState is appropriately projection-oriented, but treating Goal, Plan, and Delegation merely as incidental projections would weaken the semantic model required by P11.
+
+⸻
+
+Option C — Place required organizational concepts outside Native Core
+
+SELECTED.
+
+This preserves:
+
+* semantic correctness;
+* Native Core freeze;
+* organizational extensibility;
+* P11 scope;
+* P12 integration boundary;
+* authority separation.
+
+⸻
+
+Option D — Create a new Native Core entity/subsystem
+
+Rejected.
+
+Although Delegation demonstrates genuine semantic requirements, those requirements do not justify modification of the frozen Native Core.
+
+The organizational layer can represent the required semantics without adding another Native Core subsystem.
+
+⸻
+
+§12 — CONSEQUENCE MATRIX
+
+Concern	Consequence
+Native Core	Remains frozen
+Number of Native Core subsystems	Remains 11
+Goal	P11 organizational concept
+Plan	P11 organizational concept
+Delegation	First-class organizational relation/record
+OrganizationalState	Bounded projection; P12 integration concern
+Governance	Remains separate
+Ownership	Remains separate
+Execution	Remains separate
+Accountability	Remains attached to delegation/execution semantics
+P12	Remains owner of unified system-wide state
+DP-03	May now use this decision as authoritative input
+P11 construction	Still requires separate Founder authorization
+E11	Still requires Founder ratification
+
+⸻
+
+§13 — CO-FOUNDER RECOMMENDATION
+
+The Co-Founder recommendation is accepted in principle where consistent with this decision:
+
+Prefer the minimum canonical surface that preserves semantic correctness.
+
+Architectural interpretation:
+
+Do not create a new frozen-core structure when the required organizational semantics can be represented correctly in the organizational layer.
+
+The recommendation does not itself constitute authority.
+
+This section is subordinate to §14–§23.
+
+⸻
+
+§14 — ARCHITECT CHOICE
+
+THE ARCHITECT CHOOSES OPTION C — ORGANIZATIONAL-LAYER REPRESENTATION OUTSIDE THE FROZEN NATIVE CORE.
+
+Concept-level decisions:
+
+Goal
+
+P11 organizational concept.
+
+Plan
+
+P11 organizational concept.
+
+Delegation
+
+First-class P11 organizational relation/record outside Native Core.
+
+OrganizationalState
+
+Bounded P11 projection with P12 Unified Operational State as the system-wide integration boundary.
+
+No new Native Core entity or subsystem is authorized.
+
+No modification to the Architecture Freeze is authorized.
+
+⸻
+
+§15 — ARCHITECT RATIONALE
+
+The architecture must satisfy two constraints simultaneously:
+
+SEMANTIC CORRECTNESS
+        +
+ARCHITECTURAL INTEGRITY
+
+Eliminating Delegation as a concept merely to satisfy No-New-Entity would be architecturally incorrect because P11 explicitly requires delegation, authority boundaries, accountability, delegation tracking, and delegation verification.
+
+Conversely, creating a new Native Core subsystem solely because Delegation is semantically important would violate the existing frozen architecture.
+
+The correct solution is therefore a third position:
+
+NOT COLLAPSED
+INTO EXISTING CORE ENTITY
+AND
+NOT ELEVATED
+INTO NEW CORE SUBSYSTEM
+BUT
+REPRESENTED AS
+A GOVERNED ORGANIZATIONAL CONCEPT/RELATION
+OUTSIDE THE FROZEN CORE
+
+This is especially important because PD-01 explicitly preserves:
+
+Governance ≠ Execution
+Authority ≠ Ownership
+Delegation ≠ Transfer of Ultimate Accountability
+Coordination ≠ Ownership
+
+The decision therefore preserves the architecture rather than weakening it.
+
+⸻
+
+§16 — AFFECTED ARTIFACTS
+
+This decision affects the semantic interpretation of:
+
+1. P11 Roadmap / PRD / Construction Blueprint
+2. P11-W2 Organizational Planning
+3. P11-W3 Delegation
+4. P11-W4 Autonomous Execution
+5. P11-W5 Organizational Memory
+6. P11-W6 Organizational Performance
+7. P11-W7 Human Governance Boundary
+8. P11 organizational state model
+9. P11 → P12 integration boundary
+10. DP-03 architecture placement decision
+
+No frozen Native Core artifact is authorized for mutation by this decision.
+
+⸻
+
+§17 — CONSEQUENCE RULE
+
+After issuance:
+
+DP-04
+  ↓
+AUTHORITATIVE P11 ENTITY / CONCEPT MODEL
+  ↓
+DP-03
+  ↓
+P11 AUTHORIZATION PACKAGE
+  ↓
+E11 RATIFICATION PACKAGE
+  ↓
+CONSTRUCTION
+
+DP-03 must treat this decision as authoritative input.
+
+DP-03 shall not reopen the already-decided question of whether Goal, Plan, Delegation, and OrganizationalState are semantically required concepts.
+
+DP-03 may only determine their architectural home/interface according to the remaining DP-03 question.
+
+⸻
+
+§18 — NEGATIVE CONTROLS
+
+The following transformations are prohibited:
+
+Delegation
+   ↓
+Governance authority
+Delegation
+   ↓
+Transfer of ultimate accountability
+Goal
+   ↓
+Self-authorization
+Plan
+   ↓
+Automatic authority
+Performance
+   ↓
+Strategy authority
+OrganizationalState
+   ↓
+Competing system-wide state authority
+P11 organizational concept
+   ↓
+automatic Native Core subsystem
+DP-04
+   ↓
+automatic P11 authorization
+
+⸻
+
+§19 — PROVE-ME-WRONG CONDITION
+
+This decision shall be revisited only if authoritative evidence demonstrates that:
+
+1. the organizational layer cannot represent Delegation with sufficient semantic integrity;
+2. an existing constitutional or architectural instrument explicitly requires Delegation to be a Native Core subsystem;
+3. P12 Unified Operational State cannot safely integrate the organizational state projection;
+4. an existing frozen entity is semantically incapable of supporting the selected organizational model;
+5. a higher-authority Architect Decision or constitutional instrument contradicts this decision.
+
+Absent such evidence, the decision stands.
+
+⸻
+
+§20 — DECISION INTEGRITY
+
+The following distinctions are mandatory:
+
+CONCEPT ≠ ENTITY
+ENTITY ≠ NATIVE CORE SUBSYSTEM
+ORGANIZATIONAL CONCEPT ≠ GOVERNANCE AUTHORITY
+DELEGATION ≠ AUTHORITY CREATION
+DELEGATION ≠ ACCOUNTABILITY TRANSFER
+STATE PROJECTION ≠ SYSTEM-WIDE STATE AUTHORITY
+ARCHITECT DECISION ≠ FOUNDER AUTHORIZATION
+
+No implementation may reinterpret this ADR to expand its authority.
+
+⸻
+
+§21 — EFFECTIVE DATE
+
+2026-09-10
+
+This decision is effective upon issuance.
+
+⸻
+
+§22 — ARCHITECT SIGNATURE
+
+Architect: AIOS Architect
+Decision: DP-04
+Signature: ISSUED BY ARCHITECT
+Date: 2026-09-10
+
+⸻
+
+§23 — FINAL STATUS
+
+STATUS: ISSUED
+
+The DP-04 Architect Decision is authoritative for the P11 organizational entity/concept model.
+
+⸻
+
+§24 — ISSUED DECISION RECORD
+
+Canonical decision:
+
+P11 shall represent Goal and Plan as organizational concepts outside the frozen Native Core; Delegation shall be a first-class governed organizational relation/record outside the frozen Native Core; OrganizationalState shall be a bounded organizational projection whose system-wide integration belongs to P12 Unified Operational State. No new Native Core entity or subsystem is authorized by DP-04.
+
+⸻
+
+§25 — POST-ISSUANCE RULE
+
+Claude Code may now use DP-04 as authoritative architectural input.
+
+Claude Code shall:
+
+* not reopen DP-04;
+* not create a new Native Core subsystem;
+* not silently modify the Architecture Freeze;
+* not convert Delegation into Governance;
+* not treat Goal or Plan as authorization;
+* not create a competing P11 system-wide state authority;
+* carry DP-04 forward into DP-03;
+* identify only genuinely remaining architectural questions.
+
+DP-03 remains a separate Architect Decision.
+
+P11 authorization remains a separate Founder Decision.
+
+E11 ratification remains a separate Founder Decision.
+
+⸻
+
+§26 — GOVERNING INVARIANTS
+
+FROZEN ARCHITECTURE REMAINS FROZEN
+P11 ORGANIZATIONAL SEMANTICS REMAIN EXPRESSIBLE
+DELEGATION REMAINS DISTINCT FROM GOVERNANCE
+DELEGATION DOES NOT TRANSFER ULTIMATE ACCOUNTABILITY
+GOAL DOES NOT CREATE AUTHORITY
+PLAN DOES NOT CREATE AUTHORITY
+ORGANIZATIONAL STATE DOES NOT COMPETE WITH P12 UNIFIED STATE
+P11 ≠ P12
+ARCHITECT DECISION ≠ FOUNDER AUTHORIZATION
+AUTHORITY ≠ OWNERSHIP
+GOVERNANCE ≠ EXECUTION
+CONCEPT ≠ ENTITY
+ENTITY ≠ NATIVE CORE SUBSYSTEM
+
+END OF DP-04 — ISSUED

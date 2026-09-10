@@ -1,10 +1,72 @@
 # P11 Architect Decision Packages — DP-03 and DP-04
 
 > **Executed under `ACT-CC-P11-002`** — 2026-09-10.
-> **`DP-03 = DECISION-PENDING` · `DP-04 = DECISION-PENDING`.**
+> **`DP-04 = ISSUED` — Architect, 2026-09-10, OPTION C.**
+> **`DP-03 = DECISION-PENDING`, and materially narrowed by it — see the banner
+> immediately below.**
+>
+> ~~`DP-03 = DECISION-PENDING` · `DP-04 = DECISION-PENDING`.~~
 > Every recommendation below is labelled **`CO-FOUNDER RECOMMENDATION — NOT
 > ARCHITECT DECISION`**, as `§12`/`§22` require. **No decision was taken, no
 > subsystem created, no entity created, nothing built** (`§4`, `§28`).
+
+---
+
+## DP-04 ISSUED — what it decided, and what it leaves for DP-03
+
+**`DP-04` is issued** (`§14` OPTION C · `§21` 2026-09-10 · `§22` signed · `§23`
+`ISSUED`), persisted at
+[`DP-04-P11-ORGANIZATIONAL-ENTITY-MODEL.md`](DP-04-P11-ORGANIZATIONAL-ENTITY-MODEL.md).
+**It is authoritative input to DP-03** (`DP-04 §17`, `§25`), and **DP-04 is not
+reopened here.**
+
+### It answers most of DP-03's question
+
+`DP-04 §14` selects **organizational-layer representation outside the frozen
+Native Core**, and the concept-level decisions place the homes directly:
+
+| DP-03 capability | What `DP-04` already settles | Residual DP-03 question |
+|---|---|---|
+| **`W2` Planning** | `§8.2` — *"Plan shall exist in the organizational layer **outside the frozen Native Core**"* | **which** surface, and its interface to the eleven |
+| **`W3` Delegation** | `§8.3` — *"a governed organizational relation/record **outside the frozen Native Core**"*, with the record shape given | same, plus how it reads authority without becoming Governance |
+| **`W6` Performance** | `§7` — *"represented through the existing performance/observation mechanism rather than requiring a new Native Core entity"* | **confirm** the detect-only constraint on that mechanism |
+| **`W1` Coordination** | not addressed — and it needs no decision: `INV-13` **forces** it into `workflow` | **none** |
+
+**My `Option A` recommendation is superseded by an Architect choice that reaches
+the same placement by its own reasoning** — `DP-04 §11` rejects Option D
+explicitly: *"Although Delegation demonstrates genuine semantic requirements,
+those requirements do not justify modification of the frozen Native Core."*
+
+### The contradiction I reported is resolved
+
+I reported that `NO-NEW-ENTITY` and semantic correctness **genuinely conflict**
+for `Delegation`, and that this was the strongest case for a new entity — which I
+was forbidden to select. **`DP-04 §15` resolves it with a third position I had not
+identified:**
+
+> *"NOT COLLAPSED INTO EXISTING CORE ENTITY **AND** NOT ELEVATED INTO NEW CORE
+> SUBSYSTEM **BUT** REPRESENTED AS A GOVERNED ORGANIZATIONAL CONCEPT/RELATION
+> OUTSIDE THE FROZEN CORE."*
+
+**I had framed the choice as collapse-or-elevate and found both wrong.** The
+Architect's answer is that the dichotomy was false: the organizational layer can
+carry the semantics without either. **That is the decision doing what `§1.1` said
+it must — not merely approving what I proposed.**
+
+### DP-03 as it now stands
+
+> **Remaining question:** *Which organizational-layer surface outside the Native
+> Core hosts Planning and Delegation, what is its interface to the eleven frozen
+> boundaries, and is `W6` confirmed to the existing observation mechanism under a
+> strict detect-only constraint?*
+
+**Narrower than the original DP-03 question**, which asked *whether* a twelfth
+boundary was needed. `DP-04 §9` closes that: *"This decision does NOT create …
+Native Core subsystem #12."*
+
+**`DP-03` remains a separate Architect Decision** (`DP-04 §25`) and is **not
+decided here**. The material below is preserved as the record of the analysis that
+preceded issuance; **where it differs from `DP-04`, `DP-04` governs.**
 
 ---
 

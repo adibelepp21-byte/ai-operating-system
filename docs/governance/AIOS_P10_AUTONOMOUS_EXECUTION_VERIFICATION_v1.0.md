@@ -8114,3 +8114,80 @@ native_core subsystems: exactly eleven  (NC-07)
 DP-04 = DECISION-PENDING · §14/§15/§21/§22 unfilled
 NC-01..NC-15 = all NOT DONE · no artifact mutated (§16)
 ```
+
+
+---
+
+# 82. `DP-04` ISSUED — the Architect resolved the contradiction I could only report
+
+**Architect, 2026-09-10, `§14` OPTION C.** Persisted verbatim at
+[`DP-04`](../architecture/p11/DP-04-P11-ORGANIZATIONAL-ENTITY-MODEL.md),
+`sha256 cfe6c573…`. All five sections `§0` requires are complete.
+
+## 82.1 It did not merely approve what I proposed
+
+The pending instrument's `§1.1` warned that *"the Architect must not merely
+approve the Co-Founder recommendation."* **It did not.**
+
+I recommended on twelve of sixteen concepts and **declined on the four
+unresolved**, reporting one surviving contradiction: that `NO-NEW-ENTITY` and
+semantic correctness **genuinely conflict for `Delegation`** — its semantics match
+`governance`, `governance`'s isolation forbids it the spanning role, and no
+projection over Trace obviously reconstructs *authority conferred within bounds*.
+I called it the strongest case for Option D and said I would not select it.
+
+**`DP-04 §15` resolves it with a position I had not identified:**
+
+> *"NOT COLLAPSED INTO EXISTING CORE ENTITY **AND** NOT ELEVATED INTO NEW CORE
+> SUBSYSTEM **BUT** REPRESENTED AS A GOVERNED ORGANIZATIONAL CONCEPT/RELATION
+> OUTSIDE THE FROZEN CORE."*
+
+**I had framed the choice as collapse-or-elevate and found both wrong. The
+dichotomy was false.** The organizational layer carries the semantics without
+either — which is the answer, and it is not one I offered.
+
+## 82.2 Source verification before acting on it
+
+`§3.5`/`§15` rest on a PD-01 claim. **Verified rather than accepted:**
+`Governance ≠ Execution` sits in PD-01's own volume
+(`volume-1/pd-01-executive-office/A1.md:94`, `A10.md:201`), and the **complete
+five-distinction block** is verbatim at
+`AIOS_GAP_CLOSURE_P10_P13_CONSTRUCTION_ROADMAP_v1.0.md:370`.
+
+**The claim holds.** One nuance recorded for precision: the decision attributes
+the full set to PD-01, while the complete block is resident in the Gap Closure
+Roadmap and PD-01's volume carries part. **Both resident, substance verified** —
+a citation-precision note, not a defect.
+
+## 82.3 `DP-03` is materially narrower now
+
+`§25` authorizes carrying `DP-04` into `DP-03`. Doing so **shrinks DP-03
+substantially**, and saying so is more useful than carrying forward a question
+largely answered:
+
+| Capability | Settled by `DP-04` | Residual |
+|---|---|---|
+| `W2` Planning | `§8.2` — *"outside the frozen Native Core"* | **which** surface, and its interface |
+| `W3` Delegation | `§8.3` — governed relation/record **outside** the core | same, plus reading authority without becoming Governance |
+| `W6` Performance | `§7` — *"the existing performance/observation mechanism"* | confirm **detect-only** |
+| `W1` Coordination | not addressed — `INV-13` **forces** `workflow` | **none** |
+
+**The original DP-03 question was whether a twelfth boundary was needed.
+`DP-04 §9` closes that**: *"This decision does NOT create … Native Core subsystem
+#12."*
+
+## 82.4 What remains untouched
+
+`§2`: DP-04 authorizes **no** P11 construction, **no** `E11` ratification, **no**
+P12 construction, **no** Native Core modification, and **does not decide DP-03**.
+`§26`: **`ARCHITECT DECISION ≠ FOUNDER AUTHORIZATION`.**
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+citation 94 documents / 0 errors · stale-state 459 documents / 0 assertions
+native_core subsystems: exactly eleven — unchanged by issuance
+
+DP-04 = ISSUED       DP-03 = DECISION-PENDING (narrowed)
+DP-01 = Founder      DP-02 = Founder
+P11 CONSTRUCTED = FALSE · E11 RATIFIED = FALSE · FREEZE UNMODIFIED
+```
