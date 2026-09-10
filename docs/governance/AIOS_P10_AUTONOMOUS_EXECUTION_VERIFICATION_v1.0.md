@@ -7138,12 +7138,30 @@ reason that could have been otherwise.
 **The correction is recorded in the package rather than edited out of it.** The
 verdict did not change. The ground under it did.
 
+## 71.3b And a third cycle, attacking the pattern rather than waiting for a symptom
+
+Cycle two's defect had a shape — **a check that cannot fail** — so cycle three
+went looking for that shape instead of for new symptoms. It found the mirror.
+
+`NON_DEPARTMENT_DIRS` excluded **`platform-runtime`, a directory that has never
+existed anywhere in this repository**, speculatively added by me in `338f4ac`.
+It changed no result. But where `G-I` would have admitted an unauthorized
+Department, this would have **silently suppressed a legitimate one** given that
+name — and that failure is invisible to a population count, because the entry
+simply never appears. Removed; a test now requires every exclusion to name a
+directory that exists.
+
+Also supplied: negative controls for `_owner_disagreements`, which was asserted
+clean on the resident corpus and never shown able to fire. **That one was a
+missing control, not a defect** — the mechanism worked — and it is recorded as
+such rather than inflated into a third gap.
+
 ## 71.4 Where this leaves P10
 
 ```text
 E10               RATIFIED (FD-P10-004, DECIDED)
 E10-01..E10-06    PASS, verified against the ratified text
-GAPS              2 found, 2 closed; 4 reserved, 1 out-of-boundary, 1 not-required
+GAPS              3 found, 3 closed; 4 reserved, 1 out-of-boundary, 1 not-required
 P1-P9             no regression
 COMPLETION        recommended as a determination
 CERTIFICATION     PENDING — Founder authority, withheld from me by §17
@@ -7157,7 +7175,7 @@ and states **`PREPARED ≠ CERTIFIED`** on its first line, as `§24` requires.
 ## 71.5 Verification
 
 ```text
-native_core 801 OK (1 expected failure) · consumers 276 OK · tools 287 OK
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 293 OK
 execution-catalog 0 error 0 warning · citation 85 documents 0 errors
 stale-state 450 documents 0 assertions
 ```

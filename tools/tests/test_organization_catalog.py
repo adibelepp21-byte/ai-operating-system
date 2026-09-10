@@ -23,6 +23,8 @@ from tools.organization_catalog import (  # noqa: E402
     w4_chain,
     w4_continuity,
     unestablished,
+    _owner_disagreements,
+    NON_DEPARTMENT_DIRS,
     WorkEntry,
     WorkEntryUnresolved,
     resolve_work_entry,
@@ -256,6 +258,85 @@ class TheW4ChainClosesAndCanFail(unittest.TestCase):
             links, defects = w4_chain(read_departments(root), root)
             self.assertEqual(defects, [], "fixture is broken, not the checker")
             self.assertEqual(len(links), 1)
+
+
+class NoExclusionSuppressesSomethingThatDoesNotExist(unittest.TestCase):
+    """An exclusion naming nothing is a Department-shaped hole waiting to open.
+
+    ``NON_DEPARTMENT_DIRS`` carried ``platform-runtime``, which was never a
+    directory anywhere in this repository — speculatively added by me. It
+    changed no result, because excluding nothing excludes nothing. But it would
+    have **silently suppressed a Department later established under that name**,
+    which is `FD-P10-004 §5` condition 2 (*"no required Department is
+    demonstrably missing"*) failing in the one way the population count cannot
+    show: the entry never appears, so nothing looks wrong.
+    """
+
+    def test_every_exclusion_names_a_directory_that_exists(self):
+        missing = sorted(
+            name for name in NON_DEPARTMENT_DIRS
+            if not (ORGANIZATION_ROOT / name).is_dir())
+        self.assertEqual(missing, [], f"exclusions naming nothing: {missing}")
+
+    def test_no_directory_is_left_unaccounted_for(self):
+        """Every directory is either a Department or an explicit exclusion."""
+        dirs = {p.name for p in ORGANIZATION_ROOT.iterdir() if p.is_dir()}
+        departments = {r.key for r in read_departments()}
+        self.assertEqual(dirs - departments - NON_DEPARTMENT_DIRS, set())
+
+
+class TheOwnershipCrossCheckCanFail(unittest.TestCase):
+    """`FD-P10-004 §6` — *"ownership declarations agree with the runtime graph"*.
+
+    The cross-check compares a Capability record's own ``## Owner`` section
+    against the Department directory it is nested under — **two independent
+    statements**, which is what makes disagreement detectable at all.
+
+    It was asserted ``== []`` against the resident corpus and **never shown able
+    to fire**. Unlike the establishment gap this exercise also found, the
+    mechanism was sound; what was missing was the evidence that it was. `§10`
+    condition 5 asks for negative controls where appropriate, and *"it returns
+    empty on the only corpus it has ever seen"* is not one.
+    """
+
+    def _corpus(self, tmp, owner="Platform Department", drop_owner=False):
+        root = Path(tmp)
+        dept = root / "platform"
+        (dept / "capabilities").mkdir(parents=True)
+        (dept / "agent-definitions").mkdir(parents=True)
+        (dept / "README.md").write_text(
+            "# Platform\n\nThis Department was established by [ADR-0003](x).\n"
+            "\n## Name\n\nPlatform\n", encoding="utf-8")
+        body = ("# cap-one\n\nThis Capability was established by [ADR-0003](x).\n"
+                "\n## Name\n\ncap-one\n")
+        if not drop_owner:
+            body += f"\n## Owner\n\n{owner}\n"
+        (dept / "capabilities" / "cap-one.md").write_text(body, encoding="utf-8")
+        return root
+
+    def test_the_resident_corpus_agrees_with_itself(self):
+        self.assertEqual(_owner_disagreements(read_departments(), ORGANIZATION_ROOT), [])
+
+    def test_a_stated_owner_contradicting_the_nesting_is_seen(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp, owner="Engineering Department")
+            self.assertEqual(
+                _owner_disagreements(read_departments(root), root),
+                [("cap-one", "Engineering Department", "platform")])
+
+    def test_a_capability_stating_no_owner_at_all_is_seen(self):
+        """Silence is not agreement: an absent declaration is reported, not passed."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp, drop_owner=True)
+            self.assertEqual(
+                _owner_disagreements(read_departments(root), root),
+                [("cap-one", None, "platform")])
+
+    def test_the_positive_control_reports_nothing(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp)
+            self.assertEqual(_owner_disagreements(read_departments(root), root), [],
+                             "fixture is broken, not the checker")
 
 
 class AnUnauthorizedPopulationEntryIsSeen(unittest.TestCase):

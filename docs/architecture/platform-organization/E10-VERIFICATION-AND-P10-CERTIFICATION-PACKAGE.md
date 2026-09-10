@@ -10,7 +10,7 @@
 > **Measuring instrument:** [`FD-P10-004`](../../governance/acts/FD-P10-004-RATIFICATION-OF-MEASURABLE-PHASE-10-EXIT-CRITERIA.md),
 > Status `DECIDED`. **Verified against its ratified text**, recovered verbatim,
 > not against my superseded candidate wording.
-> **Verification date:** 2026-09-10 (two discovery cycles) · **Verifier:** Claude Code / Co-Founder
+> **Verification date:** 2026-09-10 (three discovery cycles) · **Verifier:** Claude Code / Co-Founder
 
 ---
 
@@ -29,18 +29,19 @@ P10 CERTIFICATION  = PENDING  <- Founder authority required
 P10 GOVERNANCE CLOSURE = PENDING  <- Founder/governance authority required
 ```
 
-**The loop ran twice, and the second cycle mattered.** `§18` forbids stopping
-because the first pass succeeded; the second cycle found a defect in my own
-loader that the first had passed over (`§3.4`). **Both discovery cycles are
-recorded, including the one that made this document wrong before it made it
-right.**
+**The loop ran three times, and every cycle after the first found something.**
+`§18` forbids stopping because the first pass succeeded. Cycle two found a
+defect in my own loader that cycle one had passed over (`§3.4`); cycle three
+attacked the *pattern* rather than waiting for a symptom and found its mirror
+(`§3.5`). **All three cycles are recorded, including the ones that made this
+document wrong before they made it right.**
 
 **The ratification did not make P10 pass.** `§32`: *"The purpose of E10
 ratification is not to make P10 appear complete. The purpose is to make P10
 completion objectively testable."* The fresh discovery `§14` mandates **found
-two real verification gaps and closed both** (`§4.4`, `§3.4`); had either been
-unclosable within delegated authority, this document would have read
-`P10 NOT COMPLETE`.
+three real verification gaps and closed all three** (`§4.4`, `§3.4`, `§3.5`);
+had any been unclosable within delegated authority, this document would have
+read `P10 NOT COMPLETE`.
 
 ---
 
@@ -149,6 +150,28 @@ That was a true observation resting on a mechanism that could not detect its own
 falsification, and `E10-01` was **under-evidenced when first recorded as PASS**.
 It is now properly evidenced. The verdict is unchanged; **the ground under it is
 not**, and the difference is exactly what `§14` was written to expose.
+
+### 3.5 A third cycle, and the mirror of the same defect
+
+The loop ran a third time, attacking the pattern cycle two exposed — **checks
+that cannot fail** — rather than waiting for a new symptom. Two findings:
+
+**`_owner_disagreements` was sound but unproven.** The cross-check comparing a
+Capability's stated `## Owner` against its nesting was asserted `== []` on the
+resident corpus and never shown able to fire. Planting a contradicting owner and
+a missing owner shows it reports both. **This was a missing control, not a
+defect** — the distinction is kept rather than counted as a third gap, since the
+mechanism worked all along.
+
+**`NON_DEPARTMENT_DIRS` excluded `platform-runtime`, a directory that has never
+existed anywhere in this repository** — speculatively added by me in `338f4ac`.
+It changed no result, because excluding nothing excludes nothing. But it is the
+**exact mirror of `G-I`**: rather than admitting an unauthorized Department, it
+would have **silently suppressed a legitimate one** established under that name,
+and `§5` condition 2 (*"no required Department is demonstrably missing"*) fails
+in the one way a population count can never reveal — the entry simply never
+appears. Removed, and a test now requires every exclusion to name a directory
+that exists, so no future exclusion can quietly become a hole.
 
 ---
 
@@ -285,7 +308,7 @@ Run fresh after every change in this pass:
 |---|---|
 | `native_core` | **801 OK** (1 expected failure, `GDR-0014`, pre-existing and expected) |
 | `consumers` | **276 OK** |
-| `tools` | **287 OK** (272 before; +15 this pass) |
+| `tools` | **293 OK** (272 before; +21 this pass) |
 | Execution-catalog validators | **0 error, 0 warning**, 4 informational |
 | Citation audit | 84 documents, **0 errors** |
 | Stale-state audit | 449 documents, **0 stale assertions** |
@@ -302,6 +325,7 @@ remains **CLOSED** per `FD-P9-002`; nothing here reaches into it.
 |---|---|---|---|
 | G-A | Chain join between `w4_chain` and the Agent Integration Validator unverified | `E10-IN-BOUNDARY / ACTIONABLE` | **RESOLVED** — §4.4 |
 | G-I | Department/Capability with no establishing ADR silently accepted | `E10-IN-BOUNDARY / ACTIONABLE` | **RESOLVED** — §3.4. Found by the `§18` loop **after** `E10-01` was first recorded PASS |
+| G-J | `NON_DEPARTMENT_DIRS` excluded a directory that never existed, which would silently suppress a Department later given that name | `E10-IN-BOUNDARY / ACTIONABLE` | **RESOLVED** — §3.5 |
 | G-B | `disputed_agent_definition_ownership` circular, cannot run | `E10-IN-BOUNDARY / ACTIONABLE` | **RESOLVED by substitution** — §3.2 provides a check that *can* fail; the decline stays disclosed |
 | G-C | `Department` vs `Platform Division` semantics (`AR-001`) | `E10-IN-BOUNDARY / ARCHITECT-RESERVED` | **OPEN** — `ADR-0029` Proposed. Does **not** block: both Departments are ADR-established under either reading |
 | G-D | Security Owner, Quality Authority bindings (`AR-002`/`AR-003`) | `E10-IN-BOUNDARY / FOUNDER-RESERVED` | **OPEN** — `FD-P10-003 §10`. Both options drafted at `G-03`; no Capability requires them today |

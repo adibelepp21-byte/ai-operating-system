@@ -35,7 +35,15 @@ ORGANIZATION_ROOT = REPO_ROOT / "docs/architecture/organization"
 
 #: Directories under the organization root that record framework or catalog
 #: material rather than a Department instance.
-NON_DEPARTMENT_DIRS = {"execution-catalog", "platform-runtime"}
+#:
+#: **Every entry must name a directory that actually exists**, and a test
+#: enforces that. An exclusion naming nothing is not harmless: it silently
+#: suppresses whatever later takes that name, which for this module means a
+#: legitimately established Department would go missing from the population —
+#: the exact mirror of admitting an unauthorized one. ``platform-runtime`` was
+#: such an entry, speculatively added here and never a directory anywhere in
+#: this repository; it was removed once the guard was written.
+NON_DEPARTMENT_DIRS = {"execution-catalog"}
 
 NAME_SECTION = re.compile(r"^## Name\s*\n\s*\n(.+?)\s*$", re.M)
 
