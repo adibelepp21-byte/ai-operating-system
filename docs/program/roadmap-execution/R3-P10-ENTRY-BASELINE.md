@@ -227,6 +227,35 @@ Phase 9 matures.** `Volume II §5` states the dependency `10 ← 9`.
 >
 > **The three secondary conditions are untouched** and remain independently
 > sufficient. **Nothing above is rewritten** — the original text stands.
+>
+> ### REFINEMENT — same day, after reading the four sibling decisions
+>
+> **The block above says the Founder *"expressly withholds"* Phase 10. That
+> characterisation is wrong, and the siblings show why.** The clause is the
+> **standard closing form of every phase certification** in this register:
+>
+> ```text
+> FD-P7-003  →  PHASE 8 — NOT AUTHORIZED BY THIS DECISION   (Register:6261)
+> FD-P8-002  →  PHASE 9: NOT AUTHORIZED                     (Register:6627)
+> FD-P9-002  →  PHASE 10: NOT AUTHORIZED                    (Register:7000)
+> ```
+>
+> **Each next phase was then opened by its own paired authorization act** —
+> `ACT-CC-P7-001/002/003`, `ACT-CC-P8-001/002`, `ACT-CC-P9-001/002`.
+>
+> **All five preceding phases are certified complete:** `FD-P5-001`,
+> `FD-P6-002`, `FD-P7-003`, `FD-P8-002`, `FD-P9-002` — `P7`, `P8` and `P9` also
+> **governance CLOSED**.
+>
+> **The precise blocker is therefore narrower than stated above: no Phase 10
+> authorization instrument exists.** The Register carries `ACT-CC-P6-*` through
+> `ACT-CC-P9-*` and **no `ACT-CC-P10-*` phase-authorization pair**. P10 awaits
+> the routine next step in a five-times-repeated pattern — **not the reversal of
+> a refusal.**
+>
+> **This is the second correction in one day to the same block**, and both came
+> from the same defect: reading an identifier instead of an instrument, then
+> reading one instrument instead of its series.
 
 
 **This Roadmap's own `R3` places `P10 BLOCKED` among its four valid outcomes and

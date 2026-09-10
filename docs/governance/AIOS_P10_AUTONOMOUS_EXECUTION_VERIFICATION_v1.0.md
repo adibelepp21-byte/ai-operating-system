@@ -6112,3 +6112,114 @@ P10                 AUTHORITY-BLOCKED  (FD-P9-002 §8, §10 — not a deficiency
 P9                  CERTIFIED / COMPLETE · governance CLOSED
 EXHAUSTION          AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
 ```
+
+---
+
+# 62. The same defect, four more times — and it overturns the correction I made one hour earlier
+
+**Date:** 2026-09-10 · **Baseline:** `370424e`
+
+## 62.1 Generalizing the `FD-P9-002` finding
+
+`§61` found one instrument cited eight times and never read. **The obvious next
+question is how many others there are**, so it was measured rather than
+estimated: **32 governance identifiers** are cited across this programme's
+artifacts; **30 have resident bodies**.
+
+**Four sit in exactly the `FD-P9-002` shape** — cited 5× each, body resident,
+never opened: `FD-P5-001`, `FD-P6-002`, `FD-P7-003`, `FD-P8-002`. And this
+corpus asserted of them that **"none has evidenced maturity."**
+
+## 62.2 What the four say
+
+```text
+FD-P5-001   PHASE 5 — INTELLIGENCE ECOSYSTEM: CERTIFIED / COMPLETE
+FD-P6-002   PHASE 6 — KNOWLEDGE:  FROZEN → CERTIFIED / COMPLETE
+FD-P7-003   PHASE 7 — MEMORY:     CERTIFIED / COMPLETE · governance CLOSED
+FD-P8-002   PHASE 8 — TOOLS:      CERTIFIED / COMPLETE · governance CLOSED
+FD-P9-002   PHASE 9 — WORKFLOW:   CERTIFIED / COMPLETE · governance CLOSED
+```
+
+**"None has evidenced maturity" is FALSE for all four.** It stood in the Return
+Package, the Phase–PD map, and the Evidence Fabric.
+
+## 62.3 The finding that overturns `§61`'s own correction
+
+**`§61` characterised `PHASE 10: NOT AUTHORIZED` as the Founder expressly
+withholding Phase 10. That is wrong.** The clause is the **standard closing form
+of every phase certification** in this register:
+
+| Instrument | Closing clause | Line |
+|---|---|---|
+| `FD-P7-003` | `PHASE 8 — NOT AUTHORIZED BY THIS DECISION` | 6261 |
+| `FD-P8-002` | `PHASE 9: NOT AUTHORIZED` | 6627 |
+| `FD-P9-002` | `PHASE 10: NOT AUTHORIZED` | 7000 |
+
+**And each next phase was then opened by its own paired authorization act** —
+`ACT-CC-P7-001/002/003`, `ACT-CC-P8-001/002`, `ACT-CC-P9-001/002`. **Phases 8
+and 9 were "not authorized" in exactly the same words, and both were
+subsequently authorized and completed.**
+
+**The precise blocker, restated:**
+
+```text
+WAS (§61):  Founder expressly withholds Phase 10
+IS:         No Phase 10 authorization instrument exists.
+            The Register carries ACT-CC-P6-* .. ACT-CC-P9-* and no
+            ACT-CC-P10-* phase-authorization pair.
+```
+
+**P10 awaits the routine next step in a five-times-repeated pattern — not the
+reversal of a refusal.** Those are very different things to report to a Founder.
+
+## 62.4 The defect, one level up from the one it corrects
+
+`§61` diagnosed the pattern as *"citing an identifier instead of reading the
+instrument."* **`§62` is the same defect one level up: I read one instrument and
+did not read its series.** Reading `FD-P9-002` was right; treating its idiomatic
+closing clause as a special act of withholding was reading a sentence out of a
+form I had not yet recognised as a form.
+
+**Two corrections to the same block in one day.** The first replaced a false
+figure with a false claim; the second replaces the false claim with a
+sequencing fact. **The verdict has still never moved.**
+
+## 62.5 A dependent claim that also fell
+
+`EVIDENCE-FABRIC.md` closed its `§3` with: *"The fabric measurement and the
+Phase-state measurement agree … the part of AIOS with the least frozen
+architecture is the part whose Phase state is least evidenced."*
+
+**The second half was false, so the agreement was false.** The measurements
+**diverge** — and the divergence is the better result:
+
+> **The region with the least frozen architecture (`Runtime`→`Memory`, four of
+> ten links unknown) is the region most completely certified at the Phase
+> level (`P5`–`P8`, all certified complete).**
+
+**Phase certification and frozen-architecture coverage are independent axes.**
+Treating one as evidence about the other is precisely what produced the original
+error, and the corrected artifact now says so.
+
+## 62.6 Corrected forward (`§26`) — five artifacts, no history rewritten
+
+`R3-P10-ENTRY-BASELINE.md` (refinement block) · `PHASE-PD-CAPABILITY-AND-DEPENDENCY-MAP.md`
+(`P5`–`P8`, `P10` rows + `§8`) · `RETURN-PACKAGE-AND-HANDOFF-v1.0.md` ·
+`EVIDENCE-FABRIC.md` (`§3` and its dependent paragraph). **Every original
+sentence stands; each carries a dated correction beside it.**
+
+## 62.7 Verification, measured after the final mutation
+
+```text
+citation     77 documents · 0 errors · 64 WARN
+stale-state  442 documents · 0 stale assertions
+tools        248 OK · native_core 801 OK (1 expected) · consumers 276 OK
+```
+
+## 62.8 State
+
+```text
+P5–P9   CERTIFIED / COMPLETE  (P7, P8, P9 governance CLOSED)
+P10     AUTHORITY-BLOCKED — no Phase 10 authorization instrument exists
+EXHAUSTION  AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
+```

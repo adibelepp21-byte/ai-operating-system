@@ -86,12 +86,12 @@ PLATFORM ORGANIZATION  →  owns Capability  →  Freeze §5 layer 4  →  runni
 | P2 | Runtime Foundation | `UNKNOWN` | `UNKNOWN` | `native_core/core/runtime/` | — | Blueprint §20/§21 |
 | P3 | Execution Contracts | `UNKNOWN` | `UNKNOWN` | `runtime/contract.py`, `runtime/execution/contract.py` | — | `AIOS_PHASE_RECONCILIATION_v1.0.md:32` |
 | P4 | AI Runtime | `UNKNOWN` | `UNKNOWN` | implemented | — | **`PHASE 4.6 CLOSED`** 2026-07-30; `S-9` supersedes the 0% |
-| P5 | Intelligence Ecosystem | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | — | **`FD-P5-001`**; `S-13` supersedes the 0% |
-| P6 | Knowledge Ecosystem | `UNKNOWN` — inference **rejected** (`§2`) | `UNKNOWN` | `native_core/core/knowledge/` | — | **`FD-P6-002`**; `S-14`; `GDR-0028` |
-| P7 | Memory Ecosystem | `UNKNOWN` | `UNKNOWN` | `native_core/core/memory/` | — | **`FD-P7-003`**; `S-15` |
-| P8 | Tool Ecosystem | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | — | **`FD-P8-002`**; `S-16` |
+| P5 | Intelligence Ecosystem | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | — | **`FD-P5-001`** — **CERTIFIED / COMPLETE** |
+| P6 | Knowledge Ecosystem | `UNKNOWN` — inference **rejected** (`§2`) | `UNKNOWN` | `native_core/core/knowledge/` | — | **`FD-P6-002`** — **FROZEN → CERTIFIED / COMPLETE**; `GDR-0028` |
+| P7 | Memory Ecosystem | `UNKNOWN` | `UNKNOWN` | `native_core/core/memory/` | — | **`FD-P7-003`** — **CERTIFIED / COMPLETE · CLOSED** |
+| P8 | Tool Ecosystem | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | — | **`FD-P8-002`** — **CERTIFIED / COMPLETE · CLOSED** |
 | **P9** | **Workflow Ecosystem** | `UNKNOWN` | `UNKNOWN` | `UNKNOWN` | **the Phase itself** | **`FD-P9-002`** 2026-09-03 — **CERTIFIED / COMPLETE · governance CLOSED** (`§10`) |
-| **P10** | **Department Ecosystem** | n/a — construction target | **undetermined (`G-09`)** | — | — | **AUTHORITY-BLOCKED** — `Volume VII §1.2` sequencing **satisfied**; `FD-P9-002 §8`/`§10` expressly withhold Phase 10 |
+| **P10** | **Department Ecosystem** | n/a — construction target | **undetermined (`G-09`)** | — | — | **AUTHORITY-BLOCKED** — sequencing **satisfied**; **no Phase 10 authorization instrument exists** (see `§8`) |
 | P11 | Autonomous Organization | n/a | `UNKNOWN` | — | — | gated behind P10 |
 | P12 | AI Operating System | n/a | `UNKNOWN` | — | — | gated `P4–P11` |
 | P13 | Super Intelligence Ecosystem | n/a | `UNKNOWN` | — | — | gated `P12`; discovery-driven |
@@ -136,3 +136,44 @@ its date-index row.
 `FD-P9-002 §8`, which lists `Phase 10` among what certification does **not**
 authorize. **A prerequisite blocker became an authority blocker**, and the two
 are not the same state.
+
+---
+
+## 8. Correction — 2026-09-10 (second) · the withholding clause is idiomatic
+
+**`§7` above corrected the `P9` and `P10` rows after reading `FD-P9-002`. It
+characterised `PHASE 10: NOT AUTHORIZED` as the Founder expressly withholding
+Phase 10. That characterisation was wrong, and the four sibling decisions show
+why.**
+
+**Every phase certification closes with the same clause:**
+
+| Instrument | Closing clause | Register line |
+|---|---|---|
+| `FD-P7-003` | `PHASE 8 — NOT AUTHORIZED BY THIS DECISION` | 6261 |
+| `FD-P8-002` | `PHASE 9: NOT AUTHORIZED` | 6627 |
+| `FD-P9-002` | `PHASE 10: NOT AUTHORIZED` | 7000 |
+
+**And each next phase was then opened by its own paired authorization act** —
+`ACT-CC-P7-001/002/003`, `ACT-CC-P8-001/002`, `ACT-CC-P9-001/002`. **The clause
+is the standard closing form of a phase certification, not a refusal of the
+phase that follows.**
+
+**All five phases are certified complete:**
+
+```text
+P5 INTELLIGENCE — CERTIFIED / COMPLETE      FD-P5-001
+P6 KNOWLEDGE    — FROZEN → CERTIFIED        FD-P6-002
+P7 MEMORY       — CERTIFIED / COMPLETE      FD-P7-003   governance CLOSED
+P8 TOOLS        — CERTIFIED / COMPLETE      FD-P8-002   governance CLOSED
+P9 WORKFLOW     — CERTIFIED / COMPLETE      FD-P9-002   governance CLOSED
+```
+
+**The precise blocker, restated:** **no Phase 10 authorization instrument
+exists.** Searched: the Register contains `ACT-CC-P6-*`, `ACT-CC-P7-*`,
+`ACT-CC-P8-*`, `ACT-CC-P9-*` — and **no `ACT-CC-P10-*` phase-authorization
+pair**. (The `ACT-CC-P10-*` documents elsewhere in this repository are Platform
+Organization construction acts — a different track, per `§1`.)
+
+**P10 therefore awaits the routine next step in a five-times-repeated pattern,
+not a reversal of a refusal.**

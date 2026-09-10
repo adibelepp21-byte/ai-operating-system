@@ -85,8 +85,11 @@ defined interface.
 ## Phase Integration
 
 `P1`–`P3` foundational, implemented. **`P4` closed at 4.6** (2026-07-30).
-**`P5`–`P9`** each carry a Founder certification (`FD-P5-001`, `FD-P6-002`,
-`FD-P7-003`, `FD-P8-002`, `FD-P9-002`) and **none has evidenced maturity**.
+**`P5`–`P9`** are each **CERTIFIED / COMPLETE** by Founder decision
+(`FD-P5-001`, `FD-P6-002`, `FD-P7-003`, `FD-P8-002`, `FD-P9-002`), with `P7`,
+`P8` and `P9` additionally **governance CLOSED**. *Corrected 2026-09-10: the
+earlier claim that none had evidenced maturity was false — the bodies of all
+five decisions are resident and had never been read.*
 **`P10` BLOCKED** on `Volume VII §1.2`. `P11`–`P13` gated transitively.
 **Phase ↔ PD: no provider relation is evidenced, and the inference stands
 rejected.**

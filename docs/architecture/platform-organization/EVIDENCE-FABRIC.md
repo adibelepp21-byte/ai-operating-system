@@ -74,13 +74,23 @@ Organization ── Department ~~ Workflow ~~ Tools ──╳── Memory ─�
 
 **Both ends of the chain are frozen and citable. The middle — Runtime through
 Memory by way of Intelligence and Tools — is where four of the ten links have no
-establishing source.** That region is exactly `P5`–`P8`, the Phases whose 0%
-figures `S-13`–`S-16` record as superseded but whose **maturity is equally
-unestablished**.
+establishing source.** That region is exactly `P5`–`P8`. *Corrected 2026-09-10:* those Phases are
+**CERTIFIED / COMPLETE** by `FD-P5-001`, `FD-P6-002`, `FD-P7-003` and
+`FD-P8-002`. **The earlier claim that their maturity was equally unestablished
+was false.** The fabric finding survives and sharpens: the region with the least
+**frozen architecture** is **certified complete at the Phase level** — so phase
+certification and frozen-architecture coverage are **independent**, and this is
+the clearest evidence in the corpus that they are.
 
-**The fabric measurement and the Phase-state measurement agree**, and they were
-taken independently: the part of AIOS with the least frozen architecture is the
-part whose Phase state is least evidenced.
+> **Corrected 2026-09-10.** This paragraph previously read: *"The fabric
+> measurement and the Phase-state measurement agree … the part of AIOS with the
+> least frozen architecture is the part whose Phase state is least evidenced."*
+> **The second half was false** — `P5`–`P8` are certified complete. The
+> measurements do not agree; they **diverge**, and the divergence is the more
+> useful result: **the region with the least frozen architecture is the region
+> most completely certified at the Phase level.** Phase certification and
+> frozen-architecture coverage are independent axes, and treating one as
+> evidence about the other is what produced the original error.
 
 ## 4. What this artifact does not claim
 
