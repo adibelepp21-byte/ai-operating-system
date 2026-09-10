@@ -58,6 +58,57 @@ takes when its mechanism is complete and its population is reserved.
 
 ## 4. What blocks the central P10 action, precisely
 
+> ### CORRECTION — 2026-09-10, same day · there are TWO blocks, not one
+>
+> **This section originally said the population was the single blocking item.
+> That is incomplete.** `FDE-P10-AUTONOMOUS-EXECUTION-01` — **OPERATIVE** since
+> 2026-09-05 by `GDR-0037`, Decision **B — Expanded but Controlled** — carries
+> two clauses this baseline had never read:
+>
+> **`§18` Ownership restrictions**, verbatim:
+>
+> > *"Claude must not autonomously assign or transfer ownership."*
+>
+> **`§31` No blank cheque**, verbatim:
+>
+> > *"Claude may not: SELF-AUTHORIZE · CREATE AUTHORITY · EXPAND AUTHORITY ·
+> > CHANGE IDENTITY · **ASSIGN OWNERSHIP** · CANONICALIZE · FREEZE · OVERRIDE
+> > FOUNDER · CROSS NON-DELEGABLE BOUNDARIES."*
+>
+> **Populating the ownership graph *is* assigning ownership** — a `Department`
+> owns `Capabilities`. So:
+>
+> ```text
+> BLOCK 1  population indeterminate        G-09 / ADR-0029   ARCHITECT-RESERVED
+> BLOCK 2  ownership assignment withheld   FDE-P10 §18/§31   FOUNDER-RESERVED
+> ```
+>
+> **These are independent.** Resolving `ADR-0029` would determine *which*
+> Departments exist and would **still not** permit me to bind them to
+> Capabilities. **Block 2 does not depend on Block 1 and would survive it.**
+>
+> **`ACT-CC-P10-AUTHORIZATION` does not lift `§18`.** Its `§3` authorizes
+> operationalization *"to the maximum extent legitimately supported by …
+> applicable Founder Decisions"*, and its `§13(6)` states the Act does not
+> authorize overriding an explicit Founder Decision. **`FDE-P10 §18` is one.**
+>
+> **What remains permitted is stated in `§19`:** *"Producing a proposal or
+> analysis is permitted where otherwise authorized. **Making the proposal
+> operative is not.**"*
+>
+> **`§19` also records that this is live, not hypothetical:** the frozen corpus
+> binds an owner role to a CPID in exactly three places —
+> `volume-2/pd-02-architecture-office/B7.md:212`,
+> `volume-2/pd-02-architecture-office/B4.md:731` and
+> `volume-2/pd-02-architecture-office/C8.md:122` — while naming a Security
+> Owner, a Quality authority
+> and a Governance Authority **without binding any of them to a CPID**. *"Those
+> three bindings are absent, and they remain absent under this event."*
+>
+> **The section below stands as written; this correction sits above it.**
+
+
+
 **Populating the ownership graph requires the Department population.** That is
 `G-09` — OPEN, **FOUNDER / ARCHITECT RESERVED** since 2026-09-06, and carried by
 **`ADR-0029`** (Proposed, not Approved).
@@ -152,10 +203,15 @@ implementation agree about what does not exist.**
 P10 AUTHORIZED   — yes, by ACT-CC-P10-AUTHORIZATION
 P10 CONSTRUCTED  — the mechanism was already constructed and verified
 P10 OPERATIONAL  — NO. Population empty; organizational runtime not started.
-P10 BLOCKING ITEM — ONE: the Department population (ADR-0029)
+P10 BLOCKING ITEMS — TWO, independent:
+   1. Department population indeterminate    G-09 / ADR-0029  ARCHITECT-RESERVED
+   2. Ownership assignment withheld          FDE-P10 §18/§31  FOUNDER-RESERVED
 ```
 
-**`P10 AUTHORITY-BLOCKED` at a single, named, already-escalated point.**
+**`P10 AUTHORITY-BLOCKED` at two named points, one of which survives the other.**
+*Corrected same-day — see `§4`. The original text said "a single, named,
+already-escalated point"; that was written before `FDE-P10-AUTONOMOUS-EXECUTION-01`
+was read.*
 
 **No readiness is manufactured** (`ACT §11`, `§24`). **No population was
 invented to make the graph non-empty** — inventing one would breach `INV-1` the

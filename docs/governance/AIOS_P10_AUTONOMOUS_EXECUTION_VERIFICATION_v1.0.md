@@ -6339,3 +6339,118 @@ P10 OPERATIONAL   NO — population empty
 P10 STATE         AUTHORITY-BLOCKED at ONE named, already-escalated point
 EXHAUSTION        AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
 ```
+
+---
+
+# 64. `§21` again — a second, independent block on the same action, in an instrument operative since 5 September
+
+**Date:** 2026-09-10 · **Baseline:** `3e0e1d8`
+
+## 64.1 Method, applied systematically this time
+
+`§62` diagnosed the recurring defect as *"citing an identifier instead of
+reading the instrument."* Rather than search for what I expected, **every
+decision heading in the Register was enumerated** — **47 decisions** — and read
+for relevance to the current verdict.
+
+**Two had never been opened and were directly P10-relevant:** `GDR-0037`
+(Founder issuance of `FDE-P10-AUTONOMOUS-EXECUTION-01`) and `GDR-0036` (PD-02
+Volume-Level **Activation**).
+
+## 64.2 The finding
+
+`FDE-P10-AUTONOMOUS-EXECUTION-01` has been **OPERATIVE since 2026-09-05**
+(`GDR-0037`, Decision **B — Expanded but Controlled**), its text resident at
+`AIOS_P10_AUTONOMOUS_EXECUTION_FOUNDER_EVENT_PROPOSAL_v1.0.md`, **858 lines**.
+This programme has cited it repeatedly and **never read it**.
+
+**`§18` Ownership restrictions:**
+
+> *"Claude must not autonomously assign or transfer ownership."*
+
+**`§31` No blank cheque:**
+
+> *"Claude may not: SELF-AUTHORIZE · CREATE AUTHORITY · EXPAND AUTHORITY ·
+> CHANGE IDENTITY · **ASSIGN OWNERSHIP** · CANONICALIZE · FREEZE · OVERRIDE
+> FOUNDER · CROSS NON-DELEGABLE BOUNDARIES."*
+
+**Populating the ownership graph is assigning ownership.**
+
+## 64.3 What this corrects
+
+`§63` and the P10 baseline reported **one** blocking item. **There are two, and
+they are independent:**
+
+```text
+BLOCK 1  population indeterminate       G-09 / ADR-0029   ARCHITECT-RESERVED
+BLOCK 2  ownership assignment withheld  FDE-P10 §18/§31   FOUNDER-RESERVED
+```
+
+**Resolving `ADR-0029` would determine which Departments exist and would still
+not permit me to bind them to Capabilities.** Block 2 does not depend on Block 1
+and would survive it.
+
+**`ACT-CC-P10-AUTHORIZATION` does not lift it.** Its `§3` authorizes
+operationalization *"to the maximum extent legitimately supported by …
+applicable Founder Decisions"*, and `§13(6)` states the Act does not authorize
+overriding an explicit Founder Decision. **`FDE-P10 §18` is one.**
+
+**This is the correct reading, and it is the one that costs me the work.** A
+P10 Act arriving after the restriction could plausibly have been read as
+superseding it. It does not say so, and `§13(6)` says the opposite.
+
+## 64.4 What remains permitted, stated by the same instrument
+
+`FDE-P10 §19`: *"Producing a proposal or analysis is permitted where otherwise
+authorized. **Making the proposal operative is not.**"*
+
+And `§19` records that this is **live, not hypothetical**: the frozen corpus
+binds an owner role to a CPID in exactly three places — `B7.md:212`,
+`B4.md:731`, `C8.md:122` — while naming a **Security Owner**, a **Quality
+authority** and a **Governance Authority** without binding any of them to a
+CPID. *"Those three bindings are absent, and they remain absent under this
+event."*
+
+**Those three absent bindings are `G-01`, `G-02` and `G-03` in the systemic gap
+map**, and this instrument states in terms that they stay absent. **Two
+independently-derived records agree**, which is worth more than either alone.
+
+## 64.5 `§32` operative formula, now applied rather than assumed
+
+```text
+AUTHORIZED ACTION = EXPLICIT AUTHORITY × VALID SCOPE × VALID TIER
+                    × VALID ARTIFACT × BOUNDARY COMPLIANCE
+```
+
+*"If any required factor is absent: **DO NOT EXECUTE**."*
+
+For **populate the ownership graph**: EXPLICIT AUTHORITY **absent** (`§18`),
+BOUNDARY COMPLIANCE **absent** (`§31`). **Two factors zero. Product zero.**
+
+## 64.6 Verification
+
+```text
+citation 79 documents · 0 errors · 65 WARN   stale-state 0 assertions
+native_core 801 OK (1 expected) · tools 248 OK · consumers 276 OK
+```
+
+**The checker caught this section as it was written.** Quoting `FDE-P10 §19`'s
+three CPID bindings by bare basename raised an ambiguity WARN in the derived
+corpus. **The prose was fixed rather than the test** — the full paths were
+already in the Evidence Ledger, so the citation is now *resolvable* rather
+than merely *classified*. `§43` of the continuation gate exists for exactly
+this: the report is not inert.
+
+## 64.7 State
+
+```text
+P10  AUTHORITY-BLOCKED at TWO independent points
+     1. ADR-0029      — Architect/Founder — which Departments exist
+     2. FDE-P10 §18   — Founder — may ownership be assigned, and by whom
+EXHAUSTION  AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
+```
+
+**Third consecutive cycle in which reading an instrument I had only cited
+changed the answer.** The first found Phase 9 certified; the second found the
+withholding clause idiomatic; this one found a restriction that had been
+operative for five days across everything I wrote about P10.
