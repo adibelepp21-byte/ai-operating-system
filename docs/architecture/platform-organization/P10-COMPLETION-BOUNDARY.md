@@ -133,9 +133,25 @@ determination no resident instrument makes** — and `ACT §34` forbids inferrin
 
 ```text
 P10 COMPLETION  =  ALL STATED NECESSARY CONDITIONS SATISFIED
-                   SUFFICIENT CONDITION NOT STATED BY ANY RESIDENT SOURCE
-                   → FOUNDER / ARCHITECT DETERMINATION
+                   SUFFICIENT CONDITION = RATIFIED MEASURABLE E10 CRITERIA
+                   → PROGRAM OWNER (Volume V §3) — E10 does not exist
 ```
+
+> **Sharpened 2026-09-10, after falsifying this section's own claim.** It first
+> read *"sufficient condition not stated by any resident source"*. **That was
+> true but unhelpfully vague, and the search it prompted found the exact
+> instrument.**
+>
+> **Every prior phase has ratified measurable exit criteria** — `E5-1…E5-6`,
+> `E6-01…E6-03`, `E7-01…E7-05`, `E8-01…E8-05`, `E9-01…E9-05` — and
+> **`E10` has zero occurrences repository-wide.** `Volume VIII §3` fixes the
+> sequence (*dependencies → **exit criteria ratified as measurable** → tracker*),
+> `Volume V §3` reserves the ratification to the **Program Owner**, and
+> `FD-P9-002` certified Phase 9 by determining `E9-01`…`E9-05` satisfied.
+>
+> **So the missing instrument is named, its author is named, and its form has a
+> five-phase precedent.** Candidates are prepared, unratified, at
+> `E10-CANDIDATE-EXIT-CRITERIA.md`.
 
 **This is not a source gap and not an authority block on construction.** There
 is nothing left to build that any instrument asks for. It is a **completion

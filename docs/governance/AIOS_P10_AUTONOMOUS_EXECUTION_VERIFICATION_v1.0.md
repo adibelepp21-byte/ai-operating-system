@@ -6979,3 +6979,83 @@ The deferred finding for Work-as-entity carries `§20`'s.
 tools 272 OK (+10) · native_core 801 OK (1 expected) · consumers 276 OK
 citation 82 documents · 0 errors · 65 WARN · stale-state 0 assertions
 ```
+
+---
+
+# 70. Falsifying "the sufficient condition is unstated" — it is stated, and it is missing
+
+**Date:** 2026-09-10 · **Baseline:** `023159a`
+
+## 70.1 The claim, and why it got tested
+
+`§69` closed with *"no resident instrument states the sufficient condition for
+P10 completion."* **A negative claim** — and five of six tested this session
+have been false. `ACT-CC-P10-003 §27` requires falsifying them before they
+influence a verdict.
+
+## 70.2 It survives, and the search made it precise
+
+**Every phase from 5 to 9 has ratified measurable exit criteria:**
+
+```text
+P5  E5-1 … E5-6      P8   E8-01 … E8-05
+P6  E6-01 … E6-03    P9   E9-01 … E9-05
+P7  E7-01 … E7-05    P10  none — E10 has ZERO occurrences repository-wide
+```
+
+**`Volume VIII §3`** fixes the sequence: dependencies at required status →
+**exit criteria ratified as measurable** → Progress Tracker updated.
+**`Volume V §3`** reserves the ratification: *"Exit criteria Phase 5-13
+**disahkan menjadi kriteria terukur** | **Pemilik Program (Moriarty)**."*
+**`FD-P9-002`** certified Phase 9 by determining *"`E9-01` through `E9-05` stand
+SATISFIED / PASS."*
+
+**So the sufficient condition is not unstated — it is a specific instrument that
+does not exist**, whose author is named and whose form has five precedents.
+
+**That is a materially better answer than the one it replaces**, and the vague
+version would have been easy to leave standing: it was true.
+
+## 70.3 Prepared — `E10-CANDIDATE-EXIT-CRITERIA.md`
+
+`ACT §17.5` requires the **smallest decision-ready package**. Six candidate
+criteria, derived from the Blueprint's own nine `P10 Exit` items and compressed
+into the `E9` measurable form, **with the already-measured evidence attached** so
+ratification is assessed against fact rather than promise:
+
+```text
+E10-01 Department Identity & Population        PASS
+E10-02 Ownership Integrity (INV-1/2/14)        PASS
+E10-03 Work Entry & Capability Selection       PASS
+E10-04 Department → Execution Continuity       PASS
+E10-05 Organizational Boundary Integrity       PASS
+E10-06 Evidence & Verification                 PASS
+```
+
+**Three of the Blueprint's nine — workflow, coordination, verification — are
+deliberately folded into `E10-04`/`E10-06` rather than given their own
+criteria**, because Phase 9 already certified them and `FD-P9-002 §8` bars
+re-opening what certification settled. **That is a judgement, and it is stated
+as one** so the Program Owner can reject it.
+
+**It ratifies nothing.** `P5-4`'s precedent is the same shape — *"Review of
+measurable Phase 5 exit criteria is **prepared, not finalized**."*
+
+## 70.4 Where this leaves P10
+
+```text
+CONSTRUCTION           nothing left that any instrument asks for
+AUTHORITY-OVER-BUILD   none outstanding
+SOURCE                 none missing for completion
+COMPLETION             one instrument — ratified measurable E10 criteria
+                       Program Owner, Volume V §3
+```
+
+**Six of six negative claims tested this session; five were false and one
+survived — this one — and surviving made it sharper rather than confirming it.**
+
+## 70.5 Verification
+
+```text
+tools 272 OK · citation 83 documents · 0 errors · 65 WARN · stale-state 0
+```

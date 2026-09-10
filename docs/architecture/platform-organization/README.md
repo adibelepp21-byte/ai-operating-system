@@ -151,6 +151,7 @@ measurable form. **Neither is available to this delegation.**
 | `divisions/` | `README.md` + one record per CPID, `PD-01`…`PD-10` |
 | `VOLUME-SECTION-STATUS-MATRIX.md` | Part/Section status for `PD-03`…`PD-10` (`ACT-CC-P10-C7 §35`) |
 | `CROSS-PD-INTERFACE-REGISTRY.md` | The five evidenced cross-division edges, and the 8 divisions that declare none. **Records no interface that is not declared** |
+| `E10-CANDIDATE-EXIT-CRITERIA.md` | **PROPOSED, NOT RATIFIED.** Six candidate measurable Phase 10 exit criteria in the `E5`–`E9` form, with evidence attached. Ratification is reserved to the Program Owner |
 | `P10-COMPLETION-BOUNDARY.md` | The P10 boundary **proved from the Blueprint's own `P10 Exit`** — 9/9 Exit criteria and 10/10 minimum integration tests satisfied; why completion still is not declared |
 | `P10-W1-DEPARTMENT-POPULATION-DETERMINATION.md` | Which Departments are canonical and **which platform functions are not**. New Departments required: **0**, with the lineage for every exclusion |
 | `P10-DEPARTMENT-ECOSYSTEM-BASELINE.md` | Measured P10 entry state under `ACT-CC-P10-AUTHORIZATION`. **Mechanism implemented and verified; population empty; runtime not operational** |
