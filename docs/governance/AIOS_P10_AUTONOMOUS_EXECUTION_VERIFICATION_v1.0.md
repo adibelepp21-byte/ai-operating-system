@@ -9323,3 +9323,106 @@ P11 AUTHORIZED = TRUE   ·  P11 CONSTRUCTED = PARTIAL (W2, W3, W5, W6, W7)
 W1 = gated by delegation ·  W4 = AUTHORIZED + BLOCKED
 E11 RATIFIED = FALSE    ·  P12 AUTHORIZED = FALSE ·  13 protected packages untouched
 ```
+
+# 92. `FD-P11-001` — the W4 authority chain, built as four separate things
+
+**Instrument:** `FD-P11-001`, ISSUED 2026-09-11, persisted byte-exact
+(`sha256 7caf9bea…`). **Result:** W4 authority RESOLVED, machinery constructed
+and verified, **W4 OPERATIONAL = FALSE**. Package at
+`docs/architecture/p11/W4-AUTHORITY-CHAIN-AND-EXECUTION.md`.
+
+## 92.1 The Decision resolved what I had reported as a hard stop
+
+`ACT-CC-P11-007` reported W4 `AUTHORIZED + BLOCKED`: no delegator, no Agent
+Instance, no delegation, and **what was missing was not code.** `FD-P11-001 §4.1`
+names Claude Code the authorized W4 operational delegator, and `§7` authorizes
+Agent Instance creation as an ``AUTHORIZED ACTION`` that is *"not: `AUTOMATIC
+SIDE EFFECT`"* of P11 authorization.
+
+`§5` forecloses the shortcut I would otherwise have reached for: neither
+Engineering nor Platform *"automatically becomes W4 delegator"*, because
+*"Neither label is sufficient by itself."* Had the Decision not said so, naming
+Engineering the delegator would have been the natural move — and it would have
+created a fictitious departmental authority nobody granted.
+
+## 92.2 Four stages, four separate objects
+
+`§29` forbids `0 instances → create one → delegate to it → W4 works` *"unless
+every transition is separately represented and verified."* So the delegator is a
+constant read from the Decision rather than a caller argument; the instance
+wraps the **canonical** `AgentInstance` (`§7`), which is *"Identity only"* and
+supplies two of the eight required elements, the other six being organizational
+and therefore outside the frozen core; the delegation is a separate record; and
+execution re-checks both **per step**.
+
+`§16`'s inequality became an intersection at two levels: an instance may not hold
+capabilities its Definition lacks, and a delegation may not grant beyond the
+instance's surface. `§24`'s provenance demand became a check that the citation
+names **`FD-P11-001` specifically** — so `DP-01`, which resolves perfectly well,
+is refused at both. That is `§10` in code.
+
+## 92.3 A probe found a missing control — the first time
+
+Eight controls were mutation-probed. Seven failed the suite when disabled. The
+eighth reported `OK`: disabling the instance identity check left everything
+passing, which meant **nothing tested `§7`'s *"No anonymous Agent Instance is
+valid."*** The control did not exist.
+
+The harness had already ruled out the probe being at fault — it now refuses to
+run unless the anchor matches exactly once, the mutation changes something, and
+the result parses. So `OK` could only mean a gap.
+
+**This is the first time the mutation discipline found a missing control rather
+than confirming an existing one.** Four Acts of defective probes made it
+possible: each fix removed a way for a probe to lie, and what remains can only be
+telling the truth. The lesson from `§89.5` — that a probe reporting `OK` is
+indistinguishable from a dead control — is exactly what made this `OK`
+informative once the probe itself became trustworthy.
+
+## 92.4 Substring reasoning failed me a third time
+
+My test asserted `"Founder" not in delegation.delegator`. It failed against
+correct code, because **`Co-Founder` contains `Founder`.**
+
+The mechanism is identical to `authority = AuthorityProvenance(` matching inside
+`goal_authority = …` two Acts ago, and to `Volume VII` matching inside
+`Volume VIII` before that. **Three occurrences, three contexts.** Each time the
+substring silently agreed with a conclusion I already held. Corrected to identity
+inequality, which is the property `NC-W4-08` actually names.
+
+## 92.5 A link in the authority chain I cannot verify
+
+`§3` places the **Co-Founder Delegation Charter** in the hierarchy, and `§34`
+makes it a ground on which this Decision could be challenged.
+
+**The Charter is not resident in this repository.** My own citation registry has
+recorded it as a supplied upload outside the repository since long before this
+Act. So `§3`'s characterization of what it establishes rests on Founder
+attestation I cannot check against a source body.
+
+This does not invalidate the Decision — `§4.1` is a Founder determination in its
+own right. It is recorded as a **verification limit**, because reporting the
+chain as fully verified would be claiming a check I did not perform.
+
+## 92.6 Why W4 is constructed but not operational
+
+The machinery is built and exercised end to end. **No Agent Instance is
+registered in a resident population**, because registering one commits the
+organization to an execution identity, and `§7` makes creation an authorized
+*action* rather than an automatic consequence of the mechanism existing.
+
+Same order as W3 and W2 before it: mechanism first, population when a legitimate
+act creates one. `§35` is explicit that resolving the authority *"does not mean
+W4 is already"* constructed, operational, verified, complete or certified.
+
+## 92.7 State integrity, measured
+
+```text
+native_core boundaries : 11   Agent Definitions : 3   W3 delegations : 0
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 528 OK
+citation 154 documents / 0 errors · stale-state 463 documents / 0 assertions
+
+FD-P11-001 = ISSUED     W4 AUTHORITY = RESOLVED    W4 CONSTRUCTED = TRUE
+W4 OPERATIONAL = FALSE  W4 CERTIFIED = FALSE
+E11 RATIFIED = FALSE    P12 AUTHORIZED = FALSE     13 protected packages untouched
+```

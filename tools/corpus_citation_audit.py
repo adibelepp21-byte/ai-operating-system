@@ -118,6 +118,9 @@ DEFAULT_ROOTS = (
     # carry their governing citations in docstrings and nowhere else.
     "tools/escalation_register.py",
     "tools/planning_continuity.py",
+    "tools/agent_instance_registry.py",
+    "tools/w4_delegation.py",
+    "tools/w4_execution.py",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a

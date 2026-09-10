@@ -384,6 +384,10 @@ P11_SURFACES = (
     # rather than the lesson.
     REPO_ROOT / "tools" / "escalation_register.py",
     REPO_ROOT / "tools" / "planning_continuity.py",
+    # W4 surfaces, added under `FD-P11-001 §30`. Authority crosses all three.
+    REPO_ROOT / "tools" / "agent_instance_registry.py",
+    REPO_ROOT / "tools" / "w4_delegation.py",
+    REPO_ROOT / "tools" / "w4_execution.py",
 )
 
 
