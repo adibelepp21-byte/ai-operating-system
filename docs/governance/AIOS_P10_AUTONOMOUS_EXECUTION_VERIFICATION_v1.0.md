@@ -8435,3 +8435,169 @@ P11 AUTHORIZED = FALSE · P11 CONSTRUCTED = FALSE · E11 RATIFIED = FALSE
 P12 AUTHORIZED = FALSE · NATIVE CORE MODIFIED = FALSE
 NC-01..NC-20 present in the surface · §21–§24 Founder-reserved, unfilled
 ```
+
+# 86. `DP-01` issued — the programme acquires permission to build
+
+**Act:** Founder issuance of `DP-01`, received signed on first supply.
+**Verdict:** `P11 AUTHORIZED = TRUE`. Persisted verbatim to
+`docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md`.
+
+## 86.1 What changed, precisely
+
+Every prior instrument in this programme decided something *about* construction.
+`FD-P10-004` ratified criteria. `FD-P10-005` certified a phase. `DP-04` placed
+the organizational concepts. `DP-03` fixed their architectural surface. **None
+of them permitted building.** `DP-01 §20` does:
+
+> *"Following issuance, Claude Code may begin P11 construction within this
+> authorization surface."*
+
+This is the first authorization-to-construct in the programme's record.
+
+## 86.2 It confirms `ACT-CC-P11-004` rather than contradicting it
+
+`ACT-CC-P11-004` asked me to re-examine an existing `DP-01`. I reported that
+**no such instrument had ever existed** — its body was never authored, only
+referenced. That was a negative claim, and negative claims are the class I have
+gotten wrong most often in this programme.
+
+`DP-01 §0` settles it in the Founder's own words:
+
+> *"This is a new issuance. It is **not** a reconstruction, recovery, inferred
+> decision, or retrospective interpretation of a previously existing DP-01
+> instrument."*
+
+**`PREPARED SURFACE ≠ AUTHORIZATION`.** The surface I prepared under
+`ACT-CC-P11-004` was a surface. This is the authorization. The two are recorded
+as distinct artifacts and neither is derived from the other.
+
+## 86.3 Verbatim persistence, verified
+
+The body was recovered from the session transcript — the primary record — and
+**not reconstructed**. Verified after persistence:
+
+```text
+sha256(body, excluding the single trailing newline the file appends)
+  = dfc0a022d668e54e8b20104304ec0215ec43f9399ed7ce45f3af1001aa4976cc
+  MATCH against the supplied artifact.
+```
+
+The provenance block is fenced above the body, marked as *not part of the
+supplied artifact*, and excluded from the hash range.
+
+## 86.4 Disclosed defect in my own persistence tooling
+
+Writing the provenance block through an **unquoted bash heredoc** (`<<PROV`)
+left command substitution active. The provenance block contained this heading,
+in which the identifier is wrapped in a backtick pair:
+
+```text
+## It confirms the finding of `ACT-CC-P11-004`
+```
+
+Bash **evaluated that pair as a command**:
+
+```text
+/bin/bash: line 78: ACT-CC-P11-004: command not found
+```
+
+The heading was silently written as `> ## It confirms the finding of ` — the
+identifier deleted, no error in the file, exit status unaffected.
+
+**This is disclosed, not quietly corrected.** Two properties made it dangerous:
+it was silent, and it damaged an *identifier* — the one kind of content whose
+loss is hardest to notice by reading. It was repaired by rewriting the block
+through Python, and the body hash above was re-verified afterward to prove the
+supplied artifact itself was never touched.
+
+**Standing correction to my own method:** heredocs that carry canonical or
+citation text are quoted (`<<'EOF'`) or the write goes through Python. The
+substitution characters that appear routinely in this corpus — backtick, `$`,
+`\` — are exactly the characters an unquoted heredoc consumes.
+
+## 86.5 What `DP-01` deliberately leaves FALSE
+
+From `§19` and `§22`, unmodified:
+
+```text
+P11 AUTHORIZED   = TRUE
+P11 CONSTRUCTED  = FALSE      E11 RATIFIED        = FALSE
+P12 AUTHORIZED   = FALSE      Native Core #12     = NOT AUTHORIZED
+```
+
+`§13`: authorization is **not** construction, operational, verified, exhausted,
+complete, or certified. `§20`: **`DP-02` E11 ratification remains a separate
+Founder matter and is not implied by this instrument.**
+
+`§16` acceptance conditions bind construction, including preservation of the
+eleven Native Core boundaries and the candidate-versus-ratified `E11`
+distinction. **Any material conflict must be surfaced, not silently resolved
+through implementation.**
+
+## 86.6 First increment selected under `§11`
+
+`§11` delegates routine technical Micro Acts and prescribes the discipline
+`DISCOVER → CLASSIFY → RANK → SELECT → EXECUTE → VERIFY → PERSIST → REDISCOVER
+→ CONTINUE`.
+
+**Selected: `W3` Organizational Delegation.** It ranks first because it is the
+only authorized work package whose representation is *already fully fixed* by
+issued architecture — `DP-04 §8.3` fixes the record shape
+(`AUTHORITY SOURCE → AUTHORIZED SCOPE → DELEGATED ACTOR/UNIT → BOUNDARY →
+ACCOUNTABILITY → VERIFICATION`) and `DP-03 §8.2` fixes the surface
+(`ORGANIZATIONAL-LAYER GOVERNED RECORD / RELATION`). Nothing in it requires an
+architectural choice I would have to make myself.
+
+`DP-01 §3 W3` and `DP-03 §8.2` both permit reuse of the established P10
+record/loader pattern; `DP-01 §3 W3` conditions that reuse on preserving the P11
+semantic distinction, and `DP-03 §8.2` adds that **reuse does not authorize
+creation of a Native Core entity or subsystem.**
+
+## 86.7 State integrity, measured
+
+```text
+native_core boundaries : 11        planning/delegation/goal classes : 0
+13 protected packages  : untracked, unmodified, unstaged
+
+P11 AUTHORIZED = TRUE  ·  P11 CONSTRUCTED = FALSE  ·  E11 RATIFIED = FALSE
+P12 AUTHORIZED = FALSE ·  NATIVE CORE MODIFIED = FALSE
+```
+
+## 86.8 A stale-state class my own audit cannot see
+
+Persisting `DP-01` flipped `P11 AUTHORIZED` from FALSE to TRUE. I swept the
+corpus for documents still asserting the old value. Five hits. Three are inside
+this chronological evidence record and are **correct as history**. Two were
+standing banners on live documents:
+
+```text
+docs/architecture/p11/DP-01-P11-FOUNDER-AUTHORIZATION-SURFACE.md:4
+docs/architecture/p11/P11-RECONCILIATION-REGISTERS.md:4
+```
+
+**`tools/stale_state_audit.py` reported 0 stale assertions across 462 documents
+and did not flag either one.** That is not a false negative in the matching
+logic — it is a **scope limit I had not stated**: the audit tests corpus text
+against claims *recorded as superseded in the Register*. `P11 AUTHORIZED =
+FALSE` was never registered, because until the moment of issuance nothing had
+superseded it. **An instrument that supersedes a claim in the same act that
+creates the supersession is invisible to a Register-driven audit.**
+
+The first hit is the dangerous one. That file is *named* `DP-01`, so a reader
+arriving at it sees an authoritative-looking header saying P11 is not
+authorized — while the actual `DP-01` says it is. This is **`SD-12`, the
+three-way `DP-01` identifier collision, producing a concrete contradiction
+rather than a theoretical one.** `SD-12` remains escalated and unresolved; this
+is evidence for it, not a resolution of it.
+
+**Correction applied:** superseding banners were added above both historical
+statements, linking the issued instrument and marking the old values explicitly
+as as-of-2026-09-10 records. **The historical assertions themselves were not
+edited.** Rewriting them would have destroyed the record of what was true when
+those Acts ran, which is the thing this ledger exists to preserve.
+
+**Disclosed, not silently fixed:** the audit's Register-dependence is a real
+limitation of an instrument I wrote and have repeatedly cited as evidence of
+corpus health. Its 0-assertion result means *no registered superseded claim is
+restated* — it does **not** mean the corpus contains no stale state. I have
+been reporting that number without that qualification.

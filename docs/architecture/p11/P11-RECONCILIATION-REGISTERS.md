@@ -1,5 +1,13 @@
 # P11 Blueprint Reconciliation — Registers
 
+> **STATE UPDATE — 2026-09-11.** `P11 AUTHORIZED = TRUE` per the issued
+> [`DP-01`](../../governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md).
+> The status line below is an **as-of-2026-09-10 record** and is left unaltered
+> as history. `E11 RATIFIED` and `P11 CONSTRUCTED` remain **FALSE**; the
+> reconciliation findings themselves are unaffected by the issuance.
+
+---
+
 > **Executed under `ACT-CC-P11-001`** — 2026-09-10.
 > **`P11 AUTHORIZED = FALSE` · `E11 RATIFIED = FALSE` · `P11 CONSTRUCTED = FALSE`.**
 > `§5` grants no construction authority and none was taken. **No P11 feature was

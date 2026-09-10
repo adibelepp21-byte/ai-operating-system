@@ -1,5 +1,29 @@
 # DP-01 — Founder Authorization Surface for P11
 
+> # SUPERSEDED BY ISSUANCE — 2026-09-11
+>
+> **The Founder has since issued `DP-01`.** `P11 AUTHORIZED = TRUE`.
+> The issued instrument is
+> [`docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md`](../../governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)
+> and **it, not this document, is the authority.**
+>
+> This file is a **prepared surface** and is retained **as history**. Everything
+> below it was true when written and is left unaltered. Its
+> `P11 AUTHORIZED = FALSE` is an **as-of-2026-09-10 statement, not a current
+> claim** — do not cite it as standing state.
+>
+> `DP-01 §0` confirms this document's central finding: the issuance is
+> *"not a reconstruction, recovery, inferred decision, or retrospective
+> interpretation of a previously existing DP-01 instrument."*
+> **`PREPARED SURFACE ≠ AUTHORIZATION`.**
+>
+> **Identifier warning (`SD-12`):** the name `DP-01` denotes three different
+> things across this programme. This file is the *prepared surface*; the issued
+> Founder authorization is the file linked above. The collision is escalated to
+> the Founder and remains unresolved.
+
+---
+
 > **Prepared under `ACT-CC-P11-004`** — 2026-09-10.
 > **`P11 AUTHORIZED = FALSE`.** This is a **prepared surface**, not an
 > authorization. `§18`: **`PREPARE ≠ DECIDE`.**
