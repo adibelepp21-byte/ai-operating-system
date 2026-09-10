@@ -1,7 +1,21 @@
 # E10 — Candidate Measurable Phase 10 Exit Criteria
 
-> **Status: PROPOSED — NOT RATIFIED.** Prepared under `ACT-CC-P10-003 §17.5`
-> (*"prepare the smallest decision-ready package"*). **2026-09-10**
+> **Status: SUPERSEDED BY RATIFICATION — 2026-09-10.**
+> The Founder ratified measurable Phase 10 exit criteria in
+> [`FD-P10-004`](../../governance/acts/FD-P10-004-RATIFICATION-OF-MEASURABLE-PHASE-10-EXIT-CRITERIA.md),
+> Status `DECIDED`. **That Decision, not this document, is the measuring
+> instrument.** `FD-P10-004` ratifies six criteria under the same identifiers
+> `E10-01`…`E10-06`, in the Founder's own and **broader** wording — it adds
+> falsification testing to `E10-01`, the Agent-Instance misclassification
+> exclusion to `E10-02`, and nine sub-conditions to `E10-06`, none of which
+> this document contained. **Where the two differ, `FD-P10-004` governs
+> absolutely**, and this file is retained only as the record of what was
+> proposed. Verification against the ratified text is recorded in
+> [`E10-VERIFICATION-AND-P10-CERTIFICATION-PACKAGE.md`](E10-VERIFICATION-AND-P10-CERTIFICATION-PACKAGE.md).
+>
+> **Its original status, unaltered:** **PROPOSED — NOT RATIFIED.** Prepared
+> under `ACT-CC-P10-003 §17.5` (*"prepare the smallest decision-ready
+> package"*). **2026-09-10**
 >
 > **Ratification authority: Program Owner (Moriarty)** — `Master Program
 > Volume V §3`: *"Exit criteria Phase 5-13 **disahkan menjadi kriteria terukur**

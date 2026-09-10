@@ -7059,3 +7059,87 @@ survived — this one — and surviving made it sharper rather than confirming i
 ```text
 tools 272 OK · citation 83 documents · 0 errors · 65 WARN · stale-state 0
 ```
+
+---
+
+# 71. `FD-P10-004` — the instrument arrived, and the fresh pass found a gap
+
+`§70.4` recorded that P10's completion turned on **one missing instrument**:
+ratified measurable exit criteria, reserved to the Program Owner by
+`Volume V §3`. **The Founder supplied it.** `FD-P10-004` ratifies `E10-01` …
+`E10-06`, Status `DECIDED`.
+
+## 71.1 The body was recovered, not reconstructed
+
+The conversation was compacted before the Decision could be persisted, leaving
+only a **summary** of it — precisely the input from which no canonical body may
+be rebuilt. It was not rebuilt. The session transcript holds the supplied text
+verbatim and is a **primary record**, so the body was read back from there and
+persisted byte-for-byte at
+[`FD-P10-004`](acts/FD-P10-004-RATIFICATION-OF-MEASURABLE-PHASE-10-EXIT-CRITERIA.md),
+`sha256 e6e9e5bc…`, with the trailing-newline difference stated exactly rather
+than glossed.
+
+**The ratified wording is broader than my candidate's** in three places, and
+each was treated as a new question: falsification testing (`§5(5)`), the Agent
+Instance misclassification exclusion (`§6`), and nine sub-conditions on evidence
+(`§10`). My candidate is marked **SUPERSEDED**; where they differ, the Decision
+governs.
+
+## 71.2 What the mandatory fresh pass found
+
+`§14` forbids the inference *previously no gap + E10 ratified = no gap*. Run
+against the ratified text, the pass **found one gap, and it was in the
+verification itself**:
+
+> `w4_chain` verified Department → Capability → Agent Definition. The Agent
+> Integration Validator verified Agent Definition → Workflow → Skill, both
+> directions, **0 findings**. **Nothing joined them.** The composed path a
+> Department originates was evidenced by two passing halves lying adjacent —
+> which `§10(4)` does not accept as a mechanism that *"actually tests the
+> claimed invariants."*
+
+Closed by `w4_continuity`: **5 chains, 12 skill links, 0 defects**, with five
+negative controls each confirmed to fire **alone** rather than as a cascade.
+
+Two Engineering Agent Definitions declare no Workflow. **Reported terminal, not
+defective** — `DM §7` invariant 15 and `ADR-0007` make an empty declaration
+valid — and the terminal count is now asserted by a test **so that manufacturing
+a Workflow to lengthen those chains fails rather than passes**. `§27` forbids
+that construction; none was performed.
+
+## 71.3 The strongest missing-Department candidate, and why it failed
+
+`§19` required the claim *"no required Department is missing"* be attacked.
+**"Home Department" appears 71 times — outnumbering both real Departments 5:1.**
+It is not a Department: it is an accountability *role* for Knowledge, it occurs
+**only** under `history/`, and the canonical Domain Model carries the superseded
+wording *"each item has a home **Platform Division**."* Eliminated on content.
+
+The claim survived an attack that could genuinely have broken it. **This is the
+seventh negative claim tested across this program and the second to survive** —
+and, as before, surviving sharpened it rather than merely confirming it.
+
+## 71.4 Where this leaves P10
+
+```text
+E10               RATIFIED (FD-P10-004, DECIDED)
+E10-01..E10-06    PASS, verified against the ratified text
+GAPS              1 found, 1 closed; 4 reserved, 1 out-of-boundary, 1 not-required
+P1-P9             no regression
+COMPLETION        recommended as a determination
+CERTIFICATION     PENDING — Founder authority, withheld from me by §17
+CLOSURE           PENDING — Founder/governance authority
+```
+
+The package is at
+[`E10-VERIFICATION-AND-P10-CERTIFICATION-PACKAGE.md`](../architecture/platform-organization/E10-VERIFICATION-AND-P10-CERTIFICATION-PACKAGE.md)
+and states **`PREPARED ≠ CERTIFIED`** on its first line, as `§24` requires.
+
+## 71.5 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 283 OK
+execution-catalog 0 error 0 warning · citation 85 documents 0 errors
+stale-state 450 documents 0 assertions
+```
