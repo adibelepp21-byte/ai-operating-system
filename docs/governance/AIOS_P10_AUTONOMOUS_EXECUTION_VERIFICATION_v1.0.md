@@ -7192,3 +7192,95 @@ native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
 execution-catalog 0 error 0 warning · citation 85 documents 0 errors
 stale-state 450 documents 0 assertions
 ```
+
+---
+
+# 72. `ACT-CC-P10-004` — the frontier review, and two instruments I had never read
+
+The Act required the **actual body** of every instrument used as authority
+(`§4`: `IDENTIFIER ≠ DECISION BODY` · `CITATION ≠ AUTHORITY BODY`). Reading them
+changed three things and resolved none — **no frontier was resolved by me.** Two
+were narrowed by instruments that already existed and had not been read, and one
+basis I had recorded was simply wrong.
+
+Full matrix, packages and recovery packages:
+[`FRONTIER-RESOLUTION-MATRIX.md`](../architecture/platform-organization/FRONTIER-RESOLUTION-MATRIX.md).
+
+## 72.1 `F-01` — a Founder Decision had already supplied the population half
+
+`FD-P10-003` says verbatim: *"Where `ADR-0029` does not itself establish
+sufficient authority for population, this Founder Decision supplies the required
+Founder-level authority to resolve the population boundary."* A Founder Decision
+ranks above an ADR. **The P10 population never needed `ADR-0029` decided.**
+
+And `ADE-P10-G04` — an **ISSUED** Architect Decision from 2026-09-05 that I had
+cited but never read — states *"`Department` and `Platform Division` are not two
+constructs. They are one entity under two names."* With `FD-6`, `ADR-0010` and
+the Domain Model's own *"Historical alias: Department"*, **four instruments**
+contradict `ADR-0029`'s Option B.
+
+**`ADR-0029`'s own closing section is now false where it says `INV-1` stays
+unevaluable and the population undetermined.** True when written — the
+population was empty. `INV-1` is now measured: 0 unowned, 0 disagreements.
+Recorded as Addendum 2 with the original left standing; **status remains
+Proposed**, and the Act forbids converting it by inference.
+
+## 72.2 `F-04` — the withholding I cited does not exist
+
+`AR-004` was recorded as *"expressly withheld by `FD-P10-003 §10`."* **`§10` does
+not withhold.** It says these authorities *"must be separately reconciled"*, and
+that it does not override *an existing* withholding by some **other** instrument.
+**That is a non-override clause, not a withholding**, and reading it as one
+attributed to `FD-P10-003` an act it never performed.
+
+**The verdict is unchanged; the basis is corrected.** `AR-004` is Founder-reserved
+because **no positive grant exists to bind against** — Register `FZ-04` records
+***"0** resident instruments grant the Co-Founder independent activation
+authority"*, and `Volume VII §4.1` keeps Department operation authorization with
+the Program Owner *"bahkan setelah Executive Office diimplementasikan."*
+
+## 72.3 `F-06` — a cited authority with no body, found by the Act's own rule
+
+**`FAE-P10-FRONTIER-01` is not resident.** It is cited as *the instrument barring
+the Security binding*, and the corpus declares exactly two Event IDs —
+`FDE-P10-AUTONOMOUS-EXECUTION-01` and `ADE-P10-G04`. It is neither.
+
+It was missed before because a **filename** search cannot find it — the same
+search would also have missed `FDE-P10-AUTONOMOUS-EXECUTION-01`, which is
+resident under an unrelated filename. Only searching **declared Event IDs inside
+files** separates the two cases.
+
+**No effect on the verdict.** The binding is unmade either way, because
+`FD-P10-003 §9` condition 3 requires authority never granted. **An unreadable bar
+and an absent grant leave the same state** — and `§11` forbids reading the
+absence as permission.
+
+## 72.4 `F-05` — the one I will not call non-blocking
+
+Volume VII is **genuinely absent**: filename, index and reference searches all
+negative; no protected package was touched by any of them. Three sections survive
+as verbatim quotations in tracked documents, and **all three known dependencies
+are discharged** — Phase 9 maturity satisfied by `FD-P9-002`, the six-name list
+superseded for P10 by `FD-P10-003`, activation non-delegation honoured.
+
+**And that is not enough to call it non-blocking.** The section list is unknown.
+I cannot enumerate sections I have never seen, and Volume VII is the volume
+governing Department architecture — the one most likely to carry further P10
+requirements. Declaring it satisfied on the strength of the fragments that
+happen to have been quoted is the source-absence-into-source-presence conversion
+`§11` forbids.
+
+> **Every *known* Volume VII dependency is discharged. Whether unknown sections
+> impose further P10 requirements cannot be determined without the artifact.**
+
+**This is the only frontier no decision can close.** It needs the source.
+
+## 72.5 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+execution-catalog 0 error 0 warning · citation 86 documents 0 errors
+stale-state 451 documents 0 assertions
+INV-1 0 unowned / 0 disagreements · unestablished 0/0 · W4 3 links · continuity 5 chains
+E10-01..E10-06 = PASS, re-verified after every change in this Act
+```

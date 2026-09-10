@@ -83,8 +83,7 @@ known.
   state*.
 - **"Security Department" — 1 occurrence**, in my own prior verification record,
   recording the decision **not** to create one. Security ownership is reserved to
-  the Founder by `FD-P10-003 §10` and tracked as `AR-002`. **Reserved, not
-  missing.**
+  the Founder and tracked as `AR-002`. **Reserved, not missing.**
 - **Only two Approved ADRs establish a Department**: `ADR-0003` (Platform),
   `ADR-0008` (Engineering). Both are resident. **No third exists to be missing.**
 - **"future Departments' … once established"** in the Governance Artifact
@@ -196,7 +195,7 @@ that exists, so no future exclusion can quietly become a hole.
 | no conflicting Department ownership | **0** disputes |
 | declarations agree with the runtime graph | Two-sided cross-check: each Capability's own `## Owner` section against the directory it is nested under — **two independent statements**, so disagreement is detectable |
 | ownership invariants pass | `INV-1` **0** unowned · `INV-2` **0** unowned |
-| does not cross reserved authority boundaries | **Checked, not assumed.** `governance-artifact-integrity` is *artifact* integrity — internal consistency of documents — and states *"it does not itself grant or define any authority."* It is **not** the Governance Authority reserved by `FD-P10-003 §10` / `AR-004`. No Capability touches Security or Quality authority |
+| does not cross reserved authority boundaries | **Checked, not assumed.** `governance-artifact-integrity` is *artifact* integrity — internal consistency of documents — and states *"it does not itself grant or define any authority."* It is **not** the Governance Authority reserved at `AR-004`. No Capability touches Security or Quality authority |
 | negative controls demonstrate failure | 4 planted-defect controls on the chain, each verified to fire **alone** |
 | Agent Instance not misclassified | **§3.2** |
 
@@ -337,7 +336,7 @@ remains **CLOSED** per `FD-P9-002`; nothing here reaches into it.
 | G-B | `disputed_agent_definition_ownership` circular, cannot run | `E10-IN-BOUNDARY / ACTIONABLE` | **RESOLVED by substitution** — §3.2 provides a check that *can* fail; the decline stays disclosed |
 | G-C | `Department` vs `Platform Division` semantics (`AR-001`) | `E10-IN-BOUNDARY / ARCHITECT-RESERVED` | **OPEN** — `ADR-0029` Proposed. Does **not** block: both Departments are ADR-established under either reading |
 | G-D | Security Owner, Quality Authority bindings (`AR-002`/`AR-003`) | `E10-IN-BOUNDARY / FOUNDER-RESERVED` | **OPEN** — `FD-P10-003 §10`. Both options drafted at `G-03`; no Capability requires them today |
-| G-E | Governance Authority binding (`AR-004`) | `E10-IN-BOUNDARY / FOUNDER-RESERVED` | **OPEN** — expressly withheld by `FD-P10-003 §10` |
+| G-E | Governance Authority binding (`AR-004`) | `E10-IN-BOUNDARY / FOUNDER-RESERVED` | **OPEN** — **basis corrected**: no positive grant exists to bind against (Register `FZ-04`, `GDR-0023`, `Volume VII §4.1`). `FD-P10-003 §10` does **not** withhold it; it requires separate reconciliation. See `FRONTIER-RESOLUTION-MATRIX.md` |
 | G-F | `Volume VII` not present in the repository (`AR-005`) | `E10-IN-BOUNDARY / SOURCE-BLOCKED` | **OPEN** — the only item **no decision can close**; it requires the artifact itself |
 | G-G | Knowledge's *home Platform Division* unassigned | `E10-OUT-OF-BOUNDARY` | PD track. `ACT-CC-P10-AUTHORIZATION §5`: `PD ≠ P10` |
 | G-H | 3 runtime substrates + 1 tool unreferenced | `NOT-REQUIRED` | Required by `DM §8` / `Constitution §6.2` inv. 1 — §4.4 |

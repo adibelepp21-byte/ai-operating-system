@@ -112,9 +112,48 @@ three-part conjunction fails at its first clause, so no creation follows.
 | ID | Required item | Missing authority | `§6` class | Sources inspected | Delegated path tested? | Decision package | Status |
 |---|---|---|---|---|---|---|---|
 | **AR-001** | Department/Platform-Division entity **semantics** | Architect determination | **E — ARCHITECT** | `ADR-0010`, `ADR-0011`, `FD-6`/`GDR-0020`, `E-64`, Domain Model terminology note, `Freeze §4` | **Yes** — `DEL-T4.4-CF-001 §3.2` exclusion 9 withholds Domain Model semantics; `Constitution §3.2` non-delegable | **`ADR-0029` — Proposed, decision-ready, 3 options, recommendation stated** | **PREPARED · NOT AUTHORIZED** |
-| **AR-002** | `Security Owner` → CPID binding | Founder identity assertion | **D — FOUNDER** | `G-03`, `PD-02 A5 §12`, `AUTHORITY-FRONTIER-MATRIX` row `G-03` | **Yes** — matrix records decide=Founder, execute=Co-Founder; `FAE-P10-FRONTIER-01 §7` bars the binding | `G-03` records both options: bind, **or** record that the Owner is deliberately not `PD-08` | **READY FOR FOUNDER** |
+| **AR-002** | `Security Owner` → CPID binding | Founder identity assertion | **D — FOUNDER** | `G-03`, `PD-02 A5 §12`, `AUTHORITY-FRONTIER-MATRIX` row `G-03` | **Yes** — matrix records decide=Founder, execute=Co-Founder. **`FAE-P10-FRONTIER-01 §7` is cited as barring the binding, and that instrument is not resident — see the source note below** | `G-03` records both options: bind, **or** record that the Owner is deliberately not `PD-08` | **READY FOR FOUNDER** |
 | **AR-003** | `Quality Authority` → CPID binding | Founder identity assertion | **D — FOUNDER** | `G-03` *Extends to*, `A5:331` | Yes — same path as `AR-002` | Same shape as `AR-002` | **READY FOR FOUNDER** |
-| **AR-004** | `Governance Authority` binding | Founder identity assertion | **D — FOUNDER** | `FD-P10-003 §10`, `ACT §18` | Yes — expressly withheld by `FD-P10-003 §10` unless stated otherwise, and it is not | Not prepared — `§10` withholds it explicitly rather than leaving it open | **FOUNDER-RESERVED** |
+| **AR-004** | `Governance Authority` binding | Founder identity assertion | **D — FOUNDER** | `GDR-0023`, `ACT-CC-F03-014`, `ACT-CC-F03-015 §164`, Register `FZ-04`; `Volume VII §4.1` | Yes — **but not for the reason first recorded here; see the correction below** | Not prepared — no positive grant of the authority exists to bind against | **FOUNDER-RESERVED** |
+
+> **SOURCE NOTE — 2026-09-10, `ACT-CC-P10-004 §4` actual-body review.**
+> **`FAE-P10-FRONTIER-01` has no resident body.** It is cited here and in
+> `SYSTEMIC-GAP-MAP` (`§6.3`, `§7`) as authority, and named as a predecessor
+> event by `FDE-P10-AUTONOMOUS-EXECUTION-01`, but a filename search and an
+> Event-ID search across the corpus both return nothing — the only two declared
+> Event IDs are `FDE-P10-AUTONOMOUS-EXECUTION-01` and `ADE-P10-G04`. Per
+> `ACT-CC-P10-004 §4`, **`CITATION ≠ AUTHORITY BODY`**, so its `§7` cannot be
+> read and cannot establish substantive state.
+>
+> **This does not release the binding.** `FD-P10-003 §9` condition 3 requires
+> ownership authority to be **explicitly established**, and it never was. An
+> unreadable bar and an absent grant both leave the binding unmade — and
+> `ACT-CC-P10-004 §11` forbids converting source absence into source presence.
+> Recorded as a source-recovery item, not as a licence.
+
+> **CORRECTION — 2026-09-10, `ACT-CC-P10-004 §6`/`§8` actual-body review.**
+> The `AR-004` row above previously read *"expressly withheld by `FD-P10-003
+> §10` unless stated otherwise, and it is not."* **`§10` does not say that.**
+> Its actual text is that Security Owner, Quality Authority and Governance
+> Authority *"must be separately reconciled"*, and that *"if an existing Founder
+> Decision or Founder Executive Decision **expressly withholds** those
+> assignments, this Decision does not override that withholding."* **That is a
+> non-override clause conditioned on some other instrument doing the
+> withholding — it is not itself a withholding.** Reading it as one attributed
+> to `FD-P10-003` an act it did not perform.
+>
+> **The verdict does not change; the basis does.** `AR-004` is Founder-reserved
+> because **no positive grant of Governance Authority exists to bind against** —
+> Register row `FZ-04` records activation authority as Founder-reserved under
+> `GDR-0023`, `ACT-CC-F03-014` and `ACT-CC-F03-015 §164`, with ***"0** resident
+> instruments grant the Co-Founder independent activation authority"* — and
+> `Volume VII §4.1` holds that authorizing a Department to operate *"tetap
+> berada pada Pemilik Program, bukan didelegasikan … bahkan setelah Executive
+> Office diimplementasikan."*
+>
+> **Absence of a readable withholding is not permission.** `FD-P10-003 §9`
+> condition 3 requires ownership authority to be *explicitly established*; it
+> never was. The binding stays unmade either way.
 | **AR-005** | Department population beyond the two | The `Volume VII` body | **F — INDISPENSABLE EXTERNAL SOURCE** | `G-09`, `E-64`, `E-65`, `ESC-C7-01`, full resident search | **Yes** — four-surface recovery exhausted at `SG-01`; the six names exist only as citation | **Not preparable** — a decision cannot establish a population whose source is absent | **SOURCE-BLOCKED** |
 
 **No queue item is class `G` (constitutionally prohibited) or `H` (unknown).**
