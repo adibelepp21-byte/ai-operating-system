@@ -8354,3 +8354,84 @@ inferred from two issued Architect decisions.
 `DP-02` were flagged as *not final* pending the architectural answers. **Those
 answers now exist**, so both packages can be re-examined against `DP-03`/`DP-04`
 whenever the Founder calls for them.
+
+
+---
+
+# 85. `ACT-CC-P11-004` — the instrument the Act asked me to re-examine does not exist
+
+[`DP-01-P11-FOUNDER-AUTHORIZATION-SURFACE.md`](../architecture/p11/DP-01-P11-FOUNDER-AUTHORIZATION-SURFACE.md).
+
+> **Verdict `T4` — AUTHORITY INSUFFICIENT.** Stop at the Founder boundary; the
+> prepared surface is returned. **`P11 AUTHORIZED = FALSE`.**
+
+## 85.1 The finding that governs the Act
+
+`§4` required me to locate and read *"the actual current body of DP-01."*
+**There is no `DP-01` instrument, and there never was one.** Searched by filename
+across the tree and by content across the corpus: every P11-track occurrence is a
+**forward reference to a decision not yet taken** — in my own records and inside
+`DP-03`'s body.
+
+**This is not a lost source, and the difference decides what I may do.** `§4`'s
+contingency assumes a body that cannot be found; here none was ever authored,
+which is the ordinary state of a decision nobody has made. So:
+
+- **Nothing was reconstructed** — `§4` forbids it, and there was no prior text to
+  reconstruct.
+- **The surface was prepared** — `§24` and `§27 F` require it, built from the
+  **issued** `DP-03` and `DP-04` plus the resident Blueprint.
+
+**Every `§16` scope-diff row is `ADD`.** There is no clause to `PRESERVE`,
+`MODIFY` or `REMOVE`, and the `?` column the Act asked me to resolve resolves to a
+uniform *"does not exist"* — **reported as such rather than filled with a
+plausible-looking prior text.**
+
+## 85.2 `DP-01` is a three-way identifier collision
+
+| Meaning | Location |
+|---|---|
+| *"Authority Before **Decision**"* — Decision Principle | `volume-1/pd-01-executive-office/C2.md:73` |
+| *"Authority Before **Delegation**"* — Delegation Principle | `volume-1/pd-01-executive-office/C3.md:70`; `volume-2/pd-02.../C3.md:114` |
+| **Founder P11 Authorization** | the P11 track |
+
+**Two of them differ inside the same volume, section to section.** This is
+`IDENTIFIER ≠ ACTUAL DECISION BODY` with practical consequences: a search for
+`DP-01` returns PD principles that have nothing to do with authorizing P11.
+
+**Reported, not renamed** — renaming a Founder identifier is not delegated. And
+one collision is substantively useful: PD-01's `DP-01 — Authority Before
+Delegation` (*"Hanya pihak dengan authority resmi yang dapat mendelegasikan"*) is
+the same principle `DP-03 §11` encodes as `DELEGATION ≠ AUTHORITY CREATION`.
+
+## 85.3 Why `T4` and not `T5`
+
+`T5` fires when *"required actual decision body or canonical source cannot be
+established."* **The required canonical sources are all established** — `DP-03`,
+`DP-04` and the Blueprint are issued and resident. Only the presupposed `DP-01`
+is absent, **because it has not been decided yet.**
+
+**`T5` would report a source problem where there is none.** `T4` is accurate: the
+resolution is Founder-reserved, I prepared to the boundary, and I stop there.
+
+## 85.4 The test that would have failed a week ago
+
+`§20` Test A asks whether the prepared surface accidentally authorizes a **static
+P10-style record** where P11 needs `PLAN → SEQUENCE → ADAPT → REVISE`.
+
+**It passes — and it would have failed had I prepared this before `DP-03`
+issued.** My own `Option C` recommendation would have authorized exactly that
+static surface. `DP-03 §8.4` corrected it, and **this surface carries the
+correction rather than my original recommendation.**
+
+## 85.5 State integrity, measured
+
+```text
+native_core boundaries : 11        planning/delegation/goal classes : 0
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+citation 96 documents / 0 errors · stale-state 461 documents / 0 assertions
+
+P11 AUTHORIZED = FALSE · P11 CONSTRUCTED = FALSE · E11 RATIFIED = FALSE
+P12 AUTHORIZED = FALSE · NATIVE CORE MODIFIED = FALSE
+NC-01..NC-20 present in the surface · §21–§24 Founder-reserved, unfilled
+```
