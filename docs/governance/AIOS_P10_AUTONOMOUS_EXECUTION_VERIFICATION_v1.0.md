@@ -6873,3 +6873,109 @@ this one in a single command.
 
 **Verification:** `tools 262 OK` · `citation 81 documents · 0 errors · 65 WARN` ·
 `stale-state 0 assertions`.
+
+---
+
+# 69. `ACT-CC-P10-003` — the completion boundary proved, and every stated requirement met
+
+**Date:** 2026-09-10 · **Baseline:** `a5c3021`
+
+## 69.1 The boundary came from an instrument I had cited and never read
+
+`P10 Exit`, in the Blueprint:
+
+> *"P10 complete **hanya jika** department ecosystem memiliki evidence untuk:
+> identity; authority; ownership; capability; execution; workflow;
+> coordination; verification; lifecycle."*
+
+**Nine criteria — and the two items I had been reporting as completion blockers
+are not among them.** `work intake` appears in `P10-W5` and `P10-W8`;
+cross-PD interfaces appear nowhere in P10's exit test.
+
+**`§67` said P10 completion was blocked on those two, citing
+`ACT-CC-P10-002 §29`.** That is the **Act's** checklist. **The Blueprint's
+`P10 Exit` is the canonical one.** The gaps were real; **the instrument I used
+to define the boundary was the wrong one** — which is exactly `ACT §3`'s
+prohibited inference, *"gap exists + mentioned during P10 = completion
+blocker"*.
+
+## 69.2 `hanya jika` — the reading that keeps this honest
+
+**"Hanya jika" is "only if": a necessary condition, not a sufficient one.**
+
+It would have been easy, and wrong, to read the nine as a completion test and
+declare P10 complete on satisfying them. **They are necessary. Nothing in this
+repository states the sufficient condition.**
+
+## 69.3 Measured
+
+```text
+P10 EXIT CRITERIA      9 / 9 SATISFIED
+P10-W8 MINIMUM TESTS  10 / 10 SATISFIED   (test 1 constructed this cycle)
+```
+
+**The weakest of the nine is stated as weak.** Criterion 9, *lifecycle*, is
+satisfied **by a deliberate absence**: `Freeze §4` says Department lifecycle is
+*"governed"* and **enumerates no states**, and `department_spec §4` declines to
+invent any. **If a reader holds that `lifecycle` requires states, criterion 9
+becomes UNSATISFIED and constructing them would violate `Freeze §4`** — so the
+item would be `ARCHITECT-RESERVED`, not actionable. **Recorded as the single
+interpretive dependency in the nine, rather than resolved in my own favour.**
+
+## 69.4 Built — `GAP-P10-C1` closed
+
+`P10-W8` test 1 (*work masuk*) had no Department-side answer.
+**`resolve_work_entry()`** now gives one: a Capability a request names resolves
+to its **accountable Department** and **implementing Agent Definition**. All
+three owned Capabilities resolve; an unknown Capability **fails closed**,
+because `INV-1` requires exactly one owner and work entering an organization
+that has not accepted it is not entry.
+
+**And it is deliberately not a Work entity.** `Freeze §2` reserves `Task`,
+`Goal`, `Event`; `Freeze §4` says *"No new entity."* `WorkEntry` is a
+**resolution result** — recomputed every call, storing nothing. **A test asserts
+it has no identity, owner, version, lifecycle, state, trace or key and pins its
+field set**, so the day it acquires one the test fails rather than the boundary
+quietly eroding. A second asserts two calls return **equal but distinct**
+objects, because a cached instance would be stored state.
+
+**Also built: the `P10-W4` chain check** — DEPARTMENT → CAPABILITY → AGENT
+DEFINITION, **3 links, 0 defects**, with **four negative controls** that plant a
+contradicting department, an unowned capability, an unimplemented capability
+(`INV-14`), and a positive control proving the fixture can pass.
+
+## 69.5 Where P10 actually stands
+
+```text
+AUTHORIZED YES · CONSTRUCTED YES · OPERATIONAL YES · VERIFIED YES
+COMPLETE   NOT DECLARED · CERTIFIED NOT DECLARED · CLOSED NOT DECLARED
+```
+
+**Everything the canonical sources *state* as required for P10 completion is now
+evidenced.** What remains is not construction and not authority-over-construction:
+
+```text
+ALL STATED NECESSARY CONDITIONS  SATISFIED
+SUFFICIENT CONDITION             NOT STATED BY ANY RESIDENT SOURCE
+                                 → FOUNDER / ARCHITECT DETERMINATION
+```
+
+**This is not a source gap** — no missing document would supply it. **It is a
+completion determination**, which `FD-P10-003 §16` already places outside my
+authority by keeping `COMPLETE` and `CERTIFIED` separate from `VERIFIED`, and
+which `ACT §34` forbids me from inferring.
+
+## 69.6 `ACT §30` — completion was not forced
+
+No requirement was lowered, removed, or reclassified without evidence. No entity
+was created to satisfy a checklist — **the one construction deliberately avoided
+creating the entity the checklist item is named after.** The out-of-boundary
+finding for cross-PD interfaces carries the six-element proof `§19` requires.
+The deferred finding for Work-as-entity carries `§20`'s.
+
+## 69.7 Verification
+
+```text
+tools 272 OK (+10) · native_core 801 OK (1 expected) · consumers 276 OK
+citation 82 documents · 0 errors · 65 WARN · stale-state 0 assertions
+```

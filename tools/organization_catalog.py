@@ -101,6 +101,59 @@ def _establishing_adr(readme: Path) -> Tuple[str, ...]:
 OWNER_SECTION = re.compile(r"^## Owner\s*\n\s*\n(.+?)\s*$", re.M)
 
 
+#: An Agent Definition record states its own owner and the Capability it
+#: implements — **independently of where the file sits**. That independence is
+#: what makes the cross-check below capable of failing.
+DECLARED_DEPARTMENT = re.compile(r"^## Owning Department\s*\n\s*\n\[?([^\]\n(]+)", re.M)
+DECLARED_CAPABILITY = re.compile(r"^## Implemented Capability\s*\n\s*\n\[?([^\]\n(]+)", re.M)
+
+
+def w4_chain(departments, root: Path = ORGANIZATION_ROOT):
+    """`P10-W4`: DEPARTMENT → CAPABILITY → (work → execution → verification).
+
+    Walks every Agent Definition record and closes the loop three ways:
+
+    1. the Department it **declares** matches the Department it is **nested
+       under** — two independent statements, so a mismatch is a real defect;
+    2. the Capability it **declares implementing** is one that Department
+       actually **owns** — which is `INV-2`'s second clause at record level;
+    3. every owned Capability is reachable from at least one Agent Definition,
+       or is reported unimplemented — `INV-14` forbids a Capability *"existing
+       with zero implementers as a steady state"*.
+
+    Returns ``(links, defects)``. **Defects are returned, never raised**: `PR-3`
+    is detect-don't-decide, and the frozen `OwnershipGraph` follows the same rule.
+    """
+    links, defects = [], []
+    implemented = set()
+    for record in departments:
+        base = root / record.key / "agent-definitions"
+        for key in record.agent_definitions:
+            path = base / f"{key}.md"
+            if not path.is_file():
+                defects.append(("missing-record", key, record.key, None))
+                continue
+            text = path.read_text(encoding="utf-8")
+            dept = DECLARED_DEPARTMENT.search(text)
+            cap = DECLARED_CAPABILITY.search(text)
+            declared_dept = _slug(dept.group(1)) if dept else None
+            declared_cap = _slug(cap.group(1)) if cap else None
+            if declared_dept != record.key:
+                defects.append(("department-mismatch", key, record.key, declared_dept))
+            if declared_cap is None:
+                defects.append(("no-declared-capability", key, record.key, None))
+            elif declared_cap not in record.capabilities:
+                defects.append(("capability-not-owned", key, record.key, declared_cap))
+            else:
+                implemented.add(declared_cap)
+                links.append((record.key, declared_cap, key))
+    for record in departments:
+        for capability in record.capabilities:
+            if capability not in implemented:
+                defects.append(("capability-unimplemented", capability, record.key, None))
+    return links, defects
+
+
 def _owner_disagreements(departments, root: Path):
     """Capability records whose stated Owner differs from their nesting."""
     disagreements = []
@@ -250,6 +303,63 @@ def build_graph(root: Path = ORGANIZATION_ROOT):
     return OwnershipGraph(organizations=(organization,), departments=departments)
 
 
+@dataclass(frozen=True)
+class WorkEntry:
+    """A resolved entry point into the Department Ecosystem.
+
+    **This is not a Work entity.** `Freeze §2` lists `Task`, `Goal` and `Event`
+    among *reserved concepts with no ratified entity*, and `Freeze §4` states
+    plainly *"No new entity."* Nothing here is stored, owned, versioned, traced
+    or given a lifecycle — it is a **resolution result**, recomputed from the
+    records on every call, and deleting this class costs AIOS no truth.
+
+    What it answers is `P10-W8` test 1 and test 2 together — *"work masuk"* and
+    *"capability dipilih"* — **from the Department side**: given a Capability a
+    request names, which Department is accountable, and which Agent Definition
+    implements it. Execution then proceeds through the already-certified
+    Workflow path (`E9-03`); this class does not execute anything.
+    """
+
+    capability: str
+    department: str
+    agent_definition: str
+    establishing_adr: str
+
+
+class WorkEntryUnresolved(LookupError):
+    """The named Capability does not resolve to an accountable Department.
+
+    Fails closed rather than returning a partial entry: `INV-1` requires
+    *exactly one* owning Department, and an entry that could not name one would
+    be work entering an organization that has not accepted it.
+    """
+
+
+def resolve_work_entry(capability_key: str, root: Path = ORGANIZATION_ROOT) -> WorkEntry:
+    """Resolve a named Capability to the Department accountable for it.
+
+    `P10-W8` test 1 (*work masuk*) and test 2 (*capability dipilih*), answered
+    from resident records and the frozen ownership graph. Raises rather than
+    guessing — see `WorkEntryUnresolved`.
+    """
+    departments = read_departments(root)
+    links, _ = w4_chain(departments, root)
+    for department, capability, agent_definition in links:
+        if capability != capability_key:
+            continue
+        record = next(r for r in departments if r.key == department)
+        return WorkEntry(
+            capability=capability,
+            department=department,
+            agent_definition=agent_definition,
+            establishing_adr=record.establishing_adrs[0] if record.establishing_adrs else "",
+        )
+    raise WorkEntryUnresolved(
+        f"{capability_key!r} resolves to no accountable Department; INV-1 "
+        "requires exactly one, and a partial entry is not returned"
+    )
+
+
 def report(root: Path = ORGANIZATION_ROOT) -> dict:
     departments = read_departments(root)
     result = {
@@ -294,6 +404,9 @@ def report(root: Path = ORGANIZATION_ROOT) -> dict:
     # a real second declaration — the record's ``## Owner`` section — and is
     # cross-checked above.
     result["inv2_disputed"] = "NOT RUN — would be circular; see source"
+    links, defects = w4_chain(departments, root)
+    result["w4_links"] = links
+    result["w4_defects"] = defects
     result["resolutions"] = {
         key: graph.owner_of(key).identity.department_key
         for record in departments for key in record.capabilities
@@ -323,6 +436,14 @@ def main(argv: List[str]) -> int:
         print("INV-2 — every Agent Definition owned by exactly one Department")
         print(f"  unowned            : {len(result['inv2_unowned_agent_definitions'])}")
         print(f"  disputed           : {result['inv2_disputed']}")
+        print()
+        print("P10-W4 chain — DEPARTMENT -> CAPABILITY -> AGENT DEFINITION")
+        print(f"  closed links       : {len(result['w4_links'])}")
+        print(f"  defects            : {len(result['w4_defects'])}")
+        for kind, key, dept, extra in result["w4_defects"]:
+            print(f"    {kind}: {key} ({dept}) {extra or ''}")
+        for dept, cap, agent in sorted(result["w4_links"]):
+            print(f"    {dept} -> {cap} -> {agent}")
         print()
         print("resolved ownership:")
         for capability, department in sorted(result["resolutions"].items()):

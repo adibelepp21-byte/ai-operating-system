@@ -20,6 +20,10 @@ from tools.organization_catalog import (  # noqa: E402
     organization_key,
     read_departments,
     report,
+    w4_chain,
+    WorkEntry,
+    WorkEntryUnresolved,
+    resolve_work_entry,
 )
 
 
@@ -186,3 +190,120 @@ class TheCountsAreMeasuredNotAsserted(unittest.TestCase):
 
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
+
+
+class TheW4ChainClosesAndCanFail(unittest.TestCase):
+    """`P10-W4`: DEPARTMENT → CAPABILITY → AGENT DEFINITION.
+
+    `ACT-CC-P10-003 §28`: *"negative controls"*. Each planted defect below
+    changes exactly one thing and must be seen — a chain check that cannot
+    report a break is not evidence that the chain is unbroken.
+    """
+
+    def test_the_real_chain_closes_with_no_defects(self):
+        links, defects = w4_chain(read_departments())
+        self.assertEqual(defects, [])
+        self.assertEqual(len(links), 3)
+        self.assertIn(
+            ("platform", "governance-artifact-integrity",
+             "governance-artifact-integrity-agent"), links,
+        )
+
+    def _corpus(self, tmp, *, declared_dept="Platform", declared_cap="Cap One",
+                owned=("cap-one",)):
+        root = Path(tmp)
+        dept = root / "platform"
+        (dept / "capabilities").mkdir(parents=True)
+        (dept / "agent-definitions").mkdir(parents=True)
+        (dept / "README.md").write_text(
+            "# Platform\n\nThis Department was established by [ADR-0003](x).\n"
+            "\n## Name\n\nPlatform\n", encoding="utf-8")
+        for key in owned:
+            (dept / "capabilities" / f"{key}.md").write_text(
+                f"# {key}\n\n## Name\n\n{key}\n", encoding="utf-8")
+        (dept / "agent-definitions" / "some-agent.md").write_text(
+            "# Some Agent\n\n## Owning Department\n\n"
+            f"[{declared_dept}](../README.md)\n\n## Implemented Capability\n\n"
+            f"[{declared_cap}](../capabilities/x.md)\n", encoding="utf-8")
+        return root
+
+    def test_a_declared_department_that_contradicts_the_nesting_is_seen(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp, declared_dept="Engineering")
+            _, defects = w4_chain(read_departments(root), root)
+            self.assertIn("department-mismatch", [d[0] for d in defects], defects)
+
+    def test_a_capability_the_department_does_not_own_is_seen(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp, declared_cap="Not Owned At All")
+            _, defects = w4_chain(read_departments(root), root)
+            self.assertIn("capability-not-owned", [d[0] for d in defects], defects)
+
+    def test_a_capability_with_no_implementer_is_seen(self):
+        """`INV-14` — a Capability with zero implementers as a steady state."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp, owned=("cap-one", "cap-two"))
+            _, defects = w4_chain(read_departments(root), root)
+            kinds = [(d[0], d[1]) for d in defects]
+            self.assertIn(("capability-unimplemented", "cap-two"), kinds, defects)
+
+    def test_the_positive_control_passes_on_the_same_fixture_shape(self):
+        """Guard: the fixture must be capable of producing zero defects."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = self._corpus(tmp)
+            links, defects = w4_chain(read_departments(root), root)
+            self.assertEqual(defects, [], "fixture is broken, not the checker")
+            self.assertEqual(len(links), 1)
+
+
+class WorkEntersTheDepartmentEcosystem(unittest.TestCase):
+    """`P10-W8` test 1 (*work masuk*) and test 2 (*capability dipilih*).
+
+    The Blueprint calls its ten integration tests *"Uji minimal"*. This closes
+    the one that had no Department-side answer.
+    """
+
+    def test_every_owned_capability_resolves_to_an_accountable_department(self):
+        for record in read_departments():
+            for capability in record.capabilities:
+                entry = resolve_work_entry(capability)
+                self.assertEqual(entry.department, record.key)
+                self.assertTrue(entry.agent_definition)
+                self.assertRegex(entry.establishing_adr, r"^ADR-\d{4}$")
+
+    def test_an_unknown_capability_fails_closed(self):
+        """`INV-1` requires exactly one owner; a partial entry is not returned."""
+        with self.assertRaises(WorkEntryUnresolved):
+            resolve_work_entry("no-such-capability-anywhere")
+
+    def test_the_entry_names_the_department_that_actually_owns_it(self):
+        entry = resolve_work_entry("governance-artifact-integrity")
+        self.assertEqual(entry.department, "platform")
+        self.assertEqual(entry.agent_definition, "governance-artifact-integrity-agent")
+        self.assertEqual(entry.establishing_adr, "ADR-0003")
+
+    def test_it_is_not_a_work_entity(self):
+        """`Freeze §4`: *"No new entity."*
+
+        A resolution result is recomputed from records on every call and stores
+        nothing. If this class ever gained identity, ownership, versioning, a
+        lifecycle or a Trace, it would have become an entity — so the test
+        asserts it has none of them.
+        """
+        entry = resolve_work_entry("engineering-intelligence")
+        for forbidden in ("identity", "owner", "version", "lifecycle",
+                          "state", "trace", "key"):
+            self.assertFalse(
+                hasattr(entry, forbidden),
+                f"WorkEntry gained {forbidden!r} — it would now be an entity",
+            )
+        self.assertEqual(
+            set(entry.__dataclass_fields__),
+            {"capability", "department", "agent_definition", "establishing_adr"},
+        )
+
+    def test_it_is_recomputed_not_stored(self):
+        a = resolve_work_entry("cognitive-intelligence")
+        b = resolve_work_entry("cognitive-intelligence")
+        self.assertEqual(a, b)
+        self.assertIsNot(a, b, "a cached instance would be stored state")
