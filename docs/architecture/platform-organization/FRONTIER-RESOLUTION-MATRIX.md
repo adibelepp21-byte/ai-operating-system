@@ -1,5 +1,27 @@
 # P10 Frontier Resolution Matrix
 
+> **SUPERSEDED IN PART — 2026-09-10, by `ACT-CC-P10-005`.** Two verdicts below
+> are **overturned by evidence**, and the corrections live in
+> [`SOURCE-AND-AUTHORITY-RECONCILIATION.md`](SOURCE-AND-AUTHORITY-RECONCILIATION.md):
+>
+> - **`F-05` Volume VII — "genuinely absent" is FALSE.** The volume exists, is
+>   complete, and has been read end to end. It was found in the Project/source
+>   corpus, a surface this Act's search never covered. Every requirement in it is
+>   now enumerated and tested, so `F-05` is **RESOLVED and proven non-blocking** —
+>   not the "not proven non-blocking" recorded below.
+> - **`F-06` `FAE-P10-FRONTIER-01` — "no resident body" is FALSE.** The body was
+>   recovered from the session transcript: **ISSUED, Founder Moriarty,
+>   5-09-2026**, and its `§7` is operative. `FDE-P10-FRONTIER-02` and
+>   `ACT-CC-P10-FAE-01` were likewise recovered.
+>
+> **The rest of this document stands**, including the `F-04` correction, which
+> `ACT-CC-P10-005` re-verified against both supporting sources. The superseded
+> text is left standing below rather than rewritten, because it is the record of
+> what a repository-only search concluded.
+
+---
+
+
 > **Executed under `ACT-CC-P10-004`** — P10 Frontier Resolution, Authority
 > Reconciliation & Certification Readiness Gate. **2026-09-10.**
 >

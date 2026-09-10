@@ -7306,3 +7306,103 @@ stale-state 451 documents 0 assertions
 INV-1 0 unowned / 0 disagreements · unestablished 0/0 · W4 3 links · continuity 5 chains
 E10-01..E10-06 = PASS, re-verified after every change in this Act
 ```
+
+
+---
+
+# 73. `ACT-CC-P10-005` — Volume VII exists, and I had said it did not
+
+`ACT-CC-P10-004` recorded Volume VII as **genuinely absent** on a search that
+covered the repository and nothing else. **Volume VII exists, is complete, and
+has now been read end to end** — found in the Project/source corpus because
+`ACT-CC-P10-005 §7` directed the search there, and because `§9` forbids in terms
+the exact inference I had made: *"Volume VII filename absent → Volume VII source
+absent."*
+
+**Seventh negative claim tested across this programme; second to fail.** It failed
+on the strongest evidence there is — the artifact itself.
+
+**And my own tooling had recorded the bundle all along.** The `NON_RESIDENT`
+registry in `tools/corpus_citation_audit.py` carries
+`"AIOS_MASTER_PROGRAM_v1_0_LENGKAP.md": "Architect-supplied upload, outside the
+repository"`. I searched for *"Volume VII"* and never for the bundle containing
+it, then read the empty result as proof of absence — with the pointer sitting in
+a file I wrote.
+
+Full reconciliation:
+[`SOURCE-AND-AUTHORITY-RECONCILIATION.md`](../architecture/platform-organization/SOURCE-AND-AUTHORITY-RECONCILIATION.md).
+
+## 73.1 What the volume actually says
+
+Classified **`C — DRAFT SOURCE`** (`§8`): body complete, but its own version row
+reads **Draft**, its Master Index shows Volumes I–VII all Draft, and it defers
+canonical progress to `AIOS_CANONICAL_ARCHITECTURE.md`. **Evidence, not canon** —
+`§39` forbids turning a source copy into a canonical artifact.
+
+**All three fragments quoted in resident records verified word for word.** The
+fragments were faithful; the verdict built on them was not, because the verdict
+rested on the sections nobody had read.
+
+**Eleven substantive requirements enumerated and tested; none blocks P10.** The
+residual that kept `F-05` open — *"whether unknown sections impose further P10
+requirements"* — **no longer exists**, because no section remains unread.
+
+One of them corroborates work already done: `§2.2` requires that a Department
+*"tidak dapat memanggil kapabilitas di luar yang diizinkan Governance Layer"* —
+which is exactly what `w4_continuity`'s `skill-not-permitted` check enforces,
+built two Acts ago without knowing this sentence existed.
+
+## 73.2 The six Departments are *contoh konseptual*
+
+`Volume VII §3` calls the six **conceptual examples** from Status Report v0.9, and
+`§5` says the MVP does not need all six. **`ADR-0029` frames `G-09` as a
+population conflict between those six and the ten Platform Divisions — and the
+six were never asserted as a population.** Recorded as Addendum 3; the ADR
+remains **Proposed** and no option is adopted.
+
+And `§4.2` ranks **Engineering priority 1**, which is one of the two resident
+Departments. The population matches the volume's own first priority.
+
+## 73.3 `FAE-P10-FRONTIER-01` — recovered, ISSUED, and mischaracterized by me
+
+Body recovered from the transcript: **ISSUED, Founder Moriarty, 5-09-2026.** It
+carries two status fields — a header saying `PENDING` and a signature block
+saying `ISSUED` — and the signature block governs, demonstrably: the document was
+supplied twice, differing **on that line alone**, from `ISSUED / NOT ISSUED` to
+`ISSUED`. **That line is the issuance.** The same pattern holds for
+`FDE-P10-FRONTIER-02`, so it is a convention of these events.
+
+**And `§7` does not say what resident records said it says.** They record it as
+*barring* the Security binding. It **authorizes** advancing the Security frontier,
+and bars only declaring a Security ownership model **canonical** without
+established authority. `AR-002`'s verdict is unchanged; its basis is now exact.
+
+## 73.4 Six of my own findings overturned, all the same shape
+
+Volume VII "absent" · `FAE-P10-FRONTIER-01` "bodyless" · `FDE-P10-FRONTIER-02`
+"bodyless" · `DEL-F03-015-P7I99-001` "bodyless" · `FAE-01`/`FAE-02` as
+identifiers · `FD-P10-003 §10` "expressly withholds".
+
+**Every one was a negative claim, and every one failed the same way: the search
+behind it was narrower than the claim it supported.**
+
+## 73.5 Where this leaves P10
+
+```text
+E10-01..E10-06    PASS, re-verified this Act
+SOURCE GAP        CLOSED — Volume VII found; FAE body recovered
+FRONTIERS         4 closed this Act; 2 remain, both Founder-reserved, neither blocking
+READINESS         NOT READY — AUTHORITY (§34)
+CERTIFICATION     Founder's; §33 withholds it from this Act
+```
+
+**The remaining distance to certification is entirely reserved authority** —
+four decisions, all of them the Founder's or the Architect's, none of them mine.
+
+## 73.6 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+execution-catalog 0 error 0 warning · INV-1 0 unowned / 0 disagreements
+unestablished 0/0 · W4 3 links · continuity 5 chains 0 defects
+```

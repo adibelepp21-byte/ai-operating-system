@@ -116,8 +116,22 @@ three-part conjunction fails at its first clause, so no creation follows.
 | **AR-003** | `Quality Authority` → CPID binding | Founder identity assertion | **D — FOUNDER** | `G-03` *Extends to*, `A5:331` | Yes — same path as `AR-002` | Same shape as `AR-002` | **READY FOR FOUNDER** |
 | **AR-004** | `Governance Authority` binding | Founder identity assertion | **D — FOUNDER** | `GDR-0023`, `ACT-CC-F03-014`, `ACT-CC-F03-015 §164`, Register `FZ-04`; `Volume VII §4.1` | Yes — **but not for the reason first recorded here; see the correction below** | Not prepared — no positive grant of the authority exists to bind against | **FOUNDER-RESERVED** |
 
-> **SOURCE NOTE — 2026-09-10, `ACT-CC-P10-004 §4` actual-body review.**
-> **`FAE-P10-FRONTIER-01` has no resident body.** It is cited here and in
+> **SUPERSEDED — 2026-09-10, `ACT-CC-P10-005 §11`. The note below is WRONG.**
+> **`FAE-P10-FRONTIER-01`'s body was recovered** from the session transcript:
+> **ISSUED, Founder Moriarty, 5-09-2026**, `§7` operative. And `§7` does **not**
+> *"bar the binding"* as this record says — it **authorizes** advancing the
+> Security-definition frontier, while barring any declaration that a Security
+> *"authority, ownership model, canonical boundary, or runtime role"* is
+> **canonical** without established authority. A `Security Owner → PD-08` binding
+> is such a declaration, so `AR-002`'s verdict is unchanged and its basis is now
+> exact: **the section closes a narrower door than the record claimed, next to a
+> door it actually opens.** See
+> [`SOURCE-AND-AUTHORITY-RECONCILIATION.md`](SOURCE-AND-AUTHORITY-RECONCILIATION.md) `§4`.
+> The superseded note is left standing below as the record of what a
+> repository-only search concluded.
+>
+> ~~**SOURCE NOTE — 2026-09-10, `ACT-CC-P10-004 §4` actual-body review.**~~
+> ~~**`FAE-P10-FRONTIER-01` has no resident body.**~~ It is cited here and in
 > `SYSTEMIC-GAP-MAP` (`§6.3`, `§7`) as authority, and named as a predecessor
 > event by `FDE-P10-AUTONOMOUS-EXECUTION-01`, but a filename search and an
 > Event-ID search across the corpus both return nothing — the only two declared
