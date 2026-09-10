@@ -7156,6 +7156,19 @@ clean on the resident corpus and never shown able to fire. **That one was a
 missing control, not a defect** — the mechanism worked — and it is recorded as
 such rather than inflated into a third gap.
 
+## 71.3c A fourth cycle, on a word I had read past
+
+`§7` requires *"invalid **or** unknown capability input must fail closed."* Only
+*unknown* had been tested. The invalid shapes — empty, whitespace, `None`,
+non-string types, `../../etc/passwd`, and the near-misses a helpful normalizer
+would accept — **all fail closed**; only the exact key resolves. Now asserted,
+so that a later change trimming or lowercasing the key, turning fail-closed into
+best-effort matching, fails rather than passes.
+
+**No defect. The evidence was narrower than the criterion**, which is its own
+finding: three of the four cycles found something, and this one found that a
+clause had been satisfied more narrowly than it was written.
+
 ## 71.4 Where this leaves P10
 
 ```text
@@ -7175,7 +7188,7 @@ and states **`PREPARED ≠ CERTIFIED`** on its first line, as `§24` requires.
 ## 71.5 Verification
 
 ```text
-native_core 801 OK (1 expected failure) · consumers 276 OK · tools 293 OK
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
 execution-catalog 0 error 0 warning · citation 85 documents 0 errors
 stale-state 450 documents 0 assertions
 ```

@@ -10,7 +10,7 @@
 > **Measuring instrument:** [`FD-P10-004`](../../governance/acts/FD-P10-004-RATIFICATION-OF-MEASURABLE-PHASE-10-EXIT-CRITERIA.md),
 > Status `DECIDED`. **Verified against its ratified text**, recovered verbatim,
 > not against my superseded candidate wording.
-> **Verification date:** 2026-09-10 (three discovery cycles) · **Verifier:** Claude Code / Co-Founder
+> **Verification date:** 2026-09-10 (four discovery cycles) · **Verifier:** Claude Code / Co-Founder
 
 ---
 
@@ -203,8 +203,16 @@ that exists, so no future exclusion can quietly become a hole.
 ### 4.3 `E10-03` — Work Entry & Capability Selection · **PASS**
 
 `resolve_work_entry()` resolves all three Capabilities to an accountable
-Department and implementing Agent Definition. Unknown input raises
-`WorkEntryUnresolved` — **fails closed**, as `§7` requires.
+Department and implementing Agent Definition.
+
+**`§7` says "invalid **or** unknown", and only *unknown* had been tested.** The
+fourth discovery cycle probed the invalid shapes: empty string, whitespace,
+`None`, non-string types, `../../etc/passwd`, and the near-misses a helpful
+normalizer would accept — `COGNITIVE-INTELLIGENCE`, a trailing space, an
+underscore separator. **Every one fails closed**; only the exact key resolves.
+The strictness is itself the guarantee, and is now asserted so that a later
+change trimming or lowercasing the key — turning fail-closed into best-effort
+matching — fails a test rather than passing quietly.
 
 **No Work entity was created.** `§7` permits the criterion to be satisfied
 functionally and forbids introducing an entity to satisfy it; `Freeze §4` says
@@ -308,7 +316,7 @@ Run fresh after every change in this pass:
 |---|---|
 | `native_core` | **801 OK** (1 expected failure, `GDR-0014`, pre-existing and expected) |
 | `consumers` | **276 OK** |
-| `tools` | **293 OK** (272 before; +21 this pass) |
+| `tools` | **294 OK** (272 before; +22 this pass) |
 | Execution-catalog validators | **0 error, 0 warning**, 4 informational |
 | Citation audit | 84 documents, **0 errors** |
 | Stale-state audit | 449 documents, **0 stale assertions** |

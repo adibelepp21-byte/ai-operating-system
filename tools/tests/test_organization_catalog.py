@@ -568,6 +568,23 @@ class WorkEntersTheDepartmentEcosystem(unittest.TestCase):
                 self.assertTrue(entry.agent_definition)
                 self.assertRegex(entry.establishing_adr, r"^ADR-\d{4}$")
 
+    def test_invalid_input_of_every_shape_fails_closed(self):
+        """`FD-P10-004 §7`: *"Invalid or unknown capability input must fail closed."*
+
+        The ratified wording says **invalid or unknown**, and only *unknown* was
+        tested. These are the invalid shapes: empty, whitespace, wrong type,
+        traversal, and the near-misses a helpful normalizer would silently
+        accept. **The strictness is the guarantee** — a later change that trims
+        or lowercases the key to be accommodating would weaken fail-closed
+        behavior into best-effort matching, and must fail this test instead.
+        """
+        for value in ("", "   ", None, 0, [], "../../etc/passwd",
+                      "COGNITIVE-INTELLIGENCE", "cognitive-intelligence ",
+                      "cognitive_intelligence"):
+            with self.subTest(value=value):
+                with self.assertRaises(WorkEntryUnresolved):
+                    resolve_work_entry(value)
+
     def test_an_unknown_capability_fails_closed(self):
         """`INV-1` requires exactly one owner; a partial entry is not returned."""
         with self.assertRaises(WorkEntryUnresolved):
