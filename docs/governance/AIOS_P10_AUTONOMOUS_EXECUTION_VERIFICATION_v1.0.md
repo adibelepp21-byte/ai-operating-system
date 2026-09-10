@@ -7644,3 +7644,102 @@ P11-P13    NOT AUTHORIZED
 **To issue it:** return `FD-P10-005` with `§23` completed — date, signature, and
 exactly one box ticked. Nothing else is required of me, and nothing else may be
 inferred.
+
+
+---
+
+# 77. `FD-P10-005` ISSUED — **Phase 10 is CERTIFIED**
+
+**Founder: Moriarty · 10-09-2026 · `☒ APPROVED`.**
+`§16`: *"Phase 10 — Department Ecosystem is hereby certified as COMPLETE."*
+
+Persisted verbatim at
+[`FD-P10-005`](acts/FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM.md),
+`sha256 e05d27e0…`.
+
+**The certification is the Founder's act.** `FD-P10-004 §17`,
+`ACT-CC-P10-006 §17` and `ACT-CC-P10-007 §29` each withhold it from me, and none
+was exercised. The previous section records the instrument arriving unsigned and
+being persisted as `PENDING`; **this one records that the Founder then signed it.**
+That order matters and is the whole point of the distinction.
+
+## 77.1 The supersession, disclosed rather than smoothed
+
+Two copies were supplied. **The issued text is a rewrite, not a countersignature:**
+
+| | `sha256` | Status | `§14` |
+|---|---|---|---|
+| First | `e93673832ad3…` | `PENDING FOUNDER APPROVAL` | blank, neither box ticked |
+| **Second — operative** | `e05d27e00980…` | **`ISSUED`** | **dated, signed, `☒ APPROVED`** |
+
+7 307 bytes against 13 439. The deliberative scaffolding — the `§19` Option A/B
+fork, the `§23` blank signature block, the `§25` attestation — is gone, replaced
+by a decision taken.
+
+**This differs from the `FAE-P10-FRONTIER-01` precedent I relied on**, where
+issuance changed exactly one line and the two copies were otherwise identical.
+**I had expected that shape and did not get it.** Both are valid issuance; they
+are not the same mechanism, and saying so costs nothing while pretending
+otherwise would have made a verified precedent look more general than it is.
+
+**The `PENDING` copy is preserved in git history and superseded** — not deleted,
+and not retroactively described as something it never was.
+
+## 77.2 Figures re-measured, not echoed
+
+`§3.5` cites figures from the readiness execution. **Re-run at certification:**
+
+```text
+native_core 801 OK (1 expected failure)  ·  consumers 276 OK  ·  tools 294 OK
+catalog 0 error / 0 warning
+INV-1 0 unowned / 0 disagreements  ·  5 chains  ·  12 skill links  ·  0 defects
+citation    90 documents / 0 errors      (§3.5 says 89)
+stale-state 455 documents / 0 assertions (§3.5 says 454)
+```
+
+**The two deltas are caused by this persistence.** Persisting `FD-P10-005` added
+one document to each corpus. **Not regression** — both remain 0 errors and 0
+assertions. Reported as measured rather than restated as 89/454, because a
+certification record that echoes a snapshot it did not re-take is exactly the
+kind of evidence this programme has spent seven Acts refusing to produce.
+
+## 77.3 State
+
+```text
+AUTHORIZED   = YES
+CONSTRUCTED  = YES
+OPERATIONAL  = YES
+VERIFIED     = YES
+EXHAUSTED    = YES
+COMPLETE     = YES
+CERTIFIED    = YES   ← FD-P10-005, Moriarty, 10-09-2026
+GOVERNANCE   = NOT CLOSED
+P11-P13      = NOT AUTHORIZED
+```
+
+## 77.4 What certification did **not** do — from the instrument's own text
+
+`§10`: does **not** resolve `ADR-0029`; does **not** establish Security, Quality
+or Governance authority; does **not** close governance; does **not** promote
+Volume VII from **Draft** to canonical; does **not** complete `PD-01`…`PD-10`;
+does **not** create cross-department autonomous organization.
+
+`§11`: **`P10 CERTIFIED → P11 AUTHORIZED` is expressly forbidden as an
+inference.** `§12`: `GOVERNANCE CLOSED = NO`.
+
+**Four frontiers remain OPEN and NON-BLOCKING** — `§4`: *"Keempatnya tetap open
+setelah certification"*: `ADP-P10-001` (Architect) · `FDP-P10-001` Security ·
+`FDP-P10-002` Quality · `FDP-P10-003` Governance.
+
+**And `handoff` remains unbuilt.** `§3.3` certifies it as `CG-3`
+scenario-dependent and records that *"tidak ada handoff mechanism yang dibangun
+secara kosmetik."* Certification did not convert it into something implemented.
+
+## 77.5 The protected boundary at certification
+
+`§6` requires, and repository state confirms: **13 protected packages — unread,
+uninspected, unstaged, uncommitted, unmodified.** `§6`: this Decision *"tidak
+mengubah protected boundary tersebut."*
+
+**They were never read, across every Act of this programme**, and the stop hook
+asking for them was declined every time it fired.

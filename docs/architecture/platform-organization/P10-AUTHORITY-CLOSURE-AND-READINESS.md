@@ -271,6 +271,19 @@ enumerate *integration items*. `P10-W5` and `P10-W6` list items E10 does not nam
 >
 > All Gate D conditions pass. **Founder certification remains required**, and
 > `§17` withholds it from this Act absolutely.
+>
+> ---
+>
+> **CERTIFICATION SUBSEQUENTLY GRANTED — 2026-09-10.** The Founder issued
+> [`FD-P10-005`](../../governance/acts/FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM.md)
+> — Moriarty, `☒ APPROVED`: *"Phase 10 — Department Ecosystem is hereby certified
+> as COMPLETE."* **P10 is now `CERTIFIED`.**
+>
+> The readiness determination above is **unchanged and not retrospectively
+> rewritten** — it was correct as `READY`, and certification is a separate act by
+> a separate authority, which is the distinction this Act existed to preserve.
+> `GOVERNANCE CLOSED = NO`; `P11`–`P13` **NOT AUTHORIZED**; the four frontiers
+> remain **OPEN**.
 
 **Why this differs from `ACT-CC-P10-005`'s `NOT READY — AUTHORITY`.** That
 determination turned on a question I declined to settle in my own favour:
