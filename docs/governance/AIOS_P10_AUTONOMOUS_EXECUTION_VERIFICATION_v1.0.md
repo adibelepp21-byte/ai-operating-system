@@ -6454,3 +6454,123 @@ EXHAUSTION  AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
 changed the answer.** The first found Phase 9 certified; the second found the
 withholding clause idiomatic; this one found a restriction that had been
 operative for five days across everything I wrote about P10.
+
+---
+
+# 65. `FD-P10-003` — both surfaces decided, and the population turns out to have been established all along
+
+**Date:** 2026-09-10 · **Baseline:** `b1ec22f`
+
+## 65.1 Intake (`§23`)
+
+`FD-P10-003` persisted at `docs/governance/acts/FD-P10-003-…md`. **Transcription
+disclosed** — supplied inline, not as an upload; every decision, condition,
+prohibition and reserved boundary carried verbatim or in full.
+
+**`§23` directs intake via `/CEO: Founder Decision Intake`. No such skill or
+command exists in this environment** — the inventory was checked. `§23`'s own
+alternative was used: *"persist it through the established governance
+mechanism."* **Disclosed rather than silently substituted.**
+
+## 65.2 Decision A reconciliation — the finding
+
+`§4.1(3)` permits population from *"an authoritative canonical organizational
+source that explicitly establishes Department identity."* **Two exist, and they
+are Approved ADRs in this repository:**
+
+| Department | ADR | Status | Capabilities | Agent Definitions |
+|---|---|---|---|---|
+| **Platform** | `ADR-0003` | **Approved** | 1 — Governance Artifact Integrity | 1 |
+| **Engineering** | `ADR-0008` | **Approved** | 2 — Engineering Intelligence, Cognitive Intelligence | 2 |
+
+`ADR-0003`: *"Create: A Department named **Platform** … A Capability named
+**Governance Artifact Integrity**, owned by Platform."*
+
+**`§63`'s central finding — "population EMPTY" — is FALSE.**
+
+## 65.3 What I measured correctly and concluded wrongly
+
+**Correct:** `OwnershipGraph` is never constructed by non-test code; no
+`Department` object exists at runtime; no catalog file exists.
+
+**Wrong:** concluding the *population* was empty. **The runtime graph being
+unpopulated and the canonical population being empty are different facts, and I
+collapsed them** — the exact collapse (`CANONICAL DEFINITION ≠ RUNTIME STATE`)
+that the baseline's own `§1` says it exists to prevent. **The artifact violated
+the principle stated in its first section.**
+
+**Cause:** I searched `native_core/` for instantiations and `docs/` for the six
+`Volume VII` names. **I never searched the ADR series for Department
+establishment.** Both ADRs are resident, Approved, and cited by records on disk.
+
+**Same defect as `§61`, `§62` and `§64`, fourth consecutive cycle** — but a
+variant worth naming: those three were *citing an identifier without reading the
+instrument*. **This one is searching the places I expected the answer to be and
+calling the absence a result.** A negative finding is only as good as the search
+behind it, and mine had a hole in exactly the shape of the answer.
+
+## 65.4 Decision B — Block 2 lifted, within scope
+
+`FD-P10-003 §8`/`§12` expressly authorize establishing Department ownership and
+populating the graph, subject to `§9`'s eight conditions. **All eight hold for
+both Departments** — canonically established, capabilities identified, ownership
+authority explicit in the ADRs, owner within the model, no higher prohibition
+(`§10`'s non-override is scoped to Security/Quality/Governance owner roles),
+no constitutional authority created, no Founder authority transferred, no
+protected boundary touched.
+
+**`FDE-P10 §18`'s withholding is superseded for Department → Capability ownership
+and stands for the three reserved owner roles.**
+
+## 65.5 Constructed — `tools/organization_catalog.py`, and what it refuses
+
+Reads the resident records and builds the frozen `OwnershipGraph`. **Invents
+nothing**; never consults the Platform Organization tree (asserted by test);
+never converts a PD into a Department (`§5`).
+
+**It refuses to construct.** `Freeze §4` makes a Department *"owned by an
+Organization"*; `ownership.Department` requires exactly one
+`OrganizationIdentity` and fails closed without it; **no resident ADR
+establishes an Organization instance**, and `organization_spec §12` records new
+Organizations as an *extension mechanism*, not an existing fact.
+
+**No root was invented.** A Department parented to a fabricated Organization
+would be a fabricated ownership edge — precisely what `§4.1` and `§24` forbid.
+**The refusal is the finding**, and a test proves the loader works the moment a
+root exists, so the refusal is about the missing root and not a broken loader.
+
+**One defect of mine in the loader, disclosed:** the first version attributed
+**`ADR-0003` to Engineering**, because it unioned every ADR mentioned across a
+Department's records and `engineering-intelligence.md:47` cross-references it —
+*"belongs to Platform under ADR-0003"*. **A mention is not an establishment.**
+Fixed to read only the record's own *"established by"* sentence, with a
+regression that also asserts the cross-reference still exists, so the test
+cannot pass vacuously.
+
+## 65.6 `§15` — P1–P9 integrity rerun after decision reconciliation
+
+**Re-measured, not carried forward:**
+
+```text
+native_core  801 OK (1 expected failure)     CURRENTLY VERIFIED
+tools        261 OK (+13)                    CURRENTLY VERIFIED
+consumers    276 OK                          CURRENTLY VERIFIED
+citation     79 documents · 0 errors · 65 WARN
+stale-state  0 stale assertions
+```
+
+## 65.7 State
+
+```text
+DEPARTMENT POPULATION  Platform, Engineering — FOUNDER-RESOLVED (§4.1(3))
+OWNERSHIP AUTHORITY    GRANTED within §9 scope; reserved owner roles withheld
+RUNTIME GRAPH          NOT CONSTRUCTED — Organization root not established
+P10                    AUTHORIZED · CONSTRUCTED · NOT OPERATIONAL
+REMAINING BLOCKER      ONE: no canonically established Organization instance
+EXHAUSTION             AUTHORITY-BLOCKED — INDEPENDENT WORK CONTINUES
+```
+
+**The blocker has moved twice today and is now smaller than it has ever been:**
+from *"which Departments exist"* (answered), through *"may ownership be
+assigned"* (answered), to *"what is the Organization they hang from"* — a single
+`ADR`-shaped question about the hierarchy root.

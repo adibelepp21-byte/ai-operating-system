@@ -41,6 +41,62 @@ which side of that line each element actually sits on.
 | **Conformance** | **VERIFIED** | `test_ownership_conformance.py`, **58 tests**; `INV-1` ×6, `INV-2` ×4; negative controls present (two departments claiming one Capability **fails closed**) |
 | **Population** | **EMPTY** | **Zero `Department` instances anywhere outside `ownership.py` and its tests.** `OwnershipGraph(` is **never constructed by non-test code**. No resident Department/Organization catalog or data file exists |
 
+## 2bis. CORRECTION — 2026-09-10 · the population was never empty
+
+**`§2` and `§3` below report the Department population as EMPTY. That is wrong,
+and it was wrong when written.**
+
+**Two Departments are canonically established by Approved ADRs, with resident
+records on disk:**
+
+| Department | Established by | Status | Record | Capabilities | Agent Definitions |
+|---|---|---|---|---|---|
+| **Platform** | **`ADR-0003`** | **Approved** (Architect) | `docs/architecture/organization/platform/README.md` | 1 — *Governance Artifact Integrity* | 1 |
+| **Engineering** | **`ADR-0008`** | **Approved** (Architect) | `docs/architecture/organization/engineering/README.md` | 2 — *Engineering Intelligence*, *Cognitive Intelligence* | 2 |
+
+`ADR-0003` decides: *"Create: A Department named **Platform** … A Capability
+named **Governance Artifact Integrity**, owned by Platform."*
+
+**These satisfy `FD-P10-003 §4.1(3)` exactly** — *"an authoritative canonical
+organizational source that explicitly establishes Department identity."*
+
+### What was measured correctly, and what was concluded wrongly
+
+**Correct:** `OwnershipGraph` is never constructed by non-test code; no
+`Department` object is instantiated at runtime; no catalog file exists.
+
+**Wrong:** concluding from that that the *population* was empty. **The runtime
+graph being unpopulated and the canonical population being empty are different
+facts**, and this baseline collapsed them — the very collapse (`CANONICAL
+DEFINITION ≠ RUNTIME STATE`) that `§1` says it exists to prevent.
+
+**Cause:** I searched `native_core/` for `Department(` instantiations and
+`docs/` for the six `Volume VII` names. **I never searched the ADR series for
+Department establishment**, and the two ADRs that do it are in the same
+repository, Approved, and cited by records on disk.
+
+### Corrected state
+
+```text
+CANONICAL POPULATION   : NON-EMPTY — Platform, Engineering
+                         3 Capabilities · 3 Agent Definitions
+DEPARTMENT MECHANISM   : IMPLEMENTED and VERIFIED (unchanged)
+RUNTIME OWNERSHIP GRAPH: NOT CONSTRUCTED
+ORGANIZATION ROOT      : NOT ESTABLISHED  ← the actual remaining blocker
+```
+
+**`tools/organization_catalog.py`** (built this cycle, 13 tests) reads the
+records and constructs the graph — **and refuses**, because `Freeze §4` makes a
+Department *"owned by an Organization"* and `ownership.Department` requires
+exactly one `OrganizationIdentity`, while **no resident ADR establishes an
+Organization instance.** `organization_spec §12` records new Organizations as an
+*extension mechanism*, not an existing fact.
+
+**No root was invented to proceed.** `FD-P10-003 §4.1` reserves establishing an
+organizational unit, and `§24` says *"DO NOT INVENT THE DEPARTMENT MODEL."*
+
+**The sections below are left as written.**
+
 ## 3. THE FINDING
 
 ```text
