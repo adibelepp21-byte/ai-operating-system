@@ -248,7 +248,7 @@ core at eleven.
 | # | Element | Frozen home | State |
 |---|---|---|---|
 | 1 | **WORK INTAKE** | — | **NO FROZEN HOME.** `Freeze §2` reserves Task/Goal/Event as *"reserved concepts with no ratified entity"* |
-| 2 | **STATE** | — | **NO FROZEN HOME.** `Freeze §2`: *State-as-entity* is a reserved concept; `§10` defers it |
+| 2 | **STATE** | `Workflow` (layer 6), bounded | **PARTIAL** — *corrected 2026-09-10*, see `§5.2` |
 | 3 | **DELEGATION** | `Governance` (layer 1) | **PRESENT** — authority delegation is governed; `Freeze §8` boundaries un-bypassable |
 | 4 | **COORDINATION** | `Workflow` (layer 6) | **PRESENT and FROZEN** — *"the sanctioned multi-agent channel"* (`INV-13`) |
 | 5 | **EXECUTION / WORKFLOW** | `Runtime` (2) + `Agent` (3) + `Workflow` (6) | **PRESENT** — `Runtime hosts Agent Instance` (`INV-3`); Instance is *"the only actor"* |
@@ -257,9 +257,46 @@ core at eleven.
 | 8 | **OBSERVATION** | `Trace` (cross-cutting) | **PRESENT and FROZEN** — immutable, append-only, unconditional (`INV-4`, `INV-5`) |
 | 9 | **FEEDBACK / IMPROVEMENT** | `Memory` (7) → `Knowledge` (8) → `Optimization` (10) | **PRESENT and FROZEN** — governed promotion (`INV-8`); Optimization outputs *"proposals only"* |
 
-**Six of nine have a frozen home. Two have none. One is partial.**
+**Six of nine have a frozen home. One has none. Two are partial**
+*(corrected 2026-09-10 — `STATE` moved from none to partial; see `§5.2`).*
 
-### 5.1 What the two homeless elements mean
+### 5.2 CORRECTION 2026-09-10 — `STATE` is partial, not homeless
+
+**The `STATE` row previously read `NO FROZEN HOME`. That was too strong**, and it
+was found by trying to falsify this section's own conclusion rather than by
+re-reading it.
+
+**What `Freeze §2` reserves is `State-as-entity`** — a *cross-cutting State
+entity*, listed beside Identity, Context, Resource, Artifact, Task, Goal, Event,
+Checkpoint, Permission and Policy. **That reservation is about an entity, not
+about state.**
+
+**Workflow carries its own lifecycle state, and it is substantial:**
+
+```text
+native_core/core/workflow/lifecycle.py          357 lines
+  WorkflowState        DEFINED · READY · RUNNING · SUCCEEDED · FAILED
+  WorkflowLifecycleModel · WorkflowLifecycleState · WorkflowLifecycle
+  WorkflowMonitor      read-only observation surface (§12.4, E9-04)
+```
+
+`WorkflowMonitor` *"carries **no** transition method — which is how `E9-04`'s
+'invalid state mutation does not silently succeed' is held structurally: there
+is no mutation entry point here to misuse."*
+
+**So the corrected reading:**
+
+| Claim | Status |
+|---|---|
+| A **cross-cutting State entity** exists | **NO** — reserved, `Freeze §2` |
+| **Workflow lifecycle state** exists and is observable | **YES** — five states, monitored, fail-closed by construction |
+
+**`WORK INTAKE` remains genuinely homeless.** Re-tested the same way: `Freeze`
+contains **zero** standalone occurrences of *work* once `workflow`, `framework`
+and `network` are excluded. **One of the two claims survived falsification and
+one did not**, which is the point of running it.
+
+### 5.1 What the remaining homeless element means
 
 **`WORK INTAKE` and `STATE` are not missing implementation — they are
 `Freeze §2` reserved concepts and `§10` deferred architecture, both

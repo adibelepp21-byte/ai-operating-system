@@ -6799,3 +6799,77 @@ NEW INTEGRITY DEFECT         0
 
 **`P10 EXHAUSTED`** for the authorized surface — with every remaining item
 carrying a genuinely non-delegated authority or source dependency.
+
+---
+
+# 68. Falsifying my own exhaustion claim — one of two claims survived
+
+**Date:** 2026-09-10 · **Baseline:** `c668003`
+
+## 68.1 Why this ran at all
+
+`§67` declared `P10 EXHAUSTED`. **The discipline that has caught four errors this
+session is `§21`'s: when the verdict is BLOCKED or NOT ESTABLISHED, spend the
+next cycle trying to falsify it.** An exhaustion claim is the same shape as a
+negative claim, so it got the same treatment.
+
+**The claim tested:** `WORK INTAKE` and `STATE` have no frozen home, therefore
+P10 completion is outside my authority.
+
+## 68.2 `WORK INTAKE` — survives, and is better evidenced
+
+Re-tested by structure rather than by keyword: the Workflow boundary is **nine
+modules, 1,402 lines**, and its classes are all `Workflow*` — Composition,
+Coordination, Declaration, Realization, Lifecycle, Monitor. **No Work entity
+anywhere.** And `Freeze` contains **zero** standalone occurrences of *work* once
+`workflow`, `framework` and `network` are excluded.
+
+**The claim holds, and now rests on a structural reading rather than a grep.**
+
+## 68.3 `STATE` — does not survive; corrected
+
+**`Freeze §2` reserves `State-as-entity`** — a *cross-cutting State entity*,
+listed beside Identity, Context, Resource, Artifact, Task, Goal, Event,
+Checkpoint, Permission, Policy. **That reservation is about an entity, not about
+state.**
+
+**Workflow carries its own lifecycle state:**
+
+```text
+WorkflowState  DEFINED · READY · RUNNING · SUCCEEDED · FAILED
+WorkflowLifecycleModel · WorkflowLifecycleState · WorkflowLifecycle
+WorkflowMonitor — read-only, and carries no transition method, which is how
+                  E9-04's "invalid state mutation does not silently succeed"
+                  is held structurally rather than by convention
+```
+
+**`STATE` moves from `NO FROZEN HOME` to `PARTIAL — bounded to Workflow`.**
+The `§6.2` tally becomes **six with a frozen home · one with none · two
+partial**.
+
+## 68.4 What this changes, and what it does not
+
+**P10 completion is unaffected.** `§29`'s failing items were *Work integrated*
+and *cross-PD relationships reconciled*; **the first still fails and the second
+is untouched.** The correction makes the architecture picture more accurate
+without moving a verdict — which is the ordinary case and worth saying, because
+a correction that changes nothing is still a correction.
+
+**What it does change is the shape of the remaining gap.** *"Two elements have
+no frozen home"* invited a reading in which P10 is half-built. **One element has
+no frozen home, and it is `WORK INTAKE` alone** — a single reserved concept,
+not a region.
+
+## 68.5 The pattern, stated once more
+
+```text
+§61 §62 §65 §66   four negative claims, all false
+§68               two negative claims, one false
+```
+
+**Five of six negative claims tested this session have been wrong.** The
+falsification pass is now cheaper than the corrections it prevents, and it found
+this one in a single command.
+
+**Verification:** `tools 262 OK` · `citation 81 documents · 0 errors · 65 WARN` ·
+`stale-state 0 assertions`.
