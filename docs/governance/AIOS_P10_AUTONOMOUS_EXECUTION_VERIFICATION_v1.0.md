@@ -7255,6 +7255,28 @@ files** separates the two cases.
 and an absent grant leave the same state** — and `§11` forbids reading the
 absence as permission.
 
+## 72.3a The class, swept — four pointers without bodies
+
+`F-06` exposed a **class**, so the class was swept rather than left to surface
+one member at a time. Every `FDE-*`, `FAE-*`, `ADE-*`, `APT-*` and `DEL-*`
+identifier cited in the tracked corpus was checked for a resident body. **Four
+have none:** `FAE-P10-FRONTIER-01`, `FDE-P10-FRONTIER-02` (an **ISSUED** Founder
+event, cited at `§4`/`§29`/`§31`), `ACT-CC-P10-FAE-01` and `ACT-CC-P10-FAE-02`.
+
+**None supplies authority relied on for P10 completion.**
+`FDE-P10-FRONTIER-02` authorizes **PD-track** construction and `PD ≠ P10`; the
+autonomous-execution event the two Acts constructed **is** resident and states
+its authority holds *"by virtue of that issuance and of nothing else."*
+
+**My sweep also produced two false positives, and they are disclosed rather than
+dropped.** `DEL-F03-015-P7I99-001` **is** resident — Delegation Register `:221` —
+missed because my check scanned only each file's first 4 000 characters for an
+identity declaration. `FAE-01`/`FAE-02` are not identifiers at all but fragments
+of `ACT-CC-P10-FAE-01`/`-02`. Both were eliminated **by reading the content, not
+by tuning the pattern until the output looked right.** Three of seven flagged
+identifiers were wrong; a detector that over-reports is a defect even when its
+true positives are real.
+
 ## 72.4 `F-05` — the one I will not call non-blocking
 
 Volume VII is **genuinely absent**: filename, index and reference searches all

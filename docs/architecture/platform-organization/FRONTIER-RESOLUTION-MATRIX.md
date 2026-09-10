@@ -20,7 +20,7 @@
 | **F-03** `AR-003` Quality | **FOUNDER-RESERVED** | Founder | Decision Package, `§4` | None — same shape as `F-02` | **NO** — proven, `§4.4` | `G-03` *Extends to*, `A5:331` |
 | **F-04** `AR-004` Governance | **FOUNDER-RESERVED** — **basis corrected** | Founder | Decision Package, `§5` | None for completion; **binds activation** | **NO** for completion — `§5.3` | Register `FZ-04`, `GDR-0023`, `ACT-CC-F03-014`, `ACT-CC-F03-015 §164`, `Volume VII §4.1` |
 | **F-05** `AR-005` Volume VII | **SOURCE-BLOCKED — preserved** | Source supply | Recovery Package, `§6` | Known dependencies discharged; **unknown sections cannot be ruled out** | **NOT PROVEN NON-BLOCKING** — `§6.4` | `§6` |
-| **F-06** `FAE-P10-FRONTIER-01` | **SOURCE-BLOCKED — newly discovered** | Source supply | Recovery Package, `§7` | Cited as barring the `F-02` binding | **NO** — the binding is unmade either way | `§7` |
+| **F-06** `FAE-P10-FRONTIER-01` **+ 3 more** | **SOURCE-BLOCKED — newly discovered cluster** | Source supply | Recovery Package, `§7` | Cited as barring the `F-02` binding; the other three are PD-track or construction Acts | **NO** — none supplies authority relied on here | `§7`, `§7.1` |
 
 **`F-06` is new.** It was not in `§5`'s Frontier Register and was found by this
 Act's own actual-body requirement.
@@ -267,6 +267,45 @@ never granted. **An unreadable bar and an absent grant leave the same state.**
 statement that its `§7` bar is not operative. Until then every citation of it in
 resident records is a **pointer without a body**, and is now marked as such
 where it appears.
+
+### 7.1 It is a cluster, not a single instrument
+
+`F-06` exposed a **class**, so the class was swept rather than left to surface
+one member at a time. Every high-authority identifier cited anywhere in the
+tracked corpus — `FDE-*`, `FAE-*`, `ADE-*`, `APT-*`, `DEL-*` — was checked for a
+resident body. **Four have none**, and all four are P10-frontier-era:
+
+| Cited instrument | Cited as | Resident body |
+|---|---|---|
+| `FAE-P10-FRONTIER-01` | bars the Security binding (`§7`) | **none** |
+| `FDE-P10-FRONTIER-02` | **ISSUED** Founder event; construction authorization for `PD-01…PD-10` (`§4`, `§29`, `§31`) | **none** |
+| `ACT-CC-P10-FAE-01` | constructing Act of `FDE-P10-AUTONOMOUS-EXECUTION-01` | **none** |
+| `ACT-CC-P10-FAE-02` | confirming Act; resolved `CR-1` (`§1`, `§3`, `§33`) | **none** |
+
+**None supplies authority this package relies on.** `FDE-P10-FRONTIER-02`
+authorizes **PD-track** construction, and `PD ≠ P10`. The autonomous-execution
+event those two Acts constructed **is** resident, and states its authority is in
+force *"by virtue of that issuance and of nothing else — not because this
+document exists, was committed, was verified, or is useful."* **The event does
+not depend on its constructing Acts being readable.**
+
+**Recorded, not resolved.** These are pointers without bodies, and `§4` says a
+citation cannot establish substantive state. They are listed here so the gap is
+visible rather than latent.
+
+### 7.2 Two false positives in my own sweep, disclosed
+
+The sweep first flagged `DEL-F03-015-P7I99-001` as having no resident body. **It
+does** — `AIOS_DELEGATION_REGISTER_v1.0.md:221`, with its `Delegation ID` row at
+`:225`. My check only scanned each file's **first 4 000 characters** for an
+identity declaration, and the register declares this one further down. It also
+flagged `FAE-01` and `FAE-02`, which are **not identifiers at all** but
+fragments of `ACT-CC-P10-FAE-01`/`-02` caught by a loose pattern.
+
+**Both were eliminated by reading the content, not by adjusting the pattern
+until the output looked right.** Disclosed rather than silently dropped: a
+detector that over-reports is a defect even when its true positives are real,
+and three of the seven identifiers it flagged were wrong.
 
 ---
 
