@@ -7743,3 +7743,111 @@ mengubah protected boundary tersebut."*
 
 **They were never read, across every Act of this programme**, and the stop hook
 asking for them was declined every time it fired.
+
+
+---
+
+# 78. `ACT-CC-POST-P10-001` — the transition, and a finding I nearly got wrong
+
+Six gates, four registers, one verdict:
+[`POST-P10-TRANSITION-REGISTER.md`](../architecture/platform-organization/POST-P10-TRANSITION-REGISTER.md).
+
+> **`T2` — POST-P10 STABLE; P11 PREREQUISITES IDENTIFIED BUT NOT AUTHORIZED**
+>
+> `CONSTRUCTION = NONE`. `§16` makes that valid and preferred, and nothing here
+> needed building.
+
+## 78.1 Certification moved exactly one state variable
+
+Gate B compared every axis before and after. **`COMPLETE → CERTIFIED`, and
+nothing else.** No authority moved, no scope changed beyond P10's own, governance
+stayed `NOT CLOSED`, architecture unchanged, and the **runtime is byte-identical**
+— 2 Departments, 3 Capabilities, 3 Agent Definitions, 5 chains, re-run rather
+than assumed. What changed about the evidence was not the evidence but **its
+standing**: the same records are now cited by an issued Founder Decision.
+
+## 78.2 Gate C — the dependency runs one way, and only one
+
+All eight tests negative. **The certified runtime surface contains zero P11
+references.** Every P11 mention anywhere was content-anchored, and each points
+the same direction: *"gated behind P10"*, *"P11 unauthorized"*, or **assigning**
+something to P11 — including handoff. **`P10 → P11` in every case; never
+`P11 → P10`.** A roadmap successor is not a prerequisite.
+
+## 78.3 The finding I was about to report, and why it was false
+
+`FD-P8-002` and `FD-P9-002` are both titled *"Phase N Certification **&
+Governance Closure**"*. `FD-P10-005` certifies without closing. **I took that for
+a departure worth flagging.**
+
+Enumerating **every** phase certification decision instead of the two most recent:
+`FD-P5-001`, `FD-P6-002` and `FD-P7-003` **also carry no governance closure**.
+**Three of five prior certifications closed nothing.** P10 follows the majority
+pattern and is not an outlier.
+
+**The report would have been wrong**, and what prevented it was checking the
+enumeration rather than the neighbours. Same failure shape as the Volume VII
+error two Acts ago — *a conclusion drawn from too narrow a sample* — caught this
+time before it was written rather than after.
+
+## 78.4 And closure was never sufficient anyway
+
+**`FD-P9-002 §8`** — which certified P9 **and closed its governance** — withheld
+authorization for `Planner`, `Scheduler`, `Execution Orchestrator`, *"any new
+organizational authority"*, and **`Phase 10`**.
+
+**P9 governance closed and Phase 10 remained NOT AUTHORIZED.** So closure is
+**neither necessary nor sufficient** for next-phase authorization.
+
+> `NO EVIDENCE OF MANDATORY GOVERNANCE CLOSURE BEFORE P11` — and `§11`'s
+> opposite error is not made either: absence of a stated requirement is **not**
+> proof that closure is impossible. It remains the Founder's, available at any
+> time.
+
+## 78.5 What P11 would actually require
+
+**`PROVEN` and absent:** a Founder instrument authorizing P11 (`PR-2`), and
+ratified measurable **`E11`** criteria (`PR-3`) — `Volume V §3` reserves
+exit-criteria ratification for Phases 5–13 to *"Pemilik Program (Moriarty)"*, and
+P11 is in that range.
+
+**`INFERRED` and deliberately not upgraded:** that the four open frontiers matter
+to P11. Plausible — autonomous organization touching Governance Authority — but
+**no source states it**, and `§12` allows only `PROVEN` to count as fact.
+
+**`NOT REQUIRED`:** governance closure, `PD-01`…`PD-10` completion, Volume VII
+promotion to canonical.
+
+## 78.6 Negative controls, with a probe
+
+**`0 unauthorized transitions`** across all nine prohibited shapes. The zero is
+trustworthy because the surface was probed: searching `P11 = NOT AUTHORIZED`
+matches, proving it **can** find a statement of that form.
+
+Two raw hits content-anchored as false positives rather than dismissed: all five
+*"governance is closed"* refer to **Phase 4** (`GDR-0002`), and `PD-02 ACTIVATED`
+was performed by `ACT-CC-R15` on **Track B**, not by P10 certification.
+
+## 78.7 A precedent that validates last turn's refusal
+
+The Register's `FD-P9-002` entry records that **an earlier draft of that
+instrument was declined by this office because its `§7` held only unselected
+menus**, and that `ACT-CC-P9-002` was halted for the same reason *"even though
+that Act's own header asserted `CERTIFY`. The header was a citation; this record
+is the decision."*
+
+**Declining `FD-P10-005` while its decision block was blank was established
+practice, not a novel scruple.**
+
+## 78.8 Verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 294 OK
+catalog 0 error / 0 warning · citation 91 documents / 0 errors
+stale-state 456 documents / 0 assertions
+runtime unchanged: 2 departments · 3 capabilities · 3 agent definitions · 5 chains
+
+P10 = CERTIFIED   P11 = NOT AUTHORIZED   P12/P13 = NOT AUTHORIZED
+GOVERNANCE = NOT CLOSED   CONSTRUCTION = NONE
+13 protected packages: UNREAD · UNINSPECTED · UNSTAGED · UNCOMMITTED · UNMODIFIED
+```
