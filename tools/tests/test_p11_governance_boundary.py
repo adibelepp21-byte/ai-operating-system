@@ -414,6 +414,10 @@ P11_SURFACES = (
     REPO_ROOT / "tools" / "w4_execution.py",
     REPO_ROOT / "tools" / "w4_first_run.py",
     REPO_ROOT / "tools" / "w4_continuity.py",
+    # W1 surfaces, added under `ACT-CC-P11-010`. Caught by the completeness
+    # guard below on the run that created them — the third time it has collected.
+    REPO_ROOT / "tools" / "plan_to_workflow.py",
+    REPO_ROOT / "tools" / "w1_coordination_run.py",
 )
 
 

@@ -123,6 +123,8 @@ DEFAULT_ROOTS = (
     "tools/w4_execution.py",
     "tools/w4_first_run.py",
     "tools/w4_continuity.py",
+    "tools/plan_to_workflow.py",
+    "tools/w1_coordination_run.py",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a

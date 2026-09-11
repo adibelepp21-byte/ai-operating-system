@@ -1,0 +1,32 @@
+{
+  "delegation_id": "f24d8954e64b40df",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "recipient_instance": "governance-artifact-integrity-instance-001",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "objective": "Coordinate a governance corpus health check.",
+  "capability_scope": [
+    "governance-artifact-integrity"
+  ],
+  "work_scope": [
+    "review-open-items",
+    "summarize-diffs"
+  ],
+  "lifecycle_boundary": "one execution of plan w1-coordination-proof-plan-0",
+  "resource_boundary": "read-only over resident governance records",
+  "output_expectation": "one outcome per coordinated step",
+  "verification_requirement": "every step expressed as a WorkflowStep whose actor and skill are already authorized",
+  "escalation_condition": "any step the delegation does not cover",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "termination_condition": "on completion of the bound plan, or revocation",
+  "status": "REVOKED",
+  "issued_at": "2026-09-11T03:32:24.454279+00:00",
+  "authority_chain": [
+    "delegation:f24d8954e64b40df",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ],
+  "revocation_reason": "Superseded by a later W1 coordination run. RE-RUN \u2260 NEW UNBOUNDED AUTHORITY (ACT-CC-P11-010 \u00a735).",
+  "revoked_at": "2026-09-11T03:32:31.104648+00:00"
+}

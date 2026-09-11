@@ -175,9 +175,31 @@ class NothingMayFabricateAnActorAssignment(unittest.TestCase):
     control that says so.
     """
 
-    def test_no_p11_surface_constructs_an_actor_assignment(self):
+    #: The surface that must never name an actor: Planning. Narrowed from *every*
+    #: P11 surface under `ACT-CC-P11-010`, and the narrowing is the point.
+    #:
+    #: **This control was a proxy, exactly like the eight `ACT-CC-P11-009 §94.4`
+    #: found.** It asserted *"nobody constructs these types"* as a stand-in for
+    #: *"nobody fabricates an actor assignment"*, and the stand-in held only
+    #: while no legitimate construction path existed. `tools/plan_to_workflow.py`
+    #: is now such a path: every field it writes is copied from an authorized
+    #: source — step from the Plan, actor from an ACTIVE Delegation's recipient,
+    #: skill from what that recipient's Definition already permits — and it
+    #: refuses when any of them is absent, proven by eight mutation-tested
+    #: controls in `test_w1_handoff_authority.py`.
+    #:
+    #: Planning still constructs none of them, which is the boundary that was
+    #: always meant: `PLAN ≠ AUTHORITY`, and naming who acts is not Planning's to
+    #: do.
+    PLANNING_ONLY = (REPO_ROOT / "tools" / "planning",)
+
+    def _planning_modules(self):
+        for surface in self.PLANNING_ONLY:
+            yield from sorted(surface.glob("*.py"))
+
+    def test_planning_constructs_no_actor_assignment(self):
         offenders = []
-        for path in _p11_modules():
+        for path in self._planning_modules():
             tree = ast.parse(path.read_text(encoding="utf-8"))
             for node in ast.walk(tree):
                 if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) \
@@ -186,15 +208,41 @@ class NothingMayFabricateAnActorAssignment(unittest.TestCase):
         self.assertEqual(offenders, [],
                          f"planning fabricated an actor assignment: {offenders}")
 
-    def test_no_p11_surface_imports_the_workflow_boundary(self):
+    def test_planning_does_not_import_the_workflow_boundary(self):
         offenders = []
-        for path in _p11_modules():
+        for path in self._planning_modules():
             tree = ast.parse(path.read_text(encoding="utf-8"))
             for node in ast.walk(tree):
                 if isinstance(node, ast.ImportFrom) and node.module \
                         and "workflow" in node.module:
                     offenders.append(str(path.relative_to(REPO_ROOT)))
         self.assertEqual(offenders, [])
+
+    def test_the_only_surface_that_may_name_an_actor_is_the_gated_adapter(self):
+        """Narrowing must not become a hole. Exactly one module may do this.
+
+        If a second surface starts constructing actor assignments, it will not
+        have the adapter's refusals, and this fails until someone justifies it.
+        """
+        permitted = {"plan_to_workflow.py"}
+        constructing = set()
+        for path in _p11_modules():
+            tree = ast.parse(path.read_text(encoding="utf-8"))
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) \
+                        and node.func.id in ACTOR_ASSIGNMENT_TYPES:
+                    constructing.add(path.name)
+        self.assertEqual(constructing - permitted, set(),
+                         f"an ungated surface names actors: {constructing}")
+
+    def test_the_gated_adapter_refuses_without_authority(self):
+        """The property the proxy stood for, asserted directly."""
+        from tools.plan_to_workflow import HandoffRefused, authorize_handoff
+        surface, plan = _surface()
+        prepared = surface.prepare_for_workflow(plan)[0]
+        with self.assertRaises(HandoffRefused):
+            authorize_handoff(prepared, delegation=None, registry=None,
+                              skill_key="anything")
 
     def test_every_delegation_came_from_a_legitimate_delegator(self):
         """The gate's upstream condition, stated as it was always meant.

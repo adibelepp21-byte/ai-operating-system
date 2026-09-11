@@ -91,7 +91,23 @@ def reconstruct(root: Path = OPERATIONS) -> dict:
         escalations[record["escalation_id"]] = {
             **record, "state": "ANSWERED" if answered else "OPEN"}
 
-    evidence = _load(root / "first-execution.evidence.json") or {}
+    # Any evidence record, not one hardcoded filename.
+    #
+    # **This was a real continuity gap.** The reader looked only for
+    # `first-execution.evidence.json`, so the W1 coordination run — which writes
+    # `w1-coordination.evidence.json` — reconstructed its instances and grants
+    # correctly while reporting `last_plan: null` and no outcomes. Recovery that
+    # silently omits what it cannot name is the `§22` failure of collapsing
+    # distinct states, arriving by a different route: not *stale* read as
+    # *current*, but *present* read as *absent*.
+    evidence_files = sorted(root.glob("*.evidence.json"))
+    evidence = {}
+    for path in evidence_files:
+        loaded = _load(path)
+        if loaded is None:
+            unreadable.append(path.name)
+        elif loaded.get("executed_at", "") >= evidence.get("executed_at", ""):
+            evidence = loaded
 
     active = sorted(k for k, g in grants.items() if g.get("status") == "ACTIVE")
     revoked = sorted(k for k, g in grants.items() if g.get("status") == "REVOKED")
@@ -116,6 +132,8 @@ def reconstruct(root: Path = OPERATIONS) -> dict:
         "revoked_grants": revoked,
         "duplicate_active": len(active) > 1,
         "unreadable_records": sorted(unreadable),
+        "evidence_records": [p.name for p in evidence_files],
+        "last_act": evidence.get("act"),
         "last_plan": evidence.get("plan"),
         "last_goal": evidence.get("goal"),
         "last_delegation": evidence.get("delegation_id"),

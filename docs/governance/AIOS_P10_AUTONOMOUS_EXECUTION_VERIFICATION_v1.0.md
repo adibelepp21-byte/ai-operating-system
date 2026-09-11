@@ -9633,3 +9633,95 @@ P11 OPERATIONAL = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
 
 `§40`: three dimensions advanced does not make P11 operational. **Coordination
 remains unproven**, and one escalation is open by design.
+
+# 95. The blocker I invented, and the one that was actually there
+
+**Act:** `ACT-CC-P11-010`. **Verdict `U2`** — existing authority already
+satisfies the role. Package at
+`docs/architecture/p11/W1-COORDINATION-AND-HANDOFF.md`.
+
+## 95.1 The phrase was mine
+
+`ACT-CC-P11-007` reported `PLAN → WORKFLOW` blocked on a *"unit-level
+delegator"*, and I repeated it across three Acts. It occurs in **no issued
+instrument** — not `DP-03`, `DP-04`, `DP-01` or `FD-P11-001`. It occurs in three
+documents, all written by me.
+
+`WorkflowStep` requires `performed_by: AgentInstanceRef` and `composes:
+SkillRef` — **an actor and a skill, and no delegating unit of any kind.** The
+resident workflow record had said so all along: *"invoked by an Agent Instance of
+the Governance Artifact Integrity Agent."*
+
+**Where the reasoning went wrong.** *"Naming the actor is allocating work, which
+is delegation"* — sound. The hidden step was **"and the delegator must be a
+unit"**, which no instrument states and which `FD-P11-001 §4.1` falsified by
+establishing a delegator that is explicitly not one.
+
+A conclusion can be stated, repeated, carried across Acts, and used to classify a
+frontier as blocked — while resting on a premise that was never written down
+anywhere. Repetition supplied the confidence that evidence should have.
+
+## 95.2 What was actually blocking
+
+Two things, neither a delegator. **No Agent Instance existed** until
+`FD-P11-001 §7` authorized creating one. And **the Definition I selected for W4
+has no Skills**: `engineering-intelligence-agent` declares *"Permitted Skills:
+None declared"*, so an instance of it can never produce a `WorkflowStep`.
+
+`governance-artifact-integrity-agent` carries ten Skills and five Workflows.
+`ACT-CC-P11-008 §8` ranked it **second**, correctly, because that Act asked for
+the safest observable first proof — **and that correct choice is exactly what
+made W1 unreachable from it.** A right decision under one Act's criteria
+produced a blocker under another's, and I attributed the blocker to architecture
+instead of to the selection.
+
+## 95.3 The living proof
+
+A real run reached terminal `SUCCEEDED` through
+`DEFINED → READY → RUNNING`, composing the two Skills the resident workflow
+record names, performed by a registered instance under an ACTIVE delegation
+tracing to `FD-P11-001 §9` and the Founder.
+
+Reported precisely: the Execution context is the **injected-collaborator
+stand-in** the consumer's own tests use, not the Runtime-hosted path, which
+remains unexercised. And `is_multi_agent: false` — **one acting instance is a
+handoff**, not cross-agent coordination.
+
+## 95.4 A ninth proxy control
+
+`ACT-CC-P11-007`'s rule — *no P11 surface may construct `AgentInstanceRef`,
+`SkillRef` or `WorkflowStep`* — fired against the adapter.
+
+**It was a proxy**, asserting *"nobody constructs these"* for *"nobody fabricates
+an actor assignment"*, and holding only while no legitimate construction existed.
+`§94.4` found eight of this shape; this is the ninth, and the first found in a
+control written to guard the very frontier it then blocked.
+
+Narrowed to Planning — which is the boundary that was always meant — with two new
+guards so narrowing is not a hole: **exactly one** module may name actors, and it
+must refuse without authority. Both mutation-tested in both directions.
+
+## 95.5 Continuity collapsed in a direction I had not anticipated
+
+The reader looked only for `first-execution.evidence.json`, so the W1 run
+reconstructed its grants correctly and reported `last_plan: null`.
+
+`§22` forbids collapsing distinct states into `DONE`. I had tested *stale read as
+current*. This was **present read as absent** — recovery silently omitting what
+it could not name. Fixed to find any evidence record and report which it used.
+
+## 95.6 State integrity, measured
+
+```text
+native_core boundaries : 11   W1 live grants : 1   W3 records : 1
+instances : 2 (one per operations root)   open escalations : 1
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 605 OK
+citation 162 documents / 0 errors · stale-state 463 / 0 assertions
+ten mutation probes this Act; all ten fired
+
+P11 OPERATIONAL = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
+13 protected packages untouched
+```
+
+`§40`: six of eight exit dimensions have now been exercised, **coordination only
+as a single-actor handoff**. W1 proven does not make P11 operational.
