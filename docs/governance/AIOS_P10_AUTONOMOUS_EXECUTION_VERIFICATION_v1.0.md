@@ -10124,3 +10124,108 @@ looking for another gap.
 
 **Next frontier: the P11 Exhaustion / Completion / Certification Gate** — which
 is a gate, not a side effect of this Act succeeding.
+
+---
+
+# 100. `ACT-CC-P11-015` — the final gate: exhausted, not complete
+
+Full package:
+[`P11-EXHAUSTION-COMPLETION-CERTIFICATION.md`](../architecture/p11/P11-EXHAUSTION-COMPLETION-CERTIFICATION.md).
+
+```text
+P11 EXHAUSTED — NOT COMPLETE
+```
+
+## 100.1 Three determinations, and only one was mine to make
+
+Exhaustion is proven. Completion fails on a single prerequisite, and it is not an
+implementation: **the measuring instrument does not exist in ratified form.**
+`DP-01 §9` — *"The candidate E11 criteria remain candidate criteria until
+separately ratified through: DP-02 — Founder E11 Ratification"*, and *"It may not
+represent candidate criteria as ratified acceptance criteria."*
+
+Every engineering prerequisite passes. Completion is a **measurement**, and the
+instrument that takes it is unratified. Certification fails twice over:
+completion fails, and certification is a Founder act — `FD-P10-005` is the
+resident precedent one phase back, recording that three instruments withheld
+certification from Claude Code and none was exercised.
+
+Both reasons are reported, because giving only the second would imply the first
+had been satisfied.
+
+## 100.2 The sweep found something, and I nearly argued it away
+
+`tools/stale_state_audit.py` publishes findings as `f"{rel}:{index + 1}"` — the
+same `path:line` locator the citation auditor verifies. It obeys the newline-only
+split rule by **convention**; the control enforcing that rule listed **two**
+modules, the two that existed when it was written.
+
+My first reading dismissed it: the invariant is about cross-tool line agreement,
+this module does not publish line numbers, and finding work here would be the
+manufactured work the Act forbids. Then I checked the premise rather than resting
+on it. Lines 180 and 186 publish `path:line`.
+
+**Third occurrence of the class** — after a loader that read one of two
+operational roots, and a continuity reader that knew one evidence filename. A
+control that covers part of its population does not fail. It passes, on the part
+it covers.
+
+A fourth, found by the same sweep: the escalation-wiring control's list of
+execution paths was correct, and hand-maintained, with nothing holding it so.
+
+Both now derive their population **from the repository**. That is what terminates
+the regress rather than adding another list someone must remember.
+
+## 100.3 Two of my own mutations failed to fire
+
+The Act requires reporting every mutation that does not fire. Two did not.
+
+The new completeness guard **could not detect its own intended mutation**: it
+keyed emitter discovery on the literal `"source"` as well as the locator, and
+`derived_views.py` passes `source=` as a keyword. Dropping it from the list
+produced no finding at all — a completeness guard with an incomplete population,
+one level up from the defect it was written to catch. Caught by mutating the
+list, not by reading the code.
+
+And a mutation anchor never matched: my `splitlines` probe substituted a string
+that does not occur in `stale_state_audit.py`, so that arm proved nothing while
+reporting a result. Both corrected; all six mutations now fire.
+
+*(A third, smaller: I invoked `governance_index.py` with no subcommand, read
+`exit=2` as a possible regression, and re-ran it correctly. Argparse usage is not
+a regression.)*
+
+## 100.4 The protected boundary, proven rather than asserted
+
+`open`, `Path.read_text` and `Path.read_bytes` were traced through a full
+citation audit. **230 files opened; 0 of the 13 protected paths among them.** Six
+`docs/program/` files were opened, all tracked, which the boundary permits.
+Containment is checked before the file is opened, not filtered afterwards.
+
+This is the first time that claim has been demonstrated at runtime rather than
+read off the code.
+
+## 100.5 State integrity, measured
+
+```text
+W1-W7 : all SATISFIED   cross-surface : 13 relations verified
+W3 3 records / 0 defects · W3-ledger 0 defects · 2 ACTIVE grants, both represented
+14 grants: all cite FD-P11-001, all provenance resolves, all chains end at Founder
+escalations: 1 OPEN human-reserved · 0 dangling · 0 orphan
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 707 OK = 1784
+citation 169 documents / 0 errors - stale-state 479 / 0 assertions
+native_core boundaries : 11   protected paths read : 0
+
+AUTHORIZED TRUE · CONSTRUCTED TRUE · OPERATIONAL TRUE · VERIFIED TRUE
+EXHAUSTED TRUE · COMPLETE FALSE · CERTIFIED FALSE
+```
+
+## 100.6 What stopping looks like
+
+The construction graph was **regenerated from current state** and came back
+empty — not left undrawn. No remaining item is simultaneously in scope,
+source-supported, authorized, technically actionable, incomplete and material.
+
+So P11 construction stops here. **The next program frontier is `DP-02` — Founder
+E11 Ratification**, the single gate between the state proven here and a
+completion determination, and it is not mine to open.

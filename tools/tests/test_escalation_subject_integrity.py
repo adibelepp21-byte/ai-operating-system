@@ -328,7 +328,42 @@ class E2_BothCanonicalPathsAreWired(unittest.TestCase):
     and one this programme has already produced five times.
     """
 
+    #: Every production module that runs a `W4Executor`. Hand-maintained lists
+    #: of surfaces are how W1 came to have no escalation wiring in the first
+    #: place, so `test_the_list_covers_every_production_execution_path` derives
+    #: the real set from source and fails if this one is narrower.
     PATHS = ("tools/w4_first_run.py", "tools/w1_coordination_run.py")
+
+    def _execution_paths(self):
+        """Modules that construct a `W4Executor`, discovered — not listed."""
+        found = set()
+        for directory in ("tools", "consumers"):
+            for path in sorted((REPO_ROOT / directory).rglob("*.py")):
+                if "tests" in path.parts:
+                    continue
+                tree = ast.parse(path.read_text(encoding="utf-8"))
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.Call) and \
+                            isinstance(node.func, ast.Name) and \
+                            node.func.id == "W4Executor":
+                        found.add(path.relative_to(REPO_ROOT).as_posix())
+        return found
+
+    def test_the_list_covers_every_production_execution_path(self):
+        """`ACT-CC-P11-015 §19` — a control's population must be complete.
+
+        Four times in this programme a control has covered part of its
+        population and passed on the part it covered: a loader reading one of
+        two operational roots, a continuity reader knowing one evidence
+        filename, a line-coherence list naming two of three emitters, and this
+        one — correct today only because someone maintained it by hand.
+        """
+        discovered = self._execution_paths()
+        self.assertTrue(discovered, "precondition: no execution path found")
+        self.assertLessEqual(
+            discovered, set(self.PATHS),
+            "these run a W4Executor and are not checked for escalation "
+            "wiring: %s" % sorted(discovered - set(self.PATHS)))
 
     def _calls(self, module):
         tree = ast.parse((REPO_ROOT / module).read_text(encoding="utf-8"))

@@ -128,10 +128,32 @@ class TheDeriverAndTheVerifierAgree(unittest.TestCase):
                 path.unlink()
 
 
-class NeitherToolUsesThePythonDefault(unittest.TestCase):
-    """Agreement today is not the same as agreement by construction."""
+class NoToolInTheCitationFabricUsesThePythonDefault(unittest.TestCase):
+    """Agreement today is not the same as agreement by construction.
 
-    MODULES = ("tools/derived_views.py", "tools/corpus_citation_audit.py")
+    **The population was incomplete until `ACT-CC-P11-015`.** It listed the two
+    tools that existed when the invariant was written. `tools/stale_state_audit.py`
+    was added afterwards, emits findings as ``f"{rel}:{index + 1}"`` — the same
+    ``path:line`` form this corpus cites and that `corpus_citation_audit`
+    verifies — and its own ``_lines`` docstring claims *"the same rule the
+    citation auditor and ``derived_views`` use."*
+
+    It obeyed the rule by **convention**, and nothing held it to one. Changing
+    its ``_lines`` to ``str.splitlines()`` would have broken cross-tool line
+    agreement with every check still green.
+
+    That is the third time in this programme that a control's population has
+    been narrower than the invariant it names — after a loader that read one of
+    two operational roots, and a continuity reader that knew one evidence
+    filename. **A control that covers part of its population does not fail; it
+    passes, on the part it covers.**
+    """
+
+    #: Every tool that publishes a ``path:line`` locator into the citation
+    #: fabric. A tool joins this list when it emits one — not when someone
+    #: remembers to add it.
+    MODULES = ("tools/derived_views.py", "tools/corpus_citation_audit.py",
+               "tools/stale_state_audit.py")
 
     def test_no_splitlines_call_survives_in_either_module(self) -> None:
         # ``.`` and ``splitlines`` are separate tokens, so the stripper's
@@ -147,6 +169,32 @@ class NeitherToolUsesThePythonDefault(unittest.TestCase):
                 call.search(code),
                 "%s calls str.splitlines(); the agreement above is accidental" % name,
             )
+
+    def test_every_tool_emitting_a_path_line_locator_is_covered(self) -> None:
+        """The guard that makes the list self-correcting.
+
+        Without it, the next tool to emit ``path:line`` joins the fabric and
+        silently escapes the invariant — which is exactly how this list came to
+        be missing one.
+        """
+        # Keyed on the locator **alone**. The first version of this guard also
+        # required the literal ``"source"`` to appear, which
+        # ``derived_views.py`` does not contain — it passes ``source=`` as a
+        # keyword. Dropping that module from ``MODULES`` then produced **no
+        # finding at all**: a completeness guard with an incomplete population,
+        # which is the defect it exists to catch, one level up. Caught by
+        # mutating the list rather than by reading the code.
+        locator = re.compile(r'f"\{[^"{}]*\}:\{[^"{}]*\}"')
+        emitters = {
+            "tools/%s" % path.name
+            for path in sorted((REPO_ROOT / "tools").glob("*.py"))
+            if locator.search(path.read_text(encoding="utf-8"))
+        }
+        self.assertTrue(emitters, "precondition: no emitter found at all")
+        self.assertLessEqual(
+            emitters, set(self.MODULES),
+            "these emit a path:line locator and are not held to the "
+            "newline-only rule: %s" % sorted(emitters - set(self.MODULES)))
 
     def test_the_check_still_sees_a_call_it_should_reject(self) -> None:
         """Guard against a stripper that deletes everything and passes."""
