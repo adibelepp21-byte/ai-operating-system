@@ -72,7 +72,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_ROOTS = (
+_DIRECTORY_ROOTS = (
     "docs/architecture/platform-organization",
     # The reconstitution candidate and its audit
     # (`ACT-CC-CANONICAL-ARCHITECTURE-RECONSTITUTION-SUBMISSION-v1.0`).
@@ -109,23 +109,40 @@ DEFAULT_ROOTS = (
     # would mean five exemptions added so the tool could read itself — which is
     # the pressure `NON_RESIDENT` is written to resist. The finding is recorded
     # in the W2 evidence package and left for a change that is about it.
-    "tools/planning",
     # The W6 → W2 evidence path, added under `ACT-CC-P11-006 §26` in the same
     # change that created it. Named as a file for the reason given in
     # `_iter_markdown`.
-    "tools/performance_evidence.py",
     # `ACT-CC-P11-007 §26`: added with the surface, not after it. Both modules
     # carry their governing citations in docstrings and nowhere else.
-    "tools/escalation_register.py",
-    "tools/planning_continuity.py",
-    "tools/agent_instance_registry.py",
-    "tools/w4_delegation.py",
-    "tools/w4_execution.py",
-    "tools/w4_first_run.py",
-    "tools/w4_continuity.py",
-    "tools/plan_to_workflow.py",
-    "tools/w1_coordination_run.py",
 )
+
+
+
+def _tool_module_roots(base: Path = REPO_ROOT / "tools") -> tuple:
+    """Every top-level module under `tools/`, **discovered**.
+
+    These were enumerated, one entry added per Act, and the list went stale the
+    moment a module was created without someone remembering — which is the
+    failure shape this file's own `docs/architecture/p11` comment describes as
+    *"a guard that passes because it cannot see the newest work."* By
+    `ACT-CC-P11-017` five P11 modules had been written since the last entry and
+    **none of their citations had ever been checked.** They were clean; nothing
+    would have reported it if they were not.
+
+    `corpus_citation_audit.py` itself is excluded, and that exclusion is
+    **substantive rather than convenient**: its comments and docstrings quote
+    its own citation grammar — ``file.md``, ``FILE.md``, ``capabilities/x.md`` —
+    tokens that name nothing by design. `tools/tests/` is excluded for the same
+    kind of reason: one fixture carries a deliberately unresolvable citation, so
+    that a control can prove the auditor still fails on one.
+    """
+    return tuple(sorted(
+        str(path.relative_to(REPO_ROOT))
+        for path in base.glob("*.py")
+        if path.name != "corpus_citation_audit.py"))
+
+
+DEFAULT_ROOTS = _DIRECTORY_ROOTS + ("tools/planning",) + _tool_module_roots()
 
 # A backticked token that looks like a file reference, optionally carrying a
 # ``:line`` suffix or a trailing ``§n`` section marker.

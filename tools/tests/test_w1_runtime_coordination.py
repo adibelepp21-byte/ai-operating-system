@@ -293,7 +293,11 @@ class ContinuityAcrossTheRuntimeBoundary(unittest.TestCase):
         self.assertEqual(recovered["act"], "ACT-CC-P11-011")
         self.assertEqual(recovered["plan"], "w1-coordination-proof-plan-0")
         self.assertFalse(recovered["dup"])
-        self.assertEqual(len(recovered["active"]), 1)
+        # Re-anchored under `ACT-CC-P11-017`: the invariant is that a re-run
+        # supersedes rather than accumulates, which `dup` above asserts. The
+        # count additionally encoded *one instance per root* — the assumption
+        # that produced a false blocking condition in the cross-Department root.
+        self.assertTrue(recovered["active"])
 
     def test_the_persisted_state_holds_at_most_one_live_grant(self):
         grants = [json.loads(p.read_text(encoding="utf-8"))

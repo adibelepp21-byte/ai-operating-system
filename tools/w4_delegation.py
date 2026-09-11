@@ -67,8 +67,27 @@ ULTIMATE_ACCOUNTABILITY = "Founder"
 
 AUTHORIZING_DECISION = "FD-P11-001"
 
-#: `§13`, verbatim. A Delegation missing any of these *"is incomplete and must
-#: not become executable W4 authority."*
+#: `§13`'s thirteen elements, **plus one that is mine and is labelled as mine.**
+#:
+#: `§13` lists: `DELEGATION ID · DELEGATOR · RECIPIENT AGENT INSTANCE ·
+#: AUTHORITY PROVENANCE · OBJECTIVE · CAPABILITY SCOPE · WORK SCOPE ·
+#: TIME / LIFECYCLE BOUNDARY · RESOURCE BOUNDARY · OUTPUT EXPECTATION ·
+#: VERIFICATION REQUIREMENT · ESCALATION CONDITION · ACCOUNTABLE PARTY` — and a
+#: Delegation missing any of them *"is incomplete and must not become executable
+#: W4 authority."* That is **thirteen**.
+#:
+#: ``termination_condition`` is the fourteenth and **`§13` does not list it.**
+#: This comment previously said *"`§13`, verbatim"*, which was false, and
+#: elsewhere I wrote that *"`§13` item 14 requires a termination condition"* —
+#: a miscount of a thirteen-item list that then propagated into six documents.
+#: The instrument contains no termination requirement at all; the word does not
+#: appear in it.
+#:
+#: The field is **kept**, because `§29` makes a Delegation *"a controlled
+#: lifecycle object rather than a permanent authority grant"* and a grant with
+#: no stated ending is the unbounded authority `§11` forbids. Requiring more
+#: than `§13` requires is sound; **claiming `§13` requires it was not.**
+#: Corrected under `ACT-CC-P11-017`.
 REQUIRED_ELEMENTS = (
     "delegation_id", "delegator", "recipient_instance", "authority_provenance",
     "objective", "capability_scope", "work_scope", "lifecycle_boundary",

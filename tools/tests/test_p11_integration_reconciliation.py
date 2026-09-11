@@ -296,16 +296,56 @@ class NC10_11_12_13_MemoryIsNotAuthority(unittest.TestCase):
             root = Path(tmp)
             (root / "a.delegation.json").write_text("{not json",
                                                     encoding="utf-8")
-            (root / "b.delegation.json").write_text(json.dumps(
-                {"delegation_id": "b", "status": "ACTIVE"}), encoding="utf-8")
-            (root / "c.delegation.json").write_text(json.dumps(
-                {"delegation_id": "c", "status": "ACTIVE"}), encoding="utf-8")
+            # Both live grants held by the **same** instance — accumulation.
+            for key in ("b", "c"):
+                (root / f"{key}.delegation.json").write_text(json.dumps(
+                    {"delegation_id": key, "status": "ACTIVE",
+                     "recipient_instance": "inst-1"}), encoding="utf-8")
             state = reconstruct(root)
             self.assertEqual(state["unreadable_records"], ["a.delegation.json"])
             self.assertTrue(state["duplicate_active"])
+            self.assertEqual({"inst-1": ["b", "c"]}, state["accumulated_grants"])
             joined = " ".join(continuation_conditions(state))
             self.assertIn("UNREADABLE RECORDS", joined)
             self.assertIn("MORE THAN ONE LIVE GRANT", joined)
+
+    def test_two_instances_holding_one_grant_each_is_not_accumulation(self):
+        """`ACT-CC-P11-017` — the false positive this detector used to produce.
+
+        `duplicate_active` was `len(active) > 1`, which encoded *one instance per
+        operational root*. That held for `w4-operations` and `w1-operations` and
+        is false of a cross-Department root, where two grants are live by design
+        — one per Department's instance, each bounded to its own step. The reader
+        a next run consults therefore reported a **permanent blocking condition
+        against a legitimate state**.
+
+        This is the control that keeps the correction honest: the mutation above
+        must still fire, and this must not.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for key, instance in (("b", "inst-1"), ("c", "inst-2")):
+                (root / f"{key}.delegation.json").write_text(json.dumps(
+                    {"delegation_id": key, "status": "ACTIVE",
+                     "recipient_instance": instance}), encoding="utf-8")
+            state = reconstruct(root)
+            self.assertEqual(2, len(state["active_grants"]))
+            self.assertFalse(state["duplicate_active"])
+            self.assertEqual({}, state["accumulated_grants"])
+            self.assertNotIn("MORE THAN ONE LIVE GRANT",
+                             " ".join(continuation_conditions(state)))
+
+    def test_the_resident_cross_department_root_is_not_reported_blocked(self):
+        """The real corpus, not a fixture — two Departments, two live grants."""
+        from tools.delegation_catalog import operation_roots
+        for candidate in operation_roots():
+            state = reconstruct(candidate)
+            holders = state["live_grants_by_instance"]
+            if len(holders) > 1:
+                self.assertFalse(state["duplicate_active"], candidate.name)
+                break
+        else:
+            self.skipTest("no root currently holds grants for two instances")
 
     def test_a_previous_failure_is_not_reported_as_done(self):
         with tempfile.TemporaryDirectory() as tmp:

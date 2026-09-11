@@ -10517,3 +10517,93 @@ P11 COMPLETE FALSE - P11 CERTIFIED FALSE
 
 `DP-02 §8`'s sequence has three steps left: **fresh exhaustion** against this new
 state, then completion, then certification. The last two are not mine.
+
+
+---
+
+# 104. `ACT-CC-P11-017` — fresh exhaustion, and the criterion that was never checked
+
+Full package:
+[`P11-FRESH-EXHAUSTION-AND-COMPLETION-READINESS.md`](../architecture/p11/P11-FRESH-EXHAUSTION-AND-COMPLETION-READINESS.md).
+
+```text
+P11 EXHAUSTED   ·   READY FOR FOUNDER COMPLETION REVIEW
+P11 COMPLETE = FALSE   ·   P11 CERTIFICATION = FOUNDER-RESERVED
+```
+
+## 104.1 E11 was 10/10 before this gate, and seven frontiers were still open
+
+`E11 PASS ≠ P11 EXHAUSTION`. The measurement was green at the start of this Act
+and the gate found seven actionable frontiers anyway — **none of them on any
+previous frontier list**, because discovery was driven from the diff of
+`775de36` rather than from the list of things I already knew about.
+
+## 104.2 The one that matters: the conformance proof never checked provenance
+
+Two tuples transcribed `FD-P11-001 §13`, and **neither had ever been compared to
+the instrument or to each other**.
+
+```text
+§13 lists          13 elements, including AUTHORITY PROVENANCE
+REQUIRED_ELEMENTS  14 — the 13, plus termination_condition
+CRITERION_NAMES    13 — a different 13: no AUTHORITY PROVENANCE
+```
+
+So the first real W4 execution verified thirteen criteria and reported **"13 of
+13 criteria satisfied"** — a fraction that reads as full coverage of a
+thirteen-item section. **The one element never checked was the one naming where
+the authority came from.**
+
+And the fourteenth was mine. The comment said *"`§13`, verbatim"*; elsewhere I
+had written that *"`§13` item 14 requires a termination condition"*. `§13` has
+thirteen items and **the instrument contains no termination requirement at all**
+— the word does not occur in it. A miscount of mine, propagated into a docstring
+and from there into six documents.
+
+The field is kept, because `§29` makes a Delegation a controlled lifecycle
+object. **Requiring more than `§13` is sound; claiming `§13` required it was
+not.** A control now parses `§13` from the instrument body, and the two
+transcriptions are one.
+
+The historical evidence is not rewritten — it records what was checked that day.
+Provenance coverage today is evidenced by the cross-Department run's 14/14.
+
+## 104.3 A gate reporting a blocker against a correct state
+
+`duplicate_active` was `len(active) > 1`, encoding *one instance per operational
+root*. In the cross-Department root two grants are live **by design**, so the
+reader a next run consults to decide whether to proceed reported a permanent
+`MORE THAN ONE LIVE GRANT` blocker against a legitimate state.
+
+**A false positive in a gate is as damaging as a false negative and harder to
+notice, because it looks like caution.**
+
+## 104.4 Five populations, four passes
+
+An audit population that had not seen five modules. A persisted measurement
+nothing checked for staleness. Three entry points no test could reach. A dead
+constant left as a trap. Two count assertions over the real corpus — one of them
+encoding the very assumption that had just been falsified elsewhere.
+
+Then a sweep of **every** module-level population in `tools/`, and a sweep of
+every vocabulary claiming a canonical source. That last one is what found the
+`§13` divergence.
+
+## 104.5 Why exhaustion is claimed
+
+Passes one through four each found something. **Exhaustion is claimed only
+because the fifth — run with the improved mechanisms, after remediation had
+stopped — found nothing.** That is `EXH-08` and `EXH-10`, and they are the two
+this gate nearly failed.
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 718 OK = 1795
+citation 190 documents / 0 errors - stale-state 489 / 0 assertions
+dangling 0 - orphan 0 - duplicate 0 - stale 0 - provenance failures 0
+mutations attempted 11, fired 11, missed 0 - defects found 7, fixed 7
+Native Core 11 - protected paths read 0
+```
+
+`P11 COMPLETE` stays `FALSE`, and that is not a deficiency — the declaration is
+not the executor's. `FD-P10-005` is the precedent: the Founder declared P10
+complete, and three instruments withheld that act from Claude Code.

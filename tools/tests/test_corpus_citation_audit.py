@@ -82,6 +82,35 @@ class CorpusCitationAuditTests(unittest.TestCase):
                 self.assertIn("not disproved", finding["message"])
 
 
+
+class TheAuditedModulePopulationIsComplete(unittest.TestCase):
+    """`ACT-CC-P11-017` — a module outside the roots has unchecked citations.
+
+    `DEFAULT_ROOTS` enumerated `tools/` modules one entry per Act, and by the
+    time this was written **five P11 modules had been created since the last
+    entry and none of their citations had ever been checked.** They were clean;
+    nothing would have said so if they were not.
+    """
+
+    EXCLUDED = {"tools/corpus_citation_audit.py"}
+
+    def test_every_top_level_tools_module_is_audited(self):
+        from tools.corpus_citation_audit import DEFAULT_ROOTS
+        audited = set(DEFAULT_ROOTS)
+        present = {str(p.relative_to(REPO_ROOT))
+                   for p in (REPO_ROOT / "tools").glob("*.py")}
+        self.assertTrue(present, "precondition: no modules found")
+        missing = sorted(present - audited - self.EXCLUDED)
+        self.assertEqual(missing, [], f"unaudited tools modules: {missing}")
+
+    def test_the_exclusion_is_the_auditor_and_nothing_else(self):
+        """An exclusion list is where a stale population hides next."""
+        self.assertEqual({"tools/corpus_citation_audit.py"}, self.EXCLUDED)
+        from tools.corpus_citation_audit import DEFAULT_ROOTS
+        for name in self.EXCLUDED:
+            self.assertNotIn(name, DEFAULT_ROOTS)
+
+
 if __name__ == "__main__":
     unittest.main()
 

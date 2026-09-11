@@ -76,7 +76,8 @@ from tools.planning import (
 )
 from tools.escalation_register import record_refusals
 from tools.w4_continuity import ContinuityError
-from tools.w4_delegation import AUTHORIZED_DELEGATOR, W4DelegationRegistry
+from tools.w4_delegation import (
+    AUTHORIZED_DELEGATOR, REQUIRED_ELEMENTS, W4DelegationRegistry)
 from tools.w4_execution import W4Executor
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -105,12 +106,24 @@ INSTANCE_KEY = "engineering-intelligence-instance-001"
 #: because **this module may not import that region** — see the residency note
 #: in the docstring. The performer converts them into whatever its own
 #: verification surface expects.
-CRITERION_NAMES = (
-    "delegation_id", "delegator", "recipient_instance", "objective",
-    "capability_scope", "work_scope", "lifecycle_boundary",
-    "resource_boundary", "output_expectation", "verification_requirement",
-    "escalation_condition", "accountable_party", "termination_condition",
-)
+#: **`authority_provenance` was missing until `ACT-CC-P11-017`.**
+#:
+#: This list carried thirteen names and the run reported *"13 of 13 criteria
+#: satisfied"* — a fraction that reads as complete coverage of a thirteen-item
+#: `§13`. It was not the same thirteen: it **omitted `AUTHORITY PROVENANCE`**,
+#: the element the entire delegation model rests on, and included
+#: `termination_condition`, which `§13` does not list.
+#:
+#: So the one element never checked by the conformance proof was the one
+#: naming where the authority came from. Found by comparing this tuple against
+#: `w4_delegation.REQUIRED_ELEMENTS` — two transcriptions of one instrument that
+#: had never been compared to each other.
+#:
+#: The historical evidence in `first-execution.evidence.json` is **not
+#: rewritten**: it records what was actually checked on the day. Current
+#: coverage of the provenance element is evidenced by the cross-Department run,
+#: which verified all fourteen.
+CRITERION_NAMES = tuple(REQUIRED_ELEMENTS)
 
 SUBJECT = REPO_ROOT / "tools" / "w4_delegation.py"
 

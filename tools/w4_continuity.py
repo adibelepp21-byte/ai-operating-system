@@ -110,6 +110,25 @@ def reconstruct(root: Path = OPERATIONS) -> dict:
             evidence = loaded
 
     active = sorted(k for k, g in grants.items() if g.get("status") == "ACTIVE")
+
+    # Accumulation is **per recipient instance**, not per root.
+    #
+    # `duplicate_active` was `len(active) > 1`, which encoded "one instance per
+    # operational root" — true of `w4-operations` and `w1-operations`, and false
+    # of the cross-Department root, where two grants are live **by design**: one
+    # per Department's instance, each bounded to its own step.
+    #
+    # Left as it was, `continuation_conditions` reported a permanent
+    # `MORE THAN ONE LIVE GRANT` blocker against a legitimate state — a **false
+    # positive in the reader a next run consults to decide whether to proceed.**
+    # The true positive is preserved exactly: the same instance holding two live
+    # grants in one root is still accumulation, and is still reported.
+    live_by_instance: Dict[str, List[str]] = {}
+    for key in active:
+        live_by_instance.setdefault(
+            grants[key].get("recipient_instance") or "(unnamed)", []).append(key)
+    accumulated = {instance: sorted(ids)
+                   for instance, ids in live_by_instance.items() if len(ids) > 1}
     revoked = sorted(k for k, g in grants.items() if g.get("status") == "REVOKED")
 
     # `§23`: what is still valid, what is no longer, and what remains.
@@ -130,7 +149,10 @@ def reconstruct(root: Path = OPERATIONS) -> dict:
                                     if r.get("lifecycle") != "REGISTERED"),
         "active_grants": active,
         "revoked_grants": revoked,
-        "duplicate_active": len(active) > 1,
+        "duplicate_active": bool(accumulated),
+        "accumulated_grants": accumulated,
+        "live_grants_by_instance": {k: sorted(v)
+                                    for k, v in sorted(live_by_instance.items())},
         "unreadable_records": sorted(unreadable),
         "evidence_records": [p.name for p in evidence_files],
         "last_act": evidence.get("act"),
@@ -165,8 +187,9 @@ def continuation_conditions(state: dict) -> Tuple[str, ...]:
     conditions: List[str] = []
     if state["duplicate_active"]:
         conditions.append(
-            f"MORE THAN ONE LIVE GRANT: {state['active_grants']} — a re-run must "
-            "supersede rather than add to them (§34)")
+            f"MORE THAN ONE LIVE GRANT FOR ONE INSTANCE: "
+            f"{state['accumulated_grants']} — a re-run must supersede rather "
+            "than add to them (§34)")
     if state["unreadable_records"]:
         conditions.append(
             f"UNREADABLE RECORDS: {state['unreadable_records']} — corruption is "

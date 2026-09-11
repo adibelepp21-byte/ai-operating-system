@@ -217,12 +217,14 @@ def operation_roots(base: Path = P11_OPERATIONS) -> Tuple[Path, ...]:
     return tuple(sorted(found))
 
 
-#: Retained as names for the two roots that existed when these were written.
-#: Callers should prefer `operation_roots()`.
-INSTANCE_ROOTS = (
-    REPO_ROOT / "docs/architecture/p11/w4-operations",
-    REPO_ROOT / "docs/architecture/p11/w1-operations",
-)
+#: The discovered population, under its historical name. **Not a literal list.**
+#:
+#: It was retained as a hardcoded pair when `operation_roots()` replaced it, on
+#: the reasoning that nothing used it any more. Nothing did — which made it a
+#: trap rather than a courtesy: the next reader to import it would have got the
+#: stale two-root answer the discovery function exists to prevent. Bound to the
+#: function under `ACT-CC-P11-017`.
+INSTANCE_ROOTS = operation_roots()
 
 #: Retained: the primary root, and the argument default callers already pass.
 INSTANCE_RECORDS = INSTANCE_ROOTS[0]

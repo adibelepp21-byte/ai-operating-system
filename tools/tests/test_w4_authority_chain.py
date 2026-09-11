@@ -29,8 +29,10 @@ from tools.planning import (  # noqa: E402
     PlanStep,
     PlanningSurface,
 )
+from tools.w4_first_run import CRITERION_NAMES  # noqa: E402
 from tools.w4_delegation import (  # noqa: E402
     AUTHORIZED_DELEGATOR,
+    REQUIRED_ELEMENTS,
     DelegationError,
     W4Delegation,
     W4DelegationRegistry,
@@ -556,6 +558,66 @@ class ExecutionIsNotAuthority(unittest.TestCase):
         before = {r.key for r in read_delegations()}
         registry, registration, delegations, delegation = _stack()
         self.assertEqual({r.key for r in read_delegations()}, before)
+
+
+
+class TheDelegationElementsMatchTheInstrument(unittest.TestCase):
+    """`ACT-CC-P11-017` — the transcription is checked against `§13` itself.
+
+    Two tuples transcribed one instrument — `w4_delegation.REQUIRED_ELEMENTS`
+    and `w4_first_run.CRITERION_NAMES` — and **neither had ever been compared to
+    the instrument or to each other.** They disagreed: the conformance proof
+    omitted `AUTHORITY PROVENANCE`, the element the delegation model rests on,
+    and reported *"13 of 13"* — a fraction that reads as complete coverage of a
+    thirteen-item list.
+
+    Parsed from the body, so a change to `§13` fails here rather than drifting.
+    """
+
+    FD = (REPO_ROOT / "docs/governance/acts/"
+          "FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md")
+
+    #: Mine, not `§13`'s — see `REQUIRED_ELEMENTS`' comment.
+    ADDITIONS = {"termination_condition"}
+
+    def _section_13_elements(self):
+        body = self.FD.read_text(encoding="utf-8")
+        start = body.index("13. DELEGATION BOUNDARY")
+        end = body.index("A Delegation without these elements", start)
+        names = []
+        for line in body[start:end].split("\n"):
+            line = line.strip()
+            if not line or not line.isupper() or line.startswith("13."):
+                continue
+            names.append(line)
+        return names
+
+    def test_the_instrument_still_lists_the_elements_this_code_transcribes(self):
+        listed = self._section_13_elements()
+        self.assertEqual(13, len(listed), listed)
+        self.assertIn("AUTHORITY PROVENANCE", listed)
+
+    def test_required_elements_covers_every_element_section_13_lists(self):
+        listed = self._section_13_elements()
+        canonical = {n.lower().replace(" / ", "_").replace(" ", "_")
+                     for n in listed}
+        transcribed = set(REQUIRED_ELEMENTS)
+        # `RECIPIENT AGENT INSTANCE` and `TIME / LIFECYCLE BOUNDARY` are
+        # transcribed under shorter field names; matched on their distinctive
+        # word rather than assumed equal.
+        aliases = {"recipient_agent_instance": "recipient_instance",
+                   "time_lifecycle_boundary": "lifecycle_boundary"}
+        canonical = {aliases.get(n, n) for n in canonical}
+        missing = sorted(canonical - transcribed)
+        self.assertEqual([], missing, f"§13 elements not required: {missing}")
+        extra = sorted(transcribed - canonical)
+        self.assertEqual(sorted(self.ADDITIONS), extra,
+                         "an element not in §13 must be declared an addition")
+
+    def test_the_conformance_criteria_are_the_required_elements(self):
+        """The two transcriptions may not diverge again."""
+        self.assertEqual(tuple(REQUIRED_ELEMENTS), tuple(CRITERION_NAMES))
+        self.assertIn("authority_provenance", CRITERION_NAMES)
 
 
 if __name__ == "__main__":
