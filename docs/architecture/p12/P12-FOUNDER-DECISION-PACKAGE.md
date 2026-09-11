@@ -1,5 +1,13 @@
 # P12 Founder Authorization Package — Gate 8
 
+> **⚠ SUPERSEDED AS THE OPERATIVE DECISION SURFACE.** The Founder has since
+> supplied their own package, persisted PENDING at
+> [`P12-AUTHORIZATION-FOUNDER-DECISION-PACKAGE-PENDING.md`](../../governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-PACKAGE-PENDING.md).
+> **Its `§20` is the decision block, not the `§J` below.** This document remains
+> as the preparation record it was — its findings, integration map and authority
+> classification are unchanged and still current — but no decision should be
+> entered here.
+
 > **`P12 AUTHORIZATION = PENDING FOUNDER`.** This package prepares a decision; it
 > does not make one, and preparation is not authorization. `§J` is blank and
 > only the Founder may fill it.

@@ -10990,3 +10990,90 @@ Nine frontier findings, **none executable under current authority**. Eight phase
 certified on P12's integration path, and **not one of their exit criteria ever
 asked whether the phase composes with the other seven**. That is the question P12
 exists to ask, and asking it is the Founder's to authorize.
+
+---
+
+# 109. The P12 decision package arrived unsigned — **P12 is not authorized**
+
+Persisted PENDING at
+[`P12-AUTHORIZATION-FOUNDER-DECISION-PACKAGE-PENDING.md`](acts/P12-AUTHORIZATION-FOUNDER-DECISION-PACKAGE-PENDING.md).
+
+```text
+P12 AUTHORIZED = FALSE      P12 CONSTRUCTED = FALSE
+P12 PREPARATION = READY     GOVERNANCE CLOSED = NO
+```
+
+## 109.1 Non-issuance is measured, not inferred
+
+Counted at persistence and again in the persisted body: **36 unticked
+checkboxes, 0 ticked.** `§20` carries no signature and no effective date. `§23`
+states it outright — *"Until that decision is explicitly issued: P12 = NOT
+AUTHORIZED · P12 = NOT CONSTRUCTED."*
+
+`FD-P10-005`'s first copy arrived the same way and was persisted as PENDING with
+its non-issuance marked before its first line. Same treatment, same reason.
+
+**No identifier was minted.** The package carries no instrument ID; inventing one
+would fabricate an instrument identity. **No register entry was made** either —
+the register records *decisions*, and a package awaiting signature is not one.
+
+Verified by structural split, not by search: exactly one of the file's rules
+yields `054db468…` at 18 115 bytes, running to end of file, occurring once.
+
+## 109.2 The package forecloses its own misreading, and I am the audience
+
+`§1` lists six routes by which P12 could be wrongly treated as authorized, and
+the sixth is *"recommendation dari Co-Founder mengarah ke P12"*. My own
+recommendation is named as a thing that does not authorize. That is the correct
+ordering and this section records that it was applied rather than noted.
+
+## 109.3 Two divergences from canon, recorded not reconciled
+
+Both in `§3`'s restatement of `P12-W5`, against blueprint `§9`:
+
+- **Dimensions.** Canon lists ten — *identity · architecture · capability · state
+  · decisions · organization · knowledge · runtime · risk · evolution*. `§3`
+  lists eight, keeping the first four and substituting *authority · change ·
+  staleness · unknowns*, which are subjects of the **questions** rather than
+  canonical dimensions. **Six canonical dimensions are absent.**
+- **Questions.** Canon requires nine; `§3` lists seven, omitting **"What am
+  I?"** and **"What do I own?"** — the two that `F-1` measured as **absent** and
+  **partial**. A specification taken from `§3` would drop exactly the two most in
+  need of construction.
+
+Canonical governs, and neither document was altered. `§3` also **corrects** the
+earlier framework by restoring `WORK` to the `P12-W4` chain and saying so, which
+closes my `§108` Gate 5 finding.
+
+## 109.4 A recommendation attributed to me that I did not make
+
+`§6` and `§7` record *"Co-Founder recommendation: S2"* and *"G2"* — Security and
+Governance Authority as **concurrent reserved matters**. The recommendation on
+record at `P12-FOUNDER-DECISION-PACKAGE.md §I` is that `FDP-P10-001` and
+`FDP-P10-003` are *"worth settling **before or with** authorization rather than
+inside P12"* — nearer `S1`/`G1`.
+
+*Settling with authorization* resolves the matter; *concurrent reserved matter*
+proceeds while it stays unresolved. The difference is real and it bears on
+`P12-W3`, which integrates governance across layers.
+
+Recorded because a decision should rest on an accurate account of what was
+advised, and because a misattributed recommendation is the precise failure
+**`RECOMMENDATION ≠ DECISION`** exists to prevent — here running in the direction
+that flatters me, which is the direction worth checking. **The choice is the
+Founder's either way**, and `§6`'s own qualifier is a reasonable reading this
+office does not contest.
+
+## 109.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 724 OK = 1801
+citation 197 documents / 0 errors - stale-state 497 / 0 stale assertions
+
+P4-P11 ALL CERTIFIED       P12 AUTHORIZED = FALSE
+P12 PREPARATION = READY    P12 CONSTRUCTED = FALSE
+GOVERNANCE CLOSED = NO     23f315ba9f504272 = OPEN / NON-BLOCKING
+Native Core 11 frozen - protected paths read 0 - other dirty paths 0
+```
+
+Nothing was built. The decision block is blank, and filling it is not mine.
