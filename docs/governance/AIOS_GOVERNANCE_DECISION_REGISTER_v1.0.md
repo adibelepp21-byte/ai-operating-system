@@ -7006,3 +7006,343 @@ independently certify Phase 9, and certification became effective through this
 authorized registration rather than through passing tests.
 
 ---
+
+---
+
+## 13. Phase 10 – Phase 11 Founder Instrument Append (2026-09-11)
+
+### Why this append exists
+
+Seven Founder instruments that are **resident** in `docs/governance/acts/` had no
+entry in this register. The register's last phase instrument was `FD-P9-002`, so
+the recorded governance history stopped at Phase 9 while Phase 10 and Phase 11
+were authorized, ratified, and certified.
+
+**This is a recording gap, not an authority gap.** Every instrument below was
+already effective under its own terms before this entry existed. Each carries its
+own effective-date clause; none makes its effectiveness contingent on
+registration. Registration here therefore **records** and does not effectuate, in
+keeping with this register's Authority Disclaimer: *"This register **records**
+governance decisions; it does not make them and carries no independent governance
+authority."*
+
+The gap was materially consequential rather than cosmetic. `tools/derived_views.py`
+answers the question *"what decisions are recorded"* by reading **this register**.
+Before this append that projection returned 47 decisions ending at `FD-P9-002`,
+and returned **none** of the seven instruments below — so the system's own
+self-knowledge projection could not see the decisions that authorize, ratify and
+certify the phase it is in.
+
+**Authority basis for the append itself.** `DP-01 §8` places *persist*,
+*reconcile* and *document* within the authorized executor's scope, and `§11`
+states that *"Routine technical Micro Acts remain delegated and do not require
+separate Founder approval."* The Founder's Post-P11 transition framework `§7`
+directs `DISCOVER → REGISTER → VERIFY → PERSIST → RECONCILE` where authorized and
+states plainly: *"Do not create a Micro Act merely to authorize routine register
+maintenance."* No entry below interprets an instrument; each quotes it and cites
+the section quoted.
+
+**Verbatim discipline note.** `FD-P10-003` is resident as a **transcription, not a
+byte-exact copy** — its own provenance block records that prose was condensed
+while *"every decision, condition, prohibition, reserved boundary and directive is
+carried verbatim or in full."* Quotations from it below are drawn only from text
+its persistence marks as carried verbatim. The remaining six are resident as
+verbatim copies.
+
+---
+
+### FD-P10-003 — Founder Decision · P10 Department Population & Ownership Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P10-003` |
+| **Date** | 2026-09-10 |
+| **Effective** | persisted 2026-09-10 |
+| **Tier** | Constitutional — Founder Decision |
+| **Decided by** | AIOS Founder |
+| **Record** | [`acts/FD-P10-003-…md`](acts/FD-P10-003-DEPARTMENT-POPULATION-AND-OWNERSHIP-AUTHORITY.md) · transcription; `sha256 a245f363c1e984d4…` |
+| **Status history** | FOUNDER-ISSUED / DECIDED → registered 2026-09-11 |
+
+**Decision text.** DECISION A: *"Department Population must be established from
+the authoritative organizational source model and shall not be invented by Claude
+Code."* It may be determined only from an explicit Founder Decision, an
+authoritative Architect Decision where Architect authority is sufficient, an
+authoritative canonical organizational source that explicitly establishes
+Department identity, or a later superseding decision. *"Claude Code shall not
+convert `PD-01` … `PD-10` into Departments merely because ten Platform Divisions
+exist."*
+
+```text
+CANONICAL DEPARTMENT = EXPLICITLY ESTABLISHED ORGANIZATIONAL UNIT
+                     ≠  PD = DEPARTMENT
+```
+
+DECISION B authorizes Claude Code to establish Department ownership relationships
+within bounded conditions.
+
+**Authority basis.** Founder Reserved Authority. The instrument records that
+*"Where `ADR-0029` does not itself establish sufficient authority for population,
+this Founder Decision supplies the required Founder-level authority to resolve the
+population boundary."*
+
+**Standing changes.** Department population and ownership assignment become
+determinable under stated source lineage; every Department established or excluded
+must preserve source lineage.
+
+**Explicitly not changed.** No Department may be added *"because it is convenient,
+technically useful, or architecturally symmetrical."* `PD ≠ Department` stands.
+
+**Lineage.** `ADR-0029` · `G-09` · Platform Organization sources → `FD-P10-003` →
+`FD-P10-004` (E10 ratification) → `FD-P10-005` (P10 certification).
+
+---
+
+### FD-P10-004 — Founder Decision · Ratification of Measurable Phase 10 Exit Criteria (E10)
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P10-004` |
+| **Date** | 2026-09-10 |
+| **Effective** | persisted 2026-09-10 |
+| **Tier** | Constitutional — Founder Decision |
+| **Decided by** | AIOS Founder |
+| **Record** | [`acts/FD-P10-004-…md`](acts/FD-P10-004-RATIFICATION-OF-MEASURABLE-PHASE-10-EXIT-CRITERIA.md) · verbatim copy recovered from transcript |
+| **Status history** | DECIDED → registered 2026-09-11 |
+
+**Decision text.** `§4`: *"The Founder hereby RATIFIES the following measurable
+exit criteria as: E10 — MEASURABLE PHASE 10 EXIT CRITERIA. These criteria
+constitute the measurable completion standard for P10."* Six criteria: `E10-01`
+Department Identity & Population · `E10-02` Ownership Integrity · `E10-03` Work
+Entry & Capability Selection · `E10-04` Department → Execution Continuity ·
+`E10-05` Organizational Boundary Integrity · `E10-06` Evidence & Verification.
+
+**Authority basis.** Founder Reserved Authority over phase exit criteria.
+
+**Standing changes.** E10 becomes the measurable completion standard for P10.
+`§13` requires existing evidence to be **reverified** rather than inherited;
+`§14` mandates fresh gap discovery; `§17` forbids self-certification.
+
+**Explicitly not changed.** `§12` preserves the distinction between necessary and
+sufficient conditions. Ratification of criteria is not a finding that they are
+met.
+
+**Lineage.** `FD-P10-003` → `FD-P10-004` → `FD-P10-005`.
+
+---
+
+### FD-P10-005 — Founder Decision · Certification of Phase 10 Department Ecosystem
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P10-005` |
+| **Date** | 2026-09-10 |
+| **Effective** | `§`Founder Decision Date: 10-09-2026 |
+| **Tier** | Constitutional — Founder Decision · phase certification |
+| **Decided by** | AIOS Founder |
+| **Record** | [`acts/FD-P10-005-…md`](acts/FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM.md) |
+| **Status history** | first copy supplied **unsigned** with a blank `§14` decision block and persisted as PENDING → a signed, rewritten copy was later supplied and is the resident body → ISSUED → registered 2026-09-11 |
+
+**Decision text.** `§16`: *"APPROVED. Phase 10 — Department Ecosystem is hereby
+certified as COMPLETE. This certification is bounded to the authorized P10
+completion model and does not resolve the four open Founder/Architect authority
+frontiers, does not close governance, and does not authorize P11–P13."*
+
+**Authority basis.** Founder Reserved Authority over phase certification.
+
+**Standing changes.**
+
+```text
+PHASE 10 — DEPARTMENT ECOSYSTEM: CERTIFIED / COMPLETE
+```
+
+**Explicitly not changed.** `§11` records that `P10 CERTIFIED → P11 AUTHORIZED` is
+**expressly not** automatic. Four authority frontiers remain open after
+certification; governance is not closed.
+
+**Status-history note.** The unsigned first copy is recorded here because the
+distinction is governance-relevant: certification did not take effect on supply,
+only on issuance of the signed instrument. The earlier verification record's
+finding that *"`FD-P10-005` arrived unsigned — P10 is not certified"* was accurate
+on its date and is superseded by the signed copy, not retracted.
+
+**Lineage.** `FD-P10-004` → `FD-P10-005` → `DP-01` (P11 authorization).
+
+---
+
+### DP-01 — Founder Decision · P11 Founder Authorization
+
+| Field | Value |
+|---|---|
+| **Identifier** | `DP-01` |
+| **Date** | 2026-09-11 |
+| **Effective** | `§17` — *"effective upon issuance of this instrument"* |
+| **Tier** | Constitutional — Founder Decision |
+| **Decided by** | AIOS Founder |
+| **Record** | [`acts/DP-01-P11-FOUNDER-AUTHORIZATION.md`](acts/DP-01-P11-FOUNDER-AUTHORIZATION.md) · verbatim, recovered from transcript |
+| **Status history** | ISSUED → registered 2026-09-11 |
+
+**Decision text.** `§14`: *"FOUNDER CHOICE: AUTHORIZE. I, acting in the Founder
+authority role, explicitly authorize: P11 — Autonomous Organization construction,
+over the final authorization surface established by ACT-CC-P11-004 and constrained
+by issued Architect Decisions DP-04 and DP-03. The authorization is granted
+without expansion beyond that surface. No separate authorization is implied for
+P12, E11 ratification, Native Core modification, or constitutional authority
+expansion."*
+
+**Authority basis.** Founder Reserved Authority.
+
+**Standing changes.** `§19`: `P11 AUTHORIZED = TRUE`, with `CONSTRUCTED`,
+`OPERATIONAL`, `VERIFIED`, `EXHAUSTED`, `COMPLETE`, `CERTIFIED`, `E11 RATIFIED`,
+`P12 AUTHORIZED` and `Native Core #12` all `FALSE` / `NOT AUTHORIZED`. `§8`
+delegates *discover · design within the issued architecture · implement ·
+integrate · test · verify · persist · reconcile · document · continue*.
+
+**Explicitly not changed.** `§8` forbids the executor to *"self-authorize
+additional scope"*, issue Founder or Architect decisions, or *"ratify E11
+criteria"*. `§13` declares the instrument authorizes construction and does not
+declare P11 constructed, operational, verified, exhausted, complete or certified,
+nor governance closed:
+
+```text
+AUTHORIZATION ≠ CONSTRUCTION ≠ OPERATIONAL ≠ VERIFIED ≠ EXHAUSTED ≠ COMPLETE ≠ CERTIFIED
+```
+
+**Lineage.** `FD-P10-005` → `DP-01` → `FD-P11-001` → `DP-02` → `FD-P11-002`.
+
+---
+
+### FD-P11-001 — Founder Decision · W4 Delegation & Agent Instance Authorization
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P11-001` |
+| **Date** | 2026-09-11 |
+| **Effective** | `§40` |
+| **Tier** | Constitutional — Founder Decision |
+| **Decided by** | AIOS Founder |
+| **Record** | [`acts/FD-P11-001-…md`](acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md) |
+| **Status history** | ISSUED → registered 2026-09-11 |
+
+**Decision text.** `§4.1`: *"CLAUDE CODE, acting in the established role of
+Delegated Co-Founder / Delegated Executive, is the authorized operational
+delegator for P11-W4 Autonomous Execution under this Founder Decision. This
+authority is granted specifically for the bounded purpose of establishing and
+exercising legitimate W4 delegation."* `§9` fixes the provenance model
+`FOUNDER → FD-P11-001 → AUTHORIZED W4 DELEGATOR → AUTHORIZED AGENT INSTANCE →
+BOUNDED DELEGATION`, and `§13` enumerates the thirteen required delegation
+elements, including `AUTHORITY PROVENANCE`.
+
+**Authority basis.** Founder Reserved Authority; subordinate to Constitution,
+Founder Reserved Authority, Canonical Architecture and the Co-Founder Delegation
+Charter, as `§4.1` states.
+
+**Standing changes.** Legitimate W4 delegation and Agent Instance registration
+become possible under bounded scope. `§27` fixes the escalation discipline
+`STOP → PRESERVE EVIDENCE → RECORD BLOCKER → ESCALATE → CONTINUE INDEPENDENT
+AUTHORIZED WORK`.
+
+**Explicitly not changed.** `§4.1`: *"Claude = Founder"*, *"ultimate governance
+authority"*, *"unrestricted authority"* and *"owner of all Platform
+Organization"* are each expressly excluded. `§12` lists thirteen non-delegable
+authorities including *"Authority to ratify E11"* (item 9) and *"Authority to
+issue Founder Decisions"* (item 11). `§22`: *"The autonomous organization may
+execute more work. It may not autonomously expand the authority under which it
+operates."*
+
+**Lineage.** `DP-01` → `FD-P11-001` → escalation `23f315ba9f504272` (raised under
+`§9`, reasoned on `§22`).
+
+---
+
+### DP-02 — Founder Decision · P11 E11 Ratification with Modifications
+
+| Field | Value |
+|---|---|
+| **Identifier** | `DP-02` |
+| **Date** | 2026-09-11 |
+| **Effective** | 2026-09-11 |
+| **Tier** | Constitutional — Founder Decision |
+| **Decided by** | AIOS Founder |
+| **Record** | [`acts/DP-02-P11-E11-RATIFICATION.md`](acts/DP-02-P11-E11-RATIFICATION.md) · byte-identical to supplied; `sha256 df769fb9a530eda8…` |
+| **Status history** | ISSUED → registered 2026-09-11 |
+
+**Decision text.** `§1`: *"YES — RATIFY WITH MODIFICATIONS. The P11 E11 acceptance
+framework is hereby ratified with the modifications defined in this Decision.
+This Decision establishes the canonical acceptance boundary against which P11
+shall subsequently be measured."*
+
+**Authority basis.** Founder Reserved Authority. `DP-01 §8` and `FD-P11-001 §12`
+item 9 both exclude E11 ratification from delegated authority; this instrument is
+the exercise of the reserved authority they preserved.
+
+**Standing changes.** E11 becomes ten criteria: `E11-01` Planning · `E11-02`
+Delegation · `E11-03` Execution · `E11-04` Cross-Department Coordination ·
+`E11-05` Observation · `E11-06` Verification · `E11-07` Escalation · `E11-08`
+Accountability · `E11-09` Organizational Continuity · `E11-10` Bounded Autonomy &
+Governance Integrity. `§10` fixes `MULTI-AGENT ≠ CROSS-DEPARTMENT COORDINATION`.
+
+**Explicitly not changed.** `§1` states the Decision does not declare P11
+complete, P11 certified, E11 currently PASS, any individual criterion satisfied,
+any construction authorized, P12 authorized, any Native Core subsystem
+authorized, or any new Founder or Architect authority created. `§10`:
+**`RATIFICATION ≠ PASS`**. `§7`: *"E11-04 shall not be pre-populated as PASS."*
+
+**Lineage.** `DP-01` → `FD-P11-001` → `DP-02` → `FD-P11-002`.
+
+---
+
+### FD-P11-002 — Founder Decision · P11 Autonomous Organization Certification
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P11-002` |
+| **Date** | 2026-09-11 |
+| **Effective** | `§14` — *"Effective immediately upon issuance"* |
+| **Tier** | Constitutional — Founder Decision · phase certification |
+| **Decided by** | AIOS Founder |
+| **Record** | [`acts/FD-P11-002-P11-CERTIFICATION.md`](acts/FD-P11-002-P11-CERTIFICATION.md) · byte-identical to supplied; `sha256 fc295da017d2b041…` |
+| **Status history** | ISSUED → registered 2026-09-11 |
+
+**Decision text.** `§1`: *"The Founder hereby certifies: PHASE 11 — AUTONOMOUS
+ORGANIZATION IS CERTIFIED."* `§16`: *"DECISION: YES — CERTIFY P11 · STATUS:
+CERTIFIED · P11 COMPLETE: TRUE · P11 CERTIFIED: TRUE · GOVERNANCE CLOSED: NO ·
+23f315ba9f504272: OPEN / NON-BLOCKING."*
+
+**Authority basis.** Founder Reserved Authority over phase certification;
+`FD-P11-001 §12` item 11 excludes the issuance of Founder Decisions from
+delegation.
+
+**Standing changes.** `§14`: `P11 CERTIFIED = TRUE`; P11 transitions from
+`COMPLETE / NOT CERTIFIED` to `COMPLETE / CERTIFIED`.
+
+```text
+PHASE 11 — AUTONOMOUS ORGANIZATION: CERTIFIED / COMPLETE
+PHASE 12:                           NOT AUTHORIZED
+GOVERNANCE:                         NOT CLOSED
+```
+
+**Explicitly not changed.** `§8` states the certification does not certify the
+entire AIOS program, P12, P13, Platform Organization PD-01–PD-10 as a whole,
+Native Core expansion, future capabilities, future architectural decisions, or
+unresolved Founder/Architect matters outside P11, and that
+`GOVERNANCE CLOSED = FALSE` *"may therefore remain valid after P11
+certification."* `§9`: **`P11 CERTIFICATION ≠ P12 AUTHORIZATION`**. `§10` leaves
+the Native Core at eleven frozen subsystem boundaries. `§7`: *"P11 certification
+does not require closure of `23f315ba9f504272`"*, and *"closing the escalation
+solely to obtain certification is neither required nor authorized."* `§6` holds
+the 13 Founder-protected `docs/program/AIOS_*` packages outside certification
+evidence under `PROTECTED BOUNDARY ≠ TECHNICAL INCONVENIENCE`.
+
+**Lineage.** `DP-02` → `FD-P11-002`. Successor: none. P12 authorization is a
+separate Founder act that has not occurred.
+
+---
+
+### Append integrity
+
+Seven instruments registered. No entry alters an earlier entry; §2.3's
+append-only rule is preserved. No instrument text was reconstructed: every
+quotation above is copied from the resident body and cited to its section. The
+recording changes no authority, no phase state, and no reserved matter — each
+instrument was already effective under its own terms before this append existed.
+

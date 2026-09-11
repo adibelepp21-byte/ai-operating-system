@@ -90,6 +90,14 @@ _DIRECTORY_ROOTS = (
     # cannot see the newest work*. Adding the root alongside the directory means
     # the blind spot never exists in a committed state.
     "docs/architecture/p11",
+    # Added with `docs/architecture/p12/` in the same change that created it,
+    # for the reason given two entries above. The post-P11 reconciliation and
+    # P12 preparation packages cite governance instruments densely, and the
+    # first audit run after the directory appeared reported **193 documents —
+    # unchanged** while the stale-state auditor correctly moved 493 → 496. The
+    # citation count not moving *was* the defect: `VF-11`'s failure shape,
+    # caught one commit before it became a committed state.
+    "docs/architecture/p12",
     # Added under `DP-01 §3 W3` in the same change that created
     # `docs/architecture/organization/delegations/`, for the reason stated
     # directly above. This root had **never been audited** — it holds the P10

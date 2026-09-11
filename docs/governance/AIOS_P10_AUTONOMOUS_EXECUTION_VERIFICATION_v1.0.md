@@ -10889,3 +10889,104 @@ GOVERNANCE CLOSED = NO    P12 AUTHORIZED = FALSE
 `P11 CERTIFICATION ≠ P12 AUTHORIZATION`. `CERTIFIED ≠ GOVERNANCE CLOSED`. The
 phase is certified; the programme is not finished, and no authority beyond P11
 was created by certifying it.
+
+---
+
+# 108. Post-P11 reconciliation — the register gap was hiding the phase from itself
+
+Packages:
+[`POST-P11-RECONCILIATION.md`](../architecture/p12/POST-P11-RECONCILIATION.md) ·
+[`P12-FRONTIER-AND-AUTHORITY.md`](../architecture/p12/P12-FRONTIER-AND-AUTHORITY.md) ·
+[`P12-FOUNDER-DECISION-PACKAGE.md`](../architecture/p12/P12-FOUNDER-DECISION-PACKAGE.md)
+
+```text
+P12 PREPARATION = READY      P12 AUTHORIZED = FALSE
+GOVERNANCE CLOSED = NO       23f315ba9f504272 = OPEN / NON-BLOCKING
+```
+
+## 108.1 The register gap was measurable, and the measurement is the argument
+
+Seven resident Founder instruments had no register entry. The obvious framing is
+tidiness. The real one is this: `derived_views.self_knowledge()` answers *"what
+decisions are recorded"* by reading the register, and before this work it
+returned **47 decisions ending at `FD-P9-002`** — so the system could not see the
+instruments that authorize, ratify and certify **the phase it is in**, including
+both phase certifications. After the append it sees **52**, and `what is
+unbridged` fell from 32 to 28 because four newly registered instruments bridged
+gates.
+
+That is why registration was executed rather than escalated. The five
+determinations `§7` demands all resolve the same way: required by Constitution
+`§16`/`§14.1`; append-only and authority-free by the register's own disclaimer;
+recording is not deciding; `DP-01 §8` delegates *persist · reconcile · document*;
+and no Founder act is required **provided every entry quotes and cites rather
+than interprets**, which is the condition this gate held itself to.
+
+One check could have overturned that: the Phase 9 entry says certification
+*"became effective through this authorized registration"*. If that generalized,
+registering would be effectuation. It does not — all seven carry their own
+effective-date clauses, and `FD-P11-002 §14` reads *"Effective immediately upon
+issuance"*.
+
+## 108.2 I broke four conformance tests and did not touch them
+
+The first append wrote the register's `Date` field as `2026-09-11 (§40)`. The
+governance index parses that field literally, so chronological ordering broke and
+`GDR-0033`'s same-date-unordered invariant failed — four `test_governance_index`
+failures. **The tests were right.** `Date` cells were reduced to bare
+`YYYY-MM-DD` and the citations moved to an `Effective` row. 724 green after.
+
+## 108.3 A false negative, caught inside the gate built to catch them
+
+The dependency table first recorded **P4 as `UNKNOWN`**, on a pattern search for
+`PHASE [1-4] … CERTIFIED` that returned nothing. P4 is certified and registered:
+`GDR-0002 — Gate 4 Certification · Phase 4 (4.0–4.6)`, *Frozen → Certified*,
+2026-07-30. The register records it in the **Gate vocabulary of its era**, and my
+pattern was written against the `PHASE N — CERTIFIED / COMPLETE` form adopted
+from P5 onward.
+
+**Absence of a grep hit was treated as absence of a decision** — in the gate whose
+stated purpose is establishing what is actually true, about the phase at the head
+of P12's own integration path. Corrected before commit. `P1–P3` remain `UNKNOWN`
+and are not assumed.
+
+Two smaller ones went the same way and never reached a document: `boundary_consumers`
+returning `0` does **not** mean unconsumed — `capability`, `skill` and
+`optimization` are unconsumed *by canonical design*, and `agent` is imported by 44
+files outside Native Core; and my suspicion that the `what decisions are recorded`
+fact was mislabelled `REGISTER` was wrong — all 52 records do come from the
+register.
+
+## 108.4 The one fix I could make and didn't
+
+`DP-01` and `DP-02` are now registered and **still invisible**: the index
+recognises `DEC|GDR|ADR|ACT|FD`, not `DP`. The same file records that `FD` was
+itself missing until `ACT-CC-R1-002`, an omission that *"made every Founder
+Decision — the highest-authority record class in the register — invisible to this
+index."* This is that defect again, one prefix later, and the fix is three
+constants.
+
+**It cites `ACT-CC-P6-066-R2 §9` for the authority to extend, and
+`ACT-CC-P6-066-R2` is not resident in this repository.** Widening a corpus-wide
+governance recogniser on a non-resident citation would also move `what exists`,
+the citation audit and the index at once, changing the meaning of figures already
+recorded. `NECESSITY ≠ AUTHORITY`. Recorded as `F-2`, blocked on source.
+
+## 108.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 724 OK = 1801
+citation 193 documents / 1053 citations / 0 errors
+stale-state 493 documents / 0 stale assertions
+self-model: 52 decisions visible, 28 unbridged, 3 of 9 canonical questions answered
+Native Core 11 - protected paths read 0 - other dirty paths 0
+
+P4-P11 ALL CERTIFIED      P1-P3 UNKNOWN
+P12 AUTHORIZED = FALSE    P12 PREPARATION = READY
+GOVERNANCE CLOSED = NO    23f315ba9f504272 = OPEN / NON-BLOCKING
+```
+
+Nine frontier findings, **none executable under current authority**. Eight phases
+certified on P12's integration path, and **not one of their exit criteria ever
+asked whether the phase composes with the other seven**. That is the question P12
+exists to ask, and asking it is the Founder's to authorize.
