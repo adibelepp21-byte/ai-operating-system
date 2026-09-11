@@ -544,10 +544,18 @@ class ExecutionIsNotAuthority(unittest.TestCase):
             ExecutionOutcome(step_key="a", status="authorized", detail="",
                              delegation_id="d", instance_key="i", at="now")
 
-    def test_w3_organizational_population_is_untouched_by_w4(self):
-        """`§20`: W4 operational delegation is not a W3 organizational record."""
+    def test_issuing_a_w4_grant_does_not_write_a_w3_record(self):
+        """`§20`: W3 *represents and tracks* the authorized grant — it is not
+        written as a side effect of issuing one.
+
+        `ACT-CC-P11-009` established that the two are **one canonical model with
+        two projections**, and connected them. Connection is not automation:
+        representing a grant in W3 remains a deliberate act, so issuing a
+        delegation in memory still writes nothing to the organizational layer.
+        """
+        before = {r.key for r in read_delegations()}
         registry, registration, delegations, delegation = _stack()
-        self.assertEqual(read_delegations(), [])
+        self.assertEqual({r.key for r in read_delegations()}, before)
 
 
 if __name__ == "__main__":

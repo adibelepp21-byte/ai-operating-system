@@ -65,6 +65,20 @@ from typing import Optional, Tuple
 
 from native_core.core.governance import HumanAuthority
 from tools.planning import AuthorityProvenance, EscalationRequired
+from tools.w4_execution import ExecutionRefused
+
+#: The refusal types that may become a persisted organizational escalation.
+#:
+#: Both carry ``required`` and ``held`` — what the blocked action needed against
+#: what the actor held — which is the pair an escalation must put in front of a
+#: human. `EscalationRequired` arises when a *plan* would exceed its authority;
+#: `ExecutionRefused` when a *step* would exceed its delegation.
+#:
+#: Listed explicitly rather than accepted by duck-typing. `ACT-CC-P11-009 §13`
+#: separates **refusal** from **organizational escalation**, and a register that
+#: accepted anything shaped like a refusal would let an arbitrary object become
+#: organizational state — which is the fabrication the type check exists to stop.
+SANCTIONED_REFUSALS = (EscalationRequired, ExecutionRefused)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -117,7 +131,7 @@ class EscalationRegister:
         self._root = root
         self._root.mkdir(parents=True, exist_ok=True)
 
-    def record(self, error: EscalationRequired, *, subject: str,
+    def record(self, error, *, subject: str,
                authority: AuthorityProvenance) -> EscalationRecord:
         """Persist an escalation that was actually raised.
 
@@ -126,9 +140,9 @@ class EscalationRegister:
         a caller supply those separately would allow a record that disagrees with
         the event it claims to describe.
         """
-        if not isinstance(error, EscalationRequired):
+        if not isinstance(error, SANCTIONED_REFUSALS):
             raise EscalationRegisterError(
-                "only an escalation that was actually raised may be recorded — "
+                "only a refusal that was actually raised may be recorded — "
                 "a register that accepts invented entries is not evidence")
         if not isinstance(authority, AuthorityProvenance):
             raise EscalationRegisterError(
@@ -137,8 +151,8 @@ class EscalationRegister:
         record = EscalationRecord(
             escalation_id=uuid.uuid4().hex[:16],
             subject=subject,
-            required=error.required,
-            held=error.held,
+            required=str(error.required),
+            held=str(error.held),
             reason=str(error),
             authority=authority,
             raised_at=datetime.now(timezone.utc).isoformat(),

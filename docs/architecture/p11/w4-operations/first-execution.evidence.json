@@ -1,8 +1,32 @@
 {
   "act": "ACT-CC-P11-008",
-  "executed_at": "2026-09-10T20:00:17.280259+00:00",
+  "prior_state": {
+    "recovered_instances": [
+      "engineering-intelligence-instance-001"
+    ],
+    "recovered_active_grants_before_run": [
+      "fd1f1302b0224b97"
+    ],
+    "recovered_revoked_grants": 4,
+    "recovered_last_plan": "w4-first-execution-proof-plan-0",
+    "recovered_last_outcomes": [
+      [
+        "verify-delegation-elements",
+        "success"
+      ],
+      [
+        "report-conformance",
+        "success"
+      ]
+    ],
+    "recovered_open_escalations": [],
+    "continuation_conditions": [
+      "NO BLOCKING CONDITION \u2014 prior state is coherent"
+    ]
+  },
+  "executed_at": "2026-09-11T02:33:13.801569+00:00",
   "authority_chain": [
-    "delegation:fd1f1302b0224b97",
+    "delegation:4313bd2246124a94",
     "delegator:Claude Code / AIOS Co-Founder",
     "decision:FD-P11-001 \u00a79",
     "founder:Founder"
@@ -11,7 +35,7 @@
   "agent_definition_version": "1.0",
   "agent_instance": "engineering-intelligence-instance-001",
   "instance_lifecycle": "REGISTERED",
-  "delegation_id": "fd1f1302b0224b97",
+  "delegation_id": "4313bd2246124a94",
   "delegation_status": "ACTIVE",
   "delegator": "Claude Code / AIOS Co-Founder",
   "accountable_party": "Claude Code / AIOS Co-Founder",
@@ -21,8 +45,7 @@
     "engineering-intelligence"
   ],
   "work_scope": [
-    "verify-delegation-elements",
-    "report-conformance"
+    "verify-delegation-elements"
   ],
   "goal": "w4-first-execution-proof",
   "plan": "w4-first-execution-proof-plan-0",
@@ -37,23 +60,26 @@
       "status": "success",
       "detail": "verified 13 criteria",
       "instance": "engineering-intelligence-instance-001",
-      "delegation": "fd1f1302b0224b97",
-      "at": "2026-09-10T20:00:17.280231+00:00"
+      "delegation": "4313bd2246124a94",
+      "at": "2026-09-11T02:33:13.801174+00:00"
     },
     {
       "step": "report-conformance",
-      "status": "success",
-      "detail": "13 satisfied, 0 not: none",
+      "status": "escalation",
+      "detail": "step 'report-conformance' is outside the delegated work scope \u2014 `\u00a722`: the organization may execute more work, it may not expand the authority under which it operates",
       "instance": "engineering-intelligence-instance-001",
-      "delegation": "fd1f1302b0224b97",
-      "at": "2026-09-10T20:00:17.280254+00:00"
+      "delegation": "4313bd2246124a94",
+      "at": "2026-09-11T02:33:13.801193+00:00"
     }
   ],
-  "refusals": [],
-  "boundary_crossed": false,
+  "refusals": [
+    "step 'report-conformance' is outside the delegated work scope \u2014 `\u00a722`: the organization may execute more work, it may not expand the authority under which it operates"
+  ],
+  "boundary_crossed": true,
   "superseded_grants": [
-    "125968154a7d4c06",
-    "16af1ba6664e4ed6",
-    "5a05e6649c5c4f9c"
+    "fd1f1302b0224b97"
+  ],
+  "escalations": [
+    "23f315ba9f504272"
   ]
 }

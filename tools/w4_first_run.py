@@ -73,6 +73,8 @@ from tools.planning import (
     PlanStep,
     PlanningSurface,
 )
+from tools.escalation_register import EscalationRegister
+from tools.w4_continuity import ContinuityError
 from tools.w4_delegation import AUTHORIZED_DELEGATOR, W4DelegationRegistry
 from tools.w4_execution import W4Executor
 
@@ -175,7 +177,9 @@ def _revoke_stale_grants(root: Path, instance_key: str) -> Tuple[str, ...]:
     return tuple(revoked)
 
 
-def run(perform_verification, *, persist: bool = True) -> dict:
+def run(perform_verification, *, persist: bool = True,
+        work_scope: Tuple[str, ...] = ("verify-delegation-elements",
+                                       "report-conformance")) -> dict:
     """Perform the first real W4 execution and return its evidence.
 
     ``perform_verification(artifact_lines, criterion_names) -> {name: bool}``
@@ -193,6 +197,34 @@ def run(perform_verification, *, persist: bool = True) -> dict:
     """
     OPERATIONS.mkdir(parents=True, exist_ok=True)
     root = OPERATIONS if persist else None
+
+    # ── stage 0: recover prior organizational state (§19, §20, §23) ───────
+    #
+    # **Before anything is written.** Reconstructing after the stale-grant sweep
+    # would report the state this run had already changed, and
+    # `recovered_active_grants_before_run` would be a record of my own
+    # housekeeping rather than of what a fresh process actually found. The
+    # ordering is the evidence.
+    #
+    # Reads files only — `§19`: the continuation *"MUST NOT rely on hidden
+    # conversational memory."*
+    prior = {}
+    if persist:
+        try:
+            from tools.w4_continuity import continuation_conditions, reconstruct
+            recovered = reconstruct(OPERATIONS)
+            prior = {
+                "recovered_instances": recovered["instances"],
+                "recovered_active_grants_before_run": recovered["active_grants"],
+                "recovered_revoked_grants": len(recovered["revoked_grants"]),
+                "recovered_last_plan": recovered["last_plan"],
+                "recovered_last_outcomes": recovered["last_outcomes"],
+                "recovered_open_escalations": recovered["open_escalations"],
+                "continuation_conditions":
+                    list(continuation_conditions(recovered)),
+            }
+        except ContinuityError:
+            prior = {"recovered": "none — first run against an empty root"}
 
     # ── stage 1: Agent Instance (§9) ──────────────────────────────────────
     registry = AgentInstanceRegistry(root)
@@ -214,7 +246,7 @@ def run(perform_verification, *, persist: bool = True) -> dict:
         objective="Verify tools/w4_delegation.py against the FD-P11-001 §13 "
                   "conformance criteria, and report the result.",
         capability_scope=("engineering-intelligence",),
-        work_scope=("verify-delegation-elements", "report-conformance"),
+        work_scope=work_scope,
         lifecycle_boundary="one execution of plan "
                            "w4-first-execution-proof-plan-0",
         resource_boundary="read-only access to tools/w4_delegation.py; "
@@ -245,9 +277,32 @@ def run(perform_verification, *, persist: bool = True) -> dict:
 
     report = W4Executor(delegation, registry).execute_plan(plan, perform)
 
+    # ── stage 3b: refusals become organizational escalations (§11, §17) ───
+    #
+    # `ACT-CC-P11-009 §13`: a refusal satisfies only `ACTION BLOCKED`. It does
+    # **not** prove an escalation state. Before this, a refused step produced an
+    # `ExecutionOutcome` with status `escalation` inside a run's evidence file —
+    # an *outcome*, transient to that run, with no lifecycle, no accountable
+    # party and no way to resolve. `tools/escalation_register.py` was built as
+    # the organizational home and **nothing referenced it from the W4 path.**
+    #
+    # Wired here rather than inside `W4Executor`, so the executor keeps no handle
+    # on persistence and can still run without it. `§16`: routing a decision to
+    # an authorized authority is not creating that authority.
+    escalations = []
+    if persist and report.refusals:
+        register = EscalationRegister(OPERATIONS)
+        for refusal in report.refusals:
+            record = register.record(
+                refusal, subject=f"plan {plan.key} / delegation "
+                                 f"{delegation.delegation_id}",
+                authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD))
+            escalations.append(record.escalation_id)
+
     # ── stage 4: evidence (§22, §46) ──────────────────────────────────────
     evidence = {
         "act": "ACT-CC-P11-008",
+        "prior_state": prior,
         "executed_at": datetime.now(timezone.utc).isoformat(),
         "authority_chain": list(delegation.authority_chain()),
         "agent_definition": registration.definition_key,
@@ -278,6 +333,7 @@ def run(perform_verification, *, persist: bool = True) -> dict:
         "refusals": [str(r) for r in report.refusals],
         "boundary_crossed": bool(report.refusals),
         "superseded_grants": list(superseded),
+        "escalations": list(escalations),
     }
     if persist:
         (OPERATIONS / "first-execution.evidence.json").write_text(

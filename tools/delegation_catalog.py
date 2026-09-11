@@ -37,6 +37,7 @@ in the corpus disagree, not because a sentence contained a forbidden word.
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from dataclasses import dataclass
@@ -153,15 +154,69 @@ def read_delegations(root: Path = DELEGATION_ROOT) -> List[DelegationRecord]:
     return records
 
 
-def _population(org_root: Path) -> Tuple[Dict[str, set], set, set]:
-    """``(capabilities_by_department, department_keys, actor_keys)``."""
+#: An authority source established by an *instrument* rather than by being an
+#: organizational unit. `FD-P11-001 §4.1` names Claude Code the authorized W4
+#: operational delegator, and `§5` explicitly **rejects** Engineering or Platform
+#: becoming that delegator by virtue of being labels.
+#:
+#: **This entry corrects an over-constraint of mine, not the architecture's.**
+#: `DP-04 §8.3` fixes the record shape as ``AUTHORITY SOURCE → AUTHORIZED SCOPE →
+#: DELEGATED ACTOR / UNIT → BOUNDARY → ACCOUNTABILITY → VERIFICATION` and
+#: **nowhere requires the source to be a Department.** I imposed that under
+#: `ACT-CC-P11-005`, citing `FD-P10-003 §5`, and it was right at the time: the
+#: only conceivable delegators were Departments, and demanding an established one
+#: kept authority from arising out of nowhere.
+#:
+#: `FD-P11-001` then established a delegator that is not a unit. The constraint
+#: did not become wrong — it became **narrower than the architecture it
+#: implements**, which is why `FD-P11-001 §20` could say W3 *"is the
+#: organizational mechanism through which the authorized Delegation record is
+#: represented and tracked"* while W3 structurally rejected that very record.
+#:
+#: Admitting this source creates no authority. `§20` requires that W3 *"must not
+#: manufacture authority absent valid provenance"*, so a record naming it must
+#: still cite the instrument that established it — checked below.
+INSTRUMENT_ESTABLISHED_SOURCES = {
+    "claude-code-aios-co-founder": "FD-P11-001",
+}
+
+#: Where registered Agent Instances are persisted. A W4 delegation's actor is an
+#: Agent *Instance*, which is neither a Department nor an Agent Definition — the
+#: distinction `FD-P11-001 §6.1` makes mandatory.
+INSTANCE_RECORDS = REPO_ROOT / "docs/architecture/p11/w4-operations"
+
+
+def registered_instances(root: Path = INSTANCE_RECORDS) -> Dict[str, dict]:
+    """Agent Instances that have actually been registered, read from record.
+
+    Empty when none exist, exactly as the Department loader returns nothing for
+    an absent tree. An instance that is not on disk is not a valid actor.
+    """
+    found: Dict[str, dict] = {}
+    if not root.is_dir():
+        return found
+    for path in sorted(root.glob("*.instance.json")):
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            continue
+        key = record.get("instance_key")
+        if key:
+            found[key] = record
+    return found
+
+
+def _population(org_root: Path, instance_root: Path = INSTANCE_RECORDS):
+    """``(capabilities_by_department, source_keys, actor_keys, instances)``."""
     departments = read_departments(org_root)
     owned = {r.key: set(r.capabilities) for r in departments}
     department_keys = set(owned)
-    actors = set(department_keys)
+    instances = registered_instances(instance_root)
+    source_keys = department_keys | set(INSTRUMENT_ESTABLISHED_SOURCES)
+    actors = set(department_keys) | set(instances)
     for record in departments:
         actors.update(record.agent_definitions)
-    return owned, department_keys, actors
+    return owned, source_keys, actors, instances
 
 
 def verify(delegations, org_root: Path = ORGANIZATION_ROOT,
@@ -206,7 +261,7 @@ def verify(delegations, org_root: Path = ORGANIZATION_ROOT,
         on disk. A pointer that resolves to nothing is not evidence, which is the
         same rule the citation audit applies to the rest of this corpus.
     """
-    owned, department_keys, actors = _population(org_root)
+    owned, source_keys, actors, instances = _population(org_root)
     defects: List[Tuple[str, str, Optional[str]]] = []
     for record in delegations:
         path = REPO_ROOT / record.record
@@ -222,8 +277,24 @@ def verify(delegations, org_root: Path = ORGANIZATION_ROOT,
         actor = record.delegated_actor
 
         if source is not None:
-            if source not in department_keys:
+            if source not in source_keys:
                 defects.append(("authority-source-unknown", record.key, source))
+            elif source in INSTRUMENT_ESTABLISHED_SOURCES:
+                # An instrument-established source owns no Capability, so the
+                # ownership graph cannot bound its scope. What bounds it instead
+                # is the recipient: `FD-P11-001 §16` fixes delegated ≤ available,
+                # and the instance's permitted surface is what it may hold.
+                instrument = INSTRUMENT_ESTABLISHED_SOURCES[source]
+                body = text
+                if instrument not in body:
+                    defects.append(("source-instrument-not-cited", record.key,
+                                    f"{source} requires {instrument}"))
+                permitted = set(instances.get(actor, {})
+                                .get("permitted_capabilities", ()))
+                if actor in instances and scope is not None \
+                        and scope not in permitted:
+                    defects.append(("scope-beyond-recipient", record.key,
+                                    f"{actor} ∌ {scope}"))
             elif scope is not None and scope not in owned[source]:
                 defects.append(("scope-not-owned", record.key, f"{source} ∌ {scope}"))
         if actor is not None and actor not in actors:

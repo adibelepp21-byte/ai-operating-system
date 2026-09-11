@@ -192,10 +192,20 @@ class TestD_DelegationBoundaryChallenge(unittest.TestCase):
         self.assertTrue(defects, "W3 accepted a record Planning produced")
 
     def test_planning_never_populated_the_real_delegation_directory(self):
+        """Planning authored nothing, checked by provenance rather than count.
+
+        The resident population is no longer empty — `FD-P11-001 §4.1` created a
+        delegator and `§20` made W3 track its grant — so emptiness would now be
+        the wrong assertion. What Test D actually claims is that **Planning** did
+        not write any of it.
+        """
+        before = {r.key for r in read_delegations()}
         surface, plan = _surface()
         surface.delegation_requirements(plan)
         surface.prepare_for_workflow(plan)
-        self.assertEqual(read_delegations(), [])
+        self.assertEqual({r.key for r in read_delegations()}, before)
+        for record in read_delegations():
+            self.assertNotIn("plan", (record.authority_source or "").lower())
 
 
 class TestE_WorkflowBoundaryChallenge(unittest.TestCase):

@@ -9535,3 +9535,101 @@ E11 RATIFIED = FALSE     P12 AUTHORIZED = FALSE  13 protected packages untouched
 
 **`§49` exhaustion: NOT EXHAUSTED.** Authorized actionable work remains — wiring
 the escalation register into the W4 loop, and W5 evidence continuity across runs.
+
+# 94. Three reconciliations, and eight controls that were asserting a premise
+
+**Act:** `ACT-CC-P11-009`. Verdicts **`R2` · `E1` · `C1`**. Package at
+`docs/architecture/p11/P11-INTEGRATION-RECONCILIATION.md`.
+
+## 94.1 W3 rejected the record it was designated to track
+
+`DP-04 §8.3` defines **one** delegation record shape with **one** `AUTHORITY
+SOURCE`, and `W4Delegation` maps onto all six of its elements. `FD-P11-001 §20`
+opens: *"W3 Delegation **is** the organizational mechanism through which the
+authorized Delegation record is represented and tracked."*
+
+At entry: **1 live W4 grant, 0 W3 records.** W3 could not see it, revoke it, or
+account for it. Attempting to represent it produced `authority-source-unknown`
+and `actor-unknown`.
+
+**The cause was mine.** `DP-04 §8.3` nowhere requires the authority source to be
+a Department; I imposed that under `ACT-CC-P11-005`, citing a Phase 10
+instrument. It was right when written — Departments were the only conceivable
+delegators — and it **became narrower than the architecture it implements** the
+moment `FD-P11-001 §4.1` established a delegator that is not a unit.
+
+This is a failure mode I had not met before: not a wrong constraint, but a
+**correct constraint outliving its premise**. Nothing failed when the premise
+changed, because a constraint that is too narrow refuses things silently.
+
+## 94.2 Escalation existed and nothing reached it
+
+`§12` found five representations. Four are refusals or outcomes. Only the
+register is organizational state — and **zero references reached it from the W4
+path**, with zero escalations persisted from the first real run.
+
+Wired from the runner rather than the executor, then proven by a **second real
+run** with a narrowed scope: the refused step produced escalation
+`23f315ba9f504272`, read back `OPEN` in a **third process**.
+
+**What makes it state rather than an outcome** is that it changes what a later
+run is told: the continuity reader now reports *"blocked work remains blocked; an
+escalation is not resolved by re-running."* An outcome describes a past run. State
+constrains the next one.
+
+Resolution is deliberately not performed — closing it needs a `HumanAuthority`
+that automation cannot construct.
+
+## 94.3 Continuity, and an ordering defect caught before it produced evidence
+
+The second run executed in a **fresh process** and recovered instances, the live
+grant, four revoked grants, the last plan and its outcomes, and continuation
+conditions — from files alone — then superseded rather than accumulated.
+
+Reconstruction initially ran *after* the stale-grant sweep, so
+`recovered_active_grants_before_run` would have recorded **my own housekeeping**
+rather than what a fresh process actually found. Moved to stage 0, before any
+write. **The ordering is the evidence**, and the same numbers would have been
+meaningless in the other order.
+
+## 94.4 A guard of mine fired, and it was right to
+
+`ACT-CC-P11-005` left this in the delegation suite:
+
+> *"If a delegation record ever appears here, this test fails loudly — which is
+> correct. Authoring one is an exercise of the authority being delegated, and
+> **this executor holds none of it**."*
+
+It fired on four assertions. Four more controls elsewhere used the empty
+population as a proxy for *"no authority was created"*.
+
+**It was asserting a premise, not an invariant.** The premise was true when
+written and `FD-P11-001 §4.1` falsified it. Changing a control because the code
+cannot satisfy it is the prohibited move; what changed here was **upstream of the
+code** — a Founder Decision altered who may delegate.
+
+All eight now assert the enduring property directly: *every record carries
+provenance to an established authority*. That is what emptiness stood in for
+while no such authority existed, and it is strictly stronger — a population of
+one proves a record **can** exist and proves nothing about rejection, so a new
+control checks that a record without provenance is still refused.
+
+**The lesson generalizes beyond this case.** A control that encodes *"X cannot
+happen"* is really asserting *"nothing authorizes X"*, and the second claim can
+be overturned by an instrument the control never mentions. Proxies for absence
+age badly; assertions about provenance do not.
+
+## 94.5 State integrity, measured
+
+```text
+native_core boundaries : 11   W3 records : 1 (0 defects)   live W4 grants : 1
+open escalations : 1   real runs this Act : 2 (second in a fresh process)
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 581 OK
+citation 159 documents / 0 errors · stale-state 463 / 0 assertions
+
+P11 OPERATIONAL = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
+13 protected packages untouched
+```
+
+`§40`: three dimensions advanced does not make P11 operational. **Coordination
+remains unproven**, and one escalation is open by design.

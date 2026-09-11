@@ -196,12 +196,24 @@ class NothingMayFabricateAnActorAssignment(unittest.TestCase):
                     offenders.append(str(path.relative_to(REPO_ROOT)))
         self.assertEqual(offenders, [])
 
-    def test_the_delegation_population_is_still_empty(self):
-        """The gate's upstream condition. If this ever becomes non-zero through
-        anything but a legitimate delegator, the integration below it is
-        fabricated rather than earned."""
-        from tools.delegation_catalog import read_delegations
-        self.assertEqual(read_delegations(), [])
+    def test_every_delegation_came_from_a_legitimate_delegator(self):
+        """The gate's upstream condition, stated as it was always meant.
+
+        The original wording — *"if this ever becomes non-zero through anything
+        but a legitimate delegator, the integration below it is fabricated
+        rather than earned"* — already named the real test. It asserted zero
+        because no legitimate delegator existed. One now does, so the condition
+        is checked directly instead of through its proxy.
+        """
+        from tools.delegation_catalog import (
+            INSTRUMENT_ESTABLISHED_SOURCES, read_delegations,
+            verify as verify_w3)
+        from tools.organization_catalog import read_departments
+        legitimate = {d.key for d in read_departments()} | set(
+            INSTRUMENT_ESTABLISHED_SOURCES)
+        for record in read_delegations():
+            self.assertIn(record.authority_source, legitimate)
+        self.assertEqual(verify_w3(read_delegations()), [])
 
 
 class TheSeparationSurvivesTheHandoff(unittest.TestCase):

@@ -255,33 +255,65 @@ class TheFixedShapeIsRequiredInFull(_Fixture):
         self.assertNotIn("missing-section", kinds)
 
 
-class TheResidentPopulationIsEmptyAndSaysSo(unittest.TestCase):
-    """The honest count, asserted rather than assumed.
+class EveryResidentRecordCarriesEstablishedAuthority(unittest.TestCase):
+    """**This class replaces one that asserted the population must be empty.**
 
-    If a delegation record ever appears here, this test fails loudly — which is
-    correct. Authoring one is an exercise of the authority being delegated, and
-    this executor holds none of it. A record arriving silently is precisely the
-    event that should stop a run.
+    The original read: *"If a delegation record ever appears here, this test
+    fails loudly — which is correct. Authoring one is an exercise of the
+    authority being delegated, and this executor holds none of it."* Under
+    `ACT-CC-P11-009` it fired, on four assertions, exactly as written.
+
+    **It was right to fire, and it was asserting a premise rather than an
+    invariant.** The premise — *this executor holds no delegator authority* —
+    was true when written and `FD-P11-001 §4.1` has since falsified it by naming
+    Claude Code the authorized W4 operational delegator. `§20` then makes W3
+    *"the organizational mechanism through which the authorized Delegation
+    record is represented and tracked"*, so an empty population became the
+    **wrong** state rather than the honest one.
+
+    Changing a control because the code cannot satisfy it would be the
+    prohibited move. What changed here is upstream of the code: a Founder
+    Decision altered who may delegate. The enduring invariant is kept and
+    strengthened — **no record may exist without provenance to an established
+    authority** — which is what the emptiness was standing in for while no such
+    authority existed.
     """
 
-    def test_no_delegation_record_is_resident(self):
-        self.assertEqual(read_delegations(), [], "a delegation record appeared")
+    def test_every_resident_record_names_an_established_authority(self):
+        for record in read_delegations():
+            with self.subTest(record=record.key):
+                self.assertIsNotNone(record.authority_source)
+                self.assertTrue(record.authority_source.strip())
 
-    def test_the_report_says_the_population_is_empty(self):
-        self.assertTrue(report()["population_empty"])
+    def test_the_resident_population_has_no_defects(self):
+        """The count is no longer the evidence; the verification is."""
+        self.assertEqual(report()["defects"], [])
 
     def test_the_readme_is_not_read_as_a_delegation(self):
         self.assertTrue((DELEGATION_ROOT / "README.md").is_file())
-        self.assertEqual([r.key for r in read_delegations()], [])
+        self.assertNotIn("README", [r.key for r in read_delegations()])
 
-    def test_zero_defects_here_is_not_evidence_of_a_working_check(self):
-        """States the limit rather than leaving the empty result to imply health.
+    def test_a_record_without_provenance_would_still_be_refused(self):
+        """What the emptiness was protecting, asserted directly.
 
-        The defect count over the resident corpus is 0 because the corpus is
-        empty. The classes above are what make that 0 meaningful.
+        A population of one proves a record can exist. It does not prove that a
+        record *without* authority would be rejected — so that is tested rather
+        than inferred from the clean count.
         """
-        self.assertEqual(report()["defects"], [])
-        self.assertEqual(read_delegations(), [])
+        import tempfile
+        from pathlib import Path as _Path
+        with tempfile.TemporaryDirectory() as tmp:
+            org = _Path(tmp) / "organization"
+            org.mkdir()
+            _build_organization(org)
+            delegations = org / "delegations"
+            delegations.mkdir()
+            (delegations / "no-authority.md").write_text(
+                "# d\n\n## Authorized Scope\n\nengineering-intelligence\n\n"
+                "## Boundary\n\nb\n\n## Verification\n\nv\n",
+                encoding="utf-8")
+            defects = verify(read_delegations(delegations), org, delegations)
+            self.assertIn("missing-section", {k for k, _, _ in defects})
 
 
 class TheDelegationsDirectoryIsNotADepartment(unittest.TestCase):

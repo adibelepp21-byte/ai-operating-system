@@ -122,6 +122,7 @@ DEFAULT_ROOTS = (
     "tools/w4_delegation.py",
     "tools/w4_execution.py",
     "tools/w4_first_run.py",
+    "tools/w4_continuity.py",
 )
 
 # A backticked token that looks like a file reference, optionally carrying a

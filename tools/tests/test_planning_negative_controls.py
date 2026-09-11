@@ -175,7 +175,12 @@ class NC_W2_06_07_08_PlanningCannotDelegate(unittest.TestCase):
         requirements = surface.delegation_requirements(plan)
         self.assertEqual(len(requirements), 1)
         self.assertEqual(requirements[0].step_key, "b")
-        self.assertEqual(read_delegations(), [])   # W3 population still empty
+        # Planning populated nothing: no resident record names a plan as its
+        # authority source. (The population is no longer empty — `FD-P11-001`
+        # created a delegator — so the property is checked, not the count.)
+        for record in read_delegations():
+            self.assertNotEqual(record.authority_source, "p")
+            self.assertNotIn("plan", (record.authority_source or "").lower())
 
 
 class NC_W2_09_10_11_12_ObservationCannotAuthorize(unittest.TestCase):

@@ -1,0 +1,10 @@
+{
+  "escalation_id": "23f315ba9f504272",
+  "subject": "plan w4-first-execution-proof-plan-0 / delegation 4313bd2246124a94",
+  "required": "report-conformance",
+  "held": "('verify-delegation-elements',)",
+  "reason": "step 'report-conformance' is outside the delegated work scope \u2014 `\u00a722`: the organization may execute more work, it may not expand the authority under which it operates",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "raised_at": "2026-09-11T02:33:13.801276+00:00"
+}

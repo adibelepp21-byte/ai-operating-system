@@ -192,8 +192,19 @@ class P11MustNotSelfAuthorize(unittest.TestCase):
                       self._kinds(_record(**{
                           "Authorizing Instrument": "[X](./nowhere.md)"})))
 
-    def test_no_resident_delegation_exists_to_have_authorized_anything(self):
-        self.assertEqual(read_delegations(), [])
+    def test_no_resident_delegation_authorizes_itself(self):
+        """Emptiness was the proxy; provenance is the property.
+
+        This asserted `== []` until `FD-P11-001 §4.1` created a legitimate
+        delegator and `§20` made W3 the mechanism that tracks its grant. A
+        population of one does not weaken `W7`: what `W7` forbids is a record
+        that authorizes itself, and that is now checked directly.
+        """
+        from tools.delegation_catalog import verify as verify_w3
+        resident = read_delegations()
+        self.assertEqual(verify_w3(resident), [])
+        for record in resident:
+            self.assertTrue((record.authority_source or "").strip())
 
 
 class P11MustNotSelfExpandAuthority(unittest.TestCase):
@@ -347,8 +358,21 @@ class DelegationMustNotCreateAuthority(unittest.TestCase):
     constrain the first one; this asserts only that none has appeared.
     """
 
-    def test_the_resident_delegation_population_is_empty(self):
-        self.assertEqual(read_delegations(), [])
+    def test_no_resident_delegation_creates_authority(self):
+        """`W7`: *"convert delegation into authority creation"*.
+
+        Every resident record must cite an authority established elsewhere. A
+        record is evidence of a grant, never its source.
+        """
+        from tools.delegation_catalog import (
+            INSTRUMENT_ESTABLISHED_SOURCES, verify as verify_w3)
+        from tools.organization_catalog import read_departments
+        established = {d.key for d in read_departments()} | set(
+            INSTRUMENT_ESTABLISHED_SOURCES)
+        for record in read_delegations():
+            with self.subTest(record=record.key):
+                self.assertIn(record.authority_source, established)
+        self.assertEqual(verify_w3(read_delegations()), [])
 
     def test_the_core_defines_no_delegation_class(self):
         found = []
@@ -389,6 +413,7 @@ P11_SURFACES = (
     REPO_ROOT / "tools" / "w4_delegation.py",
     REPO_ROOT / "tools" / "w4_execution.py",
     REPO_ROOT / "tools" / "w4_first_run.py",
+    REPO_ROOT / "tools" / "w4_continuity.py",
 )
 
 
@@ -459,7 +484,10 @@ class TheBoundaryAlsoConstrainsCapabilityBuiltAfterIt(unittest.TestCase):
         requirement = surface.delegation_requirements(plan)[0]
         with self.assertRaises(NotImplementedError):
             requirement.as_delegation_record()
-        self.assertEqual(read_delegations(), [])
+        # Planning authored nothing: every resident record is traceable to the
+        # delegator FD-P11-001 names, not to a plan.
+        for record in read_delegations():
+            self.assertNotIn("plan", record.key.lower())
 
     def test_the_declared_p11_surface_set_is_complete(self):
         """A surface missing from the list is a surface nothing checks.
@@ -531,8 +559,16 @@ class WhatThisSuiteDoesNotEstablish(unittest.TestCase):
     """
 
     def test_p11_is_not_claimed_constructed(self):
-        """One of seven work packages has a mechanism, and it has no population."""
-        self.assertEqual(read_delegations(), [])
+        """Several packages are built; P11 is not therefore complete.
+
+        This once asserted an empty delegation population as the evidence. That
+        stopped being true when `FD-P11-001` authorized a delegator, and an
+        empty count was never what made the claim false anyway — `P11
+        CONSTRUCTED` is false because coordination and the eight exit dimensions
+        are not jointly demonstrated, not because a directory was empty.
+        """
+        from tools.delegation_catalog import verify as verify_w3
+        self.assertEqual(verify_w3(read_delegations()), [])
 
     def test_the_representative_controls_are_named_not_merely_counted(self):
         """Relabeling a control must require editing this list, visibly.
