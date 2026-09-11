@@ -10229,3 +10229,103 @@ source-supported, authorized, technically actionable, incomplete and material.
 So P11 construction stops here. **The next program frontier is `DP-02` — Founder
 E11 Ratification**, the single gate between the state proven here and a
 completion determination, and it is not mine to open.
+
+---
+
+# 101. `ACT-CC-P11-016` — preparing the decision I am not allowed to make
+
+Full package:
+[`DP-02-P11-E11-RATIFICATION-DECISION-PACKAGE.md`](../architecture/p11/DP-02-P11-E11-RATIFICATION-DECISION-PACKAGE.md).
+
+```text
+DP-02 PREPARATION : READY — with five findings that are the Founder's to resolve
+AUTHORITY FINDING : C — CANDIDATE ONLY
+E11 RATIFIED      : FALSE
+```
+
+## 101.1 The authority test, run against bodies
+
+All **32** resident governance act bodies were read for `E11`. Every occurrence
+is a prohibition on ratifying it, a status line recording `E11 RATIFIED = FALSE`,
+or a pointer to `DP-02` as the separate future instrument. No instrument ratifies
+E11 in whole or in part, and no `DP-02` body exists anywhere.
+
+**A disclosed false positive:** three hits come from `ACT-CC-REM-003.x`, where
+`E11` is a **row label** in a remediation evidence table meaning *"Historical
+integrity"*. Two unrelated `E11` namespaces live in this corpus, and an
+identifier-only search conflates them.
+
+## 101.2 What the canonical source actually says
+
+Resident and **tracked**:
+`docs/program/AIOS_PHASE_10_13_PLATFORM_ORGANIZATION_BLUEPRINT_v1.0.md §8`.
+
+> P11 complete apabila bounded organization dapat **membuktikan**: planning;
+> delegation; execution; coordination; observation; verification; escalation;
+> accountability.
+
+**The verb is *prove*, and the canonical text specifies no measurement method.**
+The identifiers `E11-01`…`E11-08` do not appear in it at all — they come from a
+**non-resident** upload. The dimensions are canonical; the numbering is derived.
+
+## 101.3 Five findings, and three of them change what E11 would measure
+
+- **`F2`** The eight Exit dimensions cover **five of seven** work packages.
+  `P11-W5` (Memory/Continuity) and `P11-W7` (Human Governance Boundary) have
+  **no Exit dimension at all**.
+- **`F3`** All eight are **capability** dimensions. None measures what the
+  organization must *not* do. A ratified E11 of only these eight would measure
+  what it can do and never what it must not.
+- **`F4`** `E11-04` has two non-interchangeable readings. Narrow: satisfied
+  today. Canonical `P11-W1` wording — *"cross-department coordination"* —
+  **currently UNSATISFIED**: two Departments exist, one instance each, and no
+  coordination has ever spanned both. `ACT-CC-P11-011` established that
+  *multi-agent* is optional; **that does not settle this**, because
+  cross-department is not a synonym for multi-agent.
+- **`F5`** A naive `E11-03` PASS condition of `boundary_crossed == false` would
+  score a **correct refusal as failure** and reward an implementation that
+  executed out of scope. The prepared condition is written around refusal
+  happening when it should.
+- **`F7`** `prioritization` is canonical in `P11-W2` **and** Architect-reserved,
+  so it is excluded from `E11-01`. Including it would make E11 measure something
+  construction is forbidden to build.
+
+**Nothing was added to E11.** Adding a dimension is ratification.
+
+## 101.4 A near-miss in my own rendering
+
+The work-package table flattened four **bullet lists** into semicolon-separated
+prose and labelled the column *"verbatim"*. The items are verbatim; the sentence
+form is mine. A bullet list rendered as flowing prose reads as a quotation and is
+not one — **the fourth time in this programme that a reflowed source produced
+text more fluent than the original.** Relabelled, and every flattened item
+verified individually against the source.
+
+Two smaller ones: I had abbreviated `running work; completed work; failed work;
+blocked work` to `running; completed; failed; blocked`, and my first verifier
+**passed it anyway** — because it matched substrings, so `"running"` was found
+inside `"running work"`. Re-run with boundary-aware matching, the abbreviation
+was caught and corrected. A substring check defending against substring errors is
+not a check.
+
+## 101.5 What was prepared, and what was not
+
+The `DP-02` instrument carries four Founder options and five blank fields —
+choice, rationale, effective date, signature, status. **Option A is listed first
+because it is the minimal change, not because it is recommended**, and `F2`,
+`F3` and `F4` are reasons a careful Founder might choose B.
+
+Seven of eight criteria are **READY**; `E11-04` is **NOT READY**, and its
+deficiency is a decision rather than a defect.
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 707 OK = 1784
+citation 170 documents / 0 errors - native_core boundaries 11
+protected paths read 0 - no construction - no authority created
+
+P11 EXHAUSTED TRUE - P11 COMPLETE FALSE - P11 CERTIFIED FALSE - E11 RATIFIED FALSE
+DP-02 PREPARATION = COMPLETE - E11 RATIFICATION = PENDING FOUNDER
+```
+
+Per `§31` no successor Act is created. The next action is the Founder's response
+to `DP-02`.
