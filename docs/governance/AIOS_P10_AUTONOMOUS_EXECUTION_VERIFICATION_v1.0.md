@@ -9815,3 +9815,104 @@ P11 OPERATIONAL = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
 
 `§46`: a real single-participant Runtime-hosted coordination is exactly that —
 not multi-agent coordination, and the canonical contract says it need not be.
+
+---
+
+# 97. `ACT-CC-P11-012` — Global frontier rediscovery, and the gap that was never on any list
+
+**Nothing was built.** `§0`: *"Act ini bukan construction Act."* Twelve attack
+classes were run against my own conclusions. One hit, one gap was proven, and
+the gap was left open, because proving a gap is not authorization to fill it.
+
+Full package: [`P11-GLOBAL-FRONTIER-EXHAUSTION.md`](../architecture/p11/P11-GLOBAL-FRONTIER-EXHAUSTION.md).
+
+## 97.1 The Act itself is non-resident, and I said so before using it
+
+`ACT-CC-P11-008` through `012` were issued conversationally and **never
+persisted**. `docs/governance/acts/` holds `DP-01` and `FD-P11-001` and no
+`ACT-CC-P11-0xx`. I executed the substantive work from retained structure and
+**refused to assign the coded verdict labels** `E0`–`E4` and `T1`–`T6`, whose
+scales I cannot read. The verdicts are stated in words; the codes are `[U]`.
+
+A verdict label is the cheapest thing in the programme to fabricate — it is one
+token, it looks rigorous, and nobody can check it against a document that does
+not exist.
+
+## 97.2 Attack `J` hit: I corrected the noun and kept the adjective
+
+`ACT-CC-P11-011` demoted *"no resident consumer for
+`governance-artifact-integrity-agent`"* from a missing coordination mechanism to
+*"capability work"* — and left the `ACTIONABLE` label attached to the demoted
+claim.
+
+It is not actionable. The ratified Canonical Domain Model `§7` invariant 2 makes
+the **Agent Definition** the implementer of a Capability — *"Every Agent
+Definition is owned by exactly one Platform Division and implements at least one
+Capability"* — and the Capability record's own `## Status` already says the
+Agent implements it, closing a zero-implementer condition `ADR-0003` called
+*"expected, temporary."* The word *consumer* does not appear in `ADR-0003`.
+
+**Re-explaining a claim is not re-testing it.** A fresh rationale under a stale
+verdict reads, to the next reader, as a verdict that has just been checked.
+
+## 97.3 The gap: W3 was tracking a revoked grant, and the checker said fine
+
+`FD-P11-001 §20`: W3 is *"the organizational mechanism through which the
+authorized Delegation record is represented and tracked."* Measured against the
+ledger it is supposed to be tracking:
+
+```text
+ACTIVE grants                          : 2   (W4 and W1)
+represented in W3                      : 0
+W3 records                             : 1 — cites a REVOKED grant
+scope drift in that record             : yes — names a step a refusal removed
+defect classes able to detect any of it: 0 of 11
+```
+
+The record was **true when written**. Every later run called
+`_revoke_stale_grants()`, revoked the grant it cites, and minted a new one —
+**the mechanism I built to stop grants accumulating is what orphaned the
+tracking record.** I built two correct layers and never built the relation
+between them, then wrote eleven defect classes that all live on one side of the
+missing relation.
+
+`defects: 0` was not a false report. It was a true report from a checker that
+cannot see the thing that is wrong. I had been repeating `W3 records : 1` in
+state blocks — including `§96.6` above — as evidence of health.
+
+## 97.4 Why the frontier lists could not have found it
+
+Five of the six frontier rows survived re-testing. The actionable gap was on
+none of them, because every frontier list I have produced was assembled by
+re-examining **items I already knew about** — and this one lives in the
+*relation between two things I had each already marked done*.
+
+A frontier built from known items can only ever be as complete as the memory
+that built it. The gap surfaced from comparing two artifacts on disk that had
+never been compared, which is the one thing a list of open questions cannot do.
+
+## 97.5 A miscitation, caught in my own draft
+
+I first attributed invariant 2 to `agent-definitions.md §7` — which is
+*Document Structure Requirements*, a nine-item list with no numbered invariants.
+The bullet I read had abbreviated *"Domain Model … §7 invariant 2"* to a bare
+`§7`, and I resolved a document's shorthand against **that document's own
+numbering** instead of the numbering it pointed at.
+
+The claim survived; the attribution would have sent the next reader to a list of
+headings. **Citation ≠ authority**, including when the citation is mine and the
+claim is true.
+
+## 97.6 State integrity, measured
+
+```text
+native_core boundaries : 11    W3 records : 1 (STALE — see 97.3)
+ACTIVE grants : 2 (both unrepresented)   open escalations : 1 (HUMAN-RESERVED)
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 623 OK
+citation 164 documents / 0 errors - stale-state 475 documents / 0 assertions
+
+P11 CONSTRUCTED = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
+13 protected packages untouched
+```
+
+**Exhaustion: NOT EXHAUSTED — one actionable gap, open and unbuilt.**
