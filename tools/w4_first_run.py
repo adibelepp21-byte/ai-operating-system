@@ -74,7 +74,7 @@ from tools.planning import (
     PlanStep,
     PlanningSurface,
 )
-from tools.escalation_register import EscalationRegister
+from tools.escalation_register import record_refusals
 from tools.w4_continuity import ContinuityError
 from tools.w4_delegation import AUTHORIZED_DELEGATOR, W4DelegationRegistry
 from tools.w4_execution import W4Executor
@@ -290,15 +290,13 @@ def run(perform_verification, *, persist: bool = True,
     # Wired here rather than inside `W4Executor`, so the executor keeps no handle
     # on persistence and can still run without it. `§16`: routing a decision to
     # an authorized authority is not creating that authority.
-    escalations = []
-    if persist and report.refusals:
-        register = EscalationRegister(OPERATIONS)
-        for refusal in report.refusals:
-            record = register.record(
-                refusal, subject=f"plan {plan.key} / delegation "
-                                 f"{delegation.delegation_id}",
-                authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD))
-            escalations.append(record.escalation_id)
+    # Routed through `record_refusals` under `ACT-CC-P11-014`, so this path and
+    # the W1 path share **one** wiring rather than two copies of it — `§13`:
+    # `REUSE → FIX → INTEGRATE → VERIFY` before building anything new.
+    escalations = list(record_refusals(
+        OPERATIONS if persist else None, report.refusals,
+        subject=f"plan {plan.key} / delegation {delegation.delegation_id}",
+        authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD)))
 
     # ── stage 4: evidence (§22, §46) ──────────────────────────────────────
     evidence = {

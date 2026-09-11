@@ -14,7 +14,7 @@
 
 ## Operational Grant
 
-94a4df7aca4543ef
+4daebea9012d4cc7
 
 ## Representation
 
@@ -36,7 +36,7 @@ governance-artifact-integrity-instance-001
 
 ## Boundary
 
-Bounded by the grant's own terms, recorded at `docs/architecture/p11/w1-operations/94a4df7aca4543ef.delegation.json`. This projection adds no boundary and relaxes none; the ledger record is authoritative for scope, lifecycle and termination.
+Bounded by the grant's own terms, recorded at `docs/architecture/p11/w1-operations/4daebea9012d4cc7.delegation.json`. This projection adds no boundary and relaxes none; the ledger record is authoritative for scope, lifecycle and termination.
 
 ## Accountability
 

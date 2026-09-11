@@ -10013,3 +10013,114 @@ P11 CONSTRUCTED = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
 **Exhaustion: NOT EXHAUSTED.** One actionable frontier remains — `98.6` — and it
 is outside this Act's authority. No exhaustion claim is made on the strength of
 completing this Act.
+
+---
+
+# 99. `ACT-CC-P11-014` — falsifying my own reported defect, and finding the real one beside it
+
+Full package:
+[`P11-ESCALATION-SUBJECT-INTEGRITY.md`](../architecture/p11/P11-ESCALATION-SUBJECT-INTEGRITY.md).
+
+## 99.1 The defect I reported does not exist
+
+`ACT-CC-P11-013 §G` reported that re-running the W4 proof would *"duplicate an
+open human-reserved escalation."* The mechanism part was right: ids are `uuid4`,
+there is no same-subject lookup, and a repetition produces two `OPEN` records —
+reproduced and confirmed.
+
+**The defect part was wrong.** The ratified Canonical Domain Model `§10` lists
+*Escalation / Incident* among *"Deferred concepts. Not canonical entities in
+v1.0."*, and `DP-04 §7` — an issued Architect Decision — fixes that *"Escalation
+is represented as a ratified Trace status rather than an independent
+organizational entity."* Trace's semantics are invariant 4, *"production is
+unconditional, never optional"*, and invariant 5, append-only.
+
+There is no canonical escalation entity, therefore no canonical identity,
+therefore **no same subject to be idempotent about**. Two identical refusals are
+two occurrences. Suppressing the second is what `DP-01` `NC-10` forbids:
+*"Escalation must not be silently converted into success."* `E4`.
+
+## 99.2 How the false claim was built
+
+Five separate questions were collapsed into one word. Reported separately now,
+because that is the only form in which the error is visible:
+
+```text
+OBSERVED   YES · REPRODUCIBLE YES · THEORETICALLY POSSIBLE YES
+CANONICALLY FORBIDDEN  NO
+CANONICALLY ALLOWED    YES
+```
+
+I checked the first three, wrote *"defect"*, and never asked the last two.
+**A mechanism observation is not a contract violation**, and the word *defect*
+carried the claim that it was.
+
+## 99.3 The real defect was in the other half of the frontier
+
+`tools/w1_coordination_run.py` **constructed no escalation register at all.** A
+W1 coordination refusal would have survived only as a string in
+`evidence["refusals"]` — an outcome transient to one run, with no lifecycle, no
+accountable party and no way to resolve.
+
+That is verbatim the condition `ACT-CC-P11-009 §13` identified and fixed **on
+the W4 path only**. W1 was written afterwards and did not carry it. `E2` —
+existing mechanism, not connected to a canonical execution path. Both paths now
+route through one shared wiring rather than two inline copies, because two
+copies is how the second one came to be forgotten.
+
+## 99.4 An empty population that looked healthy
+
+`w1-operations` holds zero escalation records. The obvious reading is *no W1
+refusal has ever occurred*. The true reading is **W1 could not have recorded
+one**.
+
+Had I counted before checking the wiring, an empty directory would have been
+evidence of health. It is the third time in three Acts that a population has
+been complete-looking for a reason unrelated to the thing being measured —
+`defects: 0` from a checker that could not see, a loader that read one of two
+roots, and now a register nothing called.
+
+## 99.5 What was deliberately not run
+
+The W4 proof was **not** re-run. Its refusal path writes into the resident
+operations directory, so a real repetition would add a second record about a
+Founder-reserved open escalation — mutating governance state to test a
+hypothesis. The repetition was performed through the same register call at a
+temporary root and is labelled **canonically equivalent, not real-runtime**.
+
+The W1 path *was* run for real: `REAL-RUNTIME`, terminal `SUCCEEDED`, zero
+refusals, rotation carried by the W3 projection, zero reconciliation defects —
+and escalation `23f315ba…` still exactly one record, still `OPEN`.
+
+## 99.6 No idempotency was added
+
+`§34` of the Act: *"DO NOT REPAIR THE HYPOTHESIS."* The repair fixed the proven
+defect and nothing else. The suite now asserts that deduplication is **absent**,
+so acquiring one later fails loudly instead of passing quietly, and five controls
+re-read the canonical sentences the classification rests on — the difference
+between a classification and a memory of one.
+
+If one-open-per-subject is wanted, it is an Architect matter: it means promoting
+a deferred Domain Model concept into a structural queryable state, against an
+issued Decision that placed it the other way. Reported, not built.
+
+## 99.7 State integrity, measured
+
+```text
+escalations : w4-operations 1 (OPEN, human-reserved) · w1-operations 0
+W3 3 records / 0 defects · W3-ledger 0 defects · 2 ACTIVE grants, both represented
+evidence-escalation reconcile: 0 dangling, 0 orphan, both roots
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 705 OK (+38)
+citation 168 documents / 0 errors - stale-state 478 / 0 assertions
+native_core boundaries : 11   13 protected packages untouched, 0 read
+
+P11 CONSTRUCTED = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
+```
+
+**Exhaustion: NOT EXHAUSTED — RESERVED FRONTIER.** The rediscovery sweep found
+**no actionable frontier**. Everything remaining is reserved, optional, or a
+source gap. `§29`: the correct response to that is to stop building, not to go
+looking for another gap.
+
+**Next frontier: the P11 Exhaustion / Completion / Certification Gate** — which
+is a gate, not a side effect of this Act succeeding.

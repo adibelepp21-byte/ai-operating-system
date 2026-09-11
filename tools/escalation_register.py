@@ -87,6 +87,47 @@ class EscalationRegisterError(RuntimeError):
     """Fail closed (`PR-4`)."""
 
 
+def record_refusals(root: Path, refusals, *, subject: str,
+                    authority: "AuthorityProvenance") -> Tuple[str, ...]:
+    """Give every refusal an organizational home. Returns the ids recorded.
+
+    **The single wiring path from a refusal to organizational state.**
+    `ACT-CC-P11-009 §13` established the distinction this implements: a refusal
+    satisfies only `ACTION BLOCKED` and *"does not prove an escalation state"* —
+    an `ExecutionOutcome` inside a run's evidence file is transient to that run,
+    with no lifecycle, no accountable party and no way to resolve.
+
+    That fix was applied to the W4 path and **not to W1**, which was written
+    afterwards and carried the older shape: `tools/w1_coordination_run.py`
+    constructed no register at all, so a coordination refusal would have existed
+    only as a string in one evidence file. `ACT-CC-P11-014` found it and this
+    function is the repair — the **existing** mechanism, connected to both
+    canonical execution paths instead of one.
+
+    **It adds no idempotency, and that is deliberate.** `ACT-CC-P11-014`
+    falsified the same-subject uniqueness hypothesis: the ratified Domain Model
+    `§10` lists *Escalation / Incident* among deferred concepts — *"Not canonical
+    entities in v1.0"* — and `DP-04 §7` fixes that *"Escalation is represented as
+    a ratified Trace status rather than an independent organizational entity."*
+    Trace's semantics are `§7` invariant 4, *"production is unconditional, never
+    optional"*, and invariant 5, append-only. There is no canonical escalation
+    identity to deduplicate on, and suppressing a second raised refusal would
+    risk `DP-01` `NC-10`: *"Escalation must not be silently converted into
+    success."*
+
+    So each refusal that is actually raised is recorded. Two identical refusals
+    are two occurrences, and the record says so.
+    """
+    if root is None:
+        return ()
+    recorded = []
+    register = EscalationRegister(root)
+    for refusal in refusals:
+        recorded.append(register.record(refusal, subject=subject,
+                                        authority=authority).escalation_id)
+    return tuple(recorded)
+
+
 @dataclass(frozen=True)
 class EscalationRecord:
     """One escalation, exactly as it was raised.

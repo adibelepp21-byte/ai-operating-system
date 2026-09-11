@@ -37,6 +37,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from native_core.core.agent.definition import AgentDefinition  # noqa: E402
 from tools.agent_instance_registry import AgentInstanceRegistry  # noqa: E402
 from tools.delegation_reconciliation import project  # noqa: E402
+from tools.escalation_register import record_refusals  # noqa: E402
 from tools.plan_to_workflow import compose  # noqa: E402
 from tools.planning import (  # noqa: E402
     AuthorityProvenance, Goal, Plan, PlanStep, PlanningSurface)
@@ -155,6 +156,27 @@ def run(perform, *, coordinate=None, persist: bool = True,
     # used and the label is persisted rather than inferred.
     terminal, facts = coordinate(composition) if coordinate else (None, {})
 
+    # ── refusals become organizational escalations (ACT-CC-P11-014) ──────
+    #
+    # **This path had no escalation home at all.** `ACT-CC-P11-009 §13` drew the
+    # distinction — a refusal satisfies only `ACTION BLOCKED`, and an
+    # `ExecutionOutcome` in an evidence file is transient to that run, with no
+    # lifecycle, no accountable party and no way to resolve. The fix landed on
+    # W4 and this module, written afterwards under `ACT-CC-P11-010`, did not
+    # carry it: a coordination refusal would have survived only as a string in
+    # `evidence["refusals"]`.
+    #
+    # It went unnoticed because **no W1 refusal has ever occurred**, so the
+    # population was empty for a reason unrelated to the wiring — the same shape
+    # as a loader that passes on the part of the population it can see.
+    #
+    # `DP-01 §3 W1` lists *"escalation"* among the coordination capabilities, so
+    # W1 is if anything the more canonical home of the two.
+    escalations = list(record_refusals(
+        OPERATIONS if persist else None, report.refusals,
+        subject=f"plan {plan.key} / delegation {delegation.delegation_id}",
+        authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD)))
+
     evidence = {
         # The Act this *run* happened under, supplied by the caller.
         #
@@ -186,6 +208,7 @@ def run(perform, *, coordinate=None, persist: bool = True,
         "outcomes": [{"step": o.step_key, "status": o.status,
                       "detail": o.detail} for o in report.outcomes],
         "refusals": [str(r) for r in report.refusals],
+        "escalations": list(escalations),
         "boundary_crossed": bool(report.refusals),
     }
     if persist:
