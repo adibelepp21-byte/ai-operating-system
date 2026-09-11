@@ -10329,3 +10329,105 @@ DP-02 PREPARATION = COMPLETE - E11 RATIFICATION = PENDING FOUNDER
 
 Per `§31` no successor Act is created. The next action is the Founder's response
 to `DP-02`.
+
+---
+
+# 102. `DP-02` ISSUED — E11 ratified, and P11 measured against it
+
+Full package:
+[`E11-RATIFIED-MEASUREMENT.md`](../architecture/p11/E11-RATIFIED-MEASUREMENT.md).
+The Decision itself:
+[`DP-02-P11-E11-RATIFICATION.md`](acts/DP-02-P11-E11-RATIFICATION.md).
+
+```text
+E11 RATIFIED : FALSE → TRUE      E11 PASS : FALSE  (9 of 10)
+P11 COMPLETE : FALSE             P11 CERTIFIED : FALSE
+```
+
+## 102.1 One value moved
+
+`DP-02 §1` and `§8` say it directly: the Decision does not declare P11 complete,
+does not declare P11 certified, does not declare E11 currently PASS, and does not
+declare any individual criterion satisfied. `§10`: **`RATIFICATION ≠ PASS`**.
+
+The ratification is the Founder's act. `DP-01 §8` and `FD-P11-001 §12` item 9
+both withhold it from me, and neither was exercised. The body is persisted
+**byte-identical** to what was supplied — not even the trailing-newline
+difference `FD-P10-004`'s persistence had to record. My first provenance block
+claimed such a newline; it did not exist, and the claim was corrected rather than
+left standing as harmless boilerplate.
+
+## 102.2 All three open questions were settled the stricter way
+
+`ACT-CC-P11-016` left the Founder three choices and presented Option A as the
+minimal change. The Founder took **Option B** and, on every question, the reading
+that makes P11 harder to pass:
+
+- `E11-04` — the **canonical** cross-department reading, with
+  `MULTI-AGENT ≠ CROSS-DEPARTMENT COORDINATION` fixed as an invariant.
+- The negative-control gap `F3` — closed as `E11-10`'s mandatory integrity
+  evidence, and explicitly *"not established as an independent capability
+  criterion."*
+- The coverage gap `F2` — closed as `E11-09` Organizational Continuity.
+
+`§7` then forecloses the obvious cheat in advance: *"E11-04 shall not be
+pre-populated as PASS"*, and where cross-Department coordination is absent the
+result is `FAIL / UNSATISFIED` rather than *"manufacturing a PASS through
+semantic substitution."*
+
+## 102.3 Nine pass. One fails, and it is the one the Decision named
+
+The check never consults agent count. It resolves each coordination participant
+through its Agent Definition to the **owning Department**:
+
+```text
+departments : engineering, platform      one registered instance each
+coordination on record : 1 — participants ['governance-artifact-integrity-instance-001']
+departments spanned    : ['platform'] → 1
+spanning more than one : 0
+```
+
+Both Departments exist. **No single coordination has ever joined them.**
+
+## 102.4 A control fired on the run that created the instrument
+
+The P11 surface-completeness guard **failed the first measurement run**:
+`tools/e11_measurement.py` imports the planning package, which makes it a P11
+handoff surface, and it was not declared. So `E11-06` measured **FAIL** on that
+run — correctly, because the suite was genuinely red, and the instrument refused
+to report verification as established while it was.
+
+Fourth time that guard has collected, and the first time the surface it caught
+was **the instrument measuring whether the boundary holds**. An unmeasured
+measurement instrument could have forged a citation and scored itself compliant.
+
+## 102.5 The remediation frontier, and the line that governs it
+
+`E11-04`'s blocker is on record, not diagnosed:
+`engineering-intelligence-agent.md` declares **"None declared"** under Permitted
+Skills — *"No Skill exists within the Engineering Department's scope."* A
+`WorkflowStep` requires a Skill, and coordination happens through a Workflow, so
+no Engineering actor can appear in any coordination.
+
+The authority is present: Skills are *"Owned centrally"*, Agent Definition
+amendment is *"Platform Division discretion"* at Implementation Tier, and
+`DP-01 §3 W1` authorizes construction of *"cross-department coordination"* by
+name.
+
+**The binding constraint is not authority — it is `DP-02 §11`'s prohibition on
+manufacturing cross-Department evidence.** A Skill invented so `E11-04` can pass
+is manufacture. A Skill documenting work an Engineering instance has already
+performed and evidenced — the 13/13 conformance verification already in
+`first-execution.evidence.json` — is not. The difference is checkable: **the work
+exists on record before the Skill does.**
+
+## 102.6 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 707 OK = 1784
+citation 172 documents / 0 errors - Native Core 11 - protected paths read 0
+E11 RATIFIED TRUE - E11 PASS FALSE (9/10) - COMPLETE FALSE - CERTIFIED FALSE
+```
+
+`§9`: construction exhaustion is neither invalidated nor converted into
+completion. `CONSTRUCTION EXHAUSTION ≠ ACCEPTANCE ≠ COMPLETION`.

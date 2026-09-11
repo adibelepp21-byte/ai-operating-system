@@ -1,0 +1,317 @@
+{
+  "decision": "DP-02",
+  "decision_record": "docs/governance/acts/DP-02-P11-E11-RATIFICATION.md",
+  "results": [
+    {
+      "criterion": "E11-01",
+      "name": "Planning",
+      "verdict": "PASS",
+      "evidence": {
+        "lifecycle_observed": [
+          "PLANNED",
+          "ADAPTED",
+          "REVISED"
+        ],
+        "dependency_order": [
+          "a",
+          "b",
+          "c"
+        ],
+        "plans_in_real_runs": [
+          "w4-first-execution-proof-plan-0",
+          "w1-coordination-proof-plan-0"
+        ],
+        "plan_authority_resolves": true,
+        "planning_exposes_no_authorization_method": true
+      }
+    },
+    {
+      "criterion": "E11-02",
+      "name": "Delegation",
+      "verdict": "PASS",
+      "evidence": {
+        "grants": 14,
+        "all_cite_an_instrument": true,
+        "all_provenance_resolves": true,
+        "recipients_all_registered": true,
+        "delegated_within_permitted": true,
+        "no_recipient_is_its_own_accountable_party": true,
+        "revocation_represented": true,
+        "tracking_defects": 0,
+        "active_grants_all_represented": true
+      }
+    },
+    {
+      "criterion": "E11-03",
+      "name": "Execution",
+      "verdict": "PASS",
+      "evidence": {
+        "evidence_records": [
+          "docs/architecture/p11/w4-operations/first-execution.evidence.json",
+          "docs/architecture/p11/w1-operations/w1-coordination.evidence.json"
+        ],
+        "outcomes": [
+          [
+            "docs/architecture/p11/w4-operations/first-execution.evidence.json",
+            "verify-delegation-elements",
+            "success"
+          ],
+          [
+            "docs/architecture/p11/w4-operations/first-execution.evidence.json",
+            "report-conformance",
+            "escalation"
+          ],
+          [
+            "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+            "review-open-items",
+            "success"
+          ],
+          [
+            "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+            "summarize-diffs",
+            "success"
+          ]
+        ],
+        "every_run_cites_a_real_grant": true,
+        "every_chain_ends_at_founder": true,
+        "refusals_recorded": 1,
+        "refused_steps_became_escalations": true,
+        "refusal_not_counted_as_failure": true
+      }
+    },
+    {
+      "criterion": "E11-04",
+      "name": "Cross-Department Coordination",
+      "verdict": "FAIL / UNSATISFIED",
+      "evidence": {
+        "departments_resident": [
+          "engineering",
+          "platform"
+        ],
+        "instance_to_department": {
+          "engineering-intelligence-instance-001": "engineering",
+          "governance-artifact-integrity-instance-001": "platform"
+        },
+        "coordinations_observed": [
+          {
+            "source": "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+            "participants": [
+              "governance-artifact-integrity-instance-001"
+            ],
+            "departments": [
+              "platform"
+            ],
+            "department_count": 1,
+            "proof_level": "REAL-RUNTIME",
+            "is_multi_agent": false
+          }
+        ],
+        "coordinations_spanning_more_than_one_department": 0
+      },
+      "gap": "No coordination on record spans more than one Department. Departments and per-Department instances exist; no single coordination has joined them. DP-02 \u00a77: recorded FAIL / UNSATISFIED rather than substituting multi-agent or single-Department evidence."
+    },
+    {
+      "criterion": "E11-05",
+      "name": "Observation",
+      "verdict": "PASS",
+      "evidence": {
+        "outcome_statuses_observable": [
+          "escalation",
+          "success"
+        ],
+        "blocked_work_observable": true,
+        "public_api": [
+          "Iterable",
+          "OBSERVABLE_SOURCES",
+          "OptimizationObservation",
+          "PlanningEvidence",
+          "Tuple",
+          "UnobservableSource",
+          "annotations",
+          "as_planning_evidence",
+          "collect"
+        ],
+        "no_decision_surface": true
+      }
+    },
+    {
+      "criterion": "E11-06",
+      "name": "Verification",
+      "verdict": "PASS",
+      "evidence": {
+        "suites": {
+          "native_core": {
+            "summary": "Ran 801 tests in 0.645s",
+            "ok": true
+          },
+          "consumers": {
+            "summary": "Ran 276 tests in 0.422s",
+            "ok": true
+          },
+          "tools": {
+            "summary": "Ran 707 tests in 21.185s",
+            "ok": true
+          }
+        },
+        "every_grant_states_a_verification_requirement": true,
+        "runs_carry_verification_evidence": true
+      }
+    },
+    {
+      "criterion": "E11-07",
+      "name": "Escalation",
+      "verdict": "PASS",
+      "evidence": {
+        "recorded": {
+          "w4-operations": [
+            "23f315ba9f504272"
+          ],
+          "w1-operations": []
+        },
+        "open": {
+          "w4-operations": [
+            "23f315ba9f504272"
+          ],
+          "w1-operations": []
+        },
+        "any_real_escalation_persisted": true,
+        "public_api": [
+          "all_escalations",
+          "load",
+          "open_escalations",
+          "record",
+          "record_response",
+          "status"
+        ],
+        "no_resolution_method": true,
+        "statuses": {
+          "23f315ba9f504272": "OPEN"
+        }
+      }
+    },
+    {
+      "criterion": "E11-08",
+      "name": "Accountability",
+      "verdict": "PASS",
+      "evidence": {
+        "chain_answers": [
+          {
+            "source": "docs/architecture/p11/w4-operations/first-execution.evidence.json",
+            "who_delegated": "Claude Code / AIOS Co-Founder",
+            "to_whom": "engineering-intelligence-instance-001",
+            "for_what": [
+              "engineering-intelligence"
+            ],
+            "under_which_authority": "FD-P11-001 \u00a79",
+            "with_which_scope": [
+              "verify-delegation-elements"
+            ],
+            "what_happened": [
+              [
+                "verify-delegation-elements",
+                "success"
+              ],
+              [
+                "report-conformance",
+                "escalation"
+              ]
+            ],
+            "who_verified": "every criterion reported satisfied or not, and e",
+            "who_remains_accountable": "Claude Code / AIOS Co-Founder"
+          },
+          {
+            "source": "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+            "who_delegated": "Claude Code / AIOS Co-Founder",
+            "to_whom": "governance-artifact-integrity-instance-001",
+            "for_what": [
+              "governance-artifact-integrity"
+            ],
+            "under_which_authority": "FD-P11-001 \u00a79",
+            "with_which_scope": [
+              "review-open-items",
+              "summarize-diffs"
+            ],
+            "what_happened": [
+              [
+                "review-open-items",
+                "success"
+              ],
+              [
+                "summarize-diffs",
+                "success"
+              ]
+            ],
+            "who_verified": "every step expressed as a WorkflowStep whose act",
+            "who_remains_accountable": "Claude Code / AIOS Co-Founder"
+          }
+        ],
+        "every_link_recoverable": true,
+        "ultimate_accountability_not_transferred": true,
+        "all_chains_end_at_founder": true
+      }
+    },
+    {
+      "criterion": "E11-09",
+      "name": "Organizational Continuity",
+      "verdict": "PASS",
+      "evidence": {
+        "coverage": {
+          "delegation_state": true,
+          "work_state": true,
+          "escalation_state": true,
+          "prior_outcomes": true,
+          "accountability_context": true,
+          "continuity_context": true,
+          "persistence": true,
+          "reconstruction": true,
+          "across_process_boundary": true,
+          "canonical_provenance_preserved": true,
+          "revoked_stays_revoked": true
+        },
+        "fresh_process_agrees": true,
+        "roots": [
+          "w1-operations",
+          "w4-operations"
+        ]
+      }
+    },
+    {
+      "criterion": "E11-10",
+      "name": "Bounded Autonomy & Governance Integrity",
+      "verdict": "PASS",
+      "evidence": {
+        "negative_controls": {
+          "no_self_authorization": true,
+          "no_authority_expansion": true,
+          "no_fabricated_delegator": true,
+          "no_fabricated_actor": true,
+          "no_invalid_authority_inference": true,
+          "no_accountability_transfer": true,
+          "no_governance_bypass": true,
+          "no_unauthorized_resolution": true,
+          "escalation_stays_open_after_attempts": true,
+          "human_authority_still_works": true,
+          "no_unauthorized_boundary_crossing": true,
+          "no_false_completion": true,
+          "native_core_unchanged": true
+        },
+        "native_core_boundaries": 11
+      }
+    }
+  ],
+  "passed": [
+    "E11-01",
+    "E11-02",
+    "E11-03",
+    "E11-05",
+    "E11-06",
+    "E11-07",
+    "E11-08",
+    "E11-09",
+    "E11-10"
+  ],
+  "failed": [
+    "E11-04"
+  ],
+  "e11_pass": false
+}

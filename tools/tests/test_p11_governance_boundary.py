@@ -418,6 +418,12 @@ P11_SURFACES = (
     # guard below on the run that created them — the third time it has collected.
     REPO_ROOT / "tools" / "plan_to_workflow.py",
     REPO_ROOT / "tools" / "w1_coordination_run.py",
+    # The E11 measurement instrument, added under `DP-02 §11`. **Declared
+    # because the guard below failed the run that created it** — the fourth time
+    # it has collected, and the first time the surface it caught was the one
+    # measuring whether the boundary holds. A measurement instrument that could
+    # forge a provenance would measure itself as compliant.
+    REPO_ROOT / "tools" / "e11_measurement.py",
 )
 
 
