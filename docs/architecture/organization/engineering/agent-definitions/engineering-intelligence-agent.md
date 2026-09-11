@@ -13,7 +13,7 @@ Capability is not an architectural-tier decision.
 ## Metadata
 
 - **Name:** Engineering Intelligence Agent
-- **Version:** 1.0
+- **Version:** 1.1
 - **Status:** Active
 
 ## Purpose / Description
@@ -62,23 +62,57 @@ Model semantics, or ADR approval.
 
 ## Permitted Skills
 
-None declared.
+This Agent Definition specifies the following Skill, per the specifies
+relationship (Domain Model §4) and per EARC's Reference Model and
+canonical key format (EARC §9, as amended by EARC Amendment v1.1):
+
+- [`skill.artifact-conformance-verification`](../../execution-catalog/skill/artifact-conformance-verification.md)
+
+That Skill's own Permitted Invocation Context field already names an Agent
+Instance of this Agent Definition as its invoker; this list completes that
+previously one-directional citation — the same pattern the
+[Governance Artifact Integrity Agent](../../platform/agent-definitions/governance-artifact-integrity-agent.md)
+records for its ten.
 
 Per Canonical Domain Model §7 invariant 15 and
 [ADR-0007](../../../adr/decisions/ADR-0007.md), an empty Skill
-declaration is a valid architectural state and no minimum cardinality is
-required. No Skill exists within the Engineering Department's scope, and
-none is created by this document.
+declaration remains a valid architectural state and no minimum cardinality
+is required. **This list is populated because the ability it names already
+existed**, not because non-emptiness is required: ADR-0008 established the
+Testing sub-ability on 2026-07-30, the Capability record named Coding and
+Testing as the realized subset on 2026-08-28, `consumers/engineering_intelligence_agent.py`
+implemented them on 2026-09-02, and an Agent Instance of this Definition
+exercised the ability on 2026-09-11 — 13 of 13 conformance criteria
+against `tools/w4_delegation.py`, recorded in
+`docs/architecture/p11/w4-operations/first-execution.evidence.json`.
+
+**Until v1.1 this section read "None declared", and that was accurate when
+written.** No Skill record existed to name. The prior text also said *"No
+Skill exists within the Engineering Department's scope"*, which conflated
+two things Domain Model §5 keeps apart: Skills are **owned centrally**, not
+by a Department, and what an Agent Definition declares is which centrally
+owned Skill it is permitted to use. The correction is recorded here rather
+than made silently.
 
 ## Permitted Workflows
 
-None declared.
+This Agent Definition specifies the following Workflow, per the same
+specifies relationship (Domain Model §4) applied to Permitted Skills,
+above:
+
+- [`workflow.cross-department-artifact-conformance-review`](../../execution-catalog/workflow/cross-department-artifact-conformance-review.md)
+
+That Workflow's own Invokes Agent Instance field names an Agent Instance
+of this Agent Definition among its participants; this list completes that
+citation.
 
 Per Canonical Domain Model §7 invariant 15 and
 [ADR-0007](../../../adr/decisions/ADR-0007.md), an empty Workflow
-declaration is a valid architectural state and no minimum cardinality is
-required. No Workflow exists within the Engineering Department's scope,
-and none is created by this document.
+declaration remains a valid architectural state and no minimum cardinality
+is required. As with Permitted Skills above, the prior *"No Workflow
+exists within the Engineering Department's scope"* conflated central
+ownership with departmental scope; Workflows are **owned centrally**
+(Domain Model §5).
 
 ## Runtime Requirements
 
@@ -91,6 +125,16 @@ product is named or implied anywhere in this document.
 
 ## Version History
 
+- **v1.1** — Permitted Skills and Permitted Workflows populated.
+  Behaviourally material for recording purposes (Domain Model §6): this
+  Definition's instances may now appear as a `WorkflowStep` performer,
+  which an empty Skill declaration made structurally impossible. **No
+  capability is added.** The ability named was established by ADR-0008,
+  realized in a resident consumer, and exercised and evidenced before this
+  version; what changes is that the organizational record now names it.
+  Written under `DP-02 §11` item 10 and its evidence-anchored
+  non-manufacture test — the work exists on record before the declaration
+  does. The governing Capability contract version is unchanged.
 - **v1.0** — Initial creation. Established as Department-discretion,
   Implementation Tier work under Canonical Domain Model §6, closing the
   transient zero-implementer condition that

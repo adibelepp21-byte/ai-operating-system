@@ -332,7 +332,8 @@ class E2_BothCanonicalPathsAreWired(unittest.TestCase):
     #: of surfaces are how W1 came to have no escalation wiring in the first
     #: place, so `test_the_list_covers_every_production_execution_path` derives
     #: the real set from source and fails if this one is narrower.
-    PATHS = ("tools/w4_first_run.py", "tools/w1_coordination_run.py")
+    PATHS = ("tools/w4_first_run.py", "tools/w1_coordination_run.py",
+             "tools/w1_cross_department_run.py")
 
     def _execution_paths(self):
         """Modules that construct a `W4Executor`, discovered — not listed."""

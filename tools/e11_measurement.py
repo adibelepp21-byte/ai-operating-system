@@ -35,16 +35,16 @@ from typing import Dict, List, Tuple
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from tools.delegation_catalog import registered_instances  # noqa: E402
+from tools.delegation_catalog import (  # noqa: E402
+    operation_roots, registered_instances)
 from tools.delegation_reconciliation import reconcile  # noqa: E402
 from tools.escalation_register import EscalationRegister  # noqa: E402
 from tools.organization_catalog import read_departments  # noqa: E402
 from tools.w4_continuity import continuation_conditions, reconstruct  # noqa: E402
 
-OPERATION_ROOTS = (
-    REPO_ROOT / "docs/architecture/p11/w4-operations",
-    REPO_ROOT / "docs/architecture/p11/w1-operations",
-)
+#: Discovered, never listed — an operational root joins the measurement by
+#: holding a record, not by being remembered.
+OPERATION_ROOTS = operation_roots()
 
 DECISION = "DP-02"
 DECISION_RECORD = "docs/governance/acts/DP-02-P11-E11-RATIFICATION.md"
@@ -374,14 +374,18 @@ def e11_09_continuity() -> Result:
     measurement is a **second process** rebuilding the state, item by item
     against the Decision's own evidence list.
     """
-    here = {root.name: reconstruct(root) for root in OPERATION_ROOTS}
+    here = {root.name: reconstruct(root) for root in operation_roots()}
+    # The roots are **discovered in the child too**, not passed in as a list.
+    # The first version hardcoded the two that existed when it was written and
+    # went stale the moment a third operational root was created — inside the
+    # instrument built to measure whether populations are complete, on the same
+    # day three other hardcoded populations were replaced with discovery.
     script = (
         "import sys, json; sys.path.insert(0, %r);"
-        "from pathlib import Path;"
+        "from tools.delegation_catalog import operation_roots;"
         "from tools.w4_continuity import reconstruct;"
-        "print(json.dumps({d: reconstruct(Path(%r)/d) for d in "
-        "('w4-operations','w1-operations')}, default=str))"
-        % (str(REPO_ROOT), str(REPO_ROOT / "docs/architecture/p11")))
+        "print(json.dumps({r.name: reconstruct(r) for r in operation_roots()},"
+        " default=str))" % str(REPO_ROOT))
     completed = subprocess.run([sys.executable, "-c", script],
                                capture_output=True, text=True, cwd=str(REPO_ROOT))
     fresh = json.loads(completed.stdout) if completed.returncode == 0 else {}

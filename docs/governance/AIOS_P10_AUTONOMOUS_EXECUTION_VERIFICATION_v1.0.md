@@ -10431,3 +10431,89 @@ E11 RATIFIED TRUE - E11 PASS FALSE (9/10) - COMPLETE FALSE - CERTIFIED FALSE
 
 `§9`: construction exhaustion is neither invalidated nor converted into
 completion. `CONSTRUCTION EXHAUSTION ≠ ACCEPTANCE ≠ COMPLETION`.
+
+
+---
+
+# 103. `E11-04` remediated — and seven gaps found by controls, not by looking
+
+Full package:
+[`E11-04-CROSS-DEPARTMENT-REMEDIATION.md`](../architecture/p11/E11-04-CROSS-DEPARTMENT-REMEDIATION.md).
+
+```text
+E11 = PASS (10/10)      P11 COMPLETE = FALSE      P11 CERTIFIED = FALSE
+```
+
+## 103.1 The non-manufacture test, and the question that settles it
+
+The directive permitted continuation only if the Skill **documents** an existing
+capability rather than creating one to obtain a PASS. The test:
+
+> Would removing `E11-04` from existence change whether the capability exists?
+
+**No.** `ADR-0008` established Testing on **2026-07-30**; the Capability record
+named it realized on **2026-08-28**; `consumers/engineering_intelligence_agent.py`
+implemented `verify()` on **2026-09-02**; an instance exercised it on
+**2026-09-11**, 13 of 13 against `tools/w4_delegation.py`. Six weeks from the
+ADR. `E11-04` did not exist when three of those four were created.
+
+## 103.2 A conflation corrected rather than carried
+
+`engineering-intelligence-agent` said *"No Skill exists within the Engineering
+Department's scope"*. `Domain Model §5` says Skills are **owned centrally** — not
+by a Department at all. What a Definition declares is which centrally owned Skill
+it may use. The sentence was wrong in a way that made the absence look
+structural, and it is corrected in the v1.1 entry rather than quietly replaced.
+
+## 103.3 Ten of ten — measured four times, failed three
+
+`E11-04` was never predeclared. It went `FAIL` → `PASS with four regressions` →
+`one regression` → `10/10`. The regressions were real: the remediation broke
+`E11-02`, `E11-06`, `E11-09` and `E11-10` before it finished.
+
+## 103.4 Seven gaps, every one found by a control firing
+
+The most instructive is `G3`. I replaced **three** hardcoded operational-root
+lists with discovery — and then shipped **a fourth**, inside the subprocess of
+the instrument whose job is to measure whether populations are complete, on the
+same day. It was caught only because `E11-09` went red on a criterion I had not
+weakened.
+
+`G1` is the architectural one: the W3 projection key assumed **one live grant per
+instance**. A cross-Department run reuses both existing instances in a third
+operational root, so `project()` overwrote the W4 and W1 projections and orphaned
+two live grants. Four reconciliation controls and two completeness guards fired
+together.
+
+`G6` deserves naming too: a helper I wrote was called `grant_for`, and a control
+matching names this module *defines* rejected it. The helper **selects** a grant
+and grants nothing — but the control was right to be suspicious, so the name
+changed and the control did not.
+
+## 103.5 The widening that could have been an authority expansion
+
+The workflow-skill check required **every** invoker to permit **every** contained
+Skill. The easy fix was to give Engineering the governance Skill. That would have
+been **authority expansion dressed as a conformance fix** — a Department granted
+a capability it does not implement, so a test could pass.
+
+`Domain Model §4` fixes no cardinality on `Workflow invokes Agent Instance`, and
+its `collaborates with` edge says instances collaborate *"only through a shared
+Workflow"* — which a one-invoker Workflow would make impossible. So the check was
+widened to *"permitted by an invoker the Workflow names"*: it still rejects a
+Skill no invoker permits, and no Definition gained anything.
+
+## 103.6 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 707 OK = 1784
+citation 178 documents / 0 errors - stale-state 488 / 0 assertions
+W3 4 CURRENT + 1 HISTORICAL - 0 defects - 4 ACTIVE grants, all represented
+Native Core 11 - protected paths read 0 - no new authority, entity or Act
+
+E11 RATIFIED TRUE - E11 PASS TRUE (10/10)
+P11 COMPLETE FALSE - P11 CERTIFIED FALSE
+```
+
+`DP-02 §8`'s sequence has three steps left: **fresh exhaustion** against this new
+state, then completion, then certification. The last two are not mine.

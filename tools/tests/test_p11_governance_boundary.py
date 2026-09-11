@@ -424,6 +424,10 @@ P11_SURFACES = (
     # measuring whether the boundary holds. A measurement instrument that could
     # forge a provenance would measure itself as compliant.
     REPO_ROOT / "tools" / "e11_measurement.py",
+    # The cross-Department coordination surface, added under `DP-02 §11`
+    # item 10 — declared because the guard below failed the run that created
+    # it, the fifth time it has collected.
+    REPO_ROOT / "tools" / "w1_cross_department_run.py",
 )
 
 

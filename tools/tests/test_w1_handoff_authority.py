@@ -226,7 +226,15 @@ class NC02_03_05_06_IdentityCannotBeFabricated(unittest.TestCase):
         declared."* An instance of it can never produce a `WorkflowStep`,
         because a `WorkflowStep` requires a Skill.
         """
-        self.assertEqual(permitted_skills("engineering-intelligence-agent"), ())
+        # Re-anchored under `DP-02 §11` item 10. This named
+        # `engineering-intelligence-agent`, whose Permitted Skills section was
+        # empty when the control was written and is not any more — the Skill
+        # documenting its already-evidenced Testing sub-ability is declared at
+        # v1.1. The invariant is *"a Definition with no Skills can hand off
+        # nothing"*, so it is asserted against a Definition that still has none.
+        self.assertEqual(permitted_skills("cognitive-intelligence-agent"), ())
+        self.assertNotEqual(permitted_skills("engineering-intelligence-agent"), (),
+                            "precondition: the contrast case must be non-empty")
         self.assertEqual(permitted_skills("cognitive-intelligence-agent"), ())
         self.assertGreater(
             len(permitted_skills("governance-artifact-integrity-agent")), 0)

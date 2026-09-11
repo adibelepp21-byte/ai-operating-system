@@ -264,9 +264,24 @@ def w4_continuity(links, root: Path = ORGANIZATION_ROOT):
        `Domain Model §4` fixes the relationship as Workflow-invokes-*Instance*,
        and a Workflow invoking a Definition directly would be precisely the
        misclassification `FD-P10-004 §6` forbids;
-    4. a Skill a Workflow **contains** is not among the Skills its invoking
-       Agent Definition **permits** — a Workflow may not smuggle in a capability
-       its invoker was never granted.
+    4. a Skill a Workflow **contains** is permitted by **none of the Agent
+       Definitions the Workflow names as invokers** — a Workflow may not smuggle
+       in a capability no invoker was ever granted.
+
+       **Widened under `DP-02 §11` item 10, and widened rather than relaxed.**
+       This required *this* Definition to permit *every* contained Skill, which
+       silently assumed one invoker per Workflow. `Domain Model §4` fixes no such
+       cardinality on ``Workflow invokes Agent Instance``, and its own
+       ``collaborates with`` edge makes the assumption untenable: instances
+       collaborate *"only through a shared Workflow"*, so a Workflow that could
+       invoke only one instance would make instance collaboration impossible in
+       the model that requires it.
+
+       The check still rejects the fabrication case — a Skill no invoker
+       permits — and still requires reciprocity. What it no longer does is
+       demand that an Engineering Definition permit a governance Skill in order
+       for the two Departments to appear in one Workflow, which would have been
+       authority expansion dressed as a conformance fix.
 
     Returns ``(chains, terminal, defects)``. ``terminal`` lists Agent Definitions
     that declare no Workflow: that is **not a defect**. `Domain Model §7`
@@ -295,6 +310,7 @@ def w4_continuity(links, root: Path = ORGANIZATION_ROOT):
                 continue
             body = workflow.read_text(encoding="utf-8")
             invoker = INVOKER_BULLET.search(body)
+            cited = set()
             if invoker is None:
                 defects.append(("workflow-names-no-invoker", workflow.stem, agent_definition, None))
             else:
@@ -313,10 +329,22 @@ def w4_continuity(links, root: Path = ORGANIZATION_ROOT):
             skills = (
                 [p.stem for p in _catalog_links(contained.group(1), workflow, "skill")]
                 if contained else [])
+            # The Skills any invoker of this Workflow permits, resolved from
+            # the Workflow's own invoker citations rather than from the
+            # Definition currently being walked. `cited` is the same set the
+            # reciprocity check above uses, so the two cannot disagree about
+            # who the invokers are.
+            invoker_permitted = set(permitted_skills)
+            for target in (cited if invoker is not None else ()):
+                if target.is_file() and target.parent.name == "agent-definitions":
+                    invoker_permitted |= {
+                        q.stem for q in _catalog_links(
+                            _section(target.read_text(encoding="utf-8"),
+                                     "Permitted Skills"), target, "skill")}
             for skill in skills:
                 if not (catalog / "skill" / f"{skill}.md").is_file():
                     defects.append(("skill-missing", skill, workflow.stem, agent_definition))
-                elif skill not in permitted_skills:
+                elif skill not in invoker_permitted:
                     defects.append(
                         ("skill-not-permitted", skill, workflow.stem, agent_definition))
             chains.append((department, capability, agent_definition, workflow.stem, tuple(skills)))

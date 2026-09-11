@@ -405,23 +405,42 @@ class TheChainContinuesIntoWorkflowAndCanFail(unittest.TestCase):
     """
 
     def test_the_real_continuity_closes_with_no_defects(self):
+        """No defect, and every chain closes on a Workflow that exists.
+
+        **Re-anchored under `DP-02 §11` item 10.** This asserted
+        ``len(chains) == 5`` and a fixed set of five Workflow names — a
+        *population snapshot* standing in for the claim in its own name. It
+        would have failed on any new Workflow, correct or not, and passed on a
+        malformed one that kept the count.
+        """
         links, _ = w4_chain(read_departments())
         chains, terminal, defects = w4_continuity(links)
         self.assertEqual(defects, [])
-        self.assertEqual(len(chains), 5, chains)
-        self.assertEqual(
-            {c[3] for c in chains},
-            {"governance-corpus-health-check", "governance-synchronization-review",
-             "post-amendment-consistency-sweep", "pre-ratification-validation",
-             "terminology-audit"},
-        )
+        self.assertTrue(chains, "the chain may not be empty")
+        catalog = (REPO_ROOT / "docs/architecture/organization"
+                   / "execution-catalog" / "workflow")
+        for chain in chains:
+            self.assertTrue((catalog / f"{chain[3]}.md").is_file(), chain)
+            self.assertTrue(chain[4], f"{chain[3]} composes no Skill")
 
     def test_every_contained_skill_is_one_the_invoker_permits(self):
         """The invariant itself, stated over the real corpus rather than a fixture."""
         links, _ = w4_chain(read_departments())
         chains, _, _ = w4_continuity(links)
         contained = {skill for chain in chains for skill in chain[4]}
-        self.assertEqual(len(contained), 10, sorted(contained))
+        # Re-anchored: this asserted `len(contained) == 10`. The invariant named
+        # in the method is the *permitting relation*, not a count — and a count
+        # cannot distinguish a Skill that gained an invoker from one that lost
+        # its permission.
+        self.assertTrue(contained)
+        _, _, defects = w4_continuity(links)
+        self.assertEqual(
+            [d for d in defects if d[0] in ("skill-not-permitted", "skill-missing")],
+            [])
+        catalog = (REPO_ROOT / "docs/architecture/organization"
+                   / "execution-catalog" / "skill")
+        for skill in contained:
+            self.assertTrue((catalog / f"{skill}.md").is_file(), skill)
 
     def test_the_engineering_chains_are_terminal_and_that_is_not_a_defect(self):
         """`Domain Model INV-15` / `ADR-0007`: an empty declaration is valid.
@@ -432,8 +451,15 @@ class TheChainContinuesIntoWorkflowAndCanFail(unittest.TestCase):
         """
         links, _ = w4_chain(read_departments())
         _, terminal, defects = w4_continuity(links)
-        self.assertEqual({t[0] for t in terminal}, {"engineering"}, terminal)
-        self.assertEqual(len(terminal), 2, terminal)
+        # Re-anchored: this asserted `len(terminal) == 2`, encoding the fact
+        # that *both* Engineering Definitions declared no Workflow. One now
+        # declares one, legitimately. What is invariant is that a Definition
+        # declaring no Workflow is terminal and produces no defect, which
+        # `cognitive-intelligence-agent` still demonstrates.
+        self.assertIn(("engineering", "cognitive-intelligence",
+                       "cognitive-intelligence-agent"), terminal)
+        for entry in terminal:
+            self.assertNotIn(entry[2], [d[1] for d in defects], entry)
         self.assertNotIn("workflow-missing", [d[0] for d in defects])
 
     def _corpus(self, tmp, *, invoker_link="../../platform/agent-definitions/some-agent.md",

@@ -1,0 +1,31 @@
+{
+  "delegation_id": "c1af49aaba24439d",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "recipient_instance": "governance-artifact-integrity-instance-001",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "objective": "Perform one step of the cross-Department artifact conformance review.",
+  "capability_scope": [
+    "governance-artifact-integrity"
+  ],
+  "work_scope": [
+    "verify-citation-discipline"
+  ],
+  "lifecycle_boundary": "one execution of plan cross-department-conformance-review-plan-0",
+  "resource_boundary": "read-only over resident artifacts and records",
+  "output_expectation": "one outcome for the step named in work scope",
+  "verification_requirement": "the step is expressed as a WorkflowStep whose actor and skill are already authorized by the actor's Definition",
+  "escalation_condition": "any step the grant does not cover",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "termination_condition": "on completion of the bound plan, or revocation",
+  "status": "REVOKED",
+  "issued_at": "2026-09-11T09:52:56.931181+00:00",
+  "authority_chain": [
+    "delegation:c1af49aaba24439d",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ],
+  "revocation_reason": "Superseded by a later cross-Department coordination run. RE-RUN \u2260 NEW UNBOUNDED AUTHORITY.",
+  "revoked_at": "2026-09-11T09:53:20.351396+00:00"
+}

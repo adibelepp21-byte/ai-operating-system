@@ -18,8 +18,9 @@
           "c"
         ],
         "plans_in_real_runs": [
+          "w1-coordination-proof-plan-0",
           "w4-first-execution-proof-plan-0",
-          "w1-coordination-proof-plan-0"
+          "cross-department-conformance-review-plan-0"
         ],
         "plan_authority_resolves": true,
         "planning_exposes_no_authorization_method": true
@@ -30,7 +31,7 @@
       "name": "Delegation",
       "verdict": "PASS",
       "evidence": {
-        "grants": 14,
+        "grants": 24,
         "all_cite_an_instrument": true,
         "all_provenance_resolves": true,
         "recipients_all_registered": true,
@@ -47,10 +48,21 @@
       "verdict": "PASS",
       "evidence": {
         "evidence_records": [
+          "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
           "docs/architecture/p11/w4-operations/first-execution.evidence.json",
-          "docs/architecture/p11/w1-operations/w1-coordination.evidence.json"
+          "docs/architecture/p11/x-department-operations/cross-department.evidence.json"
         ],
         "outcomes": [
+          [
+            "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+            "review-open-items",
+            "success"
+          ],
+          [
+            "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+            "summarize-diffs",
+            "success"
+          ],
           [
             "docs/architecture/p11/w4-operations/first-execution.evidence.json",
             "verify-delegation-elements",
@@ -62,13 +74,13 @@
             "escalation"
           ],
           [
-            "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
-            "review-open-items",
+            "docs/architecture/p11/x-department-operations/cross-department.evidence.json",
+            "verify-artifact-conformance",
             "success"
           ],
           [
-            "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
-            "summarize-diffs",
+            "docs/architecture/p11/x-department-operations/cross-department.evidence.json",
+            "verify-citation-discipline",
             "success"
           ]
         ],
@@ -82,15 +94,15 @@
     {
       "criterion": "E11-04",
       "name": "Cross-Department Coordination",
-      "verdict": "FAIL / UNSATISFIED",
+      "verdict": "PASS",
       "evidence": {
         "departments_resident": [
           "engineering",
           "platform"
         ],
         "instance_to_department": {
-          "engineering-intelligence-instance-001": "engineering",
-          "governance-artifact-integrity-instance-001": "platform"
+          "governance-artifact-integrity-instance-001": "platform",
+          "engineering-intelligence-instance-001": "engineering"
         },
         "coordinations_observed": [
           {
@@ -104,11 +116,24 @@
             "department_count": 1,
             "proof_level": "REAL-RUNTIME",
             "is_multi_agent": false
+          },
+          {
+            "source": "docs/architecture/p11/x-department-operations/cross-department.evidence.json",
+            "participants": [
+              "engineering-intelligence-instance-001",
+              "governance-artifact-integrity-instance-001"
+            ],
+            "departments": [
+              "engineering",
+              "platform"
+            ],
+            "department_count": 2,
+            "proof_level": "REAL-RUNTIME",
+            "is_multi_agent": true
           }
         ],
-        "coordinations_spanning_more_than_one_department": 0
-      },
-      "gap": "No coordination on record spans more than one Department. Departments and per-Department instances exist; no single coordination has joined them. DP-02 \u00a77: recorded FAIL / UNSATISFIED rather than substituting multi-agent or single-Department evidence."
+        "coordinations_spanning_more_than_one_department": 1
+      }
     },
     {
       "criterion": "E11-05",
@@ -141,15 +166,15 @@
       "evidence": {
         "suites": {
           "native_core": {
-            "summary": "Ran 801 tests in 0.645s",
+            "summary": "Ran 801 tests in 0.628s",
             "ok": true
           },
           "consumers": {
-            "summary": "Ran 276 tests in 0.422s",
+            "summary": "Ran 276 tests in 0.399s",
             "ok": true
           },
           "tools": {
-            "summary": "Ran 707 tests in 21.185s",
+            "summary": "Ran 707 tests in 22.256s",
             "ok": true
           }
         },
@@ -163,16 +188,18 @@
       "verdict": "PASS",
       "evidence": {
         "recorded": {
+          "w1-operations": [],
           "w4-operations": [
             "23f315ba9f504272"
           ],
-          "w1-operations": []
+          "x-department-operations": []
         },
         "open": {
+          "w1-operations": [],
           "w4-operations": [
             "23f315ba9f504272"
           ],
-          "w1-operations": []
+          "x-department-operations": []
         },
         "any_real_escalation_persisted": true,
         "public_api": [
@@ -195,6 +222,31 @@
       "verdict": "PASS",
       "evidence": {
         "chain_answers": [
+          {
+            "source": "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+            "who_delegated": "Claude Code / AIOS Co-Founder",
+            "to_whom": "governance-artifact-integrity-instance-001",
+            "for_what": [
+              "governance-artifact-integrity"
+            ],
+            "under_which_authority": "FD-P11-001 \u00a79",
+            "with_which_scope": [
+              "review-open-items",
+              "summarize-diffs"
+            ],
+            "what_happened": [
+              [
+                "review-open-items",
+                "success"
+              ],
+              [
+                "summarize-diffs",
+                "success"
+              ]
+            ],
+            "who_verified": "every step expressed as a WorkflowStep whose act",
+            "who_remains_accountable": "Claude Code / AIOS Co-Founder"
+          },
           {
             "source": "docs/architecture/p11/w4-operations/first-execution.evidence.json",
             "who_delegated": "Claude Code / AIOS Co-Founder",
@@ -220,28 +272,27 @@
             "who_remains_accountable": "Claude Code / AIOS Co-Founder"
           },
           {
-            "source": "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+            "source": "docs/architecture/p11/x-department-operations/cross-department.evidence.json",
             "who_delegated": "Claude Code / AIOS Co-Founder",
-            "to_whom": "governance-artifact-integrity-instance-001",
+            "to_whom": "engineering-intelligence-instance-001",
             "for_what": [
-              "governance-artifact-integrity"
+              "engineering-intelligence"
             ],
             "under_which_authority": "FD-P11-001 \u00a79",
             "with_which_scope": [
-              "review-open-items",
-              "summarize-diffs"
+              "verify-artifact-conformance"
             ],
             "what_happened": [
               [
-                "review-open-items",
+                "verify-artifact-conformance",
                 "success"
               ],
               [
-                "summarize-diffs",
+                "verify-citation-discipline",
                 "success"
               ]
             ],
-            "who_verified": "every step expressed as a WorkflowStep whose act",
+            "who_verified": "the step is expressed as a WorkflowStep whose ac",
             "who_remains_accountable": "Claude Code / AIOS Co-Founder"
           }
         ],
@@ -271,7 +322,8 @@
         "fresh_process_agrees": true,
         "roots": [
           "w1-operations",
-          "w4-operations"
+          "w4-operations",
+          "x-department-operations"
         ]
       }
     },
@@ -303,6 +355,7 @@
     "E11-01",
     "E11-02",
     "E11-03",
+    "E11-04",
     "E11-05",
     "E11-06",
     "E11-07",
@@ -310,8 +363,6 @@
     "E11-09",
     "E11-10"
   ],
-  "failed": [
-    "E11-04"
-  ],
-  "e11_pass": false
+  "failed": [],
+  "e11_pass": true
 }

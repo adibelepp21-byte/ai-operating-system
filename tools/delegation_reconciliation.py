@@ -57,6 +57,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from tools.delegation_catalog import (  # noqa: E402
     DELEGATION_ROOT,
+    operation_roots,
     MD_LINK,
     _section,
     read_delegations,
@@ -66,10 +67,10 @@ from tools.delegation_catalog import (  # noqa: E402
 #: by the same authorized delegator; `w1-operations` is where the W1
 #: coordination proof persists its own, and a reconciliation that read only one
 #: would report the other's live grants as unrepresented for the wrong reason.
-LEDGER_ROOTS = (
-    REPO_ROOT / "docs/architecture/p11/w4-operations",
-    REPO_ROOT / "docs/architecture/p11/w1-operations",
-)
+#: Discovered, never listed — see `delegation_catalog.operation_roots`. A
+#: hardcoded pair here refused to project a grant the moment a third
+#: operational root was written, which is how this was found.
+LEDGER_ROOTS = operation_roots()
 
 #: The two sections this relation needs, and the **only** shape change it makes.
 #:
@@ -357,7 +358,24 @@ def reconcile(projections: Optional[List[Projection]] = None,
 #: `CURRENT` record for an instance and **refuses to modify any record whose
 #: role is `HISTORICAL`**. History someone chose to keep stays kept; history
 #: nobody wrote down is still recoverable from the ledger.
-PROJECTION_STEM = "w3-current-{instance}"
+PROJECTION_STEM = "w3-current-{context}-{instance}"
+
+
+def _context_of(grant: "LedgerGrant") -> str:
+    """The operational line of work a grant belongs to — its ledger directory.
+
+    **The projection key gained this under `DP-02 §11` item 10, because one
+    instance can hold more than one live grant.** It could not before: each
+    operational root's run revokes that instance's ACTIVE grants in that root
+    before issuing, so *within a root* an instance has exactly one. Keying on
+    the instance alone silently assumed there was only ever one root per
+    instance, and the first cross-Department run — which reuses both existing
+    instances in a third root — overwrote the W4 and W1 projections and orphaned
+    two live grants. Four reconciliation controls and two completeness guards
+    fired on it.
+    """
+    name = Path(grant.source).parent.name
+    return name[:-len("-operations")] if name.endswith("-operations") else name
 
 
 def _render(grant: LedgerGrant, *, instrument_link: str,
@@ -460,7 +478,8 @@ def project(grant_id: str, *, grants: Optional[Dict[str, LedgerGrant]] = None,
             "resolve — `§12`: provenance must remain valid")
 
     root.mkdir(parents=True, exist_ok=True)
-    path = root / f"{PROJECTION_STEM.format(instance=grant.recipient_instance)}.md"
+    path = root / ("%s.md" % PROJECTION_STEM.format(
+        context=_context_of(grant), instance=grant.recipient_instance))
 
     existing_role = None
     if path.is_file():

@@ -194,6 +194,31 @@ INSTRUMENT_ESTABLISHED_SOURCES = {
 #: A population loader that knows some of the population does not fail; it
 #: **passes, on the part it can see**, which is why nothing surfaced this for
 #: two Acts.
+P11_OPERATIONS = REPO_ROOT / "docs/architecture/p11"
+
+
+def operation_roots(base: Path = P11_OPERATIONS) -> Tuple[Path, ...]:
+    """Every directory under `docs/architecture/p11/` holding operational record.
+
+    **Discovered, not listed.** Two hand-maintained root lists have already gone
+    stale in this programme — one read `w4-operations` only and reported a live
+    W1 instance as `actor-unknown`, and a second refused to project a grant
+    written to a new root the day that root was created. A list someone must
+    remember to extend is the same defect twice.
+
+    A directory qualifies by containing a record, so a new operational root
+    joins the population by being written to rather than by being declared.
+    """
+    if not base.is_dir():
+        return ()
+    found = {path.parent for pattern in ("*.instance.json", "*.delegation.json",
+                                         "*.escalation.json", "*.evidence.json")
+             for path in base.glob(f"*/{pattern}")}
+    return tuple(sorted(found))
+
+
+#: Retained as names for the two roots that existed when these were written.
+#: Callers should prefer `operation_roots()`.
 INSTANCE_ROOTS = (
     REPO_ROOT / "docs/architecture/p11/w4-operations",
     REPO_ROOT / "docs/architecture/p11/w1-operations",
@@ -214,7 +239,7 @@ def registered_instances(root=None) -> Dict[str, dict]:
     instance.
     """
     if root is None:
-        roots: Tuple[Path, ...] = INSTANCE_ROOTS
+        roots: Tuple[Path, ...] = operation_roots()
     elif isinstance(root, (str, Path)):
         roots = (Path(root),)
     else:

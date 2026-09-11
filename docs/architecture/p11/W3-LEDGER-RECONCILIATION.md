@@ -95,8 +95,14 @@ against is re-read from the ledger on every run.
 |---|---|
 | `tools/delegation_reconciliation.py` | the relation: `read_ledger`, `read_projections`, `reconcile`, `project`, `project_all` |
 | `tools/tests/test_delegation_reconciliation.py` | 44 tests — probes `A`–`F`, mutation, false-positive, idempotency, fresh-process, contract |
-| `docs/.../delegations/w3-current-engineering-intelligence-instance-001.md` | generated `CURRENT` projection |
-| `docs/.../delegations/w3-current-governance-artifact-integrity-instance-001.md` | generated `CURRENT` projection |
+| `docs/.../delegations/w3-current-w4-engineering-intelligence-instance-001.md` | generated `CURRENT` projection |
+| `docs/.../delegations/w3-current-w1-governance-artifact-integrity-instance-001.md` | generated `CURRENT` projection |
+
+> **Renamed under `DP-02 §11` item 10**, from `w3-current-<instance>` to
+> `w3-current-<context>-<instance>`. The original key assumed one live grant per
+> instance, which held until a cross-Department run reused both instances in a
+> third operational root and overwrote their projections. The paths above are the
+> current ones; the originals are in git history at this Act's commit.
 
 **Modified**
 

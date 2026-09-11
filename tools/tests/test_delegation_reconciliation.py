@@ -331,7 +331,9 @@ class NoAuthorityCreation(unittest.TestCase):
         """`§16` — the one file class the writer refuses to touch."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            path = root / "w3-current-inst-1.md"
+            # Key gained an operational-context segment under
+            # `DP-02 §11` item 10; the invariant is unchanged.
+            path = root / "w3-current-ledger-inst-1.md"
             path.write_text("# kept\n\n## Representation\n\nHISTORICAL\n",
                             encoding="utf-8")
             before = path.read_text(encoding="utf-8")
@@ -397,7 +399,7 @@ class Idempotency(unittest.TestCase):
         """The control that proves the previous test is not inspecting a state
         that was already clean — mutate, re-project, and require repair."""
         root = REPO_ROOT / "docs/architecture/organization/delegations"
-        target = root / "w3-current-engineering-intelligence-instance-001.md"
+        target = root / "w3-current-w4-engineering-intelligence-instance-001.md"
         original = target.read_text(encoding="utf-8")
         try:
             target.write_text(original.replace(
@@ -505,7 +507,11 @@ class ResidentState(unittest.TestCase):
         result = reconcile()
         self.assertEqual(sorted(result["active_grants"]),
                          sorted(result["represented_active"]))
-        self.assertEqual(2, len(result["active_grants"]))
+        # Re-anchored: this asserted exactly two live grants, which encoded the
+        # number of operational roots at the time. An instance may now hold one
+        # live grant per root, so the invariant is the correspondence, not the
+        # count.
+        self.assertTrue(result["active_grants"])
 
     def test_S6_history_stays_distinguishable_from_live(self):
         lifecycles = reconcile()["lifecycles"]

@@ -13,7 +13,7 @@ Capability is not an architectural-tier decision.
 ## Metadata
 
 - **Name:** Governance Artifact Integrity Agent
-- **Version:** 1.1
+- **Version:** 1.2
 - **Status:** Active
 
 ## Purpose / Description
@@ -93,6 +93,7 @@ This Agent Definition specifies the following Workflows, per the same
 specifies relationship (Domain Model §4) applied to Permitted Skills,
 above:
 
+- [`workflow.cross-department-artifact-conformance-review`](../../execution-catalog/workflow/cross-department-artifact-conformance-review.md)
 - [`workflow.governance-corpus-health-check`](../../execution-catalog/workflow/governance-corpus-health-check.md)
 - [`workflow.governance-synchronization-review`](../../execution-catalog/workflow/governance-synchronization-review.md)
 - [`workflow.post-amendment-consistency-sweep`](../../execution-catalog/workflow/post-amendment-consistency-sweep.md)
@@ -120,6 +121,15 @@ textual edits. No specific technology, vendor, provider, API, or
 infrastructure product is named or implied anywhere in this document.
 
 ## Version History
+
+- **v1.2** — `workflow.cross-department-artifact-conformance-review`
+  added to Permitted Workflows. That Workflow's own Invokes Agent
+  Instance field names an Agent Instance of this Agent Definition for
+  its citation-discipline step; this entry completes the citation. **No
+  Skill, Capability or permission is added** —
+  `skill.citation-discipline-verification` was already specified by this
+  Definition. Written under `DP-02 §11`
+  item 10.
 
 - **v1.1** — Populated Permitted Skills (ten entries) and Permitted
   Workflows (five entries) with the Skills and Workflows created under

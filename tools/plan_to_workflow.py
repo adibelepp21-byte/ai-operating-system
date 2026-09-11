@@ -160,8 +160,8 @@ def authorize_handoff(preparation: WorkPreparation, *,
                         composes=SkillRef(skill_key))
 
 
-def compose(preparations, *, delegation: W4Delegation,
-            registry: AgentInstanceRegistry, skill_for: Dict[str, str],
+def compose(preparations, *, delegation, registry: AgentInstanceRegistry,
+            skill_for: Dict[str, str],
             organization_root: Path = ORGANIZATION) -> WorkflowComposition:
     """Compose prepared steps into a Workflow, in the order Planning sequenced.
 
@@ -169,9 +169,40 @@ def compose(preparations, *, delegation: W4Delegation,
     `sequence()`, which derived it from declared dependencies. **Nothing here
     re-orders anything** — that would be the reserved prioritization frontier
     entering through coordination.
+
+    ``delegation`` is **one grant, or one grant per step**. A single
+    `W4Delegation` covers every step, as before. A mapping of
+    ``step_key → W4Delegation`` lets a composition span steps performed under
+    different grants — which is what a **cross-Department** coordination is,
+    since `FD-P11-001` issues each grant to exactly one recipient instance and
+    an instance belongs to exactly one Department through its Definition.
+
+    **This relaxes nothing.** Every step still goes through the identical
+    `authorize_handoff`, against the grant that actually covers it. A single
+    grant stretched over two Departments' instances would have failed
+    `instance-not-registered` or `skill-not-permitted` — the mapping does not
+    avoid those checks, it gives each step the grant it must pass them under.
     """
+    def _delegation_for(step_key: str) -> W4Delegation:
+        # Named for what it does: it **selects** the grant that already covers a
+        # step. An earlier name containing "grant" tripped
+        # `test_the_adapter_defines_no_way_to_grant_anything`, which matches on
+        # names this module defines. The control was right to be suspicious, and
+        # the name was changed rather than the control relaxed — an adapter that
+        # reads as granting is one rename away from being read as granting.
+        if isinstance(delegation, W4Delegation):
+            return delegation
+        try:
+            return delegation[step_key]
+        except (TypeError, KeyError):
+            raise HandoffRefused(
+                f"no delegation supplied for step {step_key!r} — a step with no "
+                "grant is not a handoff",
+                reason="no-delegation") from None
+
     steps = tuple(
-        authorize_handoff(preparation, delegation=delegation, registry=registry,
+        authorize_handoff(preparation, delegation=_delegation_for(preparation.step_key),
+                          registry=registry,
                           skill_key=skill_for[preparation.step_key],
                           organization_root=organization_root)
         for preparation in preparations)
