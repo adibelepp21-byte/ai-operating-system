@@ -10692,3 +10692,81 @@ P11 EXHAUSTED TRUE - P11 COMPLETE TRUE - P11 CERTIFIED FALSE
 
 **`COMPLETION ≠ CERTIFICATION`.** No certification instrument exists, none is
 created here, and none may be inferred from this.
+
+
+---
+
+# 106. P11 Certification Evidence Audit — `CERTIFICATION-READY`, and two probes of mine that were not
+
+Full package:
+[`P11-CERTIFICATION-EVIDENCE-AUDIT.md`](../architecture/p11/P11-CERTIFICATION-EVIDENCE-AUDIT.md).
+
+```text
+CERTIFICATION-READY      P11 CERTIFIED = FALSE
+P11 CERTIFICATION = FOUNDER-RESERVED      GOVERNANCE CLOSED = NO
+```
+
+## 106.1 The criteria were discovered, and the corpus does not have any
+
+`§5` forbids inventing certification criteria, so the first question was whether
+P11 has any. **It does not.** What exists is `FD-P10-005` — one phase back, whose
+`§13` records twelve things the Founder attested before certifying P10, and whose
+`§7` shows the pre-certification state was exactly `COMPLETE = YES · CERTIFIED =
+NO`, where P11 stands now.
+
+That is classified as an **evidence condition, not a binding P11 condition**. A
+Founder's attestation for one phase does not legislate the next. All twelve are
+answered anyway, so the parallel is visible without being imposed.
+
+## 106.2 Two defects in this audit's own probes
+
+**A placeholder counted as evidence.** My first negative-control pass recorded
+*"invalid Workflow actor — held"* by writing `True` rather than exercising it. A
+proxy, inside a negative-control audit, which is the exact pattern this programme
+has corrected a dozen times. Re-run properly it refuses with
+`instance-not-registered`.
+
+**A substring false positive.** The P12 boundary probe matched the phrase
+*"unified operational state"* and reported `FAILED` against five files. Every
+occurrence is a **docstring declaring the boundary** — one quotes
+`P11 PLANNING STATE ≠ P12 UNIFIED OPERATIONAL STATE`, another says a module
+answering *"what is the organization doing"* **would be** P12, built early and
+unauthorized. Content-anchored: **zero occurrences in executable code**, and
+`derived_views` answers `UNKNOWN` to *"what is running"*. The boundary held; the
+probe did not.
+
+Both are recorded because a certification audit that hid its own bad probes would
+be certifying the audit rather than the system.
+
+## 106.3 Nineteen adversarial probes, nineteen held
+
+Including the one that matters most for a boundary: **a valid grant still
+issues**. A control that refuses everything is not a boundary, it is a wall, and
+proving the wall is not the same as proving the boundary.
+
+## 106.4 The escalation, re-verified rather than inherited
+
+All nine `§12` points confirmed from the body. It remains a correct refusal,
+correctly persisted, correctly routed, and `E11-07` — which requires escalations
+be *identified, persisted and routed* — passes **because** of it.
+
+**It was not closed.** The instruction says plainly not to close it to obtain
+certification, and it was not touched.
+
+## 106.5 State
+
+```text
+W1-W7 all SATISFIED - E11 10/10 re-measured - C1-C9 satisfied
+dangling 0 - orphan 0 - duplicate 0 - stale 0 - provenance failures 0
+negative controls: attempted 19, held 19, missed 0
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 718 OK = 1795
+citation 192 documents / 0 errors - stale-state 489 / 0 assertions
+Native Core 11 - protected paths read 0 - other dirty paths 0
+
+P11 AUTHORIZED - CONSTRUCTED - OPERATIONAL - VERIFIED - EXHAUSTED - COMPLETE = TRUE
+P11 CERTIFIED = FALSE
+```
+
+No certification was issued, no decision created, no ID minted, no signature
+written. **`CERTIFICATION-READY ≠ CERTIFIED`**, and following `FD-P10-005 §12`,
+certification would not be governance closure either.
