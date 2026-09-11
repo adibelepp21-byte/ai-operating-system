@@ -101,7 +101,8 @@ def _plan():
     return surface, plan
 
 
-def run(perform, *, coordinate=None, persist: bool = True) -> dict:
+def run(perform, *, coordinate=None, persist: bool = True,
+        act: str = "ACT-CC-P11-011") -> dict:
     """`PLAN → HANDOFF → WORKFLOW → COORDINATION → EXECUTION`."""
     OPERATIONS.mkdir(parents=True, exist_ok=True)
     root = OPERATIONS if persist else None
@@ -142,13 +143,27 @@ def run(perform, *, coordinate=None, persist: bool = True) -> dict:
 
     # ── coordination: drive the composed Workflow through its lifecycle ───
     #
-    # `perform` is supplied by the caller and drives the resident
-    # `WorkflowParticipatingAgent`, because `tools/` may not import
-    # `consumers/`. It returns the terminal lifecycle state, or None.
-    terminal = coordinate(composition) if coordinate else None
+    # `coordinate` is supplied by the caller and drives the resident
+    # `WorkflowParticipatingAgent` on the **resident Runtime**, because
+    # `tools/` may not import `consumers/`. It returns
+    # ``(terminal_state, coordination_facts)``.
+    #
+    # `ACT-CC-P11-011 §8`: the injected-subsystem result from `ACT-CC-P11-010`
+    # remains valid for what it proved and is **not** the resident Runtime path.
+    # `§36` requires every stage to be labelled, so the caller reports which it
+    # used and the label is persisted rather than inferred.
+    terminal, facts = coordinate(composition) if coordinate else (None, {})
 
     evidence = {
-        "act": "ACT-CC-P11-010",
+        # The Act this *run* happened under, supplied by the caller.
+        #
+        # It was hardcoded to the Act that first wrote this module, so the
+        # `ACT-CC-P11-011` run labelled itself `010` — a small defect with a
+        # familiar shape: a field that was correct when written and silently
+        # wrong once something else used it. `§36` requires labels not be
+        # promoted silently; a stale label demotes just as quietly.
+        "act": act,
+        "module_constructed_under": "ACT-CC-P11-010",
         "executed_at": datetime.now(timezone.utc).isoformat(),
         "superseded_grants": list(superseded),
         "authority_chain": list(delegation.authority_chain()),
@@ -166,6 +181,7 @@ def run(perform, *, coordinate=None, persist: bool = True) -> dict:
         "composed_skills": [r.skill_key for r in composition.composed_skills()],
         "is_multi_agent": WorkflowCoordinationProbe(composition),
         "workflow_terminal_state": str(terminal) if terminal else None,
+        "coordination": facts,
         "outcomes": [{"step": o.step_key, "status": o.status,
                       "detail": o.detail} for o in report.outcomes],
         "refusals": [str(r) for r in report.refusals],

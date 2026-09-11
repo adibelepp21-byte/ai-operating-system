@@ -9725,3 +9725,93 @@ P11 OPERATIONAL = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
 
 `§40`: six of eight exit dimensions have now been exercised, **coordination only
 as a single-actor handoff**. W1 proven does not make P11 operational.
+
+# 96. Three frontiers, none of them missing
+
+**Act:** `ACT-CC-P11-011`. Verdicts **`F1-A` · `F2-B` · `F3-C`**. Package at
+`docs/architecture/p11/W1-RUNTIME-COORDINATION.md`.
+
+**Nothing was built that the system already had.** All three investigated
+frontiers resolved to existing canonical mechanisms, found by reading.
+
+## 96.1 The Runtime path was already there
+
+`build_default_infrastructure` → `AIOSRuntime` → `create_execution_layer` →
+`execution.runtime.workflows`. Every piece resident, and the consumer's own
+`_resolve` had documented it: *"it comes from the Runtime hosting this
+Execution … which is RUNNING-gated by the Runtime itself."*
+
+The real run used it with **no injected subsystem**, reaching terminal
+`SUCCEEDED` on a Runtime that started, hosted, and stopped. `ACT-CC-P11-010`'s
+injected-collaborator result is not retracted — it is superseded at this stage by
+a stronger proof, which is what `§8` asks for and what `§35`'s hierarchy means.
+
+## 96.2 Multi-agent is not required, and the contract says so plainly
+
+`WorkflowCoordination`: *"A coordination with an empty composition is
+structurally valid — it coordinates no one."* `is_multi_agent()`: *"Reported,
+never acted on (PR-3)."*
+
+**This corrects my own frontier entry.** `ACT-CC-P11-010` listed cross-agent
+coordination as actionable work needing a second instance. It is **optional**,
+and `is_multi_agent: false` is a property of a valid coordination rather than a
+deficiency. What actually constrains coordination is `INV-13` — it must be
+*through a Workflow* — which the contract enforces by refusing to exist without
+one.
+
+I had been treating a reported property as a missing capability.
+
+## 96.3 An implementation absence is not an architectural absence
+
+No consumer implements `governance-artifact-integrity`, and the Workflow reached
+terminal `SUCCEEDED` anyway. The performer is injected, so coordination never
+needed one. What I recorded as a missing consumer was a missing **capability
+implementation**, and I had let it stand as a coordination gap.
+
+## 96.4 Two controls that could not detect their own prohibition
+
+Six mutation probes. Four fired. **Two returned `OK`, and both were real.**
+
+The proof-level label was checked for **membership in the allowed set, not for
+truth** — so a run could claim `REAL-MULTI-AGENT` while recording one
+participant and pass. `§36` forbids silent promotion, and **a label nobody
+cross-checks is exactly how promotion stays silent.** Each label is now tied to
+the evidence that would have to hold, verified by running a deliberately
+mislabelled proof.
+
+The idempotency control **inspected a clean result**: disabling the stale-grant
+sweep changed nothing it could see, because it read files the last real run had
+already tidied. *A control that inspects a clean result cannot tell whether the
+thing that cleaned it still works.* It now drives the mechanism directly.
+
+Both belong to the family `§94.4` opened — controls that assert a **state** where
+they should assert a **mechanism or an invariant**.
+
+## 96.5 The same boundary, crossed twice
+
+`tools/` may not import `consumers/`. `ACT-CC-P11-008` violated it from
+`w4_first_run.py`; this Act violated it again from a **test**, which is the same
+edge in the dependency graph.
+
+Knowing a rule and having been caught by it once did not prevent repeating it —
+the same finding as `§90.6`, now with a second instance. What caught it both
+times was the invariant, not my memory.
+
+The fix was not a weaker assertion: the claim I was reaching for — that
+coordination needs no capability implementation — is proven **more directly by
+the run** than by the consumer signature I tried to import.
+
+## 96.6 State integrity, measured
+
+```text
+native_core boundaries : 11   W1 live grants : 1   W3 records : 1
+proof level : REAL-RUNTIME (was INJECTED)   participants : 1
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 623 OK
+citation 163 documents / 0 errors · stale-state 463 / 0 assertions
+
+P11 OPERATIONAL = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
+13 protected packages untouched
+```
+
+`§46`: a real single-participant Runtime-hosted coordination is exactly that —
+not multi-agent coordination, and the canonical contract says it need not be.

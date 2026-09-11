@@ -24,35 +24,77 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import tempfile  # noqa: E402
+
+from native_core.core.infrastructure import (  # noqa: E402
+    build_default_infrastructure)
+from native_core.core.runtime import AIOSRuntime  # noqa: E402
+from native_core.core.runtime.execution import create_execution_layer  # noqa: E402
 from native_core.core.workflow import (  # noqa: E402
-    Workflow, WorkflowIdentity, create_workflow_subsystem)
+    Workflow, WorkflowCoordination, WorkflowIdentity)
 from consumers.workflow_agent import WorkflowParticipatingAgent  # noqa: E402
 from tools.w1_coordination_run import run  # noqa: E402
 
 
-class _Execution:
-    """The resident injected-collaborator stand-in, matching
-    `consumers/tests/test_workflow_agent.py`."""
-
-    def __init__(self, runtime=None):
-        self.runtime = runtime
-
-
 def perform(step):
+    """The delegated work, executed under the W4 delegation."""
     return f"coordinated {step.key} via the sanctioned Workflow surface"
 
 
 def coordinate(composition):
-    """Drive the composed Workflow through its real lifecycle."""
-    # Key and version read from the resident record, not invented.
+    """Drive the composed Workflow through its real lifecycle on the **resident
+    Runtime** — `ACT-CC-P11-011 §9`.
+
+    **No subsystem is injected.** `WorkflowParticipatingAgent` resolves it from
+    ``execution.runtime.workflows``, which the Runtime gates on RUNNING. The
+    whole path is resident: `build_default_infrastructure` assembles the
+    facilities, `AIOSRuntime` hosts them, `create_execution_layer` issues the
+    `Execution`, and the consumer takes the boundary it is given.
+
+    `§36` labels: **RESIDENT · REAL-RUNTIME**. `ACT-CC-P11-010` used the
+    injected-collaborator stand-in and said so; this supersedes that stage of
+    the proof without retracting what it established.
+    """
     identity = WorkflowIdentity(workflow_key="governance-corpus-health-check",
                                 workflow_version="1.0")
-    agent = WorkflowParticipatingAgent(
-        subsystem=create_workflow_subsystem(),
-        workflow=Workflow(identity=identity),
-        composition=composition,
-        performer=lambda step: f"performed {step.step_key}")
-    return agent.participate(_Execution())
+    workflow = Workflow(identity=identity)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        bootstrap = build_default_infrastructure(base_dir=Path(tmp))
+        bootstrap.establish()
+        runtime = AIOSRuntime(
+            runtime_id="p11-w1-runtime",
+            storage=bootstrap.get("storage"),
+            substrate=bootstrap.get("execution-substrate"))
+        runtime.initialize()
+        runtime.start()
+        execution = create_execution_layer(runtime)
+
+        agent = WorkflowParticipatingAgent(
+            workflow=workflow, composition=composition,
+            performer=lambda step: f"performed {step.step_key}")
+        terminal = agent.participate(execution)
+
+        # `WorkflowCoordination` is the canonical coordination contract:
+        # *"Coordination of Agent Instances, bound to exactly one Workflow"*.
+        coordination = WorkflowCoordination(workflow=workflow,
+                                            composition=composition)
+        facts = {
+            "proof_level": "REAL-RUNTIME",
+            "subsystem_source": "execution.runtime.workflows",
+            "subsystem_injected": False,
+            "runtime_id": execution.runtime.runtime_id,
+            "runtime_state": str(execution.runtime.state),
+            "execution_context": str(execution.context),
+            "participants": [r.agent_instance_key
+                             for r in coordination.participants()],
+            "is_multi_agent": coordination.is_multi_agent(),
+            "is_empty": coordination.is_empty(),
+            "completed_steps": list(agent.completed_steps),
+        }
+        runtime.stop()
+        facts["runtime_state_after_stop"] = str(runtime.state)
+    return terminal, facts
 
 
 def main() -> int:
@@ -60,7 +102,7 @@ def main() -> int:
     print(json.dumps({k: evidence[k] for k in (
         "agent_definition", "agent_instance", "delegation_id",
         "authority_chain", "prepared_steps", "workflow_steps",
-        "acting_instances", "composed_skills", "is_multi_agent",
+        "acting_instances", "composed_skills", "coordination",
         "workflow_terminal_state", "superseded_grants",
         "boundary_crossed")}, indent=2))
     for outcome in evidence["outcomes"]:

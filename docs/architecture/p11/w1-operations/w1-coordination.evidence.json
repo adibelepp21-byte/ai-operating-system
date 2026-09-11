@@ -1,18 +1,19 @@
 {
-  "act": "ACT-CC-P11-010",
-  "executed_at": "2026-09-11T03:32:31.106965+00:00",
+  "act": "ACT-CC-P11-011",
+  "module_constructed_under": "ACT-CC-P11-010",
+  "executed_at": "2026-09-11T03:58:33.704357+00:00",
   "superseded_grants": [
-    "f24d8954e64b40df"
+    "ef07645a652f45b5"
   ],
   "authority_chain": [
-    "delegation:1700394c2fea4a88",
+    "delegation:47eec2b87a284417",
     "delegator:Claude Code / AIOS Co-Founder",
     "decision:FD-P11-001 \u00a79",
     "founder:Founder"
   ],
   "agent_definition": "governance-artifact-integrity-agent",
   "agent_instance": "governance-artifact-integrity-instance-001",
-  "delegation_id": "1700394c2fea4a88",
+  "delegation_id": "47eec2b87a284417",
   "delegation_status": "ACTIVE",
   "accountable_party": "Claude Code / AIOS Co-Founder",
   "goal": "w1-coordination-proof",
@@ -36,6 +37,24 @@
   ],
   "is_multi_agent": false,
   "workflow_terminal_state": "WorkflowLifecycleState(identity=WorkflowIdentity(workflow_key='governance-corpus-health-check', workflow_version='1.0'), state=<WorkflowState.SUCCEEDED: 'succeeded'>, ordinal=4, detail=mappingproxy({'outcome': mappingproxy({'steps': ('review-open-items', 'summarize-diffs')})}))",
+  "coordination": {
+    "proof_level": "REAL-RUNTIME",
+    "subsystem_source": "execution.runtime.workflows",
+    "subsystem_injected": false,
+    "runtime_id": "p11-w1-runtime",
+    "runtime_state": "RuntimeState.RUNNING",
+    "execution_context": "ExecutionContext(runtime_id='p11-w1-runtime', execution_sequence=0)",
+    "participants": [
+      "governance-artifact-integrity-instance-001"
+    ],
+    "is_multi_agent": false,
+    "is_empty": false,
+    "completed_steps": [
+      "review-open-items",
+      "summarize-diffs"
+    ],
+    "runtime_state_after_stop": "RuntimeState.STOPPED"
+  },
   "outcomes": [
     {
       "step": "review-open-items",

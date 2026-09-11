@@ -1,5 +1,5 @@
 {
-  "delegation_id": "1700394c2fea4a88",
+  "delegation_id": "4ff9f617a3e84bba",
   "delegator": "Claude Code / AIOS Co-Founder",
   "recipient_instance": "governance-artifact-integrity-instance-001",
   "authority_instrument": "FD-P11-001 \u00a79",
@@ -20,13 +20,13 @@
   "accountable_party": "Claude Code / AIOS Co-Founder",
   "termination_condition": "on completion of the bound plan, or revocation",
   "status": "REVOKED",
-  "issued_at": "2026-09-11T03:32:31.105080+00:00",
+  "issued_at": "2026-09-11T03:57:31.689869+00:00",
   "authority_chain": [
-    "delegation:1700394c2fea4a88",
+    "delegation:4ff9f617a3e84bba",
     "delegator:Claude Code / AIOS Co-Founder",
     "decision:FD-P11-001 \u00a79",
     "founder:Founder"
   ],
   "revocation_reason": "Superseded by a later W1 coordination run. RE-RUN \u2260 NEW UNBOUNDED AUTHORITY (ACT-CC-P11-010 \u00a735).",
-  "revoked_at": "2026-09-11T03:56:13.724095+00:00"
+  "revoked_at": "2026-09-11T03:58:33.319170+00:00"
 }
