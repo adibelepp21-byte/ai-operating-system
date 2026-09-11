@@ -11077,3 +11077,108 @@ Native Core 11 frozen - protected paths read 0 - other dirty paths 0
 ```
 
 Nothing was built. The decision block is blank, and filling it is not mine.
+
+---
+
+# 110. `ACT-CC-P12-001` — the Blueprint told me what to look for, and it was there
+
+Packages:
+[`P12-BLUEPRINT-CANONICAL-RECONCILIATION.md`](../architecture/p12/P12-BLUEPRINT-CANONICAL-RECONCILIATION.md) ·
+[`…BLUEPRINT_v1.1.md`](../architecture/p12/AIOS_P12_ROADMAP_PRD_CONSTRUCTION_BLUEPRINT_v1.1.md) ·
+[`P12-AUTHORIZATION-DECISION-EVIDENCE.md`](../architecture/p12/P12-AUTHORIZATION-DECISION-EVIDENCE.md)
+
+```text
+VERDICT R2 — ALIGNED WITH MATERIAL REVISIONS REQUIRED
+P12 AUTHORIZED = FALSE      P12 CONSTRUCTED = FALSE
+```
+
+## 110.1 The base was not resident
+
+`AIOS_P12_ROADMAP_PRD_CONSTRUCTION_BLUEPRINT_v1.0.md` arrived as an upload and was
+**not in the repository**. A `v1.1` whose change ledger cited a non-resident base
+would have been the same source-gap class this programme keeps finding — a
+revision anchored to nothing. v1.0 is persisted byte-exact first
+(`bd221177d102dea9…`, 35 246 bytes, 74 sections), and only then revised.
+
+## 110.2 `§36` states the rule and breaks it in the same section
+
+The Blueprint says *"The canonical question set must be preserved in full"* and
+*"No shortened substitute set may silently replace the canonical model."* Measured
+against canon, `§36`'s own lists do neither:
+
+- the dimension list carries **`authority` where canon carries `decisions`**;
+- **"What failed?"** and **"What is incomplete?"** are absent with no
+  near-equivalent, and **"What is authoritative?"** is narrowed to *"What decisions
+  are recorded?"*
+
+The two absent questions are exactly the two that `F-3` measured as `UNKNOWN` for
+want of a Trace registry — so the omission removed from the specification the
+questions whose unanswerability is the strongest argument for building `P12-W5`.
+
+`ACT-CC-P12-001 §18` reproduces the same `authority`/`decisions` substitution.
+Recorded, not corrected: canonical governs over both, and the Act is a Founder
+instrument I do not amend.
+
+**A false positive of mine, disclosed.** I first counted *"What is unknown?"* as a
+fourth missing question. It is *"What do I not know?"* reworded — the same
+question. Counting it would have doubled the finding from two genuine omissions to
+four. A findings register that hides its own false positives measures the auditor,
+not the document.
+
+## 110.3 The decisions I was told to read do not exist
+
+`§12` and `§13` require reading the **actual body** of `FDP-P10-001` and
+`FDP-P10-003`. There is no body. `POST-P10-TRANSITION-REGISTER` Gate D records
+*"no binding instrument"* and *"no positive grant"* — these identifiers name
+**matters that have never been decided**.
+
+That is not a recovery gap. The absence of a body for an unmade decision is the
+correct state of the corpus, and `IDENTIFIER ≠ DECISION BODY` means reporting the
+absence rather than reading an adjacent document and calling it the body.
+
+Both classify **`CONDITIONAL / DEPENDENCY-BOUND`** — and the word is the resident
+evidence's own: *"Conditional? **Yes** — frontier work is authorized, the canonical
+declaration is not."*
+
+**Half of `FDP-P10-003` needs no decision at all.** `Volume VII §4.1` already
+reserves activation authority to the Program Owner permanently, *"bahkan setelah
+Executive Office diimplementasikan"*. Only the binding is open, and reading the
+matter as wholly pending overstates what is undecided.
+
+## 110.4 I withdrew a recommendation rather than defend it
+
+`P10-AUTHORITY-CLOSURE §B.3` declined to recommend on Security: *"This is an
+identity assertion about who holds authority, not a question evidence settles."*
+That is right, and it applies to my own earlier sequencing remark as much as to the
+`S2` the pending package attributed to me. **`D2` and `D3` now carry no
+recommendation at all** — only a dependency classification the evidence names
+itself. Recommendations remain at `D4`–`D8`, each labelled.
+
+## 110.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 724 OK = 1801
+citation 201 documents / 1090 citations / 0 errors - stale-state 501 / 0 assertions
+adversarial probes: 12 attempted, 11 held, 1 failed (the failure is the finding)
+
+P12 AUTHORIZED = FALSE     P12 CONSTRUCTED = FALSE
+E12 NOT RATIFIED           GOVERNANCE CLOSED = NO
+Native Core 11 - protected read 0 - staged 0 - committed 0
+```
+
+## 110.6 I did it again, in the section that reports it
+
+The state block above first read `citation 202 documents` and `stale-state 502`.
+The measured values are **201** and **501**. I wrote both figures **before running
+the auditors** — predicted from four added files rather than measured — which is
+precisely the `718`/`489` defect of `§107`, committed inside the document
+disclosing it, one section later.
+
+Corrected before commit. It is recorded because the correction is not the
+interesting part: the interesting part is that knowing the failure mode, having
+written it up twice, and having named *"mechanical re-measurement at each write"*
+as the only corrective, I still typed a plausible number instead of running the
+command. The discipline is not knowledge. It is the command.
+
+No P12-W1…W6 implementation exists. The next transition is the Founder's
+authorization decision, and `D1`–`D8` remain unfilled.
