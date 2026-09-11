@@ -9916,3 +9916,100 @@ P11 CONSTRUCTED = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
 ```
 
 **Exhaustion: NOT EXHAUSTED — one actionable gap, open and unbuilt.**
+
+---
+
+# 98. `ACT-CC-P11-013` — building the relation, and finding two controls that had never been tested by reality
+
+The gap `ACT-CC-P11-012` proved is closed. Full package:
+[`W3-LEDGER-RECONCILIATION.md`](../architecture/p11/W3-LEDGER-RECONCILIATION.md).
+
+## 98.1 The direction was read, not chosen
+
+`W4DelegationRegistry.issue()` is the only place a `delegation_id` comes into
+existence; `revoke()` is the only `ACTIVE → REVOKED` transition. A W3 record
+carries neither. So the ledger owns lifecycle and W3 is a projection — and W3
+never writes a delegation status at all. It writes which grant it represents and
+what the record is *for*; the lifecycle is re-read from the ledger every time.
+
+Eight defect classes. **One of them starts from the ledger rather than from a
+record, and that one is load-bearing.** All eleven pre-existing W3 checks start
+from a record, which is exactly why all eleven were green while both live grants
+were unrepresented: a record that does not exist cannot be inspected into
+existence.
+
+## 98.2 Rotation, proven by running the thing that broke it
+
+The W1 proof was run for real. It revoked `47eec2b87a284417`, minted
+`94a4df7aca4543ef`, and the projection followed:
+
+```text
+BEFORE  active 4313bd22…, 47eec2b8…   represented both   defects 0
+AFTER   active 4313bd22…, 94a4df7a…   represented both   defects 0
+        47eec2b87a284417 → SUPERSEDED
+```
+
+That sequence is what orphaned the record in the first place. It is now the
+sequence that keeps it correct.
+
+## 98.3 Two controls passing for reasons unrelated to their claims
+
+`test_the_resident_population_now_represents_the_live_grant` asserted
+`len(resident) == 1` — a **count** standing in for the claim in its own name. It
+would have gone on passing while the live grant went unrepresented, and it did:
+the stale record was found with this control green.
+
+`test_no_agent_instance_population_exists_to_draw_from` asserted that
+`docs/architecture/organization` held no path matching `*instance*`. Its premise
+was **false on the day it was written** — `FD-P11-001 §7` had authorized
+instances and one was registered. It stayed green only because instance records
+live in a directory it did not look in, and it matched *filenames*, so any
+document with the word in its title would have tripped it.
+
+Both re-anchored in the invariant each was reaching for. Neither weakened.
+Eleventh and twelfth proxy control of this programme.
+
+## 98.4 A loader that knew half the population
+
+`delegation_catalog.registered_instances()` read `w4-operations` only. Invisible
+for two Acts, because no W3 record had ever named a W1 instance. The moment one
+did, a live instance registered since `ACT-CC-P11-011` came back
+`actor-unknown`.
+
+**A population loader that knows part of the population does not fail. It
+passes, on the part it can see** — which is the same failure mode as `defects: 0`
+from a checker that cannot see what is wrong, arriving one layer down.
+
+## 98.5 A substring control of mine, caught by running it
+
+My own test asserted the module holds no grant registry by searching its source
+for `W4DelegationRegistry`. It failed — on the **module docstring**, which names
+that class precisely to explain that the ledger owns identity.
+
+Left as a substring check, it would have forced the explanation out of the file
+to stay green: a control punishing the documentation for describing the boundary
+it enforces. Rewritten over the AST, where a citation and a call are different
+things.
+
+## 98.6 Classified, not fixed
+
+Re-running the W4 proof would **duplicate an open, human-reserved escalation** —
+ids are `uuid4` and the register has no same-subject idempotency. That is why the
+W4 proof was not re-run. `ACT-CC-P11-013 §31`: classify rather than silently
+expand scope.
+
+## 98.7 State integrity, measured
+
+```text
+ACTIVE grants : 2 (both represented)   W3 records : 3 (2 CURRENT, 1 HISTORICAL)
+ledger : 13 grants — 2 ACTIVE, 9 REVOKED, 2 SUPERSEDED   reconciliation defects : 0
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 667 OK (+44)
+citation 167 documents / 0 errors - stale-state 477 / 0 assertions
+native_core boundaries : 11   13 protected packages untouched
+
+P11 CONSTRUCTED = FALSE   E11 RATIFIED = FALSE   P12 AUTHORIZED = FALSE
+```
+
+**Exhaustion: NOT EXHAUSTED.** One actionable frontier remains — `98.6` — and it
+is outside this Act's authority. No exhaustion claim is made on the strength of
+completing this Act.

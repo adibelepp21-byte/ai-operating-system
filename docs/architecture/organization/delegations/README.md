@@ -11,25 +11,110 @@
 
 ---
 
-## The population is empty, and that is the record
+## The population, and what it is a projection of
 
-**There are zero delegation records here.** The loader
-(`tools/delegation_catalog.py`) reports `0`, its tests prove every defect class
-can fire against fixtures, and nothing is pending.
+**Three records: two `CURRENT` projections and one preserved `HISTORICAL`.**
 
-This is deliberate. `DP-01 §3 W3` authorizes *construction* of delegation
-records, tracking, boundaries and verification. It does not make me a delegator.
-Writing a file that says *"Engineering delegates capability X to agent Y"* is
-not a technical act — **it is an exercise of the authority being delegated**.
-`DP-01 §3 W3` fixes that delegation *"does not create authority"* and *"does not
-authorize itself"*; `DP-04 §8.3` forbids it to *"create authority that does not
-already exist."* A record I authored would be a delegation whose only authority
-source is the executor who wrote it.
+```text
+w3-current-engineering-intelligence-instance-001        CURRENT    → 4313bd2246124a94
+w3-current-governance-artifact-integrity-instance-001   CURRENT    → 47eec2b87a284417
+w4-engineering-intelligence-verification                HISTORICAL → fd1f1302b0224b97
+```
 
-The P10 ownership loader stood in the same position: it existed before
-`FD-P10-003` authorized the population it would read. **Mechanism before
-population is the correct order here; the reverse is authority manufactured by
-writing it down.**
+**This directory was empty until `FD-P11-001`, and that emptiness was correct.**
+`DP-01 §3 W3` authorizes *construction* of delegation records; it does not make
+anyone a delegator. Writing *"Engineering delegates capability X to agent Y"* is
+not a technical act — it is an exercise of the authority being delegated, and a
+record whose only authority source is the executor who wrote it is precisely
+what `DP-01 §3 W3`'s *"does not authorize itself"* forbids. So the mechanism was
+built and the population left at `0`, the same order the P10 ownership loader
+followed: mechanism before population, because the reverse is authority
+manufactured by writing it down.
+
+**`FD-P11-001 §4.1` created a delegator, and `§20` gave this directory a job:**
+
+> W3 Delegation is the organizational mechanism through which the authorized
+> Delegation record is represented and tracked.
+
+Every record here now **projects a grant that already exists** in the operational
+ledger. None of them creates authority, because none of them is the origin of
+the grant it names.
+
+---
+
+## The ledger owns the delegation; this directory owns a view of it
+
+```text
+AUTHORIZED DELEGATION → OPERATIONAL LEDGER   identity · lifecycle · provenance
+                              ↓
+                       RECONCILIATION        tools/delegation_reconciliation.py
+                              ↓
+                W3 ORGANIZATIONAL REPRESENTATION   these records
+```
+
+Which layer owns what was **read off the resident implementation, not chosen**.
+`W4DelegationRegistry.issue()` is the only place a `delegation_id` comes into
+existence; `revoke()` is the only `ACTIVE → REVOKED` transition; the grant
+carries its own `AuthorityProvenance`. A record in this directory carries none
+of those. **So W3 never states a delegation status** — it states which grant it
+represents and what the record is *for*, and the lifecycle is read from the
+ledger on every check.
+
+| Section | Says | Owned by |
+|---|---|---|
+| `## Operational Grant` | the `delegation_id` this record represents | ledger |
+| `## Representation` | `CURRENT` or `HISTORICAL` — the role of the **record** | this directory |
+
+`CURRENT` records are **generated** by `tools/delegation_reconciliation.py` and
+rewritten on rotation. `HISTORICAL` records are written by hand and **never
+modified by the tool** — `ACT-CC-P11-013 §16`: *"Historical records must not be
+destroyed merely to achieve apparent consistency."*
+
+---
+
+## Why this section replaced one that said the opposite
+
+Until `ACT-CC-P11-013` this README stated *"There are zero delegation records
+here"* and *"The population is empty, and that is the record."* One record had
+existed since the first W4 execution.
+
+It went stale by the same mechanism the record itself did. Each proof run calls
+`_revoke_stale_grants()`, withdraws the previous grant and mints a successor —
+so the one W3 record ended up naming a **revoked** grant while two live grants
+had no representation at all, and `tools/delegation_catalog.py` reported
+`defects: 0` throughout, truthfully, because **all eleven of its checks compare a
+record against the organizational population and none of them looks at the
+ledger.** `defects: 0` was a true report from a checker that could not see the
+thing that was wrong.
+
+The reconciliation exists so that this class of drift is detectable rather than
+narrated. Its defect classes are below.
+
+---
+
+## Reconciliation defects — `tools/delegation_reconciliation.py`
+
+| Defect | Condition | Clause |
+|---|---|---|
+| `unrepresented-active-grant` | ledger `ACTIVE`, no `CURRENT` record | `§9` |
+| `stale-active-claim` | `CURRENT` record, grant not `ACTIVE` | `§10` |
+| `unknown-grant` | record names a grant no ledger holds | `§11` |
+| `grant-reference-missing` | record names no grant at all | `§7` |
+| `invalid-representation-role` | role absent or not `CURRENT`/`HISTORICAL` | `§20` |
+| `duplicate-representation` | two `CURRENT` records for one grant | `§4.3` |
+| `history-claims-live-grant` | `HISTORICAL` record of an `ACTIVE` grant | `§10` |
+| `provenance-mismatch` | record contradicts the grant it names | `§12` |
+
+**`unrepresented-active-grant` is the load-bearing one**, and it is the only
+check whose subject is the *ledger* rather than a record — the direction nothing
+was looking in. A record that does not exist cannot be inspected into
+existence, so the check has to start from the grant.
+
+**Lifecycle is derived, never stored here.** `ACTIVE` and `REVOKED` are the only
+statuses the ledger writes. `SUPERSEDED` is a `REVOKED` grant named in an
+evidence record's `superseded_grants`; `INVALID` is a grant whose authority
+record no longer resolves; `MISSING` is referenced-but-absent; `UNKNOWN` is a
+ledger file that will not parse — corruption, which is not absence.
 
 ---
 

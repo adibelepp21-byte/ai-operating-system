@@ -183,30 +183,58 @@ INSTRUMENT_ESTABLISHED_SOURCES = {
 #: Where registered Agent Instances are persisted. A W4 delegation's actor is an
 #: Agent *Instance*, which is neither a Department nor an Agent Definition — the
 #: distinction `FD-P11-001 §6.1` makes mandatory.
-INSTANCE_RECORDS = REPO_ROOT / "docs/architecture/p11/w4-operations"
+#:
+#: **Every operational root, not one.** This read `w4-operations` alone until
+#: `ACT-CC-P11-013`, and the single root was invisible for as long as no W3
+#: record named a W1 instance. The moment reconciliation projected the live W1
+#: grant, the loader reported its recipient as `actor-unknown` — an instance
+#: that has been registered on disk since `ACT-CC-P11-011`, reported absent
+#: because the loader was looking in one of the two places instances live.
+#:
+#: A population loader that knows some of the population does not fail; it
+#: **passes, on the part it can see**, which is why nothing surfaced this for
+#: two Acts.
+INSTANCE_ROOTS = (
+    REPO_ROOT / "docs/architecture/p11/w4-operations",
+    REPO_ROOT / "docs/architecture/p11/w1-operations",
+)
+
+#: Retained: the primary root, and the argument default callers already pass.
+INSTANCE_RECORDS = INSTANCE_ROOTS[0]
 
 
-def registered_instances(root: Path = INSTANCE_RECORDS) -> Dict[str, dict]:
+def registered_instances(root=None) -> Dict[str, dict]:
     """Agent Instances that have actually been registered, read from record.
 
     Empty when none exist, exactly as the Department loader returns nothing for
     an absent tree. An instance that is not on disk is not a valid actor.
+
+    ``root`` accepts one path or several; omitted, every operational root is
+    read, so the answer does not depend on which proof happened to persist the
+    instance.
     """
+    if root is None:
+        roots: Tuple[Path, ...] = INSTANCE_ROOTS
+    elif isinstance(root, (str, Path)):
+        roots = (Path(root),)
+    else:
+        roots = tuple(Path(r) for r in root)
     found: Dict[str, dict] = {}
-    if not root.is_dir():
-        return found
-    for path in sorted(root.glob("*.instance.json")):
-        try:
-            record = json.loads(path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
+    for one in roots:
+        if not one.is_dir():
             continue
-        key = record.get("instance_key")
-        if key:
-            found[key] = record
+        for path in sorted(one.glob("*.instance.json")):
+            try:
+                record = json.loads(path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                continue
+            key = record.get("instance_key")
+            if key:
+                found[key] = record
     return found
 
 
-def _population(org_root: Path, instance_root: Path = INSTANCE_RECORDS):
+def _population(org_root: Path, instance_root=None):
     """``(capabilities_by_department, source_keys, actor_keys, instances)``."""
     departments = read_departments(org_root)
     owned = {r.key: set(r.capabilities) for r in departments}

@@ -65,6 +65,7 @@ from typing import Tuple
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from native_core.core.agent.definition import AgentDefinition  # noqa: E402
+from tools.delegation_reconciliation import project  # noqa: E402
 from tools.agent_instance_registry import AgentInstanceRegistry
 from tools.planning import (
     AuthorityProvenance,
@@ -338,6 +339,21 @@ def run(perform_verification, *, persist: bool = True,
     if persist:
         (OPERATIONS / "first-execution.evidence.json").write_text(
             json.dumps(evidence, indent=2), encoding="utf-8")
+        # `ACT-CC-P11-013 §14` — grant rotation must leave W3 tracking correct.
+        #
+        # The rotation above revoked this instance's previous grant and issued a
+        # successor. Until this call existed, the organizational projection kept
+        # naming the grant that had just been withdrawn, which is exactly how
+        # the W3 record found by `ACT-CC-P11-012` went stale: the mechanism
+        # built to stop grants accumulating is what orphaned it.
+        #
+        # `§15` leaves the timing open and this is the choice: **immediately
+        # after the evidence is persisted**, so the projection's verification
+        # link resolves to the run that produced the grant. The projection
+        # creates no authority — `project()` refuses any grant that is not
+        # `ACTIVE` with resolvable provenance — and a `HISTORICAL` record is
+        # never rewritten (`§16`).
+        project(delegation.delegation_id)
     return evidence
 
 

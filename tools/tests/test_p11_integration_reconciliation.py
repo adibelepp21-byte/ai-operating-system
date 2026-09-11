@@ -145,11 +145,30 @@ class NC01_02_W3AndW4AreOneModelNotTwoAuthorities(_W3Fixture):
                                             "engineering-intelligence-instance-001")))
 
     def test_the_resident_population_now_represents_the_live_grant(self):
+        """Every live grant is represented, and every record verifies clean.
+
+        **Re-anchored under `ACT-CC-P11-013`.** This asserted
+        ``len(resident) == 1`` — a population *count*, standing in for the
+        claim in its own name. The count was one because exactly one record had
+        been written by hand, and the test would have gone on passing while the
+        live grant went unrepresented, which is precisely what happened:
+        `ACT-CC-P11-012` found the single record pointing at a **revoked**
+        grant, with this control green throughout.
+
+        The invariant was never the number. It is that the resident population
+        represents what is actually live, which is now asserted against the
+        ledger instead of against an integer.
+        """
+        from tools.delegation_reconciliation import reconcile
         resident = read_delegations()
-        self.assertEqual(len(resident), 1)
-        self.assertEqual(resident[0].authority_source,
-                         "claude-code-aios-co-founder")
+        self.assertTrue(resident, "the population may not be empty")
+        for record in resident:
+            self.assertEqual(record.authority_source,
+                             "claude-code-aios-co-founder")
         self.assertEqual(verify(resident), [])
+        result = reconcile()
+        self.assertEqual(sorted(result["active_grants"]),
+                         sorted(result["represented_active"]))
 
 
 class NC03_04_05_GrantLifecycle(unittest.TestCase):

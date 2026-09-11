@@ -1,19 +1,19 @@
 {
   "act": "ACT-CC-P11-011",
   "module_constructed_under": "ACT-CC-P11-010",
-  "executed_at": "2026-09-11T03:58:33.704357+00:00",
+  "executed_at": "2026-09-11T05:19:00.412181+00:00",
   "superseded_grants": [
-    "ef07645a652f45b5"
+    "47eec2b87a284417"
   ],
   "authority_chain": [
-    "delegation:47eec2b87a284417",
+    "delegation:94a4df7aca4543ef",
     "delegator:Claude Code / AIOS Co-Founder",
     "decision:FD-P11-001 \u00a79",
     "founder:Founder"
   ],
   "agent_definition": "governance-artifact-integrity-agent",
   "agent_instance": "governance-artifact-integrity-instance-001",
-  "delegation_id": "47eec2b87a284417",
+  "delegation_id": "94a4df7aca4543ef",
   "delegation_status": "ACTIVE",
   "accountable_party": "Claude Code / AIOS Co-Founder",
   "goal": "w1-coordination-proof",

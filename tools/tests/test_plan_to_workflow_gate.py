@@ -159,10 +159,30 @@ class WhatWorkflowRequiresAndPlanningLacks(unittest.TestCase):
         composition = WorkflowComposition(steps=(invented,))
         self.assertEqual(len(composition.acting_instances()), 1)
 
-    def test_no_agent_instance_population_exists_to_draw_from(self):
-        """Even a would-be assigner has nothing legitimate to assign to."""
-        organization = REPO_ROOT / "docs" / "architecture" / "organization"
-        self.assertEqual(list(organization.rglob("*instance*")), [])
+    def test_every_organizationally_named_actor_is_a_registered_instance(self):
+        """An assigner may only assign to an actor that actually exists.
+
+        **Re-anchored under `ACT-CC-P11-013`.** This asserted that
+        ``docs/architecture/organization`` contained no path matching
+        ``*instance*`` — *"no Agent Instance population exists to draw from."*
+
+        That premise was **already false** when it was written: `FD-P11-001 §7`
+        authorized instance creation and `ACT-CC-P11-008` registered one. The
+        control stayed green only because instance records are persisted under
+        `docs/architecture/p11/`, a directory it did not look in. It was passing
+        for a reason unrelated to its claim, and it matched **filenames** — so
+        it would have fired on any document whose title contained the word.
+
+        The invariant the surrounding class actually protects is that nothing
+        fabricates an actor assignment. Asserted here directly: every instance
+        an organizational record names must be in the registered population.
+        """
+        from tools.delegation_catalog import read_delegations, registered_instances
+        registered = set(registered_instances())
+        named = {r.delegated_actor for r in read_delegations()
+                 if r.delegated_actor and "instance" in r.delegated_actor}
+        self.assertTrue(named, "no organizationally named instance to check")
+        self.assertLessEqual(named, registered, sorted(named - registered))
 
 
 class NothingMayFabricateAnActorAssignment(unittest.TestCase):
