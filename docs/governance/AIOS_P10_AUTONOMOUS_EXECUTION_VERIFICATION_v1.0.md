@@ -10770,3 +10770,122 @@ P11 CERTIFIED = FALSE
 No certification was issued, no decision created, no ID minted, no signature
 written. **`CERTIFICATION-READY ≠ CERTIFIED`**, and following `FD-P10-005 §12`,
 certification would not be governance closure either.
+
+---
+
+# 107. `FD-P11-002` persisted — P11 is CERTIFIED, and two numbers I had been repeating were wrong
+
+Instrument:
+[`FD-P11-002-P11-CERTIFICATION.md`](acts/FD-P11-002-P11-CERTIFICATION.md).
+
+```text
+P11 CERTIFIED = TRUE      GOVERNANCE CLOSED = NO
+23f315ba9f504272 = OPEN / NON-BLOCKING      P12 AUTHORIZED = FALSE
+```
+
+## 107.1 The Founder certified; I persisted
+
+`FD-P11-001 §12` item 11 places *"Authority to issue Founder Decisions"* outside
+the delegation. I produced the evidence audit, recorded `CERTIFICATION-READY`,
+and stopped. The Decision is the Founder's.
+
+`DP-01 §13` had listed seven states and conferred none of them —
+`AUTHORIZATION ≠ CONSTRUCTION ≠ OPERATIONAL ≠ VERIFIED ≠ EXHAUSTED ≠ COMPLETE ≠
+CERTIFIED` — and `DP-01 §19` opened the phase at `P11 CERTIFIED = FALSE`. Each
+link was earned at its own gate. This Decision is the last one.
+
+**Persistence verified by structural split, not by search.** My first check
+located the body by searching the file for the supplied bytes and then compared
+the two — a comparison that could not fail, because one side was derived from the
+other. Replaced with a split on the document's horizontal rules, testing each
+candidate remainder by hash: **exactly one** of the file's rules yields
+`fc295da017d2b04134f27e2f423d3faddfc52305ab4f2f0d12d7d3fb7dbfe007` at 8 544
+bytes, running to end of file, appearing once. Byte-identical, verbatim, no
+reconstruction.
+
+## 107.2 Three values the certification did not carry
+
+`GOVERNANCE CLOSED` stays `NO` (`§8`). `23f315ba9f504272` stays **OPEN** — `§7`:
+*"closing the escalation solely to obtain certification is neither required nor
+authorized."* It was not touched. `P12` stays unauthorized (`§9`). `§6` holds the
+13 protected packages outside certification evidence *"merely for repository
+cleanliness"*; they were not read, staged or committed here either.
+
+## 107.3 Eighteen `FALSE` readings left standing
+
+Resident records carrying `P11 CERTIFIED = FALSE` were **not edited**. Each was
+accurate on its date; each is a dated evidence record, not a live variable. No
+resident document tracks certification as mutable current state, so the new value
+is recorded here and in the instrument, and nowhere by overwriting.
+
+## 107.4 Two numbers I had been repeating were never measured
+
+Re-running the suites for this section returned **724** tools tests, against the
+**718** I had recorded three times. The working tree is identical to `e4a8ad5`,
+so the discrepancy could not be new work. Two hypotheses, both falsified by
+measurement: the new instrument adds no tests (724 with and without it), and
+neither do the documents added after the last test change (`a962d51` already
+measures 724 with 22 P11 documents).
+
+Measured across every commit of this session:
+
+```text
+275514d 623 - a707b82 667 - 792093a 705 - 6658c29 707
+9bc3439 707 - a0d93e4 707 - 775de36 707 - a962d51 724 - e4a8ad5 724
+```
+
+**718 is the count at no commit.** It entered at `a962d51` — the commit that took
+the suite from 707 to 724 — and was copied forward into `cd3ff7c` and `e4a8ad5`.
+`stale-state 489` is the same defect: the true count at `a962d51` was **490**, and
+is **492** at `e4a8ad5`. `[I]` Both are consistent with a measurement taken
+mid-work and never refreshed before the section was written, but I cannot
+reconstruct that moment and do not assert it.
+
+What makes this mine rather than incidental: **the citation count sitting on the
+adjacent line was re-measured every time** — 190, then 191, then 192 — while the
+two beside it stayed frozen. I was re-running the auditor and copying the test
+count, in the same breath, in a document whose purpose is to record what was
+measured.
+
+Both errors run in the favourable direction — more tests green, more documents
+scanned clean, zero failures in every measurement then and now — so
+`P11 VERIFIED = TRUE` and `E11-06 PASS` hold on the corrected figures. That is
+why it is a reporting defect and not a verdict defect. It is not why it should be
+excused.
+
+`[U]` **The three documents still carry the wrong figures.** The affected lines
+are `docs/architecture/p11/P11-CERTIFICATION-EVIDENCE-AUDIT.md:19`,
+`docs/architecture/p11/P11-FOUNDER-COMPLETION-REVIEW.md:23` and
+`docs/architecture/p11/P11-FRESH-EXHAUSTION-AND-COMPLETION-READINESS.md:179` for
+the test count, and `:101`, `:99` in the first two for `stale-state 489`. The
+first two are the documents the Founder relied on when certifying. I have **not**
+amended them:
+editing the evidence a Founder has already acted on would leave the record no
+longer matching what was relied upon, and that is a governance question, not a
+clerical one. `[R]` Surfaced for Founder disposition of a correction pass.
+
+Writing that paragraph reproduced the defect it reports, twice. I first rendered
+those locators as `§19` and `§23` — they are **line numbers**, and neither
+document has a section by that number, so a `path:line` locator had been silently
+promoted into a section citation. And the second reference was split across a line
+break, which is the one shape the citation auditor cannot see: it warned about the
+first and stayed silent on the second, so the corpus would have carried an
+unresolvable citation that measured clean.
+
+## 107.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 724 OK = 1801
+citation 193 documents / 1045 citations / 0 errors
+stale-state 493 documents / 0 stale assertions
+Native Core 11 - protected paths read 0 - other dirty paths 0
+
+P11 AUTHORIZED - CONSTRUCTED - OPERATIONAL - VERIFIED - EXHAUSTED - COMPLETE = TRUE
+P11 CERTIFIED = TRUE      E11 RATIFIED = TRUE      E11 PASS = 10/10
+GOVERNANCE CLOSED = NO    P12 AUTHORIZED = FALSE
+23f315ba9f504272 = OPEN / NON-BLOCKING
+```
+
+`P11 CERTIFICATION ≠ P12 AUTHORIZATION`. `CERTIFIED ≠ GOVERNANCE CLOSED`. The
+phase is certified; the programme is not finished, and no authority beyond P11
+was created by certifying it.
