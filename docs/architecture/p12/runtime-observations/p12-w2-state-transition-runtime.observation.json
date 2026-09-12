@@ -1,0 +1,7 @@
+{
+  "runtime_id": "p12-w2-state-transition-runtime",
+  "kind": "RUNTIME",
+  "state": "RuntimeState.STOPPED",
+  "observed_at": "2026-09-12T12:49:39.155916+00:00",
+  "pid": 866
+}

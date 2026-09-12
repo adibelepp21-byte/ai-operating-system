@@ -324,27 +324,49 @@ def _change_owner() -> Tuple[bool, bool, str]:
 
 
 def _alter_state_authority() -> Tuple[bool, bool, str]:
-    """Two surfaces claiming authority over the same system-wide state.
+    """Plant a second surface claiming authority over one system-wide state.
 
-    Reported as **not attempted**. `P12-W2` unified operational state is not
-    built, so there is no surface on which two competing authority claims could
-    be planted. Reporting this as attempted-and-missed would assert that a
-    detector was exercised and stayed silent; nothing was exercised. The
-    absence is the finding, and it is recorded as an absence.
+    **Previously `UNAVAILABLE`, and honestly so**: `P12-W2` unified operational
+    state was not built, so there was no surface on which two competing claims
+    could be planted, and reporting that as an undetected mutation would have
+    asserted a detector was exercised when nothing was. `ACT-CC-P12-W2-001`
+    built the surface, so the mutation is attemptable and is now attempted.
+
+    The mutation is applied to the declared source set in memory. Nothing
+    resident is touched, and the control below proves the detector is silent
+    before the mutation.
     """
-    import importlib
-    for candidate in ("tools.p12_unified_state", "tools.p12_operational_state",
-                      "tools.p12_state_authority"):
-        try:
-            importlib.import_module(candidate)
-        except ImportError:
-            continue
+    from unittest import mock
+    from tools import p12_operational_state as state
+
+    def source(state_id: str, owns: str):
+        return state.StateSource(
+            state_id=state_id, state_class="RUNTIME",
+            semantics=state.SOURCE_OF_TRUTH, owner=state_id,
+            canonical_source="mutation probe", read_path="tools",
+            authority="mutation probe", freshness_model="none",
+            owns_within_class=owns)
+
+    faithful = (source("probe-a", "one portion"),
+                source("probe-b", "a different portion"))
+    with mock.patch.object(state, "SOURCES", faithful):
+        control = [c for c in state.conflicts() if c["kind"] == "CONFLICT"]
+    if control:
         return True, False, (
-            f"{candidate} is resident but this probe does not know its "
-            "authority model; the mutation was not applied")
-    return False, False, (
-        "P12-W2 unified operational state is not built: no state-authority "
-        "surface exists to plant a competing claim on")
+            "the control is unsound: two sources owning different portions "
+            "already report a conflict")
+
+    mutated = (source("probe-a", "the same portion"),
+               source("probe-b", "the same portion"))
+    with mock.patch.object(state, "SOURCES", mutated):
+        detected = [c for c in state.conflicts() if c["kind"] == "CONFLICT"]
+    if detected:
+        return True, True, (
+            "refused: two surfaces claiming one portion of RUNTIME are "
+            "reported as a state authority conflict")
+    return True, False, (
+        "two surfaces claiming the same portion of one state class produced "
+        "no conflict")
 
 
 #: `§50`'s ten, in its order.

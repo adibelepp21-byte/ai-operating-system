@@ -416,6 +416,94 @@ def _execution_provenance_writer() -> Tuple[bool, str]:
                   "existing one")
 
 
+def _operational_state() -> Tuple[bool, str]:
+    """The W2 verifier must report VIOLATED when a property fails.
+
+    Its live answer is nine of nine verified, which is what a verifier checking
+    nothing prints. Two properties are driven to failure on synthetic input: an
+    assigned `F-17` provider, and a projected value that reads as a permission.
+    """
+    from unittest import mock
+    from tools import p12_operational_state as state
+    from tools import p12_operational_state_verifier as verifier
+
+    live = verifier.summary()
+    if live["violated"]:
+        return False, f"the live surface already violates {live['not_verified']}"
+
+    probe = state.StateSource(
+        state_id="probe", state_class="RUNTIME",
+        semantics=state.SOURCE_OF_TRUTH, owner="probe",
+        canonical_source="probe", read_path="tools", authority="none",
+        freshness_model="none", owns_within_class="a probe portion",
+        provider="some-department")
+    with mock.patch.object(state, "SOURCES", (probe,)):
+        assigned = verifier._check_providers_unresolved().status
+    entry = state.StateEntry(
+        state_id="probe", state_class="RUNTIME", status=state.CURRENT,
+        value={"certified": True}, source="probe", observed_at="now",
+        transformation="probe", authority="none",
+        provider=state.UNRESOLVED_PROVIDER, semantics=state.SOURCE_OF_TRUTH)
+    with mock.patch.object(state, "project", return_value=(entry,)):
+        impersonation = verifier._check_no_entry_reads_as_authority().status
+    if assigned != verifier.VIOLATED:
+        return False, f"an assigned F-17 provider reported {assigned}"
+    if impersonation != verifier.VIOLATED:
+        return False, f"a projected certification flag reported {impersonation}"
+    return True, ("moves both ways: an assigned provider and a projected "
+                  "permission both report VIOLATED")
+
+
+def _state_chain() -> Tuple[bool, str]:
+    """`§17` state verification must report SATISFIED when a consumer appears."""
+    from unittest import mock
+    from tools import p12_state_verification as sv
+
+    live = {r.link: r.status for r in sv.verify()}
+    if live.get("CONSUMER") != sv.UNSATISFIED:
+        return False, f"CONSUMER is {live.get('CONSUMER')}; probe assumes it is not"
+    with mock.patch.object(sv, "consumers_of",
+                           return_value=("tools/somewhere.py",)):
+        promoted = sv._link_consumer().status
+    if promoted != sv.SATISFIED:
+        return False, f"a real consumer still reported {promoted}"
+    return True, ("moves both ways: CONSUMER UNSATISFIED with nothing reading "
+                  "the projection, SATISFIED when something does")
+
+
+def _operational_state_projection() -> Tuple[bool, str]:
+    """The projection must report UNKNOWN, never a value, when a source fails.
+
+    Its live answer is eight sources CURRENT. The negative that matters is the
+    one `§14` of the Act names: absence must not become a negative state. A
+    projection whose source raises must yield UNKNOWN with no value, not a zero
+    that a consumer would read as "nothing is running".
+    """
+    from unittest import mock
+    from tools import p12_operational_state as state
+
+    live = state.summary()
+    if live["unknown"]:
+        return False, f"the live projection already reports {live['unknown_states']}"
+
+    def explode(_source):
+        raise RuntimeError("source unreadable")
+
+    probe = state.StateSource(
+        state_id="probe", state_class="RUNTIME",
+        semantics=state.SOURCE_OF_TRUTH, owner="probe",
+        canonical_source="probe", read_path="tools", authority="none",
+        freshness_model="none", owns_within_class="a probe portion")
+    with mock.patch.object(state, "SOURCES", (probe,)), \
+            mock.patch.object(state, "_PROJECTIONS", {"probe": explode}):
+        entries = state.project()
+    if entries[0].status != state.UNKNOWN or entries[0].value is not None:
+        return False, (f"an unreadable source produced {entries[0].status} "
+                       f"with value {entries[0].value!r}")
+    return True, ("moves both ways: CURRENT on readable sources, UNKNOWN with "
+                  "no value when a source raises")
+
+
 def _governance_index() -> Tuple[bool, str]:
     """The index must report a source as stale once it changes underneath."""
     from tools.governance_index import GovernanceIndex, tracked_markdown
@@ -466,6 +554,11 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _execution_chain),
     ("p12_execution_provenance", "an incomplete manifest is refused",
      _execution_provenance_writer),
+    ("p12_operational_state_verifier", "a state property can fail",
+     _operational_state),
+    ("p12_state_verification", "a consumer is recognised", _state_chain),
+    ("p12_operational_state", "an unreadable source yields UNKNOWN",
+     _operational_state_projection),
     ("governance_index", "a source is stale", _governance_index),
 )
 

@@ -13193,3 +13193,117 @@ P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
 VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
 E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
 ```
+
+## 134. P12-W2: a projection, and W6 refusing to call it operational
+
+`ACT-CC-P12-W2-001`. Evidence:
+`docs/architecture/p12/P12-W2-UNIFIED-OPERATIONAL-STATE.md`.
+
+## 134.1 The architecture question was answered by canonical text
+
+The Act asks whether Unified Operational State is a store, a projection, a
+hybrid, or something else, and warns against choosing a store for convenience.
+**The canonical bodies settle it.** `§13` calls W2 *"the canonical integration
+surface"* and names a projection chain; `§15` grants authority to build a
+*"state integration surface"*. Neither names a store.
+
+So nothing here keeps a durable copy of anything a source owns. Every entry is
+re-derived on every call, which makes a stale projection structurally
+impossible — there is no second copy to drift. A control parses the module and
+fails if it contains **any** write path: no `write_text`, no `mkdir`, no
+`unlink`. The verifier's freshness check is what makes that falsifiable: if any
+entry's `observed_at` predates the verification run, something cached it.
+
+## 134.2 A false positive in my own conflict detector
+
+The first `§17` detector compared state **classes** and reported a `GOVERNANCE`
+conflict between the escalation register and the governance index. `§17` says
+*"the same system-wide state"*, not the same class; those two hold different
+facts and neither disputes the other's.
+
+The fix was not to re-label sources until the detector went quiet. Each source
+now declares the portion of its class it owns, and a conflict fires only when
+two claim the same portion. A source declaring no portion is reported
+`UNDECLARED` — a finding, not an exemption, because an unstated claim cannot be
+checked against anyone else's. Live: 0 conflicts, 0 undeclared.
+
+## 134.3 Real state transition, observed through the projection
+
+A third integrated execution ran — real work, 4 of 14 criteria satisfied, a
+genuine failure. The projection was told nothing about it and followed anyway:
+
+```text
+delegation.granted     27 → 28 grants, 7 → 8 active
+execution.provenance   2 → 3 manifests
+execution.recorded     5 → 6 records, 3 → 4 stores, 2 → 3 failures
+runtime.observed       one more terminated runtime
+4 of 8 sources moved; the other 4 correctly did not
+```
+
+Read afterwards through the independent verifier: 9 of 9 checks verified.
+
+## 134.4 W6 says the STATE item is not closed
+
+The Act is explicit that W2 must not be assumed to close W6's STATE item. A
+separate W6 verifier checks `§17`'s chain and reads W2 as data:
+
+```text
+STATE                  SATISFIED
+AUTHORITATIVE SOURCE   SATISFIED
+PROJECTION             SATISFIED
+CONSUMER               UNSATISFIED — no non-test module reads the projection
+```
+
+`chain_complete: False`. W6 STATE moves from `BLOCKED — DEPENDENCY` to
+**PARTIAL**, not to closed. A conformance suite is not counted as a consumer:
+counting tests is how a surface nothing uses comes to look integrated.
+
+**W2 has reproduced the programme hypothesis on itself** — capability exists,
+conformance exists, operational reachability absent. Wiring a consumer is not
+done here: the natural one is W5, and changing W5's read path changes what W5's
+recorded measurements mean, which needs its own reconciliation.
+
+## 134.5 W2 closed a mutation that was previously unattemptable
+
+`§50`'s `alter state authority` was `UNAVAILABLE` — honestly so, because there
+was no surface on which two competing claims could be planted. W2 built one.
+
+```text
+before  10 named · 9 attempted · 7 detected · 1 unavailable
+after   10 named · 10 attempted · 8 detected · 0 unavailable
+```
+
+The control asserting the mutation was unattempted was corrected **because the
+system changed**, not because the control was wrong.
+
+## 134.6 What was refused
+
+All eight providers stay `UNRESOLVED (F-17)`, enforced by a check that fails if
+any is assigned — filling that column from the directory a reader lives in would
+resolve `F-17` by convention. `is_authority()` returns False always;
+`declares()` attributes every governance fact to its instrument and disclaims;
+and a control fails if any function here is named `authorize`, `certify`,
+`approve`, `permit` or `grant`.
+
+## 134.7 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 1072 = 2149
+citation 245 documents / 1214 citations / 0 errors
+W2 8 sources / 8 projected / 0 conflicts / 8 providers unresolved
+W2 verifier 9 checks / 9 verified - W6 STATE 4 links / 3 satisfied / PARTIAL
+mutation 10 attempted / 8 detected / 0 unavailable
+execution chain 3 manifests / 7 of 7 edges each
+negative controls 21 instruments / 21 demonstrated - fresh process 5/5
+
+TraceRecord unchanged - Native Core 11 - certified evidence changes 0
+protected read 0 - historical rewrite 0 - conformance weakened to pass 0
+
+F-16, F-17, F-18 untouched
+P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
+VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
+E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
+```
+
+`W2 VERIFIED ≠ P12 VERIFIED`. W2 is constructed and verified and **not
+operational**, and W6 is what says so.

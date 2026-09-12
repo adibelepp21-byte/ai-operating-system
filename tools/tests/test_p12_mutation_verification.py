@@ -178,11 +178,26 @@ class TheFindingsAreRecordedAsFindings(unittest.TestCase):
             "an issued instrument from a planted one, this finding is closed "
             "and the evidence record must say so")
 
-    def test_state_authority_has_no_surface_to_mutate(self):
+    def test_state_authority_is_now_attemptable_and_detected(self):
+        """Updated because the system changed, not because the test was wrong.
+
+        This mutation was `UNAVAILABLE` while `P12-W2` did not exist: there was
+        no surface on which two competing authority claims could be planted, and
+        reporting an unattempted mutation as missed would have asserted a
+        detector had been exercised. `ACT-CC-P12-W2-001` built the surface, so
+        the mutation is attempted, and the conflict detector refuses it.
+        """
         attempted, detected, detail = mut._alter_state_authority()
-        self.assertFalse(attempted)
-        self.assertFalse(detected)
-        self.assertIn("P12-W2", detail)
+        self.assertTrue(attempted)
+        self.assertTrue(detected, detail)
+
+    def test_the_state_authority_probe_carries_its_own_control(self):
+        """A null result must be a measurement, not a detector that never fires."""
+        _, _, detail = mut._alter_state_authority()
+        self.assertNotIn("control is unsound", detail)
+
+    def test_no_mutation_remains_unavailable(self):
+        self.assertEqual(mut.summary()["unavailable"], 0)
 
     def test_nothing_resident_is_mutated_by_a_full_run(self):
         from tools import organization_catalog as org
