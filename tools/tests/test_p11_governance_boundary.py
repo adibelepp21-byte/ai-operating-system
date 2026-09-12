@@ -428,6 +428,13 @@ P11_SURFACES = (
     # item 10 — declared because the guard below failed the run that created
     # it, the fifth time it has collected.
     REPO_ROOT / "tools" / "w1_cross_department_run.py",
+    # The P12-W6 mutation suite, added under `P12 §19` scope `MUTATION` —
+    # declared because the guard below failed the run that created it, the sixth
+    # time it has collected. It constructs delegation requests in order to have
+    # them refused, so it holds provenance the way a genuine caller does; a
+    # mutation instrument permitted to flatten a citation into free text could
+    # manufacture the very acceptance it reports as a detection.
+    REPO_ROOT / "tools" / "p12_mutation_verification.py",
 )
 
 

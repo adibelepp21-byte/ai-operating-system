@@ -12238,3 +12238,96 @@ Native Core 11 - historical rewrite 0
 F-18 OPEN (Architect-reserved + source-blocked) - F-16, F-17 untouched
 P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
 ```
+
+## 124. Mutation verification: seven contracts refused a violation, two did not, and one had nothing to violate
+
+`§19` scope item **MUTATION**, specified by Blueprint `§50`. Ten named mutations,
+each deliberately attempted against a real detector.
+
+`{'mutations': 10, 'attempted': 9, 'detected': 7, 'missed': 2, 'unavailable': 1}`
+
+Evidence: `docs/architecture/p12/P12-W6-MUTATION-VERIFICATION.md`.
+Instrument: `tools/p12_mutation_verification.py`, 21 conformance tests.
+
+## 124.1 The two misses are findings, and they are kept
+
+**`forge decision`.** The certified-evidence guard determines which phases are
+certified by reading certification statements out of instrument bodies. A body
+containing the sentence is therefore sufficient. The guard cannot tell an
+instrument the Founder issued from one that merely says so. Closing this needs
+an authority signal outside the body — a governance question, not an
+engineering one.
+
+**`duplicate delegation`.** `reconcile` detects duplicated *representation* —
+two `CURRENT` projections of one grant — and the probe exercises that first as
+its own control, so the null result is a measurement. It does not detect
+duplicated *delegation*: two independent `ACTIVE` grants conveying the same
+capability to the same recipient produce an empty defect list. The projection
+store is keyed per recipient, so the duplicate cannot acquire a competing
+record — it is invisible rather than contradictory.
+
+Neither was driven to zero. A mutation suite returning ten detections is
+indistinguishable from one that attempts nothing.
+
+## 124.2 `alter state authority` is UNAVAILABLE, not MISSED
+
+`P12-W2` unified operational state is not built, so there is no surface on which
+a competing authority claim could be planted. Calling that a missed detection
+would assert a detector was exercised and stayed silent. Nothing was exercised.
+The absence is the finding and is recorded as one.
+
+## 124.3 Three defects in my own instrument
+
+**`alter provenance` verified nothing.** It checked that `'provenance-mismatch'`
+was a declared defect kind and reported `DETECTED`. That is `§48` — *"A
+relationship is not considered verified merely because both surfaces exist"* —
+committed inside the module built to refuse it. It now plants a contradicting
+projection and carries an unmutated control.
+
+**`change owner` asserted what it had not measured — and was wrong.** It
+mutated nothing and reported *"no resident detector compares a Department's
+declared owner against an independent authority"*. False:
+`organization_catalog._owner_disagreements` compares a capability record's
+stated Owner against the directory holding it. Run properly against a copy of
+the tree, the mutation is **DETECTED**. The sentence I wrote was not a finding
+about the system; it was a finding about a function that did not look.
+
+**The classifier counted unapplied mutations as undetected ones.**
+`attempted=False, detected=False` mapped to `MISSED`. That is this programme's
+own error in mirror image, in the module written to catch it. It now maps to
+`UNAVAILABLE`, held closed by a conformance test.
+
+Two earlier `UNAVAILABLE` results were my API error — `W4Delegator` does not
+exist; the class is `W4DelegationRegistry`. Both now attempt and both are
+`DETECTED`. They were never findings about the system.
+
+## 124.4 A resident guard caught the new module, for the sixth time
+
+`test_the_declared_p11_surface_set_is_complete` failed on the run that created
+`tools/p12_mutation_verification.py`: the module imports the planning package
+and was not declared. Declared rather than exempted — the declaration subjects
+it to the control requiring every authority-named field to be an
+`AuthorityProvenance`. A mutation instrument permitted to flatten a citation
+into free text could manufacture the acceptance it reports as a detection.
+
+## 124.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 857 OK = 1934
+citation 223 documents / 1170 citations / 0 errors - stale-state 515 / 0
+fresh-process 8/8 reproduced - mutation 10 named / 9 attempted / 7 detected
+certified evidence changes 0 - protected read 0 - Native Core 11
+historical rewrite 0 - conformance test weakened to pass 0
+
+F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
+```
+
+## 124.6 The citation count above was corrected, and why
+
+`1167` was measured, correctly, before `§124` existed. Writing this section added
+three path citations and the true figure became `1170`. The line was corrected to
+the value measured *after* the append, and this note exists because a figure that
+was accurate when taken can still be wrong when published — which is the same
+failure mode as writing a number before measuring it, arriving from the other
+direction.
