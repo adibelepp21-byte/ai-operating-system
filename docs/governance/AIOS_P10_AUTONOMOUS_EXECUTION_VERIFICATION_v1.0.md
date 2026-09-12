@@ -12626,3 +12626,177 @@ construction performed in this increment 0
 F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
 P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
 ```
+
+## 128. Five W6 scope items measured, and the same break found from four directions
+
+`ACT-CC-P12-W6-CONTINUATION-001`, executing the classification of `§127`.
+Construction followed classification, not the reverse.
+
+Five instruments, each measuring one `§19` scope item against the canonical body
+that defines its subject:
+
+```text
+PROVENANCE  §34  tools/p12_provenance_verification.py            17 conformance
+FAILURE     §33  tools/p12_failure_verification.py               18 conformance
+GOVERNANCE  §26  tools/p12_governance_evidence_verification.py   17 conformance
+RUNTIME     §30  tools/p12_runtime_verification.py               12 conformance
+WORKFLOW    §31  tools/p12_workflow_verification.py              15 conformance
+```
+
+Evidence: `P12-W6-PROVENANCE-VERIFICATION.md`, `P12-W6-FAILURE-VERIFICATION.md`,
+`P12-W6-GOVERNANCE-EVIDENCE-VERIFICATION.md`,
+`P12-W6-RUNTIME-AND-WORKFLOW-VERIFICATION.md`.
+
+## 128.1 One break, reached from four directions
+
+Four of the five instruments arrived at the same place by different routes.
+
+**Provenance:** nine of `§34`'s eleven elements are carried, and **zero of two
+executions are assemblable**. A delegation record holds the authority half
+completely, down to a chain ending at the Founder. A Trace record holds the
+execution half. Neither references the other.
+
+**Workflow:** `WORK → EXECUTION` is `BY CONVENTION` — the only thing connecting
+them is a shared actor name, and one actor holds many grants, so a name
+identifies a set rather than a link.
+
+**Failure:** `VERIFIED` is `UNREACHABLE`. The ratified execution vocabulary is
+`{success, failure, escalation}`; no execution record can say it was checked.
+
+**Runtime:** `verification` is the one absent item of nine, for the same reason.
+
+`§29`'s canonical chain is `INTENT → DECISION → WORK → EXECUTION → OBSERVATION
+→ VERIFICATION → EVIDENCE`. It is broken between `DECISION` and `EXECUTION`,
+and again after `OBSERVATION`. It is broken **in the records**, not in the code.
+
+## 128.2 The runtime has no non-manual entry
+
+Measured from the import graph, not from file names: **no root entry point is
+reached by anything but a hand-run script.** Six are imported by nothing; the
+seventh is imported by another root script that is itself imported by nothing.
+There is no service, scheduler, or dispatcher.
+
+This sharpens the programme hypothesis instead of confirming it. The capability
+is not merely reached only by its own demonstrator — the runtime has no
+non-manual entry at all. A conformance control parses the module and fails if
+any executable string literal contains `_proof`, so a name-based shortcut cannot
+return.
+
+## 128.3 `EXECUTION → OBSERVATION` shares no name at all
+
+The executions that produced durable traces ran under `p12-w4-durability-proof`.
+The published observations are of `p11-w1-runtime`,
+`p12-f4-runtime-observation`, `p12-f11-workflow-observation`. **No name appears
+on both sides.** Runs that produce execution records are not observed; runs that
+are observed produce no execution records.
+
+## 128.4 Governance evidence is not readable as data
+
+Across 385 resident governance instruments, **one of `§26`'s nine elements is
+established** — provenance, and structurally rather than because any instrument
+states it. The best-covered label reaches 123 of 385. Two elements, **affected
+surfaces** and **verification**, have no resident label at all.
+
+The obvious objection is that 385 is diluted by documents that are not decision
+instruments. It predicts a narrower population scores better. **It scores
+worse**: over the 33 Founder acts, scope is 1/33 and current state 2/33. Those
+instruments state these things in prose, at length, and label them less often
+than the corpus average. The objection is falsified in the direction opposite to
+the one it predicts.
+
+What this measures is machine-readable establishment, and the module says so in
+every line it emits. `§26` exists so governance evidence can be *used*, and every
+resident consumer reads labels. Nothing here says any decision was improperly
+made.
+
+## 128.5 The five retry rules are NOT APPLICABLE, not satisfied
+
+`§33` forbids retry creating duplicate authority, duplicate delegation,
+duplicate execution, orphan state, or false success. A syntax-tree search over
+every live module finds **no retry mechanism**; the only one in the repository
+sits in `docs/architecture/history` and is unreachable.
+
+With no retry, none of the five can be violated — and none is controlled
+against. Reporting them satisfied would be the cleanest possible lie, so the
+status is `NOT APPLICABLE` and a control asserts it is never `PASS`.
+
+`REFUSED` and `BLOCKED` are `RAISED ONLY`: two distinct refusal types are raised
+and both persist into the same record shape, which carries no field naming which
+occurred. The system tells them apart in flight and loses the distinction at
+rest — and it is the record, not the traceback, that anyone reads later.
+
+## 128.6 Four defects in my own instruments
+
+**A verifier counted itself.** `p12_failure_verification` reported three live
+retry mechanisms in a system that has none; all three were its own functions
+named `retry_mechanisms`, `_retryable`, `retry_prohibitions`. The search
+population included the module performing the search.
+
+**A probe called `len()` on an integer** and reported a working observation
+surface as `ABSENT` with its own `TypeError` as the reason.
+
+**A probe read a field that does not exist** — `Observation.subject`; the real
+name is `runtime_id` — and reported a workflow join `BROKEN` with an
+`AttributeError` as the reason. The join is still broken after the fix, but for
+a measured reason rather than a crash.
+
+**A conformance control matched its own explanation.** The check forbidding
+name-based classification scanned every string constant and fired on the
+docstring saying names are not used — the same shape as the line-locator guard
+that matched the comment describing it.
+
+All four are disclosed rather than quietly corrected. Three of the four would
+have **overstated** a defect in the system, which is the direction that looks
+like diligence and is still wrong.
+
+## 128.7 Every new verifier carries a runtime negative control
+
+`p12_negative_control_verification` now drives fifteen instruments, each to a
+negative in this process rather than by citing a suite. Every finding above is
+proven able to move: a provenance join is recognised when present, a failure
+state is promoted when the vocabulary earns it, governance coverage rises when
+the corpus labels an element, an entry point becomes `REACHED` when a package
+imports it, and a fully referenced workflow chain reports connected.
+
+Without these, five instruments reporting findings would be indistinguishable
+from five instruments that always report findings.
+
+## 128.8 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 975 = 2052
+W6 scope 13 - classified 13 - measured 9 - blocked 3 - reopened 1 (§49)
+provenance 11 elements / 9 carried / 0 of 2 executions assemblable
+failure 7 states / 3 distinguished / retry NOT APPLICABLE
+governance 9 elements / 1 established / 385 instruments
+runtime 9 items / 8 discovered / reachability HAND-INVOKED ONLY
+workflow 5 joins / 2 evidenced / chain NOT connected
+negative controls 15 instruments / 15 demonstrated
+
+certified evidence changes 0 - protected read 0 - Native Core 11
+ratified vocabulary widened 0 - record shape changed 0
+conformance test weakened to pass 0 - historical rewrite 0
+
+F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
+```
+
+## 128.9 The fifth time I wrote a number before measuring it
+
+`§128.8` and the runtime/workflow evidence record both said `tools 976` and
+`total 2053`. I arrived at those by adding the new conformance counts to the
+previous total instead of running the suite. The measured values are **975** and
+**2052**; both documents were corrected in place.
+
+`MEASURE ≠ PREDICT`, fifth occurrence in this document — `§107`, `§110.6`,
+`§115.6`, `§126.6`, and here. The arithmetic was reasonable and it was still a
+prediction. Four of the previous four were disclosed and it happened again in
+the same increment whose subject is instruments that must not report unmeasured
+values.
+
+Recorded here rather than silently fixed, and the original figures are stated
+so the correction can be checked.
+
+Measured at this point: `native_core` 801 (1 expected failure) · `consumers` 276
+· `tools` 975 = **2052**. Citation audit: 237 documents, 1197 citations, 0
+errors.

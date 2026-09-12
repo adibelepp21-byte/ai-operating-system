@@ -194,6 +194,135 @@ def _self_model() -> Tuple[bool, str]:
                    f"while pointed at an empty root — {detail}")
 
 
+def _provenance() -> Tuple[bool, str]:
+    """Provenance verification must report ASSEMBLABLE when a join exists.
+
+    This instrument's live result is already the non-positive one — `NOT
+    ASSEMBLABLE`, because no execution names the delegation that authorized it.
+    So the negative that needs demonstrating is the discriminating one: unless
+    the checker can reach `ASSEMBLABLE`, its live answer is a constant rather
+    than a measurement, and the finding it reports would be indistinguishable
+    from a checker that always says no.
+
+    Both directions are driven here on synthetic inputs, and the live corpus is
+    not touched.
+    """
+    from tools import p12_provenance_verification as prov
+    delegation = {"delegation_id": "d1", "delegator": "x",
+                  "recipient_instance": "i-001", "authority_record": "a.md",
+                  "objective": "o", "work_scope": ["w"],
+                  "capability_scope": ["c"], "verification_requirement": "v"}
+    trace = {"agent_instance": "i-001", "runtime": "r", "outputs": {"k": 1}}
+
+    unjoined = prov.assembly(delegations=(delegation,), traces=(trace,))
+    joined = prov.assembly(delegations=(delegation,),
+                           traces=(dict(trace, delegation_id="d1"),))
+    if unjoined["status"] != prov.NOT_ASSEMBLABLE:
+        return False, ("an execution with no delegation reference was not "
+                       "reported NOT ASSEMBLABLE")
+    if joined["status"] != prov.ASSEMBLABLE:
+        return False, ("an execution naming its delegation was still reported "
+                       f"{joined['status']}; the live result is a constant")
+    return True, ("moves both ways: unreferenced execution NOT ASSEMBLABLE, "
+                  "referenced execution ASSEMBLABLE")
+
+
+def _failure() -> Tuple[bool, str]:
+    """Failure verification must promote a state when the system earns it.
+
+    Its live result is already non-positive — four of seven states are not
+    distinguished. So the negative that needs demonstrating is that the checker
+    is not stuck there: given a Trace vocabulary containing `verified`, or an
+    escalation record naming the refusal type, the corresponding state must
+    become `DISTINGUISHED`. Otherwise the four findings are a constant.
+    """
+    from unittest import mock
+    from tools import p12_failure_verification as fail
+
+    live = {r.state: r.status for r in fail.verify()}
+    if live.get("VERIFIED") != fail.UNREACHABLE:
+        return False, f"VERIFIED is {live.get('VERIFIED')}; probe assumes the live state"
+    with mock.patch.object(fail, "_trace_statuses",
+                           return_value=frozenset({"success", "verified"})):
+        promoted = fail._verified().status
+    if promoted != fail.DISTINGUISHED:
+        return False, ("a vocabulary containing 'verified' still reported "
+                       f"{promoted}; the finding is a constant")
+    return True, ("moves both ways: VERIFIED UNREACHABLE on the ratified "
+                  "vocabulary, DISTINGUISHED on one that holds it")
+
+
+def _governance_evidence() -> Tuple[bool, str]:
+    """Governance-evidence coverage must move when the corpus does.
+
+    Its live result is already non-positive — one of nine elements established.
+    The negative that needs demonstrating is that it is not pinned there: a
+    synthetic corpus in which every instrument carries a label must report that
+    element `ESTABLISHED`, and one in which none does must report `ABSENT`.
+    """
+    from pathlib import Path as _Path
+    from tools import p12_governance_evidence_verification as gov
+
+    every = [(_Path("a.md"), "Status: ACTIVE\n") for _ in range(4)]
+    none = [(_Path("a.md"), "nothing here\n")]
+    high = {r.element: r.status for r in gov.coverage(population=every)}
+    low = {r.element: r.status for r in gov.coverage(population=none)}
+    if high.get("status") != gov.ESTABLISHED:
+        return False, ("a corpus labelling every instrument still reported "
+                       f"{high.get('status')}")
+    if low.get("status") != gov.ABSENT:
+        return False, f"a corpus labelling none still reported {low.get('status')}"
+    return True, ("moves both ways: ESTABLISHED when every instrument carries "
+                  "the label, ABSENT when none does")
+
+
+def _runtime_integration() -> Tuple[bool, str]:
+    """Runtime reachability must report REACHED when a package reaches an entry.
+
+    The live answer is `HAND-INVOKED ONLY`. Unless the checker can reach
+    `REACHED`, that answer is a shape rather than a measurement.
+    """
+    from unittest import mock
+    from tools import p12_runtime_verification as rt
+
+    if rt.reachability()["status"] != rt.HAND_INVOKED:
+        return False, "the live system is no longer hand-invoked only"
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        (root / "entry.py").write_text("x = 1\n", encoding="utf-8")
+        (root / "pkg").mkdir()
+        (root / "pkg" / "c.py").write_text("import entry\n", encoding="utf-8")
+        with mock.patch.object(rt, "REPO_ROOT", root):
+            points = {p.module: p for p in rt.entry_points()}
+    if points["entry.py"].status != rt.REACHED:
+        return False, ("an entry point imported from a package was still "
+                       f"{points['entry.py'].status}")
+    return True, ("moves both ways: HAND-INVOKED ONLY live, REACHED when a "
+                  "non-root surface imports the entry point")
+
+
+def _workflow_chain() -> Tuple[bool, str]:
+    """The workflow chain must connect when every join carries a reference."""
+    from unittest import mock
+    from tools import p12_workflow_verification as wf
+
+    if wf.chain_is_connected():
+        return False, "the live chain is already connected; probe assumes it is not"
+    joined = tuple(wf.JoinResult(a, b, wf.EVIDENCED, "ref", "")
+                   for a, b in wf.WORKFLOW_JOINS)
+    with mock.patch.object(wf, "verify", return_value=joined):
+        connected = wf.chain_is_connected()
+    by_convention = (wf.JoinResult("A", "B", wf.BY_CONVENTION, "name", ""),)
+    with mock.patch.object(wf, "verify", return_value=by_convention):
+        convention_connects = wf.chain_is_connected()
+    if not connected:
+        return False, "a fully evidenced chain still reported disconnected"
+    if convention_connects:
+        return False, "a BY CONVENTION join was counted as connected"
+    return True, ("moves both ways, and a shared name never counts as a "
+                  "connection")
+
+
 def _governance_index() -> Tuple[bool, str]:
     """The index must report a source as stale once it changes underneath."""
     from tools.governance_index import GovernanceIndex, tracked_markdown
@@ -228,6 +357,16 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_mutation_verification", "a mutation is MISSED", _mutation),
     ("p12_regression_verification", "a class REGRESSED", _regression),
     ("p12_self_model", "a question answers UNKNOWN", _self_model),
+    ("p12_provenance_verification", "a join is recognised when present",
+     _provenance),
+    ("p12_failure_verification", "a state is promoted when earned",
+     _failure),
+    ("p12_governance_evidence_verification",
+     "coverage moves with the corpus", _governance_evidence),
+    ("p12_runtime_verification", "reachability is recognised",
+     _runtime_integration),
+    ("p12_workflow_verification", "a connected chain is recognised",
+     _workflow_chain),
     ("governance_index", "a source is stale", _governance_index),
 )
 

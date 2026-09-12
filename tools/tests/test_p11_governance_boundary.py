@@ -441,6 +441,13 @@ P11_SURFACES = (
     # an unresolvable citation is still refused, which is a control that would
     # be worthless if the module could hold an unverified provenance itself.
     REPO_ROOT / "tools" / "p12_regression_verification.py",
+    # The P12-W6 failure-behaviour suite, added under `P12 §19` scope `FAILURE`
+    # — declared because the guard below failed the run that created it, the
+    # eighth time it has collected. It reads the planning surface to identify
+    # the two refusal types `§33` requires be told apart, and a module holding
+    # an unverified provenance could not credibly report on the provenance of
+    # anyone else's refusal.
+    REPO_ROOT / "tools" / "p12_failure_verification.py",
 )
 
 
