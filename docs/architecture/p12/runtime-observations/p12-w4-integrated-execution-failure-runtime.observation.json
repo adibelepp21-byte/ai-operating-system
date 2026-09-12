@@ -1,0 +1,7 @@
+{
+  "runtime_id": "p12-w4-integrated-execution-failure-runtime",
+  "kind": "RUNTIME",
+  "state": "RuntimeState.STOPPED",
+  "observed_at": "2026-09-12T12:24:27.232189+00:00",
+  "pid": 16864
+}

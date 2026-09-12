@@ -1,14 +1,14 @@
 # P12-W4 — Execution Integration
 
 **Act:** `ACT-CC-P12-W4-001`.
-**Status:** [E] one real execution keeps the whole `§29` contract and is verified
-independently. **7 of 7 canonical edges JOINED** for that execution; 3 older
-executions remain unjoined and were not retroactively joined.
+**Status:** [E] two real executions keep the whole `§29` contract and are verified
+independently. **7 of 7 canonical edges JOINED** for both executions run under it —
+one success, one failure; 3 older executions remain unjoined and were not retroactively joined.
 **Instruments:** `tools/p12_execution_provenance.py` (writer) ·
 `tools/p12_execution_chain_reader.py` (independent reader) ·
 `p12_w4_integrated_execution.py` (the real path).
-**Conformance:** `tools/tests/test_p12_execution_chain.py` (19 tests, including
-`§23` Tests A–H).
+**Conformance:** `tools/tests/test_p12_execution_chain.py` (27 tests, including
+`§23` Tests A–H and Test G at corpus level).
 
 ---
 
@@ -236,9 +236,48 @@ F-4, F-5, F-10′, F-11, F-12 valid · F-15 still a false positive
 no verifier weakened to obtain PASS
 ```
 
+## 10. `§26` The chain carries a non-success outcome
+
+[C] `§26`: *"W4 must not assume only successful execution."* A terminal state
+nothing has ever reached is not a state the system distinguishes, and the chain
+had only ever carried a success.
+
+[E] A second real execution was run against an artifact the work genuinely fails
+against: `tools/p12_execution_provenance.py` does not contain the
+`FD-P11-001 §13` delegation element names. **The criteria are identical in both
+runs and nothing was injected** — only the subject differs, and the outcome is
+whatever the verification produced.
+
+```text
+001  subject tools/w4_delegation.py              14 criteria · 14 satisfied · success
+002  subject tools/p12_execution_provenance.py   14 criteria ·  5 satisfied · failure
+```
+
+[E] Both chains verify **`JOINED`, 7 of 7 edges**. The failure carries the chain
+as completely as the success: its Trace record holds `status: failure`, its
+manifest holds the unsatisfied criteria by name, and its observation resolves.
+
+## 11. `§23` Test G, at corpus level
+
+[E] The two executions share **one actor** — `engineering-intelligence-instance-001`
+performed both — and are distinguished by grant, not by name:
+
+- two distinct `delegation_id` values, each bound to its own plan;
+- two distinct trace addresses, `store` and `ordinal`;
+- **swapping the two real grants breaks both chains**, verified against
+  persisted records rather than a mutated copy.
+
+[D] This is the strongest available form of the test: the earlier version
+substituted a grant belonging to an older programme run, and this one swaps two
+grants issued minutes apart to the same actor under the same integration. The
+join holds because it resolves a binding, not because the names differ.
+
+[E] Corpus state after the second run: **5 of 8 executions joined**, `2/5` Trace
+records, 2 manifests. The three unjoined remain unjoined.
+
 ## 9. What this does not establish
 
-[C] One execution keeps the whole contract. **Six others do not**, and three of
+[C] Two executions keep the whole contract. **Six others do not**, and three of
 those cannot without fabricating history.
 
 [C] `§17` runtime reachability is **not** resolved. The chain is integrated; the
@@ -251,4 +290,4 @@ matter was settled.
 ---
 
 **Suite state at this record:** `native_core` 801 (1 expected failure) ·
-`consumers` 276 · `tools` 1016 · total **2093**.
+`consumers` 276 · `tools` 1024 · total **2101**.

@@ -27,6 +27,13 @@ def _live_manifest() -> dict:
     return dict(found[0])
 
 
+def _manifest_by_status(status: str) -> dict:
+    for payload in writer.manifests():
+        if payload.get("status") == status:
+            return dict(payload)
+    raise AssertionError(f"no persisted manifest with status {status!r}")
+
+
 class TheChainHoldsOnTheLiveCorpus(unittest.TestCase):
     def test_the_seven_canonical_edges_are_read(self):
         self.assertEqual(
@@ -223,6 +230,70 @@ class TestH_StaleObservation(unittest.TestCase):
         from tools import p12_runtime_observation as obs
         answer = obs.what_is_running(obs.OBSERVATION_ROOT)
         self.assertNotIn(_live_manifest()["runtime_id"], answer["live"])
+
+
+class TheChainCarriesANonSuccessOutcome(unittest.TestCase):
+    """`§26`: W4 must not assume only successful execution.
+
+    A terminal state nothing has ever reached is not a state the system
+    distinguishes, so a second real execution was run against an artifact the
+    work genuinely fails against. The criteria are identical in both runs; only
+    the subject differs, and the outcome is whatever the verification produced.
+    """
+
+    def test_a_failed_execution_is_recorded_and_joined(self):
+        failed = _manifest_by_status("failure")
+        verdict = reader.verify_manifest(failed)
+        self.assertTrue(verdict.joined,
+                        "a failure must carry the chain as fully as a success")
+
+    def test_the_failure_is_real_not_injected(self):
+        failed = _manifest_by_status("failure")
+        outcome = failed["outcome"]
+        self.assertGreater(len(outcome["unsatisfied"]), 0)
+        self.assertEqual(outcome["criteria"],
+                         outcome["satisfied"] + len(outcome["unsatisfied"]))
+
+    def test_the_trace_record_carries_the_failure_status(self):
+        from tools import p12_provenance_verification as prov
+        failed = _manifest_by_status("failure")
+        traces = [t for t in prov.trace_records()
+                  if t.get("__store") == failed["trace_store"]
+                  and t.get("__ordinal") == failed["trace_ordinal"]]
+        self.assertEqual(len(traces), 1)
+        self.assertEqual(traces[0]["status"], "failure")
+
+    def test_success_and_failure_are_both_present(self):
+        statuses = {m.get("status") for m in writer.manifests()}
+        self.assertIn("success", statuses)
+        self.assertIn("failure", statuses)
+
+
+class TestG_DuplicateActorAtCorpusLevel(unittest.TestCase):
+    """`§23` Test G against persisted records rather than a mutated copy."""
+
+    def test_two_real_executions_share_one_actor(self):
+        actors = {m["agent_instance"] for m in writer.manifests()}
+        self.assertEqual(len(actors), 1,
+                         "precondition: the actor name cannot distinguish them")
+        self.assertGreaterEqual(len(writer.manifests()), 2)
+
+    def test_they_are_distinguished_by_grant_not_by_actor(self):
+        grants = [m["delegation_id"] for m in writer.manifests()]
+        self.assertEqual(len(set(grants)), len(grants),
+                         "each execution must carry its own grant")
+
+    def test_each_addresses_its_own_trace_record(self):
+        addresses = [(m["trace_store"], m["trace_ordinal"])
+                     for m in writer.manifests()]
+        self.assertEqual(len(set(addresses)), len(addresses))
+
+    def test_swapping_the_two_real_grants_breaks_both_chains(self):
+        first, second = writer.manifests()[0], writer.manifests()[1]
+        swapped_first = dict(first, delegation_id=second["delegation_id"])
+        swapped_second = dict(second, delegation_id=first["delegation_id"])
+        self.assertFalse(reader.verify_manifest(swapped_first).joined)
+        self.assertFalse(reader.verify_manifest(swapped_second).joined)
 
 
 class WhatThisDoesNotEstablish(unittest.TestCase):

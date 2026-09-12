@@ -67,10 +67,33 @@ FD_RECORD = ("docs/governance/acts/"
              "FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md")
 DP01_RECORD = "docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md"
 
-SUBJECT = REPO_ROOT / "tools" / "w4_delegation.py"
-EXECUTION_ID = "p12-w4-integrated-execution-001"
-STORE_NAME = "p12-w4-integrated-execution"
-RUNTIME_ID = "p12-w4-integrated-execution-runtime"
+#: Two runs, deliberately. `ACT-CC-P12-W4-001 §26`: *"W4 must not assume only
+#: successful execution."* A chain that has only ever carried a success has not
+#: shown it can carry anything else, and a terminal state nothing has ever
+#: reached is not a state the system distinguishes.
+#:
+#: The second subject is chosen because the work genuinely fails against it —
+#: `p12_execution_provenance.py` does not contain the `FD-P11-001 §13`
+#: delegation element names — not because a failure was injected. The criteria
+#: are identical in both runs. Only the artifact differs, and the outcome is
+#: whatever the real verification produces.
+RUNS = {
+    "001": {
+        "subject": REPO_ROOT / "tools" / "w4_delegation.py",
+        "store": "p12-w4-integrated-execution",
+        "runtime": "p12-w4-integrated-execution-runtime",
+        "goal": "p12-w4-integrated-execution",
+        "plan": "p12-w4-integrated-execution-plan-0",
+    },
+    "002": {
+        "subject": REPO_ROOT / "tools" / "p12_execution_provenance.py",
+        "store": "p12-w4-integrated-execution-failure",
+        "runtime": "p12-w4-integrated-execution-failure-runtime",
+        "goal": "p12-w4-integrated-execution-failure",
+        "plan": "p12-w4-integrated-execution-failure-plan-0",
+    },
+}
+
 INSTANCE_KEY = "engineering-intelligence-instance-001"
 
 DELEGATION_ROOT = REPO_ROOT / "docs/architecture/p12/w4-operations"
@@ -83,12 +106,17 @@ DEFINITION = AgentDefinition(
     specified_skills=(), specified_workflows=())
 
 WORK_SCOPE = ("verify-delegation-elements",)
-GOAL_KEY = "p12-w4-integrated-execution"
-PLAN_KEY = "p12-w4-integrated-execution-plan-0"
 
 
-def run(*, persist: bool = True) -> dict:
+def run(run_key: str = "001", *, persist: bool = True) -> dict:
     """Execute the chain once. Returns what was produced, not a verdict."""
+    config = RUNS[run_key]
+    SUBJECT = config["subject"]
+    STORE_NAME = config["store"]
+    RUNTIME_ID = config["runtime"]
+    GOAL_KEY = config["goal"]
+    PLAN_KEY = config["plan"]
+    EXECUTION_ID = f"p12-w4-integrated-execution-{run_key}"
     # ── INTENT ────────────────────────────────────────────────────────────
     surface = PlanningSurface()
     plan_authority = AuthorityProvenance("DP-01 §3 W2", DP01_RECORD)
@@ -217,7 +245,8 @@ def _trace_ordinal(store_path: Path) -> int:
 
 
 def main() -> int:
-    result = run(persist=True)
+    run_key = sys.argv[1] if len(sys.argv) > 1 else "001"
+    result = run(run_key, persist=True)
     for key, value in result.items():
         print(f"{key:<16} {value}")
     print()

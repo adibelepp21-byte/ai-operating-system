@@ -13077,3 +13077,50 @@ E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
 ```
 
 `W4 VERIFIED ≠ P12 VERIFIED`. One execution keeps the whole contract; six do not.
+
+## 132. The chain carries a failure, and Test G run against real records
+
+`§26`: *"W4 must not assume only successful execution."* The chain had only ever
+carried a success, and a terminal state nothing has ever reached is not a state
+the system distinguishes.
+
+A second real execution was run against an artifact the work genuinely fails
+against — `p12_execution_provenance.py` does not contain the `FD-P11-001 §13`
+delegation element names. **The criteria are identical in both runs and nothing
+was injected.** Only the subject differs.
+
+```text
+001  tools/w4_delegation.py               14 criteria · 14 satisfied · success
+002  tools/p12_execution_provenance.py    14 criteria ·  5 satisfied · failure
+```
+
+Both verify **JOINED, 7 of 7 edges**. The failure carries the chain as
+completely as the success: `status: failure` in its Trace record, the
+unsatisfied criteria by name in its manifest, its observation resolving.
+
+## 132.1 Test G against persisted records
+
+Both executions were performed by **one actor**. They are distinguished by
+grant: two `delegation_id` values each bound to its own plan, two trace
+addresses, and **swapping the two real grants breaks both chains**.
+
+That is the strongest available form of `§23` Test G. The earlier version
+substituted a grant from an older programme run; this one swaps two grants
+issued minutes apart, to the same actor, under the same integration. The join
+holds because it resolves a binding, not because the names happen to differ.
+
+## 132.2 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 1024 = 2101
+execution chain 2 manifests / 7 of 7 edges JOINED each / 0 dangling
+provenance 11 of 11 elements / 5 of 8 executions joined / trace 2 of 5
+terminal states carried: success, failure
+
+TraceRecord unchanged - ratified vocabulary widened 0 - Native Core 11
+certified evidence changes 0 - historical rewrite 0
+conformance test weakened to pass 0
+
+F-16, F-17, F-18 untouched
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
+```
