@@ -12420,3 +12420,106 @@ historical rewrite 0 - conformance test weakened to pass 0
 F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
 P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
 ```
+
+## 126. Negative controls, and the exhaustion claim that was wrong
+
+## 126.1 The correction
+
+After committing `§125` I wrote that regression was the last W6 item buildable
+without a reserved boundary. **That was wrong.** `§19` lists **thirteen**
+minimum scope items. Five were built. **Eight were not**, and not one of the
+eight touches a reserved boundary.
+
+`EXHAUSTION ≠ EXHAUSTION OF WHAT I HAPPENED TO BUILD.` The error was found by
+re-reading `§19` from source instead of from my own prior report. That is Rule 0
+and this is what Rule 0 is for.
+
+`NEGATIVE CONTROLS` is now the sixth of thirteen. Seven remain: `RUNTIME`,
+`WORKFLOW`, `GOVERNANCE`, `STATE`, `EVIDENCE`, `PROVENANCE`, `FAILURE`.
+
+## 126.2 A scope about the verifiers, not the system
+
+`MUTATION` asks whether the system detects a violation. `REGRESSION` asks
+whether behavior was lost. `NEGATIVE CONTROLS` asks what comes before both: can
+each verification instrument report a negative at all? An instrument that
+structurally cannot fail is not a verifier. It is a formatted assertion, and its
+green output carries no information about anything.
+
+Ten instruments, ten negatives **driven at runtime in this process**, zero
+cited. Citing a module's own conformance suite would establish only that two
+surfaces exist — `§48` — and would let an instrument that has lost the ability
+to fail keep a demonstration it no longer earns.
+
+Evidence: `docs/architecture/p12/P12-W6-NEGATIVE-CONTROL-VERIFICATION.md`.
+Instrument: `tools/p12_negative_control_verification.py`, 17 conformance tests.
+
+## 126.3 The finding: the Self-Model's root parameter had no effect
+
+Three Self-Model questions — what capabilities exist, what is running, what
+failed — took a `root` argument and ignored it, reading the other modules'
+constants instead. Pointed at an empty directory they returned answers
+byte-identical to the live ones. `failed` reported `failures: 1` about a
+directory containing nothing.
+
+The model could not be isolated, so any claim that it had been verified
+*against* a corpus was unfalsifiable: the answer was the same for every corpus,
+including none.
+
+**It is the same defect `p12_cross_phase_verification` carried**, where evidence
+roots were bound as default arguments at import. Fixing that instance did not
+generalize and nothing resident could see the second one. That is exactly why
+`§19` lists this scope separately from the other twelve.
+
+Fixed. The three now derive their store root from the root they are given, and
+all three answer `UNKNOWN` against an empty one. A root explicitly redirected
+outside the repository is honored as given, because that is how the resident
+suites isolate these questions and re-basing it would have broken them — found
+by running the suite, not by reasoning about it.
+
+**The live measurement did not move:** `{questions: 12, verified: 10,
+inferred: 2, unknown: 0}` before and after. The numbers in the W5 evidence
+record were correct. What was wrong was not the value but the ability to
+challenge it.
+
+## 126.4 Two things recorded and deliberately not fixed
+
+Six Self-Model questions raise rather than answering `UNKNOWN` against a root
+that is not a git repository. A non-repository is arguably outside the contract,
+so it is reported in the instrument's own output rather than treated as a
+defect.
+
+`authority` and `authoritative` are answered from declared constants no corpus
+can change, and are left root-independent. Faking a dependency so they look
+isolable would manufacture the property this scope exists to measure.
+
+## 126.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 896 OK = 1973
+W6 scope 13 items - built 6 - remaining 7 - reserved 0 of the remaining
+negative controls 10 instruments / 10 demonstrated / 0 cited
+mutation 10 named / 9 attempted / 7 detected - regression 11 classes / 1 unanchored
+controls at P11 certification 2089 → 2244 - removed 0 - weakened 0
+certified evidence changes 0 - protected read 0 - Native Core 11
+historical rewrite 0 - conformance test weakened to pass 0
+
+F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
+```
+
+## 126.6 I wrote a number before measuring it, for the fourth time
+
+`§126.5` said `2244` only after correction. I first wrote `2234` — a figure I
+arrived at by arithmetic on the previous section rather than by running
+`structural()`. The measured value is `2244`.
+
+`MEASURE ≠ PREDICT`. This is the fourth occurrence recorded in this document
+(`§107`, `§110.6`, `§115.6`, and here), and the third time it has happened in a
+section whose subject is the discipline of not doing it. The correction is made
+in place and the original is stated here rather than erased, because a document
+that only ever shows corrected numbers teaches nothing about how they were
+arrived at.
+
+Two counts in this document measure different things and are never reconciled:
+`2244` **declared** control methods read from source, and `1973` **executed**
+tests reported by the runners.

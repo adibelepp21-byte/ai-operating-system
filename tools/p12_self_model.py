@@ -81,6 +81,29 @@ class Answer:
         return self.status in (VERIFIED, INFERRED) and self.value is not None
 
 
+def _under(root: Path, module_root: Path, module_repo: Path) -> Path:
+    """Re-base another module's root onto `root`.
+
+    These three questions are answered from stores that live at fixed places in
+    the repository, and the first version read those modules' own constants —
+    which meant the `root` parameter was in the signature and had no effect.
+    Pointed at an empty directory the answers came back byte-identical to the
+    live ones, so the model could not be isolated, and any claim that it had
+    been verified *against* a given corpus was unfalsifiable. Found by the
+    `NEGATIVE CONTROLS` scope of `§19`, which is the same defect
+    `p12_cross_phase_verification` carried and the reason that scope exists.
+    """
+    try:
+        relative = module_root.relative_to(module_repo)
+    except ValueError:
+        # The other module's root has been redirected somewhere outside its own
+        # repository — which is how the resident suites isolate these questions.
+        # A redirect is an explicit statement about where to read, so it is
+        # honored as given rather than re-based onto `root`.
+        return module_root
+    return root / relative
+
+
 def _projection(root: Path) -> dict:
     return {f.question: f for f in views.self_knowledge(root).facts}
 
@@ -155,7 +178,8 @@ def capabilities(root: Path = REPO_ROOT) -> Answer:
     # The first version of this function passed `root` and received an empty
     # list without raising, then reported `INFERRED` over nothing — a guard that
     # passes because it cannot see. The empty case is now an explicit `UNKNOWN`.
-    departments = org.read_departments(org.ORGANIZATION_ROOT)
+    departments = org.read_departments(
+        _under(root, org.ORGANIZATION_ROOT, org.REPO_ROOT))
     if not departments:
         return Answer(
             "What capabilities exist?",
@@ -193,7 +217,8 @@ def running(root: Path = REPO_ROOT) -> Answer:
     """
     from tools import p12_runtime_observation as runtime_obs
 
-    answer = runtime_obs.what_is_running(runtime_obs.OBSERVATION_ROOT)
+    answer = runtime_obs.what_is_running(
+        _under(root, runtime_obs.OBSERVATION_ROOT, runtime_obs.REPO_ROOT))
     if not answer["answerable"]:
         return Answer(
             "What is running?",
@@ -230,7 +255,8 @@ def failed(root: Path = REPO_ROOT) -> Answer:
     """
     from tools import p12_trace_registry as traces
 
-    summary = traces.what_has_run(traces.STORE_ROOT)
+    store_root = _under(root, traces.STORE_ROOT, traces.REPO_ROOT)
+    summary = traces.what_has_run(store_root)
     if summary["stores"] == 0:
         return Answer(
             "What failed?",
@@ -238,7 +264,7 @@ def failed(root: Path = REPO_ROOT) -> Answer:
             UNKNOWN,
             "no durable Trace store exists; absence of records is not absence of failures",
         )
-    failures = traces.what_has_failed(traces.STORE_ROOT)
+    failures = traces.what_has_failed(store_root)
     return Answer(
         "What failed?",
         {
