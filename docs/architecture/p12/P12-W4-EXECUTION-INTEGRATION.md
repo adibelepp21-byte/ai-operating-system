@@ -275,6 +275,59 @@ join holds because it resolves a binding, not because the names differ.
 [E] Corpus state after the second run: **5 of 8 executions joined**, `2/5` Trace
 records, 2 manifests. The three unjoined remain unjoined.
 
+## 12. `§25` Fresh-process rediscovery
+
+[E] Five stages, each re-derived in two independent fresh interpreters:
+canonical state, integration relations, persisted records, verification,
+manifests. **5 reproduced, 0 diverged.**
+
+[C] The first run of this comparison reported two divergences. **Both were a
+defect in the comparison harness** — it compared an in-process tuple `(5, 8)`
+against the string `'5 8'` printed by the subprocess. Disclosed rather than
+quietly corrected, because a harness that manufactures divergence is as
+misleading as one that hides it, and this one would have reported a false
+regression in the work it was checking.
+
+## 13. `§26` REFUSED and ESCALATED — W4-GAP-008
+
+[E] Both states are reached and persisted: `EscalationRequired` and
+`ExecutionRefused` are raised and recorded, and one escalation record is
+resident.
+
+[E] Measured, not asserted (`tools/p12_failure_verification.escalation_join`):
+
+```text
+escalation records                 1
+joined by a structured field       0
+joined by parsed prose             1
+naming which refusal type          0
+```
+
+[D] The refusal **does** reach the grant it was refused under — through a regex
+over the record's prose `subject` field. That works until somebody rewords the
+subject. **It is the same class of fragility as joining on an actor name: the
+relation is carried by a spelling rather than by a reference.**
+
+- **Classification:** **PARTIAL — DEPENDENCY (P12-W3).**
+- [C] **Not constructed here.** `EscalationRecord` is a frozen, written-once
+  governance surface, and adding a structured delegation field or a refusal-type
+  field to it is governance-integration work. `ACT §30`: `W4 ≠ W3`, and
+  absorbing the escalation record into W4 would be exactly the silent absorption
+  it forbids.
+- [C] A conformance control asserts the current values and says in its own
+  message that the finding closes if escalation records gain the field.
+
+## 14. Remaining W4 frontier
+
+[E] Re-discovered after construction. **No actionable authorized W4 frontier
+remains.**
+
+| Item | Classification | Why it stops here |
+|---|---|---|
+| W4-GAP-003 historical executions | OUT OF SCOPE | manifests for them would manufacture history (`§22`) |
+| W4-GAP-007 runtime reachability | BLOCKED | a resident non-manual entry decides *when* AIOS acts — operational authority, `STOP-D` |
+| W4-GAP-008 refusal join | DEPENDENCY (W3) | `EscalationRecord` is a governance surface; `W4 ≠ W3` (`§30`) |
+
 ## 9. What this does not establish
 
 [C] Two executions keep the whole contract. **Six others do not**, and three of
@@ -290,4 +343,4 @@ matter was settled.
 ---
 
 **Suite state at this record:** `native_core` 801 (1 expected failure) ·
-`consumers` 276 · `tools` 1024 · total **2101**.
+`consumers` 276 · `tools` 1025 · total **2102**.

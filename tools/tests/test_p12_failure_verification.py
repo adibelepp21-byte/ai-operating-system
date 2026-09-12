@@ -87,7 +87,18 @@ class DistinguishedMeansReachableAndTellableApart(unittest.TestCase):
     def test_refused_is_raised_but_not_persisted_distinguishably(self):
         result = {r.state: r for r in fail.verify()}["REFUSED"]
         self.assertEqual(result.status, fail.RAISED_ONLY)
-        self.assertIn("carries no field naming which one", result.detail)
+        self.assertIn("no field names which one", result.detail)
+
+    def test_a_refusal_joins_its_grant_only_through_prose(self):
+        """`§34` traceability carried by a spelling, not by a reference."""
+        join = fail.escalation_join()
+        self.assertGreater(join["records"], 0)
+        self.assertEqual(join["joined_by_structured_field"], 0,
+                         "if escalation records have gained a delegation "
+                         "field, this finding is closed and the evidence "
+                         "record must say so")
+        self.assertGreater(join["joined_by_parsed_prose"], 0)
+        self.assertEqual(join["naming_the_refusal_type"], 0)
 
     def test_refused_would_be_distinguished_if_the_record_named_the_type(self):
         """The finding must close by itself once the record gains the field."""

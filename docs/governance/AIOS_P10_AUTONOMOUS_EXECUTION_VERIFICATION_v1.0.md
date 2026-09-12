@@ -13124,3 +13124,72 @@ conformance test weakened to pass 0
 F-16, F-17, F-18 untouched
 P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
 ```
+
+## 133. Fresh rediscovery, the refusal join, and the W4 stopping point
+
+## 133.1 A harness that manufactured its own divergence
+
+`§25` fresh-process rediscovery over five stages: canonical state, integration
+relations, persisted records, verification, manifests. **5 reproduced, 0
+diverged.**
+
+The first run reported two divergences. **Both were a defect in my comparison
+harness** — it compared an in-process tuple `(5, 8)` against the string `'5 8'`
+the subprocess printed. A harness that manufactures divergence is as misleading
+as one that hides it, and this one would have reported a false regression in the
+work it was checking.
+
+## 133.2 W4-GAP-008 — a refusal reaches its grant through prose
+
+`§26` requires the failure states be verified, not assumed. `REFUSED` and
+`ESCALATED` are reached and persisted. Measured rather than asserted:
+
+```text
+escalation records              1
+joined by a structured field    0
+joined by parsed prose          1
+naming which refusal type       0
+```
+
+The refusal does reach the grant it was refused under — through a regex over the
+record's prose `subject` field. That holds until somebody rewords the subject.
+**It is the same fragility as joining on an actor name: the relation is carried
+by a spelling rather than by a reference.**
+
+Not constructed. `EscalationRecord` is a frozen, written-once governance
+surface, and giving it a structured delegation field is W3 work. `W4 ≠ W3`, and
+absorbing it here is the silent absorption the Act forbids. Classified
+**PARTIAL — DEPENDENCY (P12-W3)**, with a control that says in its own failure
+message that the finding closes if the field appears.
+
+## 133.3 No actionable authorized W4 frontier remains
+
+```text
+DECISION → WORK                NOT-A-GAP    verified, and now load-bearing
+WORK → EXECUTION               PARTIAL      5/8; the rest are historical
+DELEGATION → EXECUTION         CONSTRUCTED  manifest, independently resolved
+EXECUTION → OBSERVATION        CONSTRUCTED  by real execution
+OBSERVATION → VERIFICATION     CONSTRUCTED  on the P12 surface, not the vocabulary
+VERIFICATION → EVIDENCE        CONSTRUCTED  manifest refuses to be incomplete
+historical executions          OUT OF SCOPE §22 historical integrity
+runtime reachability           BLOCKED      operational authority, STOP-D
+refusal join                   DEPENDENCY   P12-W3, §30
+```
+
+## 133.4 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 1025 = 2102
+fresh-process 5 stages / 5 reproduced / 0 diverged
+execution chain 2 manifests / 7 of 7 edges each / 0 dangling
+terminal states carried: success, failure
+
+TraceRecord unchanged - EscalationRecord unchanged - Native Core 11
+ratified vocabulary widened 0 - certified evidence changes 0
+historical rewrite 0 - conformance test weakened to pass 0
+
+F-16, F-17, F-18 untouched
+P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
+VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
+E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
+```

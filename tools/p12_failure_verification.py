@@ -155,6 +155,47 @@ def _blocked() -> StateResult:
         "ESCALATED")
 
 
+def escalation_join() -> dict:
+    """How a persisted refusal reaches the grant it was refused under.
+
+    `§34` provenance and `§29`'s contract both require a refusal to be traceable
+    to its authority. It is — but through a regex over the record's prose
+    `subject` field, not through a structured reference. That works until
+    somebody rewords the subject, which is the same class of fragility as
+    joining on an actor name: the relation is carried by a spelling.
+    """
+    import json
+    import re
+    from tools.p12_provenance_verification import delegation_records
+
+    known = {d["delegation_id"] for d in delegation_records()}
+    records = sorted(
+        (REPO_ROOT / "docs/architecture").rglob("*.escalation.json"))
+    structured = 0
+    parsed = 0
+    typed = 0
+    for path in records:
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        if payload.get("delegation_id") in known:
+            structured += 1
+        else:
+            match = re.search(r"delegation ([0-9a-f]{16})",
+                              str(payload.get("subject", "")))
+            if match and match.group(1) in known:
+                parsed += 1
+        if any(key in payload for key in ("refusal_type", "kind", "type")):
+            typed += 1
+    return {
+        "records": len(records),
+        "joined_by_structured_field": structured,
+        "joined_by_parsed_prose": parsed,
+        "naming_the_refusal_type": typed,
+    }
+
+
 def _refused() -> StateResult:
     from tools.escalation_register import SANCTIONED_REFUSALS
     fields = _escalation_record_fields()
@@ -165,10 +206,13 @@ def _refused() -> StateResult:
         return StateResult("REFUSED", DISTINGUISHED, " / ".join(names),
                            f"escalation record .{type_field[0]}",
                            "the persisted record names which refusal occurred")
+    join = escalation_join()
     return StateResult(
         "REFUSED", RAISED_ONLY, " / ".join(names), "escalation record",
-        f"{len(names)} distinct refusal types are raised, and the persisted "
-        f"record carries no field naming which one: {list(fields)}")
+        f"{len(names)} refusal types raised; no field names which one; "
+        f"{join['joined_by_structured_field']}/{join['records']} join their "
+        f"grant by a structured field and {join['joined_by_parsed_prose']} by "
+        "parsed prose")
 
 
 def _failed() -> StateResult:
