@@ -11291,3 +11291,92 @@ Native Core 11 - protected read 0 - staged 0 - committed 0
 
 `F-2` closed. `F-1` partially closed. `F-3`–`F-6` open and authorized. `F-8`
 reserved, no direct dependency proven. `F-9` untouched.
+
+---
+
+# 112. P12-W4 — the boundary was built and never fed, and the first failure it recorded was mine
+
+Evidence:
+[`P12-W4-DURABLE-TRACE-EVIDENCE.md`](../architecture/p12/P12-W4-DURABLE-TRACE-EVIDENCE.md)
+
+```text
+F-3 CLOSED      self-model 9 VERIFIED · 2 INFERRED · 1 UNKNOWN
+P12 CONSTRUCTED = FALSE      F-4 open and authorized
+```
+
+## 112.1 The stated gap was not the real one
+
+`derived_views` explained `what has failed = UNKNOWN` by the absence of a
+cross-process Trace registry. True, and incomplete. Measured: **zero** durable
+trace partitions on disk, **zero** constructions of `LocalAppendOnlyStorage`
+outside its own definition, **zero** resident executions supplying a writer —
+`TraceWriter` is an optional argument, `None` everywhere.
+
+**The boundary was fully built, conformance-tested, and never fed.** Building the
+registry alone would have enumerated an empty set and reported success. So
+discovery and a real execution landed together: the root proof runs the *same*
+verification the cross-Department proof runs, with a writer over durable storage.
+
+`ACT-CC-R1-SYSTEMIC-001` had found this shape once already — *"the Trace boundary
+complete and never called."* R2-A supplied the call. Nothing had supplied the
+store.
+
+## 112.2 The first durable record in this system is my own crash
+
+```text
+status  : failure
+outputs : {'error': "AttributeError: 'TracedAction' object has no attribute 'record'"}
+```
+
+I called a method that does not exist; the real API is `used_skill` /
+`used_tool` / `produced`, written once on `__exit__`. `TracedAction` did exactly
+what its docstring promises — one record, status `failure`, exception propagated.
+
+**It stays.** The facility offers no delete and no edit by construction, and
+`§13.8` forbids rewriting historical evidence so current state looks clean. A
+durability proof whose first artifact is the author's own mistake is better
+evidence than a tidy one: nothing about it could have been staged.
+
+Two independent interpreters (`pid 4931`, `pid 4932`) read the store back:
+`{'failure': 1, 'success': 1}`. Durability survives the process boundary — the
+property `F-3` named and nothing here had ever shown.
+
+## 112.3 `What failed?` answered; `What is running?` deliberately not
+
+`8 VERIFIED → 9`. `What is running?` stays `UNKNOWN`: a Trace says what **ran**,
+past tense, and reading one back is not observation of a live process. Answering
+`F-4` with `F-3`'s evidence is precisely the substitution this model exists to
+refuse, and a test now asserts the two answers differ.
+
+An empty registry returns `UNKNOWN`, not zero — **absence of records is not
+absence of failures**, and `0 failures` from `0 records` would be the cleanest
+possible lie.
+
+## 112.4 I changed two of my own tests, and say so plainly
+
+Both were written earlier this session and both asserted `What failed?` is
+`UNKNOWN`. `W4` made it answerable from evidence, so both failed.
+
+**Changed because the measured state changed — not to make an implementation
+pass.** The invariant is now enforced *harder*: `EmptyIsNotSuccess` proves the
+answer reverts to `UNKNOWN` the instant evidence is absent, which is a stronger
+claim than the static assertion it replaces. The coverage floor sits at `1` and
+is **not a target to drive to zero**; it falls only when a question becomes
+answerable from real evidence. Recorded here because "the test now expects the
+new behaviour" is the sentence behind most quietly broken suites, and it should
+never pass without its reason attached.
+
+## 112.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 756 OK = 1833
+citation 206 documents / 0 errors - stale-state 504 / 0 stale assertions
+durable trace stores 1 - records 2 - {failure 1, success 1}
+self-model 12 questions - 9 VERIFIED, 2 INFERRED, 1 UNKNOWN
+
+P12 AUTHORIZED = TRUE   P12 CONSTRUCTED = FALSE   E12 NOT RATIFIED
+Native Core 11 - protected read 0 - staged 0 - committed 0
+```
+
+`F-3` closed. `F-4` open and authorized — runtime observation is the next
+`P12-W2` increment.

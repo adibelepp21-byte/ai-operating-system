@@ -179,15 +179,50 @@ def capabilities(root: Path = REPO_ROOT) -> Answer:
 
 
 def running(root: Path = REPO_ROOT) -> Answer:
-    """What is running? — `UNKNOWN`, and correctly so."""
+    """What is running? — `UNKNOWN`, and still correctly so.
+
+    Deliberately **not** answered from the Trace registry. A Trace record says
+    what *ran*, past tense; reading one back is not observation of a live
+    process. Answering `F-4` with `F-3`'s evidence would be the substitution
+    this model exists to refuse.
+    """
     fact = _projection(root)["what is running"]
     return Answer("What is running?", fact.value, fact.status, fact.source)
 
 
 def failed(root: Path = REPO_ROOT) -> Answer:
-    """What failed? — `UNKNOWN` until a cross-process Trace registry exists."""
-    fact = _projection(root)["what has failed"]
-    return Answer("What failed?", fact.value, fact.status, fact.source)
+    """What failed? — from durable Trace records where any exist.
+
+    Answered `UNKNOWN` until P12-W4 gave the Trace boundary a durable store to
+    write into. It is still `UNKNOWN` when no store exists: an empty registry
+    means *no evidence*, not *no failures*, and reporting zero failures from
+    zero records would be the cleanest possible lie.
+
+    `escalation` is not counted here. The ratified vocabulary keeps it distinct
+    from `failure`, and `DP-02 §3 E11-03` settled that a correct refusal is not
+    an execution failure.
+    """
+    from tools import p12_trace_registry as traces
+
+    summary = traces.what_has_run(traces.STORE_ROOT)
+    if summary["stores"] == 0:
+        return Answer(
+            "What failed?",
+            None,
+            UNKNOWN,
+            "no durable Trace store exists; absence of records is not absence of failures",
+        )
+    failures = traces.what_has_failed(traces.STORE_ROOT)
+    return Answer(
+        "What failed?",
+        {
+            "failures": len(failures),
+            "outputs": tuple(f.outputs for f in failures),
+            "records_examined": summary["records"],
+        },
+        VERIFIED,
+        f"durable Trace records across {summary['stores']} store(s)",
+    )
 
 
 def incomplete(root: Path = REPO_ROOT) -> Answer:

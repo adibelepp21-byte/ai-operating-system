@@ -59,11 +59,30 @@ class TheTwelveQuestions(unittest.TestCase):
 class UnknownIsPreserved(unittest.TestCase):
     """`§23`: MEASUREMENT ≠ PREDICTION. An absent source must not be filled in."""
 
-    def test_runtime_questions_are_unknown_not_guessed(self):
-        for question in ("What is running?", "What failed?"):
-            answer = _answer(question)
-            self.assertEqual(answer.status, UNKNOWN)
-            self.assertIsNone(answer.value)
+    def test_what_is_running_is_unknown_not_guessed(self):
+        """`F-4` is unclosed and must not be answered by proxy.
+
+        This test asserted the same of *"What failed?"* until P12-W4 gave the
+        Trace boundary a durable store, at which point that question became
+        answerable **from evidence**. The assertion was changed because the
+        measured state changed, not to make anything pass — the invariant it
+        protects is enforced harder in
+        `test_p12_trace_registry.EmptyIsNotSuccess`, which proves the answer
+        returns to `UNKNOWN` the moment the evidence is absent.
+        """
+        answer = _answer("What is running?")
+        self.assertEqual(answer.status, UNKNOWN)
+        self.assertIsNone(answer.value)
+
+    def test_what_failed_is_never_answered_from_the_running_question(self):
+        """A Trace record is past tense. `F-3` evidence may not close `F-4`."""
+        running = _answer("What is running?")
+        failed = _answer("What failed?")
+        self.assertEqual(running.status, UNKNOWN)
+        self.assertNotEqual(
+            running.value, failed.value,
+            "answering 'what is running' with trace history would be substitution",
+        )
 
     def test_an_unknown_answer_still_names_the_absent_source(self):
         answer = _answer("What is running?")
@@ -157,7 +176,16 @@ class CoverageIsMeasured(unittest.TestCase):
         self.assertEqual(c["questions"], 12)
 
     def test_coverage_does_not_claim_the_unknowns_are_answered(self):
-        self.assertGreaterEqual(model.coverage()["unknown"], 2)
+        """At least one question remains unanswered, and it is named.
+
+        The threshold was 2 before P12-W4 closed *"What failed?"*. It is not a
+        target to drive to zero: it falls only when a question becomes
+        answerable from real evidence.
+        """
+        coverage = model.coverage()
+        self.assertGreaterEqual(coverage["unknown"], 1)
+        unanswered = _answer("What do I not know?").value["unanswered_questions"]
+        self.assertIn("What is running?", unanswered)
 
 
 if __name__ == "__main__":  # pragma: no cover
