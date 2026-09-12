@@ -11972,3 +11972,71 @@ historical rewrite 0 - p11 changes 0 - native_core 0 - protected read 0
 F-15 CLOSED (C1) - F-16 OPEN FOUNDER-RESERVED - F-13, F-14 OPEN
 P12 CONSTRUCTED = FALSE - E12 NOT RATIFIED - P13 NOT AUTHORIZED
 ```
+
+---
+
+# 120. `E12` prepared, not ratified — and the question `F-15` could not answer
+
+Package:
+[`E12-RATIFICATION-DECISION-PACKAGE.md`](../architecture/p12/E12-RATIFICATION-DECISION-PACKAGE.md)
+
+```text
+E12 RATIFIED = FALSE      §H deliberately blank
+P12 CONSTRUCTED = FALSE   F-16 prepared, not closed
+```
+
+## 120.1 Why preparation was the authorized step
+
+`§53` requires six elements per criterion and forbids treating any as ratified
+before canonical reconciliation. **None of the six has a measurable
+interpretation**, and `§54`'s matrix is `TBD` in all six rows — which `v1.1`
+deliberately left standing.
+
+`DP-01 §8` and `FD-P11-001 §12` item 9 exclude ratifying exit criteria from the
+delegation. `DP-02` was the Founder act that ratified E11 after this office
+prepared it, and the same division applies: **prepare, then stop.**
+
+## 120.2 The status quo, stated per criterion rather than in aggregate
+
+```text
+E12-01 System Integration      NOT BUILT   graph exists; none of the ten edge fields
+E12-02 Unified Operational     PARTIAL     3 observations, 2 vocabularies, freshness
+E12-03 Governance Integration  PARTIAL     54/54 discoverable; enforced for {10,11}
+E12-04 Execution Integration   PARTIAL     durable Trace; one real work path observed
+E12-05 AIOS Self-Model         BUILT       12 questions, reversion proved
+E12-06 System-wide Verification PARTIAL    cross-phase only; 6 exercised, 2 not
+```
+
+An aggregate figure would have read far better than this, and would have told the
+Founder less.
+
+## 120.3 The question, put rather than answered
+
+**Must a canonical phase be exercised for `E12-06`, and what counts as exercise?**
+Three readings are laid out — consumption by real work, provisioning by a real
+execution, or dormancy as legitimate — with the measured facts beneath them:
+`P6`/`P7` are **provisioned by every real runtime and consumed by no execution
+ever recorded**.
+
+`[R]` This office recommends the third, bounded: it is the only reading
+consistent with `NOT EXERCISED ≠ FAILED` and with `§30`'s *"where runtime
+evidence is the relevant proof"*. The first would make P12 completion depend on
+**inventing work to satisfy a metric**, which the governing Act prohibits; the
+second would admit existence-adjacent evidence that `§48` refuses.
+
+**The recommendation is labelled and the box is unticked.** `RECOMMENDATION ≠
+DECISION`.
+
+## 120.4 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 811 OK = 1888
+citation 216 documents / 0 errors - stale-state 511 / 0 stale assertions
+0 code changes - 0 executions manufactured - historical rewrite 0
+protected read 0 / staged 0 / committed 0 - Native Core 11
+
+E12 RATIFIED = FALSE - P12 CONSTRUCTED = FALSE - P13 NOT AUTHORIZED
+```
+
+`RATIFICATION ≠ PASS`, as `DP-02 §10` held for E11. Ratifying `E12` would fix the
+acceptance boundary and declare nothing satisfied.
