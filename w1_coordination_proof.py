@@ -33,6 +33,7 @@ from native_core.core.runtime.execution import create_execution_layer  # noqa: E
 from native_core.core.workflow import (  # noqa: E402
     Workflow, WorkflowCoordination, WorkflowIdentity)
 from consumers.workflow_agent import WorkflowParticipatingAgent  # noqa: E402
+from tools.p12_runtime_observation import RUNTIME, publish  # noqa: E402
 from tools.w1_coordination_run import run  # noqa: E402
 
 
@@ -68,6 +69,14 @@ def coordinate(composition):
             substrate=bootstrap.get("execution-substrate"))
         runtime.initialize()
         runtime.start()
+        # `F-10′` / `§17`: execution integration must prove the relationship
+        # *between* surfaces, not each surface's existence. Publishing here puts
+        # the runtime that performs this Act's real work on the observation
+        # surface, so an independent process can see it live **while the work is
+        # running** — which a demonstrator, doing no work, can never establish.
+        # The target is a P12 root, so the F-12 certified-evidence guard is
+        # untouched and no P11 record is written.
+        publish(runtime.runtime_id, str(runtime.state), kind=RUNTIME)
         execution = create_execution_layer(runtime)
 
         agent = WorkflowParticipatingAgent(
@@ -92,7 +101,14 @@ def coordinate(composition):
             "is_empty": coordination.is_empty(),
             "completed_steps": list(agent.completed_steps),
         }
+        # Republished after the real work completed and before the runtime is
+        # stopped: at this instant the runtime is still RUNNING and has actually
+        # performed the coordination, which is the moment the relationship is
+        # true rather than merely arrangeable.
+        publish(runtime.runtime_id, str(runtime.state), kind=RUNTIME)
+        facts["observation_published"] = True
         runtime.stop()
+        publish(runtime.runtime_id, str(runtime.state), kind=RUNTIME)
         facts["runtime_state_after_stop"] = str(runtime.state)
     return terminal, facts
 

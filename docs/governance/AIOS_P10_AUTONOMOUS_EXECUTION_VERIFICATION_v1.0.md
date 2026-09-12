@@ -11717,3 +11717,98 @@ P12 CONSTRUCTED = FALSE - E12 NOT RATIFIED - P13 NOT AUTHORIZED
 
 Measured after every write in this increment, including this section — the
 only point at which a count is final.
+
+---
+
+# 117. `F-10′` — real work reached the observation surface, and the clause I cited was the wrong one
+
+Evidence:
+[`P12-F10-PRIME-WORK-OBSERVATION-EVIDENCE.md`](../architecture/p12/P12-F10-PRIME-WORK-OBSERVATION-EVIDENCE.md)
+
+```text
+F-10′ CLOSED — VERIFIED    F-13 NARROWED    F-14 OPEN — NON-BLOCKING
+P12 CONSTRUCTED = FALSE    historical rewrite 0
+```
+
+## 117.1 I grounded the frontier on the wrong clause
+
+I attributed `F-10′` to `W6` (`§45`, `§48`). `§19`'s **minimum verification
+scope** lists thirteen items — cross-phase contracts, cross-PD interfaces,
+runtime, workflow, governance, state, evidence, provenance, failure, negative
+controls, mutation, regression, fresh process — and **`OBSERVATION` is not among
+them.**
+
+The requirement is `§17` W4, and it is imperative: *"P12 execution integration
+**harus membuktikan hubungan antar-surface**, bukan hanya keberadaan
+masing-masing subsystem."* The canonical chain places `OBSERVATION` between
+`EXECUTION` and `VERIFICATION`, so an execution skipping it has not completed the
+chain.
+
+**The gap was real; my grounding was not.** Corrected rather than left standing,
+because the clause a frontier rests on determines what would close it.
+
+## 117.2 Real work, not another demonstrator
+
+`w1_coordination_proof.py` — the resident W1 work path — now publishes from
+inside the work. `p12_w4_observed_work_proof.py` runs it with `persist=False`,
+**importing** `perform` and `coordinate` rather than reimplementing them; had it
+reimplemented them it would have become another demonstrator, the exact failure
+it exists to avoid.
+
+```text
+completed_steps ['review-open-items', 'summarize-diffs']
+found True · runtime_id p11-w1-runtime · writer_pid 822 · observer_pid 823
+```
+
+Real coordination work, reaching the surface, read back by a different process.
+
+**`persist=False` is what `F-12` bought** — the guard refuses writes, not
+executions. The predicted ordering held: `F-12` had to close first.
+
+## 117.3 The claim I could not make, and the measurement that stopped me
+
+The first version started a poller before the work and waited for a live catch.
+It never caught one, and the reason is measured:
+
+```text
++0.0 ms RUNNING · +0.6 ms RUNNING · +0.9 ms STOPPED    window = 0.9 ms
+```
+
+No external poller reliably samples a 0.9 ms window, and widening it by holding
+the runtime open would manufacture the observability being tested — *"do not fake
+a long-running process."* So the claim narrowed to what the evidence supports:
+
+```text
+LIVE CATCH ≠ WORK ↔ OBSERVATION RELATIONSHIP
+```
+
+A live external catch of this work is unachievable **at its duration**, which is
+a property of the work and not a missing capability. A test now prevents the
+proof from quietly acquiring the overclaim later.
+
+## 117.4 The programme hypothesis has its first counter-example
+
+*"Capability reached only by its own demonstrator"* held across three surfaces.
+It **no longer holds universally** — one real work path now reaches the
+observation surface. It remains accurate for the majority, so it is kept as a
+systemic finding: neither promoted to a rule nor quietly dropped now that it is
+less flattering to the work just done.
+
+`F-14` records the residue honestly: `cross_department_coordination_proof.py` and
+`w4_first_execution.py` still publish nothing. Per-path coverage was established
+as **not canonically required**, so this is non-blocking — recorded rather than
+absorbed into the closure.
+
+## 117.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 798 OK = 1875
+citation 212 documents / 1147 citations / 0 errors - stale-state 508 / 0 assertions
+negative controls: attempted 6, held 6, missed 0
+certified evidence: p11 git changes 0 - guard intact, proof still exits 1
+native_core changes 0 - Native Core 11 - protected read 0 / staged 0 / committed 0
+
+F-10′ CLOSED - F-12 CLOSED - F-4 CLOSED - F-11 CLOSED
+F-13 NARROWED - F-14 OPEN NON-BLOCKING
+P12 CONSTRUCTED = FALSE - E12 NOT RATIFIED - P13 NOT AUTHORIZED
+```
