@@ -179,15 +179,40 @@ def capabilities(root: Path = REPO_ROOT) -> Answer:
 
 
 def running(root: Path = REPO_ROOT) -> Answer:
-    """What is running? — `UNKNOWN`, and still correctly so.
+    """What is running? — from freshness-qualified runtime observation.
 
     Deliberately **not** answered from the Trace registry. A Trace record says
     what *ran*, past tense; reading one back is not observation of a live
-    process. Answering `F-4` with `F-3`'s evidence would be the substitution
+    process, and answering `F-4` with `F-3`'s evidence would be the substitution
     this model exists to refuse.
+
+    `UNKNOWN` in two distinct cases, and the distinction is the point: no
+    observation has been published, or every published observation is stale.
+    Neither is "nothing is running" — a runtime can die without publishing a
+    terminal state, and the evidence cannot tell that apart from one still up.
     """
-    fact = _projection(root)["what is running"]
-    return Answer("What is running?", fact.value, fact.status, fact.source)
+    from tools import p12_runtime_observation as runtime_obs
+
+    answer = runtime_obs.what_is_running(runtime_obs.OBSERVATION_ROOT)
+    if not answer["answerable"]:
+        return Answer(
+            "What is running?",
+            None,
+            UNKNOWN,
+            answer["reason"],
+        )
+    return Answer(
+        "What is running?",
+        {
+            "live": answer["live"],
+            "terminated": answer.get("terminated", ()),
+            "observations": answer["observations"],
+            "scope": answer["scope"],
+        },
+        VERIFIED,
+        f"runtime observation within a "
+        f"{runtime_obs.LIVE_HORIZON_SECONDS:g}s liveness horizon",
+    )
 
 
 def failed(root: Path = REPO_ROOT) -> Answer:

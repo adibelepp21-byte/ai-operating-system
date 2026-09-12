@@ -139,10 +139,12 @@ class TheResidentStoreCarriesRealEvidence(unittest.TestCase):
         self.assertEqual(answer.status, VERIFIED)
         self.assertGreaterEqual(answer.value["failures"], 1)
 
-    def test_what_is_running_stays_unknown(self):
-        """A Trace says what ran, past tense. Answering F-4 with F-3's evidence
-        is the substitution this model refuses."""
-        self.assertEqual(model.running().status, UNKNOWN)
+    def test_the_trace_registry_is_not_the_source_of_the_running_answer(self):
+        """A Trace says what ran, past tense. F-4 is answered from runtime
+        observation instead, and this asserts the wiring never crossed."""
+        running = model.running()
+        self.assertNotIn("Trace", running.source)
+        self.assertNotEqual(running.value, model.failed().value)
 
 
 if __name__ == "__main__":  # pragma: no cover

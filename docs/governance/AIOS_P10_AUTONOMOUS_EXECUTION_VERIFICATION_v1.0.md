@@ -11380,3 +11380,100 @@ Native Core 11 - protected read 0 - staged 0 - committed 0
 
 `F-3` closed. `F-4` open and authorized — runtime observation is the next
 `P12-W2` increment.
+
+---
+
+# 113. F-4 — the observation existed; nobody outside could see it
+
+Evidence:
+[`P12-F4-RUNTIME-OBSERVATION-EVIDENCE.md`](../architecture/p12/P12-F4-RUNTIME-OBSERVATION-EVIDENCE.md)
+
+```text
+F-4 CLOSED — VERIFIED       F-10, F-11 OPEN — AUTHORIZED
+P12 CONSTRUCTED = FALSE     E12 NOT RATIFIED
+```
+
+## 113.1 The frontier was misnamed, including by me
+
+`F-4` read *"runtime state is unobserved"*. Discovery falsified the stronger
+reading: `native_core/core/runtime` carries a canonical lifecycle —
+`CREATED → INITIALIZED → RUNNING → STOPPING → STOPPED` with enforced transitions —
+and **two resident root proofs already read it live**, recording `runtime_state
+RUNNING` and `after stop STOPPED`.
+
+The real gap was narrower and exact: `self._state` is an in-memory attribute, so
+**no other process can see it**. Building a runtime-observation subsystem would
+have duplicated a boundary that already works. What was missing was a projection
+across the process line, plus the one thing live state cannot be projected
+without — **freshness**.
+
+**A substring false positive, mine.** Sweeping for `heartbeat|lease|liveness`
+returned hits that were all **`release`d** — facility lifecycle, matched inside
+the word. "No liveness mechanism exists" had to be re-derived by reading.
+
+## 113.2 Freshness is the whole problem
+
+A record reading `RUNNING` proves a runtime *was* running when it was written.
+Using it later to answer *"what is running"* is historical evidence wearing a live
+label. So `RUNNING + expired → STALE`, and **`STALE` is deliberately not
+`TERMINATED`**: a runtime that dies without publishing a terminal state is, from
+the evidence, indistinguishable from one still up. Claiming it stopped would be as
+false as claiming it runs.
+
+## 113.3 Observed from another process, while genuinely running
+
+A **child interpreter** — handed no runtime object, only the published record and
+its own clock — reported `live: [p12-f4-runtime-observation @ 0.04s]` while the
+runtime was up, and `terminated` after `stop()`. Between the two observations
+nothing changed but the runtime's actual state, and the observer was the same code
+both times.
+
+`mutation: attempted 5, fired 5, missed 0` · `negative: attempted 7, held 7,
+missed 0`. A test asserts the detector does not return the same answer across
+conditions — a constant detector is not verification.
+
+## 113.4 `0 UNKNOWN` was an overclaim, caught before commit
+
+Wiring the answer took the self-model to `10 VERIFIED · 2 INFERRED · 0 UNKNOWN`,
+and I nearly shipped it. An empty `live` list does **not** mean nothing is
+running; it means nothing **observed** is running, and unobserved runtimes are
+invisible to the evidence. The answer now carries its scope as data:
+
+```text
+scope: runtimes that publish observations; unobserved runtimes are not covered
+```
+
+`What is running?` is not answered from Trace — a test asserts the source says
+`observation` and not `Trace`, and that the two answers differ. `F-3`'s evidence
+may not close `F-4`.
+
+## 113.5 Coverage measured, and it is one path of three
+
+`w1_coordination_proof.py` and `cross_department_coordination_proof.py` both start
+real runtimes and **publish nothing**. `ONE REAL PATH ≠ SYSTEM-WIDE COVERAGE`, so
+`F-4` is closed against the requirement `§18` actually sets — an evidence-backed
+answer with stated scope — and the coverage gap is recorded as `F-10` rather than
+absorbed into a pass.
+
+`F-11` is the sharper discovery: `WorkflowState` carries its own `RUNNING`, a
+second live-state vocabulary with no projection at all, in a system that now
+believes it can answer *"what is running"*.
+
+## 113.6 Four tests changed, each replaced by something stricter
+
+All four asserted `What is running?` is `UNKNOWN` — true when written. The
+replacements do not assert the new answer; they prove the model **reverts** to
+`UNKNOWN` when the observation root is emptied. That is a stronger claim than the
+static one it replaces, and the same move `§112.4` made for `What failed?`. The
+coverage floor is no longer a number construction is allowed to move.
+
+## 113.7 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 772 OK = 1849
+citation 208 documents / 0 errors - stale-state 505 / 0 stale assertions
+self-model 12 questions - 10 VERIFIED, 2 INFERRED, 0 UNKNOWN (scope stated)
+native_core changes 0 - Native Core 11 - protected read 0 / staged 0 / committed 0
+
+P12 AUTHORIZED = TRUE   P12 CONSTRUCTED = FALSE   E12 NOT RATIFIED
+```

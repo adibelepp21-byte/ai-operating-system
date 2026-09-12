@@ -59,30 +59,48 @@ class TheTwelveQuestions(unittest.TestCase):
 class UnknownIsPreserved(unittest.TestCase):
     """`§23`: MEASUREMENT ≠ PREDICTION. An absent source must not be filled in."""
 
-    def test_what_is_running_is_unknown_not_guessed(self):
-        """`F-4` is unclosed and must not be answered by proxy.
+    def test_what_is_running_reverts_to_unknown_without_observation(self):
+        """The question is answerable only while observation evidence exists.
 
-        This test asserted the same of *"What failed?"* until P12-W4 gave the
-        Trace boundary a durable store, at which point that question became
-        answerable **from evidence**. The assertion was changed because the
-        measured state changed, not to make anything pass — the invariant it
-        protects is enforced harder in
-        `test_p12_trace_registry.EmptyIsNotSuccess`, which proves the answer
-        returns to `UNKNOWN` the moment the evidence is absent.
+        This asserted a flat `UNKNOWN` for *"What is running?"* until F-4 built
+        freshness-qualified runtime observation, and before that it asserted the
+        same of *"What failed?"* until F-3 gave Trace a durable store. Each
+        assertion changed because the measured state changed, not to make an
+        implementation pass — and each time the invariant moved somewhere
+        stricter. Here it is proved directly: point the model at an empty
+        observation root and the answer must go back to `UNKNOWN`.
         """
-        answer = _answer("What is running?")
+        import tempfile
+        from pathlib import Path
+        from tools import p12_runtime_observation as runtime_obs
+
+        original = runtime_obs.OBSERVATION_ROOT
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                runtime_obs.OBSERVATION_ROOT = Path(tmp)
+                answer = model.running()
+        finally:
+            runtime_obs.OBSERVATION_ROOT = original
         self.assertEqual(answer.status, UNKNOWN)
         self.assertIsNone(answer.value)
+        self.assertIn("absence is not zero", answer.source)
 
-    def test_what_failed_is_never_answered_from_the_running_question(self):
+    def test_what_is_running_is_not_answered_from_trace_history(self):
         """A Trace record is past tense. `F-3` evidence may not close `F-4`."""
         running = _answer("What is running?")
         failed = _answer("What failed?")
-        self.assertEqual(running.status, UNKNOWN)
         self.assertNotEqual(
             running.value, failed.value,
             "answering 'what is running' with trace history would be substitution",
         )
+        self.assertNotIn("Trace", running.source)
+        self.assertIn("observation", running.source)
+
+    def test_a_running_answer_states_the_scope_it_covers(self):
+        """An empty `live` must never read as 'nothing is running'."""
+        running = _answer("What is running?")
+        if running.status == VERIFIED:
+            self.assertIn("not covered", running.value["scope"])
 
     def test_an_unknown_answer_still_names_the_absent_source(self):
         answer = _answer("What is running?")
@@ -183,9 +201,25 @@ class CoverageIsMeasured(unittest.TestCase):
         answerable from real evidence.
         """
         coverage = model.coverage()
-        self.assertGreaterEqual(coverage["unknown"], 1)
-        unanswered = _answer("What do I not know?").value["unanswered_questions"]
-        self.assertIn("What is running?", unanswered)
+        self.assertEqual(
+            coverage["verified"] + coverage["inferred"] + coverage["unknown"],
+            coverage["questions"],
+        )
+        # `unknown` reached 0 once F-3 and F-4 closed. That is not a target and
+        # not a guarantee: the model must still be *able* to answer UNKNOWN, so
+        # the floor is proved by removing a source rather than by asserting a
+        # count that construction is allowed to move.
+        import tempfile
+        from pathlib import Path
+        from tools import p12_runtime_observation as runtime_obs
+
+        original = runtime_obs.OBSERVATION_ROOT
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                runtime_obs.OBSERVATION_ROOT = Path(tmp)
+                self.assertEqual(model.running().status, UNKNOWN)
+        finally:
+            runtime_obs.OBSERVATION_ROOT = original
 
 
 if __name__ == "__main__":  # pragma: no cover
