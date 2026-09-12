@@ -52,6 +52,8 @@ from tools.w4_delegation import AUTHORIZED_DELEGATOR, W4DelegationRegistry  # no
 from tools.w4_execution import (  # noqa: E402
     ExecutionOutcome, ExecutionRefused, ExecutionReport, W4Executor)
 
+from tools.p12_certified_evidence_guard import guard  # noqa: E402
+
 OPERATIONS = REPO_ROOT / "docs/architecture/p11/x-department-operations"
 FD_RECORD = ("docs/governance/acts/"
              "FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md")
@@ -121,7 +123,8 @@ def _revoke_stale(root: Path, instance_keys) -> Tuple[str, ...]:
             "Superseded by a later cross-Department coordination run. "
             "RE-RUN ≠ NEW UNBOUNDED AUTHORITY.")
         record["revoked_at"] = datetime.now(timezone.utc).isoformat()
-        path.write_text(json.dumps(record, indent=2), encoding="utf-8")
+        # `F-12`: revocation mutates a certified-phase record in place.
+        guard(path).write_text(json.dumps(record, indent=2), encoding="utf-8")
         revoked.append(record["delegation_id"])
     return tuple(revoked)
 
@@ -259,7 +262,8 @@ def run(perform: Callable[[PlanStep], str], *, coordinate=None,
         "escalations": escalations,
     }
     if persist:
-        (OPERATIONS / "cross-department.evidence.json").write_text(
+        # `F-12`: see `w4_first_run`. Certification froze this record.
+        guard(OPERATIONS / "cross-department.evidence.json").write_text(
             json.dumps(evidence, indent=2), encoding="utf-8")
         for grant in grants.values():
             project(grant.delegation_id)

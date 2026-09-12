@@ -11630,3 +11630,90 @@ measured figure are indistinguishable in the finished artifact, which is the
 entire reason the rule says measure. `§107.4` recorded `718`, derived the same
 way from the same kind of reasoning, and was wrong for six commits. This one was
 lucky; the method was identical.
+
+---
+
+# 116. `F-12` — certification was a document; now it is a boundary
+
+Evidence:
+[`P12-F12-CERTIFIED-EVIDENCE-GUARD.md`](../architecture/p12/P12-F12-CERTIFIED-EVIDENCE-GUARD.md)
+
+```text
+F-12 CLOSED — VERIFIED      historical rewrite 0
+F-10′ UNBLOCKED             P12 CONSTRUCTED = FALSE
+```
+
+## 116.1 The operation did not change; its meaning did
+
+The P11 work paths were built re-runnable, and during construction that was
+correct. `FD-P11-002` certified P11 on 2026-09-11, and from that moment the same
+re-run overwrote certified evidence and flipped the one `ACTIVE` delegation to
+`REVOKED`. **Nothing in the repository noticed.**
+
+`§16` asks that governance be *applied across layers*. The gap between a
+certification that constrains documents and one that constrains behaviour is
+exactly that:
+
+```text
+CERTIFIED DOCUMENT ≠ ENFORCED BOUNDARY
+```
+
+## 116.2 Read from bodies, and rejected from prose
+
+Certified phases come from a certification **statement** inside a resident
+instrument — `FD-P11-002 §1`, `FD-P10-005 §16` — yielding `{10, 11}`.
+
+Deriving them from the Register's prose was tried and **rejected**: it contains
+*"It does **not** establish `PHASE 8 — CERTIFIED / COMPLETE`"*, which every naive
+pattern reads as a certification. A guard fooled by a negation is worse than no
+guard, and a test holds that case. The guard also **fails closed** — unreadable
+governance raises rather than permits.
+
+It refuses **writes**, not executions. That distinction is what unblocks `F-10′`:
+work paths can now run for observation without rewriting history.
+
+## 116.3 Proved against the real path
+
+```text
+python3 w1_coordination_proof.py
+  → CertifiedEvidenceProtected: …/4daebea9012d4cc7.delegation.json  → exit 1
+fingerprints before == after · ACTIVE 1 · records 8 · git p11 changes 0
+```
+
+It fired on the **first** write the run attempted — the revocation of the single
+`ACTIVE` delegation. The hazard was reproduced against the real path rather than
+argued, the refusal is loud (exit 1, not a silent skip), and it is precise: the
+uncertified observation proofs still exit 0.
+
+## 116.4 The test that found the hole was the one I had to fix first
+
+`_revoke_stale` mutates delegation records in place, and my **first wiring missed
+it in three modules**. My conformance test passed anyway, because it asked
+whether a *module* imported the guard — and `w1_coordination_run.py` did, while
+an unguarded call site sat inside it.
+
+**A module-level check cannot see an unguarded call in a guarded module.**
+Rewritten per call site, it failed immediately and named three more: two genuine
+holes, and one false positive from my own two-statement form, which I normalized
+so the rule has exactly one shape.
+
+A conformance check that passes because it looks at the wrong granularity is the
+same failure as a guard that passes because it cannot see — `VF-11`'s shape, in
+the test rather than the tool. The population of guarded writers is now measured
+rather than remembered, and a second test asserts the check **can** fail.
+
+## 116.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 789 OK = 1866
+citation 211 documents / 1137 citations / 0 errors
+stale-state 507 documents / 0 stale assertions
+certified {10, 11} - protected docs/architecture/p11 - historical rewrite 0
+protected read 0 / staged 0 / committed 0
+
+F-12 CLOSED - F-10′ UNBLOCKED - F-13 OPEN
+P12 CONSTRUCTED = FALSE - E12 NOT RATIFIED - P13 NOT AUTHORIZED
+```
+
+Measured after every write in this increment, including this section — the
+only point at which a count is final.

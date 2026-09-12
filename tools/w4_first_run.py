@@ -81,6 +81,8 @@ from tools.w4_delegation import (
 from tools.w4_execution import W4Executor
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+from tools.p12_certified_evidence_guard import guard  # noqa: E402
+
 OPERATIONS = REPO_ROOT / "docs/architecture/p11/w4-operations"
 
 FD_RECORD = ("docs/governance/acts/"
@@ -186,7 +188,8 @@ def _revoke_stale_grants(root: Path, instance_key: str) -> Tuple[str, ...]:
             "withdrawn here — FD-P11-001 §29: a delegation is a controlled "
             "lifecycle object, not a permanent grant.")
         record["revoked_at"] = datetime.now(timezone.utc).isoformat()
-        path.write_text(json.dumps(record, indent=2), encoding="utf-8")
+        # `F-12`: revocation mutates a certified-phase record in place.
+        guard(path).write_text(json.dumps(record, indent=2), encoding="utf-8")
         revoked.append(record["delegation_id"])
     return tuple(revoked)
 
@@ -348,7 +351,9 @@ def run(perform_verification, *, persist: bool = True,
         "escalations": list(escalations),
     }
     if persist:
-        (OPERATIONS / "first-execution.evidence.json").write_text(
+        # `F-12`: P11 is certified; this record is historical. Execute freely
+        # with `persist=False`; overwriting the frozen record is refused.
+        guard(OPERATIONS / "first-execution.evidence.json").write_text(
             json.dumps(evidence, indent=2), encoding="utf-8")
         # `ACT-CC-P11-013 §14` — grant rotation must leave W3 tracking correct.
         #

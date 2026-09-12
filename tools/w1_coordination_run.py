@@ -45,6 +45,8 @@ from tools.w4_delegation import AUTHORIZED_DELEGATOR, W4DelegationRegistry  # no
 from tools.w4_execution import W4Executor  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+from tools.p12_certified_evidence_guard import guard  # noqa: E402
+
 OPERATIONS = REPO_ROOT / "docs/architecture/p11/w1-operations"
 FD_RECORD = ("docs/governance/acts/"
              "FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md")
@@ -81,7 +83,12 @@ def _revoke_stale(root: Path, instance_key: str) -> Tuple[str, ...]:
             "Superseded by a later W1 coordination run. RE-RUN ≠ NEW UNBOUNDED "
             "AUTHORITY (ACT-CC-P11-010 §35).")
         record["revoked_at"] = datetime.now(timezone.utc).isoformat()
-        path.write_text(json.dumps(record, indent=2), encoding="utf-8")
+        # `F-12`: revocation *mutates* a certified-phase delegation record —
+        # ACTIVE becomes REVOKED in place. That is a rewrite of frozen evidence,
+        # and it was the write this guard's first wiring missed: the module
+        # imported the guard, so a module-level conformance check passed while
+        # this call site stayed open.
+        guard(path).write_text(json.dumps(record, indent=2), encoding="utf-8")
         revoked.append(record["delegation_id"])
     return tuple(revoked)
 
@@ -212,7 +219,11 @@ def run(perform, *, coordinate=None, persist: bool = True,
         "boundary_crossed": bool(report.refusals),
     }
     if persist:
-        (OPERATIONS / "w1-coordination.evidence.json").write_text(
+        # `F-12`: P11 is certified, so this record is historical. The guard
+        # refuses the overwrite rather than letting a re-run quietly rewrite
+        # evidence that certification froze. Execution itself is untouched —
+        # run with `persist=False` to observe without writing.
+        guard(OPERATIONS / "w1-coordination.evidence.json").write_text(
             json.dumps(evidence, indent=2), encoding="utf-8")
         # `ACT-CC-P11-013 §14` — grant rotation must leave W3 tracking correct.
         #
