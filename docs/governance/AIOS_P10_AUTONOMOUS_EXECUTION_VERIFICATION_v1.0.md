@@ -12119,3 +12119,58 @@ P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
 
 Nothing in this increment depended on `E12` ratification, and none of it settled
 `E12` indirectly.
+
+---
+
+# 122. Fresh-process verification — no P12 claim depends on this session
+
+Evidence:
+[`P12-W6-FRESH-PROCESS-VERIFICATION.md`](../architecture/p12/P12-W6-FRESH-PROCESS-VERIFICATION.md)
+
+```text
+8 of 8 stages REPRODUCED · 0 diverged · E12 RATIFIED = FALSE
+```
+
+## 122.1 The check this corpus actually needed
+
+`§52` requires material P12 claims to survive fresh-process reconstruction
+*"without relying on hidden conversational state."* Every claim here was produced
+in one very long session, where a figure can be right for reasons that do not
+outlive it — a module imported earlier, a file written mid-run, a value in a live
+object.
+
+Each of `§52`'s eight stages is now derived **twice**: once in process, once in a
+subprocess handed nothing but the repository path. All eight agree.
+
+```text
+repository 513 · blueprint sha 62b6c289… · registries 435 · state 10/2/0
+decisions 54 · graph 14 acyclic · runtime 3 · evidence 2
+```
+
+**No P12 claim in this corpus depends on session state.**
+
+## 122.2 Eight-of-eight is what a broken comparator returns too
+
+So the comparator is proved able to fail: an injected divergence makes all eight
+report `DIVERGED`, and a failing subprocess makes all eight `UNAVAILABLE` rather
+than `REPRODUCED`. That second control exists because *"the child failed"* and
+*"the values match"* are easy to conflate and mean opposite things.
+
+## 122.3 It asserts no threshold
+
+Whether these values **satisfy** `E12-06` is the measurable interpretation only
+Founder ratification supplies. The module reports reproducibility, not adequacy,
+returns no pass/fail verdict, and a test holds it to that — `F-16` is untouched
+and was not settled indirectly.
+
+## 122.4 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 825 OK = 1902
+citation 219 documents / 1163 citations / 0 errors - stale-state 513 / 0
+historical rewrite 0 - protected read 0 - Native Core 11
+
+W6 scope: cross-phase contracts + fresh process addressed
+          cross-PD interfaces, phase-level mutation and regression not built
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
+```
