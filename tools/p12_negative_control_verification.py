@@ -504,6 +504,30 @@ def _operational_state_projection() -> Tuple[bool, str]:
                   "no value when a source raises")
 
 
+def _self_model_contract() -> Tuple[bool, str]:
+    """The binding checker must be able to report UNBOUND.
+
+    Twelve bound answers is what a checker following every alias would print
+    whether or not the binding existed, so a deliberately wrong binding is
+    planted and must come back `UNBOUND`.
+    """
+    from unittest import mock
+    from tools import p12_self_model_contract as contract
+
+    live = contract.summary()
+    if live["unbound_answers"]:
+        return False, f"the live contract already reports {live['unbound_answers']}"
+    wrong = contract.QuestionContract(
+        "What is running?", "running", "tools.nothing_reads_this",
+        contract.AUTHORITATIVE, "none", "none", "a deliberately wrong binding")
+    with mock.patch.object(contract, "CONTRACT", (wrong,)):
+        bindings = dict(contract.answers_bound_to_their_source())
+    if bindings.get("running") != contract.UNBOUND:
+        return False, f"a wrong binding still reported {bindings.get('running')}"
+    return True, ("moves both ways: all twelve BOUND on the real contract, "
+                  "UNBOUND when a binding is wrong")
+
+
 def _governance_index() -> Tuple[bool, str]:
     """The index must report a source as stale once it changes underneath."""
     from tools.governance_index import GovernanceIndex, tracked_markdown
@@ -559,6 +583,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_state_verification", "a consumer is recognised", _state_chain),
     ("p12_operational_state", "an unreadable source yields UNKNOWN",
      _operational_state_projection),
+    ("p12_self_model_contract", "a wrong binding is refused",
+     _self_model_contract),
     ("governance_index", "a source is stale", _governance_index),
 )
 

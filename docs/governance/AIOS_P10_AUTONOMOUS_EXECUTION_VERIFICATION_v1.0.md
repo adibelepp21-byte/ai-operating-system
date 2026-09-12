@@ -13307,3 +13307,107 @@ E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
 
 `W2 VERIFIED ≠ P12 VERIFIED`. W2 is constructed and verified and **not
 operational**, and W6 is what says so.
+
+## 135. P12-W5: the integration was falsified, and not built
+
+`ACT-CC-P12-W5-001`. Evidence:
+`docs/architecture/p12/P12-W5-CONSUMER-RECONCILIATION.md`.
+
+The Act was explicit that it must not begin by assuming W5 consumes W2.
+**It does not, it should not as W2 is currently built, and nothing was
+constructed.**
+
+## 135.1 The canonical clause that decides it
+
+`§41`: *"Self-model operational state must derive from current **authoritative
+state sources**."* `§13` calls W2 a **projection** over sources, not a source.
+So routing W5 through W2 puts a projection where `§41` names a source —
+admissible only if the projection preserves what the source carries. That is
+measurable, and it was measured.
+
+`§18` is the controlling question set: **twelve**, and the resident model
+matches it in order. `§36`'s inline list of nine is prefixed *"at minimum"* — a
+floor, not the set.
+
+## 135.2 Ground one — the projection loses the answer
+
+```text
+running       LOST  live_by_kind, scope
+failed        LOST  outputs, records_examined
+capabilities  LOST  declared, count
+```
+
+**W2's projections are summaries; W5's answers are contents.** `failed` would
+lose `outputs` — *what* failed, reduced to how many. `capabilities` would lose
+the capability names. `running` would lose `scope`, the qualifier saying what
+the answer covers.
+
+The other nine are not candidates: four read declared constants, one derives
+from the model's own answers, and W2 carries no `CHANGE` source at all. Where
+both have a notion of staleness they mean different things — an unsynchronized
+external corpus versus an index whose hash drifted — and routing one through
+the other would conflate them under one word.
+
+## 135.3 Ground two — it would have moved the gap, not closed it
+
+```text
+tools.p12_operational_state   non-test consumers: NONE
+tools.p12_self_model          non-test consumers: NONE
+```
+
+**W5 has no resident consumer either.** Wiring W5 to consume W2 would produce
+two unreached surfaces joined to each other. The W2 `CONSUMER` link would still
+read `UNSATISFIED`, because the thing doing the consuming is itself unreached.
+
+This is the stronger ground: even with equivalent semantics, the construction
+would not have closed what it was proposed to close.
+
+## 135.4 `NO INTERNAL CACHE ≠ NO STALE SOURCE`, proven
+
+W2 re-derives on every call, so it reports `CURRENT`. Meanwhile **6 of 6
+underlying runtime observations are stale or terminated and 0 are live.** A
+self-model inferring source freshness from projection freshness would report a
+stopped world as live. The two are measured separately and a control asserts the
+live corpus demonstrates it rather than merely defining it.
+
+## 135.5 A defect in my own checker
+
+The binding check first inspected only imports written inside each function and
+reported `incomplete`, `stale` and `decisions` as `UNBOUND`. All three read
+`derived_views` through a module-level alias via a helper. **All three were
+bound and the checker could not see it** — a check that misses how the module is
+written reports a defect in the code it reads when the defect is its own. It now
+resolves aliases and follows one level of delegation, and two controls prove it
+can still report `UNBOUND`.
+
+## 135.6 What was built, and what was refused
+
+Built: the semantic contract — twelve questions, each bound to its source, with
+that source's authority, its freshness model, and **why that answer is the
+correct self-model answer**, which is what `§25` asks for and an answer alone
+cannot give.
+
+Refused: the integration. `§16`'s conditions were not met. `§37` defines success
+as truthfully determining whether the relationship is required, not as building
+it.
+
+## 135.7 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 1089 = 2166
+controls at P11 certification 2089 → 2437 - removed 0 - weakened 0
+W5 contract 12 questions / 12 bound / 0 reading a projection
+W5 AUTHORIZED TRUE - CONSTRUCTED TRUE - VERIFIED TRUE - OPERATIONAL FALSE
+W2 CONSUMER link unchanged: UNSATISFIED
+mutation 10 attempted / 8 detected / 2 missed / 0 unavailable
+§49 controls 13 attempted / 11 refused / 2 ACCEPTED, still individually classified
+negative controls 22 instruments / 22 demonstrated - fresh process 5/5
+
+TraceRecord unchanged - Native Core 11 - certified evidence changes 0
+protected read 0 - historical rewrite 0 - conformance weakened to pass 0
+
+F-16, F-17, F-18 untouched
+P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
+VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
+E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
+```
