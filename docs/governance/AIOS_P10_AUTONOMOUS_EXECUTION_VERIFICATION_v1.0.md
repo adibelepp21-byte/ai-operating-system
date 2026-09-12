@@ -12331,3 +12331,92 @@ the value measured *after* the append, and this note exists because a figure tha
 was accurate when taken can still be wrong when published — which is the same
 failure mode as writing a number before measuring it, arriving from the other
 direction.
+
+## 125. Regression verification: nothing was lost, and one class was never looked at
+
+`§19` scope item **REGRESSION**, specified by Blueprint `§51`. The word `§51`
+turns on is *silently*: a control that was deleted, renamed, or stripped of its
+assertions reports green, and reports it more quietly than a failure would.
+1956 passing tests cannot tell "every P4–P11 behavior holds" from "the tests
+that would have caught the breakage are gone."
+
+Evidence: `docs/architecture/p12/P12-W6-REGRESSION-VERIFICATION.md`.
+Instrument: `tools/p12_regression_verification.py`, 22 conformance tests.
+
+## 125.1 The structural comparison, which needs no classification
+
+Every declared control at the P11 certification commit `98c0a1e` against every
+declared control now:
+
+```text
+2089 controls at 98c0a1e → 2222 now · 0 removed · 0 weakened · HELD
+```
+
+Exhaustive over the repository, so no mapping error can hide a case from it. A
+renamed control reads as removed — renaming is how a control disappears while
+the total goes up. "Weakened" counts `with` blocks, because a control that
+loses its `with self.assertRaises(...)` keeps its name, keeps its green result,
+and has lost its entire point.
+
+The `2222` declared and the `1956` executed are different measurements — a
+parameterized control runs more than once, an undiscovered module runs not at
+all — and they are not reconciled. Reporting either as the other would be a
+fabricated equivalence.
+
+## 125.2 Ten classes held; `quality` was never examined
+
+Each of `§51`'s eleven classes is bound to a named resident verifier and that
+verifier is run. Ten produce a value. **`quality` has no anchor**: there is no
+linter, no formatter, no coverage threshold, no CI configuration in this
+repository. Nothing measures quality, so there is no prior value to regress
+from.
+
+Reported `UNANCHORED`, never `HELD`. A class whose anchor does not exist has not
+held — it has not been looked at. That distinction is the same one `§124.2`
+drew for `alter state authority`, and it is the distinction this programme keeps
+having to restate.
+
+`HELD` means this named check produced this value now. It does not mean the
+class is free of regression. A conformance control forbids any `HELD` without a
+named anchor, so the claim stays falsifiable.
+
+## 125.3 Three defects in my own instrument
+
+**Three anchors were written against APIs I had not read.** All three returned
+`UNAVAILABLE` on the first run — the same error as `W4Delegator` in `§124`,
+committed again one section later, in the module written to detect silent
+breakage.
+
+**The governance anchor only checked that parsing succeeded.** Parsing succeeds
+for an instrument edited after being indexed, which is precisely the silent
+breakage `§51` names. It now calls `stale_sources` and recomputes hashes.
+
+**A resident guard flagged this module, and then flagged the explanation.**
+`test_line_numbering_coherence` scans for the shape of a `path:line` locator,
+and an interpolated git revision spec has that shape. Nothing here computes a
+line number, so the spec is built by concatenation — and the comment saying so
+had to be rewritten, because the guard reads raw text and matched the literal
+inside the comment. The guard was not loosened and this module was not declared
+an emitter it is not. A locator guard that fails closed errs in the right
+direction.
+
+## 125.4 The seventh collection
+
+`test_the_declared_p11_surface_set_is_complete` failed on the run that created
+the module. Declared, not exempted: it reads the planning surface to check that
+an unresolvable citation is still refused, and that control would be worthless
+if the module could hold an unverified provenance itself.
+
+## 125.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 879 OK = 1956
+controls at P11 certification 2089 → 2222 - removed 0 - weakened 0
+regression 11 classes / 10 held / 0 regressed / 1 unanchored (quality)
+mutation 10 named / 9 attempted / 7 detected - fresh-process 8/8 reproduced
+certified evidence changes 0 - protected read 0 - Native Core 11
+historical rewrite 0 - conformance test weakened to pass 0
+
+F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
+```

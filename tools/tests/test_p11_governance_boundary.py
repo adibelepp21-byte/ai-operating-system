@@ -435,6 +435,12 @@ P11_SURFACES = (
     # mutation instrument permitted to flatten a citation into free text could
     # manufacture the very acceptance it reports as a detection.
     REPO_ROOT / "tools" / "p12_mutation_verification.py",
+    # The P12-W6 regression suite, added under `P12 §19` scope `REGRESSION` —
+    # declared because the guard below failed the run that created it, the
+    # seventh time it has collected. It reads the planning surface to check that
+    # an unresolvable citation is still refused, which is a control that would
+    # be worthless if the module could hold an unverified provenance itself.
+    REPO_ROOT / "tools" / "p12_regression_verification.py",
 )
 
 
