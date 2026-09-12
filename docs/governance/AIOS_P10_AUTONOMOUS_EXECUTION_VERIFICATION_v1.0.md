@@ -12174,3 +12174,67 @@ W6 scope: cross-phase contracts + fresh process addressed
           cross-PD interfaces, phase-level mutation and regression not built
 P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
 ```
+
+---
+
+# 123. Cross-PD interfaces — the registry is current, the interfaces are undefined
+
+Evidence:
+[`P12-W6-CROSS-PD-VERIFICATION.md`](../architecture/p12/P12-W6-CROSS-PD-VERIFICATION.md)
+
+```text
+checks 6 · current 6 · drifted 0 · interfaces_verified 0
+F-18 OPEN — boundary, not a task
+```
+
+## 123.1 The thing `§48` asks for cannot be done here
+
+All five evidenced cross-PD edges record `Interface: not declared`. **An
+undefined interface cannot be exercised**, so *"not verified merely because both
+surfaces exist"* cannot be satisfied by any amount of work. Two pre-existing
+boundaries hold it: the eight silent divisions' volumes are **non-resident**
+(`ESC-C7-01`, *"Not recoverable in this repository"*), and `INV-10` applicability
+**awaits `ADR-0029`**.
+
+The registry already records `POSSIBLE INV-10 EXPOSURE — NOT ASSERTED` and *"No
+violation is claimed, and none is ruled out."* I claim none either.
+
+**Falsified before concluding:** nothing has defined an interface since
+2026-09-09 — 29 commits touched that corpus and the only near-hit is a P3 record
+stating *"No API, signature, Runtime assumption, or interface is defined here."*
+The evidence identifiers `E-24`, `E-33`, `E-42` all still resolve.
+
+I did **not** pursue the one route that would have produced a result: treating
+implementation relationships as PD interfaces. That needs a PD ↔ implementation
+assignment, which is `F-17`.
+
+## 123.2 What was verified instead
+
+The registry's rows are the **only resident evidence** of these edges, so they
+cannot be independently recomputed — but its currency can be, and is: 5 edges, 90
+ordered pairs, 5.6 % coverage, 0 defined interfaces, 3 identifiers resolving, 10
+divisions. All six checks `CURRENT`.
+
+**Current is not verified.** The module returns `interfaces_verified: 0` beside
+the named blocking boundaries so the two cannot be read as one.
+
+## 123.3 Proved able to drift
+
+Six-of-six is what a checker reading nothing reports. Removing an edge drifts the
+count; breaking the Ledger drifts the identifiers; removing the registry yields
+`UNAVAILABLE` with `current == 0`. The control that matters most: **giving an
+edge a defined interface drifts immediately** — that is the single change that
+would make cross-PD verification possible, and the checker must notice it rather
+than keep reporting a comfortable zero.
+
+## 123.4 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 836 OK = 1913
+citation 221 documents / 1165 citations / 0 errors - stale-state 514 / 0
+fresh-process 8/8 reproduced - certified evidence changes 0 - protected read 0
+Native Core 11 - historical rewrite 0
+
+F-18 OPEN (Architect-reserved + source-blocked) - F-16, F-17 untouched
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
+```
