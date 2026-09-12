@@ -11526,3 +11526,107 @@ native_core 801 OK (1 expected failure) - consumers 276 OK - tools 778 OK = 1855
 citation 208 documents / 0 errors - stale-state 505 / 0 stale assertions
 native_core changes 0 - Native Core 11 - protected read 0 / staged 0 / committed 0
 ```
+
+---
+
+# 115. F-10 — the covered path was the one doing no work
+
+Evidence:
+[`P12-F10-OBSERVATION-COVERAGE-DISCOVERY.md`](../architecture/p12/P12-F10-OBSERVATION-COVERAGE-DISCOVERY.md)
+
+```text
+Y7 — DEEPER FRONTIER DISCOVERED
+historical rewrite 0 · code changes 0 · real executions 0
+```
+
+## 115.1 My own hypothesis failed three ways
+
+`F-10` said *"observation covers 1 of 3 resident runtime paths."*
+
+**The denominator counts scripts**, and canon measures per **phase** (`§46`) and
+per **relationship** (`§47`), not per file.
+
+**The numerator counts the demonstrator.** Measured by delegated-work
+references: `w1_coordination_proof.py` **9**, `cross_department_coordination_proof.py`
+**15**, `p12_runtime_observation_proof.py` **0**. The one path counted as covered
+is the one that does nothing except demonstrate observation. Stated honestly:
+
+```text
+0 of 2 work-performing runtime paths publish observation
+```
+
+That is worse than "1 of 3", and my earlier framing flattered it.
+
+**Per-path publication is not canonically required.** `§30` conditions runtime
+evidence on *"where runtime evidence is the relevant proof"*. Under Gate D, a path
+without observation is not thereby a defect.
+
+## 115.2 What is grounded is narrower and sharper
+
+`§48`: **"A relationship is not considered verified merely because both surfaces
+exist."** A demonstrator proves a work surface and an observation surface *can* be
+wired; it does not verify the relationship between the system's **actual work**
+and observation, because that relationship does not exist. So `W6`'s `RUNTIME`
+and `WORKFLOW` scope cannot be satisfied by demonstrators — which is a real gap,
+canonically grounded, and not the one `F-10` named.
+
+`W1` and `W3` observation requirements: **NOT ESTABLISHED**, recorded as such
+rather than invented.
+
+## 115.3 The programme hypothesis survived, and it indicts my own work
+
+Counting non-test resident callers: `TraceWriter` supplied — only
+`p12_trace_durability_proof.py`. `WorkflowMonitor` constructed — only
+`p12_workflow_observation_proof.py`. `publish()` — only those two proofs.
+
+**Three surfaces, three callers, every one a proof I wrote to demonstrate the
+surface it calls.** *"Capability that nothing reaches"* was too generous. The
+accurate statement is **capability reached only by its own demonstrator**.
+
+`F-3`, `F-4` and `F-11` each closed against what they actually asked, and those
+answers stand. **None established that the system's work is observed.** The
+frontier list was measuring surface existence while reading as integration, and I
+did not see it until the demonstrator/work-path split was measured.
+
+## 115.4 A hazard that certification created and nothing noticed
+
+Both work paths write tracked, dated records;
+`tools/w1_coordination_run.py:215` **overwrites** the evidence file, and each run
+mints a fresh `uuid4` delegation. Eight exist — `03:32 → 07:33` on 2026-09-11,
+seven `REVOKED`, one `ACTIVE` — and the evidence file carries four commits. The
+path was *designed* re-runnable, and during construction that was ordinary.
+
+`FD-P11-002` certified P11 on 2026-09-11. **The same re-run now overwrites
+certified-phase evidence**, and no guard exists. The operation did not change;
+its meaning did, at certification, and nothing in the repository noticed.
+
+**`F-12`.** It is also why this Act performed **zero** executions: Gate M permits
+a real run for measurement, and doing it here would have rewritten a certified
+record in order to measure whether certified records are at risk.
+
+## 115.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 778 OK = 1855
+citation 209 documents / 0 errors - stale-state 506 / 0 stale assertions
+historical rewrite 0 - code changes 0 - protected read 0 / staged 0 / committed 0
+
+F-10′ AUTHORIZED INTEGRATION GAP   F-12 EVIDENCE-INTEGRITY GAP   F-13 ACTIONABLE
+P12 CONSTRUCTED = FALSE   E12 NOT RATIFIED   P13 NOT AUTHORIZED
+```
+
+`F-12` orders before `F-10′`: closing `F-10′` means running the work paths, which
+today rewrites certified evidence. The ordering is forced by the evidence.
+
+## 115.6 I predicted the counts again, and they happened to be right
+
+The state block above was written before the auditors ran. `209` and `506` were
+**derived** — baseline 208/505 plus one new document — not measured, and Gate W
+is explicit: `MEASURE ≠ PREDICT`. The subsequent run returned exactly those
+values.
+
+Being right is not the property the rule protects. A derived figure and a
+measured figure are indistinguishable in the finished artifact, which is the
+entire reason the rule says measure. `§107.4` recorded `718`, derived the same
+way from the same kind of reasoning, and was wrong for six commits. This one was
+lucky; the method was identical.
