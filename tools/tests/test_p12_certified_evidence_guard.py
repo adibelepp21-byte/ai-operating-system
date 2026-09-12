@@ -143,3 +143,40 @@ class EveryWriterIntoCertifiedEvidenceIsGuarded(unittest.TestCase):
 
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
+
+
+class EveryCertifiedPhaseResolvesToARoot(unittest.TestCase):
+    """A certified phase with no resolvable evidence root must fail loudly.
+
+    P10 is certified, has no `docs/architecture/p10/`, and its certification
+    package sits under `platform-organization/`. The first version of
+    `protected_roots` skipped that phase silently and reported success — the
+    guard's own failure mode, inside the guard.
+    """
+
+    def test_p10_evidence_root_is_protected(self):
+        target = (REPO_ROOT / "docs/architecture/platform-organization"
+                  / "E10-VERIFICATION-AND-P10-CERTIFICATION-PACKAGE.md")
+        self.assertTrue(target.is_file(), "P10's certification package moved")
+        with self.assertRaises(sentinel.CertifiedEvidenceProtected):
+            sentinel.guard(target)
+
+    def test_both_certified_phases_have_a_protected_root(self):
+        roots = sentinel.protected_roots()
+        self.assertEqual(
+            len(roots), len(sentinel.certified_phases()),
+            "every certified phase must resolve to exactly one evidence root",
+        )
+
+    def test_an_unresolvable_certified_phase_raises_rather_than_skips(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            acts = Path(tmp)
+            (acts / "fd.md").write_text(
+                "PHASE 99 — SOMETHING IS CERTIFIED.", encoding="utf-8")
+            with self.assertRaises(sentinel.CertificationUndeterminable):
+                sentinel.protected_roots(REPO_ROOT, acts)
+
+    def test_the_declared_mapping_is_only_for_non_conventional_roots(self):
+        """P11 follows `p{N}` and must not need a declaration."""
+        self.assertNotIn(11, sentinel.PHASE_EVIDENCE_ROOTS)
+        self.assertIn(10, sentinel.PHASE_EVIDENCE_ROOTS)

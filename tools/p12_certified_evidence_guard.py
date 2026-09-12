@@ -56,6 +56,21 @@ _CERTIFIES = re.compile(
 )
 
 
+#: Evidence roots for certified phases that do **not** follow the `p{N}`
+#: directory convention. P10's certified evidence lives under
+#: `platform-organization/`, and there is no `docs/architecture/p10/` at all.
+#:
+#: **Declared, because it cannot be derived.** Neither `FD-P10-005` nor
+#: `FD-P11-002` names a path in its body, so there is no instrument text to
+#: anchor this on, and inferring a root from identifier density would be the
+#: kind of guess this module exists to refuse. It is declared openly and made
+#: *verified rather than remembered* by a conformance test that fails the moment
+#: a certified phase has no resolvable root.
+PHASE_EVIDENCE_ROOTS = {
+    10: "docs/architecture/platform-organization",
+}
+
+
 class CertificationUndeterminable(RuntimeError):
     """Governance could not be read, so certification could not be established."""
 
@@ -87,9 +102,26 @@ def protected_roots(
     phases = certified_phases(acts_root or (repo_root / "docs/governance/acts"))
     roots = []
     for phase in sorted(phases):
-        root = repo_root / f"docs/architecture/p{phase}"
-        if root.is_dir():
-            roots.append(root)
+        declared = PHASE_EVIDENCE_ROOTS.get(phase)
+        candidate = (
+            repo_root / declared if declared
+            else repo_root / f"docs/architecture/p{phase}"
+        )
+        if candidate.is_dir():
+            roots.append(candidate)
+            continue
+        # A certified phase whose evidence root cannot be resolved is an
+        # undeterminable boundary, not an absent one. The first version of this
+        # loop skipped it silently: P10 is certified, has no `p10/` directory,
+        # and its certification package sat unprotected under
+        # `platform-organization/` while this function reported success. That is
+        # the same "guard that passes because it cannot see" shape this module
+        # was written to prevent, committed inside the module itself.
+        raise CertificationUndeterminable(
+            f"phase {phase} is certified but its evidence root cannot be "
+            f"resolved: neither PHASE_EVIDENCE_ROOTS nor docs/architecture/"
+            f"p{phase} yields a directory"
+        )
     return tuple(roots)
 
 

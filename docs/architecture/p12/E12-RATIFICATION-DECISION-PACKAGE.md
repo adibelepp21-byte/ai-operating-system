@@ -52,7 +52,7 @@ until ratified.
 | Verification method | edge-by-edge classification; no edge admitted on existence alone |
 | Negative control | an edge whose two surfaces exist but which nothing crosses must classify `UNVERIFIED` |
 | Failure semantics | an unclassified material edge is a failure; a `BLOCKED` or `RESERVED` edge is not |
-| **Current state** | **NOT BUILT** as a work package. The interface graph exists (14 edges, acyclic) but carries none of the ten edge fields |
+| **Current state** | **CORRECTED — the canonical requirement is SATISFIED.** `PHASE-PD-CAPABILITY-AND-DEPENDENCY-MAP.md` has been resident since 2026-09-09 and answers `§14`'s six questions for every phase. This cell first read *NOT BUILT*, which was a failure to look before classifying; see [`P12-W1-PHASE-PD-MAP-RECONCILIATION.md`](P12-W1-PHASE-PD-MAP-RECONCILIATION.md). What remains open is `F-17`: `Provider PD` is `UNKNOWN` for every phase because no resident source establishes the relation |
 
 ### `E12-02` — Unified Operational State
 

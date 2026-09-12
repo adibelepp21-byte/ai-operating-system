@@ -12040,3 +12040,82 @@ E12 RATIFIED = FALSE - P12 CONSTRUCTED = FALSE - P13 NOT AUTHORIZED
 
 `RATIFICATION ≠ PASS`, as `DP-02 §10` held for E11. Ratifying `E12` would fix the
 acceptance boundary and declare nothing satisfied.
+
+---
+
+# 121. `E12-01` was built all along, and my guard was not guarding P10
+
+Evidence:
+[`P12-W1-PHASE-PD-MAP-RECONCILIATION.md`](../architecture/p12/P12-W1-PHASE-PD-MAP-RECONCILIATION.md)
+
+```text
+E12-01 mapping requirement SATISFIED (my NOT BUILT corrected)
+protected roots 1 → 2      F-17 OPEN      historical rewrite 0
+```
+
+## 121.1 I classified without looking
+
+My `E12` package recorded `E12-01 — NOT BUILT`. `§14` requires an explicit
+Phase ↔ PD capability/dependency mapping, and **that artifact has been resident
+since 2026-09-09**, answering the six required questions for every phase with a
+stated reason for each `UNKNOWN`.
+
+The requirement is satisfied. Three of its rows are stale. Reporting `NOT BUILT`
+was a failure to look before classifying — in the document proposing how to
+measure everything else.
+
+## 121.2 The map's negative finding is current, not inherited
+
+Its `§2`: *"zero resident sources assign a Phase to a PD as its provider."*
+Re-tested today across everything P11 and P12 added — `DP-01`, `FD-P11-001`,
+`DP-02`, `FD-P11-002`, the P12 authorization — **still zero**.
+
+That matters more than the stale rows. The `Provider PD` column is `UNKNOWN`
+everywhere because nothing has ever established the relation, and P12's
+integration work has not changed it. `F-17` records it as a **boundary, not a
+task**: the map tested the inference and it was *"rejected on the record"*, so
+assigning a provider is an Architect/Founder act.
+
+`P10`'s row is the sharpest staleness: *"no Phase 10 authorization instrument
+exists"* was true when written and is false now, and the map has no mechanism to
+notice.
+
+## 121.3 The guard was not guarding P10
+
+Establishing whether the map was protected showed it was not — and **P10 is
+certified.**
+
+`protected_roots()` mapped phase `N` to `docs/architecture/p{N}`. There is no
+`p10/`; P10's certified evidence, including its certification package, lives
+under `platform-organization/`. The loop's `if root.is_dir()` **silently
+skipped** the phase and reported success.
+
+**A certified phase's evidence sat unprotected while the guard reported it was
+guarding everything.** Third time I have written this shape, and the second time
+*inside the countermeasure built to prevent it*.
+
+Corrected: non-conventional roots are **declared** (they cannot be derived — no
+certification instrument names a path in its body), an unresolvable certified
+phase now **raises** instead of being skipped, and a conformance test asserts
+every certified phase resolves — verified rather than remembered.
+
+```text
+BEFORE  protected: p11
+AFTER   protected: platform-organization · p11
+```
+
+Nothing broke: no resident module writes there.
+
+## 121.4 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 815 OK = 1892
+citation 217 documents / 1162 citations / 0 errors - stale-state 512 / 0
+protected roots 2 - historical rewrite 0 - Native Core 11 - protected read 0
+
+E12-01 SATISFIED (corrected) - F-17 OPEN - F-16 OPEN Founder-reserved
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
+```
+
+Nothing in this increment depended on `E12` ratification, and none of it settled
+`E12` indirectly.
