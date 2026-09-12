@@ -85,6 +85,13 @@ RUNS = {
         "goal": "p12-w4-integrated-execution",
         "plan": "p12-w4-integrated-execution-plan-0",
     },
+    "004": {
+        "subject": REPO_ROOT / "tools" / "p12_integration_graph.py",
+        "store": "p12-w1-integration-edge",
+        "runtime": "p12-w1-integration-edge-runtime",
+        "goal": "p12-w1-integration-edge",
+        "plan": "p12-w1-integration-edge-plan-0",
+    },
     "003": {
         "subject": REPO_ROOT / "tools" / "w4_execution.py",
         "store": "p12-w2-state-transition",

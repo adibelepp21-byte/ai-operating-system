@@ -13411,3 +13411,105 @@ P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
 VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
 E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
 ```
+
+## 136. P12-W1: the label existed, the work package did not
+
+`ACT-CC-P12-W1-001`. Evidence:
+`docs/architecture/p12/P12-W1-SYSTEM-INTEGRATION.md`.
+
+## 136.1 A name collision, not an implementation
+
+Three resident modules are named `w1_*`. **All three are P11-W1** — coordination
+surfaces executing `ACT-CC-P11-010` and `DP-02`. Read from the filenames, W1
+looked implemented. Read from the bodies, nothing implemented it.
+
+`FILENAME ≠ CANONICAL STATUS`, and this is the clearest instance the programme
+has produced: two work packages in two phases share a label. P12-W1 was
+`NOT_STARTED`.
+
+The second candidate was also false: `derived_views.interface_graph` derives a
+14-edge Native Core graph whose relationship is `imports` — not one of `§9`'s
+twelve classes, and `§8` forbids counting an import as an edge.
+
+## 136.2 W1 does not consume W2, and cannot
+
+**W2 cannot supply 8 of `§9`'s 10 edge attributes**: target, relationship,
+contract, state, evidence, verification, lifecycle, owner. The two names it
+shares mean different things — W2's `source` is a read path, `§9`'s is an edge
+endpoint.
+
+W2 is a per-**state** projection; a `§9` edge is a per-**edge** record. Different
+shapes, not different detail levels. The answer is not "W1 should read sources
+instead" — **W2 has no notion of an edge at all**, so a W1→W2 dependency would
+have nothing to draw on.
+
+This is the third consecutive falsification of a proposed W2 consumer, and they
+share one cause: **W2 summarises, and every proposed consumer needs references.**
+
+## 136.3 The graph, and two edges that are not relationships
+
+Eight edges, each evidenced by a resident artifact relating both ends. Four
+verified, three unverified, one reserved.
+
+**`workflow ↔ runtime`** — both kinds of observation exist and **no runtime
+identity appears on both sides**. Two observations are not a relationship; the
+`§48` case, found again.
+
+**`memory ↔ state`** — all seven durable execution records carry
+`memory_consumed`, and every one is empty. The field exists, is written, and
+nothing has ever put anything in it.
+
+**`platform ↔ phase`** is `RESERVED`, not verified: the map is resident and the
+provider assignment is `F-17`. Recording the crossing is not assigning the
+provider, and every one of the eight owners reads `UNRESOLVED (F-17)`.
+
+## 136.4 Real work reached the graph
+
+A fourth integrated execution — real work, 14 criteria, 3 satisfied, a genuine
+failure. The graph was told nothing and followed: governance↔execution,
+evidence↔verification and authority↔execution each moved 3/3 → 4/4, and
+memory↔state moved 0/6 → 0/7 — the denominator moved and the numerator did not,
+which is the honest result.
+
+## 136.5 The consumer answer, for the third time
+
+```text
+tools.p12_integration_graph   non-test consumers: NONE
+tools.p12_operational_state   non-test consumers: NONE
+tools.p12_self_model          non-test consumers: NONE
+```
+
+Three P12 surfaces now stand constructed, verified and unconsumed. **W1 was the
+last workstream canonically positioned to be a consumer of the others. It is
+not one** — `§8` requires it to read the authoritative sources, and it does.
+
+The programme hypothesis holds across all three: capability exists, conformance
+exists, operational reachability absent.
+
+## 136.6 Two defects in my own instruments
+
+The dangling-evidence check compared a module name to the filesystem and
+reported a resident module as dangling. And a conformance control read only
+`node.module`, so `from tools import X as y` showed it nothing but `"tools"` —
+it missed every import it was written to find. Neither was a finding about the
+system.
+
+## 136.7 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 1118 = 2195
+controls at P11 certification 2089 → 2454 - removed 0 - weakened 0
+W1 8 edges / 4 verified / 3 unverified / 1 reserved / 0 dangling
+W1 AUTHORIZED TRUE - CONSTRUCTED TRUE - VERIFIED TRUE - OPERATIONAL FALSE
+W2, W4, W5, W6 unchanged - W6 STATE broken link still ('CONSUMER',)
+mutation 10 attempted / 8 detected / 2 missed / 0 unavailable
+negative controls 23 instruments / 23 demonstrated - fresh process 5/5
+
+TraceRecord unchanged - Native Core 11 - certified evidence changes 0
+protected read 0 - historical rewrite 0 - conformance weakened to pass 0
+
+F-16, F-17, F-18 untouched
+P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
+VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
+E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
+```

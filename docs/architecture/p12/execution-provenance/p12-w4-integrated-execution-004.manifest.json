@@ -1,0 +1,64 @@
+{
+  "agent_definition_version": "1.1",
+  "agent_instance": "engineering-intelligence-instance-001",
+  "authority_chain": [
+    "delegation:08e14bd7aa584ea5",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ],
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "capability_scope": [
+    "engineering-intelligence"
+  ],
+  "contract_elements": [
+    "intent",
+    "decision",
+    "work",
+    "actor",
+    "authority",
+    "scope",
+    "execution",
+    "observation",
+    "verification",
+    "evidence",
+    "provenance",
+    "lifecycle"
+  ],
+  "delegation_id": "08e14bd7aa584ea5",
+  "delegation_status": "ACTIVE",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "execution_id": "p12-w4-integrated-execution-004",
+  "goal": "p12-w1-integration-edge",
+  "observation_kind": "runtime",
+  "observation_subject": "p12-w1-integration-edge-runtime",
+  "outcome": {
+    "criteria": 14,
+    "satisfied": 3,
+    "unsatisfied": [
+      "recipient_instance",
+      "authority_provenance",
+      "objective",
+      "capability_scope",
+      "work_scope",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "escalation_condition",
+      "accountable_party",
+      "termination_condition"
+    ]
+  },
+  "plan": "p12-w1-integration-edge-plan-0",
+  "plan_authority": "DP-01 \u00a73 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)",
+  "recorded_at": "2026-09-12T13:57:25.057416+00:00",
+  "runtime_id": "p12-w1-integration-edge-runtime",
+  "status": "failure",
+  "trace_ordinal": 0,
+  "trace_store": "p12-w1-integration-edge",
+  "verification_requirement": "every criterion reported satisfied or not, and the outcome carrying a ratified status",
+  "work_scope": [
+    "verify-delegation-elements"
+  ]
+}

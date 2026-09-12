@@ -1,0 +1,7 @@
+{
+  "runtime_id": "p12-w1-integration-edge-runtime",
+  "kind": "RUNTIME",
+  "state": "RuntimeState.STOPPED",
+  "observed_at": "2026-09-12T13:57:25.056934+00:00",
+  "pid": 840
+}

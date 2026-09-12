@@ -528,6 +528,36 @@ def _self_model_contract() -> Tuple[bool, str]:
                   "UNBOUND when a binding is wrong")
 
 
+def _integration_graph() -> Tuple[bool, str]:
+    """The W1 graph must promote an edge when its source earns it.
+
+    Four verified edges of eight is what a graph asserting its own edges would
+    print. The `workflow ↔ runtime` edge is `UNVERIFIED` because both kinds of
+    observation exist and share no identity — the `§48` case. Given
+    observations that do share one, it must become `VERIFIED`.
+    """
+    from unittest import mock
+    from tools import p12_integration_graph as graph
+
+    live = {e.integration_class: e.classification for e in graph.graph()}
+    if live.get("workflow ↔ runtime") != graph.UNVERIFIED:
+        return False, (f"workflow ↔ runtime is "
+                       f"{live.get('workflow ↔ runtime')}; probe assumes it is not")
+
+    class _Obs:
+        def __init__(self, kind, rid):
+            self.kind, self.runtime_id = kind, rid
+
+    shared = [_Obs("workflow", "r-1"), _Obs("runtime", "r-1")]
+    with mock.patch("tools.p12_runtime_observation.observations",
+                    return_value=shared):
+        promoted = graph._workflow_to_runtime().classification
+    if promoted != graph.VERIFIED:
+        return False, f"a shared runtime identity still reported {promoted}"
+    return True, ("moves both ways: UNVERIFIED when two observations share no "
+                  "identity, VERIFIED when they do")
+
+
 def _governance_index() -> Tuple[bool, str]:
     """The index must report a source as stale once it changes underneath."""
     from tools.governance_index import GovernanceIndex, tracked_markdown
@@ -585,6 +615,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _operational_state_projection),
     ("p12_self_model_contract", "a wrong binding is refused",
      _self_model_contract),
+    ("p12_integration_graph", "an edge is promoted when earned",
+     _integration_graph),
     ("governance_index", "a source is stale", _governance_index),
 )
 
