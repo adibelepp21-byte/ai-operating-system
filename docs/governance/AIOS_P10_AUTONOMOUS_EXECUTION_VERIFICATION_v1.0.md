@@ -12886,3 +12886,79 @@ P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
 VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
 E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
 ```
+
+## 130. Fresh rediscovery, and a measurement that moves because I am inside it
+
+Every W6 instrument re-run after the last commit. Nothing changed except one
+number, and that number is a finding of its own.
+
+```text
+cross-phase   8 phases · 6 exercised · 2 not · demonstrator-only P4, P9
+mutation      10 named · 9 attempted · 7 detected · 2 missed · 1 unavailable
+regression    11 classes · 10 held · 0 regressed · 1 unanchored (quality)
+fresh process 8 stages · 8 reproduced · 0 diverged
+cross-PD      6 checks CURRENT · 0 interfaces verified · blocked at two boundaries
+provenance    11 elements · 9 carried · 0 of 2 executions assemblable
+failure       7 states · 3 distinguished · retry NOT APPLICABLE
+governance    9 elements · 1 established · population 390 (was 385)
+runtime       9 items · 8 discovered · HAND-INVOKED ONLY
+workflow      5 joins · 2 evidenced · chain NOT connected
+§49 controls  13 attempted · 11 refused · 2 accepted
+verifiers     16 instruments · 16 negatives demonstrated
+self-model    12 questions · 10 verified · 2 inferred · 0 unknown
+```
+
+## 130.1 The governance population grew because I wrote to it
+
+`§128.4` measured 385 governance instruments. It is now **390**. The five new
+ones are the W6 evidence records this increment produced.
+
+**Those records are part of the corpus they measure.** A verifier whose
+population includes the documents its own programme produces reports a different
+denominator on every run, and there is no fixed number to correct the earlier
+figures *to*.
+
+They are left as measured and dated rather than rewritten. Rewriting on each run
+would present a moving measurement as a settled one, and the ratios — one
+element of nine, the best label under a third — do not turn on five documents.
+
+Excluding P12 evidence records from the population was rejected. They are
+governance records by the same test every other instrument passes, and excluding
+the documents that would lower a score is how a measurement becomes an argument.
+
+## 130.2 No actionable authorized W6 frontier remains
+
+Ten of `§19`'s thirteen are measured. Three are blocked, each at a boundary that
+is not mine:
+
+**STATE** — `§17` state authority cannot be verified before a state authority
+exists. P12-W2 is not built. Building one inside W6 would let an implementation
+convention establish state authority.
+
+**EVIDENCE** — `§54`'s Evidence Matrix is `TBD` under *"intentionally not
+pre-certified"*. Filling it assigns status to the E12 criteria. `F-16`,
+Founder-reserved.
+
+**CROSS-PD INTERFACES** — five evidenced edges, zero defined interfaces. `F-18`,
+source gap plus Architect-reserved.
+
+None was routed around. None was converted into an engineering task.
+
+## 130.3 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 992 = 2069
+citation 239 documents / 1202 citations / 0 errors
+
+P12 AUTHORIZED = TRUE
+P12 CONSTRUCTED = FALSE - OPERATIONAL = FALSE - VERIFIED = FALSE
+P12 EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
+E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
+
+F-16 OPEN (Founder) - F-17 OPEN (Architect/Founder) - F-18 OPEN (source + Architect)
+```
+
+`P12 EXHAUSTED = FALSE` deliberately: **W6 is exhausted within existing
+authority; P12 is not.** W2 remains unbuilt and W1/W3 remain unreconciled
+against their canonical bodies. Treating one work package's exhaustion as the
+phase's is the error `§126.1` and `§127` each corrected once already.

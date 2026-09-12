@@ -107,6 +107,28 @@ documents would be a corpus-wide rewrite of governance evidence, and adding
 construction**, not W6 verification. `GOVERNANCE` is truthfully classified here;
 it is not closed.
 
+## 8. The population is time-indexed, and this record is inside it
+
+[E] Every figure above was measured when this record was written, against **385**
+resident governance instruments. Re-measured after the subsequent W6 evidence
+records were committed, the population is **390**.
+
+[D] **This record is part of the corpus it measures.** So are the other W6
+evidence records. A verifier whose population includes the documents its own
+programme produces reports a different denominator on every run, and there is no
+fixed number to correct the figures *to*.
+
+[C] The figures are therefore left as measured and dated rather than rewritten.
+Rewriting them on each run would present a moving measurement as a settled one,
+and the ratios — one element of nine established, the best label under a third —
+are not sensitive to five documents either way.
+
+[C] The alternative, excluding P12 evidence records from the population, was
+rejected: they **are** governance records by the same test every other
+instrument passes, and excluding the documents that would lower a score is how a
+measurement becomes an argument.
+
+
 ---
 
 **Suite state at this record:** `native_core` 801 (1 expected failure) ·
