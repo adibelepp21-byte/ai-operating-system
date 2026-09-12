@@ -448,6 +448,13 @@ P11_SURFACES = (
     # an unverified provenance could not credibly report on the provenance of
     # anyone else's refusal.
     REPO_ROOT / "tools" / "p12_failure_verification.py",
+    # The `§49` system negative controls, added under `P12 §19` — declared
+    # because the guard below failed the run that created it, the ninth time it
+    # has collected. It constructs a Goal, a Plan and a delegation request in
+    # order to have each refused, so it holds provenance exactly as a genuine
+    # caller does; a module permitted to flatten a citation into free text could
+    # manufacture the refusal it reports as integrity evidence.
+    REPO_ROOT / "tools" / "p12_system_negative_controls.py",
 )
 
 

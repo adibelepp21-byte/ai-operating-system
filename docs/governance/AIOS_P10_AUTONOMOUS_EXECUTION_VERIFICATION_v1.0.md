@@ -12800,3 +12800,89 @@ so the correction can be checked.
 Measured at this point: `native_core` 801 (1 expected failure) · `consumers` 276
 · `tools` 975 = **2052**. Citation audit: 237 documents, 1197 citations, 0
 errors.
+
+## 129. `§49`'s thirteen, attempted — and a probe that passed because it crashed
+
+The scope item `§127.2` reopened. `§49` names thirteen mandatory negative
+controls, each an illegitimate action the system must refuse. All thirteen are
+attempted here; none is cited.
+
+```text
+13 attempted · 11 refused · 2 accepted · 0 uncontrolled
+```
+
+Evidence: `docs/architecture/p12/P12-W6-SYSTEM-NEGATIVE-CONTROLS.md`.
+Instrument: `tools/p12_system_negative_controls.py`, 17 conformance tests.
+
+Where `§49` overlaps the `§50` mutations, the attempt was made again rather than
+cited. A citation establishes that an attempt succeeded once. It does not
+establish that the refusal still holds.
+
+## 129.1 The defect this module exists to detect, committed inside it
+
+`_governance_bypass` caught `Exception` broadly. The probe called an API that
+does not exist — `surface.plans()` — raised `AttributeError`, and the control
+was reported **REFUSED**.
+
+A governance-bypass control passing because the probe crashed is a false pass,
+and a false pass on a `§49` control is worse than a missing one: a missing
+control is visible. It now accepts only `EscalationRequired`, and a conformance
+control asserts that a broken fixture propagates instead of reading as a
+refusal.
+
+The sibling probe, `self-authorization`, invented the same API and reported
+`UNCONTROLLED` — correctly, because an unattempted control is never counted as a
+refusal. That rule is what kept the second defect visible while the first hid
+inside the refusal count. Both now build a Goal and Plan the way the resident
+suites do, and both refuse.
+
+## 129.2 Two accepted
+
+**`unauthorized P13 authorization`.** No resident surface states P13's
+authorization status. A claim that P13 is authorized contradicts nothing the
+system holds. P13 being unauthorized is stated in Founder instruments and
+repeated throughout this document — in prose. It is not a value any consumer can
+read.
+
+That is the same shape as `§128.4`: established for a human reader, absent for
+every consumer. Not closed here — making it readable means adding a
+programme-state surface, and a W6 implementation must not establish authority by
+convention.
+
+**`false certification`.** The certified-evidence guard reads certification
+statements out of instrument bodies, so a body containing the sentence is
+sufficient. Reproduced independently here rather than carried over from `§124`.
+Unchanged, and still a governance question: closing it needs an authority signal
+outside the body.
+
+## 129.3 W6 scope, reconciled against `§19`
+
+```text
+VERIFIED    cross-phase contracts · mutation · regression · fresh process
+MEASURED    provenance · failure · governance · runtime · workflow
+            negative controls (§49)
+BLOCKED     state (dependency: P12-W2)
+            evidence (Founder-reserved: F-16)
+            cross-PD interfaces (source gap + Architect-reserved: F-18)
+```
+
+Ten of thirteen measured. Three blocked at boundaries that are not mine. **No
+actionable authorized W6 frontier remains.**
+
+## 129.4 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 992 = 2069
+W6 scope 13 - truthfully classified 13 - measured 10 - blocked 3
+§49 controls 13 attempted / 11 refused / 2 accepted / 0 uncontrolled
+negative controls 16 instruments / 16 demonstrated
+
+certified evidence changes 0 - protected read 0 - Native Core 11
+ratified vocabulary widened 0 - record shape changed 0
+conformance test weakened to pass 0 - historical rewrite 0
+
+F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
+P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
+VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
+E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
+```

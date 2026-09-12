@@ -323,6 +323,33 @@ def _workflow_chain() -> Tuple[bool, str]:
                   "connection")
 
 
+def _system_negative_controls() -> Tuple[bool, str]:
+    """`§49`'s controls must be able to report ACCEPTED.
+
+    Eleven refusals is what a module returning a constant would print, and two
+    of the thirteen already report `ACCEPTED` on the live corpus — but a live
+    `ACCEPTED` could equally be a probe that never refuses anything. Both
+    directions are driven on synthetic attempts.
+    """
+    from unittest import mock
+    from tools import p12_system_negative_controls as sysneg
+
+    with mock.patch.object(sysneg, "CONTROLS",
+                           (("probe", lambda: (True, False, "nothing objected")),)):
+        accepted = sysneg.verify()[0].status
+    with mock.patch.object(sysneg, "CONTROLS",
+                           (("probe", lambda: (True, True, "refused")),)):
+        refused = sysneg.verify()[0].status
+    if accepted != sysneg.ACCEPTED or refused != sysneg.REFUSED:
+        return False, f"statuses do not move: {accepted!r}, {refused!r}"
+    live = sysneg.summary()
+    if live["uncontrolled"]:
+        return False, (f"{live['uncontrolled']} control(s) were never "
+                       "attempted; a refusal count over them means nothing")
+    return True, (f"moves both ways; live run attempts all {live['controls']} "
+                  f"with {live['accepted']} ACCEPTED")
+
+
 def _governance_index() -> Tuple[bool, str]:
     """The index must report a source as stale once it changes underneath."""
     from tools.governance_index import GovernanceIndex, tracked_markdown
@@ -367,6 +394,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _runtime_integration),
     ("p12_workflow_verification", "a connected chain is recognised",
      _workflow_chain),
+    ("p12_system_negative_controls", "ACCEPTED is reachable",
+     _system_negative_controls),
     ("governance_index", "a source is stale", _governance_index),
 )
 
