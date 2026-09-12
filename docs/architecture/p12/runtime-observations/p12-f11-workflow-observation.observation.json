@@ -1,0 +1,7 @@
+{
+  "runtime_id": "p12-f11-workflow-observation",
+  "kind": "workflow",
+  "state": "WorkflowState.SUCCEEDED",
+  "observed_at": "2026-09-12T06:12:58.995031+00:00",
+  "pid": 4448
+}

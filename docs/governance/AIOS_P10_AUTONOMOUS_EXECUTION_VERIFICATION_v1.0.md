@@ -11477,3 +11477,52 @@ native_core changes 0 - Native Core 11 - protected read 0 / staged 0 / committed
 
 P12 AUTHORIZED = TRUE   P12 CONSTRUCTED = FALSE   E12 NOT RATIFIED
 ```
+
+---
+
+# 114. `F-11` — the third surface built and never called
+
+```text
+F-4 CLOSED · F-11 CLOSED · F-10 OPEN — AUTHORIZED
+P12 CONSTRUCTED = FALSE      E12 NOT RATIFIED
+```
+
+`F-11` read *"`WorkflowState` has no projection"*. False in the same way `F-4`
+was: **`WorkflowMonitor` is canonical and ratified** under `§12.4` / `E9-04`,
+answering identity, current state, active-or-terminal and success-or-failure —
+and carrying **no** transition method, which is how *"invalid state mutation does
+not silently succeed"* holds structurally.
+
+**Zero resident callers.** That is the third time in two days:
+
+```text
+Trace boundary   built, never called   → R2-A
+Trace store      never provisioned     → F-3
+WorkflowMonitor  never called          → here
+```
+
+The recurring defect in this system is not missing capability. It is **capability
+nothing reaches**. Three independent boundaries, each complete, each
+conformance-tested, each inert until something outside asked it a question.
+
+A child interpreter saw `workflow: [p12-f11-workflow-observation]` live while the
+lifecycle was `RUNNING`, and nothing after `succeed()`. `Runtime RUNNING` and
+`Workflow RUNNING` are kept as two vocabularies: six tests hold the separation,
+including that `SUCCEEDED`/`FAILED` are never translated into `STOPPED`.
+
+**And I mislabelled again.** After extending the answer to workflows, `scope`
+still read *"runtimes that publish observations"* — two vocabularies, one named.
+The same defect `§112.4` recorded for `recorded_supersessions`, three sections
+later. The test now requires the scope to name both rather than matching a fixed
+string.
+
+`F-10` stays open deliberately: closing it means re-running the two P11 root
+proofs, which rewrites dated evidence records. `§13.8` forbids that, so the
+increment must add publication without disturbing what those records say — an
+evidence-integrity question, not a missing line.
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 778 OK = 1855
+citation 208 documents / 0 errors - stale-state 505 / 0 stale assertions
+native_core changes 0 - Native Core 11 - protected read 0 / staged 0 / committed 0
+```

@@ -66,6 +66,14 @@ OBSERVATION_ROOT = REPO_ROOT / "docs/architecture/p12/runtime-observations"
 #: live, which is the failure this module exists to prevent.
 LIVE_HORIZON_SECONDS = 30.0
 
+#: What a published observation is *about*. Two canonical live-state
+#: vocabularies exist and they are not interchangeable: a Runtime can be RUNNING
+#: while no Workflow is, and a Workflow can be RUNNING on a Runtime that is
+#: itself only INITIALIZED. Merging them into one "is it running" would lose the
+#: distinction the boundaries were built to keep.
+RUNTIME = "runtime"
+WORKFLOW = "workflow"
+
 LIVE = "LIVE"
 STALE = "STALE"
 TERMINATED = "TERMINATED"
@@ -74,9 +82,10 @@ UNKNOWN = "UNKNOWN"
 
 @dataclass(frozen=True)
 class Observation:
-    """One published runtime observation, with the freshness that qualifies it."""
+    """One published observation, with the freshness that qualifies it."""
 
     runtime_id: str
+    kind: str
     state: str
     observed_at: str
     pid: int
@@ -97,6 +106,7 @@ def publish(
     state: str,
     root: Path = OBSERVATION_ROOT,
     now: Optional[datetime] = None,
+    kind: str = RUNTIME,
 ) -> Path:
     """Publish the runtime's *current* state so another process can read it.
 
@@ -112,6 +122,7 @@ def publish(
         json.dumps(
             {
                 "runtime_id": runtime_id,
+                "kind": kind,
                 "state": state,
                 "observed_at": moment,
                 "pid": os.getpid(),
@@ -127,7 +138,9 @@ def publish(
 def _classify(state: str, age: float, horizon: float) -> str:
     """Freshness-qualified classification. The only place the rule lives."""
     normalized = state.rsplit(".", 1)[-1].strip().upper()
-    if normalized in ("STOPPED", "STOPPING"):
+    # Runtime terminals: STOPPING/STOPPED. Workflow terminals: SUCCEEDED/FAILED.
+    # Both vocabularies are read here; neither is translated into the other.
+    if normalized in ("STOPPED", "STOPPING", "SUCCEEDED", "FAILED"):
         return TERMINATED
     if normalized == "RUNNING":
         return LIVE if age <= horizon else STALE
@@ -154,6 +167,10 @@ def observations(
         found.append(
             Observation(
                 runtime_id=payload["runtime_id"],
+                # Records written before workflow observation existed carry no
+                # `kind`. They are runtimes, and the default says so explicitly
+                # rather than leaving the field to be guessed downstream.
+                kind=payload.get("kind", RUNTIME),
                 state=payload["state"],
                 observed_at=payload["observed_at"],
                 pid=int(payload["pid"]),
@@ -205,11 +222,22 @@ def what_is_running(
         # says nothing about any runtime that does not. An empty `live` means
         # "none of the observed runtimes is live" — never "nothing is running".
         # `ONE REAL PATH ≠ SYSTEM-WIDE COVERAGE`.
-        "scope": "runtimes that publish observations; unobserved runtimes are not covered",
+        "scope": (
+            "runtimes and workflows that publish observations; "
+            "unobserved subjects of either kind are not covered"
+        ),
         "live": tuple(
-            {"runtime_id": o.runtime_id, "age_seconds": round(o.age_seconds, 3)}
+            {
+                "runtime_id": o.runtime_id,
+                "kind": o.kind,
+                "age_seconds": round(o.age_seconds, 3),
+            }
             for o in live
         ),
+        "live_by_kind": {
+            kind: tuple(o.runtime_id for o in live if o.kind == kind)
+            for kind in (RUNTIME, WORKFLOW)
+        },
         "terminated": tuple(
             o.runtime_id for o in found if o.classification == TERMINATED
         ),

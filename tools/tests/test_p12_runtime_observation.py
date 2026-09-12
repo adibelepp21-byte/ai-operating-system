@@ -22,6 +22,12 @@ def _at(root: Path, runtime_id: str, state: str, age_seconds: float) -> Path:
     return obs.publish(runtime_id, state, root=root, now=when)
 
 
+def _at_kind(root: Path, subject: str, state: str, age_seconds: float,
+             kind: str) -> Path:
+    when = datetime.now(timezone.utc) - timedelta(seconds=age_seconds)
+    return obs.publish(subject, state, root=root, now=when, kind=kind)
+
+
 class FreshnessGatesTheAnswer(unittest.TestCase):
     """Gate Q — mutate the condition; the detector must change."""
 
@@ -172,7 +178,12 @@ class CoverageIsStatedNotImplied(unittest.TestCase):
             _at(Path(tmp), "r1", "RuntimeState.STOPPED", age_seconds=1)
             answer = obs.what_is_running(Path(tmp))
             self.assertTrue(answer["answerable"])
-            self.assertIn("unobserved runtimes are not covered", answer["scope"])
+            self.assertIn("not covered", answer["scope"])
+            # The scope must name both vocabularies, not just the one it began
+            # with: an answer covering workflows while saying "runtimes" is the
+            # stale-label defect one layer up.
+            self.assertIn("workflows", answer["scope"])
+            self.assertIn("runtimes", answer["scope"])
 
     def test_empty_live_does_not_claim_nothing_is_running(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -183,3 +194,65 @@ class CoverageIsStatedNotImplied(unittest.TestCase):
             rendered = repr(answer).lower()
             for claim in ("nothing is running", "no runtimes", "system idle"):
                 self.assertNotIn(claim, rendered)
+
+
+class TwoVocabulariesStaySeparate(unittest.TestCase):
+    """F-11 — Runtime RUNNING and Workflow RUNNING are not the same claim.
+
+    A Workflow can run on a Runtime that is only INITIALIZED, and a Runtime can
+    be RUNNING with no Workflow at all. Merging them would lose exactly the
+    distinction the two boundaries were built to keep.
+    """
+
+    def test_a_live_workflow_is_not_reported_as_a_live_runtime(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _at_kind(Path(tmp), "wf1", "WorkflowState.RUNNING", 1, obs.WORKFLOW)
+            answer = obs.what_is_running(Path(tmp))
+            self.assertEqual(answer["live_by_kind"][obs.WORKFLOW], ("wf1",))
+            self.assertEqual(answer["live_by_kind"][obs.RUNTIME], ())
+
+    def test_a_live_runtime_is_not_reported_as_a_live_workflow(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _at_kind(Path(tmp), "rt1", "RuntimeState.RUNNING", 1, obs.RUNTIME)
+            answer = obs.what_is_running(Path(tmp))
+            self.assertEqual(answer["live_by_kind"][obs.RUNTIME], ("rt1",))
+            self.assertEqual(answer["live_by_kind"][obs.WORKFLOW], ())
+
+    def test_both_kinds_coexist_without_merging(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _at_kind(Path(tmp), "rt1", "RuntimeState.RUNNING", 1, obs.RUNTIME)
+            _at_kind(Path(tmp), "wf1", "WorkflowState.RUNNING", 1, obs.WORKFLOW)
+            by_kind = obs.what_is_running(Path(tmp))["live_by_kind"]
+            self.assertEqual(by_kind[obs.RUNTIME], ("rt1",))
+            self.assertEqual(by_kind[obs.WORKFLOW], ("wf1",))
+
+    def test_workflow_terminals_are_terminated_not_running(self):
+        """SUCCEEDED and FAILED are the Workflow vocabulary's terminals; neither
+        is translated into the Runtime vocabulary's STOPPED."""
+        for terminal in ("WorkflowState.SUCCEEDED", "WorkflowState.FAILED"):
+            with tempfile.TemporaryDirectory() as tmp:
+                _at_kind(Path(tmp), "wf1", terminal, 1, obs.WORKFLOW)
+                found = obs.observations(Path(tmp))
+                self.assertEqual(found[0].classification, obs.TERMINATED)
+                self.assertEqual(
+                    obs.what_is_running(Path(tmp))["live_by_kind"][obs.WORKFLOW], ())
+
+    def test_a_stale_running_workflow_is_no_more_live_than_a_stale_runtime(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            _at_kind(Path(tmp), "wf1", "WorkflowState.RUNNING",
+                     obs.LIVE_HORIZON_SECONDS + 60, obs.WORKFLOW)
+            self.assertFalse(obs.what_is_running(Path(tmp))["answerable"])
+
+    def test_a_record_without_a_kind_defaults_to_runtime_explicitly(self):
+        """Records predating workflow observation carry no `kind`. The default
+        is stated in code rather than guessed downstream."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            root.mkdir(parents=True, exist_ok=True)
+            (root / "legacy.observation.json").write_text(json.dumps({
+                "runtime_id": "legacy",
+                "state": "RuntimeState.RUNNING",
+                "observed_at": datetime.now(timezone.utc).isoformat(),
+                "pid": 1,
+            }), encoding="utf-8")
+            self.assertEqual(obs.observations(root)[0].kind, obs.RUNTIME)

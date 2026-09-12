@@ -205,6 +205,7 @@ def running(root: Path = REPO_ROOT) -> Answer:
         "What is running?",
         {
             "live": answer["live"],
+            "live_by_kind": answer["live_by_kind"],
             "terminated": answer.get("terminated", ()),
             "observations": answer["observations"],
             "scope": answer["scope"],

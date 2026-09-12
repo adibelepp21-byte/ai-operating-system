@@ -199,3 +199,81 @@ each replaced with a stricter invariant.
 F-4 CLOSED — VERIFIED     F-10, F-11 OPEN — AUTHORIZED
 P12 AUTHORIZED = TRUE     P12 CONSTRUCTED = FALSE     E12 NOT RATIFIED
 ```
+
+---
+
+# Addendum — `F-11` closed in the same loop
+
+## 11. `WorkflowMonitor` was the third surface built and never called
+
+`F-11` was recorded as *"`WorkflowState` is a second live-state vocabulary with
+no projection"*. Discovery falsified the strong reading, exactly as it did for
+`F-4`: **`WorkflowMonitor` is a canonical, ratified observation surface** under
+`§12.4` / `E9-04`, answering Workflow identity, current lifecycle state,
+active-or-terminal, and success-or-failure — and *"nothing else"*. It carries
+**no** transition method by design, which is how `E9-04`'s *"invalid state
+mutation does not silently succeed"* holds structurally rather than by
+convention.
+
+**It is called from zero resident paths.** Built, conformance-tested, never used
+outside its own tests — the third instance of this shape in two days:
+
+```text
+Trace boundary     built, never called      → fixed by R2-A
+Trace store        never provisioned        → fixed by F-3
+WorkflowMonitor    never called             → fixed here
+```
+
+The pattern is worth naming: this system's recurring defect is not missing
+capability, it is **capability that nothing reaches**.
+
+## 12. Proof — a live Workflow seen from another process
+
+`p12_workflow_observation_proof.py` drives a real lifecycle
+`define → mark_ready → enter_running`, reads state **through `WorkflowMonitor`**
+rather than from the lifecycle directly, and publishes it:
+
+```text
+child process, while RUNNING   → live_by_kind: {runtime: [], workflow: [p12-f11-…]}
+lifecycle.succeed()
+child process, after SUCCESS   → live_by_kind: {runtime: [], workflow: []}
+```
+
+## 13. The two vocabularies are kept apart
+
+`Runtime RUNNING` and `Workflow RUNNING` are **not the same claim**. A Workflow
+can run on a Runtime that is only `INITIALIZED`; a Runtime can be `RUNNING` with
+no Workflow at all. Six tests hold the separation, including that Workflow
+terminals (`SUCCEEDED` / `FAILED`) are never translated into the Runtime
+vocabulary's `STOPPED`, and that a stale `RUNNING` workflow is no more live than a
+stale runtime.
+
+**A record without a `kind` defaults to `runtime`, stated in code.** The
+observation committed before workflow support existed carries no `kind` field;
+the default is explicit rather than guessed downstream, with a test against it.
+
+## 14. A stale label of my own, caught by the same discipline
+
+After extending the answer to workflows, the `scope` string still read
+*"runtimes that publish observations"* — an answer covering two vocabularies
+while naming one. Precisely the mislabelling `§112` recorded for
+`recorded_supersessions`, committed again three sections later. Corrected, and
+the test now **requires the scope to name both vocabularies** rather than
+matching a fixed sentence.
+
+## 15. Re-verification
+
+```text
+native_core 801 OK (1 expected failure) · consumers 276 OK · tools 778 OK = 1855
+citation 208 documents / 0 errors · stale-state 505 / 0 stale assertions
+native_core changes 0 · Native Core 11 frozen · protected read 0 / staged 0
+
+F-4 CLOSED · F-11 CLOSED · F-10 OPEN — AUTHORIZED
+```
+
+**`F-10` remains open deliberately.** Closing it means wiring the two P11 root
+proofs to publish, and those proofs write P11 evidence artifacts; re-running them
+rewrites dated records. `§13.8` forbids rewriting historical evidence, so that
+increment needs to add publication **without** disturbing what the P11 records
+already say — a question about evidence integrity, not a missing line of code,
+and not one to settle in passing.
