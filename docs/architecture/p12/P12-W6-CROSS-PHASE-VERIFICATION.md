@@ -64,11 +64,20 @@ exercised 6 · not exercised 2 · unknown 0
 exercised_only_by_a_demonstrator: ('P4', 'P9')
 ```
 
-**`P6` Knowledge and `P7` Memory have never been crossed by any execution in
+**`P6` Knowledge and `P7` Memory have never been *consumed* by any execution in
 this repository.** Both boundaries are built, conformance-tested and consumed by
 other boundaries in the import graph — and no Agent Instance has ever recorded
 consuming knowledge or memory. That is the most substantive `W6` finding
 available today, and it was invisible while verification meant unit tests.
+
+> **Corrected under `ACT-CC-P12-F15-001`.** This sentence first read *"never been
+> **crossed** by any execution"*, which overstates what was measured. A real
+> runtime **provisions** `KnowledgeSubsystem` and `MemorySubsystem` on every run,
+> including the resident W1 work path — so the boundaries *are* reached by real
+> execution. What has never happened is **consumption**: `knowledge_consumed` and
+> `memory_consumed` are empty in every Trace record. `PROVISIONED ≠ CONSUMED`,
+> and the verifier measured consumption, which is what the Trace vocabulary
+> records.
 
 **`P4` and `P9` are flagged demonstrator-only.** Their crossings exist because
 proofs made them, not because the system's work did. Reporting six-of-eight

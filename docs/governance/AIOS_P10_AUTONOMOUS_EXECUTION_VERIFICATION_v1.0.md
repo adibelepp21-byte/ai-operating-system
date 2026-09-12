@@ -11838,10 +11838,14 @@ P6 Knowledge    NOT EXERCISED    P10 Department   EXERCISED
 P7 Memory       NOT EXERCISED    P11 Organization EXERCISED
 ```
 
-**`P6` Knowledge and `P7` Memory have never been crossed by any execution in
+**`P6` Knowledge and `P7` Memory have never been *consumed* by any execution in
 this repository.** Both are built, conformance-tested, and consumed by other
 boundaries in the import graph — and `knowledge_consumed` and `memory_consumed`
 are empty in **every** Trace record ever written.
+
+> **Corrected under `ACT-CC-P12-F15-001`:** this read *"never been **crossed**"*.
+> A real runtime provisions both subsystems on every run, so they **are** reached
+> by real execution; what never happens is consumption. `PROVISIONED ≠ CONSUMED`.
 
 1 888 passing tests establish that components work. Not one of them establishes
 that anything crossed a phase, which is exactly what `§19` means by refusing
@@ -11881,3 +11885,90 @@ W6 NOT COMPLETE - P12 CONSTRUCTED = FALSE - E12 NOT RATIFIED
 `§19` names thirteen scope items. This increment addresses `CROSS-PHASE
 CONTRACTS`; cross-PD interfaces, mutation, regression and fresh-process
 verification remain unbuilt at the phase level.
+
+---
+
+# 119. `F-15` — a false positive, and my own sentence was the overclaim
+
+Evidence:
+[`P12-F15-DISCOVERY.md`](../architecture/p12/P12-F15-DISCOVERY.md)
+
+```text
+F15-C1 FALSE POSITIVE · F-16 OPEN — FOUNDER-RESERVED
+0 code changes · 0 executions manufactured · P12 CONSTRUCTED = FALSE
+```
+
+## 119.1 The requirement does not exist yet
+
+`§53`: each `E12` criterion *"must have canonical definition; measurable
+interpretation; evidence source; verification method"*, and **"No E12 criterion
+may be silently invented or treated as ratified before canonical
+reconciliation."**
+
+**`E12` is not ratified**, so `E12-06` has no measurable interpretation and
+nothing canonical establishes that every phase must carry execution evidence now.
+The inference `F-15` required —
+
+```text
+P6 exists + P7 exists + W6 covers P4–P11  ⟹  P6/P7 must be exercised
+```
+
+— is the one the governing Act prohibits, and the canon defers rather than
+supports it. `NOT EXERCISED ≠ FAILED`.
+
+## 119.2 I overstated it, in a document already committed
+
+My `W6` evidence said P6/P7 had *"never been **crossed** by any execution."* A
+real runtime **provisions** `KnowledgeSubsystem` and `MemorySubsystem` on every
+run, including the resident W1 work path — so they **are** reached by real
+execution. What never happens is **consumption**.
+
+```text
+PROVISIONED ≠ CONSUMED
+```
+
+Corrected in place in both documents. The verifier's own label was accurate — it
+says *"`knowledge_consumed` is empty in every Trace record"*, which is exactly
+what it measured. **The prose around it was the defect**, and prose is where an
+accurate measurement most easily becomes a false claim.
+
+**The verifier was not changed.** Reporting `PROVISIONED` needs evidence that
+provisioning occurred, and no execution-produced record carries it; inferring it
+from the runtime's construction is the inference this programme refuses, and
+manufacturing such a record is construction the classification does not justify.
+
+## 119.3 Seven hypotheses, four falsified
+
+`H3` falsified — `INV-6` requires *captured content*, so there is no alternative
+vocabulary hiding the evidence. `H4` falsified — even the demonstrators consume
+neither. `H6` falsified — no work path constructs either agent, so no crossing
+occurred to go unrecorded. `H5` and `H7` confirmed: canon does not require it,
+and the two resident work paths — a governance corpus health check and an
+artifact conformance verification — have no semantic need of knowledge admission
+or memory retention.
+
+## 119.4 The programme hypothesis, on two more surfaces
+
+`KnowledgeAgent` and `MemoryAgent` are complete, documented, conformance-tested,
+resolve their subsystems through the authorized RUNNING-gated path — and have
+**zero resident non-test callers**. Same shape as the Trace boundary, the Trace
+store, and `WorkflowMonitor`.
+
+**Five surfaces.** `F-10′` falsified it as a universal claim; it holds for the
+majority and is kept as a systemic finding, still not promoted to a rule.
+
+## 119.5 The boundary this gate actually found
+
+**`F-16`** — every remaining `W6` question resolves to a measurable
+interpretation of `E12-06` that only Founder ratification can supply. `§53`
+reserves it. This office may prepare that surface; it may not ratify it.
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 811 OK = 1888
+citation 215 documents / 1155 citations / 0 errors - stale-state 510 / 0
+changes: 2 documents corrected - 0 code - 0 tests - 0 executions manufactured
+historical rewrite 0 - p11 changes 0 - native_core 0 - protected read 0
+
+F-15 CLOSED (C1) - F-16 OPEN FOUNDER-RESERVED - F-13, F-14 OPEN
+P12 CONSTRUCTED = FALSE - E12 NOT RATIFIED - P13 NOT AUTHORIZED
+```
