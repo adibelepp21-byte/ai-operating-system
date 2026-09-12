@@ -11812,3 +11812,72 @@ F-10′ CLOSED - F-12 CLOSED - F-4 CLOSED - F-11 CLOSED
 F-13 NARROWED - F-14 OPEN NON-BLOCKING
 P12 CONSTRUCTED = FALSE - E12 NOT RATIFIED - P13 NOT AUTHORIZED
 ```
+
+---
+
+# 118. `W6` — two phases have never been crossed, and 1 888 green tests could not tell me
+
+Evidence:
+[`P12-W6-CROSS-PHASE-VERIFICATION.md`](../architecture/p12/P12-W6-CROSS-PHASE-VERIFICATION.md)
+
+```text
+F-5 CLOSED · F-15 OPEN — AUTHORIZED
+W6 NOT COMPLETE · P12 CONSTRUCTED = FALSE
+```
+
+## 118.1 The finding
+
+`§48`: *"A relationship is not considered verified merely because both surfaces
+exist."* Measured against execution-produced evidence only — durable Trace
+records and published observations, never an import or a registry entry:
+
+```text
+P4 Runtime      EXERCISED        P8  Tools        EXERCISED
+P5 Intelligence EXERCISED        P9  Workflow     EXERCISED
+P6 Knowledge    NOT EXERCISED    P10 Department   EXERCISED
+P7 Memory       NOT EXERCISED    P11 Organization EXERCISED
+```
+
+**`P6` Knowledge and `P7` Memory have never been crossed by any execution in
+this repository.** Both are built, conformance-tested, and consumed by other
+boundaries in the import graph — and `knowledge_consumed` and `memory_consumed`
+are empty in **every** Trace record ever written.
+
+1 888 passing tests establish that components work. Not one of them establishes
+that anything crossed a phase, which is exactly what `§19` means by refusing
+green unit tests as completion.
+
+**`P4` and `P9` are flagged demonstrator-only.** Their crossings exist because
+proofs made them. Reporting six-of-eight without that qualifier would repeat
+`F-10` precisely — a coverage figure counting its own demonstrator.
+
+## 118.2 My verifier contained the error it was built to catch
+
+`_department_exercised` returned `EXERCISED` because delegation **records**
+exist. A module written to refuse *"both surfaces exist"* accepted *"a record
+exists"* one function later. Corrected to require the **intersection** — a
+delegation recipient that also authored a Trace record. It still passes, on
+different and real evidence.
+
+And the predicates took their evidence root as a **default argument**, bound at
+import, so patching it changed nothing and the control proving *existence is not
+exercise* could not run against an empty corpus. **A test that cannot isolate is
+the same failure as a guard that cannot see.** Roots are read at call time now,
+and against an empty evidence store the verifier reports **nothing** exercised
+while every boundary still exists — which is the control working.
+
+## 118.3 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 811 OK = 1888
+citation 214 documents / 1149 citations / 0 errors - stale-state 509 / 0
+p11 changes 0 - native_core changes 0 - Native Core 11 - protected read 0
+
+F-4 · F-11 · F-12 · F-10′ · F-5 CLOSED
+F-13 NARROWED · F-14 non-blocking · F-15 OPEN — AUTHORIZED
+W6 NOT COMPLETE - P12 CONSTRUCTED = FALSE - E12 NOT RATIFIED
+```
+
+`§19` names thirteen scope items. This increment addresses `CROSS-PHASE
+CONTRACTS`; cross-PD interfaces, mutation, regression and fresh-process
+verification remain unbuilt at the phase level.
