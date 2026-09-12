@@ -1,0 +1,7 @@
+{
+  "runtime_id": "p12-w4-integrated-execution-runtime",
+  "kind": "RUNTIME",
+  "state": "RuntimeState.STOPPED",
+  "observed_at": "2026-09-12T12:04:15.613851+00:00",
+  "pid": 913
+}

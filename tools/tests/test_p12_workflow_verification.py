@@ -30,10 +30,18 @@ class TheScopeIsSection31s(unittest.TestCase):
 
 
 class TheUnitIsTheLinkNotTheElement(unittest.TestCase):
-    def test_a_shared_name_is_by_convention_not_evidenced(self):
+    def test_a_partially_referenced_join_is_by_convention_not_evidenced(self):
+        """The weakest link governs: some executions name their work, some do not."""
         result = {(r.source, r.target): r
                   for r in wf.verify()}[("WORK", "EXECUTION")]
         self.assertEqual(result.status, wf.BY_CONVENTION)
+        self.assertIn("share only an actor name", result.detail)
+
+    def test_a_join_with_no_references_at_all_names_the_actor(self):
+        with mock.patch("tools.p12_provenance_verification.assembly",
+                        return_value={"status": "NOT ASSEMBLABLE",
+                                      "executions": 3, "joined": 0}):
+            result = wf._work_to_execution()
         self.assertEqual(result.evidence, "actor name")
 
     def test_a_real_reference_makes_the_join_evidenced(self):
@@ -42,12 +50,20 @@ class TheUnitIsTheLinkNotTheElement(unittest.TestCase):
         trace = {"agent_instance": "i-001", "runtime": "r",
                  "outputs": {"k": 1}, "delegation_id": "d1"}
         with mock.patch.object(wf, "_delegations", return_value=(delegation,)), \
-                mock.patch.object(wf, "_traces", return_value=(trace,)):
+                mock.patch.object(wf, "_traces", return_value=(trace,)), \
+                mock.patch("tools.p12_provenance_verification.evidence_records",
+                           return_value=()), \
+                mock.patch("tools.p12_provenance_verification.manifest_records",
+                           return_value=()):
             self.assertEqual(wf._work_to_execution().status, wf.EVIDENCED)
 
     def test_no_executions_is_broken_not_evidenced(self):
         with mock.patch.object(wf, "_delegations", return_value=()), \
-                mock.patch.object(wf, "_traces", return_value=()):
+                mock.patch.object(wf, "_traces", return_value=()), \
+                mock.patch("tools.p12_provenance_verification.evidence_records",
+                           return_value=()), \
+                mock.patch("tools.p12_provenance_verification.manifest_records",
+                           return_value=()):
             self.assertEqual(wf._work_to_execution().status, wf.BROKEN)
 
 
@@ -107,9 +123,18 @@ class TheChainIsConnectedOnlyIfEveryLinkIs(unittest.TestCase):
             self.assertTrue(wf.chain_is_connected())
 
     def test_the_weakest_links_are_named(self):
+        """`OBSERVATION→VERIFICATION` left this list through construction.
+
+        It was BROKEN because no execution record can hold a verified state.
+        That is still true — the ratified vocabulary was not widened. The edge
+        is now carried by the P12 provenance manifest instead, which is the
+        separation `§9` requires. `WORK→EXECUTION` remains weak because three
+        older executions have no manifest and must not be given one.
+        """
         summary = wf.summary()
         self.assertIn("WORK→EXECUTION", summary["weakest"])
-        self.assertIn("OBSERVATION→VERIFICATION", summary["weakest"])
+        from native_core.core.trace import VALID_STATUSES
+        self.assertNotIn("verified", VALID_STATUSES)
 
     def test_no_probe_reports_its_own_exception_as_a_finding(self):
         for result in wf.verify():

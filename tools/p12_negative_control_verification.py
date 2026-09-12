@@ -214,9 +214,13 @@ def _provenance() -> Tuple[bool, str]:
                   "capability_scope": ["c"], "verification_requirement": "v"}
     trace = {"agent_instance": "i-001", "runtime": "r", "outputs": {"k": 1}}
 
-    unjoined = prov.assembly(delegations=(delegation,), traces=(trace,))
+    # Isolated from the live evidence and manifest surfaces: the probe is about
+    # whether the checker discriminates, not about what the corpus contains.
+    unjoined = prov.assembly(delegations=(delegation,), traces=(trace,),
+                             evidence=(), manifests=())
     joined = prov.assembly(delegations=(delegation,),
-                           traces=(dict(trace, delegation_id="d1"),))
+                           traces=(dict(trace, delegation_id="d1"),),
+                           evidence=(), manifests=())
     if unjoined["status"] != prov.NOT_ASSEMBLABLE:
         return False, ("an execution with no delegation reference was not "
                        "reported NOT ASSEMBLABLE")
@@ -350,6 +354,68 @@ def _system_negative_controls() -> Tuple[bool, str]:
                   f"with {live['accepted']} ACCEPTED")
 
 
+def _execution_chain() -> Tuple[bool, str]:
+    """The chain reader must report DANGLING for a reference that does not resolve.
+
+    Its live answer is `JOINED`, which is the positive. Unless it can be driven
+    to `DANGLING`, a joined verdict says nothing — so a manifest is mutated in
+    memory to name a delegation nobody issued, and the reader must refuse it.
+    Nothing persisted is touched.
+    """
+    from tools import p12_execution_chain_reader as chain
+    from tools import p12_execution_provenance as prov
+
+    persisted = prov.manifests()
+    if not persisted:
+        return False, "no manifest is persisted; nothing to falsify"
+    live = chain.verify_manifest(dict(persisted[0]))
+    if not live.joined:
+        return False, f"the live chain is already {live.status}"
+    broken = chain.verify_manifest(dict(persisted[0], delegation_id="0" * 16))
+    if broken.joined:
+        return False, "a manifest naming a delegation nobody issued still joined"
+    return True, ("moves both ways: JOINED on the persisted manifest, DANGLING "
+                  "when its delegation reference is replaced")
+
+
+def _execution_provenance_writer() -> Tuple[bool, str]:
+    """The manifest writer must refuse an incomplete manifest and an overwrite.
+
+    Its positive is writing a manifest. The negatives are the two refusals that
+    make a written manifest mean something: a manifest missing a `§29` element
+    would claim a contract the execution did not keep, and an overwrite would
+    make a second execution look like the only one.
+    """
+    from tools import p12_execution_provenance as prov
+
+    persisted = prov.manifests()
+    if not persisted:
+        return False, "no manifest is persisted; nothing to falsify"
+    fields = {k: v for k, v in persisted[0].items()
+              if k not in ("contract_elements", "recorded_at")}
+    for key in ("work_scope", "capability_scope", "authority_chain"):
+        fields[key] = tuple(fields[key])
+
+    incomplete = prov.ExecutionManifest(**dict(fields, goal=""))
+    if "intent" not in incomplete.missing_elements():
+        return False, "a manifest with no intent did not report it missing"
+    with tempfile.TemporaryDirectory() as tmp:
+        try:
+            prov.record(incomplete, root=Path(tmp))
+            return False, "an incomplete manifest was written"
+        except prov.ProvenanceIncomplete:
+            pass
+        complete = prov.ExecutionManifest(**fields)
+        prov.record(complete, root=Path(tmp))
+        try:
+            prov.record(complete, root=Path(tmp))
+            return False, "a manifest overwrote an existing one"
+        except prov.ProvenanceIncomplete:
+            pass
+    return True, ("refuses an incomplete manifest and refuses to overwrite an "
+                  "existing one")
+
+
 def _governance_index() -> Tuple[bool, str]:
     """The index must report a source as stale once it changes underneath."""
     from tools.governance_index import GovernanceIndex, tracked_markdown
@@ -396,6 +462,10 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _workflow_chain),
     ("p12_system_negative_controls", "ACCEPTED is reachable",
      _system_negative_controls),
+    ("p12_execution_chain_reader", "a dangling reference is refused",
+     _execution_chain),
+    ("p12_execution_provenance", "an incomplete manifest is refused",
+     _execution_provenance_writer),
     ("governance_index", "a source is stale", _governance_index),
 )
 

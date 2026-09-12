@@ -102,9 +102,22 @@ def _work_to_execution() -> JoinResult:
     if assembled["executions"] == 0:
         return JoinResult("WORK", "EXECUTION", BROKEN, None,
                           "no execution record exists to join")
+    joined = assembled["joined"]
+    total = assembled["executions"]
+    if joined:
+        # Some executions carry a real reference and some do not. Reported as
+        # BY CONVENTION rather than EVIDENCED, because the weakest link governs:
+        # a chain in which most executions name their work and some do not is
+        # not a chain that can be followed for an arbitrary execution.
+        return JoinResult(
+            "WORK", "EXECUTION", BY_CONVENTION,
+            "evidence record / provenance manifest",
+            f"{joined}/{total} executions name the work they performed; the "
+            f"remaining {total - joined} share only an actor name, and one "
+            "actor holds many grants")
     return JoinResult(
         "WORK", "EXECUTION", BY_CONVENTION, "actor name",
-        f"{assembled['executions']} execution(s) carry no reference to the "
+        f"{total} execution(s) carry no reference to the "
         "work they performed; only the actor name is shared, and one actor "
         "holds many grants")
 
@@ -120,6 +133,21 @@ def _execution_to_observation() -> JoinResult:
     if not traces:
         return JoinResult("EXECUTION", "OBSERVATION", BROKEN, None,
                           "no execution record exists to observe")
+    # A manifest names the observation subject for its execution, and the
+    # independent reader resolves it against the observation record. Where that
+    # holds, the link is a resolved reference rather than a shared name.
+    from tools import p12_provenance_verification as prov
+    manifests = prov.manifest_records()
+    observed_ids = {o.runtime_id for o in observations}
+    resolved = [m for m in manifests
+                if m.get("observation_subject") in observed_ids]
+    if resolved:
+        return JoinResult(
+            "EXECUTION", "OBSERVATION", EVIDENCED,
+            "manifest.observation_subject",
+            f"{len(resolved)}/{len(manifests)} manifest(s) name an observation "
+            "subject that resolves to a published observation")
+
     runtimes = {t.get("runtime") for t in traces}
     # `runtime_id`, not `subject`. The first version of this probe read a field
     # that does not exist, and the join was reported BROKEN with an
@@ -151,6 +179,26 @@ def _observation_to_verification() -> JoinResult:
     if "verified" in VALID_STATUSES:
         return JoinResult("OBSERVATION", "VERIFICATION", EVIDENCED,
                           "execution record verified state", "")
+
+    # No *execution record* can hold a verified state, and that finding stands.
+    # But a provenance manifest records the verification requirement the grant
+    # imposed together with the outcome the observed execution produced, and the
+    # independent reader resolves both. Where that holds, the edge is carried —
+    # by the P12 integration surface rather than by the ratified vocabulary,
+    # which is exactly the separation `§9` requires.
+    from tools import p12_provenance_verification as prov
+    observed_ids = {o.runtime_id for o in observations}
+    carried = [m for m in prov.manifest_records()
+               if m.get("observation_subject") in observed_ids
+               and m.get("verification_requirement")
+               and m.get("outcome") is not None]
+    if carried:
+        return JoinResult(
+            "OBSERVATION", "VERIFICATION", EVIDENCED,
+            "manifest.verification_requirement + outcome",
+            f"{len(carried)} manifest(s) carry the requirement and the outcome "
+            f"for an observed execution; the ratified execution vocabulary is "
+            f"still {sorted(VALID_STATUSES)} and holds no verified state")
     return JoinResult(
         "OBSERVATION", "VERIFICATION", BROKEN, None,
         f"the ratified execution vocabulary is {sorted(VALID_STATUSES)}; "

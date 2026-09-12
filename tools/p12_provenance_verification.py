@@ -37,10 +37,33 @@ DELEGATION_ROOTS: Tuple[Path, ...] = (
     REPO_ROOT / "docs/architecture/p11/w1-operations",
     REPO_ROOT / "docs/architecture/p11/w4-operations",
     REPO_ROOT / "docs/architecture/p11/x-department-operations",
+    # P12-W4 grants. Omitted at first, which made the new execution's manifest
+    # name a delegation this module could not find — the module reported the
+    # join missing because it was not looking where the grant was written.
+    REPO_ROOT / "docs/architecture/p12/w4-operations",
 )
 
 #: Where durable Trace records live.
 TRACE_ROOT = REPO_ROOT / "docs/architecture/p12/trace-stores"
+
+#: Where P11 execution **evidence records** live. These were missing from the
+#: first version of this module, and their absence produced a finding that was
+#: true of the two surfaces measured and false as a statement about the system:
+#: an evidence record carries `goal`, `plan`, `plan_authority`, the step-to-grant
+#: mapping, `delegation_id` and `authority_chain` in one artifact, which is
+#: precisely the join the module reported missing. Found by trying to falsify
+#: the finding rather than reproduce it.
+EVIDENCE_ROOTS: Tuple[Path, ...] = (
+    REPO_ROOT / "docs/architecture/p11",
+)
+
+#: Where P12-W4 execution provenance manifests live. A manifest joins a Trace
+#: record to the delegation that authorized it, which `TraceRecord` cannot carry
+#: — its reader reconstructs only the ten required fields, so a delegation key
+#: written into a Trace record is dropped on read. Counting a Trace record as
+#: joined therefore means resolving the manifest that names it, not looking for
+#: a key inside it.
+MANIFEST_ROOT = REPO_ROOT / "docs/architecture/p12/execution-provenance"
 
 CARRIED = "CARRIED"
 ABSENT = "ABSENT"
@@ -70,6 +93,21 @@ _TRACE_KEYS: Dict[str, str] = {
     "actor": "agent_instance",
     "runtime": "runtime",
     "result": "outputs",
+}
+#: An execution evidence record. `workflow` and `evidence` were reported ABSENT
+#: while this surface was outside the measured population; both are carried here.
+_EVIDENCE_KEYS: Dict[str, str] = {
+    "actor": "agent_instance",
+    "delegator": "accountable_party",
+    "authority": "authority_chain",
+    "objective": "goal",
+    "work scope": "work_scope",
+    "capability": "capability_scope",
+    "workflow": "workflow_steps",
+    "runtime": "coordination",
+    "result": "outcomes",
+    "evidence": "executed_at",
+    "verification": "criteria_total",
 }
 
 
@@ -105,17 +143,54 @@ def trace_records() -> Tuple[dict, ...]:
     found = []
     if not TRACE_ROOT.is_dir():
         return ()
-    for path in sorted(TRACE_ROOT.rglob("*")):
-        if not path.is_file():
+    for store in sorted(p for p in TRACE_ROOT.iterdir() if p.is_dir()):
+        ordinal = 0
+        for path in sorted(p for p in store.rglob("*") if p.is_file()):
+            for line in path.read_text(encoding="utf-8").splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    record = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                # The address a manifest uses. Carried alongside the record so a
+                # join can be resolved by address rather than by matching the
+                # runtime name — which is the same name-match this module exists
+                # to reject, and which an earlier version of the manifest check
+                # committed: one manifest appeared to join two records because
+                # both ran under the same runtime identity.
+                record["__store"] = store.name
+                record["__ordinal"] = ordinal
+                ordinal += 1
+                found.append(record)
+    return tuple(found)
+
+
+def evidence_records() -> Tuple[dict, ...]:
+    """Every resident execution evidence record, as stored."""
+    found = []
+    for root in EVIDENCE_ROOTS:
+        if not root.is_dir():
             continue
-        for line in path.read_text(encoding="utf-8").splitlines():
-            line = line.strip()
-            if not line:
-                continue
+        for path in sorted(root.rglob("*.evidence.json")):
             try:
-                found.append(json.loads(line))
-            except json.JSONDecodeError:
+                found.append(json.loads(path.read_text(encoding="utf-8")))
+            except (json.JSONDecodeError, OSError):
                 continue
+    return tuple(found)
+
+
+def manifest_records() -> Tuple[dict, ...]:
+    """Every persisted execution provenance manifest, as stored."""
+    if not MANIFEST_ROOT.is_dir():
+        return ()
+    found = []
+    for path in sorted(MANIFEST_ROOT.glob("*.manifest.json")):
+        try:
+            found.append(json.loads(path.read_text(encoding="utf-8")))
+        except (json.JSONDecodeError, OSError):
+            continue
     return tuple(found)
 
 
@@ -137,9 +212,11 @@ def _populated(records: Tuple[dict, ...], key: str) -> int:
     return total
 
 
-def elements(delegations=None, traces=None) -> Tuple[ElementResult, ...]:
+def elements(delegations=None, traces=None, evidence=None
+             ) -> Tuple[ElementResult, ...]:
     delegations = delegation_records() if delegations is None else delegations
     traces = trace_records() if traces is None else traces
+    evidenced = evidence_records() if evidence is None else evidence
 
     results = []
     for element in PROVENANCE_ELEMENTS:
@@ -147,7 +224,8 @@ def elements(delegations=None, traces=None) -> Tuple[ElementResult, ...]:
         details = []
         for label, records, keys in (
                 ("delegation", delegations, _DELEGATION_KEYS),
-                ("trace", traces, _TRACE_KEYS)):
+                ("trace", traces, _TRACE_KEYS),
+                ("evidence", evidenced, _EVIDENCE_KEYS)):
             key = keys.get(element)
             if key is None:
                 continue
@@ -165,26 +243,52 @@ def elements(delegations=None, traces=None) -> Tuple[ElementResult, ...]:
     return tuple(results)
 
 
-def assembly(delegations=None, traces=None) -> dict:
+def assembly(delegations=None, traces=None, evidence=None,
+             manifests=None) -> dict:
     """Can provenance be assembled for an actual execution?
 
-    An execution is a stored Trace record. Assembling `§34` for it requires
-    reaching the delegation that authorized it. The actor name is on both sides
-    and is **not** a join: one Agent Instance holds many grants, so an actor
-    match identifies a set, not the grant under which this execution ran.
+    An execution is a stored record of work having run. Two resident surfaces
+    hold such records and they behave differently, so both are counted and the
+    result names which is which:
+
+    * an **evidence record** carries `delegation_id` in the same artifact as the
+      goal, plan and outcome — the join is present;
+    * a **Trace record** carries actor, runtime and outputs and nothing that
+      names the grant under which it ran.
+
+    The actor name is on both sides and is **not** a join: one Agent Instance
+    holds many grants, so an actor match identifies a set, not the grant in
+    force.
     """
     delegations = delegation_records() if delegations is None else delegations
     traces = trace_records() if traces is None else traces
+    evidenced = evidence_records() if evidence is None else evidence
+    joins = manifest_records() if manifests is None else manifests
 
-    if not traces:
+    known = {d.get("delegation_id") for d in delegations}
+    # A manifest joins one Trace record, addressed by store and ordinal. Only
+    # manifests whose delegation actually resolves are counted: a manifest
+    # naming a grant nobody issued is a claim, not a join.
+    manifest_joined = {
+        (m.get("trace_store"), m.get("trace_ordinal"))
+        for m in joins if m.get("delegation_id") in known}
+    evidence_joined = sum(
+        1 for record in evidenced if record.get("delegation_id") in known)
+
+    if not traces and not evidenced:
         return {"status": NO_EXECUTIONS, "executions": 0, "joined": 0,
-                "detail": "no durable Trace record exists to assemble"}
+                "evidence_executions": 0, "evidence_joined": 0,
+                "trace_executions": 0, "trace_joined": 0,
+                "detail": "no execution record of either kind exists"}
 
     joined = 0
     ambiguous = 0
     for trace in traces:
         link = trace.get("delegation_id") or trace.get("delegation")
         if link and any(d.get("delegation_id") == link for d in delegations):
+            joined += 1
+            continue
+        if (trace.get("__store"), trace.get("__ordinal")) in manifest_joined:
             joined += 1
             continue
         actor = trace.get("agent_instance")
@@ -198,20 +302,28 @@ def assembly(delegations=None, traces=None) -> dict:
         elif len(candidates) > 1:
             ambiguous += 1
 
-    if joined == len(traces):
-        return {"status": ASSEMBLABLE, "executions": len(traces),
-                "joined": joined,
-                "detail": "every execution names the delegation that authorized it"}
-    return {
-        "status": NOT_ASSEMBLABLE,
-        "executions": len(traces),
-        "joined": joined,
-        "detail": (
-            f"{len(traces) - joined} of {len(traces)} executions carry no "
-            f"delegation reference; {ambiguous} could only be matched by actor "
-            "name, which identifies a set of grants rather than the one in "
-            "force"),
+    total = len(traces) + len(evidenced)
+    total_joined = joined + evidence_joined
+    common = {
+        "executions": total,
+        "joined": total_joined,
+        "evidence_executions": len(evidenced),
+        "evidence_joined": evidence_joined,
+        "trace_executions": len(traces),
+        "trace_joined": joined,
     }
+    if total_joined == total:
+        return dict(common, status=ASSEMBLABLE,
+                    detail="every execution names the delegation that "
+                           "authorized it")
+    return dict(
+        common, status=NOT_ASSEMBLABLE,
+        detail=(
+            f"{total_joined}/{total} executions name their delegation: "
+            f"{evidence_joined}/{len(evidenced)} evidence records do, "
+            f"{joined}/{len(traces)} Trace records do; {ambiguous} could only "
+            "be matched by actor name, which identifies a set of grants rather "
+            "than the one in force"))
 
 
 def summary() -> dict:
@@ -226,6 +338,11 @@ def summary() -> dict:
         "assembly": joinable["status"],
         "executions": joinable["executions"],
         "executions_joined": joinable["joined"],
+        "evidence_joined": f"{joinable['evidence_joined']}/"
+                           f"{joinable['evidence_executions']}",
+        "trace_joined": f"{joinable['trace_joined']}/"
+                        f"{joinable['trace_executions']}",
+        "manifests": len(manifest_records()),
     }
 
 

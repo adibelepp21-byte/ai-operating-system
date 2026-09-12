@@ -12962,3 +12962,118 @@ F-16 OPEN (Founder) - F-17 OPEN (Architect/Founder) - F-18 OPEN (source + Archit
 authority; P12 is not.** W2 remains unbuilt and W1/W3 remain unreconciled
 against their canonical bodies. Treating one work package's exhaustion as the
 phase's is the error `§126.1` and `§127` each corrected once already.
+
+## 131. P12-W4: the finding I acted on was wrong, and the fix broke on its own test
+
+`ACT-CC-P12-W4-001`. Evidence:
+`docs/architecture/p12/P12-W4-EXECUTION-INTEGRATION.md`.
+
+## 131.1 Falsification came first, and it succeeded
+
+The Act required the W6 provenance finding be falsified rather than reproduced.
+**It falsified.** `§128.1` reported 9 of 11 `§34` elements carried and 0 of 2
+executions assemblable. That measurement read delegation records and Trace
+records. It never read the resident `*.evidence.json` execution records — which
+carry goal, plan, plan authority, the step-to-grant mapping, workflow steps,
+`delegation_id` and `authority_chain` **in one artifact**, which is exactly the
+join I reported missing.
+
+Corrected: **11 of 11 elements carried**, and 3 of 3 evidence-record executions
+joined. The finding was true of the surfaces measured and false as a statement
+about the system.
+
+Two conformance controls had encoded that falsehood. They were corrected because
+they were **wrong**, not to make an implementation pass — and the corrected
+element control asserts a stronger result than the one it replaced.
+
+## 131.2 The real gap was narrower, and it was mine
+
+The P11 evidence path records the join. The durable Trace path built under
+P12-W4 does not — and it issues no delegation at all. It names an instance, and
+no grant authorizes that specific execution. **The newer surface lost a relation
+the older one had**, and this programme built the newer surface.
+
+## 131.3 What was built
+
+An execution provenance manifest, beside the Trace record rather than inside it.
+`TraceRecord` is ratified and closed — its reader reconstructs only the ten
+required fields, so a key written into it is dropped on read, and a control
+asserts that drop against Native Core. No Native Core file changed, no ratified
+vocabulary widened, no twelfth subsystem.
+
+The manifest refuses to be written incomplete and refuses to overwrite. The
+reader that judges it **imports nothing from the writer**, and a control parses
+its imports and fails if it ever does.
+
+One real execution: declared Goal, adopted Plan, real delegation from the
+delegator `FD-P11-001 §4.1` names, real conformance work through `TraceWriter`
+to durable storage, observation published under the execution's own runtime
+identity, outcome recorded against the delegation's verification requirement.
+14 criteria, 14 satisfied. Independent verdict: **JOINED, 7 of 7 edges.**
+
+## 131.4 `§23` Test G broke my construction
+
+Substituting a different grant **held by the same actor** still verified. The
+reader checked that the trace actor equalled the grant recipient — true for all
+seven grants that actor holds.
+
+That is the shared-name defect reappearing inside the fix built to remove it,
+found by falsification rather than by review. The join now also requires the
+delegation's `lifecycle_boundary` to name the plan the manifest cites: a grant
+bound to another plan authorizes another execution, whatever its scope says.
+
+## 131.5 Two more name-matches of my own
+
+A manifest appeared to join **two** Trace records, because the first version
+matched manifests to traces on runtime identity and actor — a name match, in the
+module written to reject name matches, for the third time in this programme.
+Traces are now addressed by store and ordinal, as a manifest addresses them, and
+the count fell from `2/4` to the correct `1/4`.
+
+And the new grant was written to a P12 directory that the provenance module's
+search path did not list, so the module reported the join missing because it was
+not looking where the grant was written.
+
+## 131.6 What moved, and what deliberately did not
+
+```text
+EXECUTION → OBSERVATION    BROKEN → EVIDENCED   by real execution
+OBSERVATION → VERIFICATION BROKEN → EVIDENCED   on the P12 surface, not the vocabulary
+WORK → EXECUTION           4/7, still BY CONVENTION — the weakest link governs
+```
+
+Three Trace records stay unjoined: two from the earlier durability proof, one
+from a first attempt that failed at the evidence stage **after its work had
+already run**. Writing manifests for them would manufacture historical evidence.
+The corpus figure stays `4/7` rather than being driven to `7/7`.
+
+The ratified vocabulary still holds no verified state, and a control asserts
+`"verified" not in VALID_STATUSES` so that finding cannot quietly become false.
+
+Runtime reachability is unchanged: eight entry points, `HAND-INVOKED ONLY`. The
+integrated execution is itself hand-invoked. A resident non-manual entry means
+something deciding *when* AIOS acts, which is operational authority, and building
+one inside W4 would establish it by engineering convention.
+
+## 131.7 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 1016 = 2093
+citation 241 documents / 1202 citations / 0 errors
+execution chain 1 manifest / 7 of 7 edges JOINED / 0 dangling
+provenance 11 of 11 elements / 4 of 7 executions joined
+workflow 5 joins / 4 evidenced / 1 by convention / 0 broken
+negative controls 18 instruments / 18 demonstrated
+regression 11 classes / 0 regressed - mutation unchanged - fresh process 8/8
+
+certified evidence changes 0 - protected read 0 - Native Core 11
+ratified vocabulary widened 0 - TraceRecord unchanged - historical rewrite 0
+conformance test weakened to pass 0
+
+F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
+P12 AUTHORIZED = TRUE - CONSTRUCTED = FALSE - OPERATIONAL = FALSE
+VERIFIED = FALSE - EXHAUSTED = FALSE - COMPLETE = FALSE - CERTIFIED = FALSE
+E12 RATIFIED = FALSE - P13 AUTHORIZED = FALSE
+```
+
+`W4 VERIFIED ≠ P12 VERIFIED`. One execution keeps the whole contract; six do not.
