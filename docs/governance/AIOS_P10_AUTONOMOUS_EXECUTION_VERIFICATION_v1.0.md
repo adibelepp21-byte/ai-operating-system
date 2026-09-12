@@ -11182,3 +11182,112 @@ command. The discipline is not knowledge. It is the command.
 
 No P12-W1…W6 implementation exists. The next transition is the Founder's
 authorization decision, and `D1`–`D8` remain unfilled.
+
+---
+
+# 111. P12 authorized — and the first thing it could not see was itself
+
+Instrument:
+[`P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md`](acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md) ·
+Evidence:
+[`P12-W5-SELF-MODEL-EVIDENCE.md`](../architecture/p12/P12-W5-SELF-MODEL-EVIDENCE.md)
+
+```text
+P12 AUTHORIZED = TRUE       P12 CONSTRUCTED = FALSE
+P13 NOT AUTHORIZED          GOVERNANCE CLOSED = NO
+23f315ba9f504272 = OPEN / NON-BLOCKING
+```
+
+## 111.1 The instrument contradicts itself, and I said so before acting on it
+
+Its header reads `Status: PENDING FOUNDER DECISION · P12 Authorization: NOT YET
+GRANTED`. Its `§35`, titled **FINAL FOUNDER DECISION**, reads `AUTHORIZED · YES ·
+Status: ISSUED`.
+
+**Determination: ISSUED; the header is stale template text.** `§31` carries all
+eight decisions filled — the prior package was PENDING because its 36 checkboxes
+were *empty*. `§32` carries a rationale, `§33` an effective date, `§34` a
+ten-point attestation, `§37` calls `P12 AUTHORIZED = TRUE` *"the intended state
+transition"*, and `§36` is a **post**-decision contract. A decision is made by its
+decision content, not by a template line above it — the inverse of `FD-P10-005`,
+whose **blank** `§14` made it PENDING.
+
+The determination is stated at the top of the persisted instrument rather than
+buried, because if it is wrong it must be easy to find and reverse. The work done
+under it adds capability and evidence, creates no authority, and closes no
+reserved matter.
+
+## 111.2 The first authorized act found the system blind to its own charter
+
+`DP-01` authorized P11. `DP-02` ratified E11. Both resident, both registered by
+`§108`, and **both invisible** to the governance index: it recognised
+`DEC|GDR|ADR|ACT|FD` and not `DP`.
+
+```text
+BEFORE  decisions visible 52 · DP-01 ✗ · DP-02 ✗
+AFTER   decisions visible 54 · DP-01 ✓ · DP-02 ✓
+```
+
+**The class list was restated in three places.** Adding `DP` to `IDENTIFIER_RE`
+moved `records` 427 → 432 and left `identified`, `decisions visible` and `DP-01`
+**unchanged**. The measurement not moving is what exposed `_SUBRECORD_RE`'s own
+hardcoded copy. Had I trusted the first edit, I would have reported `F-2` closed
+and been wrong, with no existing test to catch it. The three now derive from one
+tuple.
+
+`FD` was itself missing from this alternation until `ACT-CC-R1-002` — an omission
+that *"made every Founder Decision … invisible to this index."* `DP` was the same
+omission one prefix later; the drift that made it three edits is now gone rather
+than re-documented.
+
+## 111.3 The self-model answers ten of twelve, and two `UNKNOWN`s are correct
+
+`tools/p12_self_model.py`, built as a **new** module: `derived_views` cites a
+`§26` prohibition on building a Self-Model from `ACT-CC-R2BC-IMPL-001`, **not
+resident**, so the projection there stays a projection and the authorized
+self-model is built beside it.
+
+`8 VERIFIED · 2 INFERRED · 2 UNKNOWN`. *"What is running?"* and *"What failed?"*
+return `UNKNOWN` naming their absent sources — `F-3` and `F-4`. Filling them needs
+a Trace registry and runtime observation, which is `W2`/`W4` construction, not
+better wording. *"What do I not know?"* is **derived from the model's own
+answers**, because a hand-kept list of one's own ignorance is the first thing to
+go stale.
+
+## 111.4 Three defects, two of them mine
+
+**`capabilities` reported `INFERRED` over an empty tuple.** It passed the
+repository root where the **organization** root was wanted: found nothing, raised
+nothing, inside a `try/except` that never fired. A guard that passes because it
+cannot see — the shape this programme has now corrected eight times, written fresh
+by me today.
+
+**`What changed?` relabelled the staleness list as `recorded_supersessions`.** The
+data was not what the key said. Supersession now comes from the Register: **6**,
+distinct from **17** open synchronizations, with a test asserting the two answers
+differ.
+
+**A pre-existing invalid escape** — ``ADR-\d{4}`` in a non-raw docstring in
+`organization_catalog.py`. I suspected my own edit first and checked `HEAD` before
+saying otherwise: untouched by me. Fixed; zero remain repo-wide.
+
+And a fourth, transient: caching the model in the test helper, I rewrote
+`_answer`'s body into a call to itself. Nine tests recursed. Caught and fixed in
+one cycle, recorded because the turn's lesson is that the careless edits cluster
+around the careful ones.
+
+## 111.5 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 741 OK = 1818
+citation 204 documents / 1096 citations / 0 errors
+stale-state 503 documents / 0 stale assertions
+self-model: 12 questions - 8 VERIFIED, 2 INFERRED, 2 UNKNOWN
+decisions visible: 54 of 54 registered
+
+P12 AUTHORIZED = TRUE     P12 CONSTRUCTED = FALSE     E12 NOT RATIFIED
+Native Core 11 - protected read 0 - staged 0 - committed 0
+```
+
+`F-2` closed. `F-1` partially closed. `F-3`–`F-6` open and authorized. `F-8`
+reserved, no direct dependency proven. `F-9` untouched.

@@ -83,8 +83,30 @@ _SEGMENT = r"[A-Z0-9][A-Za-z0-9]*"
 #: register — invisible to this index: `ACT-CC-R1-001` measured 10 of 10
 #: undiscoverable while all 10 were present in the source. Nothing else was
 #: wrong with discovery; one missing prefix hid the records that matter most.
+#: `DP` was absent until P12-W3 governance integration. The omission repeated
+#: the `FD` defect recorded directly above, one prefix later: `DP-01` (P11
+#: Founder Authorization) and `DP-02` (E11 Ratification) are **Founder
+#: Decisions**, resident in `docs/governance/acts/` and registered in the
+#: Register's §13 append, and neither was discoverable by this index. The
+#: measured effect was that `derived_views.self_knowledge()` answered *"what
+#: decisions are recorded"* with 52 of the 54 registered decisions, omitting the
+#: instrument that authorized P11 and the one that ratified its exit criteria.
+#: Added under the P12 Founder Authorization `§16` (governance integration) and
+#: `§18`, which requires *"What decisions are recorded?"* to be evidence-backed.
+#: Recognising an identifier class changes discovery only: it grants nothing,
+#: promotes nothing, and `DP-03`/`DP-04` remain Architect Decisions that this
+#: index reports as records without conferring authority on them.
+#: The governance identifier classes, declared **once**. Three places used to
+#: restate this list — `IDENTIFIER_RE`, `IDENTIFIER_CLASSES` and `_SUBRECORD_RE`
+#: — and `DP` had to be added to each independently before `DP-01` became
+#: discoverable. Two of the three were found only because the measurement after
+#: the first edit did not move. They now derive from this tuple, so a class
+#: added here reaches all three.
+IDENTIFIER_CLASS_NAMES = ("DEC", "GDR", "ADR", "ACT", "FD", "DP")
+_CLASS_ALT = "|".join(IDENTIFIER_CLASS_NAMES)
+
 IDENTIFIER_RE = re.compile(
-    r"\b(?:DEC|GDR|ADR|ACT|FD)-" + _SEGMENT + r"(?:[.-]" + _SEGMENT + r")*"
+    r"\b(?:" + _CLASS_ALT + r")-" + _SEGMENT + r"(?:[.-]" + _SEGMENT + r")*"
 )
 TOPIC_RE = re.compile(r"\bT-\d+\b|\bT\d+-[A-Z]-\d+\b")
 
@@ -94,7 +116,7 @@ TOPIC_RE = re.compile(r"\bT-\d+\b|\bT\d+-[A-Z]-\d+\b")
 #: runs off `IDENTIFIER_RE` alone. It is kept in step with that pattern so the
 #: two cannot drift, but it is dead as written; removing it is a separate
 #: question and is not decided here (`ACT-CC-R1-002 §4`).
-IDENTIFIER_CLASSES = ("DEC", "GDR", "ACT", "ADR", "FD")
+IDENTIFIER_CLASSES = IDENTIFIER_CLASS_NAMES
 
 
 def identifiers_in(text: str) -> Tuple[str, ...]:
@@ -156,7 +178,7 @@ _H1_RE = re.compile(r"^#\s+(?P<title>.+?)\s*$")
 # where a file carries two or more of them, so that a single such heading inside
 # a narrative document is not mistaken for a record boundary.
 _SUBRECORD_RE = re.compile(
-    r"^(?P<hashes>#{2,4})\s+(?P<identifier>(?:DEC|GDR|ACT|ADR|FD)-" + _SEGMENT
+    r"^(?P<hashes>#{2,4})\s+(?P<identifier>(?:" + _CLASS_ALT + r")-" + _SEGMENT
     + r"(?:[.-]" + _SEGMENT + r")*)\s*(?P<sep>[-—–:·])"
 )
 

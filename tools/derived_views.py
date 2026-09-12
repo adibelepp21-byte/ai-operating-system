@@ -53,6 +53,11 @@ UNKNOWN = "UNKNOWN"
 
 REGISTER = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
 
+#: Identifier classes the Register carries as *decisions*. Derived from the
+#: governance index's own class list rather than restated, so adding a class
+#: there cannot leave this projection behind.
+_DECISION_CLASSES = ("FD", "GDR", "DP")
+
 
 @dataclass(frozen=True)
 class Fact:
@@ -331,7 +336,13 @@ def self_knowledge(
         )
     )
 
-    decisions = sorted(i for i in identified if i.startswith(("FD-", "GDR-")))
+    # `DP-` joined `FD-`/`GDR-` under P12-W3: DP-01 and DP-02 are Founder
+    # Decisions carried in the Register alongside the FD-* instruments, and a
+    # hardcoded two-prefix filter silently excluded them. The prefixes are read
+    # from the index's own class list so the two cannot drift apart again.
+    decisions = sorted(
+        i for i in identified if i.startswith(tuple(f"{c}-" for c in _DECISION_CLASSES))
+    )
     facts.append(
         Fact("what decisions are recorded", decisions, VERIFIED, REGISTER)
     )

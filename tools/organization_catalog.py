@@ -102,7 +102,7 @@ ESTABLISHED_BY = re.compile(
 
 
 def _establishing_adr(readme: Path) -> Tuple[str, ...]:
-    """The ADR the record says established it — **not every ADR it mentions**.
+    r"""The ADR the record says established it — **not every ADR it mentions**.
 
     The first version unioned every ``ADR-\d{4}`` across the README and every
     capability file. That attributed **`ADR-0003` to Engineering**, because
