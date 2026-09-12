@@ -12523,3 +12523,106 @@ arrived at.
 Two counts in this document measure different things and are never reconciled:
 `2244` **declared** control methods read from source, and `1973` **executed**
 tests reported by the runners.
+
+## 127. The remaining W6 scope, classified — and a scope item I had closed that was not closed
+
+`ACT-CC-P12-W6-CONTINUATION-001`. Discovery and classification only; no
+construction. `§13` of that Act sets the objective: not `13/13 PASS` but
+**`13/13 TRUTHFULLY CLASSIFIED`**.
+
+Evidence: `docs/architecture/p12/P12-W6-SCOPE-DISCOVERY-AND-CLASSIFICATION.md`.
+
+## 127.1 The thirteen are scopes over subjects defined elsewhere
+
+`§19`'s thirteen are not thirteen Blueprint sections. Read against the actual
+bodies they resolve onto `§30` RUNTIME, `§31` WORKFLOW, `§26` GOVERNANCE,
+`§13`–`§20` STATE, `§54` EVIDENCE, `§34` PROVENANCE, `§33` FAILURE, `§49`
+NEGATIVE CONTROLS. Reading `§19` alone gives thirteen words; reading the bodies
+they point at gives thirteen requirements, and they are not the same thing.
+
+## 127.2 NEGATIVE CONTROLS was not closed
+
+`§49` names **thirteen mandatory negative controls** and they are about the
+**system**: self-authorization, authority expansion, governance bypass, invalid
+provenance, fabricated actor, unauthorized delegation, unauthorized state
+mutation, unauthorized architecture mutation, unauthorized P13 authorization,
+false completion, false certification, stale-state acceptance,
+historical-as-current substitution.
+
+`§126` verified something else: that ten P12 **verifiers** can each report a
+negative. That work stands — the Self-Model finding it produced is sound and the
+governing Act requires verifier falsifiability independently at its `§18`. But
+it is not `§49`, and I recorded the scope item as closed. **It is reopened.**
+
+Seven of `§49`'s thirteen overlap `§50` mutations already attempted. **Six have
+never been attempted at all**: self-authorization, authority expansion,
+governance bypass, unauthorized P13 authorization, false completion,
+historical-as-current substitution.
+
+This is the same error as `§126.1`, one section later: treating a scope item as
+satisfied by the work I had done rather than by the requirement the canonical
+body states. `§126.1` was found by reading `§19`. This one needed `§49`.
+
+## 127.3 The finding: execution provenance cannot be assembled
+
+`§34` requires eleven provenance elements. Measured against **stored records**,
+not class definitions:
+
+A resident delegation record carries delegator, actor, authority instrument and
+record, objective, capability scope, work scope, verification requirement, and
+an explicit authority chain to the Founder. It carries no workflow, no runtime,
+no result, no evidence.
+
+A resident Trace record carries actor, runtime, and result. It carries no
+delegation id, no delegator, no authority, no objective, no work scope, no
+workflow, no evidence, no verification.
+
+**The two surfaces are not joined.** Nothing links a specific execution to the
+specific delegation that authorized it. The actor name appears on both sides,
+and an actor name is not a link — one instance holds many grants.
+
+`§34` closes: *"Provenance is part of system integrity."* It is currently split
+across two records that cannot be joined, which is the highest-value item
+remaining.
+
+## 127.4 Two boundaries reached, and not routed around
+
+**EVIDENCE** is `§54`, whose every cell reads `TBD by canonical reconciliation`
+under the sentence *"This table is intentionally not pre-certified."* Filling it
+assigns requirements and statuses to the E12 criteria. That is `F-16`.
+**AUTHORITY-BLOCKED — FOUNDER-RESERVED.** Governance evidence per `§26` is a
+different subject and is classified separately rather than used as a route to
+`§54`.
+
+**STATE** is `§17` state authority, and P12-W2 unified operational state is not
+built, so there is no surface on which a conflict could be discovered.
+**BLOCKED — DEPENDENCY.** W2 construction is authorized by `FD §31` D7, but it
+is construction rather than W6 verification, and building a state authority
+inside W6 would let an implementation convention establish it — which the
+governing Act forbids at its `§26`.
+
+## 127.5 Classification of all thirteen
+
+```text
+VERIFIED   cross-phase contracts · mutation · regression · fresh process
+ACTIONABLE runtime · workflow · governance · provenance · failure
+           negative controls (reopened)
+BLOCKED    state (dependency: P12-W2)
+           evidence (Founder-reserved: F-16)
+           cross-PD interfaces (source gap + Architect-reserved: F-18)
+```
+
+Four verified, six actionable, three blocked at boundaries that are not mine.
+
+## 127.6 State
+
+```text
+native_core 801 OK (1 expected failure) - consumers 276 OK - tools 896 OK = 1973
+W6 scope 13 items - truthfully classified 13 - verified 4 - actionable 6 - blocked 3
+citation 228 documents / 1183 citations / 0 errors
+certified evidence changes 0 - protected read 0 - Native Core 11
+construction performed in this increment 0
+
+F-16, F-17, F-18 untouched (Founder- / Architect-reserved)
+P12 CONSTRUCTED = FALSE - E12 RATIFIED = FALSE - P13 NOT AUTHORIZED
+```
