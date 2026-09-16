@@ -181,6 +181,10 @@ forbids manufacturing a join a record's author never captured.
 them is possible within the same delegated authority and is future,
 independent `P12-W3` work, not implied by this increment.
 
+**Superseded by `ACT-CC-P12-005`, §14 below.** All three now call it. Not
+withdrawn — the boundary this paragraph named was real at the time it was
+written, and closing it is exactly the future increment it anticipated.
+
 [C] `W3 GOVERNANCE INTEGRATION AUTHORITY` (`§16`) is broader than this one
 gap — the `DECISION → AUTHORITY → RATIONALE → IMPLEMENTATION → VERIFICATION →
 CURRENT STATE` chain across Founder Decisions and ADRs generally was not
@@ -193,7 +197,115 @@ lives in `tools/`, alongside `ExecutionManifest`, not in `native_core/`.
 
 ---
 
+## 14. `ACT-CC-P12-005` — resident consumption
+
+[E] All three refusal-recording call sites now call one shared, additive
+helper, `join_refusals_to_grants` (`tools/p12_governance_escalation_join.py`),
+in place of calling `record_refusals` directly. It calls the unmodified
+`record_refusals` internally (unchanged behaviour) and additionally joins
+each resulting escalation to the grant the caller names —
+`delegation.delegation_id` for the two single-grant sites
+(`tools/w4_first_run.py`, `tools/w1_coordination_run.py`), and
+`grants[refusal.required].delegation_id` for the one multi-grant site
+(`tools/w1_cross_department_run.py`, one delegation per step). Neither
+`EscalationRecord` nor `record_refusals`'s own signature changed.
+
+[E] **Real, end-to-end proof through the actual resident call site.**
+`p12_w3_resident_wiring_proof.py` calls `tools.w4_first_run.run` for real —
+real agent registration, real delegation, a real out-of-scope step
+`W4Executor` genuinely refuses, real escalation recording, real structural
+join — with three narrow, disclosed substitutions so the run cannot corrupt
+shared state: `OPERATIONS` stays the resident `docs/architecture/p12/w4-operations/`
+root; `INSTANCE_KEY` is a fresh, non-colliding value, because the module's
+own `engineering-intelligence-instance-001` is shared with
+`p12_w4_integrated_execution.py`'s live grants in the same directory, and
+`_revoke_stale_grants` would otherwise have revoked them; `project()` (a
+different, `docs/architecture/p11/`-scoped organizational-state surface this
+Act does not touch) is a no-op for this one call. Result:
+
+```text
+delegation_id      2494015de36246fd   (real, issued by W4DelegationRegistry)
+escalations        ['9cb90fa0787a478c']
+join                JOINED, independently, via tools.p12_governance_join_reader
+delegation resolves independently:  True
+```
+
+[C] **A self-caught defect, disclosed rather than concealed.** The first
+attempt at this script forgot to patch `OPERATIONS`, so it ran against the
+real, certified `docs/architecture/p11/w4-operations/` for several stages
+before the existing `tools/p12_certified_evidence_guard.guard` correctly
+refused the final evidence write. Four new, real, but unwanted files had
+already been written there (`§10`/`§21` — none pre-existing was modified;
+`guard` did its job) and were deleted before being committed. The script was
+corrected — `OPERATIONS` is now explicitly patched — and re-run cleanly. No
+historical evidence was ever overwritten; the near-miss is recorded so it is
+not repeated.
+
+[E] **The other two sites cannot currently produce a refusal through their
+own real scenarios, confirmed by reading their source, not by absence of
+evidence.** `tools/w1_coordination_run.py`'s real plan has exactly two
+steps, and `STEP_SKILLS` — the source of its granted `work_scope` — names
+both; `tools/w1_cross_department_run.py` issues one grant per step, each
+scoped to exactly that step. Neither can exceed its own grant today. This
+matches, and now explains rather than merely observes,
+`tools/tests/test_escalation_subject_integrity.py`'s own finding that *"no
+W1 refusal has ever occurred."*
+
+[E] **The multi-grant lookup, proven directly.** `tools/tests/test_p12_w3_resident_wiring.py`
+builds two real delegations and two real refusals (real `W4Executor`, real
+`W4DelegationRegistry`, no mocks) and asserts each escalation joins the
+grant its own refusal named — `grants[refusal.required]`, not a shared
+constant — plus a negative-fixture proving a naive constant lookup really
+would mis-join one of the two. This is real work on the exact pattern
+`tools/w1_cross_department_run.py` now uses, independent of whether that
+site's own historical scenario ever exercises it.
+
+[C] **A second, self-caught defect: `escalation_join()`'s new-surface count
+only checked one hardcoded directory.** Written under `ACT-CC-P12-003`
+against `docs/architecture/p12/w3-operations` alone, it silently missed the
+real join this increment produced in `docs/architecture/p12/w4-operations` —
+the exact `DELEGATION_ROOTS`-shaped defect
+`tools/p12_provenance_verification.py`'s own comment already names once.
+Found by re-running the measurement against the new evidence rather than
+trusting the old figure. Fixed to resolve each escalation's join beside
+whichever directory that escalation actually lives in:
+
+```text
+records                          3   (1 historical, 1 P12-003, 1 P12-005)
+joined_by_structured_field       0   (EscalationRecord still unmodified)
+joined_by_parsed_prose           2   (historical + this increment's; the
+                                      P12-003 record was deliberately worded
+                                      not to match)
+joined_by_governance_surface     2   (both real joins, resolved independently,
+                                      each in its own directory)
+```
+
+[C] **A known, unchanged semantic limitation, preserved not upgraded.** The
+join resolves whether a named delegation *exists*, not whether it is
+currently `ACTIVE` — a revoked grant still resolves `JOINED`. This is the
+same standard `joined_by_structured_field` always used and is not new to
+resident wiring; recorded because `ACT-CC-P12-004` disclosed the adjacent
+"is this the *specific* grant the refusal named" limitation and this one is
+its sibling, not because either changed this Act.
+
+### Three-site coverage
+
+| Call site | Wired | Reachable | Real refusal possible today | Invoked with real content | Independently verified |
+|---|---|---|---|---|---|
+| `tools/w4_first_run.py` | YES | YES | YES (`report-conformance` outside `work_scope`) | YES, this Act | YES — real run, independent reader, fresh process |
+| `tools/w1_coordination_run.py` | YES | YES | NO — both real steps are always in scope | NO — never, by construction | wiring pattern verified via `w4_first_run`'s identical single-grant shape |
+| `tools/w1_cross_department_run.py` | YES | YES | NO — each grant always covers exactly its own step | NO — never, by construction | multi-grant lookup verified directly, real objects, `test_p12_w3_resident_wiring.py` |
+
+**Not `3/3 operational`.** One site is wired, reachable, and exercised with
+real content this Act. Two are wired and reachable, and — by the shape of
+their own real work, not by any limitation in the join — have never
+produced, and today cannot produce, the condition the join exists to
+handle. Their wiring's correctness rests on direct proof of the pattern
+each uses, not on an occurrence that has never happened.
+
+---
+
 **Suite state at this record:** `native_core` 801 (1 expected failure) ·
-`consumers` 276 · `tools` 1123 (net of this increment's 16 new tests and one
-negative-control-coverage fix) · regression `0` of `12` classes regressed ·
-mutation and fresh-process unchanged from the pre-increment baseline.
+`consumers` 276 · `tools` 1113 (net of `ACT-CC-P12-005`'s 4 new tests, one
+rewritten test, and one bugfix to `escalation_join()`) · regression `0`
+classes regressed · fresh-process unchanged.

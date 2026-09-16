@@ -234,6 +234,16 @@ still projects as a count here; this W2 surface was not widened. What closed
 is `W4-GAP-008` itself, beside the escalation record it joins.
 **Reclassified: `DEPENDENCY (W3) → CONSTRUCTED (by W3)`.**
 
+**`ACT-CC-P12-005`** wired the join into the resident refusal-recording call
+sites, including the one `w4_first_run.py` this Act's own resident
+consumption proof exercises. `escalation.raised` still projects as a count
+here — this file's own surface is still untouched — but the count this W2
+entry projects now reflects a resident-consumed join, not merely a
+constructed one. No new consumer of `W2` was created; `_project_escalation`
+already called `tools.p12_failure_verification.escalation_join`, and this
+Act only made what that call returns more complete
+(`P12-004`'s `PARTIAL` transitive-consumption finding stands, unchanged).
+
 ### W2-GAP-008 — W1 dependency
 **DEPENDENCY (W1).** `§9`'s integration graph is W1's, and its edge model lists
 `STATE` as an edge attribute. W1 is a **consumer** of W2, not a duplicate of it.

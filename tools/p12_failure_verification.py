@@ -174,11 +174,21 @@ def escalation_join() -> dict:
     a record can now be joined by a *separate, independently resolvable*
     structural reference, which this function counts as its own category
     rather than silently merging into the two that predate it.
+
+    `ACT-CC-P12-005` resolves the join **per escalation, beside whichever
+    directory that escalation actually lives in** — not against one hardcoded
+    directory. The first version hardcoded `docs/architecture/p12/w3-operations`
+    and silently missed a real, resident join this same Act produced in
+    `docs/architecture/p12/w4-operations` once resident call sites started
+    writing joins of their own. Caught by re-running this function against
+    the new evidence rather than trusting the old figure, and fixed the same
+    Act it was found in — the exact `DELEGATION_ROOTS`-shaped defect
+    `tools/p12_provenance_verification.py`'s own comment already names once.
     """
     import json
     import re
     from tools.p12_provenance_verification import delegation_records
-    from tools.p12_governance_join_reader import resolve_all, JOINED
+    from tools.p12_governance_join_reader import resolve, JOINED
 
     known = {d["delegation_id"] for d in delegation_records()}
     records = sorted(
@@ -186,6 +196,7 @@ def escalation_join() -> dict:
     structured = 0
     parsed = 0
     typed = 0
+    governance_surface = 0
     for path in records:
         try:
             payload = json.loads(path.read_text(encoding="utf-8"))
@@ -200,20 +211,17 @@ def escalation_join() -> dict:
                 parsed += 1
         if any(key in payload for key in ("refusal_type", "kind", "type")):
             typed += 1
-
-    governance_root = REPO_ROOT / "docs/architecture/p12/w3-operations"
-    joined_by_governance_surface = 0
-    if governance_root.is_dir():
-        joined_by_governance_surface = sum(
-            1 for r in resolve_all(governance_root, governance_root)
-            if r["status"] == JOINED)
+        escalation_id = payload.get("escalation_id")
+        if escalation_id and resolve(
+                path.parent, path.parent, escalation_id)["status"] == JOINED:
+            governance_surface += 1
 
     return {
         "records": len(records),
         "joined_by_structured_field": structured,
         "joined_by_parsed_prose": parsed,
         "naming_the_refusal_type": typed,
-        "joined_by_governance_surface": joined_by_governance_surface,
+        "joined_by_governance_surface": governance_surface,
     }
 
 

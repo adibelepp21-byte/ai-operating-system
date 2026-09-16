@@ -7,6 +7,7 @@ the system earns it, and must not count a state it cannot reach.
 
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -111,28 +112,45 @@ class DistinguishedMeansReachableAndTellableApart(unittest.TestCase):
 
 
 class GovernanceJoinSurfaceIsMeasuredSeparately(unittest.TestCase):
-    """`P12-W3`: a refusal now also joins its grant through an independently
-    resolvable, beside-the-record reference — a real, persisted instance of
-    it, not a mock. `docs/architecture/p12/w3-operations/` must already carry
-    the run `p12_w3_governance_escalation.py` produced."""
+    """`P12-W3`/`P12-005`: a refusal now also joins its grant through an
+    independently resolvable, beside-the-record reference — real, persisted
+    instances, not mocks. `docs/architecture/p12/w3-operations/` carries the
+    run `p12_w3_governance_escalation.py` produced (`ACT-CC-P12-003`);
+    `docs/architecture/p12/w4-operations/` now also carries one produced by
+    the wired resident call site `tools/w4_first_run.py`
+    (`p12_w3_resident_wiring_proof.py`, `ACT-CC-P12-005`) — proof the join
+    resolves per-escalation, beside whichever directory each one actually
+    lives in, not against one hardcoded root (the defect this Act found and
+    fixed in `escalation_join()` itself)."""
 
-    def test_the_real_p12_w3_run_joins_by_the_new_surface(self):
+    def test_at_least_two_real_runs_join_by_the_new_surface(self):
         join = fail.escalation_join()
-        self.assertGreaterEqual(join["joined_by_governance_surface"], 1,
-                                "expected the real P12-W3 run "
-                                "(p12_w3_governance_escalation.py) to have "
-                                "left at least one independently-resolvable "
-                                "join on disk")
+        self.assertGreaterEqual(join["joined_by_governance_surface"], 2,
+                                "expected both the P12-W3 cycle's run and "
+                                "this cycle's resident-wiring run to have "
+                                "left an independently-resolvable join on "
+                                "disk, in their own directories")
 
-    def test_the_new_join_does_not_inflate_the_prose_or_structured_counts(self):
-        """The new record's subject was deliberately worded so the old
-        regex does not match it — proof the governance surface, not the
-        prose fallback, is what resolves it."""
-        join = fail.escalation_join()
-        # Exactly the one historical record matches the prose regex; the new
-        # P12-W3 record must not, or this test would not be proving anything.
-        self.assertEqual(join["joined_by_parsed_prose"], 1)
-        self.assertEqual(join["joined_by_structured_field"], 0)
+    def test_the_w3_cycle_record_does_not_depend_on_prose_matching(self):
+        """`ACT-CC-P12-003`'s record's subject was deliberately worded so
+        the old regex does not match it — proof that record specifically is
+        resolved by the governance surface, not the prose fallback. A
+        second, later real record (`ACT-CC-P12-005`, `w4-operations`) was
+        *not* given adversarial wording — its subject follows
+        `tools/w4_first_run.py`'s own unchanged format, which happens to
+        satisfy the old regex too — so the aggregate count below is not, by
+        itself, proof of independence; this test checks the one record that
+        is."""
+        from tools.p12_governance_join_reader import resolve, JOINED
+        root = fail.REPO_ROOT / "docs/architecture/p12/w3-operations"
+        escalation_id = next(
+            p.name.split(".")[0]
+            for p in root.glob("*.escalation.json"))
+        payload = json.loads(
+            (root / f"{escalation_id}.escalation.json").read_text())
+        self.assertNotRegex(payload["subject"], r"delegation [0-9a-f]{16}")
+        self.assertEqual(
+            resolve(root, root, escalation_id)["status"], JOINED)
 
     def test_verified_is_unreachable_in_the_ratified_vocabulary(self):
         result = {r.state: r for r in fail.verify()}["VERIFIED"]

@@ -37,7 +37,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from native_core.core.agent.definition import AgentDefinition  # noqa: E402
 from tools.agent_instance_registry import AgentInstanceRegistry  # noqa: E402
 from tools.delegation_reconciliation import project  # noqa: E402
-from tools.escalation_register import record_refusals  # noqa: E402
+from tools.p12_governance_escalation_join import join_refusals_to_grants  # noqa: E402
 from tools.plan_to_workflow import compose  # noqa: E402
 from tools.planning import (  # noqa: E402
     AuthorityProvenance, Goal, Plan, PlanStep, PlanningSurface)
@@ -179,10 +179,18 @@ def run(perform, *, coordinate=None, persist: bool = True,
     #
     # `DP-01 §3 W1` lists *"escalation"* among the coordination capabilities, so
     # W1 is if anything the more canonical home of the two.
-    escalations = list(record_refusals(
+    #
+    # `ACT-CC-P12-005`: routed through `join_refusals_to_grants`, the one
+    # wiring this path now shares with `tools/w4_first_run.py` and
+    # `tools/w1_cross_department_run.py` — it calls the unmodified
+    # `record_refusals` internally, then joins each escalation to
+    # `delegation.delegation_id`, the single delegation this whole plan
+    # executes under.
+    escalations = list(join_refusals_to_grants(
         OPERATIONS if persist else None, report.refusals,
         subject=f"plan {plan.key} / delegation {delegation.delegation_id}",
-        authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD)))
+        authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD),
+        delegation_for=lambda refusal: delegation.delegation_id))
 
     evidence = {
         # The Act this *run* happened under, supplied by the caller.

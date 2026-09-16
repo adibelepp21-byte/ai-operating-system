@@ -32,6 +32,7 @@ import json
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Callable, Optional, Tuple
 
 from tools.escalation_register import EscalationRegister
 
@@ -114,3 +115,46 @@ def join_escalation_to_grant(root: Path, register: EscalationRegister,
         joined_at=datetime.now(timezone.utc).isoformat())
     path.write_text(json.dumps(join.to_payload(), indent=2), encoding="utf-8")
     return join
+
+
+def join_refusals_to_grants(root: Optional[Path], refusals, *, subject: str,
+                             authority, delegation_for: Callable
+                             ) -> Tuple[str, ...]:
+    """`ACT-CC-P12-005` — the one wiring path for resident consumption.
+
+    Composes two existing, unmodified functions rather than adding a third
+    way to record a refusal: `tools.escalation_register.record_refusals`
+    (reused exactly as `tools/w4_first_run.py` and the two `tools/w1_*_run.py`
+    paths already call it) writes each escalation, then
+    `join_escalation_to_grant` — this module's own, already-verified writer —
+    joins it to the grant `delegation_for(refusal)` names.
+
+    ``delegation_for`` is the caller's own knowledge of which delegation each
+    refusal was actually raised under. It is **never inferred here** — for a
+    single-delegation call site it is a constant; for a call site that binds
+    one delegation per step (`tools/w1_cross_department_run.py`), it must
+    look up the delegation that governed the specific step the refusal
+    names (`refusal.required`). Supplying the wrong one is a caller defect
+    this function has no way to detect, exactly as before this function
+    existed — it narrows nothing `join_escalation_to_grant`'s own contract
+    already stated.
+
+    Returns exactly what `record_refusals` returns: the escalation ids, in
+    order. If `root` is `None` (the existing `persist=False` convention),
+    nothing is recorded or joined — matching `record_refusals`'s own
+    behaviour, unchanged.
+    """
+    from tools.escalation_register import EscalationRegister, record_refusals
+
+    escalation_ids = record_refusals(root, refusals, subject=subject,
+                                      authority=authority)
+    if not escalation_ids:
+        return escalation_ids
+
+    register = EscalationRegister(root)
+    for escalation_id, refusal in zip(escalation_ids, refusals):
+        join_escalation_to_grant(
+            root, register, escalation_id,
+            delegation_id=delegation_for(refusal),
+            refusal_type=type(refusal).__name__)
+    return escalation_ids

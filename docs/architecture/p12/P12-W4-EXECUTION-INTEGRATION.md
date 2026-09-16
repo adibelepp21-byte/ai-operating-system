@@ -343,6 +343,15 @@ classification: `CONSTRUCTED — BESIDE THE RECORD`.** The one historical
 escalation (`23f315ba9f504272`) is unchanged and gained no join — `§22`
 forbids manufacturing one for a record that never captured it.
 
+**Wired into this file by `ACT-CC-P12-005`, `P12-W3-GOVERNANCE-INTEGRATION.md
+§14`.** `tools/w4_first_run.py` — this file's own real execution path — now
+calls the join, in place of a bare `record_refusals`, and a real run
+(`p12_w3_resident_wiring_proof.py`, isolated from this file's certified
+historical evidence) produced a real refusal, escalation, and structural
+join, independently verified. **Classification unchanged
+(`CONSTRUCTED — BESIDE THE RECORD`); resident consumption added.** The
+historical run this file documents (`23f315ba9f504272`) remains untouched.
+
 ## 14. Remaining W4 frontier
 
 [E] Re-discovered after construction. **No actionable authorized W4 frontier
