@@ -227,6 +227,13 @@ recorded measurements mean, which needs its own reconciliation.
 a refusal joining its grant through parsed prose — remains W3's to close.
 `ACT §44`: do not repair W3 from W2.
 
+**Closed by `ACT-CC-P12-003`,
+[`P12-W3-GOVERNANCE-INTEGRATION.md`](P12-W3-GOVERNANCE-INTEGRATION.md)** —
+from `W3`, not from `W2`, exactly as `§44` required. `escalation.raised`
+still projects as a count here; this W2 surface was not widened. What closed
+is `W4-GAP-008` itself, beside the escalation record it joins.
+**Reclassified: `DEPENDENCY (W3) → CONSTRUCTED (by W3)`.**
+
 ### W2-GAP-008 — W1 dependency
 **DEPENDENCY (W1).** `§9`'s integration graph is W1's, and its edge model lists
 `STATE` as an edge attribute. W1 is a **consumer** of W2, not a duplicate of it.

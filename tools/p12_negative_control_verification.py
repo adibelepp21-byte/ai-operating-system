@@ -416,6 +416,89 @@ def _execution_provenance_writer() -> Tuple[bool, str]:
                   "existing one")
 
 
+def _governance_join_writer() -> Tuple[bool, str]:
+    """The `P12-W3` join writer must refuse an unsanctioned refusal type and
+    refuse to overwrite an existing join.
+
+    Its positive is the real join `p12_w3_governance_escalation.py` left
+    resident. The negatives are the two refusals that keep a written join
+    meaning something: a join claiming a refusal type the register would
+    never have accepted, and a second join overwriting the first.
+    """
+    from tools import p12_governance_escalation_join as join
+    from tools.escalation_register import EscalationRegister
+
+    root = REPO_ROOT / "docs/architecture/p12/w3-operations"
+    escalations = sorted(root.glob("*.escalation.json"))
+    if not escalations:
+        return False, "no P12-W3 escalation is persisted; nothing to falsify"
+    escalation_id = escalations[0].name.split(".")[0]
+    register = EscalationRegister(root)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_root = Path(tmp)
+        (tmp_root / escalations[0].name).write_text(
+            escalations[0].read_text(encoding="utf-8"), encoding="utf-8")
+        tmp_register = EscalationRegister(tmp_root)
+        try:
+            join.join_escalation_to_grant(
+                tmp_root, tmp_register, escalation_id,
+                delegation_id="a" * 16, refusal_type="NotASanctionedRefusal")
+            return False, "an unsanctioned refusal type was joined"
+        except join.GovernanceJoinError:
+            pass
+        join.join_escalation_to_grant(
+            tmp_root, tmp_register, escalation_id,
+            delegation_id="a" * 16, refusal_type="ExecutionRefused")
+        try:
+            join.join_escalation_to_grant(
+                tmp_root, tmp_register, escalation_id,
+                delegation_id="b" * 16, refusal_type="ExecutionRefused")
+            return False, "a second join overwrote the first"
+        except join.GovernanceJoinError:
+            pass
+    return True, ("refuses an unsanctioned refusal type and refuses to "
+                  "overwrite an existing join")
+
+
+def _governance_join_reader() -> Tuple[bool, str]:
+    """The `P12-W3` join reader must report `DANGLING` for a reference that
+    does not resolve.
+
+    Its live answer, over the resident population, is `JOINED`. Unless it can
+    be driven to `DANGLING`, that verdict says nothing — so a copy of the real
+    join is written naming a delegation nobody issued, in a temporary
+    directory, and the reader must refuse it. Nothing persisted is touched.
+    """
+    from tools import p12_governance_join_reader as reader
+
+    root = REPO_ROOT / "docs/architecture/p12/w3-operations"
+    joins = sorted(root.glob("*.governance-join.json"))
+    if not joins:
+        return False, "no P12-W3 join is persisted; nothing to falsify"
+    escalation_id = joins[0].name.split(".")[0]
+
+    live = reader.resolve(root, root, escalation_id)
+    if live["status"] != reader.JOINED:
+        return False, f"the live join is already {live['status']}"
+
+    import json
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_root = Path(tmp)
+        (tmp_root / f"{escalation_id}.escalation.json").write_text(
+            (root / f"{escalation_id}.escalation.json").read_text(
+                encoding="utf-8"), encoding="utf-8")
+        payload = json.loads(joins[0].read_text(encoding="utf-8"))
+        payload["delegation_id"] = "0" * 16
+        (tmp_root / f"{escalation_id}.governance-join.json").write_text(
+            json.dumps(payload), encoding="utf-8")
+        broken = reader.resolve(tmp_root, tmp_root, escalation_id)
+        if broken["status"] == reader.JOINED:
+            return False, "a join naming a delegation nobody issued still joined"
+    return True, ("moves both ways: JOINED on the persisted join, DANGLING on "
+                  "one naming a delegation nobody issued")
+
+
 def _operational_state() -> Tuple[bool, str]:
     """The W2 verifier must report VIOLATED when a property fails.
 
@@ -608,6 +691,10 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _execution_chain),
     ("p12_execution_provenance", "an incomplete manifest is refused",
      _execution_provenance_writer),
+    ("p12_governance_escalation_join", "an unsanctioned refusal type is "
+     "refused", _governance_join_writer),
+    ("p12_governance_join_reader", "a dangling reference is refused",
+     _governance_join_reader),
     ("p12_operational_state_verifier", "a state property can fail",
      _operational_state),
     ("p12_state_verification", "a consumer is recognised", _state_chain),

@@ -89,8 +89,11 @@ class DistinguishedMeansReachableAndTellableApart(unittest.TestCase):
         self.assertEqual(result.status, fail.RAISED_ONLY)
         self.assertIn("no field names which one", result.detail)
 
-    def test_a_refusal_joins_its_grant_only_through_prose(self):
-        """`§34` traceability carried by a spelling, not by a reference."""
+    def test_the_escalation_record_itself_still_carries_no_structured_join(self):
+        """`§34` traceability on the record itself is still carried by a
+        spelling, not by a reference. `EscalationRecord` was not widened —
+        `P12-W3`'s fix (see the class below) lives beside the record, not in
+        it, exactly as `ExecutionManifest` sits beside `TraceRecord`."""
         join = fail.escalation_join()
         self.assertGreater(join["records"], 0)
         self.assertEqual(join["joined_by_structured_field"], 0,
@@ -105,6 +108,31 @@ class DistinguishedMeansReachableAndTellableApart(unittest.TestCase):
         with mock.patch.object(fail, "_escalation_record_fields",
                                return_value=("escalation_id", "refusal_type")):
             self.assertEqual(fail._refused().status, fail.DISTINGUISHED)
+
+
+class GovernanceJoinSurfaceIsMeasuredSeparately(unittest.TestCase):
+    """`P12-W3`: a refusal now also joins its grant through an independently
+    resolvable, beside-the-record reference — a real, persisted instance of
+    it, not a mock. `docs/architecture/p12/w3-operations/` must already carry
+    the run `p12_w3_governance_escalation.py` produced."""
+
+    def test_the_real_p12_w3_run_joins_by_the_new_surface(self):
+        join = fail.escalation_join()
+        self.assertGreaterEqual(join["joined_by_governance_surface"], 1,
+                                "expected the real P12-W3 run "
+                                "(p12_w3_governance_escalation.py) to have "
+                                "left at least one independently-resolvable "
+                                "join on disk")
+
+    def test_the_new_join_does_not_inflate_the_prose_or_structured_counts(self):
+        """The new record's subject was deliberately worded so the old
+        regex does not match it — proof the governance surface, not the
+        prose fallback, is what resolves it."""
+        join = fail.escalation_join()
+        # Exactly the one historical record matches the prose regex; the new
+        # P12-W3 record must not, or this test would not be proving anything.
+        self.assertEqual(join["joined_by_parsed_prose"], 1)
+        self.assertEqual(join["joined_by_structured_field"], 0)
 
     def test_verified_is_unreachable_in_the_ratified_vocabulary(self):
         result = {r.state: r for r in fail.verify()}["VERIFIED"]

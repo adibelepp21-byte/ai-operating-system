@@ -332,6 +332,17 @@ relation is carried by a spelling rather than by a reference.**
 - [C] A conformance control asserts the current values and says in its own
   message that the finding closes if escalation records gain the field.
 
+**Constructed by `ACT-CC-P12-003`,
+[`P12-W3-GOVERNANCE-INTEGRATION.md`](P12-W3-GOVERNANCE-INTEGRATION.md).** Not
+by widening `EscalationRecord` — that boundary above still holds, and the
+control referenced above still reads `joined_by_structured_field == 0`, still
+true. Instead, a `P12-W3` surface joins a real, newly-escalated refusal to its
+grant beside the record, resolved independently and proven not to ride along
+on the existing prose regex (a deliberately non-matching `subject`). **Final
+classification: `CONSTRUCTED — BESIDE THE RECORD`.** The one historical
+escalation (`23f315ba9f504272`) is unchanged and gained no join — `§22`
+forbids manufacturing one for a record that never captured it.
+
 ## 14. Remaining W4 frontier
 
 [E] Re-discovered after construction. **No actionable authorized W4 frontier
