@@ -220,6 +220,21 @@ shape was removed rather than the guard loosened, as before.
   constructing one inside W4 would establish operational authority by engineering
   convention — `STOP-D`.
 
+**Reclassified by `ACT-CC-P12-OA-001`,
+[`P12-OA-001-ACTIVATION-AUTHORITY-DISCOVERY.md`](P12-OA-001-ACTIVATION-AUTHORITY-DISCOVERY.md).**
+Not withdrawn — disclosed. The `STOP-D` reasoning above (technical reachability
+is not authority) stands and was independently re-confirmed. What did not
+survive falsification was the *canonical requirement* citation: `§17, §29 "of
+the Act"` cites `ACT-CC-P12-W4-001`, which has no persisted body anywhere in
+this repository — an identifier without a verifiable decision body. Read
+directly, the Founder's own `§17` (`P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md §17`)
+requires proving the relationship between execution-chain surfaces, which this
+record already does, and says nothing about invocation mechanism; `P12-W6-RUNTIME-AND-WORKFLOW-VERIFICATION.md §A.1`
+had already disclosed, at the point of measurement, that reachability is
+"what `§30` implies without spelling out" — an inference, not canonical text.
+**Final classification: `OA-1 — NOT-A-GAP`.** No activation mechanism is
+required, authorized, or needed for W4, P12-W6, or P12 exit.
+
 ## 8. `§38` Regression
 
 [E] Pre- and post-construction: **no regression.**
@@ -325,7 +340,7 @@ remains.**
 | Item | Classification | Why it stops here |
 |---|---|---|
 | W4-GAP-003 historical executions | OUT OF SCOPE | manifests for them would manufacture history (`§22`) |
-| W4-GAP-007 runtime reachability | BLOCKED | a resident non-manual entry decides *when* AIOS acts — operational authority, `STOP-D` |
+| W4-GAP-007 runtime reachability | **NOT-A-GAP** (`ACT-CC-P12-OA-001`) | canonical requirement citation unsupported; capability not required |
 | W4-GAP-008 refusal join | DEPENDENCY (W3) | `EscalationRecord` is a governance surface; `W4 ≠ W3` (`§30`) |
 
 ## 9. What this does not establish
