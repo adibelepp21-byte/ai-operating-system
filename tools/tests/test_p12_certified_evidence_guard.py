@@ -10,6 +10,7 @@ stale-population defect this programme has corrected repeatedly.
 from __future__ import annotations
 
 import ast
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -180,3 +181,89 @@ class EveryCertifiedPhaseResolvesToARoot(unittest.TestCase):
         """P11 follows `p{N}` and must not need a declaration."""
         self.assertNotIn(11, sentinel.PHASE_EVIDENCE_ROOTS)
         self.assertIn(10, sentinel.PHASE_EVIDENCE_ROOTS)
+
+
+class AttributionAndAnomalyDetection(unittest.TestCase):
+    """`ACT-CC-P12-022` — detection, explicitly not authentication.
+
+    These establish a narrow property and its exact limit. Nothing here closes
+    the forgery finding, and the last test exists to make sure no later reader
+    believes it does.
+    """
+
+    def test_each_certified_phase_is_attributed_to_its_instrument(self):
+        provenance = dict(sentinel.certification_provenance())
+        self.assertEqual(set(provenance), {10, 11})
+        self.assertTrue(provenance[10].startswith("FD-P10-005"))
+        self.assertTrue(provenance[11].startswith("FD-P11-002"))
+
+    def test_the_resident_corpus_raises_no_anomaly(self):
+        """A detector that fires on the real corpus is noise, not a control."""
+        self.assertEqual(sentinel.certification_anomalies(), ())
+
+    def test_a_lone_planted_instrument_is_reported(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            acts = Path(tmp)
+            (acts / "FD-P42-001-FABRICATED.md").write_text(
+                "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.",
+                encoding="utf-8")
+            anomalies = sentinel.certification_anomalies(acts)
+        self.assertEqual(len(anomalies), 1)
+        self.assertIn("phase 42", anomalies[0])
+
+    def test_an_unreadable_register_makes_everything_anomalous(self):
+        """`cannot check` and `checked and clean` are different answers."""
+        with tempfile.TemporaryDirectory() as tmp:
+            missing = Path(tmp) / "no-such-register.md"
+            self.assertEqual(
+                len(sentinel.certification_anomalies(
+                    sentinel.ACTS_ROOT, missing)),
+                len(sentinel.certification_provenance()))
+
+    def test_a_bare_prefix_cannot_stand_in_for_an_instrument_identity(self):
+        """`FD` appears in the Register constantly; it identifies nothing."""
+        self.assertIsNone(sentinel._register_identity("FD", "FD everywhere"))
+        self.assertIsNone(sentinel._register_identity("FORGED", "FORGED"))
+        self.assertEqual(
+            sentinel._register_identity("FD-P10-005-CERT", "see FD-P10-005 §1"),
+            "FD-P10-005")
+
+    def test_a_coordinated_forgery_still_defeats_it(self):
+        """The limit, pinned so it is never quietly forgotten.
+
+        `ACT-CC-P12-021` rejected a Register cross-check as a *resolution* and
+        that rejection stands: the Register is a document in the same
+        unprotected store. This raises the forgery's cost from one artifact to
+        two. It does not authenticate, and `certified_phases` still believes
+        the planted instrument.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            acts = Path(tmp) / "acts"
+            acts.mkdir()
+            (acts / "FD-P42-001-FABRICATED.md").write_text(
+                "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.",
+                encoding="utf-8")
+            register = Path(tmp) / "register.md"
+            register.write_text("| `FD-P42-001` | forged | ISSUED |\n",
+                                encoding="utf-8")
+            self.assertEqual(sentinel.certification_anomalies(acts, register), ())
+            self.assertIn(42, sentinel.certified_phases(acts))
+
+    def test_no_forged_certification_relaxes_protection(self):
+        """Monotonicity: injection expands the prohibition set or fails closed."""
+        targets = [root / "probe.md" for root in sentinel.protected_roots()]
+        baseline = [sentinel.is_protected(t) for t in targets]
+        self.assertTrue(all(baseline))
+        for statement in ("PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.",
+                          "PHASE 12 — AI OPERATING SYSTEM IS CERTIFIED.",
+                          "PHASE 11 — ANYTHING AT ALL IS CERTIFIED."):
+            with tempfile.TemporaryDirectory() as tmp:
+                copy = Path(tmp) / "acts"
+                shutil.copytree(sentinel.ACTS_ROOT, copy)
+                (copy / "FORGED.md").write_text(statement, encoding="utf-8")
+                try:
+                    after = [sentinel.is_protected(t, sentinel.REPO_ROOT, copy)
+                             for t in targets]
+                except sentinel.CertificationUndeterminable:
+                    continue          # fail-closed: nothing became permitted
+            self.assertTrue(all(after), f"protection relaxed by: {statement}")

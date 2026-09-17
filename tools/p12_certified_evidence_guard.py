@@ -45,6 +45,7 @@ from typing import FrozenSet, Optional, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 ACTS_ROOT = REPO_ROOT / "docs/governance/acts"
+REGISTER = REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
 
 #: A certification *statement*, as the resident instruments actually phrase it:
 #: `FD-P11-002 §1` — "PHASE 11 — AUTONOMOUS ORGANIZATION IS CERTIFIED";
@@ -93,6 +94,84 @@ def certified_phases(acts_root: Path = ACTS_ROOT) -> FrozenSet[int]:
                 if group:
                     phases.add(int(group))
     return frozenset(phases)
+
+
+def certification_provenance(
+    acts_root: Path = ACTS_ROOT
+) -> Tuple[Tuple[int, str], ...]:
+    """Which instrument each certification statement was actually read from.
+
+    `certified_phases` answers *what* is certified and discards *where it read
+    that*. Under `ACT-CC-P12-022` the discarding is the problem: an auditor
+    handed `frozenset({10, 11, 42})` cannot see that `42` came from a file
+    nobody issued, and neither can any other reader in this repository.
+
+    This establishes no authority and changes no authorization. It reports
+    attribution — `PR-3`, detect don't decide.
+    """
+    found = []
+    for path in sorted(acts_root.glob("*.md")):
+        body = path.read_text(encoding="utf-8")
+        for match in _CERTIFIES.finditer(body):
+            for group in match.groups():
+                if group:
+                    found.append((int(group), path.name))
+    return tuple(sorted(set(found)))
+
+
+def _register_identity(stem: str, register_text: str) -> Optional[str]:
+    """The longest prefix of a filename the Register actually records.
+
+    No identifier grammar is assumed, because assuming one is how a guard comes
+    to believe a filename. Prefixes are tried longest-first and the first one
+    the Register's own text contains is returned. A match must carry a digit and
+    span at least two tokens, so that a bare `FD` — which the Register contains
+    hundreds of times — can never stand in for an instrument identity.
+    """
+    tokens = stem.split("-")
+    for length in range(len(tokens), 1, -1):
+        candidate = "-".join(tokens[:length])
+        if any(c.isdigit() for c in candidate) and candidate in register_text:
+            return candidate
+    return None
+
+
+def certification_anomalies(
+    acts_root: Path = ACTS_ROOT, register: Path = REGISTER
+) -> Tuple[str, ...]:
+    """Certification statements whose instrument the Register does not record.
+
+    **This is detection, not authentication, and the difference is the whole
+    point.** `ACT-CC-P12-021` rejected a Register cross-check as a *resolution*
+    of the forgery finding, and that rejection stands: the Register is a
+    document in the same unprotected store, so anyone who can plant a
+    certifying instrument can plant a row describing it. Nothing here
+    authenticates anything.
+
+    What it does is make a **lone** forgery visible, which it previously was
+    not. A planted document that no governance record mentions is now reported;
+    before, it was silently believed. That raises the cost of the forgery from
+    one consistent artifact to two, and it gives an auditor a name to look at.
+    It does not close `§6.8` or `§6.9`, and this module does not claim it does
+    — `certified_phases` returns exactly what it returned before.
+
+    Fails closed: an unreadable Register makes every certification anomalous
+    rather than none, because *"cannot check"* and *"checked and clean"* are
+    different answers.
+    """
+    try:
+        register_text = register.read_text(encoding="utf-8")
+    except OSError:
+        register_text = ""
+    anomalies = []
+    for phase, filename in certification_provenance(acts_root):
+        identity = _register_identity(Path(filename).stem, register_text)
+        if identity is None:
+            anomalies.append(
+                f"phase {phase} is certified by {filename}, which no entry in "
+                f"{register.name} records"
+            )
+    return tuple(anomalies)
 
 
 def protected_roots(

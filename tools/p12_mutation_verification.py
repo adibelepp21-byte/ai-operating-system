@@ -190,15 +190,28 @@ def _forge_decision() -> Tuple[bool, bool, str]:
     """
     from tools import p12_certified_evidence_guard as sentinel
     with tempfile.TemporaryDirectory() as tmp:
-        acts = Path(tmp)
-        (acts / "forged.md").write_text(
+        acts = Path(tmp) / "acts"
+        acts.mkdir()
+        (acts / "FD-P42-001-FABRICATED-CERTIFICATION.md").write_text(
             "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
-        phases = sentinel.certified_phases(acts)
-        if 42 in phases:
-            return True, False, (
-                "a planted certification statement was accepted; the guard reads "
-                "bodies and cannot distinguish an issued instrument from a forged one")
-        return True, True, "forged certification statement rejected"
+        # `ACT-CC-P12-022`: the adversary is coordinated, because a forger with
+        # write access to the docs tree has write access to all of it. Planting
+        # only the instrument tests an attacker who forgets the paperwork, and
+        # a control calibrated against a careless attacker reports a strength
+        # the system does not have. The matching Register row is planted too.
+        register = Path(tmp) / "register.md"
+        register.write_text(
+            "| `FD-P42-001` | Certification of Phase 42 | ISSUED |\n",
+            encoding="utf-8")
+
+        if 42 not in sentinel.certified_phases(acts):
+            return True, True, "forged certification statement rejected"
+        if sentinel.certification_anomalies(acts, register):
+            return True, True, "forged certification reported as an anomaly"
+        return True, False, (
+            "a coordinated forgery — instrument plus matching Register row — "
+            "was accepted and raised no anomaly; the guard reads bodies and "
+            "cannot distinguish an issued instrument from one that says so")
 
 
 def _duplicate_delegation() -> Tuple[bool, bool, str]:

@@ -330,3 +330,24 @@ falsified rather than asserted.
 
 **`P12 COMPLETE = NO` is unchanged**, on `§6` conditions 8, 9 and 11. Full
 analysis: `P12-021-RETURN-PACKAGE.md`.
+
+---
+
+# CORRECTION under `ACT-CC-P12-022`
+
+> **Appended, not rewritten.** A third row of `§7`'s completion table was wrong,
+> and this one made the picture look better than it was.
+
+| Located | What it says | What is true |
+|---|---|---|
+| `§7` row 10 | *"regression integrity holds — **YES** — 10 HELD · 0 REGRESSED"* | `p12_regression_verification` carries **eleven** classes. The eleventh, `quality`, is **UNANCHORED**, and the module prints *"An UNANCHORED class has not held. It has not been examined."* on every run. It was added on 2026-09-12 (`54add30`, titled *"…and one class was never looked at"*), five days before this table. The `YES` rested on a count that dropped it. **`§6.10` is `NO`.** |
+
+**Not anchorable retrospectively.** There is no resident linter, formatter,
+coverage threshold or CI workflow, so there is no prior quality measurement to
+have regressed from. A gate built now would measure the future, not the past;
+reporting it as regression integrity would manufacture evidence. Classified
+**STRUCTURAL — NOT ANCHORABLE**, outside P12 completion scope, and added to the
+blocker list as `B3`.
+
+`P12 COMPLETE = NO` is unchanged; the blocking set is now `§6` conditions 8, 9,
+10 and 11 (and 7, partial). Full analysis: `P12-022-RETURN-PACKAGE.md`.

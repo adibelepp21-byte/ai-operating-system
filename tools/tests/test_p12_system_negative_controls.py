@@ -158,3 +158,50 @@ class WhatThisSuiteDoesNotEstablish(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SupplementaryControlsNeverInflateSection49(unittest.TestCase):
+    """`ACT-CC-P12-022` — added beside `§49`, never inside it.
+
+    `§6.8` asks whether `§49`'s thirteen hold. Two controls were added this Act
+    and both pass; if they had been appended to `CONTROLS`, `§6.8` would have
+    read `14/15` and looked like progress it is not.
+    """
+
+    def test_section_49_is_still_exactly_thirteen(self):
+        self.assertEqual(len(neg.CONTROLS), 13)
+        self.assertEqual([name for name, _ in neg.CONTROLS],
+                         list(neg.NEGATIVE_CONTROLS))
+
+    def test_no_supplementary_control_is_a_section_49_control(self):
+        self.assertFalse(
+            {name for name, _ in neg.SUPPLEMENTARY_CONTROLS}
+            & set(neg.NEGATIVE_CONTROLS))
+
+    def test_the_headline_numbers_count_only_section_49(self):
+        summary = neg.summary()
+        self.assertEqual(summary["controls"], 13)
+        self.assertEqual(summary["refused"], 12)
+        self.assertEqual(summary["accepted"], 1)
+        self.assertEqual(summary["not_refused"], ("false certification",))
+
+    def test_the_supplementary_results_are_reported_under_their_own_keys(self):
+        summary = neg.summary()
+        self.assertEqual(summary["supplementary"], 2)
+        self.assertEqual(summary["supplementary_refused"], 2)
+        self.assertEqual(summary["supplementary_not_refused"], ())
+
+    def test_a_lone_planted_instrument_is_reported(self):
+        attempted, refused, detail = neg._unregistered_certification()
+        self.assertTrue(attempted and refused)
+        self.assertIn("phase 42", detail)
+
+    def test_no_forged_certification_permits_a_refused_write(self):
+        attempted, refused, detail = neg._forged_certification_permitting_a_write()
+        self.assertTrue(attempted and refused)
+        self.assertIn("expands the prohibition set or fails closed", detail)
+
+    def test_false_certification_is_still_accepted_beside_them(self):
+        """The limit, pinned. Neither supplementary control closes `§6.8`."""
+        results = {r.control: r.status for r in neg.verify()}
+        self.assertEqual(results["false certification"], neg.ACCEPTED)
