@@ -1195,6 +1195,61 @@ def _e12_source_discovery() -> Tuple[bool, str]:
                   "section that is a different section")
 
 
+def _e12_measurement() -> Tuple[bool, str]:
+    """The `E12-01`…`E12-05` measurement must be able to report NOT SATISFIED.
+
+    Its live answer is five of five `SATISFIED`, which is what a module
+    returning constants would print — and it reached that state only after
+    three defects in its own first run were corrected, two of which produced a
+    **false FAIL**. The control drives it both ways: a clause whose evidence is
+    removed must fail, a clause whose evidence source raises must report
+    `UNKNOWN` rather than `NOT SATISFIED`, and the decision record must remain
+    load-bearing.
+    """
+    import tempfile
+    from pathlib import Path
+    from unittest import mock
+
+    from tools import p12_e12_measurement as em
+
+    live = em.determination()
+    if live["satisfied"] != len(em.CRITERIA):
+        return False, (f"the live corpus satisfies {live['satisfied']} of "
+                       f"{len(em.CRITERIA)}; this control assumes all five and "
+                       "must be re-grounded")
+
+    # Evidence removed → NOT SATISFIED.
+    from tools import p12_execution_provenance as provenance
+    with mock.patch.object(provenance, "manifests", return_value=()):
+        demoted = {r.criterion: r.verdict for r in em.measure()}
+    if demoted.get("E12-04") != em.NOT_SATISFIED:
+        return False, (f"an absent execution manifest still reported "
+                       f"{demoted.get('E12-04')}")
+
+    # Evidence unreadable → UNKNOWN, never NOT SATISFIED. `UNKNOWN != FALSE`.
+    def _raise(root):
+        raise RuntimeError("evidence source unavailable")
+    with mock.patch.dict(em._CLAUSES, {"E12-01": _raise}):
+        unreadable = {r.criterion: r.verdict for r in em.measure()}
+    if unreadable.get("E12-01") != em.UNKNOWN:
+        return False, (f"an unreadable evidence source reported "
+                       f"{unreadable.get('E12-01')} rather than UNKNOWN")
+
+    # The decision record is the only source of a boundary.
+    with tempfile.TemporaryDirectory() as tmp:
+        try:
+            em.measure(Path(tmp))
+        except em.AcceptanceBoundaryUnavailable:
+            pass
+        else:
+            return False, "a world with no decision record still measured"
+
+    return True, ("moves both ways: 5 of 5 SATISFIED live; NOT SATISFIED when "
+                  "an execution manifest is removed; UNKNOWN (not NOT "
+                  "SATISFIED) when an evidence source raises; and no boundary "
+                  "at all without the decision record")
+
+
 CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_runtime_observation", "cannot answer what is running",
      _runtime_observation),
@@ -1253,6 +1308,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _e12_criteria),
     ("p12_e12_source_discovery", "an unsupported citation is refused",
      _e12_source_discovery),
+    ("p12_e12_measurement", "an unearned SATISFIED is refused",
+     _e12_measurement),
     ("governance_index", "a source is stale", _governance_index),
 )
 

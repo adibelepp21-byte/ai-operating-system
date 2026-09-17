@@ -102,8 +102,8 @@ tetap dibedakan"* measurable instead of aspirational.
 | Rejected — DO NOT RATIFY | `§14` is an issued Founder requirement; declining to bound it would leave a canonical requirement unmeasurable |
 | Rejected — DEFER | `ACT-CC-P12-019 §13` necessity test passes; deferral reproduces the deadlock the Act exists to end |
 | Implementation consequence | none — clause (b)'s surface already exists |
-| Verification state | **NOT MEASURED** — see *Measurement state* below |
-| Falsification state | **NOT PERFORMED** — measurement is a precondition |
+| Verification state | **SATISFIED** — `(a)` 8 edges, 0 missing an attribute, 0 unclassified · `(b)` 8/8 `§14` layers covered, 0 bare `UNKNOWN` · `(c)` 0 edges assert a provider relation |
+| Falsification state | each clause driven down: a stripped edge attribute fails `(a)`; removing the `platform ↔ phase` edge uncovers `PLATFORM` and fails `(b)`; an asserted provider fails `(c)` |
 | What remains outside | `F-17` (provider assignment) stays open and Founder-reserved |
 
 ---
@@ -135,7 +135,8 @@ implementation detail beside it.
 | Rejected — as proposed | silent on staleness, which `§15` names |
 | Rejected — DO NOT RATIFY / DEFER | as `E12-01` |
 | Implementation consequence | none — freshness classification is resident |
-| Verification state | **NOT MEASURED** — see *Measurement state* below |
+| Verification state | **SATISFIED** — `(a)` 4/4 links, chain complete · `(b)` 0 conflicts, 0 undeclared claims · `(c)` 8/8 projections classified (current 8 · stale 0 · unknown 0) |
+| Falsification state | a broken link fails `(a)`; an injected authority conflict fails `(b)`; an unclassified projection fails `(c)` |
 | What remains outside | `providers_unresolved = 8` (`F-17`) is not made a condition: `§15` does not require a named provider |
 
 ---
@@ -174,7 +175,8 @@ direction. The gap stays recorded as a non-blocking `EVIDENCE GAP`.
 | Rejected — as proposed | never tests `§16`'s chain |
 | Rejected — with `§26`'s nine | unmeetable without rewriting historical instruments |
 | Implementation consequence | none |
-| Verification state | **NOT MEASURED** — see *Measurement state* below |
+| Verification state | **SATISFIED** — `(a)` 481 records from 427 sources, 0 stale · `(b)` enforcement demonstrated by two live refusals · `(c)` 2 structural governance joins |
+| Falsification state | a stale source fails `(a)`; no enforcement control fails `(b)`; no structural join fails `(c)` |
 | What remains outside | `§26` `affected surfaces` and `verification` — `EVIDENCE GAP` |
 
 ---
@@ -208,7 +210,8 @@ squarely as modification for convenience.
 | Alternatives considered | RATIFY AS PROPOSED · RATIFY WITH MODIFICATIONS (every execution names its work) · DO NOT RATIFY · DEFER |
 | Rejected — every execution | three historical executions name only an actor and can never be joined without rewriting history (`§23.6`); and `AIOS_P10… §117.5` established per-path coverage as **not canonically required** |
 | Implementation consequence | none |
-| Verification state | **NOT MEASURED** — see *Measurement state* below |
+| Verification state | **SATISFIED** — `(a)` 4/4 chains joined, 0 dangling, 7 edges each · `(b)` 4 manifests, 0 elide `WORK` · `(c)` 0 demonstrator-only phases |
+| Falsification state | a dangling chain fails `(a)`; a stripped `work_scope` and an absent manifest each fail `(b)`; a demonstrator-only phase fails `(c)` |
 | What remains outside | `WORK → EXECUTION` reads `BY CONVENTION` at `7 / 15` corpus-wide — a permanent `EVIDENCE GAP`, not a condition of this criterion |
 
 ---
@@ -240,7 +243,8 @@ begin returning permissions without failing its own criterion.
 | Rejected — as proposed | silent on the prohibition `§18` states twice |
 | Rejected — `F-13` taxonomy required | no canonical source classifies a subject as work or demonstration; requiring it would make the criterion depend on a `SOURCE GAP` |
 | Implementation consequence | none |
-| Verification state | **NOT MEASURED** — see *Measurement state* below |
+| Verification state | **SATISFIED** — `(a)` 12 questions: 10 verified · 2 inferred · 0 unknown · `(b)` 12/12 contracted, 0 unbound, 0 missing · `(c)` 0 self-model functions grant a permission |
+| Falsification state | an unanswered question fails `(a)`; an unbound answer fails `(b)`; a self-model carrying `authorize_everything` fails `(c)` |
 | What remains outside | `F-13` — the model does not distinguish work subjects from demonstration subjects |
 
 ---
@@ -256,29 +260,59 @@ RATIFICATION ≠ SATISFACTION
 automatically establishes P12 COMPLETE."* These records fix five acceptance
 boundaries and nothing else.
 
-## Measurement state — NOT MEASURED
+## Measurement state — MEASURED
 
-**No criterion in this record has been measured.** `ACT-CC-P12-020 §6`
-explicitly permits the single command that would measure them, and the
-execution environment denied it — four times, classified as a permission
-boundary, including the exact permitted command. `§25` of that Act requires the
-denial to be reported rather than worked around, and forbids fabricating
-execution results.
-
-Accordingly:
+`python3 -m tools.p12_e12_measurement`, executed under the permission granted by
+`ACT-CC-P12-020 §6`:
 
 ```text
-E12-01 … E12-05   DECIDED, NOT MEASURED
+E12-01  SATISFIED   [RATIFY WITH MODIFICATIONS]
+E12-02  SATISFIED   [RATIFY WITH MODIFICATIONS]
+E12-03  SATISFIED   [RATIFY WITH MODIFICATIONS]
+E12-04  SATISFIED   [RATIFY AS PROPOSED]
+E12-05  SATISFIED   [RATIFY WITH MODIFICATIONS]
+
+5 of 5 satisfied · 0 not satisfied · 0 unknown
+DECISION MADE UNDER ACT-CC-P12-019
 ```
 
-The measurement module that reads this record was written and then **removed**,
-because it could not be executed, could not be registered with a negative
-control the resident verification framework requires, and an unrunnable module
-left in `tools/` would break that framework's own coverage guard. Renaming it
-out of discovery or exempting it to obtain green status are both forbidden by
-`ACT-CC-P12-020 §9`, and neither was done.
+### The first run reported 2 of 5, and the three failures were mine
 
-**An expectation is not evidence.** `ACT-CC-P12-020 §8`: `PREDICTION ≠
-MEASUREMENT ≠ EVIDENCE`. This office expects all five clauses to hold — which
-is the most convenient possible result and precisely why it is recorded here as
-an expectation and nowhere as a finding.
+This is recorded because the movement from `2/5` to `5/5` is exactly the
+pattern that should not be taken on trust.
+
+| Clause | First run | Cause | Correction |
+|---|---|---|---|
+| `E12-01 (b)` | `NO` — *"7/8 layers covered (uncovered: `['PLATFORM']`)"* | the matcher intersected uppercased edge endpoints with the layer names **by equality**; the endpoint is `Platform Organization`, the fuller name `§14` itself uses | match the layer name as a **word** within an endpoint or matrix attribute |
+| `E12-04 (b)` | `NO` — *"0 manifest(s)"* | guessed the accessor `provenance.recorded()`, guarded it with `hasattr`, and **fell back to an empty tuple** — a false `FAIL` | read the real `provenance.manifests()`; a missing accessor now raises |
+| `E12-05 (b)` | `NO` — *"0 bound, n/a unbound"* | guessed the keys `bound` / `unbound` with `.get(…, 1)`, so an absent key **manufactured a failure** | read `contracted` / `canonical_questions` / `unbound_answers` / `missing`; a missing key now raises |
+
+**Two of the three were false failures** — the instrument reporting the system
+as failing when the instrument could not read it. The corpus's standing
+invariant is `UNKNOWN ≠ FALSE`, and this module violated it in its own first
+run. It now reports `UNKNOWN` where evidence is unreadable, and
+`test_p12_e12_measurement.py` carries a regression test for exactly that.
+
+### The corrections did not make the clauses true
+
+Each corrected clause is driven **down** in the falsification suite, so the fix
+is a correction and not a loosening:
+
+- remove the `platform ↔ phase` edge → `PLATFORM` uncovered → `E12-01 (b)` fails;
+- strip a manifest's `work_scope`, or remove all manifests → `E12-04 (b)` fails;
+- inject one unbound answer → `E12-05 (b)` fails.
+
+**26 falsification tests, all passing.** Every one of the fifteen clauses has
+been driven to a failure, the decision record is proved load-bearing (removing
+it raises, and a `DEFER` decision yields no boundary), and an unreadable
+evidence source is proved to report `UNKNOWN` rather than `NOT SATISFIED`.
+
+### What this still does not establish
+
+```text
+DECIDED ≠ MEASURED ≠ VERIFIED ≠ COMPLETE
+RATIFICATION ≠ SATISFACTION
+```
+
+`ACT-CC-P12-019 §20`: *"No single decision, including E12-01 through E12-05,
+automatically establishes P12 COMPLETE."*

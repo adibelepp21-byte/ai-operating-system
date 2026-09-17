@@ -60,10 +60,17 @@ class AConformanceSuiteIsNotAConsumer(unittest.TestCase):
         `ACT-CC-P12-008` did the first half — no consumer was wired, a
         measurement defect was corrected — and this is the second half. The
         assertion is still exact, so a consumer appearing or disappearing still
-        fails here."""
+        fails here.
+
+        `ACT-CC-P12-019` added the third: `p12_e12_measurement` reads the
+        surface in its `E12-02` clause. It was **registered with the
+        independent consumer verifier** at the same time, so the consumption is
+        observed rather than merely claimed — a static importer the dynamic
+        harness cannot drive would otherwise read as a permanent DISAGREES."""
         self.assertEqual(
             sv.consumers_of("tools.p12_operational_state"),
-            ("tools/p12_negative_control_verification.py",
+            ("tools/p12_e12_measurement.py",
+             "tools/p12_negative_control_verification.py",
              "tools/p12_self_model_contract.py"))
 
     def test_an_importer_that_never_reads_is_not_counted(self):

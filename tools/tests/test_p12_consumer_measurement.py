@@ -74,7 +74,15 @@ class NC01ThePreviouslyMissedImportShape(unittest.TestCase):
         self.assertNotIn("surface", old_shape[0])
 
     def test_the_live_surface_is_imported_through_that_shape(self):
-        self.assertEqual(3, len(sv.importers_of(SURFACE)))
+        """Pinned exactly, in both directions.
+
+        Three importers until `ACT-CC-P12-019` added `p12_e12_measurement`,
+        which reads the surface in its `E12-02` clause. The count moved because
+        a real importer appeared, not because the shape recogniser changed —
+        every one is still bound through `from tools import … as …`, which is
+        the form the superseded implementation could not see.
+        """
+        self.assertEqual(4, len(sv.importers_of(SURFACE)))
 
 
 class NC02AnIrrelevantTextualReference(unittest.TestCase):

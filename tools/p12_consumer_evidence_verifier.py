@@ -51,6 +51,12 @@ CANDIDATES: Tuple[Tuple[str, str], ...] = (
      "projection_freshness_is_not_source_freshness"),
     ("tools.p12_negative_control_verification", "_operational_state_projection"),
     ("tools.p12_mutation_verification", "_alter_state_authority"),
+    # Added by `ACT-CC-P12-019`'s measurement, which reads the surface in its
+    # `E12-02` clause. Registered so the consumption is **observable** rather
+    # than merely claimed: a new static importer that this harness cannot drive
+    # would otherwise show up as a permanent DISAGREES, which would say more
+    # about the harness's reach than about the consumer.
+    ("tools.p12_e12_measurement", "_e12_02"),
 )
 
 #: The surface's projection API, named here independently of the measurement
