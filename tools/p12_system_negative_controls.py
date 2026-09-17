@@ -283,6 +283,14 @@ def _false_completion() -> Tuple[bool, bool, str]:
 
 
 def _false_certification() -> Tuple[bool, bool, str]:
+    """`§6.8`'s one ACCEPTED control and `§6.9`'s one MISSED mutation are **one
+    behaviour**, deliberately not re-implemented so they can never diverge.
+
+    Recorded under `ACT-CC-P12-021 §18`: a Return Package that lists them as two
+    blockers is counting the same finding twice. Closing `forge decision` closes
+    this in the same commit, and nothing can close one without the other.
+    `_forge_decision` carries the classification and the falsified repairs.
+    """
     from tools.p12_mutation_verification import _forge_decision
     return _forge_decision()
 

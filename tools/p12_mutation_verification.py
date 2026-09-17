@@ -164,7 +164,30 @@ def _alter_frozen_boundary() -> Tuple[bool, bool, str]:
 
 
 def _forge_decision() -> Tuple[bool, bool, str]:
-    """Plant a document asserting a certification that no Founder issued."""
+    """Plant a document asserting a certification that no Founder issued.
+
+    **The temporary root is not why this succeeds.** Classified under
+    `ACT-CC-P12-021` after both candidate repairs were driven rather than
+    argued: pinning `certified_phases` to `ACTS_ROOT` does not close it — the
+    forgery is accepted just as readily when planted inside a faithful copy of
+    the resident acts root — and requiring the authentication block a genuine
+    Founder instrument carries does not close it either, because the block is
+    body text and a forger writes body text. Both are pinned as tests.
+
+    The root cause is `F-G1`'s, exactly: a reader that derives authority from
+    the contents of a store no access control protects. `F-G1` was closed for
+    Governance by an **in-memory provenance index that only a validated
+    `record_decision` populates** — trust that is deliberately *process-scoped*,
+    because *"a persistent trust anchor is exactly what Identity/Auth
+    reserves"*. This guard cannot take that shape: it runs in a fresh process
+    and reads instruments no process here witnessed being issued, so the
+    equivalent index would have to be persistent and cross-process.
+
+    `Freeze §10` reserves that anchor to Identity/Authentication, and
+    `AIOS_PHASE3_300 §104` states the consequence plainly — introducing one now
+    is *"out of scope and forbidden"*. So this is not an unfixed defect awaiting
+    effort. It is a boundary, and the honest report is `MISSED`.
+    """
     from tools import p12_certified_evidence_guard as sentinel
     with tempfile.TemporaryDirectory() as tmp:
         acts = Path(tmp)
@@ -181,50 +204,68 @@ def _forge_decision() -> Tuple[bool, bool, str]:
 def _duplicate_delegation() -> Tuple[bool, bool, str]:
     """Two ACTIVE grants conveying one capability to one recipient instance.
 
-    `reconcile` is pure with respect to disk when both inputs are supplied, so
-    the mutation is applied to the inputs themselves rather than to a synthetic
-    directory the loaders would read differently from the real one.
+    **This probe asked the wrong component until `ACT-CC-P12-021`.** It drove
+    `delegation_reconciliation.reconcile`, whose `DEFECT_KINDS` are about the
+    ledger↔projection relationship — unrepresented grants, stale claims,
+    provenance mismatch. Grant **accumulation** is not among them and never
+    was. The component that owns it is `w4_continuity`, whose
+    `continuation_conditions` raises `MORE THAN ONE LIVE GRANT FOR ONE
+    INSTANCE`, and whose semantics were deliberately re-anchored on the
+    recipient instance in P11 after a `len(active) > 1` reading fired a false
+    positive against the legitimate cross-Department state.
 
-    Two shapes are attempted, because they are not the same mutation and the
-    system does not treat them the same way. The first — one grant projected
-    twice — is a duplicated *representation*. The second — two independent
-    grants of the same capability to the same recipient — is a duplicated
-    *delegation*, which is what `§50` names. The first is exercised here as the
-    control: it proves the detector under test can fire at all, so a null result
-    on the second cannot be read as the suite failing to run.
+    So the previous `MISSED` was a **test-oracle defect**, not a system defect
+    and not a source gap: the system detects this and the probe was looking
+    somewhere else. Corrected by driving the real detector, both ways — the
+    same instance holding two live grants must fire, and two instances holding
+    one each must not, because the second is the legitimate state the false
+    positive once blocked.
     """
-    from tools.delegation_reconciliation import (
-        ACTIVE, LedgerGrant, Projection, reconcile)
+    import json
 
-    def grant(key: str) -> LedgerGrant:
-        return LedgerGrant(
-            delegation_id=key, lifecycle=ACTIVE,
-            recipient_instance="mutation-probe-instance-001",
-            capability_scope=("probe",), authority_instrument="FD-P11-001",
-            authority_record=AUTHORIZING_RECORD,
-            accountable_party="mutation-verification", source="synthetic")
+    from tools import w4_continuity as continuity
 
-    def projection(key: str, grant_id: str) -> Projection:
-        return Projection(key=key, record=f"{key}.md", grant_id=grant_id,
-                          role="CURRENT", authorized_scope="probe",
-                          delegated_actor="mutation-probe-instance-001")
+    def _world(tmp: Path, grants) -> Path:
+        root = Path(tmp)
+        (root / "probe.instance.json").write_text(
+            json.dumps({"instance_key": "mutation-probe-instance-001"}),
+            encoding="utf-8")
+        for delegation_id, instance in grants:
+            (root / f"{delegation_id}.delegation.json").write_text(
+                json.dumps({"delegation_id": delegation_id,
+                            "status": "ACTIVE",
+                            "recipient_instance": instance,
+                            "executed_at": "2026-01-01"}), encoding="utf-8")
+        return root
 
-    control = reconcile([projection("w3-a", "g1"), projection("w3-b", "g1")],
-                        {"g1": grant("g1")})["defects"]
-    if not any(kind == "duplicate-representation" for kind, _, _ in control):
+    # The control: two instances holding one grant each is lawful and must not
+    # fire. Without it a detector that fired unconditionally would look correct.
+    with tempfile.TemporaryDirectory() as tmp:
+        lawful = continuity.reconstruct(_world(tmp, [
+            ("g1", "mutation-probe-instance-001"),
+            ("g2", "mutation-probe-instance-002")]))
+    if lawful["duplicate_active"]:
         return True, False, (
-            "the control did not fire: duplicated representation of one grant "
-            "was not reported, so this probe cannot distinguish a missing "
-            "detector from a suite that is not running")
+            "two instances holding one live grant each was reported as "
+            "accumulation — the false positive P11 corrected has returned")
 
-    defects = reconcile([projection("w3-a", "g1"), projection("w3-b", "g2")],
-                        {"g1": grant("g1"), "g2": grant("g2")})["defects"]
-    if defects:
-        return True, True, f"detected: {defects[0][0]}"
-    return True, False, (
-        "two ACTIVE grants of one capability to one recipient produced no "
-        "defect; duplicated representation is detected, duplicated delegation "
-        "is not")
+    # The mutation: one instance, two live grants.
+    with tempfile.TemporaryDirectory() as tmp:
+        mutated = continuity.reconstruct(_world(tmp, [
+            ("g1", "mutation-probe-instance-001"),
+            ("g2", "mutation-probe-instance-001")]))
+    if not mutated["duplicate_active"]:
+        return True, False, (
+            "one instance holding two live grants produced no accumulation "
+            "finding")
+    conditions = [c for c in continuity.continuation_conditions(mutated)
+                  if "MORE THAN ONE LIVE GRANT" in c]
+    if not conditions:
+        return True, False, (
+            "accumulation was computed but no continuation condition reports "
+            "it; a finding a next run never sees is not a detection")
+    return True, True, (
+        f"detected: {conditions[0][:88]}")
 
 
 def _alter_provenance() -> Tuple[bool, bool, str]:

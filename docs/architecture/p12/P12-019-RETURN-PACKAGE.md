@@ -302,3 +302,31 @@ falsifiable; 0 citation errors.
 `ACT-CC-P12-019` remains **ACTIVE**: it terminates on verified `P12 COMPLETE`,
 and `P12` is not complete. It has been exercised for exactly what it was issued
 for — the five E12 decision surfaces — and not extended to anything else.
+
+---
+
+# CORRECTION under `ACT-CC-P12-021`
+
+> **Appended, not rewritten.** Everything above is the record as issued. Two of
+> its classifications were wrong, and the way to say so is to say so here.
+
+| Located | What it says | What is true |
+|---|---|---|
+| `§7` blocker table, `duplicate delegation` row | *"no canonical source makes it a violation — the resident model expressly permits an instance to hold more than one live grant (`DP-02 §11.10`)"* | **`DP-02 §11` is `REQUIRED POST-DECISION ACTION`; item 10 reads "Continue only where existing authority permits."** It says nothing about grants or multiplicity. A canonical requirement *does* exist — `w4_continuity` (`ACT-CC-P11-009 §34`) raises `MORE THAN ONE LIVE GRANT FOR ONE INSTANCE`, certified P10 `§94.3` records supersession as the behaviour that occurred, and the resident P12 W4 evidence record already contains a **fired** instance. **`TEST-ORACLE DEFECT`, remediated; `§6.9` is now `9/10`.** |
+| `§7` blocker table + `D/E` row, `§6.11` | *"`ESC-C7-01`, the defining source, does not exist"* | **`ESC-C7-01` is resident**, at `AIOS_P10_AUTONOMOUS_EXECUTION_VERIFICATION_v1.0 §21.3`, with a full `A`–`J` body. It is a **residency** escalation over PD-03/PD-04 corpora that *"exist, are complete, and are not resident"* — not a missing interface definition. `F-18`'s interface existence is **undetermined, not absent**. |
+| `§7`, *"three of the four are the same finding"* | counts `§6.8` and `§6.9 forge decision` as two blockers | They are the **same code**: `_false_certification` returns `_forge_decision()`. Two rows, one behaviour. |
+
+**The verdicts stand; two of the reasons do not.** `F-18` is still
+`NOT RESOLVED`, `§6.11` is still **NO**, and `§11` still forbids manufacturing
+an interface — nothing in the correction above makes any of that closable. What
+changes is what the Founder is told about *why*: not *"a source we need does not
+exist"* but *"a verified 5.2 MB corpus exists, is complete, sits in a session
+path, and needs one of three named decisions at `ESC-C7-01 §G`."*
+
+**What was right and stands:** `§6.8` / `forge decision` as a `Freeze §10`
+Identity/Authentication dependency. `ACT-CC-P12-021` drove four candidate
+resolutions and rejected all four, two empirically; the classification is now
+falsified rather than asserted.
+
+**`P12 COMPLETE = NO` is unchanged**, on `§6` conditions 8, 9 and 11. Full
+analysis: `P12-021-RETURN-PACKAGE.md`.

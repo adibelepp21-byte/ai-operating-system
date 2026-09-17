@@ -561,3 +561,26 @@ COMPLETION BLOCKER   ≠ CONSTRUCTION FRONTIER
 NO ACTIONABLE FRONTIER ≠ AUTOMATIC COMPLETION
 NATIVE CORE = 11
 ```
+
+---
+
+# CORRECTION under `ACT-CC-P12-021`
+
+> **Appended, not rewritten.** The record above stands as issued; two of its
+> classifications do not.
+
+| Located | What it says | What is true |
+|---|---|---|
+| line 300 row, line 349 | `duplicate delegation` is a **SOURCE GAP** — *"the resident model **permits** an instance to hold more than one live grant (`DP-02 §11.10`)"* | **`DP-02 §11` is `REQUIRED POST-DECISION ACTION`; item 10 reads "Continue only where existing authority permits."** The citation does not support the claim. A canonical requirement exists (`w4_continuity`, `ACT-CC-P11-009 §34`; certified P10 `§94.3`; a fired instance in the resident P12 W4 evidence record). **`TEST-ORACLE DEFECT`, remediated.** |
+| line 297 row, line 346, line 474 | `ESC-C7-01` **absent** / *"cited, non-resident"* | **Resident**, at `AIOS_P10_AUTONOMOUS_EXECUTION_VERIFICATION_v1.0 §21.3`, ten labelled parts. It escalates **non-residency** of the PD-03/PD-04 corpora — which *"exist, are complete"*, 80/80 and 30/30 identities, 5.2 MB verified — under `E-29`, with three named Founder decisions available at its `§G`. |
+
+**Consequence for the line-474 row's method.** `ESC-C7-01` appears in that row's
+*"cited, non-resident"* list and is resident, so the list was not established at
+body level. `ACT-CC-R2BC-IMPL-001` and `ACT-CC-P6-066-R2` share the row and were
+**not** re-examined — `ACT-CC-P12-021` is scope-locked to three targets. They are
+recorded as an open frontier item in `P12-021-RETURN-PACKAGE` Part F, unclassified.
+
+**`F-18`'s state is unchanged** — `SOURCE GAP + ARCHITECT-RESERVED`, zero
+interfaces verified. What changed is that the source gap now names its two
+halves separately: `ESC-C7-01` (non-residency, PD-03/PD-04) and `G-01`
+(absence, PD-05…PD-10). Full analysis: `P12-021-RETURN-PACKAGE.md`.
