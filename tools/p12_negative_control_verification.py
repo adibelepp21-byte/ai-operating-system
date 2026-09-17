@@ -1127,6 +1127,74 @@ def _e12_criteria() -> Tuple[bool, str]:
                   "is not the canonical proposal")
 
 
+def _e12_source_discovery() -> Tuple[bool, str]:
+    """The E12 source discovery must be able to report a gap and a contradiction.
+
+    Five `RESOLVED` is what a module that checked nothing would print. Three
+    removals are applied: the proposal package, a quotation attributed to a
+    section that does not contain it, and a cited section replaced by a
+    different one. Each must change the status. The `ratified` set is checked
+    in the other direction — it is empty and must stay empty however the
+    sources move, because a proposal is never a ratification.
+    """
+    import shutil
+    import tempfile
+    from pathlib import Path
+    from tools import p12_e12_source_discovery as sd
+
+    live = sd.summary()
+    if live["resolved"] != 5:
+        return False, (f"the live corpus resolves {live['resolved']} of 5; "
+                       "this control assumes all five and must be re-grounded")
+    if live["ratified"]:
+        return False, "a proposal is reported ratified on the live corpus"
+
+    def _world(tmp: Path, *, proposal: bool = True) -> Path:
+        for source in (sd.REQUIREMENT_SOURCE, sd.PROPOSAL_SOURCE):
+            if source == sd.PROPOSAL_SOURCE and not proposal:
+                continue
+            target = tmp / source
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(sd.REPO_ROOT / source, target)
+        return tmp
+
+    with tempfile.TemporaryDirectory() as tmp:
+        gapped = sd.discover(_world(Path(tmp), proposal=False))
+    if any(d.status != sd.SOURCE_GAP for d in gapped):
+        return False, ("an absent proposal package did not yield SOURCE-GAP: "
+                       f"{[d.status for d in gapped]}")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _world(Path(tmp))
+        path = root / sd.PROPOSAL_SOURCE
+        path.write_text(path.read_text(encoding="utf-8").replace(
+            '*"Phase dan Platform Organization harus tetap dibedakan"*',
+            '*"a sentence the cited section does not contain at all"*'),
+            encoding="utf-8")
+        forged = {d.criterion: d.status for d in sd.discover(root)}
+    if forged.get("E12-01") != sd.CONTRADICTION:
+        return False, (f"a quotation absent from its cited section reported "
+                       f"{forged.get('E12-01')}")
+    if any(v != sd.RESOLVED for k, v in forged.items() if k != "E12-01"):
+        return False, "the provenance check is not per-criterion"
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _world(Path(tmp))
+        path = root / sd.REQUIREMENT_SOURCE
+        path.write_text(path.read_text(encoding="utf-8").replace(
+            "15. P12-W2 — UNIFIED OPERATIONAL STATE AUTHORITY",
+            "15. AN ENTIRELY DIFFERENT SECTION"), encoding="utf-8")
+        swapped = {d.criterion: d.status for d in sd.discover(root)}
+    if swapped.get("E12-02") != sd.CONTRADICTION:
+        return False, (f"a cited section that is a different section reported "
+                       f"{swapped.get('E12-02')}")
+
+    return True, ("moves both ways: 5 of 5 RESOLVED live with 0 ratified; "
+                  "SOURCE-GAP with no proposal package; CONTRADICTION for a "
+                  "quotation absent from its cited body and for a cited "
+                  "section that is a different section")
+
+
 CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_runtime_observation", "cannot answer what is running",
      _runtime_observation),
@@ -1183,6 +1251,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _phase_verification_matrix),
     ("p12_e12_criteria", "an unfilled decision supplies no boundary",
      _e12_criteria),
+    ("p12_e12_source_discovery", "an unsupported citation is refused",
+     _e12_source_discovery),
     ("governance_index", "a source is stale", _governance_index),
 )
 
