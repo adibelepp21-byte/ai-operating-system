@@ -655,6 +655,53 @@ def _consumer_evidence_verifier() -> Tuple[bool, str]:
                   "fixture-only reader are both rejected")
 
 
+def _e12_acceptance() -> Tuple[bool, str]:
+    """The ratified `E12-06` measurement must be able to report SATISFIED.
+
+    Its live answer is `NOT SATISFIED`, and a verifier that can only report one
+    verdict measures nothing. The risk here runs opposite to the usual one: the
+    control drives it **up**, on synthetic evidence in which every phase is
+    crossed by real work, and also confirms it refuses a reading it does not
+    implement rather than defaulting to one.
+    """
+    from unittest import mock
+    from tools import p12_e12_acceptance as acc
+    from tools import p12_cross_phase_verification as cross
+
+    live = acc.determination()
+    if live["verdict"] != acc.NOT_SATISFIED:
+        return False, (f"the live corpus now reports {live['verdict']}; this "
+                       "control assumes it does not, and must be re-grounded")
+
+    all_real = tuple(
+        cross.PhaseResult(phase=p, name=p, status=cross.EXERCISED,
+                          evidence="authored by engineering-intelligence-instance-001",
+                          locator="probe")
+        for p in ("P4", "P5"))
+    with mock.patch.object(cross, "verify", return_value=all_real), \
+            mock.patch.object(cross, "summary",
+                              return_value={"exercised_only_by_a_demonstrator": ()}):
+        promoted = acc.determination()["verdict"]
+    if promoted != acc.SATISFIED:
+        return False, f"evidence of real consumption still reported {promoted}"
+
+    import tempfile
+    from pathlib import Path
+    with tempfile.TemporaryDirectory() as tmp:
+        (Path(tmp) / "docs" / "governance" / "acts").mkdir(parents=True)
+        try:
+            acc.determination(Path(tmp))
+        except acc.AcceptanceBoundaryUnresolved:
+            pass
+        else:
+            return False, ("a corpus with no ratified instrument produced an "
+                           "acceptance verdict rather than refusing")
+    return True, ("moves both ways: NOT SATISFIED on the live corpus "
+                  "(4 of 8 phases consumed by real work), SATISFIED when every "
+                  "phase is crossed by real work, and refused outright when no "
+                  "ratified boundary exists")
+
+
 def _state_chain() -> Tuple[bool, str]:
     """`§17` state verification must be able to report CONSUMER either way.
 
@@ -849,6 +896,7 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      "refused", _phase_authorization_verifier),
     ("p12_consumer_evidence_verifier", "a wrong consumer claim is rejected",
      _consumer_evidence_verifier),
+    ("p12_e12_acceptance", "an unearned SATISFIED is refused", _e12_acceptance),
     ("governance_index", "a source is stale", _governance_index),
 )
 
