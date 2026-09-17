@@ -70,31 +70,35 @@ class F01FalseConsumptionClaim(unittest.TestCase):
 
     def test_a_phase_with_no_execution_is_not_consumed(self):
         self.assertIn("P6", acc.determination()["not_consumed"])
-        self.assertIn("P7", acc.determination()["by_reason"]
+        self.assertIn("P6", acc.determination()["by_reason"]
                       ["no execution ever recorded"])
 
     def test_the_verdict_names_which_phases_failed_and_why(self):
+        """Pinned exactly. `ACT-CC-P12-014` moved `P4`, `P7` and `P9` into
+        consumption by building a real work path; `P6` stayed, blocked on a
+        human governance approval this office cannot supply. Narrowed to what
+        is true, not relaxed — a fourth phase failing, or `P6` passing without
+        an admitted Knowledge version, still fails here."""
         found = acc.determination()
-        self.assertEqual(sorted(found["not_consumed"]),
-                         ["P4", "P6", "P7", "P9"])
+        self.assertEqual(["P6"], sorted(found["not_consumed"]))
         reasons = found["by_reason"]
-        self.assertEqual(sorted(reasons["no execution ever recorded"]),
-                         ["P6", "P7"])
-        self.assertEqual(sorted(reasons["demonstrator only"]), ["P4", "P9"])
+        self.assertEqual(["P6"], sorted(reasons["no execution ever recorded"]))
+        self.assertEqual([], sorted(reasons["demonstrator only"]))
 
 
 class F02ProvisionedButNotConsumed(unittest.TestCase):
     """`§6` — `R2` is NOT SELECTED, so provisioning must not satisfy `R1`."""
 
     def test_provisioning_is_not_accepted_as_consumption(self):
-        """`P6` and `P7` are provisioned by every real runtime and consumed by
-        no execution ever recorded. Under `R2` they would pass; under the
-        ratified `R1` they must not."""
+        """`P6` is provisioned by every real runtime — the work reaches
+        `execution.runtime.knowledge` on a RUNNING Runtime — and consumed by no
+        execution ever recorded, because nothing Active exists to read. Under
+        `R2` that would pass; under the ratified `R1` it must not. `P7` was in
+        this class until real work consumed it."""
         found = {r.phase: r for r in acc.phases()}
-        for phase in ("P6", "P7"):
-            with self.subTest(phase):
-                self.assertFalse(found[phase].accepted)
-                self.assertEqual(acc.NOT_EXERCISED_AT_ALL, found[phase].verdict)
+        self.assertFalse(found["P6"].accepted)
+        self.assertEqual(acc.NOT_EXERCISED_AT_ALL, found["P6"].verdict)
+        self.assertTrue(found["P7"].accepted)
 
     def test_r2_and_r3_are_recorded_as_not_selected(self):
         self.assertEqual(("R2", "R3"), acc.ratified_boundary().not_selected)
@@ -111,22 +115,33 @@ class F02ProvisionedButNotConsumed(unittest.TestCase):
 class F03DemonstratorButNotRealSystemWork(unittest.TestCase):
     """`§5` — a demonstrator is not by itself sufficient."""
 
-    def test_a_demonstrator_only_crossing_is_not_consumption(self):
-        found = {r.phase: r for r in acc.phases()}
-        for phase in ("P4", "P9"):
-            with self.subTest(phase):
-                self.assertFalse(found[phase].accepted)
-                self.assertEqual(acc.DEMONSTRATOR_ONLY, found[phase].verdict)
+    def test_no_phase_is_demonstrator_only_on_the_live_corpus(self):
+        """`P4` and `P9` were, until `ACT-CC-P12-014` gave both a real-work
+        crossing. Pinned, so a regression still fails here."""
+        self.assertEqual([], [r.phase for r in acc.phases()
+                              if r.verdict == acc.DEMONSTRATOR_ONLY])
 
-    def test_the_underlying_measurement_reported_these_as_exercised(self):
-        """The point of `R1`: the same evidence reads differently under a
-        stricter boundary. `P4` and `P9` are `EXERCISED` to the cross-phase
-        verifier and **not consumed** under `R1`. Nothing was re-measured to
-        suit the decision."""
-        exercised = {r.phase for r in cross.verify() if r.status == cross.EXERCISED}
-        self.assertTrue({"P4", "P9"} <= exercised)
-        self.assertEqual(6, cross.summary()["exercised"])
-        self.assertEqual(4, len(acc.determination()["consumed_by_real_work"]))
+    def test_a_demonstrator_only_crossing_is_still_refused(self):
+        """The rule, not the corpus. Driven on synthetic evidence so the
+        refusal is proved rather than assumed from an empty list."""
+        mixed = (
+            _result("P4", "Runtime", cross.EXERCISED, "'p12-f4-runtime-observation'"),
+            _result("P5", "Intelligence", cross.EXERCISED,
+                    "authored by engineering-intelligence-instance-001"))
+        with mock.patch.object(cross, "verify", return_value=mixed), \
+                mock.patch.object(cross, "summary", return_value={
+                    "exercised_only_by_a_demonstrator": ("P4",)}):
+            found = {r.phase: r for r in acc.phases()}
+        self.assertFalse(found["P4"].accepted)
+        self.assertEqual(acc.DEMONSTRATOR_ONLY, found["P4"].verdict)
+
+    def test_consumption_rose_because_work_was_built_not_because_r1_relaxed(self):
+        """`R1` is unchanged; the corpus is not. Seven of eight phases are now
+        crossed by real work, and the one that is not is blocked on a human
+        approval rather than on engineering."""
+        self.assertEqual(7, cross.summary()["exercised"])
+        self.assertEqual(7, len(acc.determination()["consumed_by_real_work"]))
+        self.assertEqual(acc.NOT_SATISFIED, acc.determination()["verdict"])
 
     def test_the_boundary_records_that_demonstrators_are_insufficient(self):
         self.assertTrue(acc.ratified_boundary().demonstrator_insufficient)

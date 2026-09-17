@@ -241,10 +241,14 @@ class ClassificationsCanMove(unittest.TestCase):
         self.assertEqual(edge.classification, w1.UNVERIFIED)
         self.assertIn("two observations are not", edge.detail)
 
-    def test_memory_state_is_unverified_because_nothing_populates_it(self):
+    def test_memory_state_became_verified_when_real_work_populated_it(self):
+        """`UNVERIFIED — empty memory_consumed` until `ACT-CC-P12-014`. The edge
+        moved because a real execution consumed Memory and the Trace record
+        carried the captured content, not because the classification was
+        relaxed. `test_a_raising_derivation_is_invalid_not_verified` below
+        still proves the edge can leave `VERIFIED`."""
         edge = {e.integration_class: e for e in w1.graph()}["memory ↔ state"]
-        self.assertEqual(edge.classification, w1.UNVERIFIED)
-        self.assertIn("empty memory_consumed", edge.detail)
+        self.assertEqual(edge.classification, w1.VERIFIED)
 
     def test_a_raising_derivation_is_invalid_not_verified(self):
         def explode():

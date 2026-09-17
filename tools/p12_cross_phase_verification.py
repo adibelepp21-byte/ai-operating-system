@@ -38,9 +38,12 @@ being built rather than asserted.
 
 from __future__ import annotations
 
+import re
+
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Optional, Tuple
+from collections.abc import Mapping
 
 from tools import p12_runtime_observation as observation
 from tools import p12_trace_registry as traces
@@ -101,15 +104,43 @@ def _intelligence_exercised(records) -> Tuple[bool, str]:
     return False, "no Trace record names an intelligence Agent Instance"
 
 
+def _captured(entries) -> Tuple[str, ...]:
+    """Identify each captured consumption entry, whatever shape it carries.
+
+    **`TraceRecord` INV-6 — Capture, Don't Reference — requires
+    `knowledge_consumed` and `memory_consumed` to hold *captured content*, not
+    references**, and the record deep-freezes mappings at construction. The
+    first version of these two predicates built a `set` straight from the
+    entries, so it could only read records whose entries were bare hashable
+    strings — that is, records that *did not* honour INV-6. The moment a real
+    execution captured content as the invariant requires, the predicate raised
+    `unhashable type: 'mappingproxy'` and the phase reported `UNKNOWN`.
+
+    Found by `ACT-CC-P12-014`'s first real Memory-consuming execution. Fixed
+    here rather than by flattening the record to strings: the record's
+    invariant is canonical, and a measurement that can only read records
+    breaking it is the defect.
+    """
+    names = []
+    for entry in entries or ():
+        if isinstance(entry, Mapping):
+            # Captured content. Identify it by whatever key it carries, and
+            # fall back to the shape itself rather than inventing a name.
+            names.append(str(entry.get("key") or sorted(entry)))
+        else:
+            names.append(str(entry))
+    return tuple(sorted(set(names)))
+
+
 def _knowledge_exercised(records) -> Tuple[bool, str]:
-    consumed = {k for r in records for k in (r.knowledge_consumed or ())}
+    consumed = {n for r in records for n in _captured(r.knowledge_consumed)}
     if consumed:
         return True, f"knowledge_consumed {sorted(consumed)}"
     return False, "knowledge_consumed is empty in every Trace record"
 
 
 def _memory_exercised(records) -> Tuple[bool, str]:
-    consumed = {m for r in records for m in (r.memory_consumed or ())}
+    consumed = {n for r in records for n in _captured(r.memory_consumed)}
     if consumed:
         return True, f"memory_consumed {sorted(consumed)}"
     return False, "memory_consumed is empty in every Trace record"
@@ -227,6 +258,32 @@ DEMONSTRATOR_EXECUTIONS = (
 )
 
 
+def _is_demonstrator_only(evidence: str) -> bool:
+    """Whether every crossing named in this evidence is a demonstrator.
+
+    **Attribution is structural, not an allow-list.** The first version asked
+    whether the evidence mentioned a demonstrator *and* mentioned neither
+    `p11-` nor `engineering-intelligence` — two markers that happened to be the
+    only non-demonstrator crossings in the corpus when it was written. Under
+    `FD-P12-001`'s `R1` that shortcut fails the moment a *new* real-work
+    crossing appears: it carries neither marker, so a phase genuinely crossed
+    by real work still reported demonstrator-only.
+
+    Found by `ACT-CC-P12-014`'s first real hosted execution. The rule is now
+    what the question always meant: the evidence names at least one
+    demonstrator, and **no** crossing in it that is not one. Quoted identifiers
+    are the crossings — every predicate reports them that way.
+    """
+    named = re.findall(r"'([^']+)'", evidence)
+    if not named:
+        return False
+    demonstrators = [n for n in named
+                     if any(d in n for d in DEMONSTRATOR_EXECUTIONS)]
+    if not demonstrators:
+        return False
+    return len(demonstrators) == len(named)
+
+
 def summary(root: Path = REPO_ROOT) -> dict:
     """Counts, plus how much of the evidence comes from a demonstrator.
 
@@ -238,11 +295,7 @@ def summary(root: Path = REPO_ROOT) -> dict:
     results = verify(root)
     demonstrator_only = tuple(
         r.phase for r in results
-        if r.status == EXERCISED
-        and any(name in r.evidence for name in DEMONSTRATOR_EXECUTIONS)
-        and not any(
-            marker in r.evidence for marker in ("p11-", "engineering-intelligence")
-        )
+        if r.status == EXERCISED and _is_demonstrator_only(r.evidence)
     )
     return {
         "phases": len(results),
