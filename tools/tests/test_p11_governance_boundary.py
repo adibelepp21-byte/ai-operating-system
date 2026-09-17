@@ -455,6 +455,16 @@ P11_SURFACES = (
     # caller does; a module permitted to flatten a citation into free text could
     # manufacture the refusal it reports as integrity evidence.
     REPO_ROOT / "tools" / "p12_system_negative_controls.py",
+    # `ACT-CC-P12-007`'s phase-authorization reader. **Declared because the
+    # completeness guard below failed the run that created it** — it is the
+    # sixth time that guard has collected, and the argument for a membership
+    # check over a remembered list needs no restating. The surface belongs
+    # here on its merits too: it carries authority across a boundary, from the
+    # Founder decision body into the self-model, and it builds an
+    # `AuthorityProvenance` to do it. A module permitted to flatten that
+    # citation into free text could report a phase as unauthorized on the
+    # strength of a string.
+    REPO_ROOT / "tools" / "p12_phase_authorization.py",
 )
 
 

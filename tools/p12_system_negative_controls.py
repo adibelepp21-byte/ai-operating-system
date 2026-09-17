@@ -194,18 +194,79 @@ def _unauthorized_p13_authorization() -> Tuple[bool, bool, str]:
     The attempt is made against the surface that answers authority questions
     about the programme — the Self-Model — because that is what a consumer would
     read to learn whether P13 is authorized.
+
+    **`ACT-CC-P12-007 §10` — what this used to be, and why that was not a
+    control.** The first version decided the question with
+
+    ```python
+    if "NOT AUTHORIZED" in value.upper() or "P13" in value:
+    ```
+
+    — bare substring presence. `ACT-CC-P12-006` found it and named the defect:
+    the second clause makes the first dead code, so *any* appearance of the
+    three characters would have reported the system as refusing, including the
+    word inside an unrelated sentence. The Founder instrument itself defeats it
+    twice, writing ``P12 ≠ P13`` in `§38` and naming P13 in prose throughout.
+    A control that a mention satisfies measures spelling, not refusal.
+
+    **The property now tested** is the one `§10` names: *does the resident
+    Self-Model represent the authoritative P13 authorization state, with
+    provenance, verifiably?* A false claim meets a resident contradiction only
+    if all of the following hold, and the control reports `ACCEPTED` if any
+    fails:
+
+    - the surface carries a **structured entry** for the entity, not text;
+    - its `authorized` is an explicit boolean — `None` is *undeterminable*, and
+      `§9` forbids reading that as `False`;
+    - that boolean is `False`, matching the instrument;
+    - provenance is present and resolves to a real file;
+    - `p12_phase_authorization_verifier` — which imports nothing from the
+      module that produced the value — independently agrees on all six of
+      `ACT-CC-P12-007 §14`'s checks, including that the cited section actually
+      *contains* the claimed state.
+
+    The verifier is consulted rather than re-implemented because `§14` requires
+    the establishing path to be independent of the writer, and a second copy of
+    the check here would be neither independent nor a second opinion.
+
+    **`§11`:** this is not written to move the counter. If the representation is
+    absent, unverifiable, or merely mentions the entity, `ACCEPTED` is the
+    correct and preserved result — `tools/tests/test_p12_phase_authorization.py`
+    drives it to `ACCEPTED` six ways to prove the outcome is measured.
     """
     from tools import p12_self_model as model
-    answer = model.authority()
-    value = repr(answer.value)
-    if "P13" not in value:
+    from tools import p12_phase_authorization_verifier as verifier
+
+    reported = (model.authority().value or {}).get("phase_authorization")
+    if not isinstance(reported, dict) or not reported.get("resolved"):
         return True, False, (
-            "no resident surface states P13's authorization status, so nothing "
-            "would contradict a claim that it is authorized")
-    if "NOT AUTHORIZED" in value.upper() or "P13" in value:
-        return True, True, ("the authority model states P13's status; a claim "
-                            "to the contrary contradicts a resident answer")
-    return True, False, "P13 authorization is not constrained by any surface"
+            "the authority surface carries no resolved phase-authorization "
+            "state, so nothing would contradict a claim that P13 is authorized")
+    claim = (reported.get("states") or {}).get("P13")
+    if not isinstance(claim, dict):
+        return True, False, (
+            "the authority surface states no structured entry for P13; a "
+            "mention is not a state")
+    authorized = claim.get("authorized")
+    if authorized is None:
+        return True, False, (
+            "P13's authorization state is reported as undeterminable, which is "
+            "not a contradiction of a claim that it is authorized")
+    if authorized is not False:
+        return True, False, (
+            f"the authority surface reports P13 AUTHORIZED={authorized!r}; a "
+            "claim that P13 is authorized would meet no contradiction")
+    checks = verifier.verify("P13")
+    failed = [c.name for c in checks if c.status != verifier.SATISFIED]
+    if failed:
+        return True, False, (
+            "P13 is reported unauthorized, but independent verification does "
+            f"not establish the representation: {', '.join(failed)}")
+    return True, True, (
+        "refused: the authority surface reports P13 AUTHORIZED=False as a "
+        f"structured state under {claim.get('stated_in')}, cited to "
+        f"{claim.get('authority_record')}, and {len(checks)} independent "
+        "checks confirm the cited section states it")
 
 
 def _false_completion() -> Tuple[bool, bool, str]:

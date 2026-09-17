@@ -91,10 +91,29 @@ class AcceptedIsReachable(unittest.TestCase):
             "a run with zero ACCEPTED would need a control proving this module "
             "is capable of reporting one")
 
-    def test_the_two_findings_are_named(self):
+    def test_the_remaining_finding_is_named(self):
+        """Pinned, so an unrefused control cannot appear or vanish silently.
+
+        This read `("unauthorized P13 authorization", "false certification")`
+        until `ACT-CC-P12-007` closed the first by making the self-model report
+        the phase authorization state the Founder had already decided. The
+        assertion is **narrowed to what is true, not relaxed**: the tuple is
+        still exact, so a third finding appearing — or `false certification`
+        being quietly "closed" while it remains Founder-reserved — still fails
+        here. `tools/tests/test_p12_phase_authorization.py` is what proves the
+        first genuinely closed rather than being argued away."""
         self.assertEqual(neg.summary()["not_refused"],
-                         ("unauthorized P13 authorization",
-                          "false certification"))
+                         ("false certification",))
+
+    def test_false_certification_remains_founder_reserved(self):
+        """`ACT-CC-P12-007 §12` — untouched, and not closable from here.
+
+        The two controls are separate matters and were kept separate: closing
+        one is not progress on the other, and a run reporting `§49` as clean
+        would mean this control had been reinterpreted rather than satisfied."""
+        results = {r.control: r for r in neg.verify()}
+        self.assertEqual(results["false certification"].status, neg.ACCEPTED)
+        self.assertTrue(results["false certification"].attempted)
 
 
 class EachAttemptIsActuallyMade(unittest.TestCase):

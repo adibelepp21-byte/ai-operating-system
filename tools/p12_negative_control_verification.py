@@ -499,6 +499,92 @@ def _governance_join_reader() -> Tuple[bool, str]:
                   "one naming a delegation nobody issued")
 
 
+def _phase_authorization_reader() -> Tuple[bool, str]:
+    """The phase-authorization reader must refuse an undeterminable corpus.
+
+    `ACT-CC-P12-007 §9` turns on the difference between *"the Founder did not
+    authorize it"* and *"no Founder instrument could be found"*. A reader that
+    returned an empty result for the second would let a caller read it as the
+    first, which is how a phase comes to look unauthorized because a directory
+    was missing. It must raise, and it must still read the real corpus
+    correctly — so both directions are driven here.
+    """
+    import tempfile
+    from pathlib import Path
+    from tools import p12_phase_authorization as phases
+
+    live = phases.state_of("P13")
+    if live is None or live.authorized is not False:
+        return False, ("the live corpus no longer states P13 AUTHORIZED=FALSE; "
+                       "this control cannot be trusted until that is explained")
+    with tempfile.TemporaryDirectory() as tmp:
+        empty = Path(tmp)
+        (empty / "docs" / "governance" / "acts").mkdir(parents=True)
+        try:
+            phases.phase_states(empty)
+        except phases.PhaseAuthorizationUnresolved:
+            pass
+        else:
+            return False, ("an empty governance root produced a phase state "
+                           "rather than reporting the corpus undeterminable")
+        # A body that names the phase everywhere but carries no structured
+        # state block must not yield a state — `§10`'s false-positive case.
+        (empty / "docs" / "governance" / "acts" / "roadmap.md").write_text(
+            "1. FUTURE WORK\n\nP13 is discussed here. P13 authorization is "
+            "described as future work for P13.\n", encoding="utf-8")
+        try:
+            phases.phase_states(empty)
+        except phases.PhaseAuthorizationUnresolved:
+            pass
+        else:
+            return False, "prose naming the phase was accepted as a state source"
+    return True, ("moves both ways: P13 AUTHORIZED=FALSE on the real "
+                  "instrument, undeterminable on an empty root and on prose "
+                  "that only names the phase")
+
+
+def _phase_authorization_verifier() -> Tuple[bool, str]:
+    """The independent verifier must report UNSATISFIED on a wrong report.
+
+    Its live answer is six of six satisfied, which is also what a verifier
+    checking nothing prints. The self-model's reported value is replaced with a
+    forged one — right shape, wrong state, provenance pointing at a file that
+    exists but does not state it — and the verifier must fail on it.
+    """
+    from unittest import mock
+    from tools import p12_phase_authorization_verifier as verifier
+    from tools import p12_self_model as model
+
+    live = verifier.summary()
+    if live["unsatisfied"] or live["unresolved"]:
+        return False, f"the live representation already fails {live['not_satisfied']}"
+
+    forged = {
+        "resolved": True,
+        "states": {"P13": {
+            "entity": "P13", "authorized": True,
+            "dimensions": {"AUTHORIZED": True},
+            "unstated_dimensions": (), "stated_in": "§37 FINAL STATE TRANSITION",
+            "corroborated_by": (),
+            "authority": "a citation that resolves",
+            "authority_record": "README.md"}},
+        "issuance_contradiction": None,
+    }
+    answer = model.Answer("What authority do I have?",
+                          {"phase_authorization": forged}, "VERIFIED", "forged")
+    with mock.patch.object(model, "authority", return_value=answer):
+        checks = verifier.verify("P13")
+    failed = {c.name for c in checks if c.status != verifier.SATISFIED}
+    expected = {"authoritative source", "authorization state",
+                "provenance supports the claim"}
+    if not expected <= failed:
+        return False, (f"a forged authorization claim was not refused: only "
+                       f"{sorted(failed)} failed")
+    return True, ("moves both ways: six of six satisfied on the real "
+                  "representation; a forged P13 AUTHORIZED=True citing a "
+                  f"resolving but unsupporting record fails {sorted(failed)}")
+
+
 def _operational_state() -> Tuple[bool, str]:
     """The W2 verifier must report VIOLATED when a property fails.
 
@@ -704,6 +790,10 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _self_model_contract),
     ("p12_integration_graph", "an edge is promoted when earned",
      _integration_graph),
+    ("p12_phase_authorization", "an undeterminable corpus is refused",
+     _phase_authorization_reader),
+    ("p12_phase_authorization_verifier", "a forged authorization claim is "
+     "refused", _phase_authorization_verifier),
     ("governance_index", "a source is stale", _governance_index),
 )
 
