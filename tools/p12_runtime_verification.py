@@ -57,6 +57,16 @@ class EntryPoint:
     reached_by: Tuple[str, ...]
 
 
+def _is_test(relative_path: str) -> bool:
+    """Whether a caller is a test rather than a surface that runs the system.
+
+    Recognised structurally — a `tests` package directory or a `test_` module
+    name — not by a curated list, so a suite added tomorrow is covered.
+    """
+    parts = Path(relative_path).parts
+    return "tests" in parts or Path(relative_path).name.startswith("test_")
+
+
 def entry_points() -> Tuple[EntryPoint, ...]:
     """Every root-level runnable module, and what reaches it.
 
@@ -91,9 +101,21 @@ def entry_points() -> Tuple[EntryPoint, ...]:
         callers = tuple(sorted(reached[path.stem]))
         # A caller that is itself only hand-invoked does not make this entry
         # point reachable by the system; it makes two hand-invoked scripts.
+        #
+        # **Nor does a test.** `ACT-CC-P12-015` added a falsification suite
+        # that imports `aios_corpus_health_run` to drive `judge` and `run`
+        # against synthetic worlds, and this measurement immediately reported
+        # the live system `REACHED` — on the strength of a unit test. A suite
+        # exercising an entry point is not the system entering a runtime, and
+        # a measurement that cannot tell them apart would have reported
+        # runtime integration the moment anyone wrote a test. Excluded here
+        # rather than by removing the import, which would have hidden the
+        # defect instead of correcting it. Precedent: `consumers_of` separates
+        # `fixture_reads` from real consumption for the same reason.
         system_callers = tuple(
             c for c in callers
-            if not (REPO_ROOT / c).parent == REPO_ROOT)
+            if not (REPO_ROOT / c).parent == REPO_ROOT
+            and not _is_test(c))
         found.append(EntryPoint(
             module=path.name,
             status=REACHED if system_callers else HAND_INVOKED,

@@ -84,14 +84,42 @@ def _certified_evidence_guard() -> Tuple[bool, str]:
 
 
 def _cross_phase() -> Tuple[bool, str]:
-    """Cross-phase verification must be able to say NOT EXERCISED."""
+    """Cross-phase verification must be able to say NOT EXERCISED.
+
+    **This control used to read the live corpus and pass because a phase
+    happened to be un-crossed.** That worked only while the system was
+    incomplete: `ACT-CC-P12-015` crossed the last phase, the live count of
+    NOT EXERCISED went to zero, and the control reported the verifier
+    undemonstrated — when nothing about the verifier had changed. A control
+    whose negative depends on the system still having a hole is not a control.
+
+    Re-grounded structurally: the predicates are pointed at an empty evidence
+    world, where nothing has ever run, and every phase must come back NOT
+    EXERCISED. That negative stays reachable however complete the system gets.
+    """
+    from unittest import mock
+
     from tools import p12_cross_phase_verification as cross
-    summary = cross.summary()
-    if summary["not_exercised"] > 0:
-        return True, (f"{summary['not_exercised']} of {summary['phases']} "
-                      "canonical phases report NOT EXERCISED on the live corpus")
-    return False, ("every phase reports EXERCISED; the negative is not "
-                   "demonstrated by this run")
+    from tools import p12_runtime_observation as observation
+    from tools import p12_trace_registry as traces
+
+    live = cross.summary()
+    if live["exercised"] != live["phases"]:
+        return False, (f"{live['not_exercised']} of {live['phases']} phases are "
+                       "un-crossed on the live corpus; this control assumes "
+                       "they are all crossed and must be re-grounded")
+    with tempfile.TemporaryDirectory() as tmp:
+        with mock.patch.object(traces, "STORE_ROOT", Path(tmp) / "traces"), \
+                mock.patch.object(observation, "OBSERVATION_ROOT",
+                                  Path(tmp) / "observations"):
+            empty = cross.summary()
+    if empty["not_exercised"] != empty["phases"]:
+        return False, (f"an empty evidence world still reported "
+                       f"{empty['exercised']} phase(s) exercised")
+    return True, (f"moves both ways: {live['exercised']} of {live['phases']} "
+                  "exercised on the live corpus, and all "
+                  f"{empty['phases']} NOT EXERCISED against an empty "
+                  "evidence world")
 
 
 def _cross_pd() -> Tuple[bool, str]:
@@ -669,9 +697,38 @@ def _e12_acceptance() -> Tuple[bool, str]:
     from tools import p12_cross_phase_verification as cross
 
     live = acc.determination()
-    if live["verdict"] != acc.NOT_SATISFIED:
+    if live["verdict"] != acc.SATISFIED:
         return False, (f"the live corpus now reports {live['verdict']}; this "
                        "control assumes it does not, and must be re-grounded")
+
+    # The live answer moved to SATISFIED under `ACT-CC-P12-015`, so the risk
+    # inverted with it: a measurement that can only print the verdict the
+    # corpus currently earns is still measuring nothing. The control now
+    # drives it **down** — synthetic evidence in which a phase was crossed
+    # only by a demonstrator, and synthetic evidence in which one was never
+    # crossed at all — and both must fall back to NOT SATISFIED.
+    demonstrator_only = tuple(
+        cross.PhaseResult(phase=p, name=p, status=cross.EXERCISED,
+                          evidence="runtime 'p12-f11-workflow-observation'",
+                          locator="probe")
+        for p in ("P4", "P5"))
+    with mock.patch.object(cross, "verify", return_value=demonstrator_only), \
+            mock.patch.object(cross, "summary",
+                              return_value={"exercised_only_by_a_demonstrator": ("P4", "P5")}):
+        demoted = acc.determination()["verdict"]
+    if demoted != acc.NOT_SATISFIED:
+        return False, f"demonstrator-only evidence still reported {demoted}"
+
+    never_crossed = tuple(
+        cross.PhaseResult(phase=p, name=p, status=cross.NOT_EXERCISED,
+                          evidence="nothing crossed it", locator="probe")
+        for p in ("P4", "P5"))
+    with mock.patch.object(cross, "verify", return_value=never_crossed), \
+            mock.patch.object(cross, "summary",
+                              return_value={"exercised_only_by_a_demonstrator": ()}):
+        absent = acc.determination()["verdict"]
+    if absent != acc.NOT_SATISFIED:
+        return False, f"evidence of no consumption still reported {absent}"
 
     all_real = tuple(
         cross.PhaseResult(phase=p, name=p, status=cross.EXERCISED,
@@ -696,9 +753,10 @@ def _e12_acceptance() -> Tuple[bool, str]:
         else:
             return False, ("a corpus with no ratified instrument produced an "
                            "acceptance verdict rather than refusing")
-    return True, ("moves both ways: NOT SATISFIED on the live corpus "
-                  "(4 of 8 phases consumed by real work), SATISFIED when every "
-                  "phase is crossed by real work, and refused outright when no "
+    return True, ("moves both ways: SATISFIED on the live corpus "
+                  f"({len(live['consumed_by_real_work'])} of 8 phases consumed "
+                  "by real work), NOT SATISFIED on demonstrator-only evidence "
+                  "and on no evidence at all, and refused outright when no "
                   "ratified boundary exists")
 
 
@@ -849,6 +907,93 @@ def _governance_index() -> Tuple[bool, str]:
 
 
 #: One entry per P12 verification instrument, with the negative each must reach.
+def _knowledge_admission_writer() -> Tuple[bool, str]:
+    """The admission executor must refuse an admission nobody authorized.
+
+    It succeeded once on the live corpus, which is also what a module that
+    admits unconditionally would do. Three authorizations are removed in turn
+    — the issued status, the human authority, and the candidate the instrument
+    names — and each must stop it before the Governance gate is even reached.
+    """
+    import shutil
+    import tempfile
+    from pathlib import Path
+    from tools import p12_knowledge_admission as ka
+
+    live = ka.founder_authorization()
+    body = (ka.REPO_ROOT / live.instrument).read_text(encoding="utf-8")
+    source = ka.REPO_ROOT / ka.CANDIDATE_SOURCE
+
+    def _world(tmp: Path, text: str) -> Path:
+        (tmp / ka.DECISION_ROOT).mkdir(parents=True, exist_ok=True)
+        (tmp / ka.DECISION_ROOT / "FD.md").write_text(text, encoding="utf-8")
+        shutil.copy(source, tmp / ka.CANDIDATE_SOURCE)
+        return tmp
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _world(Path(tmp), body)
+        if ka.founder_authorization(root).admission != "AUTHORIZED":
+            return False, "the control's own copy of the instrument is not issued"
+
+    for label, mutated in (
+        ("an unissued status",
+         body.replace("FINAL / ISSUED", "PENDING FOUNDER DECISION")),
+        ("no human authority",
+         body.replace("HumanAuthority:\nFounder", "HumanAuthority:\n")),
+    ):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _world(Path(tmp), mutated)
+            try:
+                ka.founder_authorization(root)
+            except ka.AdmissionAuthorityUnresolved:
+                continue
+            return False, f"{label} was still read as an authorization"
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _world(Path(tmp), body.replace(
+            "Candidate:\nP12 Corpus-Health Assessment Criteria",
+            "Candidate:\nP12 Release Notes"))
+        try:
+            ka.admit(root, store_root=Path(tmp) / "r",
+                     decision_root=Path(tmp) / "d",
+                     provenance_root=Path(tmp) / "p")
+        except ka.AdmissionRefused:
+            pass
+        else:
+            return False, ("an approval naming a different candidate was still "
+                           "spent on this one")
+
+    return True, ("moves both ways: the issued instrument authorizes; an "
+                  "unissued status, an absent human authority and an approval "
+                  "of another candidate are each refused")
+
+
+def _knowledge_admission_verifier() -> Tuple[bool, str]:
+    """The independent admission verifier must be able to report UNSATISFIED.
+
+    Its live answer is ten of ten, which is also what a verifier that checks
+    nothing prints. It is pointed at an empty world, where the admission chain
+    does not exist, and must fail rather than pass by absence.
+    """
+    import tempfile
+    from pathlib import Path
+    from tools import p12_knowledge_admission_verifier as kav
+
+    live = kav.summary()
+    if live["failing"]:
+        return False, f"the live chain already fails {live['failing']}"
+
+    with tempfile.TemporaryDirectory() as tmp:
+        empty = kav.summary(Path(tmp))
+    if empty["satisfied"] == len(kav._CHECKS):
+        return False, "an empty world still satisfied every check"
+    if not empty["failing"]:
+        return False, "an empty world reported nothing failing"
+    return True, (f"moves both ways: 10 of 10 on the live chain; "
+                  f"{len(empty['failing'])} of {len(kav._CHECKS)} fail against "
+                  "a world holding no admission")
+
+
 CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_runtime_observation", "cannot answer what is running",
      _runtime_observation),
@@ -897,6 +1042,10 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_consumer_evidence_verifier", "a wrong consumer claim is rejected",
      _consumer_evidence_verifier),
     ("p12_e12_acceptance", "an unearned SATISFIED is refused", _e12_acceptance),
+    ("p12_knowledge_admission", "an unauthorized admission is refused",
+     _knowledge_admission_writer),
+    ("p12_knowledge_admission_verifier", "an unearned SATISFIED is refused",
+     _knowledge_admission_verifier),
     ("governance_index", "a source is stale", _governance_index),
 )
 

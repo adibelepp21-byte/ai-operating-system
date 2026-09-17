@@ -26,16 +26,24 @@ That shape is not chosen to satisfy `R1`. It is what the task actually needs:
   verdict follows from them. The work does not invent a threshold to fill the
   gap; it records that the verdict is withheld.
 
-**One capability is reachable and one is not, and the difference is
-authority, not engineering.** Memory admission is the lifecycle's own
-(`MemoryLifecycle.admit(candidate)` — *"it cannot ask permission of anything"*).
-Knowledge admission is governed: `KnowledgeAdmission.admit(candidate,
-authorization)` admits **iff** `GovernanceReview.promotion_authorized` reflects
-a provenance-verified **human** `approve` — a `ReviewDecision` carrying a
-`HumanAuthority(reviewer_id)`. No resident Active Knowledge version exists, and
-this office cannot supply a human reviewer. `§36.8` makes that a hard stop, so
-the work **runs to its honest end and reports the verdict withheld** rather than
-manufacturing an approval to reach a passing number.
+**One capability is reachable on its own and one required a decision, and the
+difference is authority, not engineering.** Memory admission is the lifecycle's
+own (`MemoryLifecycle.admit(candidate)` — *"it cannot ask permission of
+anything"*). Knowledge admission is governed: `KnowledgeAdmission.admit(
+candidate, authorization)` admits **iff** `GovernanceReview.promotion_authorized`
+reflects a provenance-verified **human** `approve` — a `ReviewDecision` carrying
+a `HumanAuthority(reviewer_id)`. This office holds no human authority and did
+not supply one: under `ACT-CC-P12-014 §36.8` the work ran to its honest end and
+reported the verdict **withheld** rather than manufacturing an approval, and the
+decision surface was prepared and left blank. `FD-P12-002` then issued the
+approval, and `tools/p12_knowledge_admission.py` executed the admission it
+authorizes, reading the reviewer identity out of that instrument's own body.
+
+**The verdict is still not guaranteed.** `_active_criteria` reads whatever is
+Active and `judge` still returns `WITHHELD` when nothing is — which is what
+happens the moment the Knowledge store is pointed somewhere that holds no
+admitted version. The path did not become unconditional; its condition is now
+satisfiable.
 
 **Boundaries this path keeps.** `§15`: capability is reached through
 `execution.runtime.knowledge` / `.memory`, which the Runtime gates on RUNNING —
@@ -78,6 +86,11 @@ WORKFLOW_KEY = "aios-corpus-health"
 MEMORY_KEY_PREFIX = "corpus-health.finding"
 KNOWLEDGE_KEY = "corpus-health.criteria"
 AGENT_INSTANCE = "engineering-intelligence-instance-001"
+
+#: The Runtime's durable storage root — where the governed Knowledge admitted
+#: under `FD-P12-002` lives. Declared here rather than imported so the work
+#: depends on the location, not on the admission tool.
+KNOWLEDGE_STORE_ROOT = REPO_ROOT / "docs/architecture/p12/aios-runtime-store"
 
 #: The criteria this work judges against, held as Knowledge rather than as a
 #: constant here — which is the point. A threshold hard-coded in the worker is
@@ -128,14 +141,14 @@ def judge(facts: dict, criteria: Optional[dict]) -> dict:
     }
 
 
-def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None) -> dict:
+def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None,
+        runtime_store: Optional[Path] = None) -> dict:
     """One real work cycle, hosted on a started Runtime and inside a Workflow.
 
     Returns what happened. Decides nothing about `E12-06` — `§29`:
     `CONSTRUCTION ≠ ACCEPTANCE`, and the measurement is
     `tools/p12_e12_acceptance`'s to make from the evidence this leaves behind.
     """
-    import tempfile
     from tools.p12_trace_registry import STORE_ROOT
 
     # The Trace goes to the canonical durable store — the same root every other
@@ -144,67 +157,77 @@ def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None) -> dict:
     trace_store = LocalAppendOnlyStorage(
         (store_root or STORE_ROOT) / WORKFLOW_KEY)
     trace_store.provision()
-    with tempfile.TemporaryDirectory() as tmp:
-        # The Runtime's own working storage is separate and disposable: it
-        # hosts the subsystems for this execution and holds no evidence.
-        bootstrap = build_default_infrastructure(base_dir=Path(tmp))
-        bootstrap.establish()
+    # The Runtime's storage is **durable**, and it has to be. Knowledge is
+    # *"durable, authoritative, versioned understanding"* by its boundary's
+    # own definition, and `InfrastructureKnowledgeStore` keeps versions in a
+    # partition beneath this root. The first version of this path handed the
+    # Runtime a `TemporaryDirectory`, which was honest while nothing had
+    # ever been admitted and is wrong now: a Knowledge version that
+    # evaporates with the process that admitted it is not Knowledge, and no
+    # execution after that one could ever consume it.
+    #
+    # Nothing else writes here. Memory's store is built bare and in-process
+    # by `create_memory_subsystem`, and Trace has its own root above.
+    runtime_root = Path(runtime_store or KNOWLEDGE_STORE_ROOT)
+    runtime_root.mkdir(parents=True, exist_ok=True)
+    bootstrap = build_default_infrastructure(base_dir=runtime_root)
+    bootstrap.establish()
 
-        # -- RUNTIME: started for real, in this process (P4) ---------------
-        runtime = AIOSRuntime(
-            runtime_id=RUNTIME_ID,
-            storage=bootstrap.get("storage"),
-            substrate=bootstrap.get("execution-substrate"),
-        )
-        runtime.initialize()
-        runtime.start()
-        if runtime.state is not RuntimeState.RUNNING:
-            raise RuntimeError(f"runtime did not reach RUNNING: {runtime.state}")
+    # -- RUNTIME: started for real, in this process (P4) ---------------
+    runtime = AIOSRuntime(
+        runtime_id=RUNTIME_ID,
+        storage=bootstrap.get("storage"),
+        substrate=bootstrap.get("execution-substrate"),
+    )
+    runtime.initialize()
+    runtime.start()
+    if runtime.state is not RuntimeState.RUNNING:
+        raise RuntimeError(f"runtime did not reach RUNNING: {runtime.state}")
 
-        # -- WORKFLOW: this work runs inside one (P9) -----------------------
-        identity = WorkflowIdentity(workflow_key=WORKFLOW_KEY,
-                                    workflow_version="1.0")
-        lifecycle = WorkflowLifecycle()
-        lifecycle.define(Workflow(identity=identity))
-        lifecycle.mark_ready(identity)
-        lifecycle.enter_running(identity)
-        monitor = WorkflowMonitor(lifecycle)
-        if not monitor.is_active(identity):
-            raise RuntimeError("workflow did not reach RUNNING")
+    # -- WORKFLOW: this work runs inside one (P9) -----------------------
+    identity = WorkflowIdentity(workflow_key=WORKFLOW_KEY,
+                                workflow_version="1.0")
+    lifecycle = WorkflowLifecycle()
+    lifecycle.define(Workflow(identity=identity))
+    lifecycle.mark_ready(identity)
+    lifecycle.enter_running(identity)
+    monitor = WorkflowMonitor(lifecycle)
+    if not monitor.is_active(identity):
+        raise RuntimeError("workflow did not reach RUNNING")
 
-        # `§22`: the run must be observable. Both subjects publish through the
-        # canonical observation surface while they are genuinely in that state
-        # — this is an observation of a real crossing, not a demonstration of
-        # the observation surface.
-        observation.publish(RUNTIME_ID, str(runtime.state),
-                            kind=observation.RUNTIME)
-        observation.publish(WORKFLOW_KEY, str(monitor.state_of(identity).state),
-                            kind=observation.WORKFLOW)
+    # `§22`: the run must be observable. Both subjects publish through the
+    # canonical observation surface while they are genuinely in that state
+    # — this is an observation of a real crossing, not a demonstration of
+    # the observation surface.
+    observation.publish(RUNTIME_ID, str(runtime.state),
+                        kind=observation.RUNTIME)
+    observation.publish(WORKFLOW_KEY, str(monitor.state_of(identity).state),
+                        kind=observation.WORKFLOW)
 
-        writer = TraceWriter(trace_store)
+    writer = TraceWriter(trace_store)
 
-        try:
-            outcome = _work(runtime, root, writer)
-        except Exception:
-            lifecycle.fail(identity, "the assessment raised")
-            runtime.stop()
-            raise
-
-        lifecycle.succeed(identity)
-        observation.publish(WORKFLOW_KEY,
-                            str(monitor.state_of(identity).state),
-                            kind=observation.WORKFLOW)
-        outcome["workflow"] = {
-            "key": WORKFLOW_KEY,
-            "state": str(monitor.state_of(identity).state),
-            "succeeded": bool(monitor.is_success(identity)),
-        }
+    try:
+        outcome = _work(runtime, root, writer)
+    except Exception:
+        lifecycle.fail(identity, "the assessment raised")
         runtime.stop()
-        observation.publish(RUNTIME_ID, str(runtime.state),
-                            kind=observation.RUNTIME)
-        outcome["runtime"] = {"id": RUNTIME_ID, "state": str(runtime.state)}
-        outcome["trace_records"] = _read_back(trace_store)
-        return outcome
+        raise
+
+    lifecycle.succeed(identity)
+    observation.publish(WORKFLOW_KEY,
+                        str(monitor.state_of(identity).state),
+                        kind=observation.WORKFLOW)
+    outcome["workflow"] = {
+        "key": WORKFLOW_KEY,
+        "state": str(monitor.state_of(identity).state),
+        "succeeded": bool(monitor.is_success(identity)),
+    }
+    runtime.stop()
+    observation.publish(RUNTIME_ID, str(runtime.state),
+                        kind=observation.RUNTIME)
+    outcome["runtime"] = {"id": RUNTIME_ID, "state": str(runtime.state)}
+    outcome["trace_records"] = _read_back(trace_store)
+    return outcome
 
 
 def _work(runtime, root: Path, writer) -> dict:

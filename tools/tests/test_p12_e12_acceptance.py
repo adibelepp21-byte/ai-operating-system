@@ -1,10 +1,17 @@
 """`ACT-CC-P12-013 §20` — falsification for the ratified `E12-06` measurement.
 
 Seven mandatory controls, one class each. `§20` closes: *"A successful
-falsification must not be hidden merely because it prevents completion."* The
-live measurement reports `NOT SATISFIED`, so the risk this suite exists to
-catch runs the other way from usual: it must prove the module **can** report
-`SATISFIED`, or `NOT SATISFIED` is a constant rather than a measurement.
+falsification must not be hidden merely because it prevents completion."*
+
+The live measurement reported `NOT SATISFIED` when this suite was written, so
+the controls proved the module **could** report `SATISFIED`. It now reports
+`SATISFIED`, and the risk has inverted with it: a module returning a constant
+`SATISFIED` would pass every live reading here. So each control that used to
+lean on an un-crossed phase now drives the refusal directly — on evidence with
+no crossing, and on evidence carrying only a demonstrator — while ratification
+is held constant. `R1`, `R2 = NOT SELECTED` and `R3 = NOT SELECTED` are read
+from the same instrument throughout; what moved between `4 of 8`, `7 of 8` and
+`8 of 8` was the evidence, and these controls exist to keep that true.
 
 `F-06` and `F-07` are the two that matter most, because they guard the step from
 a ratified boundary to a claimed pass — the shortcut `§11` names explicitly:
@@ -69,36 +76,59 @@ class F01FalseConsumptionClaim(unittest.TestCase):
     """A phase must not be reported consumed without evidence of consumption."""
 
     def test_a_phase_with_no_execution_is_not_consumed(self):
-        self.assertIn("P6", acc.determination()["not_consumed"])
-        self.assertIn("P6", acc.determination()["by_reason"]
-                      ["no execution ever recorded"])
+        """The rule, not the corpus.
+
+        No live phase is un-crossed any more, so reading the live corpus here
+        would pass for a module that reported `CONSUMED` unconditionally. The
+        refusal is driven on synthetic evidence instead.
+        """
+        absent = (_result("P4", "Runtime", cross.NOT_EXERCISED,
+                          "no Trace record names a runtime"),)
+        with mock.patch.object(cross, "verify", return_value=absent), \
+                mock.patch.object(cross, "summary", return_value={
+                    "exercised_only_by_a_demonstrator": ()}):
+            found = acc.determination()
+        self.assertEqual(["P4"], sorted(found["not_consumed"]))
+        self.assertEqual(["P4"],
+                         sorted(found["by_reason"]["no execution ever recorded"]))
 
     def test_the_verdict_names_which_phases_failed_and_why(self):
         """Pinned exactly. `ACT-CC-P12-014` moved `P4`, `P7` and `P9` into
-        consumption by building a real work path; `P6` stayed, blocked on a
-        human governance approval this office cannot supply. Narrowed to what
-        is true, not relaxed — a fourth phase failing, or `P6` passing without
-        an admitted Knowledge version, still fails here."""
+        consumption by building a real work path; `FD-P12-002` authorized the
+        Knowledge admission and the work then consumed the admitted version,
+        which moved `P6`. Pinned to the whole result rather than relaxed — a
+        phase regressing, or one passing on demonstrator evidence, still fails
+        here."""
         found = acc.determination()
-        self.assertEqual(["P6"], sorted(found["not_consumed"]))
+        self.assertEqual([], sorted(found["not_consumed"]))
         reasons = found["by_reason"]
-        self.assertEqual(["P6"], sorted(reasons["no execution ever recorded"]))
+        self.assertEqual([], sorted(reasons["no execution ever recorded"]))
         self.assertEqual([], sorted(reasons["demonstrator only"]))
+        self.assertEqual(8, len(found["consumed_by_real_work"]))
 
 
 class F02ProvisionedButNotConsumed(unittest.TestCase):
     """`§6` — `R2` is NOT SELECTED, so provisioning must not satisfy `R1`."""
 
     def test_provisioning_is_not_accepted_as_consumption(self):
-        """`P6` is provisioned by every real runtime — the work reaches
+        """`P6` was provisioned by every real runtime — the work reached
         `execution.runtime.knowledge` on a RUNNING Runtime — and consumed by no
-        execution ever recorded, because nothing Active exists to read. Under
-        `R2` that would pass; under the ratified `R1` it must not. `P7` was in
-        this class until real work consumed it."""
-        found = {r.phase: r for r in acc.phases()}
+        execution, because nothing Active existed to read. Under `R2` that
+        would have passed; under the ratified `R1` it did not, and `P6` only
+        moved once an admitted version was actually read.
+
+        The rule outlives the state: a phase whose evidence shows provisioning
+        but no crossing must still be refused, so it is driven synthetically.
+        """
+        provisioned = (_result("P6", "Knowledge", cross.NOT_EXERCISED,
+                               "knowledge_consumed is empty in every Trace "
+                               "record"),)
+        with mock.patch.object(cross, "verify", return_value=provisioned), \
+                mock.patch.object(cross, "summary", return_value={
+                    "exercised_only_by_a_demonstrator": ()}):
+            found = {r.phase: r for r in acc.phases()}
         self.assertFalse(found["P6"].accepted)
         self.assertEqual(acc.NOT_EXERCISED_AT_ALL, found["P6"].verdict)
-        self.assertTrue(found["P7"].accepted)
 
     def test_r2_and_r3_are_recorded_as_not_selected(self):
         self.assertEqual(("R2", "R3"), acc.ratified_boundary().not_selected)
@@ -136,12 +166,20 @@ class F03DemonstratorButNotRealSystemWork(unittest.TestCase):
         self.assertEqual(acc.DEMONSTRATOR_ONLY, found["P4"].verdict)
 
     def test_consumption_rose_because_work_was_built_not_because_r1_relaxed(self):
-        """`R1` is unchanged; the corpus is not. Seven of eight phases are now
-        crossed by real work, and the one that is not is blocked on a human
-        approval rather than on engineering."""
-        self.assertEqual(7, cross.summary()["exercised"])
-        self.assertEqual(7, len(acc.determination()["consumed_by_real_work"]))
-        self.assertEqual(acc.NOT_SATISFIED, acc.determination()["verdict"])
+        """`R1` is unchanged; the corpus is not.
+
+        All eight phases are crossed by real work. The boundary that produced
+        `4 of 8`, then `7 of 8`, then this is the same one — read from the same
+        instrument, with `R2` and `R3` still NOT SELECTED and a demonstrator
+        still insufficient. What moved was the evidence.
+        """
+        boundary = acc.ratified_boundary()
+        self.assertTrue(boundary.reading.startswith("R1"))
+        self.assertEqual(("R2", "R3"), boundary.not_selected)
+        self.assertTrue(boundary.demonstrator_insufficient)
+        self.assertEqual(8, cross.summary()["exercised"])
+        self.assertEqual(8, len(acc.determination()["consumed_by_real_work"]))
+        self.assertEqual(acc.SATISFIED, acc.determination()["verdict"])
 
     def test_the_boundary_records_that_demonstrators_are_insufficient(self):
         self.assertTrue(acc.ratified_boundary().demonstrator_insufficient)
@@ -219,11 +257,24 @@ class F06FalseSection74PartJPass(unittest.TestCase):
     """`§11` — `E12 RATIFIED → PART J PASS` is prohibited."""
 
     def test_ratification_alone_does_not_satisfy_the_criterion(self):
-        """The instrument is ratified and the criterion is NOT SATISFIED. If
-        these ever move together without the evidence moving, the shortcut has
-        been taken."""
+        """Ratification is held constant while the evidence is removed.
+
+        The instrument stayed ratified throughout `4 of 8`, `7 of 8` and
+        `8 of 8`; the criterion followed the evidence each time. Here the
+        ratified boundary is left exactly as it is and the evidence is emptied
+        — and the criterion must fall back to NOT SATISFIED. If ratification
+        alone could carry it, this would still report SATISFIED.
+        """
         self.assertTrue(acc.ratified_boundary().reading.startswith("R1"))
-        self.assertEqual(acc.NOT_SATISFIED, acc.determination()["verdict"])
+        absent = tuple(
+            _result(p, p, cross.NOT_EXERCISED, "nothing crossed it")
+            for p in ("P4", "P5"))
+        with mock.patch.object(cross, "verify", return_value=absent), \
+                mock.patch.object(cross, "summary", return_value={
+                    "exercised_only_by_a_demonstrator": ()}):
+            self.assertEqual(acc.NOT_SATISFIED,
+                             acc.determination()["verdict"])
+        self.assertTrue(acc.ratified_boundary().reading.startswith("R1"))
 
     def test_the_instrument_itself_says_ratification_is_not_a_pass(self):
         body = (REPO_ROOT / "docs" / "governance" / "acts" /

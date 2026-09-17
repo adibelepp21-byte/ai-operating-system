@@ -1,9 +1,14 @@
 """P12-W6 — cross-phase verification conformance.
 
-The controls that matter are that existence never yields `EXERCISED`, that the
-two genuinely uncrossed phases are reported as such rather than smoothed over,
-and that a predicate reading *records* instead of *executions* fails — because
-one of them did, and passed, before it was caught.
+The controls that matter are that existence never yields `EXERCISED`, that an
+uncrossed phase is reported as such rather than smoothed over, and that a
+predicate reading *records* instead of *executions* fails — because one of them
+did, and passed, before it was caught.
+
+All eight phases are now crossed by real work, which makes the live corpus a
+weak witness on its own: it would look identical for a verifier that returned
+`EXERCISED` unconditionally. So each predicate is also driven directly against
+evidence that should refuse it.
 """
 
 from __future__ import annotations
@@ -66,20 +71,33 @@ class ExistenceIsNotExercise(unittest.TestCase):
 
 
 class TheUncrossedPhasesAreReportedHonestly(unittest.TestCase):
-    def test_knowledge_is_not_exercised(self):
-        """`P7` was here too until `ACT-CC-P12-014` built a real work path that
-        consumes Memory. `P6` remains, and not for want of engineering: the
-        work reaches the Knowledge subsystem and finds nothing Active, because
-        admission requires a provenance-verified **human** approval this office
-        cannot supply. The assertion is narrowed to what is true, and stays
-        exact so a change in either direction still fails here."""
-        results = {r.phase: r for r in w6.verify()}
-        self.assertEqual(results["P6"].status, w6.NOT_EXERCISED)
-        self.assertEqual(results["P7"].status, w6.EXERCISED)
+    def test_every_phase_is_now_exercised(self):
+        """`P7` was pinned here until `ACT-CC-P12-014` built a real work path
+        that consumes Memory; `P6` until `FD-P12-002` authorized the Knowledge
+        admission and the work consumed the admitted version. The class name
+        stays, because what it guards is unchanged — the measurement must be
+        exact in both directions, so this pins the *whole* result rather than
+        relaxing to "at least the ones we expect"."""
+        results = {r.phase: r.status for r in w6.verify()}
+        self.assertEqual({w6.EXERCISED}, set(results.values()), results)
 
-    def test_its_evidence_states_why(self):
+    def test_the_predicate_still_reports_an_absent_crossing(self):
+        """The verifier must still be able to say NOT EXERCISED.
+
+        With every live phase crossed, a test that only reads the live corpus
+        would pass for a predicate that returned `EXERCISED` unconditionally.
+        This drives the Knowledge predicate directly with a record that
+        consumed nothing.
+        """
+        class Bare:
+            knowledge_consumed = ()
+        exercised, evidence = w6._knowledge_exercised((Bare(),))
+        self.assertFalse(exercised)
+        self.assertIn("empty in every Trace record", evidence)
+
+    def test_its_evidence_states_what_was_consumed(self):
         results = {r.phase: r for r in w6.verify()}
-        self.assertIn("empty in every Trace record", results["P6"].evidence)
+        self.assertIn("corpus-health.criteria", results["P6"].evidence)
 
     def test_memory_is_exercised_by_captured_content(self):
         """`INV-6` — the record holds captured content, not references, and the
@@ -91,10 +109,16 @@ class TheUncrossedPhasesAreReportedHonestly(unittest.TestCase):
         self.assertNotEqual(results["P7"].status, w6.UNKNOWN)
         self.assertIn("corpus-health.finding", results["P7"].evidence)
 
-    def test_not_exercised_is_not_reported_as_unknown(self):
-        """An absent crossing is measured, not undeterminable."""
+    def test_no_phase_is_reported_unknown(self):
+        """An absent crossing would be measured, not undeterminable.
+
+        `UNKNOWN` is the status the Knowledge and Memory predicates produced
+        when they could only read records that broke `INV-6`. No phase may
+        reach it.
+        """
         results = {r.phase: r for r in w6.verify()}
-        self.assertNotEqual(results["P6"].status, w6.UNKNOWN)
+        self.assertEqual([], [p for p, r in results.items()
+                              if r.status == w6.UNKNOWN])
 
 
 class DemonstratorProvenanceIsReported(unittest.TestCase):
