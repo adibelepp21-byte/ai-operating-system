@@ -329,7 +329,7 @@ Nothing suppressed; every cross-reference introduced by this Act resolves.
 
 | | Before | After |
 |---|---|---|
-| declared control inventory (`§51` functional anchor) | 2536 | **2555** |
+| declared control inventory (`§51` functional anchor) | 2536 | **2557** — measured at the committed revision, since the anchor compares git revisions |
 | removed | — | **0** |
 | weakened | — | **0** |
 | falsifiable instruments | 27 | **28**, all DEMONSTRATED |
