@@ -1060,6 +1060,73 @@ def _phase_verification_matrix() -> Tuple[bool, str]:
                   "evidence does, and no OWNER is ever assigned")
 
 
+def _e12_criteria() -> Tuple[bool, str]:
+    """The `E12-01`…`E12-05` reader must be able to resolve, and to reject.
+
+    Its live answer is five `UNRESOLVED`, which is also what a reader that
+    parsed nothing would print. A filled instrument must resolve all five and
+    yield their boundaries; a selection that is not the canonical package's
+    proposed one must be `REJECTED`; and the sole-candidate case — the package
+    proposes exactly one interpretation per criterion — must still not be
+    adopted from the live instrument.
+    """
+    import shutil
+    import tempfile
+    from pathlib import Path
+    from tools import p12_e12_criteria as ec
+
+    live = ec.summary()
+    if live["resolved"]:
+        return False, (f"the live instrument already resolves "
+                       f"{live['resolved']} criteria; this control assumes it "
+                       "resolves none and must be re-grounded")
+
+    section = ("\n{n}. FOUNDER DECISION — {c}\n\nFounder Selection\n\n"
+               "Founder selects:\n\n{c}\n→ {sel}\n\n"
+               "Founder Decision: RATIFIED\n\nAcceptance Boundary:\n\n"
+               "{bound}\n")
+
+    def _world(tmp: Path, chooser) -> Path:
+        (tmp / ec.DECISION_ROOT).mkdir(parents=True, exist_ok=True)
+        (tmp / ec.E12_PACKAGE).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(ec.REPO_ROOT / ec.E12_PACKAGE, tmp / ec.E12_PACKAGE)
+        proposals = ec.proposed_interpretations(ec.REPO_ROOT)
+        body = "FD\n\nDecision Domain: E12-01 THROUGH E12-05\n"
+        for index, criterion in enumerate(ec.CRITERIA, start=4):
+            body += section.format(
+                n=index, c=criterion,
+                sel=chooser(proposals[criterion]["proposed"]),
+                bound="a bounded, measurable statement")
+        (tmp / ec.DECISION_ROOT / "FD.md").write_text(body, encoding="utf-8")
+        return tmp
+
+    with tempfile.TemporaryDirectory() as tmp:
+        filled = ec.summary(_world(Path(tmp), lambda proposed: proposed))
+        if filled["resolved"] != len(ec.CRITERIA) or not filled["measurable"]:
+            return False, (f"a filled instrument resolved only "
+                           f"{filled['resolved']} of {len(ec.CRITERIA)}")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        wrong = ec.decisions(_world(
+            Path(tmp),
+            lambda proposed: "an interpretation nobody ever proposed here"))
+        if any(d.status != ec.REJECTED for d in wrong):
+            return False, ("a selection that is not the proposed one was not "
+                           f"rejected: {[d.status for d in wrong]}")
+
+    try:
+        ec.boundaries()
+    except ec.AcceptanceBoundaryUnavailable:
+        pass
+    else:
+        return False, "the live unfilled instrument still yielded boundaries"
+
+    return True, (f"moves both ways: 0 of {len(ec.CRITERIA)} resolved on the "
+                  "live instrument and boundaries unavailable, all five "
+                  "resolved when filled, all five REJECTED when the selection "
+                  "is not the canonical proposal")
+
+
 CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_runtime_observation", "cannot answer what is running",
      _runtime_observation),
@@ -1114,6 +1181,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _knowledge_admission_verifier),
     ("p12_phase_verification_matrix", "an unearned measured cell is refused",
      _phase_verification_matrix),
+    ("p12_e12_criteria", "an unfilled decision supplies no boundary",
+     _e12_criteria),
     ("governance_index", "a source is stale", _governance_index),
 )
 
