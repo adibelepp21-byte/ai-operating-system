@@ -856,33 +856,48 @@ def _self_model_contract() -> Tuple[bool, str]:
 
 
 def _integration_graph() -> Tuple[bool, str]:
-    """The W1 graph must promote an edge when its source earns it.
+    """The W1 graph must move an edge in both directions with its source.
 
-    Four verified edges of eight is what a graph asserting its own edges would
-    print. The `workflow ↔ runtime` edge is `UNVERIFIED` because both kinds of
-    observation exist and share no identity — the `§48` case. Given
-    observations that do share one, it must become `VERIFIED`.
+    Seven verified edges of eight is what a graph asserting its own edges would
+    print. **This control used to lean on `workflow ↔ runtime` being live-
+    `UNVERIFIED`** — it drove that one edge up and passed. `ACT-CC-P12-016`
+    recorded the hosting relation the edge had always contracted for and the
+    edge became `VERIFIED`, so the control reported the graph undemonstrated
+    when nothing about the graph had changed. A control whose negative depends
+    on the system still having a hole is not a control.
+
+    Re-grounded on the edge's own inputs, both ways: a workflow that names a
+    host an observation covers must verify, and one that names none — the
+    `§48` case, two observations that are not a relationship — must not.
     """
     from unittest import mock
     from tools import p12_integration_graph as graph
 
     live = {e.integration_class: e.classification for e in graph.graph()}
-    if live.get("workflow ↔ runtime") != graph.UNVERIFIED:
+    if live.get("workflow ↔ runtime") != graph.VERIFIED:
         return False, (f"workflow ↔ runtime is "
-                       f"{live.get('workflow ↔ runtime')}; probe assumes it is not")
+                       f"{live.get('workflow ↔ runtime')}; probe assumes VERIFIED")
 
     class _Obs:
-        def __init__(self, kind, rid):
+        def __init__(self, kind, rid, hosted_by=None):
             self.kind, self.runtime_id = kind, rid
+            self.hosted_by = hosted_by
 
-    shared = [_Obs("workflow", "r-1"), _Obs("runtime", "r-1")]
+    joined = [_Obs("workflow", "w-1", hosted_by="r-1"), _Obs("runtime", "r-1")]
     with mock.patch("tools.p12_runtime_observation.observations",
-                    return_value=shared):
+                    return_value=joined):
         promoted = graph._workflow_to_runtime().classification
     if promoted != graph.VERIFIED:
-        return False, f"a shared runtime identity still reported {promoted}"
-    return True, ("moves both ways: UNVERIFIED when two observations share no "
-                  "identity, VERIFIED when they do")
+        return False, f"a recorded, resolved host still reported {promoted}"
+
+    unhosted = [_Obs("workflow", "w-1"), _Obs("runtime", "r-1")]
+    with mock.patch("tools.p12_runtime_observation.observations",
+                    return_value=unhosted):
+        demoted = graph._workflow_to_runtime().classification
+    if demoted != graph.UNVERIFIED:
+        return False, f"two observations with no hosting relation reported {demoted}"
+    return True, ("moves both ways: VERIFIED when a workflow names a host an "
+                  "observation covers, UNVERIFIED when it names none")
 
 
 def _governance_index() -> Tuple[bool, str]:
@@ -994,6 +1009,57 @@ def _knowledge_admission_verifier() -> Tuple[bool, str]:
                   "a world holding no admission")
 
 
+def _phase_verification_matrix() -> Tuple[bool, str]:
+    """The `§46` matrix must be able to lose a cell it currently measures.
+
+    49 of 80 cells are measured on the live corpus, which is also what a module
+    printing constants would show. Two removals are applied — the Native Core
+    tree it reads boundaries from, and the cross-phase verifier it reads state
+    from — and the affected cells must fall to `UNKNOWN` rather than keep their
+    values. The `OWNER` column is checked in the other direction: it is
+    `UNKNOWN` everywhere and must stay so, because assigning one is `F-17`.
+    """
+    import tempfile
+    from pathlib import Path
+    from unittest import mock
+
+    from tools import p12_cross_phase_verification as cross
+    from tools import p12_phase_verification_matrix as m
+
+    live = m.summary()
+    if live["measured_cells"] == 0:
+        return False, "the live matrix measures nothing; nothing can be lost"
+    if live["complete"]:
+        return False, ("the live matrix reports complete; this control assumes "
+                       "it does not and must be re-grounded")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        empty = m.summary(Path(tmp))
+    if empty["measured_cells"] >= live["measured_cells"]:
+        return False, (f"a world with no Native Core still measured "
+                       f"{empty['measured_cells']} cells")
+
+    absent = tuple(
+        cross.PhaseResult(phase=p, name=n, status=cross.NOT_EXERCISED,
+                          evidence="nothing crossed it", locator="")
+        for p, n in cross.CANONICAL_PHASES)
+    with mock.patch.object(cross, "verify", return_value=absent):
+        rows = m.rows()
+    # `NOT EXERCISED` contains `EXERCISED`; compare the status, never the
+    # substring. The first version of this check did the latter and reported
+    # the matrix undemonstrated against evidence it had correctly read.
+    if any(not r.state.startswith(cross.NOT_EXERCISED) for r in rows):
+        return False, "a phase still reported a crossing with no evidence"
+
+    if any(not r.owner.startswith(m.UNKNOWN) for r in m.rows()):
+        return False, "a phase was assigned an owner no resident source gives"
+
+    return True, (f"moves both ways: {live['measured_cells']}/{live['cells']} "
+                  f"cells measured live, {empty['measured_cells']} against an "
+                  "empty world, every STATE falls to NOT EXERCISED when the "
+                  "evidence does, and no OWNER is ever assigned")
+
+
 CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_runtime_observation", "cannot answer what is running",
      _runtime_observation),
@@ -1046,6 +1112,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _knowledge_admission_writer),
     ("p12_knowledge_admission_verifier", "an unearned SATISFIED is refused",
      _knowledge_admission_verifier),
+    ("p12_phase_verification_matrix", "an unearned measured cell is refused",
+     _phase_verification_matrix),
     ("governance_index", "a source is stale", _governance_index),
 )
 

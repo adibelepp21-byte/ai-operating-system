@@ -201,8 +201,12 @@ def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None,
     # the observation surface.
     observation.publish(RUNTIME_ID, str(runtime.state),
                         kind=observation.RUNTIME)
+    # The workflow names the Runtime hosting it. This execution holds both
+    # identities — it started the Runtime and defined the Workflow on it — so
+    # the relation is recorded by the one party that actually knows it, and is
+    # never inferred by a reader afterwards.
     observation.publish(WORKFLOW_KEY, str(monitor.state_of(identity).state),
-                        kind=observation.WORKFLOW)
+                        kind=observation.WORKFLOW, hosted_by=RUNTIME_ID)
 
     writer = TraceWriter(trace_store)
 
@@ -216,7 +220,7 @@ def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None,
     lifecycle.succeed(identity)
     observation.publish(WORKFLOW_KEY,
                         str(monitor.state_of(identity).state),
-                        kind=observation.WORKFLOW)
+                        kind=observation.WORKFLOW, hosted_by=RUNTIME_ID)
     outcome["workflow"] = {
         "key": WORKFLOW_KEY,
         "state": str(monitor.state_of(identity).state),

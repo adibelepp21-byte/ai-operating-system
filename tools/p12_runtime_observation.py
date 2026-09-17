@@ -91,6 +91,10 @@ class Observation:
     pid: int
     age_seconds: float
     classification: str
+    #: For a workflow observation, the identity of the Runtime hosting it.
+    #: `None` for a runtime observation, and for any workflow observation
+    #: published before this field existed — absence is absence, never a guess.
+    hosted_by: Optional[str] = None
 
     @property
     def is_live(self) -> bool:
@@ -107,6 +111,7 @@ def publish(
     root: Path = OBSERVATION_ROOT,
     now: Optional[datetime] = None,
     kind: str = RUNTIME,
+    hosted_by: Optional[str] = None,
 ) -> Path:
     """Publish the runtime's *current* state so another process can read it.
 
@@ -114,24 +119,31 @@ def publish(
     computes, guesses or defaults a state: a caller that cannot read a real
     runtime has nothing to publish, and publishing a fabricated state would
     manufacture exactly the certainty the governing Act forbids.
+
+    `hosted_by` is the identity of the Runtime hosting a Workflow, supplied by
+    the caller that actually holds both. **It is never inferred.** The W1 edge
+    `workflow ↔ runtime` states its contract as *"a workflow observation names
+    the runtime hosting it"*, and until this field existed the record had
+    nowhere to put that: `runtime_id` is the subject's own identity, so a
+    workflow could only have shared it by being published under the runtime's
+    name and losing its own. The edge therefore read `UNVERIFIED` — correctly,
+    because nothing recorded the relation — while the relation itself was real
+    in every hosted run. The field is written only when supplied, so a record
+    without it is a record that did not claim one.
     """
     root.mkdir(parents=True, exist_ok=True)
     moment = (now or _now()).isoformat()
     path = root / f"{runtime_id}.observation.json"
-    path.write_text(
-        json.dumps(
-            {
-                "runtime_id": runtime_id,
-                "kind": kind,
-                "state": state,
-                "observed_at": moment,
-                "pid": os.getpid(),
-            },
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    payload = {
+        "runtime_id": runtime_id,
+        "kind": kind,
+        "state": state,
+        "observed_at": moment,
+        "pid": os.getpid(),
+    }
+    if hosted_by is not None:
+        payload["hosted_by"] = hosted_by
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     return path
 
 
@@ -176,6 +188,7 @@ def observations(
                 pid=int(payload["pid"]),
                 age_seconds=age,
                 classification=_classify(payload["state"], age, horizon),
+                hosted_by=payload.get("hosted_by"),
             )
         )
     return tuple(found)

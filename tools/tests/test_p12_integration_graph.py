@@ -226,20 +226,68 @@ class ClassificationsCanMove(unittest.TestCase):
 
     def test_an_unverified_edge_becomes_verified_when_its_source_does(self):
         class _Obs:
-            def __init__(self, kind, rid):
+            def __init__(self, kind, rid, hosted_by=None):
                 self.kind, self.runtime_id = kind, rid
+                self.hosted_by = hosted_by
 
-        shared = [_Obs("workflow", "r-1"), _Obs("runtime", "r-1")]
+        joined = [_Obs("workflow", "w-1", hosted_by="r-1"),
+                  _Obs("runtime", "r-1")]
         with mock.patch("tools.p12_runtime_observation.observations",
-                        return_value=shared):
+                        return_value=joined):
             edge = w1._workflow_to_runtime()
         self.assertEqual(edge.classification, w1.VERIFIED)
 
-    def test_the_live_workflow_runtime_edge_is_unverified(self):
-        edge = {e.integration_class: e
-                for e in w1.graph()}["workflow ↔ runtime"]
+    def test_a_workflow_that_declares_no_host_does_not_verify_the_edge(self):
+        """Two observations are not a relationship — `§48`, directly.
+
+        This is the state the live corpus was in until `ACT-CC-P12-016` gave
+        the record somewhere to put the hosting relation. Kept as the rule, so
+        the edge cannot verify on both kinds merely existing.
+        """
+        class _Obs:
+            def __init__(self, kind, rid, hosted_by=None):
+                self.kind, self.runtime_id = kind, rid
+                self.hosted_by = hosted_by
+
+        unhosted = [_Obs("workflow", "w-1"), _Obs("runtime", "r-1")]
+        with mock.patch("tools.p12_runtime_observation.observations",
+                        return_value=unhosted):
+            edge = w1._workflow_to_runtime()
         self.assertEqual(edge.classification, w1.UNVERIFIED)
         self.assertIn("two observations are not", edge.detail)
+
+    def test_a_host_no_observation_covers_does_not_verify_the_edge(self):
+        """A declared host is a claim; resolving it against an observed runtime
+        is the verification. A workflow naming a runtime nobody observed has
+        recorded an intention, not a relationship."""
+        class _Obs:
+            def __init__(self, kind, rid, hosted_by=None):
+                self.kind, self.runtime_id = kind, rid
+                self.hosted_by = hosted_by
+
+        dangling = [_Obs("workflow", "w-1", hosted_by="nobody-observed-this"),
+                    _Obs("runtime", "r-1")]
+        with mock.patch("tools.p12_runtime_observation.observations",
+                        return_value=dangling):
+            edge = w1._workflow_to_runtime()
+        self.assertEqual(edge.classification, w1.UNVERIFIED)
+        self.assertIn("no observation covers", edge.detail)
+
+    def test_the_live_workflow_runtime_edge_became_verified_when_the_host_was_recorded(self):
+        """`UNVERIFIED` until `ACT-CC-P12-016`, and not because the rule moved.
+
+        The contract this edge has always stated is *"a workflow observation
+        names the runtime hosting it"*. The record had no field for that, so
+        the only join available was an intersection of `runtime_id` across the
+        two kinds — which a workflow could satisfy only by being published
+        under a runtime's name and losing its own identity. The field was
+        added; the real work now records the host it genuinely has; the two
+        controls above keep the edge falsifiable in both directions.
+        """
+        edge = {e.integration_class: e
+                for e in w1.graph()}["workflow ↔ runtime"]
+        self.assertEqual(edge.classification, w1.VERIFIED)
+        self.assertIn("hosting recorded and resolved", edge.detail)
 
     def test_memory_state_became_verified_when_real_work_populated_it(self):
         """`UNVERIFIED — empty memory_consumed` until `ACT-CC-P12-014`. The edge
