@@ -623,21 +623,74 @@ def _operational_state() -> Tuple[bool, str]:
                   "permission both report VIOLATED")
 
 
+def _consumer_evidence_verifier() -> Tuple[bool, str]:
+    """The independent consumer verifier must be able to report DISAGREES.
+
+    Its live answer is four of four agreeing, which is also what a verifier
+    that compares nothing prints. Two wrong claims are fed to it — one that
+    omits a real consumer, one that invents a consumer out of the module
+    observed reading only its own fixture — and it must reject both.
+    """
+    from tools import p12_consumer_evidence_verifier as cev
+    from tools import p12_state_verification as sv
+
+    claimed = sv.consumers_of(sv.SURFACE)
+    importers = sv.importers_of(sv.SURFACE)
+    live = cev.summary(claimed, importers)
+    if live["disagrees"] or live["unobservable"]:
+        return False, f"the live claim already fails {live['not_agreeing']}"
+
+    omitted = cev.verify(claimed[:1], importers)
+    if not [c for c in omitted if c.status == cev.DISAGREES]:
+        return False, "a claim omitting a real consumer was not rejected"
+
+    invented = cev.verify(
+        claimed + ("tools/p12_mutation_verification.py",), importers)
+    names = {c.name for c in invented if c.status == cev.DISAGREES}
+    if "a substituted read is not counted" not in names:
+        return False, ("a claim counting the fixture-only reader as a consumer "
+                       f"was not rejected; only {sorted(names)} disagreed")
+    return True, ("moves both ways: 4 of 4 agree on the measured claim; a "
+                  "claim omitting a real consumer and a claim counting the "
+                  "fixture-only reader are both rejected")
+
+
 def _state_chain() -> Tuple[bool, str]:
-    """`§17` state verification must report SATISFIED when a consumer appears."""
+    """`§17` state verification must be able to report CONSUMER either way.
+
+    **Inverted by `ACT-CC-P12-008`, not weakened.** This probe used to assume
+    the live link was UNSATISFIED and drive it up; the corrected measurement
+    made the live link SATISFIED, so it now asserts the live evidence and
+    drives it *down*. A probe left pointing at the old live value would have
+    reported `not demonstrated` for a control that works — and one edited to
+    accept whichever value it finds would demonstrate nothing at all.
+
+    The demotion is driven by removing the *evidence*, not by removing the
+    importer: a module that imports the surface without reading it must not
+    satisfy `§16`, which is the distinction the corrected link exists to make.
+    """
     from unittest import mock
     from tools import p12_state_verification as sv
 
     live = {r.link: r.status for r in sv.verify()}
-    if live.get("CONSUMER") != sv.UNSATISFIED:
-        return False, f"CONSUMER is {live.get('CONSUMER')}; probe assumes it is not"
-    with mock.patch.object(sv, "consumers_of",
-                           return_value=("tools/somewhere.py",)):
-        promoted = sv._link_consumer().status
-    if promoted != sv.SATISFIED:
-        return False, f"a real consumer still reported {promoted}"
-    return True, ("moves both ways: CONSUMER UNSATISFIED with nothing reading "
-                  "the projection, SATISFIED when something does")
+    if live.get("CONSUMER") != sv.SATISFIED:
+        return False, (f"CONSUMER is {live.get('CONSUMER')}; probe assumes the "
+                       "live corpus carries evidenced consumers")
+    importer_only = (sv.ConsumerEvidence("tools/imports-but-never-reads.py",
+                                         reads=(), fixture_reads=("project",)),)
+    with mock.patch.object(sv, "consumption_evidence",
+                           return_value=importer_only):
+        demoted = sv._link_consumer().status
+    if demoted != sv.UNSATISFIED:
+        return False, f"an importer that never reads still reported {demoted}"
+    with mock.patch.object(sv, "consumption_evidence", return_value=()):
+        empty = sv._link_consumer().status
+    if empty != sv.UNSATISFIED:
+        return False, f"an empty corpus still reported {empty}"
+    return True, ("moves both ways: CONSUMER SATISFIED on the live corpus "
+                  "(2 evidenced consumers of 3 importers), UNSATISFIED when "
+                  "the only importer never reads the projection and when "
+                  "nothing imports it at all")
 
 
 def _operational_state_projection() -> Tuple[bool, str]:
@@ -794,6 +847,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _phase_authorization_reader),
     ("p12_phase_authorization_verifier", "a forged authorization claim is "
      "refused", _phase_authorization_verifier),
+    ("p12_consumer_evidence_verifier", "a wrong consumer claim is rejected",
+     _consumer_evidence_verifier),
     ("governance_index", "a source is stale", _governance_index),
 )
 
