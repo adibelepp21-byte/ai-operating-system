@@ -284,31 +284,61 @@ def _false_completion() -> Tuple[bool, bool, str]:
 
 
 def _false_certification() -> Tuple[bool, bool, str]:
-    """`§6.8`'s one ACCEPTED control and `§6.9`'s one MISSED mutation are **one
-    behaviour**, deliberately not re-implemented so they can never diverge.
+    """A coordinated forgery of a certifying instrument.
 
-    Recorded under `ACT-CC-P12-021 §18`: a Return Package that lists them as two
-    blockers is counting the same finding twice. Closing `forge decision` closes
-    this in the same commit, and nothing can close one without the other.
-    `_forge_decision` carries the classification and the falsified repairs.
+    **Preserved deliberately under `ACT-CC-P12-027`, with the reasoning for
+    changing it referred to the Founder instead.** `§50`'s `forge decision` was
+    re-pointed this Act at the contract that owns decisions, so this control can
+    no longer borrow its body and is written out here. The **measurement is
+    unchanged**: a coordinated forgery against `certified_phases`, which is
+    `ACCEPTED`, exactly as before.
+
+    A case exists for changing it, and it is not made here. `§49` defines none
+    of its thirteen, and its siblings are measured against a weaker adversary —
+    `fabricated actor` refuses an instance *"that was never registered"*,
+    `invalid provenance` a record *"that does not resolve"*, and neither would
+    survive an attacker who also writes the registry. By that family standard
+    this control alone is held to a stricter test.
+
+    **That argument would close `§6.8`, which is why Claude did not act on it.**
+    `ACT-CC-P12-027 §6` delegates authority to resolve the semantic boundary,
+    and `§8` forbids choosing an interpretation because it produces PASS. The
+    two are hard to separate when the interpreter is also the party the result
+    favours, so the reading is recorded as a decision package
+    (`D-P12-027-02`, `P12-027-DELEGATED-DECISIONS.md`) and the measurement is
+    left as it stands until the Founder rules.
+
+    The finding this reports is real either way: the guard reads instrument
+    bodies and cannot distinguish an issued instrument from one that says so.
     """
-    from tools.p12_mutation_verification import _forge_decision
-    return _forge_decision()
+    from tools import p12_certified_evidence_guard as guard
+
+    with tempfile.TemporaryDirectory() as tmp:
+        acts = Path(tmp) / "acts"
+        acts.mkdir()
+        (acts / "FD-P42-001-FABRICATED-CERTIFICATION.md").write_text(
+            "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
+        register = Path(tmp) / "register.md"
+        register.write_text("| `FD-P42-001` | Certification of Phase 42 | ISSUED |\n",
+                            encoding="utf-8")
+        if 42 not in guard.certified_phases(acts):
+            return True, True, "forged certification statement rejected"
+        if guard.certification_anomalies(acts, register):
+            return True, True, "forged certification reported as an anomaly"
+    return True, False, (
+        "a coordinated forgery — instrument plus matching Register row — was "
+        "accepted and raised no anomaly; the guard reads bodies and cannot "
+        "distinguish an issued instrument from one that says so")
 
 
 def _unregistered_certification() -> Tuple[bool, bool, str]:
-    """A certification statement in an instrument no governance record mentions.
+    """A certification from an instrument no governance record mentions.
 
-    **Distinct from `false certification`, and deliberately kept separate.**
-    That control asks whether a forgery can be *authenticated*; the answer is
-    still no and it is still `ACCEPTED`. This one asks the narrower question the
-    system can actually answer: is a planted instrument that nothing else in
-    governance mentions at least *visible*? Added under `ACT-CC-P12-022`,
-    because before it the answer was no and nobody had asked.
-
-    Detection, never authentication. A coordinated forger who also writes the
-    Register row defeats this, which is exactly why `false certification`
-    remains `ACCEPTED` beside it.
+    Restored under `ACT-CC-P12-027` after being removed earlier in the same Act.
+    It is only redundant with `false certification` under the reading Claude
+    referred to the Founder; while that reading is unratified the two measure
+    different adversaries, and removing this one would have quietly narrowed the
+    suite on the strength of a decision not yet made.
     """
     from tools import p12_certified_evidence_guard as guard
     with tempfile.TemporaryDirectory() as tmp:
@@ -316,8 +346,6 @@ def _unregistered_certification() -> Tuple[bool, bool, str]:
         acts.mkdir()
         (acts / "FD-P42-001-FABRICATED.md").write_text(
             "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
-        # The control: the resident state must stay clean, or "anomalous" would
-        # mean nothing.
         if guard.certification_anomalies():
             return True, False, (
                 "the resident certifications are reported anomalous; the "

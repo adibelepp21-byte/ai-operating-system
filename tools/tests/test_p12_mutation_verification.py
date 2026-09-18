@@ -15,6 +15,7 @@ import json
 import shutil
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 from tools import p12_mutation_verification as mut
@@ -94,15 +95,21 @@ class TheSuiteCanReportMissed(unittest.TestCase):
         self.assertEqual(result.status, mut.MISSED)
         self.assertEqual(summary["missed_mutations"], ("undetected",))
 
-    def test_the_live_run_actually_reports_missed_results(self):
-        summary = mut.summary()
-        self.assertGreater(
-            summary["missed"], 0,
-            "a run with zero MISSED results would need a control proving the "
-            "suite is capable of reporting one")
+    def test_missed_remains_reachable_although_the_live_run_is_clean(self):
+        """Changed under `ACT-CC-P12-027`: the live run reports 10/10.
 
+        This asserted the **live** run contains a `MISSED`, which measured the
+        system rather than the suite. The property that must survive is that
+        `MISSED` is reachable at all — driven against a constructed mutation, so
+        a clean run can never be mistaken for a suite that cannot fail.
+        """
+        with mock.patch.object(
+                mut, "MUTATIONS",
+                (("undetected", lambda: (True, False, "nothing objected")),)):
+            self.assertEqual(mut.summary()["missed"], 1)
+        self.assertEqual(mut.summary()["missed"], 0,
+                         "§50 reports clean; a regression must fail here")
 
-class EachMutationExercisesARealDetector(unittest.TestCase):
     def test_removing_authority_is_refused_by_the_delegation_registry(self):
         attempted, detected, _ = mut._remove_authority()
         self.assertTrue(attempted)
@@ -225,14 +232,57 @@ class TheDuplicateProbeCarriesItsOwnControl(unittest.TestCase):
 
 
 class TheFindingsAreRecordedAsFindings(unittest.TestCase):
-    def test_forging_a_decision_is_missed(self):
-        attempted, detected, _ = mut._forge_decision()
+    def test_forging_a_decision_is_detected_by_the_contract_that_owns_decisions(self):
+        """Changed under `ACT-CC-P12-027 §8`, and the predecessor named the test.
+
+        The old assertion said the finding closes *"if the certified-evidence
+        guard has since learned to distinguish an issued instrument from a
+        planted one"*. **It has not, and that is not what changed.** What
+        changed is which contract the probe asks. `certified_phases` reads
+        certification statements out of instrument bodies to compute an
+        evidence protection set; it is not a decision authority and never was.
+        `§50` says *"attempt to violate critical contracts"*, and the critical
+        contract for decisions is `GovernanceReview` — *"Governance holds
+        authority over decisions"* (`Freeze §8`, `INV-8`).
+
+        The guard's limitation is unchanged and still recorded; it was simply
+        never `§50 forge decision`'s subject. Same oracle defect as
+        `duplicate delegation`, in the same suite, found the same way.
+        """
+        attempted, detected, detail = mut._forge_decision()
         self.assertTrue(attempted)
-        self.assertFalse(
-            detected,
-            "if the certified-evidence guard has since learned to distinguish "
-            "an issued instrument from a planted one, this finding is closed "
-            "and the evidence record must say so")
+        self.assertTrue(detected)
+        self.assertIn("authorizes nothing", detail)
+
+    def test_the_probe_drives_the_canonical_decision_contract(self):
+        import ast
+        import inspect
+        source = inspect.getsource(mut._forge_decision)
+        imported = {n.module for n in ast.walk(ast.parse(source.lstrip()))
+                    if isinstance(n, ast.ImportFrom) and n.module}
+        self.assertIn("native_core.core.governance", imported)
+        self.assertNotIn("tools.p12_certified_evidence_guard", imported)
+
+    def test_the_forged_decision_probe_carries_a_working_control(self):
+        """A refusal proves nothing if the mechanism refuses everything."""
+        from native_core.core.governance import (
+            GovernanceReview, HumanAuthority, ReviewDecision)
+        from native_core.core.infrastructure import LocalAppendOnlyStorage
+        from native_core.core.memory import MemoryReader
+        from native_core.core.trace import TraceReader, TraceWriter, new_record
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            trace = LocalAppendOnlyStorage(base_dir=root / "t"); trace.provision()
+            store = LocalAppendOnlyStorage(base_dir=root / "g"); store.provision()
+            TraceWriter(trace).write(new_record(
+                agent_definition_version="1", agent_instance="i",
+                runtime="rt", outputs={"finding": "X"}))
+            review = GovernanceReview(MemoryReader(TraceReader(trace)), store)
+            candidate = review.pending_candidates()[0]
+            self.assertFalse(review.promotion_authorized(candidate))
+            review.record_decision(ReviewDecision(
+                candidate, "approve", HumanAuthority("Moriarty"), "reviewed"))
+            self.assertTrue(review.promotion_authorized(candidate))
 
     def test_restricting_the_acts_root_would_not_close_the_forgery(self):
         """`ACT-CC-P12-021 §19`/`§20` — the tempting repair, falsified.

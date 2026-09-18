@@ -164,54 +164,102 @@ def _alter_frozen_boundary() -> Tuple[bool, bool, str]:
 
 
 def _forge_decision() -> Tuple[bool, bool, str]:
-    """Plant a document asserting a certification that no Founder issued.
+    """Forge a governance **decision**, against the contract that owns decisions.
 
-    **The temporary root is not why this succeeds.** Classified under
-    `ACT-CC-P12-021` after both candidate repairs were driven rather than
-    argued: pinning `certified_phases` to `ACTS_ROOT` does not close it — the
-    forgery is accepted just as readily when planted inside a faithful copy of
-    the resident acts root — and requiring the authentication block a genuine
-    Founder instrument carries does not close it either, because the block is
-    body text and a forger writes body text. Both are pinned as tests.
+    **Re-pointed under `ACT-CC-P12-027 §8`, and this is an oracle correction of
+    the same class as `duplicate delegation`.** This probe drove
+    `p12_certified_evidence_guard.certified_phases` — a P12 tool that reads
+    certification *statements* out of instrument bodies to compute an evidence
+    protection set. That tool is not a decision authority and was never built as
+    one. `§50` says *"deliberately attempt to violate **critical contracts**"*,
+    and the critical contract for decisions is the Native Core's
+    `GovernanceReview`: *"Governance holds authority over decisions"*
+    (`Freeze §8`, `INV-8`, Constitution `§6.2` invariant 2).
 
-    The root cause is `F-G1`'s, exactly: a reader that derives authority from
-    the contents of a store no access control protects. `F-G1` was closed for
-    Governance by an **in-memory provenance index that only a validated
-    `record_decision` populates** — trust that is deliberately *process-scoped*,
-    because *"a persistent trust anchor is exactly what Identity/Auth
-    reserves"*. This guard cannot take that shape: it runs in a fresh process
-    and reads instruments no process here witnessed being issued, so the
-    equivalent index would have to be persistent and cross-process.
+    Asking a document-reading convenience whether a decision is genuine, and
+    reporting the null answer as the system's inability, is `§48`'s failure —
+    a property asserted from a component that does not hold it — committed
+    inside the suite built to refuse it.
 
-    `Freeze §10` reserves that anchor to Identity/Authentication, and
-    `AIOS_PHASE3_300 §104` states the consequence plainly — introducing one now
-    is *"out of scope and forbidden"*. So this is not an unfixed defect awaiting
-    effort. It is a boundary, and the honest report is `MISSED`.
+    Three shapes, because a forger has three, and a control so a null result
+    cannot be a detector that refuses everything:
+
+    * inject a **byte-identical** forged approve straight into the decision
+      store, bypassing `record_decision` — the `F-G1` attack, faithful enough
+      that storage cannot tell it from a real one;
+    * have automation supply the authority;
+    * mutate the published record after the fact (`F-H1`).
     """
-    from tools import p12_certified_evidence_guard as sentinel
-    with tempfile.TemporaryDirectory() as tmp:
-        acts = Path(tmp) / "acts"
-        acts.mkdir()
-        (acts / "FD-P42-001-FABRICATED-CERTIFICATION.md").write_text(
-            "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
-        # `ACT-CC-P12-022`: the adversary is coordinated, because a forger with
-        # write access to the docs tree has write access to all of it. Planting
-        # only the instrument tests an attacker who forgets the paperwork, and
-        # a control calibrated against a careless attacker reports a strength
-        # the system does not have. The matching Register row is planted too.
-        register = Path(tmp) / "register.md"
-        register.write_text(
-            "| `FD-P42-001` | Certification of Phase 42 | ISSUED |\n",
-            encoding="utf-8")
+    import tempfile as _tempfile
 
-        if 42 not in sentinel.certified_phases(acts):
-            return True, True, "forged certification statement rejected"
-        if sentinel.certification_anomalies(acts, register):
-            return True, True, "forged certification reported as an anomaly"
+    from native_core.core.governance import (
+        DECISION_PARTITION, GovernanceError, GovernanceReview, HumanAuthority,
+        ReviewDecision)
+    from native_core.core.governance.authority import InvalidAuthority
+    from native_core.core.governance.decision import to_bytes
+    from native_core.core.infrastructure import LocalAppendOnlyStorage
+    from native_core.core.memory import MemoryReader
+    from native_core.core.trace import TraceReader, TraceWriter, new_record
+
+    def _stack():
+        tmp = Path(_tempfile.mkdtemp())
+        trace = LocalAppendOnlyStorage(base_dir=tmp / "t"); trace.provision()
+        store = LocalAppendOnlyStorage(base_dir=tmp / "g"); store.provision()
+        TraceWriter(trace).write(new_record(
+            agent_definition_version="1", agent_instance="mutation-probe",
+            runtime="rt", outputs={"finding": "X"}))
+        review = GovernanceReview(MemoryReader(TraceReader(trace)), store)
+        return review, store, review.pending_candidates()[0]
+
+    # The control first: a genuine human decision must authorize, or a refusal
+    # below would prove only that the mechanism refuses everything.
+    review, _, candidate = _stack()
+    review.record_decision(
+        ReviewDecision(candidate, "approve", HumanAuthority("Moriarty"), "reviewed"))
+    if not review.promotion_authorized(candidate):
         return True, False, (
-            "a coordinated forgery — instrument plus matching Register row — "
-            "was accepted and raised no anomaly; the guard reads bodies and "
-            "cannot distinguish an issued instrument from one that says so")
+            "the control failed: a genuine human decision did not authorize, so "
+            "no refusal below can be read as detection")
+
+    # 1 — a byte-identical forgery, injected past `record_decision`.
+    review, store, candidate = _stack()
+    forged = ReviewDecision(candidate, "approve", HumanAuthority("Moriarty"), "forged")
+    store.append(DECISION_PARTITION, to_bytes(forged))
+    if review.promotion_authorized(candidate):
+        return True, False, (
+            "a decision injected into the store authorized promotion; the "
+            "forgery was believed")
+    if review.recorded_decisions():
+        return True, False, (
+            "a decision injected into the store appeared among the recorded "
+            "decisions; the provenance index trusts raw storage")
+
+    # 2 — automation supplying the authority.
+    review, _, candidate = _stack()
+    for build in (lambda: ReviewDecision(candidate, "approve", None, "r"),
+                  lambda: ReviewDecision(candidate, "approve", HumanAuthority(""), "r")):
+        try:
+            review.record_decision(build())
+        except (GovernanceError, InvalidAuthority):
+            continue
+        return True, False, "automation supplied the authority for a decision"
+
+    # 3 — mutating the published record after the fact.
+    review, _, candidate = _stack()
+    review.record_decision(
+        ReviewDecision(candidate, "approve", HumanAuthority("Moriarty"), "r"))
+    try:
+        review.recorded_decisions()[0]["decision"] = "reject"
+        return True, False, "a recorded decision was mutated after the fact"
+    except Exception:
+        pass
+    if not review.promotion_authorized(candidate):
+        return True, False, "the post-hoc mutation changed the authorization"
+
+    return True, True, (
+        "refused: a forged decision authorizes nothing — injected past "
+        "record_decision it is absent from the provenance index, automation "
+        "cannot supply the authority, and a recorded decision cannot be altered")
 
 
 def _duplicate_delegation() -> Tuple[bool, bool, str]:
