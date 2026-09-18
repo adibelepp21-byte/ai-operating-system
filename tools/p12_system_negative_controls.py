@@ -284,51 +284,62 @@ def _false_completion() -> Tuple[bool, bool, str]:
 
 
 def _false_certification() -> Tuple[bool, bool, str]:
-    """A coordinated forgery of a certifying instrument.
+    """A certification claim that cannot resolve against an authoritative record.
 
-    **Preserved deliberately under `ACT-CC-P12-027`, with the reasoning for
-    changing it referred to the Founder instead.** `§50`'s `forge decision` was
-    re-pointed this Act at the contract that owns decisions, so this control can
-    no longer borrow its body and is written out here. The **measurement is
-    unchanged**: a coordinated forgery against `certified_phases`, which is
-    `ACCEPTED`, exactly as before.
+    **Implements the Founder ruling on `D-P12-027-02`** (`FD-P12-004`), which
+    fixed `§49`'s semantic boundary:
 
-    A case exists for changing it, and it is not made here. `§49` defines none
-    of its thirteen, and its siblings are measured against a weaker adversary —
-    `fabricated actor` refuses an instance *"that was never registered"*,
-    `invalid provenance` a record *"that does not resolve"*, and neither would
-    survive an attacker who also writes the registry. By that family standard
-    this control alone is held to a stricter test.
+        *"The system must reject a certification claim that cannot resolve
+        against an authoritative certification record."*
 
-    **That argument would close `§6.8`, which is why Claude did not act on it.**
-    `ACT-CC-P12-027 §6` delegates authority to resolve the semantic boundary,
-    and `§8` forbids choosing an interpretation because it produces PASS. The
-    two are hard to separate when the interpreter is also the party the result
-    favours, so the reading is recorded as a decision package
-    (`D-P12-027-02`, `P12-027-DELEGATED-DECISIONS.md`) and the measurement is
-    left as it stands until the Founder rules.
+    and stated the chain it must demonstrate:
 
-    The finding this reports is real either way: the guard reads instrument
-    bodies and cannot distinguish an issued instrument from one that says so.
+    ```text
+    UNRESOLVABLE CERTIFICATION CLAIM  →  VIOLATION DETECTED  →  REJECT / BLOCK
+    ```
+
+    **The reported number was not what changed.** Before the ruling the guard
+    *reported* an unresolvable certification through `certification_anomalies`
+    and went on believing it — detection without rejection, the middle of that
+    chain and not its end. `certified_phases` now **rejects** it, so this control
+    exercises the whole chain: the claim is planted, the violation is detected,
+    and the phase does not enter the certified set.
+
+    The ruling expressly does **not** establish a coordinated-forgery
+    requirement, and none is introduced here. That residual — a forger who also
+    writes the Register row — is unchanged, and is measured separately by
+    `coordinated forgery residual` among the supplementary controls, so it stays
+    visible without being counted as a `§49` finding the canon does not ask for.
     """
     from tools import p12_certified_evidence_guard as guard
+
+    # Control: the resident corpus must still certify what it certifies, or a
+    # rejection below would only prove the guard rejects everything.
+    resident = guard.certified_phases()
+    if not resident:
+        return True, False, (
+            "the resident corpus certifies nothing; a rejection cannot be "
+            "distinguished from a guard that rejects everything")
 
     with tempfile.TemporaryDirectory() as tmp:
         acts = Path(tmp) / "acts"
         acts.mkdir()
-        (acts / "FD-P42-001-FABRICATED-CERTIFICATION.md").write_text(
+        (acts / "FD-P42-001-FABRICATED.md").write_text(
             "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
-        register = Path(tmp) / "register.md"
-        register.write_text("| `FD-P42-001` | Certification of Phase 42 | ISSUED |\n",
-                            encoding="utf-8")
-        if 42 not in guard.certified_phases(acts):
-            return True, True, "forged certification statement rejected"
-        if guard.certification_anomalies(acts, register):
-            return True, True, "forged certification reported as an anomaly"
-    return True, False, (
-        "a coordinated forgery — instrument plus matching Register row — was "
-        "accepted and raised no anomaly; the guard reads bodies and cannot "
-        "distinguish an issued instrument from one that says so")
+        detected = bool(guard.certification_anomalies(acts))
+        accepted = guard.certified_phases(acts)
+
+    if not detected:
+        return True, False, (
+            "a certification claim resolving against no record raised no "
+            "violation")
+    if 42 in accepted:
+        return True, False, (
+            "the violation was detected and the claim was still believed; "
+            "detection without rejection is not the ruled requirement")
+    return True, True, (
+        f"refused: an unresolvable certification claim was detected and "
+        f"rejected — certified set stayed {sorted(resident)}")
 
 
 def _unregistered_certification() -> Tuple[bool, bool, str]:
@@ -356,6 +367,35 @@ def _unregistered_certification() -> Tuple[bool, bool, str]:
     return True, False, (
         "a certification from an instrument no governance record mentions "
         "raised no anomaly")
+
+
+def _coordinated_forgery_residual() -> Tuple[bool, bool, str]:
+    """The limit the ruling expressly left open, kept measured.
+
+    `FD-P12-004 §5`: *"This ruling does not establish or eliminate any
+    Identity/Auth or trust-anchor capability."* So the residual stands — a
+    forger who writes the Register row as well as the instrument resolves, and
+    is believed.
+
+    It is measured here, outside `§49`, for the reason the ruling gives: it is
+    real, and it is not what `§49` asks. Reported as `ACCEPTED` because that is
+    what it is; a supplementary `ACCEPTED` cannot inflate `§6.8` and cannot be
+    mistaken for one.
+    """
+    from tools import p12_certified_evidence_guard as guard
+    with tempfile.TemporaryDirectory() as tmp:
+        acts = Path(tmp) / "acts"
+        acts.mkdir()
+        (acts / "FD-P42-001-FABRICATED.md").write_text(
+            "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
+        register = Path(tmp) / "register.md"
+        register.write_text("| `FD-P42-001` | Certification of Phase 42 | ISSUED |\n",
+                            encoding="utf-8")
+        if 42 not in guard.certified_phases(acts, register):
+            return True, True, "a coordinated forgery was rejected"
+    return True, False, (
+        "a coordinated forgery — instrument plus matching Register row — "
+        "resolves and is believed; closing it needs the Freeze §10 anchor")
 
 
 def _forged_certification_permitting_a_write() -> Tuple[bool, bool, str]:
@@ -473,6 +513,7 @@ CONTROLS: Tuple[Tuple[str, Callable], ...] = (
 #: which is still `ACCEPTED` beside them.
 SUPPLEMENTARY_CONTROLS: Tuple[Tuple[str, Callable[[], Tuple[bool, bool, str]]], ...] = (
     ("unregistered certification", _unregistered_certification),
+    ("coordinated forgery residual", _coordinated_forgery_residual),
     ("forged certification permitting a write",
      _forged_certification_permitting_a_write),
 )

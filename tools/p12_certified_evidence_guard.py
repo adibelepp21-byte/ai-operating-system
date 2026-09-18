@@ -80,19 +80,63 @@ class CertifiedEvidenceProtected(RuntimeError):
     """A write was refused because it targets a certified phase's evidence."""
 
 
-def certified_phases(acts_root: Path = ACTS_ROOT) -> FrozenSet[int]:
-    """Phase numbers certified by a resident instrument's own body."""
+def certified_phases(
+    acts_root: Path = ACTS_ROOT, register: Path = REGISTER
+) -> FrozenSet[int]:
+    """Phases certified by an instrument that **resolves** against the Register.
+
+    **The rejection is required, not merely the detection.** Under the Founder
+    ruling on `D-P12-027-02`, `§49`'s `false certification` means *"the system
+    must reject a certification claim that cannot resolve against an
+    authoritative certification record"*, and the chain the ruling states is:
+
+    ```text
+    UNRESOLVABLE CERTIFICATION CLAIM  →  VIOLATION DETECTED  →  REJECT / BLOCK
+    ```
+
+    Before the ruling this function accepted any body carrying the sentence and
+    `certification_anomalies` reported the unresolvable ones alongside it —
+    detection without rejection, which is the middle of that chain and not its
+    end. A certification that is reported and still believed has not been
+    blocked.
+
+    **Fails closed on an unreadable Register, and that direction matters.** If
+    the Register cannot be read, nothing is rejected and
+    `CertificationUndeterminable` is raised. The alternative — treating an
+    unreadable Register as resolving nothing — would empty the protected set and
+    leave P10 and P11 evidence writable, turning a missing file into an
+    unprotection. *"Cannot check"* and *"checked and found unresolvable"* are
+    different answers, and only the second may reject.
+
+    **The ruling establishes no trust anchor and this implements none.** A forger
+    who writes the Register row too still resolves; `§5` of the ruling says so in
+    terms, and the residual is recorded as a supplementary control rather than
+    closed.
+    """
     if not acts_root.is_dir():
         raise CertificationUndeterminable(
             f"governance acts root is not readable: {acts_root}"
         )
+    try:
+        register_text = register.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise CertificationUndeterminable(
+            f"the certification register is not readable ({register}): "
+            f"certification cannot be resolved, and an undeterminable boundary "
+            f"is not an absent one"
+        ) from exc
+
     phases = set()
     for path in sorted(acts_root.glob("*.md")):
         body = path.read_text(encoding="utf-8")
-        for match in _CERTIFIES.finditer(body):
-            for group in match.groups():
-                if group:
-                    phases.add(int(group))
+        claimed = {int(group)
+                   for match in _CERTIFIES.finditer(body)
+                   for group in match.groups() if group}
+        if not claimed:
+            continue
+        if _register_identity(path.stem, register_text) is None:
+            continue  # REJECT: the instrument resolves against no record
+        phases.update(claimed)
     return frozenset(phases)
 
 
@@ -175,10 +219,18 @@ def certification_anomalies(
 
 
 def protected_roots(
-    repo_root: Path = REPO_ROOT, acts_root: Optional[Path] = None
+    repo_root: Path = REPO_ROOT, acts_root: Optional[Path] = None,
+    register: Path = REGISTER,
 ) -> Tuple[Path, ...]:
-    """Evidence roots belonging to a certified phase, that actually exist."""
-    phases = certified_phases(acts_root or (repo_root / "docs/governance/acts"))
+    """Evidence roots belonging to a certified phase, that actually exist.
+
+    `register` is parameterised for the same reason `acts_root` is: the
+    resolution step the Founder ruling added is part of the fail-closed chain,
+    and a chain that cannot be exercised against a constructed register cannot
+    be shown to hold.
+    """
+    phases = certified_phases(
+        acts_root or (repo_root / "docs/governance/acts"), register)
     roots = []
     for phase in sorted(phases):
         declared = PHASE_EVIDENCE_ROOTS.get(phase)
@@ -243,11 +295,12 @@ def protected_instruments(acts_root: Path = ACTS_ROOT) -> Tuple[Path, ...]:
 
 
 def is_protected(
-    path: Path, repo_root: Path = REPO_ROOT, acts_root: Optional[Path] = None
+    path: Path, repo_root: Path = REPO_ROOT, acts_root: Optional[Path] = None,
+    register: Path = REGISTER,
 ) -> bool:
     """Whether `path` is certified-phase evidence, or an instrument certifying one."""
     resolved = Path(path).resolve()
-    for root in protected_roots(repo_root, acts_root):
+    for root in protected_roots(repo_root, acts_root, register):
         try:
             resolved.relative_to(root.resolve())
         except ValueError:
@@ -261,7 +314,8 @@ def is_protected(
 
 
 def guard(
-    path: Path, repo_root: Path = REPO_ROOT, acts_root: Optional[Path] = None
+    path: Path, repo_root: Path = REPO_ROOT, acts_root: Optional[Path] = None,
+    register: Path = REGISTER,
 ) -> Path:
     """Refuse a persisting write into certified-phase evidence.
 
@@ -269,7 +323,7 @@ def guard(
     checkpoint at the call site rather than as a separate step someone can
     forget to perform.
     """
-    if is_protected(path, repo_root, acts_root):
+    if is_protected(path, repo_root, acts_root, register):
         raise CertifiedEvidenceProtected(
             f"{path} lies in certified-phase evidence and may not be overwritten. "
             "The phase's evidence is historical: execute freely, but persist "

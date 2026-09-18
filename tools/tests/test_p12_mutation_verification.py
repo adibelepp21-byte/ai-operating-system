@@ -308,7 +308,14 @@ class TheFindingsAreRecordedAsFindings(unittest.TestCase):
             (copy / "FD-P42-999-FABRICATED.md").write_text(
                 "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.",
                 encoding="utf-8")
-            self.assertIn(42, sentinel.certified_phases(copy))
+            # Under `FD-P12-004` the lone plant is now rejected — it resolves
+            # against no Register entry — so the point survives only in its
+            # stronger form: the residual, where the forger writes the record
+            # too. Restricting the root still closes nothing there.
+            self.assertEqual(sentinel.certified_phases(copy), resident)
+            register = Path(tmp) / "register.md"
+            register.write_text("| `FD-P42-999` | issued |", encoding="utf-8")
+            self.assertIn(42, sentinel.certified_phases(copy, register))
 
     def test_an_authentication_block_is_not_a_defence_either(self):
         """The second tempting repair, falsified the same way.
@@ -321,15 +328,22 @@ class TheFindingsAreRecordedAsFindings(unittest.TestCase):
         """
         from tools import p12_certified_evidence_guard as sentinel
         with tempfile.TemporaryDirectory() as tmp:
-            acts = Path(tmp)
-            (acts / "forged.md").write_text(
+            acts = Path(tmp) / "acts"
+            acts.mkdir()
+            (acts / "FD-P42-001-FORGED.md").write_text(
                 "Founder Name: Moriarty\n"
                 "Signature: Moriarty\n"
                 "Decision Status: FINAL / ISSUED\n"
                 "Founder Authority: ISSUED\n\n"
                 "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.\n",
                 encoding="utf-8")
-            self.assertIn(42, sentinel.certified_phases(acts))
+            # `FD-P12-004` added the resolution step, so the instrument must
+            # resolve before the block is even reached. Once it does, the block
+            # is still no defence — it is body text, and a forger writes body
+            # text. That was and remains the point.
+            register = Path(tmp) / "register.md"
+            register.write_text("| `FD-P42-001` | issued |", encoding="utf-8")
+            self.assertIn(42, sentinel.certified_phases(acts, register))
 
     def test_state_authority_is_now_attemptable_and_detected(self):
         """Updated because the system changed, not because the test was wrong.
