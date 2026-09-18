@@ -347,3 +347,57 @@ a Founder-issued delegation that postdates `P12-74` and expressly supersedes the
 reservation `P12-74` was reporting. The blank `FD-P12-003` is **not** what
 carries it, and `p12_e12_criteria` still reports `5 of 5 UNRESOLVED` against the
 Founder-supplied boundary it was built to measure.
+
+---
+
+# PART IV — verification, as measured
+
+Added after the runs reported. **No count appeared in this record, or in the
+commit that carried the change, before it was measured** — the commit says in
+its own body that it claims none. `§56` forbids inferring completion from test
+count, and none of `PART II` rests on this table; it is here so the tree this
+determination describes can be identified.
+
+| | Result |
+|---|---|
+| `unittest discover -s tools/tests -t .` | **1366** · OK (1 skipped) — was **1362** before this record, **1356** at `86c11c2` |
+| `unittest discover -s native_core -t .` | **801** · OK (1 expected failure) |
+| `unittest discover -s consumers -t .` | **276** · OK |
+| **`p12_negative_control_verification`** | **36 / 36 DEMONSTRATED · 0 NOT DEMONSTRATED** — was 34 / 36 |
+| `p12_failure_verification` | `§33` **4 / 7** distinguished · residual `RETRYABLE` `BLOCKED` `VERIFIED` |
+| `p12_system_negative_controls` | `§49` **13 / 13** refused |
+| `p12_mutation_verification` | `§50` **10 / 10** detected · 0 missed — **unchanged** by the control rewrite |
+| `p12_regression_verification` | `§51` **11 / 11** HELD · 0 UNANCHORED |
+| `p12_fresh_process_verification` | `§52` **8 / 8** reproduced |
+| `p12_provenance_verification` | `§34` 11 / 11 carried · `NOT ASSEMBLABLE` **7 / 15** |
+| `p12_workflow_verification` | `§31` `chain_connected False` |
+| `p12_runtime_verification` | `§30` **8 / 9** · reachability `REACHED` — **unchanged** by the control rewrite |
+| `p12_phase_verification_matrix` | `§46` 80 cells · **49 measured · 31 UNKNOWN** |
+| `p12_cross_platform_verification` | `§48` **18 / 18** readable pairs · `MENTIONED 0` · `interfaces_defined 0` |
+| `p12_cross_phase_verification` | `§47` **8 / 8** exercised · 0 demonstrator-only |
+| `p12_integration_graph` | 8 classes · 7 VERIFIED · 1 RESERVED · **0 dangling** |
+| `p12_operational_state` | 8 sources · 8 current · **0 stale · 0 conflicts** |
+| `p12_execution_chain_reader` | **4 / 4** joined · 0 dangling · 7 edges per chain |
+| `p12_e12_measurement` | `E12-01`…`E12-05` **5 / 5 SATISFIED** under `ACT-CC-P12-019` |
+| `p12_e12_criteria` | **5 / 5 UNRESOLVED** against the Founder-supplied boundary — `FD-P12-003` is a blank form, and this figure is reported, not reconciled away |
+| `p12_governance_evidence_verification` | `§26` **442** · 1 ESTABLISHED · 6 PARTIAL · 2 ABSENT |
+| `p12_self_model` | `§35` 12 questions · 10 VERIFIED · 2 INFERRED · **0 UNKNOWN** |
+| `corpus_citation_audit` | **0 errors** |
+| `stale_state_audit` | **0** live stale assertions · 55 historical uses preserved |
+| `docs/program/AIOS_*` | `sha256 abfc6b09d2a14acb8c23c16474b523735d3a0a2fb0884936ba9f0a4d0033d706` — **unchanged** |
+
+**The `+4` is accounted for.** All four pin the two rewritten falsifiability
+controls: that the mutation negative is driven rather than read off the live
+corpus and restores the live registry; that it separates `MISSED` from
+`UNAVAILABLE`; that the runtime negative drives both directions; and that it
+reports the live status instead of gating on it.
+
+**The two rewritten controls changed no live measurement**, which is the point
+and is checked rather than asserted: `§50` is still `10 / 10` and runtime
+reachability is still `REACHED`, both pinned by the new controls themselves.
+
+**One figure is deliberately left in conflict.** `p12_e12_measurement` says
+`5 / 5 SATISFIED` and `p12_e12_criteria` says `5 / 5 UNRESOLVED`. Both are
+correct about different authorities — a delegated resolution and an absent
+Founder selection — and printing one of them only would be the kind of
+reconciliation `§43` calls fabricating certainty.
