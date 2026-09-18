@@ -130,7 +130,7 @@ from an earlier record, the earlier record's figure belongs to an earlier tree.
 | final completion determination | `P12 COMPLETE = YES` | same, `PART III` |
 | completion baseline | `278e48c…` | `FD-P12-006 §2` |
 | final measured certified state | `6968c6e` | this record |
-| `tools` suite | **1367** · OK (1 skipped) | re-run; see `§2.1` |
+| `tools` suite | **1367** · OK (1 skipped) | re-run against the certified state; matches `P12-LIVE-OPERATIONAL-VERIFICATION-RECORD.md §M` |
 | `native_core` suite | **801** · OK (1 expected failure) | re-run |
 | `consumers` suite | **276** · OK | re-run |
 | citation audit | **0 errors** | re-run |
@@ -140,6 +140,14 @@ from an earlier record, the earlier record's figure belongs to an earlier tree.
 | stale-state audit | **0** live stale assertions | re-run |
 | protected package integrity | `sha256 abfc6b09d2a14acb8c23c16474b523735d3a0a2fb0884936ba9f0a4d0033d706` — **unchanged** | re-run |
 | repository cleanliness | clean at the handoff commit | `§12.3` |
+
+**A correction to this table, made rather than left.** The `tools` row first
+cited `§2.1`, which is the `E12` authority note below and says nothing about the
+suite. The row now cites what actually supports it: a re-run against this tree,
+agreeing with the figure `§M` of the live-verification record recorded. The
+suite is evidence of implementation integrity at a measured point and of
+nothing wider — `FD-P12-006 §26` forbids converting it into operational proof,
+and no conclusion in this record rests on it.
 
 ### 2.1 The `E12` authority basis, preserved as `FD-P12-006 §5` requires
 
