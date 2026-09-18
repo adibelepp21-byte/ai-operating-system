@@ -37,7 +37,7 @@ dependency evidence named as `§27` requires.
 ```text
 CLASS A  1   §33 REFUSED                              — built
 CLASS B  4   §33 BLOCKED · §33 VERIFIED · §30 verification · §34 live paths
-CLASS D  3   §34/§31 eight historical executions · §26 corpus
+CLASS D  3   §34 eight historical executions · §31 the same eight · §26 corpus
 CLASS E  1   §33 RETRYABLE
 CLASS F  2   §35 self-model · the escalation delegation join
 ```
@@ -137,3 +137,46 @@ invoked, not a rewrite of a finding.
   requirement.
 - No P13 work and no P13 authorization.
 - Nothing self-certified: `§57` reserves certification to the Founder.
+
+
+---
+
+## 6. Verification, as measured
+
+Added after the runs reported. **No count appeared in this record, or in the
+commit that carried the change, before it was measured** — the commit says in
+its own body that it claims none.
+
+| | Result |
+|---|---|
+| `unittest discover -s tools/tests -t .` | **1362** · OK (1 skipped) — was **1356** at `86c11c2` |
+| `unittest discover -s native_core -t .` | **801** · OK (1 expected failure) |
+| `unittest discover -s consumers -t .` | **276** · OK |
+| `p12_failure_verification` | `§33` **4 / 7** distinguished · `REFUSED` `DISTINGUISHED`, persisted as `escalation record .refusal_type` · residual `RETRYABLE` `BLOCKED` `VERIFIED` |
+| `p12_system_negative_controls` | `§49` **13 / 13** refused · supplementary 3 · 2 refused |
+| `p12_mutation_verification` | `§50` **10 / 10** detected · 0 missed |
+| `p12_regression_verification` | `§51` **11 / 11** HELD · 0 REGRESSED · 0 UNANCHORED |
+| `p12_fresh_process_verification` | `§52` **8 / 8** reproduced · 0 diverged |
+| `p12_provenance_verification` | `§34` 11 / 11 carried · `NOT ASSEMBLABLE` **7 / 15** — unchanged |
+| `p12_workflow_verification` | `§31` `chain_connected False` · `WORK→EXECUTION` by convention — unchanged |
+| `p12_runtime_verification` | `§30` **8 / 9** discovered · `verification` `ABSENT` — unchanged |
+| `p12_governance_evidence_verification` | `§26` **440** instruments · 1 ESTABLISHED · 6 PARTIAL · 2 ABSENT |
+| `p12_self_model` | `§35` 12 questions · 10 VERIFIED · 2 INFERRED · **0 UNKNOWN** |
+| `p12_negative_control_verification` | 36 instruments · 34 demonstrated · 2 not (`p12_mutation_verification`, `p12_runtime_verification` — both pre-existing) |
+| `corpus_citation_audit` | **0 errors** |
+
+**The `+6` is accounted for**, because a test count that moves without an
+explanation is the kind of number `§56` forbids inferring completion from.
+Four are the new agreement controls on the two surfaces
+(`TheTwoSurfacesMustAgreeAboutOneFact`); two are the net of the `§33` closure —
+one control replaced by three (the field is derived, the resident records were
+not rewritten, and the finding re-opens if the field is stripped).
+
+**Every W6 figure other than `§33` is unchanged.** That is the expected result
+and it is worth stating: the one closure moved exactly the one measurement it
+was built to move, and nothing drifted quietly beside it.
+
+**Three suites and eleven verifiers were run against the committed tree**, not
+against a tree that was abandoned. An earlier run in this session measured a
+tree with a defect I had introduced and then fixed (`§4`); it is not cited here,
+and the only figures above are from the run that describes `004f375`.
