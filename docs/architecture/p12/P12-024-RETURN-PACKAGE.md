@@ -281,3 +281,46 @@ Exit Contract is held open by exactly **two** facts:
 `§21`: `COMPLETE ≠ CERTIFIED ≠ GOVERNANCE CLOSED ≠ P13 AUTHORIZED`. **No
 completion is claimed, no certification is claimed — `§57` remains
 Founder-reserved — and P13 is not authorized.**
+
+---
+
+## 11. Three self-introduced failures, caught by the guards and disclosed
+
+`ACT-CC-P12-024`'s first commit (`7f1b3d8`) was made while the full `tools`
+suite was still running, with no test count claimed anywhere in this package
+precisely because none had been measured. The suite then reported **three
+failures, all caused by this Act's own work**. Recorded here rather than
+silently repaired, because a failure I caused and quietly fixed is
+indistinguishable in the record from one that never happened.
+
+| Failure | Cause | Resolution |
+|---|---|---|
+| `test_every_p12_verification_module_is_covered` | `p12_cross_platform_verification` was added with **no falsifiability control**. `p12_negative_control_verification` requires one per P12 verifier, and it was right to fail: *"a verifier missing from the list is a verifier nothing checks"* | Control added — an empty architecture root must raise `CorpusUnavailable` rather than report zero evidenced pairs, because *"no corpus to read"* and *"read and found nothing"* are different answers |
+| `test_the_live_system_is_hand_invoked_only` | **not** the new module — the `§51` `quality` anchor. `p12_regression_verification` now imports `aios_corpus_health_run`, a **non-root, non-test** caller, which is exactly what this measurement means by the system reaching a runtime | Test updated to the new state, with a companion test pinning that a **test-only** importer still does not count |
+| `test_the_summary_reports_both_and_merges_neither` | same cause | Updated, keeping its actual subject — that `discovered` and `reachability` are reported side by side and never collapsed |
+
+### 11.1 A consequence, not a motive
+
+[E] Runtime reachability moved `HAND-INVOKED ONLY → REACHED`:
+
+```text
+aios_corpus_health_run.py   REACHED   <- tools/p12_regression_verification.py
+```
+
+[C] **This was not the reason the anchor was bound.** It was bound because `§51`
+names the `quality` class and a resident verifier for it existed unbound. That
+it also moves an unrelated measurement is a side effect, and presenting it as
+the point would invert cause and effect — the shape `ACT-CC-P12-021 §20` warns
+about, in the direction that would flatter this Act.
+
+[D] It is, however, real, and it belongs in part 5's answer rather than being
+dropped for being inconvenient to classify: a P12 **verification** module now
+actually enters the corpus-health **runtime** as part of its own work. Before
+this Act, every root entry point was reached by nothing but a hand-run script.
+That is a small, genuine increment in P4–P11 operating as one system, and it
+arrived as a by-product of `§51` conformance rather than as a demonstration
+built to show it — which is the better provenance of the two.
+
+[U] **No `§6` condition changes.** `§30` runtime integration was already
+`DISCOVERED` on 8 of 9 items, and `reachability` is reported beside that count,
+never merged into it.

@@ -140,6 +140,26 @@ def _cross_pd() -> Tuple[bool, str]:
         xpd.REGISTRY = original
 
 
+def _cross_platform() -> Tuple[bool, str]:
+    """Relationship evidence must vanish when the corpora do.
+
+    The live module reports `18` evidenced pairs over two resident corpora, and
+    a module that read nothing and returned a constant would report the same
+    number just as confidently. Pointed at an architecture root holding no
+    division corpus, it must fail closed rather than report zero: `CorpusUnavailable`
+    (`PR-4`), because *"no corpus to read"* and *"read and found nothing"* are
+    different answers and the second would be a lie here.
+    """
+    from tools import p12_cross_platform_verification as xpl
+    with tempfile.TemporaryDirectory() as tmp:
+        try:
+            summary = xpl.summary(Path(tmp))
+        except xpl.CorpusUnavailable:
+            return True, "an empty architecture root fails closed, not to zero"
+    return False, (f"an empty architecture root still reported "
+                   f"{summary['evidenced_pairs']} evidenced pair(s)")
+
+
 def _fresh_process() -> Tuple[bool, str]:
     """Fresh-process verification must be able to report DIVERGED."""
     from tools import p12_fresh_process_verification as fresh
@@ -1258,6 +1278,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _certified_evidence_guard),
     ("p12_cross_phase_verification", "a phase is NOT EXERCISED", _cross_phase),
     ("p12_cross_pd_verification", "the registry is UNAVAILABLE", _cross_pd),
+    ("p12_cross_platform_verification", "an absent corpus fails closed",
+     _cross_platform),
     ("p12_fresh_process_verification", "a stage DIVERGED", _fresh_process),
     ("p12_mutation_verification", "a mutation is MISSED", _mutation),
     ("p12_regression_verification", "a class REGRESSED", _regression),

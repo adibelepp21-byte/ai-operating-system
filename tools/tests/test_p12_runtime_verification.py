@@ -75,11 +75,38 @@ class ReachabilityIsMeasuredFromTheImportGraph(unittest.TestCase):
                 points = {p.module: p for p in rt.entry_points()}
                 self.assertEqual(points["entry.py"].status, rt.REACHED)
 
-    def test_the_live_system_is_hand_invoked_only(self):
+    def test_the_live_system_is_now_reached_by_one_entry_point(self):
+        """Changed under `ACT-CC-P12-024` because the system changed.
+
+        This pinned `HAND-INVOKED ONLY`, and it was right to until `§51`'s
+        `quality` regression class was anchored. `p12_regression_verification`
+        now imports `aios_corpus_health_run` to judge corpus facts against the
+        criteria admitted under `FD-P12-002` — a **non-root, non-test** caller,
+        which is exactly what this measurement means by the system reaching a
+        runtime.
+
+        **The reachability change was a consequence, not a motive.** The anchor
+        was bound because `§51` names the class and a resident verifier for it
+        existed unbound; that it also moves this measurement is a side effect,
+        and recording it as if it were the point would invert cause and effect.
+        The measurement is still falsifiable — the tests above drive both
+        states against constructed roots, and a test-only importer still does
+        not count.
+        """
         reach = rt.reachability()
-        self.assertEqual(reach["status"], rt.HAND_INVOKED)
-        self.assertEqual(reach["reached_by_the_system"], 0)
-        self.assertGreater(reach["entry_points"], 0)
+        self.assertEqual(reach["status"], rt.REACHED)
+        self.assertEqual(reach["reached_by_the_system"], 1)
+        self.assertGreater(reach["entry_points"], 1)
+
+    def test_a_test_only_importer_still_does_not_reach_the_system(self):
+        """The distinction the previous state protected, kept explicit."""
+        reached = {p.module: p for p in rt.entry_points()}["aios_corpus_health_run.py"]
+        system_callers = [c for c in reached.reached_by
+                          if not c.startswith("tools/tests/")]
+        self.assertEqual(system_callers, ["tools/p12_regression_verification.py"])
+        self.assertTrue(any(c.startswith("tools/tests/")
+                            for c in reached.reached_by),
+                        "test importers exist and are correctly not counted")
 
 
 class TheProbesReadRealSurfaces(unittest.TestCase):
@@ -118,8 +145,12 @@ class DiscoveryIsSeparateFromIntegration(unittest.TestCase):
         summary = rt.summary()
         self.assertIn("discovered", summary)
         self.assertIn("reachability", summary)
-        self.assertEqual(summary["reachability"], rt.HAND_INVOKED)
+        self.assertEqual(summary["reachability"], rt.REACHED)
         self.assertGreater(summary["discovered"], 0)
+        # The point of this test is that the two are reported side by side and
+        # never collapsed, which holds whichever value reachability carries:
+        # `discovered` counts §30 items, `reachability` counts entry points.
+        self.assertNotEqual(summary["discovered"], summary["reachability"])
 
 
 if __name__ == "__main__":
