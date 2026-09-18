@@ -205,3 +205,39 @@ report the exact condition and basis."* Three do, and none of them is
 | Blocking set = `R-A` + `R-B` | **Neither blocks.** The blocking findings are internal to W6 and were never examined while the blocker set was fixed |
 
 Historical records are preserved; these corrections are additive and named.
+
+---
+
+## 7. Verification, as measured
+
+Added after the run reported. No count appeared here before it was measured.
+
+| | Result |
+|---|---|
+| `unittest discover -s tools/tests -t .` | **1356** · OK (1 skipped) |
+| `unittest discover -s native_core -t .` | **801** · OK (1 expected failure) |
+| `unittest discover -s consumers -t .` | **276** · OK |
+| `p12_system_negative_controls` | `§49` **13 / 13 refused** · supplementary 3, of which `coordinated forgery residual` `ACCEPTED` |
+| `p12_mutation_verification` | `§50` **10 / 10 detected** · 0 missed |
+| `p12_regression_verification` | `§51` **11 / 11 HELD** · 0 REGRESSED · 0 UNANCHORED |
+| `p12_fresh_process_verification` | `§52` **8 / 8** reproduced · 0 diverged |
+| `p12_failure_verification` | `§33` **3 / 7 distinguished** ← blocking |
+| `p12_provenance_verification` | `§34` **NOT ASSEMBLABLE**, 7/15 joined ← blocking |
+| `p12_workflow_verification` | `§31` `chain_connected: False` ← blocking |
+| `p12_cross_platform_verification` | **18 / 18** readable pairs · `interfaces_defined 0` |
+| `p12_e12_measurement` | `E12-01…05` **5 / 5** SATISFIED |
+| `corpus_citation_audit` | **0 errors** |
+
+**The suite being green is not the determination**, and the gap between the two
+rows is the point: `1356 OK` sits beside `§33` at 3/7 and `§34` `NOT
+ASSEMBLABLE`. `§56` forbids inferring completion from test count, and `§6`'s own
+closing line says *"Exit is not established by document completion or test count
+alone."* Every test passes because every test asserts what the system actually
+does — including the tests that assert these findings.
+
+Seven tests changed under `FD-P12-004`, each labelled in its own body with the
+ruling and the reason. Two of them (`restricting the acts root`, `an
+authentication block is not a defence`) were written by Claude in
+`ACT-CC-P12-021`/`-022` to pin that certain repairs would *not* close the
+forgery; under the ruled semantics the lone plant is now rejected, so each was
+re-pinned to the **residual**, where the point they were making still holds.
