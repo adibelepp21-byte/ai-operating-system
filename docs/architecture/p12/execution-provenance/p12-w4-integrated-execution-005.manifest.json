@@ -1,0 +1,64 @@
+{
+  "agent_definition_version": "1.1",
+  "agent_instance": "engineering-intelligence-instance-001",
+  "authority_chain": [
+    "delegation:632b256f8335434f",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ],
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "capability_scope": [
+    "engineering-intelligence"
+  ],
+  "contract_elements": [
+    "intent",
+    "decision",
+    "work",
+    "actor",
+    "authority",
+    "scope",
+    "execution",
+    "observation",
+    "verification",
+    "evidence",
+    "provenance",
+    "lifecycle"
+  ],
+  "delegation_id": "632b256f8335434f",
+  "delegation_status": "ACTIVE",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "execution_id": "p12-w4-integrated-execution-005",
+  "goal": "p12-live-verification",
+  "observation_kind": "runtime",
+  "observation_subject": "p12-live-verification-runtime",
+  "outcome": {
+    "criteria": 14,
+    "satisfied": 3,
+    "unsatisfied": [
+      "delegator",
+      "authority_provenance",
+      "objective",
+      "capability_scope",
+      "work_scope",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "verification_requirement",
+      "escalation_condition",
+      "termination_condition"
+    ]
+  },
+  "plan": "p12-live-verification-plan-0",
+  "plan_authority": "DP-01 \u00a73 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)",
+  "recorded_at": "2026-09-18T15:55:36.934633+00:00",
+  "runtime_id": "p12-live-verification-runtime",
+  "status": "failure",
+  "trace_ordinal": 0,
+  "trace_store": "p12-live-verification",
+  "verification_requirement": "every criterion reported satisfied or not, and the outcome carrying a ratified status",
+  "work_scope": [
+    "verify-delegation-elements"
+  ]
+}

@@ -149,14 +149,37 @@ class DistinguishedMeansReachableAndTellableApart(unittest.TestCase):
                          "record must say so")
         self.assertGreater(join["joined_by_parsed_prose"], 0)
 
-    def test_the_resident_records_were_not_rewritten(self):
-        """`refusal_type` is for records written from now on.
+    #: The escalations that predate `refusal_type`. Named, because "the count
+    #: is 0" stopped being the right control the moment a live run under
+    #: `FD-P12-006 §16` wrote a real escalation that does carry one.
+    PREDATING = ("23f315ba9f504272", "0991300404cf44d8", "9cb90fa0787a478c")
 
-        The three resident escalations predate the field and keep the shape
-        they were written in. Backfilling a value nobody observed onto a
-        historical record would be manufacturing evidence, so this stays `0`
-        and is expected to."""
-        self.assertEqual(fail.escalation_join()["naming_the_refusal_type"], 0)
+    def test_the_records_predating_the_field_were_not_backfilled(self):
+        """`refusal_type` is for records written from the field onward.
+
+        Backfilling a value nobody observed onto a historical record would be
+        manufacturing evidence. These three keep the shape they were written
+        in, and the control names them rather than asserting a total — a total
+        of `0` would now be false for an honest reason, and a control that has
+        to be relaxed to stay true is not measuring what it claims."""
+        import json
+        records = {
+            json.loads(path.read_text(encoding="utf-8"))["escalation_id"]:
+                json.loads(path.read_text(encoding="utf-8"))
+            for path in (fail.REPO_ROOT / "docs/architecture")
+            .rglob("*.escalation.json")}
+        for escalation_id in self.PREDATING:
+            with self.subTest(escalation_id):
+                self.assertIn(escalation_id, records)
+                self.assertNotIn("refusal_type", records[escalation_id])
+
+    def test_a_record_written_since_the_field_carries_it(self):
+        """The other half: the field must actually reach resident records, or
+        it is a schema change nothing exercises."""
+        naming = fail.escalation_join()["naming_the_refusal_type"]
+        self.assertGreater(naming, 0,
+                           "no resident escalation names its refusal type; "
+                           "the field is not reaching real records")
 
     def test_refused_falls_back_if_the_record_ever_loses_the_field(self):
         """The falsification: the state must not stay `DISTINGUISHED` on
