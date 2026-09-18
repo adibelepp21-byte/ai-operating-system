@@ -379,3 +379,54 @@ connectivity · `§30` runtime verification vocabulary · `§26` governance corp
 `§46` 31 UNKNOWN cells · `§48` undefined cross-PD interfaces — plus `D.1` and
 `D.2` from this test. `R-A` and `R-B` are outside the P12 completion requirement
 and are neither resolved nor authorized by this record.
+
+---
+
+# § M · Measured verification, after the live runs
+
+Added after the runs reported. **No count appeared in this record, or in the
+commit that carried the live artefacts, before it was measured** — that commit
+says in its own body that it claims none. `FD-P12-006 §26` forbids converting
+test count into operational proof, so nothing in `§21` above rests on this
+table; it identifies the tree, and the operational conclusions come from the
+live runs.
+
+| | Result |
+|---|---|
+| `unittest discover -s tools/tests -t .` | **1367** · OK (1 skipped) — was 1366 before the live test |
+| `unittest discover -s native_core -t .` | **801** · OK (1 expected failure) |
+| `unittest discover -s consumers -t .` | **276** · OK |
+| `p12_system_negative_controls` | `§49` **13 / 13 refused** — live |
+| `p12_negative_control_verification` | **36 / 36 demonstrated** — driven |
+| `p12_mutation_verification` | `§50` **10 / 10** detected |
+| `p12_regression_verification` | `§51` **11 / 11** HELD |
+| `p12_fresh_process_verification` | `§52` **8 / 8** reproduced |
+| `p12_e12_measurement` | `E12-01`…`E12-05` **5 / 5 SATISFIED** — re-measured **after** the live runs |
+| `p12_state_verification` | 4 / 4 links · `chain_complete True` |
+| `p12_operational_state` | 8 sources · 8 current · 0 stale · 0 conflicts |
+| `p12_execution_chain_reader` | **5 / 5** joined · 0 dangling |
+| `p12_provenance_verification` | `§34` **8 / 19** — see `§D.3` |
+| `p12_failure_verification` | `§33` **4 / 7** · `naming_the_refusal_type` **1 / 4** |
+| `p12_runtime_verification` | `§30` **8 / 9** · reachability `REACHED` |
+| `corpus_citation_audit` | **0 errors** |
+
+**The `+1` is accounted for.** One control became two: the assertion that
+`naming_the_refusal_type == 0` was replaced by a control naming the three
+escalations that predate the field and asserting none was backfilled, plus a
+second requiring that at least one resident record does carry it. The first
+half of that pair would have gone false for an honest reason after `§16`; a
+control that has to be relaxed to stay true is not measuring what it claims.
+
+## `§21.7` · Repository state, clean and identifiable
+
+```text
+commit under test    278e48c8e388e126962a125a6c9f575198b424b1   clean at start
+live artefacts       9d3ea4f   delegations · trace records · observations ·
+                               manifest · escalation · governance join
+observation refresh  8c4d1b9   states verified terminal, not assumed
+this record          the commit carrying §M
+```
+
+Every artefact the live test produced is committed. The record is reproducible
+from the repository: each `§` above names the entry point invoked, and each
+figure is the output of a resident verifier run against the committed tree.
