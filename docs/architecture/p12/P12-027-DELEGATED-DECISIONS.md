@@ -17,7 +17,7 @@ take it.
 D-P12-027-01  §50 "forge decision"       DECIDED     → §6.9 SATISFIED
 D-P12-027-02  §49 "false certification"  NOT TAKEN   → ruled by FD-P12-004
 D-P12-027-03  §48 "relevant"             DECIDED     → §6.11 SATISFIED
-D-P12-027-04  §6.7 "has been completed"  NOT TAKEN   → §6.7 unchanged, open
+D-P12-027-04  §6.7 "has been completed"  NOT TAKEN   → RULED by FD-P12-005
 ```
 
 **`D-P12-027-04` was added under the Founder's CONTINUE directive**, after
@@ -151,5 +151,6 @@ the sequencing failure above. Only the third is evidence for `6c2bd7c`.
 | **Why Claude did not take it** | **It is the last blocker.** `§6.13` closes on this Act's own construction, and `§6.14` rests on `§6.7` through `§56`. Taking this reading would move the Exit Contract from `11 SATISFIED / 3 NOT` to `14 / 0` and produce `P12 COMPLETE = YES` in the same stroke. `§8` forbids choosing an interpretation because it produces PASS. The verb-contrast argument is real and would stand on its own — but so did `D-P12-027-02`'s, and the Founder's ruling there differed materially from what Claude would have implemented. Where the interpreter is the beneficiary and the effect is to complete the phase, the honest act is to prepare the decision, not to take it |
 | **What remains true either way** | The findings are unchanged by the reading. `§33` is `4 / 7` with three residuals classified `B`/`B`/`E`; `§34` and `§31` carry eight historical executions; `§26` carries two absent elements over 438; `§30` carries one. Nothing about the system changes — only whether `§6.7` reports those as a shortfall or as a completed verification with recorded gaps |
 | **Implementation consequence** | **None.** No verifier was altered, no threshold moved, no measurement relabelled |
-| **Final state** | `§6.7` = **NOT SATISFIED**, pending the Founder's ruling. `P12 COMPLETE = NO` |
+| **Final state at referral** | `§6.7` = **NOT SATISFIED**, pending the Founder's ruling. `P12 COMPLETE = NO` |
+| **Ruled** | **`FD-P12-005`**, 18 September 2026. The Founder granted the activity reading **and withheld the conclusion**: *"This ruling does not declare `§6.7` SATISFIED automatically."* The determination it required found two actionable verifier findings Claude had not enumerated. See `P12-027-SECTION-6-7-FRESH-DETERMINATION.md` |
 | **What the Founder is asked** | Does `§6.7`'s *"has been completed"* describe the **activity** — verification performed across the system, findings classified, gaps recorded per `§55` — or the **result**, that every property verified must hold? |

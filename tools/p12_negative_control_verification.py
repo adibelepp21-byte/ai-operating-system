@@ -178,15 +178,48 @@ def _fresh_process() -> Tuple[bool, str]:
 
 
 def _mutation() -> Tuple[bool, str]:
-    """The mutation suite must report MISSED where nothing detects."""
+    """The mutation suite must be able to reach MISSED — and not over-reach it.
+
+    **This demonstrated its negative from the live corpus, and that stopped
+    working the moment `§50` reached 10/10 detected.** A control that can only
+    show its negative while the system is failing is not a control; it reads
+    only in a fire. It reported `NOT DEMONSTRATED` for exactly that reason, and
+    the reason was the system improving.
+
+    The negative is driven synthetically instead, the way every neighbouring
+    control here drives its own, and the live figure is reported beside it
+    rather than depended upon. Both directions are exercised, because the
+    distinction the mutation module exists to keep is between a mutation that
+    was applied and went undetected (`MISSED`) and one that was never applied
+    at all (`UNAVAILABLE`) — collapsing those is the defect, not the pass.
+    """
+    from unittest import mock
     from tools import p12_mutation_verification as mutation
-    summary = mutation.summary()
-    if summary["missed"] > 0:
-        return True, (f"{summary['missed']} of {summary['mutations']} report "
-                      f"MISSED on the live corpus: "
-                      f"{', '.join(summary['missed_mutations'])}")
-    return False, ("every mutation reports DETECTED; the negative is not "
-                   "demonstrated by this run")
+
+    live = mutation.summary()
+
+    undetected = (("an applied mutation nothing refuses",
+                   lambda: (True, False, "applied; no control refused it")),)
+    with mock.patch.object(mutation, "MUTATIONS", undetected):
+        driven = mutation.summary()
+    if driven["missed"] != 1 or driven["missed_mutations"] != (
+            "an applied mutation nothing refuses",):
+        return False, ("an applied, undetected mutation did not report "
+                       f"MISSED: {driven}")
+
+    unapplied = (("a mutation never applied",
+                  lambda: (False, False, "nothing was put in front of it")),)
+    with mock.patch.object(mutation, "MUTATIONS", unapplied):
+        skipped = mutation.summary()
+    if skipped["missed"] != 0 or skipped["unavailable"] != 1:
+        return False, ("a mutation that was never applied was reported as "
+                       f"MISSED rather than UNAVAILABLE: {skipped}")
+
+    return True, (
+        "reaches MISSED when an applied mutation goes undetected, and "
+        "UNAVAILABLE — not MISSED — when none was applied; the live corpus "
+        f"reports {live['detected']}/{live['mutations']} detected, "
+        f"{live['missed']} missed")
 
 
 def _regression() -> Tuple[bool, str]:
@@ -329,28 +362,54 @@ def _governance_evidence() -> Tuple[bool, str]:
 
 
 def _runtime_integration() -> Tuple[bool, str]:
-    """Runtime reachability must report REACHED when a package reaches an entry.
+    """Runtime reachability must move both ways, whatever the live answer is.
 
-    The live answer is `HAND-INVOKED ONLY`. Unless the checker can reach
-    `REACHED`, that answer is a shape rather than a measurement.
+    **This required the live system to be `HAND-INVOKED ONLY` before it would
+    demonstrate `REACHED` synthetically**, and that guard turned into a false
+    negative the moment a resident entry point genuinely became reached
+    (`aios_corpus_health_run.py`, once non-test importers appeared). It has
+    reported `NOT DEMONSTRATED` ever since — not because the checker stopped
+    working, but because one of its two answers became the live one.
+
+    **The live status is a measurement, not a precondition for measuring.**
+    Both directions are driven synthetically here and the live status is
+    reported beside them, so this control keeps working whichever way the
+    system goes.
     """
     from unittest import mock
     from tools import p12_runtime_verification as rt
 
-    if rt.reachability()["status"] != rt.HAND_INVOKED:
-        return False, "the live system is no longer hand-invoked only"
+    live = rt.reachability()["status"]
+
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         (root / "entry.py").write_text("x = 1\n", encoding="utf-8")
         (root / "pkg").mkdir()
         (root / "pkg" / "c.py").write_text("import entry\n", encoding="utf-8")
         with mock.patch.object(rt, "REPO_ROOT", root):
-            points = {p.module: p for p in rt.entry_points()}
-    if points["entry.py"].status != rt.REACHED:
+            imported = {p.module: p for p in rt.entry_points()}
+            imported_status = rt.reachability()["status"]
+    if imported["entry.py"].status != rt.REACHED:
         return False, ("an entry point imported from a package was still "
-                       f"{points['entry.py'].status}")
-    return True, ("moves both ways: HAND-INVOKED ONLY live, REACHED when a "
-                  "non-root surface imports the entry point")
+                       f"{imported['entry.py'].status}")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        (root / "entry.py").write_text("x = 1\n", encoding="utf-8")
+        with mock.patch.object(rt, "REPO_ROOT", root):
+            alone = {p.module: p for p in rt.entry_points()}
+            alone_status = rt.reachability()["status"]
+    if alone["entry.py"].status != rt.HAND_INVOKED:
+        return False, ("an entry point nothing imports was still "
+                       f"{alone['entry.py'].status}")
+
+    if imported_status == alone_status:
+        return False, ("reachability reported the same status for both "
+                       f"populations: {imported_status}")
+
+    return True, ("moves both ways: REACHED when a non-root surface imports "
+                  "the entry point, HAND-INVOKED ONLY when nothing does; the "
+                  f"live status is {live}")
 
 
 def _workflow_chain() -> Tuple[bool, str]:

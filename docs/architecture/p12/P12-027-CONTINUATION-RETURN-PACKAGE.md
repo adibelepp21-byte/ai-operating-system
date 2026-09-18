@@ -180,3 +180,29 @@ was built to move, and nothing drifted quietly beside it.
 against a tree that was abandoned. An earlier run in this session measured a
 tree with a defect I had introduced and then fixed (`§4`); it is not cited here,
 and the only figures above are from the run that describes `004f375`.
+
+---
+
+## 7. Superseded by the Founder's ruling on `D-P12-027-04`
+
+`FD-P12-005` ruled the referred question: `§6.7`'s *"has been completed"* means
+**completion of the verification activity**, not that every property it examines
+must hold. The ruling then withheld the conclusion — *"This ruling does not
+declare `§6.7` SATISFIED automatically"* — and required the activity's own
+completion to be established from evidence.
+
+**That requirement did work.** The determination found **two actionable
+`§6.7` findings this package had not enumerated**: two of thirty-six verifiers
+could no longer demonstrate that they were able to fail, both disabled by the
+system improving. Both are built.
+
+```text
+this package        §6.7 NOT SATISFIED · §6.13 SATISFIED · P12 COMPLETE = NO
+after FD-P12-005    §6.7 SATISFIED     · §6.13 SATISFIED · P12 COMPLETE = YES
+```
+
+The findings are **unchanged** — `§33` is still `4 / 7`, `§34` still `7 / 15`,
+`§31` still not connected, `§30` still `8 / 9`, `§26` still 2 absent. What
+changed is what `§6.7` was asking about them.
+
+Current state: `P12-027-SECTION-6-7-FRESH-DETERMINATION.md`.
