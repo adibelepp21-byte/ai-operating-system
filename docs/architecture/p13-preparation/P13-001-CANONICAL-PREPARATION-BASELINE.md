@@ -489,3 +489,41 @@ boundary, Blueprint, architecture, authority or decision was created or
 modified. No P13 definition was invented, no missing authority manufactured, no
 absent source reconstructed, and no Founder or Architect decision taken on their
 behalf.
+
+---
+
+# Appendix — supersession under `ACT-P13-001`
+
+**Appended, not rewritten.** The body above is the baseline as established under
+`ACT-CC-P13-001` and stays as issued. It was true when written.
+
+## A.1 `F-1` is closed by supply
+
+`F-1` and `O10 PF-02` recorded the File 3 slot — *System Integration / Gap
+Resolution* — as **NOT FOUND**. Under `ACT-P13-001` that document was supplied:
+*P13 Systemic Gap Discovery & Resolution Framework v1.0*,
+`sha256 af6db7493a707f44…`, 404 lines. **The corpus is now six of six.**
+
+## A.2 A residual the closure does not cover
+
+The slot carries two different scopes across the corpus: the supplied document
+answers *"how are discovered gaps closed?"*, while File 6 `§2.1` attributes
+*"how does AIOS become one coherent system?"* to the same slot. Whether the
+corpus still lacks a system-integration layer, or the slot was simply renamed,
+is **not resolvable by inference**. Recorded as `P13-GAP-0011`.
+
+## A.3 What this changes in the baseline's outcome
+
+| | Was | Now |
+|---|---|---|
+| `EC-01` | `PARTIAL` — one named document absent | **COMPLETE** — six of six ingested |
+| `O12` status | `P13 RECONCILIATION BLOCKED` + `AUTHORITY PACKAGE REQUIRED` | **unchanged** |
+| `A-2` (corpus composition) | open | **superseded in part** — the corpus is complete; the scope question survives as `P13-GAP-0011` |
+| Exit state | `BLOCKED_AUTHORITY` | **unchanged** — `A-1` and `A-3` still block |
+
+**The blocking items did not move.** Who may author the P13 Blueprint (`A-1` /
+`P13-GAP-0003`) and whether P1–P9 evidence must be resident (`A-3` /
+`P13-GAP-0005`) are untouched by File 3's arrival.
+
+Full gap register with resolution paths:
+`P13-002-SYSTEMIC-GAP-MAP-AND-RESOLUTION-REGISTER.md`.
