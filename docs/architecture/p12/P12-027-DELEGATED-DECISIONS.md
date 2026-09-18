@@ -96,3 +96,33 @@ D-P12-027-03  §48 "relevant"             DECIDED     → §6.11 SATISFIED
 - **Certification was not self-granted.** `§57` reserves it to the Founder and
   `ACT-CC-P12-027` does not explicitly establish another authority for it;
   `§3`'s *"where validly permitted"* is a condition that is not met.
+
+---
+
+## Verification, as measured
+
+Added after the run reported. No count appeared here before it was measured.
+
+| | Result |
+|---|---|
+| `unittest discover -s tools/tests -t .` | **1356** · OK (1 skipped) — was 1354 at `ACT-CC-P12-025` |
+| `unittest discover -s native_core -t .` | **801** · OK (1 expected failure) |
+| `p12_mutation_verification` | `§50` **10 / 10 detected** · 0 missed |
+| `p12_system_negative_controls` | `§49` **12 / 13** · `false certification` `ACCEPTED` · supplementary **2 / 2** |
+| `p12_cross_platform_verification` | **18 / 18** readable pairs · `MENTIONED 0` · `interfaces_defined 0` |
+| `p12_cross_pd_verification` | `interfaces_verified 0` — `F-18` unchanged |
+| `corpus_citation_audit` | **0 errors** |
+
+**A failure of mine, disclosed.** The first run against this tree reported one
+`FAIL`: `p12_system_negative_controls.py:308` cited
+`P12-027-DELEGATED-DECISIONS.md`, which did not yet exist — I wrote the citing
+code, started a nine-minute suite, then wrote the cited document. The audit was
+correct at the instant it looked. Not a flake and not a defect in the committed
+tree; an artifact of my own sequencing, and the reason the commit that preceded
+it claimed no test count. Re-run against the stable tree: green.
+
+**Three runs, two of which describe trees that are not in this repository.**
+The first (**1355 OK**) measured the wider change set — `§49` at 13/13 with a
+control removed — that was backed out before commit. Citing it for this commit
+would be reporting evidence from a state deliberately abandoned. The second is
+the sequencing failure above. Only the third is evidence for `6c2bd7c`.
