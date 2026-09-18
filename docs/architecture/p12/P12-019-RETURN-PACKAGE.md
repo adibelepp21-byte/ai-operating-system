@@ -351,3 +351,21 @@ blocker list as `B3`.
 
 `P12 COMPLETE = NO` is unchanged; the blocking set is now `§6` conditions 8, 9,
 10 and 11 (and 7, partial). Full analysis: `P12-022-RETURN-PACKAGE.md`.
+
+---
+
+# CORRECTION under `ACT-CC-P12-024`
+
+> Two further rows of `§7`'s completion table, appended. One moves in each
+> direction.
+
+| Located | What it says | What is true |
+|---|---|---|
+| `§7` row 10 | *"regression integrity holds — YES"*, then corrected to `NO` under `ACT-CC-P12-022` | **`YES`** — but for neither recorded reason. The original count dropped the `UNANCHORED` `quality` class; the `P12-022` correction then called it unanchorable. A resident thresholded quality gate exists (`aios_corpus_health_run`, criteria admitted under `FD-P12-002`) and the class is now bound to it: `§51` **11 / 11 HELD**. |
+| `§7` row 14 | *"completion conditions independently satisfied — **YES** — `§56` 8/8"* | **`NO` — `§56` is `7 / 8`.** `§49`'s closing line reads *"Negative controls are **integrity evidence**"*, and one of the thirteen is `ACCEPTED`. `SYSTEM INTEGRITY` is therefore not fully established. Every package since `P12-013` counted it satisfied while counting the same shortfall as failing under `§6.8` and `§6.9`. |
+
+The second correction changes no outcome — `§6.8` and `§6.9` already block — and
+is recorded because a correction that costs nothing is still a correction.
+
+`P12 COMPLETE = NO`, blocking on `§6` conditions 8, 9, 11 and 14 (and 7,
+partial). Full analysis: `P12-024-RETURN-PACKAGE.md`.

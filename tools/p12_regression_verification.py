@@ -28,6 +28,7 @@ the class is free of regression; a class is only as covered as its anchor.
 from __future__ import annotations
 
 import ast
+import json
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
@@ -259,19 +260,89 @@ def _security() -> Tuple[Optional[str], bool, str]:
             f"a write under certified {sample} was permitted")
 
 
-def _quality() -> Tuple[Optional[str], bool, str]:
-    """No resident quality gate exists to regress.
+#: The durable Knowledge store the `ACT-CC-P12-015` admission wrote.
+KNOWLEDGE_VERSIONS = (
+    REPO_ROOT
+    / "docs/architecture/p12/aios-runtime-store"
+    / "native_core_storage/knowledge_versions"
+)
 
-    There is no linter configuration, no formatter configuration, no coverage
-    threshold and no CI workflow in this repository. `§51` names a quality
-    regression class; nothing resident measures quality, so there is no prior
-    value for this run to be compared against.
 
-    Reported `UNANCHORED` rather than `HELD`. A class whose anchor does not
-    exist has not held — it has not been looked at.
+def _admitted_criteria(key: str = "corpus-health.criteria") -> Optional[dict]:
+    """The Active admitted criteria, read from the durable store.
+
+    Active is the highest `version_sequence` for the key, which is how
+    `KnowledgeVersioning` derives it from the append-only sequence. Absent,
+    unreadable or malformed all return `None`, because a criteria set that
+    cannot be read is not an empty one.
     """
-    return (None, False, "no resident quality gate: no linter, formatter, "
-                         "coverage threshold or CI configuration exists")
+    try:
+        lines = KNOWLEDGE_VERSIONS.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return None
+    best: Optional[dict] = None
+    for line in lines:
+        try:
+            record = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if record.get("knowledge_item_key") != key:
+            continue
+        if best is None or record.get("version_sequence", 0) > best.get(
+                "version_sequence", 0):
+            best = record
+    content = (best or {}).get("content")
+    return content if isinstance(content, dict) else None
+
+
+def _quality() -> Tuple[Optional[str], bool, str]:
+    """Corpus quality, judged against the criteria AIOS holds as Knowledge.
+
+    **Anchored under `ACT-CC-P12-024`, correcting `ACT-CC-P12-022`.** This
+    reported `UNANCHORED` on the ground that *"no resident quality gate: no
+    linter, formatter, coverage threshold or CI configuration exists"*. Each
+    clause of that is true and the conclusion drawn from it was not: a
+    thresholded quality gate does exist. `aios_corpus_health_run` judges three
+    measured facts against maxima **admitted as Active Knowledge** under
+    `FD-P12-002` — `stale_governance_sources_max`, `citation_errors_max`,
+    `live_stale_assertions_max`, all `0`. Looking only for the conventional
+    code-hygiene gates and concluding *nothing measures quality* was the same
+    error class this module exists to catch: absence of the expected shape read
+    as absence of the thing.
+
+    So the class is bound to the resident work's own path — its `_assess_*`
+    readers and its own `judge` — rather than to a re-derivation. The
+    thresholds are not restated here; they are read from the Knowledge store,
+    because a verifier that carries its own copy of a governed value stops
+    verifying the governed one.
+
+    **Fails closed.** A withheld verdict — no admitted criteria readable — is
+    `UNANCHORED`, never `HELD`. *"Cannot judge"* and *"judged and healthy"* are
+    different answers.
+
+    **What it does not cover, stated so the anchor is not over-read.** This is
+    the corpus quality dimension: governance-source staleness, citation
+    integrity, stale-assertion hygiene. Code style, formatting and test
+    coverage remain unmeasured, and `§51`'s `quality` class is only as covered
+    as this anchor — the module's own standing caveat, which applies here.
+    """
+    import aios_corpus_health_run as health
+
+    criteria = _admitted_criteria()
+    if criteria is None:
+        return (None, False,
+                "the admitted corpus-health criteria could not be read; a "
+                "withheld verdict is not a held one")
+    facts = {}
+    facts.update(health._assess_governance(REPO_ROOT))
+    facts.update(health._assess_citations(REPO_ROOT))
+    facts.update(health._assess_stale_state(REPO_ROOT))
+    result = health.judge(facts, criteria)
+    held = result["verdict"] == "HEALTHY"
+    breaches = result.get("breaches") or ()
+    return ("aios_corpus_health_run.judge", held,
+            f"{result['verdict']} against admitted criteria"
+            + (f"; breaches: {list(breaches)}" if breaches else ""))
 
 
 ANCHORS: Dict[str, Callable] = {

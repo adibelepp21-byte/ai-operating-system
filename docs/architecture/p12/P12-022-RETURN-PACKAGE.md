@@ -341,3 +341,22 @@ each tested to destruction. What stopped the work is that the next step in every
 direction is either someone else's decision or an absent artifact.
 
 **`P12 COMPLETE = NO`, and no authorized actionable construction remains.**
+
+---
+
+# CORRECTION under `ACT-CC-P12-024`
+
+> **Appended, not rewritten.** `B3` was wrong, and wrong in the direction that
+> cost the programme a condition it already satisfied.
+
+| Located | What it says | What is true |
+|---|---|---|
+| Part 6, and `B3` in part 8 | `§6.10` is `NO`; the `quality` regression class is **`STRUCTURAL — NOT ANCHORABLE RETROSPECTIVELY`**, because *"there is no resident linter, formatter, coverage threshold or CI workflow"* | Each clause is true and the conclusion does not follow. **A thresholded quality gate exists**: `aios_corpus_health_run` judges three measured facts against maxima admitted as **Active Knowledge under `FD-P12-002`** — `stale_governance_sources_max`, `citation_errors_max`, `live_stale_assertions_max`, all `0`. The class is now bound to that resident work's own readers and its own `judge`, with the thresholds **read from the Knowledge store rather than restated**. `§51`: **11 / 11 HELD · 0 REGRESSED · 0 UNANCHORED**. **`§6.10` is `YES`; `B3` is closed.** |
+| Part 6, *"Authorized actionable construction remaining: **none found**"* | — | **Also wrong.** Two P12-required items existed: the `quality` anchor above, and `§48` cross-platform verification over the resident `PD-01`/`PD-02` corpora, which no P12 measurement had ever read. Both were executed under `ACT-CC-P12-024`. |
+
+**Searching only for the conventional shape and concluding the thing is absent**
+is the error both rows share, and it is the same class as `ACT-CC-P12-021`'s
+`ESC-C7-01` finding. It is now three occurrences; the mechanism that caught all
+three was the same — read the actual body.
+
+`B1` and `B2` stand unchanged. Full analysis: `P12-024-RETURN-PACKAGE.md`.
