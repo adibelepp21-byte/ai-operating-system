@@ -28,8 +28,14 @@ Contract**, and `ACT-CC-P12-024 §5` forbids treating the first as the second.
 ## 2. `P12 EXIT CONTRACT`
 
 ```text
-RESULT = 10 of 14 SATISFIED · 1 PARTIAL · 3 NOT SATISFIED
+RESULT = 9 of 14 SATISFIED · 1 PARTIAL · 4 NOT SATISFIED
 ```
+
+> **Corrected under `ACT-CC-P12-025`.** This line originally read *"10 …
+> 3 NOT SATISFIED"*, which does not match the table below it: nine rows are
+> `YES` and four are `NO`. The summary was miscounted; no condition's state
+> changed, and none is re-judged here.
+
 
 | | Condition | State | Measured |
 |---|---|---|---|

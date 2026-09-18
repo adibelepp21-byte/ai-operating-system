@@ -267,3 +267,59 @@ class AttributionAndAnomalyDetection(unittest.TestCase):
                 except sentinel.CertificationUndeterminable:
                     continue          # fail-closed: nothing became permitted
             self.assertTrue(all(after), f"protection relaxed by: {statement}")
+
+
+class TheWarrantIsProtectedAndNotOnlyTheEvidence(unittest.TestCase):
+    """`ACT-CC-P12-025 §4 A2` — the gap in `F-12`'s own artifact.
+
+    The guard protected every certified phase's evidence and left the
+    instruments conferring that certification writable. Overwrite
+    `FD-P11-002` and `docs/architecture/p11` stops being protected at all: the
+    evidence was guarded and its warrant was not.
+    """
+
+    def test_both_certifying_instruments_are_protected(self):
+        for instrument in sentinel.protected_instruments():
+            with self.subTest(instrument.name):
+                with self.assertRaises(sentinel.CertifiedEvidenceProtected):
+                    sentinel.guard(instrument)
+
+    def test_the_set_is_derived_from_what_certifies_not_listed(self):
+        derived = {p.name for p in sentinel.protected_instruments()}
+        stated = {name for _, name in sentinel.certification_provenance()}
+        self.assertEqual(derived, stated)
+        source = Path(sentinel.__file__).read_text(encoding="utf-8")
+        self.assertNotIn("FD-P11-002-P11-CERTIFICATION.md\"", source)
+
+    def test_an_instrument_becomes_protected_by_certifying(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            acts = Path(tmp)
+            planted = acts / "FD-P42-001-NEW.md"
+            planted.write_text("PHASE 42 — SOMETHING IS CERTIFIED.",
+                               encoding="utf-8")
+            self.assertIn(planted, sentinel.protected_instruments(acts))
+
+    def test_an_ordinary_act_stays_writable(self):
+        """Protecting the whole acts root would refuse the corpus's own work."""
+        ordinary = (sentinel.ACTS_ROOT
+                    / "ACT-CC-P12-019-P12-COMPLETION-AUTHORITY-DELEGATION.md")
+        self.assertTrue(ordinary.is_file())
+        self.assertEqual(sentinel.guard(ordinary), ordinary)
+
+    def test_p12_working_files_stay_writable(self):
+        working = sentinel.REPO_ROOT / "docs/architecture/p12/probe.md"
+        self.assertEqual(sentinel.guard(working), working)
+
+    def test_this_does_not_touch_the_forgery_finding(self):
+        """Overwriting an instrument and planting one are different acts.
+
+        Pinned so no later reader reads this as progress on `§6.8` or `§6.9`.
+        A planted instrument is still believed; only overwriting an existing
+        certifying one is now refused.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            acts = Path(tmp)
+            (acts / "FD-P42-001-FABRICATED.md").write_text(
+                "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.",
+                encoding="utf-8")
+            self.assertIn(42, sentinel.certified_phases(acts))

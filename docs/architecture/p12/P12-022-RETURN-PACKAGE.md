@@ -360,3 +360,28 @@ is the error both rows share, and it is the same class as `ACT-CC-P12-021`'s
 three was the same — read the actual body.
 
 `B1` and `B2` stand unchanged. Full analysis: `P12-024-RETURN-PACKAGE.md`.
+
+---
+
+# SECOND CORRECTION under `ACT-CC-P12-025`
+
+| Located | What it says | What is true |
+|---|---|---|
+| `D-P12-022-02`, and part 3 of the return package | the `PD-03 ↔ PD-04` relationship is *"previously unregistered"* and *"on no register"* | **It is registered.** `EVIDENCE-LEDGER.md` carries it as **`E-25`** — *"PD-03 ↔ PD-04 ownership boundary, stated consistently from both sides, **conflict NONE**"*, citing the same `B1 §11`, `C8` and `C8 §36`. What is true is narrower: it is absent from the **`CROSS-PD-INTERFACE-REGISTRY`**, which carries `X-01`…`X-05`. I found it through the `P6-071` assessment and did not check the Ledger, so I reported *unregistered* when I meant *not in that one registry*. |
+| same | *"the only cross-PD relationship in the corpus with **both sides resident**"* | Loose. The PD-03 and PD-04 **corpora are not resident**; what is resident is the *evidence about* them — a P6 assessment's body-level quotation and `E-25`. The accurate claim is: the only cross-PD relationship with **two-sided body-level evidence quoted in resident records**. |
+
+Neither correction changes `F-18`, `§6.11`, or any determination. Both are
+recorded because the overstatement was mine and the Ledger had the answer.
+
+---
+
+# THIRD CORRECTION under `ACT-CC-P12-025`
+
+| Located | What it says | What is true |
+|---|---|---|
+| *"The gating arithmetic, which nobody had done"* — `X-01` row | after a full `ESC-C7-01` grant, `X-01` PD-03 → PD-02 has *"both sides readable"*, so **one of five** edges becomes two-sided | **Zero of five.** The arithmetic was right about **residency** and did not ask about **source completeness**. Volume 3's Part B is `NOT FROZEN` · `BLOCKED BY SOURCE IDENTITY` · `NOT COMPLETABLE FOR STRUCTURAL FREEZE`, and `B7`–`B10` carry the literal title *"Canonical Section Identity Pending"* (`VOLUME-SECTION-STATUS-MATRIX §2`; corroborated by `E-22`, resident in `ACT-CC-P6-071 §2`). **`B7` is the Interface section.** So for PD-03 — the source of `X-01`, `X-02` and `X-03` — the interface section does not exist **in the canonical volume either**, and granting residency would not produce one. PD-04's `B7` does exist, but `X-04` and `X-05` target `PD-06` and `PD-05`, both `G-01` absent. |
+
+This makes `ESC-C7-01` **less** valuable to `§6.11` than recorded, not more, and
+it is recorded for that reason. Its value to the programme is undiminished —
+`§H`'s 110 verified section bodies are still the largest unlock available — but
+it is no longer correct to say residency moves any `F-18` edge.

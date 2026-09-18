@@ -204,10 +204,48 @@ def protected_roots(
     return tuple(roots)
 
 
+def protected_instruments(acts_root: Path = ACTS_ROOT) -> Tuple[Path, ...]:
+    """The instruments that **confer** certification, which were not protected.
+
+    **A gap in `F-12`'s own artifact, found under `ACT-CC-P12-025 §4 A2` and
+    closed here.** The guard protected every certified phase's *evidence* and
+    left the instruments conferring that certification writable:
+
+    ```text
+    docs/architecture/platform-organization/EVIDENCE-LEDGER.md   REFUSED
+    docs/governance/acts/FD-P10-005-…CERTIFICATION….md           PERMITTED
+    docs/governance/acts/FD-P11-002-P11-CERTIFICATION.md         PERMITTED
+    ```
+
+    That is the module's own founding sentence turned on itself — *"a
+    certification that constrains documents but not behaviour is a record, not
+    a boundary"* — because the record the boundary is computed **from** was
+    outside the boundary. Overwrite `FD-P11-002` and `docs/architecture/p11`
+    stops being protected at all; the evidence was guarded and its warrant was
+    not.
+
+    **This is not the forgery finding and does not touch it.** Overwriting an
+    existing instrument and planting a new one are different acts: this refuses
+    the first and has no bearing on the second, so `§6.8`'s `false
+    certification` and `§6.9`'s `forge decision` are unchanged. It is fixed
+    because it is a defect, not because it moves anything.
+
+    **Derived, never listed.** The set is exactly the instruments
+    `certification_provenance` read a certification statement from, so an
+    instrument becomes protected by the act of certifying and a hand-maintained
+    list cannot drift away from what the guard actually believes.
+
+    The rest of the acts root stays writable: a new Act must be persistable, and
+    protecting the whole directory would refuse the corpus's ordinary work.
+    """
+    return tuple(sorted({acts_root / name
+                         for _, name in certification_provenance(acts_root)}))
+
+
 def is_protected(
     path: Path, repo_root: Path = REPO_ROOT, acts_root: Optional[Path] = None
 ) -> bool:
-    """Whether `path` lies inside a certified phase's evidence root."""
+    """Whether `path` is certified-phase evidence, or an instrument certifying one."""
     resolved = Path(path).resolve()
     for root in protected_roots(repo_root, acts_root):
         try:
@@ -215,6 +253,10 @@ def is_protected(
         except ValueError:
             continue
         return True
+    for instrument in protected_instruments(
+            acts_root or (repo_root / "docs/governance/acts")):
+        if resolved == instrument.resolve():
+            return True
     return False
 
 
