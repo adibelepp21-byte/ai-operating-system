@@ -334,3 +334,39 @@ FINAL P12 STATUS = PENDING EXTERNAL / RESERVED DEPENDENCY
 CERTIFICATION    = NOT CLAIMED   (§57 Founder-reserved)
 P13              = NOT AUTHORIZED
 ```
+
+---
+
+# SUITES AND INSTRUMENTS, AS MEASURED
+
+Added after the full run reported. No count appeared in this package before it
+had been measured.
+
+| | Result |
+|---|---|
+| `unittest discover -s native_core -t .` | **801** · OK (1 expected failure) |
+| `unittest discover -s consumers -t .` | **276** · OK |
+| `unittest discover -s tools/tests -t .` | **1354** · OK (1 skipped) — was 1348 at `ACT-CC-P12-024` |
+| `p12_system_negative_controls` | `§49` **12 / 13** · supplementary 2 / 2 |
+| `p12_mutation_verification` | `§50` **9 / 10** |
+| `p12_regression_verification` | `§51` **11 / 11 HELD** · 0 REGRESSED · 0 UNANCHORED |
+| `p12_fresh_process_verification` | `§52` **8 / 8** · 0 diverged |
+| `p12_cross_phase_verification` | **8 / 8** exercised |
+| `p12_cross_platform_verification` | **18 / 18** readable · 72 SOURCE-ABSENT · `interfaces_defined: 0` |
+| `p12_cross_pd_verification` | 6 current · `interfaces_verified: 0` |
+| `corpus_citation_audit` | **0 errors** |
+
+**+6 tests**, all on the warrant gap: both certifying instruments refuse writes;
+the protected set is asserted **derived** rather than listed, with the module's
+source checked for a hardcoded filename; an instrument becomes protected by
+certifying; an ordinary Act and a P12 working file stay writable; and — the one
+that matters most — a test pinning that **this does not touch the forgery
+finding**, so no later reader mistakes it for progress on `§6.8` or `§6.9`.
+
+**The full suite was mid-run when `69b1ed8` was committed**, and that commit said
+so rather than implying a green run. It came back green, and the pre-check that
+predicted it — no module writes into the acts root — is recorded above.
+
+```text
+1354 tests · OK · skipped 1 · exit 0
+```
