@@ -324,3 +324,46 @@ built to show it — which is the better provenance of the two.
 [U] **No `§6` condition changes.** `§30` runtime integration was already
 `DISCOVERED` on 8 of 9 items, and `reachability` is reported beside that count,
 never merged into it.
+
+---
+
+## 12. Suites and instruments, as measured
+
+Added after the full run reported, not before. No count appeared anywhere in
+this package until it had been measured.
+
+| | Result |
+|---|---|
+| `unittest discover -s native_core -t .` | **801** · OK (1 expected failure) |
+| `unittest discover -s consumers -t .` | **276** · OK |
+| `unittest discover -s tools/tests -t .` | **1348** · OK (1 skipped) — was 1327 at `ACT-CC-P12-023` |
+| `p12_system_negative_controls` | `§49` **12 / 13** · supplementary 2 / 2 |
+| `p12_mutation_verification` | **9 / 10** |
+| `p12_regression_verification` | `§51` **11 / 11 HELD** · 0 REGRESSED · **0 UNANCHORED** |
+| `p12_fresh_process_verification` | `§52` **8 / 8** reproduced · 0 diverged |
+| `p12_cross_phase_verification` | **8 / 8** exercised · 0 by a demonstrator |
+| `p12_cross_platform_verification` | **18 / 18** readable pairs evidenced · 72 SOURCE-ABSENT |
+| `p12_cross_pd_verification` | 6 current · **`interfaces_verified: 0`** |
+| `p12_operational_state_verifier` | **9 / 9** verified · 0 violated |
+| `p12_integration_graph` | 8 classes · 7 VERIFIED · 1 RESERVED · 0 invalid · 0 dangling |
+| `p12_self_model` | 12 questions · 10 VERIFIED · 2 INFERRED · **0 UNKNOWN** |
+| `p12_e12_measurement` | **5 / 5** SATISFIED |
+| `corpus_citation_audit` | **0 errors** |
+
+**+21 tests**, all adversarial: four drive the `§51` quality anchor — a forced
+`DEGRADED` verdict, unreadable criteria, a missing store, and the thresholds
+asserted against the admitted record; sixteen drive the `§48` cross-platform
+states against constructed corpora, including the Part-banner layout that caused
+this Act's own instrument defect; one pins that a test-only importer still does
+not reach a runtime.
+
+**Three tests were changed**, each labelled in its own body with why: two because
+the system changed under them (`§51`'s anchor made
+`p12_regression_verification` a non-test caller of `aios_corpus_health_run`),
+and one because it pinned a class as permanently unanchorable that turned out to
+have a resident anchor all along.
+
+```text
+P12 COMPLETE = NO
+BLOCKING: §6 conditions 8, 9, 11, 14   (and 7, partial)
+```
