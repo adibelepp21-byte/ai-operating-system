@@ -15,9 +15,14 @@ take it.
 
 ```text
 D-P12-027-01  §50 "forge decision"       DECIDED     → §6.9 SATISFIED
-D-P12-027-02  §49 "false certification"  NOT TAKEN   → §6.8 unchanged, open
+D-P12-027-02  §49 "false certification"  NOT TAKEN   → ruled by FD-P12-004
 D-P12-027-03  §48 "relevant"             DECIDED     → §6.11 SATISFIED
+D-P12-027-04  §6.7 "has been completed"  NOT TAKEN   → §6.7 unchanged, open
 ```
+
+**`D-P12-027-04` was added under the Founder's CONTINUE directive**, after
+`FD-P12-004` ruled `D-P12-027-02`. It is the fourth semantic surface and the
+second one declined, for the same reason as the second.
 
 ---
 
@@ -126,3 +131,25 @@ The first (**1355 OK**) measured the wider change set — `§49` at 13/13 with a
 control removed — that was backed out before commit. Citing it for this commit
 would be reporting evidence from a state deliberately abandoned. The second is
 the sequencing failure above. Only the third is evidence for `6c2bd7c`.
+
+
+---
+
+## `D-P12-027-04` — `§6.7` *"has been completed"* · **NOT TAKEN — referred to the Founder**
+
+| Field | Value |
+|---|---|
+| **Decision ID** | `D-P12-027-04` |
+| **Subject** | Whether `§6.7`'s *"system-wide verification **has been completed**"* means the verification was **performed and its findings recorded**, or that every property it verifies **holds** |
+| **Original authority** | Founder — the Exit Contract's author |
+| **Delegating authority** | `ACT-CC-P12-027 §6`, `§7` — **available and deliberately not exercised** |
+| **Status** | **UNRATIFIED DECISION PACKAGE.** `§6.7` is left `NOT SATISFIED`, exactly as it stood |
+| **The reading available** | *Performed and recorded.* On this reading `§6.7` is SATISFIED today: every `§19` scope item has a resident verifier, all were measured, and every gap is recorded rather than closed |
+| **Evidence for it — the Exit Contract's own verbs** | `§6` varies its verb deliberately and within four lines. `§6.8` *negative controls **hold***; `§6.9` *mutation tests **hold***; `§6.10` *regression integrity **holds***; `§6.11` relationships ***have evidence***; `§6.7` verification *has been **completed***. If `§6.7` meant every verified property must pass, `hold` was the word in use three lines later and it was not used |
+| **Further evidence** | `§55(7)–(9)` require source, evidence and external gaps **explicitly recorded** — a completion model in which a recorded gap is a completion is not one in which every property passes. `§43`: `UNKNOWN ≠ FALSE`, *"preserve uncertainty instead of fabricating certainty."* `§54`'s evidence matrix is *"intentionally not pre-certified"* |
+| **Evidence against it** | `§6`'s own closing line: *"Exit is not established by document completion or test count alone."* A reading on which running the verifiers completes `§6.7` sits close to that sentence, and `§56` forbids inferring completion from *absence of obvious failures*. The counter-counterargument — that `§6.7` requires findings **classified with dependency evidence**, not merely emitted — is what `P12-027-SECTION-6-7-FRONTIER-DETERMINATION.md` supplies, but supplying it does not settle which reading `§6.7` carries |
+| **Why Claude did not take it** | **It is the last blocker.** `§6.13` closes on this Act's own construction, and `§6.14` rests on `§6.7` through `§56`. Taking this reading would move the Exit Contract from `11 SATISFIED / 3 NOT` to `14 / 0` and produce `P12 COMPLETE = YES` in the same stroke. `§8` forbids choosing an interpretation because it produces PASS. The verb-contrast argument is real and would stand on its own — but so did `D-P12-027-02`'s, and the Founder's ruling there differed materially from what Claude would have implemented. Where the interpreter is the beneficiary and the effect is to complete the phase, the honest act is to prepare the decision, not to take it |
+| **What remains true either way** | The findings are unchanged by the reading. `§33` is `4 / 7` with three residuals classified `B`/`B`/`E`; `§34` and `§31` carry eight historical executions; `§26` carries two absent elements over 438; `§30` carries one. Nothing about the system changes — only whether `§6.7` reports those as a shortfall or as a completed verification with recorded gaps |
+| **Implementation consequence** | **None.** No verifier was altered, no threshold moved, no measurement relabelled |
+| **Final state** | `§6.7` = **NOT SATISFIED**, pending the Founder's ruling. `P12 COMPLETE = NO` |
+| **What the Founder is asked** | Does `§6.7`'s *"has been completed"* describe the **activity** — verification performed across the system, findings classified, gaps recorded per `§55` — or the **result**, that every property verified must hold? |

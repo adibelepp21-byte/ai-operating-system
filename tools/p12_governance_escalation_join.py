@@ -98,7 +98,21 @@ def join_escalation_to_grant(root: Path, register: EscalationRegister,
 
     # The escalation must already exist. A join cannot precede its subject —
     # raises EscalationRegisterError (a RuntimeError) if it does not.
-    register.load(escalation_id)
+    recorded = register.load(escalation_id)
+
+    # Since `ACT-CC-P12-027` the record names its own refusal type (`§33`), so
+    # two surfaces now state one fact and they must not disagree — a join
+    # contradicting the record it sits beside is worse than either alone.
+    # A record written before that field existed says nothing, and **silence is
+    # not a contradiction**: an absent value is not checked, never overridden.
+    # "Cannot check" and "checked and found wrong" are different answers, and
+    # only the second may refuse.
+    recorded_type = recorded.get("refusal_type")
+    if recorded_type is not None and recorded_type != refusal_type:
+        raise GovernanceJoinError(
+            f"the escalation record names {recorded_type!r} and this join "
+            f"claims {refusal_type!r} — a join may not contradict the record "
+            "it sits beside")
 
     root.mkdir(parents=True, exist_ok=True)
     path = root / f"{escalation_id}.governance-join.json"

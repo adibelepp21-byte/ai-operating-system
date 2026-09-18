@@ -241,3 +241,59 @@ authentication block is not a defence`) were written by Claude in
 `ACT-CC-P12-021`/`-022` to pin that certain repairs would *not* close the
 forgery; under the ruled semantics the lone plant is now rejected, so each was
 re-pinned to the **residual**, where the point they were making still holds.
+
+---
+
+# Appendix — corrections and supersession (Founder CONTINUE directive)
+
+**Appended, not rewritten.** The body above is the determination as it was made
+at `86c11c2` and stays exactly as issued. This appendix records what continued
+work found wrong in it, and what has changed since.
+
+## A.1 Two corrections against this record
+
+| | What it said | What is correct |
+|---|---|---|
+| `§2.5` heading | *"`§35` — governance evidence · 2 of 9 elements absent"* | The nine elements are **`§26` Governance Evidence**. `§35` is *P12-W5 — AIOS Self-Model*. `tools/p12_governance_evidence_verification.py` cites `§26` in its own first line; the citation here was wrong, the finding was not |
+| `§2.5` by implication | that `§35` carries a `§6.7` shortfall | `§35` measures **12 questions · 10 VERIFIED · 2 INFERRED · 0 UNKNOWN**, no element absent. It is the surface `§6.6` carries, and `§6.6` is SATISFIED |
+
+## A.2 `§2.6`'s `BLOCKED` / `REFUSED` row was half right
+
+It read *"**P12 GAP** — the escalation record carries no field naming which
+refusal occurred… **Plausibly yes** — a record field, for future records."*
+
+- **`REFUSED`: right, and now closed.** `EscalationRecord` gained
+  `refusal_type`, derived from the raised exception. `§33` is **4 / 7**.
+- **`BLOCKED`: wrong.** That field does not distinguish `BLOCKED`, because every
+  persisted refusal is *in the escalation register* and so is escalated at rest,
+  and `ExecutionOutcome.status` is likewise confined to the ratified
+  `success / failure / escalation`. `BLOCKED` belongs with `VERIFIED`, under the
+  ratified outcome vocabulary — **not** with the closable gap.
+
+Full reasoning, with each residual classified and its dependency evidence named
+as `§27` requires: `P12-027-SECTION-6-7-FRONTIER-DETERMINATION.md`.
+
+## A.3 What this changes in `§1`'s table
+
+| Condition | Was | Now | Basis |
+|---|---|---|---|
+| `§6.7` system-wide verification | NOT SATISFIED | **NOT SATISFIED** — unchanged | one `A` finding closed; the rest classified `B`/`D`/`E`/`F`. Whether the remainder *is* a shortfall turns on `D-P12-027-04`, prepared and **not taken** |
+| `§6.13` no authorized actionable construction remains | NOT SATISFIED | **SATISFIED** | the single item this record identified has been constructed; no other survives classification |
+| `§6.14` completion conditions | NOT SATISFIED | **NOT SATISFIED** | rests on `§6.7` through `§56` |
+
+```text
+12 SATISFIED · 2 NOT SATISFIED   (12 + 2 = 14)
+P12 COMPLETE = NO   — blocking: §6.7, §6.14
+```
+
+**`§6.13` moved in Claude's favour and is stated with its counterargument.**
+`ACT-CC-P12-026` recorded *"no authorized actionable construction remains"*;
+this record overturned it by finding one item; that item is now built, so the
+condition returns to where `P12-026` had it. The counterargument is that an
+enumeration which has already been wrong once may be wrong again — which is why
+`§6.13` is recorded as *satisfied on the enumeration in
+`P12-027-SECTION-6-7-FRONTIER-DETERMINATION.md §8`*, an enumeration written to
+be checked, and not as a claim that nothing further exists.
+
+**It does not matter to the verdict.** `P12 COMPLETE = NO` on `§6.7` and
+`§6.14`, exactly as before.

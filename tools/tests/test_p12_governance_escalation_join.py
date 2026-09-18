@@ -117,6 +117,75 @@ class WriterPersistsWhatItValidates(TempEscalation):
         self.assertEqual(before, after)
 
 
+class TheTwoSurfacesMustAgreeAboutOneFact(TempEscalation):
+    """`ACT-CC-P12-027` put `refusal_type` on the escalation record itself.
+
+    The join already carried one. Two surfaces now state the same fact, and
+    two surfaces disagreeing about one fact is worse than one surface alone,
+    so the writer refuses the contradiction.
+    """
+
+    def test_a_join_contradicting_the_record_is_refused(self):
+        with self.assertRaises(writer.GovernanceJoinError) as caught:
+            writer.join_escalation_to_grant(
+                self.root, self.register, self.recorded.escalation_id,
+                delegation_id="a" * 16, refusal_type="EscalationRequired")
+        self.assertIn("may not contradict the record", str(caught.exception))
+        self.assertFalse(
+            (self.root
+             / f"{self.recorded.escalation_id}.governance-join.json").exists(),
+            "a refused join must leave nothing behind")
+
+    def test_a_join_agreeing_with_the_record_is_written(self):
+        """The control must not refuse everything."""
+        join = writer.join_escalation_to_grant(
+            self.root, self.register, self.recorded.escalation_id,
+            delegation_id="a" * 16, refusal_type="ExecutionRefused")
+        self.assertEqual(join.refusal_type, self.recorded.refusal_type)
+
+    def test_a_record_that_names_no_type_is_not_treated_as_contradicting(self):
+        """Silence is not a contradiction.
+
+        The three resident escalations predate the field. *Cannot check* and
+        *checked and found wrong* are different answers, and only the second
+        may refuse — otherwise adding the field would retroactively make every
+        historical record unjoinable."""
+        path = (self.root
+                / f"{self.recorded.escalation_id}.escalation.json")
+        payload = json.loads(path.read_text())
+        payload.pop("refusal_type")
+        path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        join = writer.join_escalation_to_grant(
+            self.root, self.register, self.recorded.escalation_id,
+            delegation_id="a" * 16, refusal_type="EscalationRequired")
+        self.assertEqual(join.refusal_type, "EscalationRequired")
+
+    def test_the_one_wiring_path_cannot_produce_a_disagreement(self):
+        """Both values come from the same object in the same loop."""
+        import tempfile as _tempfile
+        from tools.planning import EscalationRequired
+        with _tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            refusals = [refusal(),
+                        EscalationRequired("plan exceeds authority",
+                                           required="r", held=("h",))]
+            ids = writer.join_refusals_to_grants(
+                root, refusals, subject=SUBJECT, authority=authority(),
+                delegation_for=lambda _r: "b" * 16)
+            self.assertEqual(len(ids), 2)
+            for escalation_id in ids:
+                record = json.loads(
+                    (root / f"{escalation_id}.escalation.json").read_text())
+                join = json.loads(
+                    (root / f"{escalation_id}.governance-join.json").read_text())
+                self.assertEqual(record["refusal_type"], join["refusal_type"])
+            self.assertEqual(
+                {json.loads((root / f"{i}.escalation.json").read_text())
+                 ["refusal_type"] for i in ids},
+                {"ExecutionRefused", "EscalationRequired"},
+                "the fixture must exercise both sanctioned types")
+
+
 class ReaderImportsNothingFromTheWriter(unittest.TestCase):
     """`§24` — a join only the writer believes in is not a join."""
 

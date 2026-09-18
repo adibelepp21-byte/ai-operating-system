@@ -2,7 +2,7 @@
   "runtime_id": "aios-corpus-health",
   "kind": "workflow",
   "state": "WorkflowState.SUCCEEDED",
-  "observed_at": "2026-09-18T13:33:39.608365+00:00",
-  "pid": 400,
+  "observed_at": "2026-09-18T14:06:30.451053+00:00",
+  "pid": 774,
   "hosted_by": "aios-corpus-health-runtime"
 }
