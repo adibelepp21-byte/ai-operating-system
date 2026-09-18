@@ -480,3 +480,21 @@ ACT-P13-001
 boundary, Blueprint, architecture, authority or decision was created or
 modified. No P13 definition was invented, no absent source reconstructed, and no
 Founder or Architect decision taken on their behalf.
+
+---
+
+# Appendix — supersession under `ACT-CC-P13-002`
+
+**Appended, not rewritten.** Three status changes; no gap was added or removed.
+
+| Gap | Was | Now | Basis |
+|---|---|---|---|
+| `P13-GAP-0005` P1–P9 not resident | `AUTHORITY_PENDING`, **blocking** | **NON-BLOCKING** | `D-1` — P12 Exit Contract `§46`'s precedent: a phase's capability is reconciled against the **resident system**, not its documents. Residency is required only to cite a P1–P9 document as authority, and no P13 requirement does |
+| `P13-GAP-0011` File 3 slot scope | `AUTHORITY_PENDING` | **`NO ACTION — NOT A VALID GAP`** | `D-2` — the question File 6 attributes to File 3 is the one **P12 answered and had certified**. A `DOCUMENT/SCOPE COLLISION`, not a missing layer |
+| `P13-GAP-0010` `Optimization → Governance` | `AUTHORITY_PENDING` | **`CONFLICTED` + Architect** | `D-3` — confirmed against the module body and the Governance Decision Register |
+
+**The `§8` exhaustion assessment stands**, and the blocking set is smaller but
+not shorter in effect: `GAP-0003` remains the apex, and removing `0005` from the
+blocking list did not unblock anything.
+
+Full register gate: `P13-003-GAP-ROOT-CAUSE-AND-RESOLUTION-REGISTER-GATE.md`.
