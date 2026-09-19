@@ -508,3 +508,69 @@ achievable and is achieved. **The program remains blocked; the Act is not.**
 boundary, Blueprint, architecture, subsystem, authority or decision was created
 or modified. `docs/architecture/p13/` does not exist. `P13 AUTHORIZED` reads
 `False` from the instrument body. Native Core remains 11.
+
+---
+
+# Appendix — supersession under `ACT-CC-P13-003`
+
+**Appended, not rewritten** (`ACT-CC-P13-003 §31`). The body above stays as
+issued. It was the honest reading of the evidence then in hand; fresh source
+tracing under `ACT-CC-P13-003` found that reading incomplete, and the correction
+is recorded here rather than applied to the text above.
+
+## A.1 `GAP-0003` — prior state, new evidence, reconciliation, new state
+
+| | |
+|---|---|
+| **PRIOR STATE** | `GAP-0003` *"who may author the P13 Blueprint"* · `AUTHORITY = NOT ESTABLISHED` · named **the apex** of the dependency graph (`§O7`, lines 199–200) |
+| **NEW EVIDENCE** | `docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md` → **`DEL-T4.4-CF-001`**, resident and **`ACTIVE`**, Constitution `§3.2`, governing decision `GDR-0015`. Its `§3.1 A/D` delegates *"perform architecture design · prepare architecture decisions"* and *"construction-phase roadmap sequencing"*. Its `§3.2` lists 20 exclusions; none of them is drafting a Blueprint. `P12 Exit Contract §58` separately reserves the **canonical** step: `Blueprint → Canonical Reconciliation → Authority Preparation → Founder Authorization → Construction` |
+| **RECONCILIATION** | Two authorities had been conflated under one gap. **Drafting** a Blueprint is an architecture-design act, establishable under the resident delegation. **Canonicalizing** one is a Founder act reserved by `§58`. `NOT ESTABLISHED` was true of the second and not of the first |
+| **NEW STATE** | `GAP-0003` = **RESOLVED**, split into `GAP-0003` (drafting — `ESTABLISHABLE UNDER EXISTING DELEGATION`, scope factor escalated as `FD-P13-002`, **NOT EXERCISED**) and `GAP-0003b` (canonicalization — `FOUNDER DECISION REQUIRED`, `§58`) |
+
+**The drafting authority was not exercised.** It is recorded as establishable;
+establishing it is a separate act and one factor in its scope is escalated, not
+assumed. Nothing was drafted under it.
+
+**The P12 precedent was refused as a basis, deliberately.** The P12 Blueprint
+was drafted while `P12 AUTHORIZED = FALSE`, which is resident and true and would
+have been the easy argument. `DEL-T4.4-CF-001 §3.3` forbids exactly that
+inference — *"role · capability · urgency · confidence · **precedent** ·
+silence"* — so the finding above rests on the delegation's own scope clauses.
+
+## A.2 The apex moves
+
+```text
+WAS:  GAP-0003  BLUEPRINT AUTHOR   ← apex
+        └─ gates → GAP-0001  P13 DEFINITION
+
+NOW:  GAP-0001  P13 DEFINITION     ← apex
+        (GAP-0003 no longer gates it; GAP-0003b sits downstream of the
+         Blueprint, not upstream of the definition)
+```
+
+**This is a correction against interest, not a relaxation.** The new apex is
+harder than the one it replaces. `GAP-0003` could in principle be closed by a
+delegation; `GAP-0001` cannot be closed by any delegation at all, because no
+delegation supplies a definition no source states. `§7` forbids reconstructing
+it and `DEL-T4.4-CF-001 §3.2.11` forbids creating authority by implication.
+**The program is no less blocked than this record said it was** — it is blocked
+on a different and less tractable thing.
+
+## A.3 What this changes in this record's outcome
+
+| | Was | Now |
+|---|---|---|
+| `§O7` dependency graph | single apex `GAP-0003` | single apex **`GAP-0001`**; `GAP-0003` resolved, `GAP-0003b` added downstream |
+| `§O7` class counts | `AUTHORITY DEPENDENCY` = 1 (`GAP-0003`) | `AUTHORITY DEPENDENCY` = 1 (`GAP-0003b`); `BLOCKING` set unchanged at 15, all still tracing to `GAP-0001` |
+| `§O15` next-gate package | *"the next gate needs exactly one decision: `E-1` — who may author the P13 Blueprint?"* | `E-1` is **answered in part** and no longer the gate; the gate is **`E-2` — what is P13?** |
+| `D-1` · `D-2` · `D-3` | as recorded | **CONFIRMED**, unchanged |
+| Exit state | `ACT-CC-P13-002 = COMPLETE` | **unchanged** — the Act's own objective was achieved and this correction does not retract it |
+| `P13 AUTHORIZATION` | `NOT GRANTED` | **unchanged** |
+
+**The register total moves by one, and only by the split.** No gap was added,
+removed or reclassified other than the split recorded in `A.1`: the 27 registered
+here become **28**, `GAP-0003` resolved as drafting and `GAP-0003b` carrying the
+reserved canonicalization half. The blocking set is unchanged.
+
+Full authorship and definition determination:
+`P13-004-BLUEPRINT-AUTHORSHIP-AND-DEFINITION-GATE.md`.
