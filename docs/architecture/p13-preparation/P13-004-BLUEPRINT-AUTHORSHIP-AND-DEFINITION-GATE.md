@@ -575,3 +575,35 @@ required state."* — **TRUE for the mechanism, FALSE for the content.** The
 mechanism is `§58`'s chain with `DEL-T4.4-CF-001` beneath it and the Founder at
 its terminus. What is missing is not a mechanism. It is the definition the
 mechanism would carry, and that is the Founder's to state.
+
+---
+
+# Appendix — supersession under `FD-P13-001`
+
+**Appended, not rewritten.** The body above stays as issued; one finding in it
+has been answered by Founder act.
+
+| | |
+|---|---|
+| **PRIOR STATE** | `O15` named the next gate as **`FD-P13-001` — what is P13?**, with options (a) direct definition, (b) non-canonical draft then canonicalization, (c) defer |
+| **NEW EVIDENCE** | **`FD-P13-001`, issued by the Founder, selects Option B** — `NON_CANONICAL_DRAFT_TO_FOUNDER_CANONICALIZATION`. Persisted verbatim at [`FD-P13-001-…`](../../governance/acts/FD-P13-001-P13-IDENTITY-AND-DEFINITION-PATH-SELECTION.md) |
+| **RECONCILIATION** | The gate `O15` named is answered **as to method only**. The decision selects how a P13 definition may be reached; it supplies no part of the definition, and its own `§12` says so. `O10`'s `FD-P13-001` package is spent; `O10`'s `FD-P13-002` package is now the live one |
+| **NEW STATE** | `DEFINITION METHOD = SELECTED` · `NEXT GATE = FD-P13-002` (drafting scope) · `GAP-0001` **unchanged — still open, still the apex** |
+
+**`O1`'s central determination is unchanged and was not overtaken.** The drafting
+authority remains `ESTABLISHABLE` and **still not exercised**: `FD-P13-001`
+expressly makes it `SUBJECT_TO_FD-P13-002` rather than resolving the scope
+factor. `O1`'s refusal to act on the P12 precedent, and its escalation of the
+scope factor instead, is what the decision then ratified as the required
+sequence.
+
+**No draft was begun on the strength of this decision.** The Founder selecting
+the path this office recommended is not a scope ruling, and `DEL-T4.4-CF-001
+§3.3` forbids inferring authority from confidence or assent as firmly as from
+precedent.
+
+`O14`'s dependency graph is unchanged: the apex is `GAP-0001`, `GAP-0003b`
+remains Founder-reserved and parallel, and none of the 15 blocking gaps moved.
+Register total remains 28.
+
+Full gate record: [`P13-005-DEFINITION-PATH-SELECTED-AND-DRAFTING-SCOPE-GATE.md`](P13-005-DEFINITION-PATH-SELECTED-AND-DRAFTING-SCOPE-GATE.md).
