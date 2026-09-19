@@ -311,3 +311,35 @@ absent source reconstructed. `docs/architecture/p13/` does not exist.
 
 **This record does not authorize the next gate, and Part B does not become an
 Act by being well-formed.**
+
+---
+
+# Appendix — supersession under `FI-P13-004`
+
+**Appended, not rewritten.** Part B above stays as prepared.
+
+| | |
+|---|---|
+| **PRIOR STATE** | Part B was a **proposal**, granting nothing, deliberately filed outside `docs/governance/acts/`. `ACT-CC-P13-004 = REQUIRED — NOT YET ISSUED` |
+| **NEW EVIDENCE** | **`FI-P13-004`, issued by the Founder** — `§21` `[X] ISSUE ACT-CC-P13-004`, `§22` signed, `Status: ISSUED`, `§20` `ISSUED = ACTIVE = BOUNDED` |
+| **RECONCILIATION** | The issuance arrived **without an Act body**. `§15` holds the proposal remains a proposal *"until incorporated into the issued Act"*; `§18` directs the issued Act be persisted in the canonical governance location. The body was therefore incorporated, **revised to satisfy `FI-P13-004 §6`'s element list**, which differs from `FD-P13-002 §9`'s and which Part B did **not** meet |
+| **NEW STATE** | [`ACT-CC-P13-004`](../../governance/acts/ACT-CC-P13-004-P13-NON-CANONICAL-BLUEPRINT-DRAFTING-AUTHORIZATION.md) — **ISSUED · ACTIVE · BOUNDED.** Part B is superseded by it and is no longer the operative text |
+
+**What Part B was missing.** `FI-P13-004 §6` adds three elements `FD-P13-002 §9`
+did not name — `12. authority boundaries` · `13. Founder / Architect reserved
+matters` · `14. explicit completion boundary` — and collapses four prohibitions
+into one. The issued Act carries the **union of both lists** (`§15` of the Act
+maps them), so neither specification excuses the other.
+
+**Part A's refusal stands and was vindicated.** `A.2` refused to read
+`FD-P13-002 §21`'s unattributed grant as permission to self-issue. `FI-P13-004
+§3` then ruled on exactly that: *"The authority chain shall not be interpreted
+as: `FD-P13-002` → Claude self-issues `ACT-CC-P13-004`. Self-issuance is
+expressly prohibited."* Had the broader reading been taken, an instrument would
+have been issued in breach of a prohibition the Founder had not yet written but
+plainly held.
+
+**The authorship of the body is disclosed, not buried.** The text is Claude's;
+the authority is the Founder's. Both the Act's header and `FI-P13-004`'s
+provenance section say so, and both state that if the Founder intended different
+Act text, this body must be replaced and every output under it re-examined.
