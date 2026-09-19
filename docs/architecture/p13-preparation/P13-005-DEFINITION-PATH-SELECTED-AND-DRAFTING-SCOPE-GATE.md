@@ -179,3 +179,38 @@ absent source reconstructed. `docs/architecture/p13/` does not exist.
 `P13 AUTHORIZED` reads `False` from the instrument body. Native Core remains 11.
 
 **This record does not authorize the next gate.** It states what the gate is.
+
+---
+
+# Appendix — supersession under `FD-P13-002`
+
+**Appended, not rewritten.** The body above stays as issued; its `§3` package
+has been answered by Founder act.
+
+| | |
+|---|---|
+| **PRIOR STATE** | `§3` prepared `FD-P13-002` with three options — (a) confirm in scope · (b) confirm out of scope · (c) bounded Act — and chose none. `§6` named `FD-P13-002` the next gate |
+| **NEW EVIDENCE** | **`FD-P13-002`, issued by the Founder, selects Option (c)** — a bounded, Founder-issued Act. Persisted verbatim at [`FD-P13-002-…`](../../governance/acts/FD-P13-002-BLUEPRINT-DRAFTING-SCOPE-AND-BOUNDED-AUTHORITY.md) |
+| **RECONCILIATION** | The gate is answered **as to mechanism only**. `§20` of the decision: *"until the bounded Act itself is issued: `P13 BLUEPRINT DRAFTING = NOT AUTHORIZED`. This is intentional."* The standing-delegation scope question `§3` framed is **deliberately left unresolved** by `§7` — it was not decided either way |
+| **NEW STATE** | `AUTHORITY MECHANISM = BOUNDED ACT` · `ACT-CC-P13-004 = REQUIRED — NOT YET ISSUED` · `NEXT GATE = its issuance, by the Founder` |
+
+**`§2`'s reasoning was upheld, not overtaken.** This record declined to draft on
+the strength of `FD-P13-001`; `FD-P13-002 §5` then named that same inference
+among the forbidden ones — *"Founder agreement with Option B ≠ standing
+delegation expansion"* — and `§8` restated the hold. The stop was correct and
+remains in force under a different instrument.
+
+**The structural observation in `§3` was addressed directly.** This record noted
+that every P13 preparation output to date was commissioned by a Founder-issued
+Act rather than by the standing delegation, and offered it as an observation
+rather than precedent. `FD-P13-002 §5` rules on it: *"the fact that
+`ACT-CC-P13-001`, `-002` and `-003` successfully commissioned P13 preparation
+work does not itself establish that the standing delegation covers P13
+drafting. Those Acts were Founder-issued instruments."* The observation stands
+and is now authoritative as a **limit**, not a licence.
+
+`GAP-0001` is unchanged — open, apex, and expressly not closed by `§14`. The 15
+blocking gaps and the 21 dependents are unchanged by `§15`. Register total 28.
+
+Full gate record and the proposed Act body:
+[`P13-006-BOUNDED-ACT-GATE-AND-PROPOSED-ACT-BODY.md`](P13-006-BOUNDED-ACT-GATE-AND-PROPOSED-ACT-BODY.md).
