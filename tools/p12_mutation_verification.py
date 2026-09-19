@@ -164,67 +164,169 @@ def _alter_frozen_boundary() -> Tuple[bool, bool, str]:
 
 
 def _forge_decision() -> Tuple[bool, bool, str]:
-    """Plant a document asserting a certification that no Founder issued."""
-    from tools import p12_certified_evidence_guard as sentinel
-    with tempfile.TemporaryDirectory() as tmp:
-        acts = Path(tmp)
-        (acts / "forged.md").write_text(
-            "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
-        phases = sentinel.certified_phases(acts)
-        if 42 in phases:
-            return True, False, (
-                "a planted certification statement was accepted; the guard reads "
-                "bodies and cannot distinguish an issued instrument from a forged one")
-        return True, True, "forged certification statement rejected"
+    """Forge a governance **decision**, against the contract that owns decisions.
+
+    **Re-pointed under `ACT-CC-P12-027 §8`, and this is an oracle correction of
+    the same class as `duplicate delegation`.** This probe drove
+    `p12_certified_evidence_guard.certified_phases` — a P12 tool that reads
+    certification *statements* out of instrument bodies to compute an evidence
+    protection set. That tool is not a decision authority and was never built as
+    one. `§50` says *"deliberately attempt to violate **critical contracts**"*,
+    and the critical contract for decisions is the Native Core's
+    `GovernanceReview`: *"Governance holds authority over decisions"*
+    (`Freeze §8`, `INV-8`, Constitution `§6.2` invariant 2).
+
+    Asking a document-reading convenience whether a decision is genuine, and
+    reporting the null answer as the system's inability, is `§48`'s failure —
+    a property asserted from a component that does not hold it — committed
+    inside the suite built to refuse it.
+
+    Three shapes, because a forger has three, and a control so a null result
+    cannot be a detector that refuses everything:
+
+    * inject a **byte-identical** forged approve straight into the decision
+      store, bypassing `record_decision` — the `F-G1` attack, faithful enough
+      that storage cannot tell it from a real one;
+    * have automation supply the authority;
+    * mutate the published record after the fact (`F-H1`).
+    """
+    import tempfile as _tempfile
+
+    from native_core.core.governance import (
+        DECISION_PARTITION, GovernanceError, GovernanceReview, HumanAuthority,
+        ReviewDecision)
+    from native_core.core.governance.authority import InvalidAuthority
+    from native_core.core.governance.decision import to_bytes
+    from native_core.core.infrastructure import LocalAppendOnlyStorage
+    from native_core.core.memory import MemoryReader
+    from native_core.core.trace import TraceReader, TraceWriter, new_record
+
+    def _stack():
+        tmp = Path(_tempfile.mkdtemp())
+        trace = LocalAppendOnlyStorage(base_dir=tmp / "t"); trace.provision()
+        store = LocalAppendOnlyStorage(base_dir=tmp / "g"); store.provision()
+        TraceWriter(trace).write(new_record(
+            agent_definition_version="1", agent_instance="mutation-probe",
+            runtime="rt", outputs={"finding": "X"}))
+        review = GovernanceReview(MemoryReader(TraceReader(trace)), store)
+        return review, store, review.pending_candidates()[0]
+
+    # The control first: a genuine human decision must authorize, or a refusal
+    # below would prove only that the mechanism refuses everything.
+    review, _, candidate = _stack()
+    review.record_decision(
+        ReviewDecision(candidate, "approve", HumanAuthority("Moriarty"), "reviewed"))
+    if not review.promotion_authorized(candidate):
+        return True, False, (
+            "the control failed: a genuine human decision did not authorize, so "
+            "no refusal below can be read as detection")
+
+    # 1 — a byte-identical forgery, injected past `record_decision`.
+    review, store, candidate = _stack()
+    forged = ReviewDecision(candidate, "approve", HumanAuthority("Moriarty"), "forged")
+    store.append(DECISION_PARTITION, to_bytes(forged))
+    if review.promotion_authorized(candidate):
+        return True, False, (
+            "a decision injected into the store authorized promotion; the "
+            "forgery was believed")
+    if review.recorded_decisions():
+        return True, False, (
+            "a decision injected into the store appeared among the recorded "
+            "decisions; the provenance index trusts raw storage")
+
+    # 2 — automation supplying the authority.
+    review, _, candidate = _stack()
+    for build in (lambda: ReviewDecision(candidate, "approve", None, "r"),
+                  lambda: ReviewDecision(candidate, "approve", HumanAuthority(""), "r")):
+        try:
+            review.record_decision(build())
+        except (GovernanceError, InvalidAuthority):
+            continue
+        return True, False, "automation supplied the authority for a decision"
+
+    # 3 — mutating the published record after the fact.
+    review, _, candidate = _stack()
+    review.record_decision(
+        ReviewDecision(candidate, "approve", HumanAuthority("Moriarty"), "r"))
+    try:
+        review.recorded_decisions()[0]["decision"] = "reject"
+        return True, False, "a recorded decision was mutated after the fact"
+    except Exception:
+        pass
+    if not review.promotion_authorized(candidate):
+        return True, False, "the post-hoc mutation changed the authorization"
+
+    return True, True, (
+        "refused: a forged decision authorizes nothing — injected past "
+        "record_decision it is absent from the provenance index, automation "
+        "cannot supply the authority, and a recorded decision cannot be altered")
 
 
 def _duplicate_delegation() -> Tuple[bool, bool, str]:
     """Two ACTIVE grants conveying one capability to one recipient instance.
 
-    `reconcile` is pure with respect to disk when both inputs are supplied, so
-    the mutation is applied to the inputs themselves rather than to a synthetic
-    directory the loaders would read differently from the real one.
+    **This probe asked the wrong component until `ACT-CC-P12-021`.** It drove
+    `delegation_reconciliation.reconcile`, whose `DEFECT_KINDS` are about the
+    ledger↔projection relationship — unrepresented grants, stale claims,
+    provenance mismatch. Grant **accumulation** is not among them and never
+    was. The component that owns it is `w4_continuity`, whose
+    `continuation_conditions` raises `MORE THAN ONE LIVE GRANT FOR ONE
+    INSTANCE`, and whose semantics were deliberately re-anchored on the
+    recipient instance in P11 after a `len(active) > 1` reading fired a false
+    positive against the legitimate cross-Department state.
 
-    Two shapes are attempted, because they are not the same mutation and the
-    system does not treat them the same way. The first — one grant projected
-    twice — is a duplicated *representation*. The second — two independent
-    grants of the same capability to the same recipient — is a duplicated
-    *delegation*, which is what `§50` names. The first is exercised here as the
-    control: it proves the detector under test can fire at all, so a null result
-    on the second cannot be read as the suite failing to run.
+    So the previous `MISSED` was a **test-oracle defect**, not a system defect
+    and not a source gap: the system detects this and the probe was looking
+    somewhere else. Corrected by driving the real detector, both ways — the
+    same instance holding two live grants must fire, and two instances holding
+    one each must not, because the second is the legitimate state the false
+    positive once blocked.
     """
-    from tools.delegation_reconciliation import (
-        ACTIVE, LedgerGrant, Projection, reconcile)
+    import json
 
-    def grant(key: str) -> LedgerGrant:
-        return LedgerGrant(
-            delegation_id=key, lifecycle=ACTIVE,
-            recipient_instance="mutation-probe-instance-001",
-            capability_scope=("probe",), authority_instrument="FD-P11-001",
-            authority_record=AUTHORIZING_RECORD,
-            accountable_party="mutation-verification", source="synthetic")
+    from tools import w4_continuity as continuity
 
-    def projection(key: str, grant_id: str) -> Projection:
-        return Projection(key=key, record=f"{key}.md", grant_id=grant_id,
-                          role="CURRENT", authorized_scope="probe",
-                          delegated_actor="mutation-probe-instance-001")
+    def _world(tmp: Path, grants) -> Path:
+        root = Path(tmp)
+        (root / "probe.instance.json").write_text(
+            json.dumps({"instance_key": "mutation-probe-instance-001"}),
+            encoding="utf-8")
+        for delegation_id, instance in grants:
+            (root / f"{delegation_id}.delegation.json").write_text(
+                json.dumps({"delegation_id": delegation_id,
+                            "status": "ACTIVE",
+                            "recipient_instance": instance,
+                            "executed_at": "2026-01-01"}), encoding="utf-8")
+        return root
 
-    control = reconcile([projection("w3-a", "g1"), projection("w3-b", "g1")],
-                        {"g1": grant("g1")})["defects"]
-    if not any(kind == "duplicate-representation" for kind, _, _ in control):
+    # The control: two instances holding one grant each is lawful and must not
+    # fire. Without it a detector that fired unconditionally would look correct.
+    with tempfile.TemporaryDirectory() as tmp:
+        lawful = continuity.reconstruct(_world(tmp, [
+            ("g1", "mutation-probe-instance-001"),
+            ("g2", "mutation-probe-instance-002")]))
+    if lawful["duplicate_active"]:
         return True, False, (
-            "the control did not fire: duplicated representation of one grant "
-            "was not reported, so this probe cannot distinguish a missing "
-            "detector from a suite that is not running")
+            "two instances holding one live grant each was reported as "
+            "accumulation — the false positive P11 corrected has returned")
 
-    defects = reconcile([projection("w3-a", "g1"), projection("w3-b", "g2")],
-                        {"g1": grant("g1"), "g2": grant("g2")})["defects"]
-    if defects:
-        return True, True, f"detected: {defects[0][0]}"
-    return True, False, (
-        "two ACTIVE grants of one capability to one recipient produced no "
-        "defect; duplicated representation is detected, duplicated delegation "
-        "is not")
+    # The mutation: one instance, two live grants.
+    with tempfile.TemporaryDirectory() as tmp:
+        mutated = continuity.reconstruct(_world(tmp, [
+            ("g1", "mutation-probe-instance-001"),
+            ("g2", "mutation-probe-instance-001")]))
+    if not mutated["duplicate_active"]:
+        return True, False, (
+            "one instance holding two live grants produced no accumulation "
+            "finding")
+    conditions = [c for c in continuity.continuation_conditions(mutated)
+                  if "MORE THAN ONE LIVE GRANT" in c]
+    if not conditions:
+        return True, False, (
+            "accumulation was computed but no continuation condition reports "
+            "it; a finding a next run never sees is not a detection")
+    return True, True, (
+        f"detected: {conditions[0][:88]}")
 
 
 def _alter_provenance() -> Tuple[bool, bool, str]:

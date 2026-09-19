@@ -138,10 +138,41 @@ def ownership(root: Path = REPO_ROOT) -> Answer:
 def authority(root: Path = REPO_ROOT) -> Answer:
     """What authority do I have? — reported, never exercised.
 
-    Returns the *holders* of authority and the matters that remain reserved.
-    Representing a reserved matter here does not resolve it, and representing a
-    delegation does not widen it.
+    Returns the *holders* of authority, the matters that remain reserved, and —
+    `ACT-CC-P12-007` — the **phase authorization state** the Founder has already
+    decided, read from the decision body on every call.
+
+    `phase_authorization` is the one part of this answer that is not a declared
+    constant. It exists because `ACT-CC-P12-006` found that this surface named
+    ``phase authorization`` as a Founder-reserved *matter* while saying nothing
+    about what had been *decided* under it — so nothing resident contradicted a
+    claim that P13 was authorized, and the `§49` control for exactly that
+    reported `ACCEPTED`. Naming who holds an authority is not the same as
+    reporting what they did with it.
+
+    **This does not authorize anything.** `ACT-CC-P12-007 §37`:
+    ``SELF-MODEL REPRESENTATION ≠ AUTHORIZATION``. The value is whatever
+    `tools.p12_phase_authorization` reads out of the Founder instrument; when
+    that instrument cannot be resolved the field says so and names the reason,
+    because *"authorization state undeterminable"* and *"not authorized"* are
+    different answers and a caller must not read the second for the first.
     """
+    from tools import p12_phase_authorization as phases
+    try:
+        states = {state.entity: state.as_reported()
+                  for state in phases.phase_states(root)}
+        contradiction = phases.issuance_contradiction(root)
+        phase_authorization = {
+            "resolved": True,
+            "states": states,
+            "issuance_contradiction": contradiction,
+        }
+    except phases.PhaseAuthorizationUnresolved as unresolved:
+        phase_authorization = {
+            "resolved": False,
+            "states": {},
+            "detail": str(unresolved),
+        }
     return Answer(
         "What authority do I have?",
         {
@@ -158,10 +189,13 @@ def authority(root: Path = REPO_ROOT) -> Answer:
                 "discover", "design within issued architecture", "implement",
                 "integrate", "test", "verify", "persist", "reconcile", "document",
             ),
+            "phase_authorization": phase_authorization,
             "self_model_authority": None,
         },
         VERIFIED,
-        "DP-01 §8; FD-P11-001 §12; FD-P10-005 §4; P12 Authorization §13",
+        "DP-01 §8; FD-P11-001 §12; FD-P10-005 §4; P12 Authorization §13; "
+        "phase state read from the Founder decision body by "
+        "tools.p12_phase_authorization",
     )
 
 

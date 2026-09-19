@@ -93,11 +93,14 @@ class AnUnanchoredClassHasNotHeld(unittest.TestCase):
         self.assertEqual(result.status, reg.UNANCHORED)
 
     def test_unanchored_is_excluded_from_held(self):
-        summary = reg.summary()
-        self.assertNotIn("quality", [c for c in reg.REGRESSION_CLASSES
-                                     if c not in summary["unanchored_classes"]
-                                     and c == "quality"])
+        """Driven against a mocked class, since every resident one is anchored."""
+        with mock.patch.dict(reg.ANCHORS,
+                             {"quality": lambda: (None, True, "nothing ran")}):
+            summary = reg.summary()
         self.assertIn("quality", summary["unanchored_classes"])
+        self.assertNotIn("quality", [r.regression_class for r in reg.verify()
+                                     if r.status == reg.HELD
+                                     and r.anchor is None])
         self.assertEqual(summary["held"] + summary["regressed"]
                          + summary["unanchored"] + summary["unavailable"],
                          summary["classes"])
@@ -187,12 +190,64 @@ class WhatThisSuiteDoesNotEstablish(unittest.TestCase):
                 result.anchor,
                 "HELD without a named anchor would be an unfalsifiable claim")
 
-    def test_quality_remains_unanchored(self):
+    def test_every_section_51_class_is_anchored(self):
+        """Changed under `ACT-CC-P12-024`. The predecessor of this test said:
+
+            *"if a resident quality gate has since been built, this finding is
+            closed and the evidence record must say so"*
+
+        No gate was built. One was **found**: `aios_corpus_health_run` judges
+        three measured facts against maxima admitted as Active Knowledge under
+        `FD-P12-002`. `ACT-CC-P12-022` looked for a linter, a formatter, a
+        coverage threshold and a CI workflow, found none, and concluded nothing
+        resident measures quality — absence of the expected shape read as
+        absence of the thing. The evidence record says so.
+        """
         summary = reg.summary()
-        self.assertIn(
-            "quality", summary["unanchored_classes"],
-            "if a resident quality gate has since been built, this finding is "
-            "closed and the evidence record must say so")
+        self.assertEqual(summary["unanchored_classes"], ())
+        self.assertEqual(summary["classes"], 11)
+
+
+class TheQualityAnchorIsAMeasurement(unittest.TestCase):
+    """`HELD` here must be reachable only by the corpus actually being healthy."""
+
+    def test_a_breach_is_reported_as_not_held(self):
+        import aios_corpus_health_run as health
+        real = health.judge
+        try:
+            health.judge = lambda facts, criteria: {
+                "verdict": "DEGRADED", "reason": "forced",
+                "breaches": ("citation_errors",)}
+            anchor, held, detail = reg._quality()
+        finally:
+            health.judge = real
+        self.assertEqual(anchor, "aios_corpus_health_run.judge")
+        self.assertFalse(held)
+        self.assertIn("citation_errors", detail)
+
+    def test_unreadable_criteria_is_unanchored_not_held(self):
+        """A withheld verdict is not a held one."""
+        with mock.patch.object(reg, "_admitted_criteria", lambda: None):
+            anchor, held, detail = reg._quality()
+        self.assertIsNone(anchor)
+        self.assertFalse(held)
+        self.assertIn("withheld", detail)
+
+    def test_the_thresholds_are_read_from_knowledge_not_restated(self):
+        """A verifier carrying its own copy stops verifying the governed value."""
+        criteria = reg._admitted_criteria()
+        self.assertEqual(criteria, {
+            "knowledge_item_key": "corpus-health.criteria",
+            "stale_governance_sources_max": 0,
+            "citation_errors_max": 0,
+            "live_stale_assertions_max": 0})
+        source = Path(reg.__file__).read_text(encoding="utf-8")
+        self.assertNotIn("citation_errors_max\": 0", source)
+
+    def test_a_malformed_store_does_not_read_as_empty_criteria(self):
+        with mock.patch.object(reg, "KNOWLEDGE_VERSIONS",
+                               Path("/no/such/knowledge/store")):
+            self.assertIsNone(reg._admitted_criteria())
 
 
 if __name__ == "__main__":

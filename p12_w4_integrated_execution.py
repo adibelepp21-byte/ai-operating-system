@@ -106,6 +106,20 @@ RUNS = {
         "goal": "p12-w4-integrated-execution-failure",
         "plan": "p12-w4-integrated-execution-failure-plan-0",
     },
+    # `FD-P12-006 §11` required a live end-to-end run against the completion
+    # state, and the four rows above had all been executed — `record()` refuses
+    # to overwrite a manifest, so a fifth **execution identity** was needed
+    # rather than a re-run. This is that identity: the same real work (an
+    # artifact conformance verification against the `FD-P11-001 §13` criteria)
+    # on a subject that had not been verified before. The outcome is whatever
+    # the subject turns out to carry; nothing here chooses it.
+    "005": {
+        "subject": REPO_ROOT / "tools" / "w4_continuity.py",
+        "store": "p12-live-verification",
+        "runtime": "p12-live-verification-runtime",
+        "goal": "p12-live-verification",
+        "plan": "p12-live-verification-plan-0",
+    },
 }
 
 INSTANCE_KEY = "engineering-intelligence-instance-001"

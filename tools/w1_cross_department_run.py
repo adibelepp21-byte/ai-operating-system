@@ -43,7 +43,7 @@ sys.path.insert(0, str(REPO_ROOT))
 from native_core.core.agent.definition import AgentDefinition  # noqa: E402
 from tools.agent_instance_registry import AgentInstanceRegistry  # noqa: E402
 from tools.delegation_reconciliation import project  # noqa: E402
-from tools.escalation_register import record_refusals  # noqa: E402
+from tools.p12_governance_escalation_join import join_refusals_to_grants  # noqa: E402
 from tools.organization_catalog import read_departments  # noqa: E402
 from tools.plan_to_workflow import compose  # noqa: E402
 from tools.planning import (AuthorityProvenance, Goal, Plan, PlanStep,  # noqa: E402
@@ -200,9 +200,10 @@ def run(perform: Callable[[PlanStep], str], *, coordinate=None,
                           skill_for={k: v[2] for k, v in STEPS.items()})
 
     # Collected into an `ExecutionReport`, the same shape the single-grant paths
-    # produce, so `report.refusals` is what reaches `record_refusals` here too —
-    # the property `test_each_call_passes_the_executors_own_refusals` asserts,
-    # and which a locally-built list would have satisfied only by accident.
+    # produce, so `report.refusals` is what reaches `join_refusals_to_grants`
+    # here too — the property `test_each_call_passes_the_executors_own_refusals`
+    # asserts, and which a locally-built list would have satisfied only by
+    # accident.
     report = ExecutionReport()
     for step in sequence(plan):
         executor = W4Executor(grants[step.key], registry)
@@ -226,10 +227,21 @@ def run(perform: Callable[[PlanStep], str], *, coordinate=None,
         for key in participants}
     departments = sorted({d for d in by_department.values() if d})
 
-    escalations = list(record_refusals(
+    # `ACT-CC-P12-005`: routed through `join_refusals_to_grants`, the one
+    # wiring this path now shares with `tools/w4_first_run.py` and
+    # `tools/w1_coordination_run.py`. Unlike those two, this path binds **one
+    # delegation per step** (`grants`), so the delegation a given refusal was
+    # actually raised under is not a single constant — it is
+    # `grants[refusal.required]`, because `_authorize_step` sets
+    # `ExecutionRefused.required` to the step key it refused, and each step
+    # ran under exactly the grant `grants[step.key]` names. Looking it up
+    # this way, rather than passing one delegation for all refusals, is what
+    # keeps a two-grant run from mis-joining a refusal to the wrong grant.
+    escalations = list(join_refusals_to_grants(
         OPERATIONS if persist else None, report.refusals,
         subject=f"plan {plan.key} / cross-department coordination",
-        authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD)))
+        authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD),
+        delegation_for=lambda refusal: grants[refusal.required].delegation_id))
 
     evidence = {
         "act": act,

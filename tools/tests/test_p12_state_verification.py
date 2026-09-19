@@ -51,35 +51,83 @@ class AConformanceSuiteIsNotAConsumer(unittest.TestCase):
         found = sv.consumers_of("tools.p12_operational_state")
         self.assertFalse([c for c in found if "test" in c])
 
-    def test_the_projection_currently_has_no_consumer(self):
-        self.assertEqual(sv.consumers_of("tools.p12_operational_state"), (),
-                         "if a consumer has been wired, the STATE item's "
-                         "classification must be updated rather than this "
-                         "control relaxed")
+    def test_the_evidenced_consumer_set_is_exactly_this(self):
+        """Pinned, so the set cannot drift in either direction unnoticed.
+
+        Its predecessor asserted the set was **empty** and said in its own
+        message: *"if a consumer has been wired, the STATE item's
+        classification must be updated rather than this control relaxed."*
+        `ACT-CC-P12-008` did the first half — no consumer was wired, a
+        measurement defect was corrected — and this is the second half. The
+        assertion is still exact, so a consumer appearing or disappearing still
+        fails here.
+
+        `ACT-CC-P12-019` added the third: `p12_e12_measurement` reads the
+        surface in its `E12-02` clause. It was **registered with the
+        independent consumer verifier** at the same time, so the consumption is
+        observed rather than merely claimed — a static importer the dynamic
+        harness cannot drive would otherwise read as a permanent DISAGREES."""
+        self.assertEqual(
+            sv.consumers_of("tools.p12_operational_state"),
+            ("tools/p12_e12_measurement.py",
+             "tools/p12_negative_control_verification.py",
+             "tools/p12_self_model_contract.py"))
+
+    def test_an_importer_that_never_reads_is_not_counted(self):
+        """`§16`: *"Each claimed consumer requires evidence that it actually
+        consumes the state."* `tools/p12_mutation_verification.py` imports the
+        surface and calls its projection only over a substituted source set —
+        it reads its own fixture, never the system's state."""
+        target = "tools.p12_operational_state"
+        self.assertIn("tools/p12_mutation_verification.py",
+                      sv.importers_of(target))
+        self.assertNotIn("tools/p12_mutation_verification.py",
+                         sv.consumers_of(target))
+        evidence = {e.module: e for e in sv.consumption_evidence(target)}
+        probe = evidence["tools/p12_mutation_verification.py"]
+        self.assertEqual((), probe.reads)
+        self.assertEqual(("conflicts",), probe.fixture_reads)
 
     def test_a_real_consumer_is_found_when_one_exists(self):
-        """The check must be able to report SATISFIED."""
+        """The check must be able to report SATISFIED — on a read, not on an
+        import, which is the whole of what `ACT-CC-P12-008` corrected."""
         import tempfile
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            (root / "surface.py").write_text("X = 1\n", encoding="utf-8")
-            (root / "reader.py").write_text("import surface\n", encoding="utf-8")
+            (root / "surface.py").write_text("def project():\n    return ()\n",
+                                             encoding="utf-8")
+            (root / "reader.py").write_text(
+                "import surface\nENTRIES = surface.project()\n",
+                encoding="utf-8")
+            (root / "importer.py").write_text("import surface\n",
+                                              encoding="utf-8")
             with mock.patch.object(sv, "REPO_ROOT", root):
                 self.assertEqual(sv.consumers_of("surface"), ("reader.py",))
+                self.assertEqual(sv.importers_of("surface"),
+                                 ("importer.py", "reader.py"))
 
 
 class EachLinkCanBeDrivenToUnsatisfied(unittest.TestCase):
     """Three satisfied links is a measurement only if they can fail."""
 
-    def test_the_consumer_link_is_unsatisfied_on_the_live_corpus(self):
+    def test_the_consumer_link_is_satisfied_on_the_live_corpus(self):
         result = {r.link: r for r in sv.verify()}["CONSUMER"]
-        self.assertEqual(result.status, sv.UNSATISFIED)
-        self.assertIn("nothing reads", result.detail)
+        self.assertEqual(result.status, sv.SATISFIED)
+        self.assertIn("evidenced consumer", result.detail)
 
-    def test_the_consumer_link_is_satisfied_when_a_consumer_exists(self):
-        with mock.patch.object(sv, "consumers_of",
-                               return_value=("tools/somewhere.py",)):
-            self.assertEqual(sv._link_consumer().status, sv.SATISFIED)
+    def test_the_consumer_link_is_unsatisfied_when_nothing_reads(self):
+        """The direction this class exists for. Driven down two ways, because
+        an empty corpus and a corpus of importers-that-never-read are different
+        failures and only the second exercises `§16`'s evidence requirement."""
+        importer_only = (sv.ConsumerEvidence("tools/never-reads.py",
+                                             reads=(), fixture_reads=()),)
+        with mock.patch.object(sv, "consumption_evidence",
+                               return_value=importer_only):
+            result = sv._link_consumer()
+        self.assertEqual(result.status, sv.UNSATISFIED)
+        self.assertIn("import it without reading it", result.detail)
+        with mock.patch.object(sv, "consumption_evidence", return_value=()):
+            self.assertEqual(sv._link_consumer().status, sv.UNSATISFIED)
 
     def test_an_unresolved_source_path_breaks_the_source_link(self):
         from tools import p12_operational_state as state
@@ -115,16 +163,30 @@ class EachLinkCanBeDrivenToUnsatisfied(unittest.TestCase):
         self.assertEqual(result.status, sv.UNAVAILABLE)
 
 
-class TheItemIsNotClosed(unittest.TestCase):
-    """`ACT-CC-P12-W2-001 §48`: W2 must not be assumed to close it."""
+class TheItemIsClosedByMeasurementNotByAssumption(unittest.TestCase):
+    """`ACT-CC-P12-W2-001 §48`: W2 must not be **assumed** to close it.
 
-    def test_the_chain_is_incomplete(self):
+    That rule is about who decides and on what basis, and it is still honoured:
+    W2 built the surface and claimed nothing; W6 measured it and decided. What
+    changed under `ACT-CC-P12-008` is the measurement, not the standard — the
+    fourth link reported UNSATISFIED for as long as the instrument could not
+    see the shape every resident importer actually uses.
+    """
+
+    def test_the_chain_is_complete(self):
         summary = sv.summary()
+        self.assertTrue(summary["chain_complete"])
+        self.assertEqual(summary["broken_links"], ())
+
+    def test_four_of_four_links_are_satisfied(self):
+        self.assertEqual(sv.summary()["satisfied"], 4)
+
+    def test_closure_rests_on_evidence_that_can_be_withdrawn(self):
+        """Four of four is a measurement only if the fourth can still fail."""
+        with mock.patch.object(sv, "consumption_evidence", return_value=()):
+            summary = sv.summary()
         self.assertFalse(summary["chain_complete"])
         self.assertEqual(summary["broken_links"], ("CONSUMER",))
-
-    def test_three_of_four_links_are_satisfied(self):
-        self.assertEqual(sv.summary()["satisfied"], 3)
 
     def test_no_authority_conflict_is_outstanding(self):
         self.assertEqual(sv.summary()["authority_conflicts"], 0)

@@ -1,0 +1,29 @@
+{
+  "delegation_id": "aa591daf55ca4714",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "recipient_instance": "engineering-intelligence-instance-p12w3-001",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "objective": "Prove one real refusal can be escalated and joined to its grant by structured reference (W4-GAP-008).",
+  "capability_scope": [
+    "engineering-intelligence"
+  ],
+  "work_scope": [
+    "verify-delegation-elements"
+  ],
+  "lifecycle_boundary": "one execution of plan p12-w3-governance-escalation-plan-0",
+  "resource_boundary": "no repository mutation outside docs/architecture/p12",
+  "output_expectation": "one escalation, structurally joined to this grant",
+  "verification_requirement": "the join independently resolves through tools/p12_governance_join_reader",
+  "escalation_condition": "any step outside the delegated work scope",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "termination_condition": "on completion of plan p12-w3-governance-escalation-plan-0",
+  "status": "ACTIVE",
+  "issued_at": "2026-09-16T17:11:53.445494+00:00",
+  "authority_chain": [
+    "delegation:aa591daf55ca4714",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ]
+}

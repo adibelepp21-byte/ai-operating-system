@@ -84,17 +84,68 @@ class AcceptedIsReachable(unittest.TestCase):
         self.assertEqual(result.status, neg.ACCEPTED)
         self.assertTrue(result.attempted)
 
-    def test_the_live_run_reports_accepted_results(self):
-        summary = neg.summary()
-        self.assertGreater(
-            summary["accepted"], 0,
-            "a run with zero ACCEPTED would need a control proving this module "
-            "is capable of reporting one")
+    def test_accepted_remains_reachable_although_section_49_is_clean(self):
+        """Updated under `FD-P12-004`: `§49` now reports 13/13.
 
-    def test_the_two_findings_are_named(self):
-        self.assertEqual(neg.summary()["not_refused"],
-                         ("unauthorized P13 authorization",
-                          "false certification"))
+        This asserted the **live** `§49` run contains an `ACCEPTED`, which
+        measured the system rather than the suite. The property that must
+        survive is that `ACCEPTED` is reachable at all — driven against a
+        constructed control, so a clean run can never be mistaken for a suite
+        incapable of reporting one. The live `ACCEPTED` that remains is the
+        `coordinated forgery residual`, reported among the supplementary
+        controls exactly because the ruling says it is not a `§49` finding.
+        """
+        with mock.patch.object(
+                neg, "CONTROLS",
+                (("probe", lambda: (True, False, "nothing objected")),)):
+            self.assertEqual(neg.summary()["accepted"], 1)
+        self.assertEqual(
+            neg.summary()["supplementary_not_refused"],
+            ("coordinated forgery residual",))
+        self.assertEqual(
+            neg.summary()["accepted"], 0,
+            "§49 is clean under FD-P12-004; a regression must fail here")
+
+    def test_the_remaining_finding_is_named(self):
+        """Pinned, so an unrefused control cannot appear or vanish silently.
+
+        This read `("unauthorized P13 authorization", "false certification")`
+        until `ACT-CC-P12-007` closed the first by making the self-model report
+        the phase authorization state the Founder had already decided. The
+        assertion is **narrowed to what is true, not relaxed**: the tuple is
+        still exact, so a third finding appearing — or `false certification`
+        being quietly "closed" while it remains Founder-reserved — still fails
+        here. `tools/tests/test_p12_phase_authorization.py` is what proves the
+        first genuinely closed rather than being argued away.
+
+        Under `FD-P12-004` the tuple is **empty**. The Founder fixed `§49`'s
+        semantic boundary — reject a certification claim that cannot resolve
+        against an authoritative record — and the guard now rejects rather than
+        merely reports one. The assertion stays exact, so a finding appearing
+        still fails here."""
+        self.assertEqual(neg.summary()["not_refused"], ())
+
+    def test_false_certification_demonstrates_the_ruled_chain(self):
+        """Updated under `FD-P12-004`, and the predecessor named the risk.
+
+        The old test warned that a clean `§49` *"would mean this control had
+        been reinterpreted rather than satisfied"* — the right thing to worry
+        about, and the reason Claude prepared the reading and declined to apply
+        it. The Founder applied it. `§49`'s `false certification` means *reject a
+        certification claim that cannot resolve against an authoritative
+        certification record*, and the ruling required the oracle and evidence
+        be reconciled rather than the number changed.
+
+        So the control now drives the whole ruled chain: an unresolvable claim
+        is **detected** and then **rejected** — it does not enter the certified
+        set. Detection alone, which is what the guard did before, is the middle
+        of that chain and was not enough.
+        """
+        results = {r.control: r for r in neg.verify()}
+        self.assertEqual(results["false certification"].status, neg.REFUSED)
+        self.assertTrue(results["false certification"].attempted)
+        self.assertIn("detected and rejected",
+                      results["false certification"].detail)
 
 
 class EachAttemptIsActuallyMade(unittest.TestCase):
@@ -139,3 +190,62 @@ class WhatThisSuiteDoesNotEstablish(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SupplementaryControlsNeverInflateSection49(unittest.TestCase):
+    """`ACT-CC-P12-022` — added beside `§49`, never inside it.
+
+    `§6.8` asks whether `§49`'s thirteen hold. Two controls were added this Act
+    and both pass; if they had been appended to `CONTROLS`, `§6.8` would have
+    read `14/15` and looked like progress it is not.
+    """
+
+    def test_section_49_is_still_exactly_thirteen(self):
+        self.assertEqual(len(neg.CONTROLS), 13)
+        self.assertEqual([name for name, _ in neg.CONTROLS],
+                         list(neg.NEGATIVE_CONTROLS))
+
+    def test_no_supplementary_control_is_a_section_49_control(self):
+        self.assertFalse(
+            {name for name, _ in neg.SUPPLEMENTARY_CONTROLS}
+            & set(neg.NEGATIVE_CONTROLS))
+
+    def test_the_headline_numbers_count_only_section_49(self):
+        summary = neg.summary()
+        self.assertEqual(summary["controls"], 13)
+        self.assertEqual(summary["refused"], 13)
+        self.assertEqual(summary["accepted"], 0)
+        self.assertEqual(summary["not_refused"], ())
+
+    def test_the_supplementary_results_are_reported_under_their_own_keys(self):
+        summary = neg.summary()
+        self.assertEqual(summary["supplementary"], 3)
+        self.assertEqual(summary["supplementary_refused"], 2)
+        self.assertEqual(summary["supplementary_not_refused"],
+                         ("coordinated forgery residual",))
+
+    def test_a_lone_planted_instrument_is_reported(self):
+        attempted, refused, detail = neg._unregistered_certification()
+        self.assertTrue(attempted and refused)
+        self.assertIn("phase 42", detail)
+
+    def test_no_forged_certification_permits_a_refused_write(self):
+        attempted, refused, detail = neg._forged_certification_permitting_a_write()
+        self.assertTrue(attempted and refused)
+        self.assertIn("expands the prohibition set or fails closed", detail)
+
+    def test_the_residual_is_measured_outside_section_49(self):
+        """`FD-P12-004 §5`: the ruling eliminates no trust-anchor capability.
+
+        So the residual — a forger who writes the Register row as well as the
+        instrument — is still real and still measured, as a supplementary
+        `ACCEPTED`. Keeping it outside `§49` is what the ruling directs: it is
+        not a finding the canon asks that control for, and a supplementary
+        `ACCEPTED` cannot inflate `§6.8` or be mistaken for one.
+        """
+        supplementary = {r.control: r for r in neg.supplementary()}
+        residual = supplementary["coordinated forgery residual"]
+        self.assertEqual(residual.status, neg.ACCEPTED)
+        self.assertIn("Freeze §10", residual.detail)
+        self.assertNotIn("coordinated forgery residual",
+                         [name for name, _ in neg.CONTROLS])

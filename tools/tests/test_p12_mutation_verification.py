@@ -11,11 +11,15 @@ controls here establish the three properties that tell the two apart:
 
 from __future__ import annotations
 
+import json
+import shutil
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 from tools import p12_mutation_verification as mut
+from tools import w4_continuity as continuity
 
 
 class TheScopeIsSection50s(unittest.TestCase):
@@ -91,15 +95,21 @@ class TheSuiteCanReportMissed(unittest.TestCase):
         self.assertEqual(result.status, mut.MISSED)
         self.assertEqual(summary["missed_mutations"], ("undetected",))
 
-    def test_the_live_run_actually_reports_missed_results(self):
-        summary = mut.summary()
-        self.assertGreater(
-            summary["missed"], 0,
-            "a run with zero MISSED results would need a control proving the "
-            "suite is capable of reporting one")
+    def test_missed_remains_reachable_although_the_live_run_is_clean(self):
+        """Changed under `ACT-CC-P12-027`: the live run reports 10/10.
 
+        This asserted the **live** run contains a `MISSED`, which measured the
+        system rather than the suite. The property that must survive is that
+        `MISSED` is reachable at all — driven against a constructed mutation, so
+        a clean run can never be mistaken for a suite that cannot fail.
+        """
+        with mock.patch.object(
+                mut, "MUTATIONS",
+                (("undetected", lambda: (True, False, "nothing objected")),)):
+            self.assertEqual(mut.summary()["missed"], 1)
+        self.assertEqual(mut.summary()["missed"], 0,
+                         "§50 reports clean; a regression must fail here")
 
-class EachMutationExercisesARealDetector(unittest.TestCase):
     def test_removing_authority_is_refused_by_the_delegation_registry(self):
         attempted, detected, _ = mut._remove_authority()
         self.assertTrue(attempted)
@@ -161,22 +171,179 @@ class TheDuplicateProbeCarriesItsOwnControl(unittest.TestCase):
         kinds = [k for k, _, _ in reconcile(twice, {"g1": grant})["defects"]]
         self.assertIn("duplicate-representation", kinds)
 
-    def test_duplicated_delegation_is_not_detected(self):
+    def test_duplicated_delegation_is_detected_by_the_component_that_owns_it(self):
+        """Changed under `ACT-CC-P12-021` because the probe was wrong.
+
+        This asserted `MISSED`. It was pinning a **test-oracle defect**: the
+        probe drove `delegation_reconciliation.reconcile`, whose defect kinds
+        are about the ledger-to-projection relationship and have never included
+        grant accumulation. The component that owns accumulation is
+        `w4_continuity`. The system's behaviour did not change here; what the
+        probe asks did.
+        """
         attempted, detected, detail = mut._duplicate_delegation()
         self.assertTrue(attempted, "the control must have run")
+        self.assertTrue(detected)
+        self.assertIn("MORE THAN ONE LIVE GRANT", detail)
+
+    def test_two_instances_holding_one_grant_each_is_not_accumulation(self):
+        """The false positive P11 corrected must stay corrected.
+
+        `duplicate_active` was once `len(active) > 1`, which reported the
+        legitimate cross-Department state — one live grant per Department's
+        instance — as a permanent blocker. If that reading returns, the probe's
+        own control catches it and the probe reports `MISSED`, not `DETECTED`.
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for key, instance in (("g1", "i-001"), ("g2", "i-002")):
+                (root / f"{key}.delegation.json").write_text(json.dumps(
+                    {"delegation_id": key, "status": "ACTIVE",
+                     "recipient_instance": instance,
+                     "executed_at": "2026-01-01"}), encoding="utf-8")
+            state = continuity.reconstruct(root)
+        self.assertFalse(state["duplicate_active"])
+        self.assertEqual(state["accumulated_grants"], {})
+
+    def test_the_probe_reports_missed_when_the_detector_goes_silent(self):
+        """A null result must still be reachable, or `DETECTED` means nothing."""
+        original = continuity.reconstruct
+        try:
+            continuity.reconstruct = lambda root: dict(
+                original(root), duplicate_active=False, accumulated_grants={})
+            attempted, detected, detail = mut._duplicate_delegation()
+        finally:
+            continuity.reconstruct = original
+        self.assertTrue(attempted)
         self.assertFalse(detected)
-        self.assertIn("duplicated delegation", detail)
+        self.assertIn("no accumulation finding", detail)
+
+    def test_the_probe_reports_missed_when_the_condition_is_not_surfaced(self):
+        """Computing accumulation without reporting it is not a detection."""
+        original = continuity.continuation_conditions
+        try:
+            continuity.continuation_conditions = lambda state: ()
+            attempted, detected, detail = mut._duplicate_delegation()
+        finally:
+            continuity.continuation_conditions = original
+        self.assertTrue(attempted)
+        self.assertFalse(detected)
+        self.assertIn("no continuation condition reports", detail)
 
 
 class TheFindingsAreRecordedAsFindings(unittest.TestCase):
-    def test_forging_a_decision_is_missed(self):
-        attempted, detected, _ = mut._forge_decision()
+    def test_forging_a_decision_is_detected_by_the_contract_that_owns_decisions(self):
+        """Changed under `ACT-CC-P12-027 §8`, and the predecessor named the test.
+
+        The old assertion said the finding closes *"if the certified-evidence
+        guard has since learned to distinguish an issued instrument from a
+        planted one"*. **It has not, and that is not what changed.** What
+        changed is which contract the probe asks. `certified_phases` reads
+        certification statements out of instrument bodies to compute an
+        evidence protection set; it is not a decision authority and never was.
+        `§50` says *"attempt to violate critical contracts"*, and the critical
+        contract for decisions is `GovernanceReview` — *"Governance holds
+        authority over decisions"* (`Freeze §8`, `INV-8`).
+
+        The guard's limitation is unchanged and still recorded; it was simply
+        never `§50 forge decision`'s subject. Same oracle defect as
+        `duplicate delegation`, in the same suite, found the same way.
+        """
+        attempted, detected, detail = mut._forge_decision()
         self.assertTrue(attempted)
-        self.assertFalse(
-            detected,
-            "if the certified-evidence guard has since learned to distinguish "
-            "an issued instrument from a planted one, this finding is closed "
-            "and the evidence record must say so")
+        self.assertTrue(detected)
+        self.assertIn("authorizes nothing", detail)
+
+    def test_the_probe_drives_the_canonical_decision_contract(self):
+        import ast
+        import inspect
+        source = inspect.getsource(mut._forge_decision)
+        imported = {n.module for n in ast.walk(ast.parse(source.lstrip()))
+                    if isinstance(n, ast.ImportFrom) and n.module}
+        self.assertIn("native_core.core.governance", imported)
+        self.assertNotIn("tools.p12_certified_evidence_guard", imported)
+
+    def test_the_forged_decision_probe_carries_a_working_control(self):
+        """A refusal proves nothing if the mechanism refuses everything."""
+        from native_core.core.governance import (
+            GovernanceReview, HumanAuthority, ReviewDecision)
+        from native_core.core.infrastructure import LocalAppendOnlyStorage
+        from native_core.core.memory import MemoryReader
+        from native_core.core.trace import TraceReader, TraceWriter, new_record
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            trace = LocalAppendOnlyStorage(base_dir=root / "t"); trace.provision()
+            store = LocalAppendOnlyStorage(base_dir=root / "g"); store.provision()
+            TraceWriter(trace).write(new_record(
+                agent_definition_version="1", agent_instance="i",
+                runtime="rt", outputs={"finding": "X"}))
+            review = GovernanceReview(MemoryReader(TraceReader(trace)), store)
+            candidate = review.pending_candidates()[0]
+            self.assertFalse(review.promotion_authorized(candidate))
+            review.record_decision(ReviewDecision(
+                candidate, "approve", HumanAuthority("Moriarty"), "reviewed"))
+            self.assertTrue(review.promotion_authorized(candidate))
+
+    def test_restricting_the_acts_root_would_not_close_the_forgery(self):
+        """`ACT-CC-P12-021 §19`/`§20` — the tempting repair, falsified.
+
+        `_forge_decision` plants its document in a temporary directory, so the
+        obvious reading is that the probe only succeeds because it was handed a
+        root the real guard would never see, and that pinning `certified_phases`
+        to `ACTS_ROOT` would close the finding. It would close the *probe*, not
+        the behaviour: the forgery is accepted just as readily when it is
+        planted inside a faithful copy of the resident acts root.
+
+        Pinned here so that repair can never be mistaken for a resolution. It
+        would move `§6.8` to `13/13` and `§6.9` to `10/10` while the system
+        gained no ability whatsoever to tell an issued instrument from a planted
+        one — the metric improvement `§20` names and forbids.
+        """
+        from tools import p12_certified_evidence_guard as sentinel
+        resident = sentinel.certified_phases(sentinel.ACTS_ROOT)
+        self.assertNotIn(42, resident)
+        with tempfile.TemporaryDirectory() as tmp:
+            copy = Path(tmp) / "acts"
+            shutil.copytree(sentinel.ACTS_ROOT, copy)
+            (copy / "FD-P42-999-FABRICATED.md").write_text(
+                "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.",
+                encoding="utf-8")
+            # Under `FD-P12-004` the lone plant is now rejected — it resolves
+            # against no Register entry — so the point survives only in its
+            # stronger form: the residual, where the forger writes the record
+            # too. Restricting the root still closes nothing there.
+            self.assertEqual(sentinel.certified_phases(copy), resident)
+            register = Path(tmp) / "register.md"
+            register.write_text("| `FD-P42-999` | issued |", encoding="utf-8")
+            self.assertIn(42, sentinel.certified_phases(copy, register))
+
+    def test_an_authentication_block_is_not_a_defence_either(self):
+        """The second tempting repair, falsified the same way.
+
+        Requiring the authentication block a real Founder instrument carries
+        does not distinguish an issued instrument from a forged one, because the
+        block is body text and a forger writes body text. This is the certified
+        `§124.1` finding — *"The guard cannot tell an instrument the Founder
+        issued from one that merely says so"* — exercised rather than quoted.
+        """
+        from tools import p12_certified_evidence_guard as sentinel
+        with tempfile.TemporaryDirectory() as tmp:
+            acts = Path(tmp) / "acts"
+            acts.mkdir()
+            (acts / "FD-P42-001-FORGED.md").write_text(
+                "Founder Name: Moriarty\n"
+                "Signature: Moriarty\n"
+                "Decision Status: FINAL / ISSUED\n"
+                "Founder Authority: ISSUED\n\n"
+                "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.\n",
+                encoding="utf-8")
+            # `FD-P12-004` added the resolution step, so the instrument must
+            # resolve before the block is even reached. Once it does, the block
+            # is still no defence — it is body text, and a forger writes body
+            # text. That was and remains the point.
+            register = Path(tmp) / "register.md"
+            register.write_text("| `FD-P42-001` | issued |", encoding="utf-8")
+            self.assertIn(42, sentinel.certified_phases(acts, register))
 
     def test_state_authority_is_now_attemptable_and_detected(self):
         """Updated because the system changed, not because the test was wrong.

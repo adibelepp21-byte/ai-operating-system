@@ -250,21 +250,48 @@ def _workflow_to_runtime() -> IntegrationEdge:
             detail="one kind of observation is missing; a hosting "
                    "relationship cannot be read from one side")
     # Both kinds exist. That is not the relationship — `§48`.
-    shared = {w.runtime_id for w in workflows} & {r.runtime_id for r in runtimes}
+    #
+    # **The join is the workflow's declared host, resolved against an observed
+    # runtime.** The first version intersected `runtime_id` across the two
+    # kinds, which could only succeed if a workflow were published under a
+    # runtime's own name — losing its identity to satisfy a measurement. So the
+    # edge read UNVERIFIED for as long as the surface had nowhere to record the
+    # hosting relation, while the relation itself was real in every hosted run.
+    # `ACT-CC-P12-016` added `hosted_by` to the observation record; the join is
+    # now the contract this edge has always stated, and a workflow that
+    # declares no host, or names a runtime nobody observed, still fails it.
+    observed_runtimes = {r.runtime_id for r in runtimes}
+    hosted = {w.runtime_id: w.hosted_by for w in workflows if w.hosted_by}
+    joined = {key: host for key, host in hosted.items()
+              if host in observed_runtimes}
+    unhosted = sorted(w.runtime_id for w in workflows if not w.hosted_by)
+    dangling = sorted(key for key, host in hosted.items()
+                      if host not in observed_runtimes)
+    if joined:
+        detail = ("hosting recorded and resolved: "
+                  + ", ".join(f"{k} → {v}" for k, v in sorted(joined.items())))
+        if unhosted:
+            detail += f"; {len(unhosted)} workflow(s) declare no host: {unhosted}"
+        if dangling:
+            detail += f"; {len(dangling)} name an unobserved runtime: {dangling}"
+    elif dangling:
+        detail = (f"{len(dangling)} workflow observation(s) name a runtime no "
+                  f"observation covers: {dangling}")
+    else:
+        detail = ("both kinds are observed and no workflow names the runtime "
+                  "hosting it, so the hosting relation is not recorded — two "
+                  "observations are not a relationship")
     return _edge(
         source="Workflow", target="Runtime", relationship="OBSERVES",
         authority="observation is evidence, not permission",
         contract="a workflow observation names the runtime hosting it",
         state=f"{len(workflows)} workflow, {len(runtimes)} runtime observation(s)",
         evidence="docs/architecture/p12/runtime-observations",
-        verification="runtime_id shared between a workflow and a runtime",
+        verification="a workflow's declared host resolves to an observed runtime",
         lifecycle="liveness horizon",
         integration_class="workflow ↔ runtime", dependency="RUNTIME",
-        classification=VERIFIED if shared else UNVERIFIED,
-        detail=("both kinds are observed and no identity is shared, so the "
-                "hosting relation is not recorded — two observations are not "
-                "a relationship" if not shared
-                else f"shared runtime identity: {sorted(shared)}"))
+        classification=VERIFIED if joined else UNVERIFIED,
+        detail=detail)
 
 
 def _memory_to_state() -> IntegrationEdge:

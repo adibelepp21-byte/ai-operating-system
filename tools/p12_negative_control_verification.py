@@ -84,14 +84,42 @@ def _certified_evidence_guard() -> Tuple[bool, str]:
 
 
 def _cross_phase() -> Tuple[bool, str]:
-    """Cross-phase verification must be able to say NOT EXERCISED."""
+    """Cross-phase verification must be able to say NOT EXERCISED.
+
+    **This control used to read the live corpus and pass because a phase
+    happened to be un-crossed.** That worked only while the system was
+    incomplete: `ACT-CC-P12-015` crossed the last phase, the live count of
+    NOT EXERCISED went to zero, and the control reported the verifier
+    undemonstrated — when nothing about the verifier had changed. A control
+    whose negative depends on the system still having a hole is not a control.
+
+    Re-grounded structurally: the predicates are pointed at an empty evidence
+    world, where nothing has ever run, and every phase must come back NOT
+    EXERCISED. That negative stays reachable however complete the system gets.
+    """
+    from unittest import mock
+
     from tools import p12_cross_phase_verification as cross
-    summary = cross.summary()
-    if summary["not_exercised"] > 0:
-        return True, (f"{summary['not_exercised']} of {summary['phases']} "
-                      "canonical phases report NOT EXERCISED on the live corpus")
-    return False, ("every phase reports EXERCISED; the negative is not "
-                   "demonstrated by this run")
+    from tools import p12_runtime_observation as observation
+    from tools import p12_trace_registry as traces
+
+    live = cross.summary()
+    if live["exercised"] != live["phases"]:
+        return False, (f"{live['not_exercised']} of {live['phases']} phases are "
+                       "un-crossed on the live corpus; this control assumes "
+                       "they are all crossed and must be re-grounded")
+    with tempfile.TemporaryDirectory() as tmp:
+        with mock.patch.object(traces, "STORE_ROOT", Path(tmp) / "traces"), \
+                mock.patch.object(observation, "OBSERVATION_ROOT",
+                                  Path(tmp) / "observations"):
+            empty = cross.summary()
+    if empty["not_exercised"] != empty["phases"]:
+        return False, (f"an empty evidence world still reported "
+                       f"{empty['exercised']} phase(s) exercised")
+    return True, (f"moves both ways: {live['exercised']} of {live['phases']} "
+                  "exercised on the live corpus, and all "
+                  f"{empty['phases']} NOT EXERCISED against an empty "
+                  "evidence world")
 
 
 def _cross_pd() -> Tuple[bool, str]:
@@ -112,6 +140,26 @@ def _cross_pd() -> Tuple[bool, str]:
         xpd.REGISTRY = original
 
 
+def _cross_platform() -> Tuple[bool, str]:
+    """Relationship evidence must vanish when the corpora do.
+
+    The live module reports `18` evidenced pairs over two resident corpora, and
+    a module that read nothing and returned a constant would report the same
+    number just as confidently. Pointed at an architecture root holding no
+    division corpus, it must fail closed rather than report zero: `CorpusUnavailable`
+    (`PR-4`), because *"no corpus to read"* and *"read and found nothing"* are
+    different answers and the second would be a lie here.
+    """
+    from tools import p12_cross_platform_verification as xpl
+    with tempfile.TemporaryDirectory() as tmp:
+        try:
+            summary = xpl.summary(Path(tmp))
+        except xpl.CorpusUnavailable:
+            return True, "an empty architecture root fails closed, not to zero"
+    return False, (f"an empty architecture root still reported "
+                   f"{summary['evidenced_pairs']} evidenced pair(s)")
+
+
 def _fresh_process() -> Tuple[bool, str]:
     """Fresh-process verification must be able to report DIVERGED."""
     from tools import p12_fresh_process_verification as fresh
@@ -130,15 +178,48 @@ def _fresh_process() -> Tuple[bool, str]:
 
 
 def _mutation() -> Tuple[bool, str]:
-    """The mutation suite must report MISSED where nothing detects."""
+    """The mutation suite must be able to reach MISSED — and not over-reach it.
+
+    **This demonstrated its negative from the live corpus, and that stopped
+    working the moment `§50` reached 10/10 detected.** A control that can only
+    show its negative while the system is failing is not a control; it reads
+    only in a fire. It reported `NOT DEMONSTRATED` for exactly that reason, and
+    the reason was the system improving.
+
+    The negative is driven synthetically instead, the way every neighbouring
+    control here drives its own, and the live figure is reported beside it
+    rather than depended upon. Both directions are exercised, because the
+    distinction the mutation module exists to keep is between a mutation that
+    was applied and went undetected (`MISSED`) and one that was never applied
+    at all (`UNAVAILABLE`) — collapsing those is the defect, not the pass.
+    """
+    from unittest import mock
     from tools import p12_mutation_verification as mutation
-    summary = mutation.summary()
-    if summary["missed"] > 0:
-        return True, (f"{summary['missed']} of {summary['mutations']} report "
-                      f"MISSED on the live corpus: "
-                      f"{', '.join(summary['missed_mutations'])}")
-    return False, ("every mutation reports DETECTED; the negative is not "
-                   "demonstrated by this run")
+
+    live = mutation.summary()
+
+    undetected = (("an applied mutation nothing refuses",
+                   lambda: (True, False, "applied; no control refused it")),)
+    with mock.patch.object(mutation, "MUTATIONS", undetected):
+        driven = mutation.summary()
+    if driven["missed"] != 1 or driven["missed_mutations"] != (
+            "an applied mutation nothing refuses",):
+        return False, ("an applied, undetected mutation did not report "
+                       f"MISSED: {driven}")
+
+    unapplied = (("a mutation never applied",
+                  lambda: (False, False, "nothing was put in front of it")),)
+    with mock.patch.object(mutation, "MUTATIONS", unapplied):
+        skipped = mutation.summary()
+    if skipped["missed"] != 0 or skipped["unavailable"] != 1:
+        return False, ("a mutation that was never applied was reported as "
+                       f"MISSED rather than UNAVAILABLE: {skipped}")
+
+    return True, (
+        "reaches MISSED when an applied mutation goes undetected, and "
+        "UNAVAILABLE — not MISSED — when none was applied; the live corpus "
+        f"reports {live['detected']}/{live['mutations']} detected, "
+        f"{live['missed']} missed")
 
 
 def _regression() -> Tuple[bool, str]:
@@ -281,28 +362,54 @@ def _governance_evidence() -> Tuple[bool, str]:
 
 
 def _runtime_integration() -> Tuple[bool, str]:
-    """Runtime reachability must report REACHED when a package reaches an entry.
+    """Runtime reachability must move both ways, whatever the live answer is.
 
-    The live answer is `HAND-INVOKED ONLY`. Unless the checker can reach
-    `REACHED`, that answer is a shape rather than a measurement.
+    **This required the live system to be `HAND-INVOKED ONLY` before it would
+    demonstrate `REACHED` synthetically**, and that guard turned into a false
+    negative the moment a resident entry point genuinely became reached
+    (`aios_corpus_health_run.py`, once non-test importers appeared). It has
+    reported `NOT DEMONSTRATED` ever since — not because the checker stopped
+    working, but because one of its two answers became the live one.
+
+    **The live status is a measurement, not a precondition for measuring.**
+    Both directions are driven synthetically here and the live status is
+    reported beside them, so this control keeps working whichever way the
+    system goes.
     """
     from unittest import mock
     from tools import p12_runtime_verification as rt
 
-    if rt.reachability()["status"] != rt.HAND_INVOKED:
-        return False, "the live system is no longer hand-invoked only"
+    live = rt.reachability()["status"]
+
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         (root / "entry.py").write_text("x = 1\n", encoding="utf-8")
         (root / "pkg").mkdir()
         (root / "pkg" / "c.py").write_text("import entry\n", encoding="utf-8")
         with mock.patch.object(rt, "REPO_ROOT", root):
-            points = {p.module: p for p in rt.entry_points()}
-    if points["entry.py"].status != rt.REACHED:
+            imported = {p.module: p for p in rt.entry_points()}
+            imported_status = rt.reachability()["status"]
+    if imported["entry.py"].status != rt.REACHED:
         return False, ("an entry point imported from a package was still "
-                       f"{points['entry.py'].status}")
-    return True, ("moves both ways: HAND-INVOKED ONLY live, REACHED when a "
-                  "non-root surface imports the entry point")
+                       f"{imported['entry.py'].status}")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        (root / "entry.py").write_text("x = 1\n", encoding="utf-8")
+        with mock.patch.object(rt, "REPO_ROOT", root):
+            alone = {p.module: p for p in rt.entry_points()}
+            alone_status = rt.reachability()["status"]
+    if alone["entry.py"].status != rt.HAND_INVOKED:
+        return False, ("an entry point nothing imports was still "
+                       f"{alone['entry.py'].status}")
+
+    if imported_status == alone_status:
+        return False, ("reachability reported the same status for both "
+                       f"populations: {imported_status}")
+
+    return True, ("moves both ways: REACHED when a non-root surface imports "
+                  "the entry point, HAND-INVOKED ONLY when nothing does; the "
+                  f"live status is {live}")
 
 
 def _workflow_chain() -> Tuple[bool, str]:
@@ -416,6 +523,175 @@ def _execution_provenance_writer() -> Tuple[bool, str]:
                   "existing one")
 
 
+def _governance_join_writer() -> Tuple[bool, str]:
+    """The `P12-W3` join writer must refuse an unsanctioned refusal type and
+    refuse to overwrite an existing join.
+
+    Its positive is the real join `p12_w3_governance_escalation.py` left
+    resident. The negatives are the two refusals that keep a written join
+    meaning something: a join claiming a refusal type the register would
+    never have accepted, and a second join overwriting the first.
+    """
+    from tools import p12_governance_escalation_join as join
+    from tools.escalation_register import EscalationRegister
+
+    root = REPO_ROOT / "docs/architecture/p12/w3-operations"
+    escalations = sorted(root.glob("*.escalation.json"))
+    if not escalations:
+        return False, "no P12-W3 escalation is persisted; nothing to falsify"
+    escalation_id = escalations[0].name.split(".")[0]
+    register = EscalationRegister(root)
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_root = Path(tmp)
+        (tmp_root / escalations[0].name).write_text(
+            escalations[0].read_text(encoding="utf-8"), encoding="utf-8")
+        tmp_register = EscalationRegister(tmp_root)
+        try:
+            join.join_escalation_to_grant(
+                tmp_root, tmp_register, escalation_id,
+                delegation_id="a" * 16, refusal_type="NotASanctionedRefusal")
+            return False, "an unsanctioned refusal type was joined"
+        except join.GovernanceJoinError:
+            pass
+        join.join_escalation_to_grant(
+            tmp_root, tmp_register, escalation_id,
+            delegation_id="a" * 16, refusal_type="ExecutionRefused")
+        try:
+            join.join_escalation_to_grant(
+                tmp_root, tmp_register, escalation_id,
+                delegation_id="b" * 16, refusal_type="ExecutionRefused")
+            return False, "a second join overwrote the first"
+        except join.GovernanceJoinError:
+            pass
+    return True, ("refuses an unsanctioned refusal type and refuses to "
+                  "overwrite an existing join")
+
+
+def _governance_join_reader() -> Tuple[bool, str]:
+    """The `P12-W3` join reader must report `DANGLING` for a reference that
+    does not resolve.
+
+    Its live answer, over the resident population, is `JOINED`. Unless it can
+    be driven to `DANGLING`, that verdict says nothing — so a copy of the real
+    join is written naming a delegation nobody issued, in a temporary
+    directory, and the reader must refuse it. Nothing persisted is touched.
+    """
+    from tools import p12_governance_join_reader as reader
+
+    root = REPO_ROOT / "docs/architecture/p12/w3-operations"
+    joins = sorted(root.glob("*.governance-join.json"))
+    if not joins:
+        return False, "no P12-W3 join is persisted; nothing to falsify"
+    escalation_id = joins[0].name.split(".")[0]
+
+    live = reader.resolve(root, root, escalation_id)
+    if live["status"] != reader.JOINED:
+        return False, f"the live join is already {live['status']}"
+
+    import json
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp_root = Path(tmp)
+        (tmp_root / f"{escalation_id}.escalation.json").write_text(
+            (root / f"{escalation_id}.escalation.json").read_text(
+                encoding="utf-8"), encoding="utf-8")
+        payload = json.loads(joins[0].read_text(encoding="utf-8"))
+        payload["delegation_id"] = "0" * 16
+        (tmp_root / f"{escalation_id}.governance-join.json").write_text(
+            json.dumps(payload), encoding="utf-8")
+        broken = reader.resolve(tmp_root, tmp_root, escalation_id)
+        if broken["status"] == reader.JOINED:
+            return False, "a join naming a delegation nobody issued still joined"
+    return True, ("moves both ways: JOINED on the persisted join, DANGLING on "
+                  "one naming a delegation nobody issued")
+
+
+def _phase_authorization_reader() -> Tuple[bool, str]:
+    """The phase-authorization reader must refuse an undeterminable corpus.
+
+    `ACT-CC-P12-007 §9` turns on the difference between *"the Founder did not
+    authorize it"* and *"no Founder instrument could be found"*. A reader that
+    returned an empty result for the second would let a caller read it as the
+    first, which is how a phase comes to look unauthorized because a directory
+    was missing. It must raise, and it must still read the real corpus
+    correctly — so both directions are driven here.
+    """
+    import tempfile
+    from pathlib import Path
+    from tools import p12_phase_authorization as phases
+
+    live = phases.state_of("P13")
+    if live is None or live.authorized is not False:
+        return False, ("the live corpus no longer states P13 AUTHORIZED=FALSE; "
+                       "this control cannot be trusted until that is explained")
+    with tempfile.TemporaryDirectory() as tmp:
+        empty = Path(tmp)
+        (empty / "docs" / "governance" / "acts").mkdir(parents=True)
+        try:
+            phases.phase_states(empty)
+        except phases.PhaseAuthorizationUnresolved:
+            pass
+        else:
+            return False, ("an empty governance root produced a phase state "
+                           "rather than reporting the corpus undeterminable")
+        # A body that names the phase everywhere but carries no structured
+        # state block must not yield a state — `§10`'s false-positive case.
+        (empty / "docs" / "governance" / "acts" / "roadmap.md").write_text(
+            "1. FUTURE WORK\n\nP13 is discussed here. P13 authorization is "
+            "described as future work for P13.\n", encoding="utf-8")
+        try:
+            phases.phase_states(empty)
+        except phases.PhaseAuthorizationUnresolved:
+            pass
+        else:
+            return False, "prose naming the phase was accepted as a state source"
+    return True, ("moves both ways: P13 AUTHORIZED=FALSE on the real "
+                  "instrument, undeterminable on an empty root and on prose "
+                  "that only names the phase")
+
+
+def _phase_authorization_verifier() -> Tuple[bool, str]:
+    """The independent verifier must report UNSATISFIED on a wrong report.
+
+    Its live answer is six of six satisfied, which is also what a verifier
+    checking nothing prints. The self-model's reported value is replaced with a
+    forged one — right shape, wrong state, provenance pointing at a file that
+    exists but does not state it — and the verifier must fail on it.
+    """
+    from unittest import mock
+    from tools import p12_phase_authorization_verifier as verifier
+    from tools import p12_self_model as model
+
+    live = verifier.summary()
+    if live["unsatisfied"] or live["unresolved"]:
+        return False, f"the live representation already fails {live['not_satisfied']}"
+
+    forged = {
+        "resolved": True,
+        "states": {"P13": {
+            "entity": "P13", "authorized": True,
+            "dimensions": {"AUTHORIZED": True},
+            "unstated_dimensions": (), "stated_in": "§37 FINAL STATE TRANSITION",
+            "corroborated_by": (),
+            "authority": "a citation that resolves",
+            "authority_record": "README.md"}},
+        "issuance_contradiction": None,
+    }
+    answer = model.Answer("What authority do I have?",
+                          {"phase_authorization": forged}, "VERIFIED", "forged")
+    with mock.patch.object(model, "authority", return_value=answer):
+        checks = verifier.verify("P13")
+    failed = {c.name for c in checks if c.status != verifier.SATISFIED}
+    expected = {"authoritative source", "authorization state",
+                "provenance supports the claim"}
+    if not expected <= failed:
+        return False, (f"a forged authorization claim was not refused: only "
+                       f"{sorted(failed)} failed")
+    return True, ("moves both ways: six of six satisfied on the real "
+                  "representation; a forged P13 AUTHORIZED=True citing a "
+                  f"resolving but unsupporting record fails {sorted(failed)}")
+
+
 def _operational_state() -> Tuple[bool, str]:
     """The W2 verifier must report VIOLATED when a property fails.
 
@@ -454,21 +730,151 @@ def _operational_state() -> Tuple[bool, str]:
                   "permission both report VIOLATED")
 
 
+def _consumer_evidence_verifier() -> Tuple[bool, str]:
+    """The independent consumer verifier must be able to report DISAGREES.
+
+    Its live answer is four of four agreeing, which is also what a verifier
+    that compares nothing prints. Two wrong claims are fed to it — one that
+    omits a real consumer, one that invents a consumer out of the module
+    observed reading only its own fixture — and it must reject both.
+    """
+    from tools import p12_consumer_evidence_verifier as cev
+    from tools import p12_state_verification as sv
+
+    claimed = sv.consumers_of(sv.SURFACE)
+    importers = sv.importers_of(sv.SURFACE)
+    live = cev.summary(claimed, importers)
+    if live["disagrees"] or live["unobservable"]:
+        return False, f"the live claim already fails {live['not_agreeing']}"
+
+    omitted = cev.verify(claimed[:1], importers)
+    if not [c for c in omitted if c.status == cev.DISAGREES]:
+        return False, "a claim omitting a real consumer was not rejected"
+
+    invented = cev.verify(
+        claimed + ("tools/p12_mutation_verification.py",), importers)
+    names = {c.name for c in invented if c.status == cev.DISAGREES}
+    if "a substituted read is not counted" not in names:
+        return False, ("a claim counting the fixture-only reader as a consumer "
+                       f"was not rejected; only {sorted(names)} disagreed")
+    return True, ("moves both ways: 4 of 4 agree on the measured claim; a "
+                  "claim omitting a real consumer and a claim counting the "
+                  "fixture-only reader are both rejected")
+
+
+def _e12_acceptance() -> Tuple[bool, str]:
+    """The ratified `E12-06` measurement must be able to report SATISFIED.
+
+    Its live answer is `NOT SATISFIED`, and a verifier that can only report one
+    verdict measures nothing. The risk here runs opposite to the usual one: the
+    control drives it **up**, on synthetic evidence in which every phase is
+    crossed by real work, and also confirms it refuses a reading it does not
+    implement rather than defaulting to one.
+    """
+    from unittest import mock
+    from tools import p12_e12_acceptance as acc
+    from tools import p12_cross_phase_verification as cross
+
+    live = acc.determination()
+    if live["verdict"] != acc.SATISFIED:
+        return False, (f"the live corpus now reports {live['verdict']}; this "
+                       "control assumes it does not, and must be re-grounded")
+
+    # The live answer moved to SATISFIED under `ACT-CC-P12-015`, so the risk
+    # inverted with it: a measurement that can only print the verdict the
+    # corpus currently earns is still measuring nothing. The control now
+    # drives it **down** — synthetic evidence in which a phase was crossed
+    # only by a demonstrator, and synthetic evidence in which one was never
+    # crossed at all — and both must fall back to NOT SATISFIED.
+    demonstrator_only = tuple(
+        cross.PhaseResult(phase=p, name=p, status=cross.EXERCISED,
+                          evidence="runtime 'p12-f11-workflow-observation'",
+                          locator="probe")
+        for p in ("P4", "P5"))
+    with mock.patch.object(cross, "verify", return_value=demonstrator_only), \
+            mock.patch.object(cross, "summary",
+                              return_value={"exercised_only_by_a_demonstrator": ("P4", "P5")}):
+        demoted = acc.determination()["verdict"]
+    if demoted != acc.NOT_SATISFIED:
+        return False, f"demonstrator-only evidence still reported {demoted}"
+
+    never_crossed = tuple(
+        cross.PhaseResult(phase=p, name=p, status=cross.NOT_EXERCISED,
+                          evidence="nothing crossed it", locator="probe")
+        for p in ("P4", "P5"))
+    with mock.patch.object(cross, "verify", return_value=never_crossed), \
+            mock.patch.object(cross, "summary",
+                              return_value={"exercised_only_by_a_demonstrator": ()}):
+        absent = acc.determination()["verdict"]
+    if absent != acc.NOT_SATISFIED:
+        return False, f"evidence of no consumption still reported {absent}"
+
+    all_real = tuple(
+        cross.PhaseResult(phase=p, name=p, status=cross.EXERCISED,
+                          evidence="authored by engineering-intelligence-instance-001",
+                          locator="probe")
+        for p in ("P4", "P5"))
+    with mock.patch.object(cross, "verify", return_value=all_real), \
+            mock.patch.object(cross, "summary",
+                              return_value={"exercised_only_by_a_demonstrator": ()}):
+        promoted = acc.determination()["verdict"]
+    if promoted != acc.SATISFIED:
+        return False, f"evidence of real consumption still reported {promoted}"
+
+    import tempfile
+    from pathlib import Path
+    with tempfile.TemporaryDirectory() as tmp:
+        (Path(tmp) / "docs" / "governance" / "acts").mkdir(parents=True)
+        try:
+            acc.determination(Path(tmp))
+        except acc.AcceptanceBoundaryUnresolved:
+            pass
+        else:
+            return False, ("a corpus with no ratified instrument produced an "
+                           "acceptance verdict rather than refusing")
+    return True, ("moves both ways: SATISFIED on the live corpus "
+                  f"({len(live['consumed_by_real_work'])} of 8 phases consumed "
+                  "by real work), NOT SATISFIED on demonstrator-only evidence "
+                  "and on no evidence at all, and refused outright when no "
+                  "ratified boundary exists")
+
+
 def _state_chain() -> Tuple[bool, str]:
-    """`§17` state verification must report SATISFIED when a consumer appears."""
+    """`§17` state verification must be able to report CONSUMER either way.
+
+    **Inverted by `ACT-CC-P12-008`, not weakened.** This probe used to assume
+    the live link was UNSATISFIED and drive it up; the corrected measurement
+    made the live link SATISFIED, so it now asserts the live evidence and
+    drives it *down*. A probe left pointing at the old live value would have
+    reported `not demonstrated` for a control that works — and one edited to
+    accept whichever value it finds would demonstrate nothing at all.
+
+    The demotion is driven by removing the *evidence*, not by removing the
+    importer: a module that imports the surface without reading it must not
+    satisfy `§16`, which is the distinction the corrected link exists to make.
+    """
     from unittest import mock
     from tools import p12_state_verification as sv
 
     live = {r.link: r.status for r in sv.verify()}
-    if live.get("CONSUMER") != sv.UNSATISFIED:
-        return False, f"CONSUMER is {live.get('CONSUMER')}; probe assumes it is not"
-    with mock.patch.object(sv, "consumers_of",
-                           return_value=("tools/somewhere.py",)):
-        promoted = sv._link_consumer().status
-    if promoted != sv.SATISFIED:
-        return False, f"a real consumer still reported {promoted}"
-    return True, ("moves both ways: CONSUMER UNSATISFIED with nothing reading "
-                  "the projection, SATISFIED when something does")
+    if live.get("CONSUMER") != sv.SATISFIED:
+        return False, (f"CONSUMER is {live.get('CONSUMER')}; probe assumes the "
+                       "live corpus carries evidenced consumers")
+    importer_only = (sv.ConsumerEvidence("tools/imports-but-never-reads.py",
+                                         reads=(), fixture_reads=("project",)),)
+    with mock.patch.object(sv, "consumption_evidence",
+                           return_value=importer_only):
+        demoted = sv._link_consumer().status
+    if demoted != sv.UNSATISFIED:
+        return False, f"an importer that never reads still reported {demoted}"
+    with mock.patch.object(sv, "consumption_evidence", return_value=()):
+        empty = sv._link_consumer().status
+    if empty != sv.UNSATISFIED:
+        return False, f"an empty corpus still reported {empty}"
+    return True, ("moves both ways: CONSUMER SATISFIED on the live corpus "
+                  "(2 evidenced consumers of 3 importers), UNSATISFIED when "
+                  "the only importer never reads the projection and when "
+                  "nothing imports it at all")
 
 
 def _operational_state_projection() -> Tuple[bool, str]:
@@ -529,33 +935,48 @@ def _self_model_contract() -> Tuple[bool, str]:
 
 
 def _integration_graph() -> Tuple[bool, str]:
-    """The W1 graph must promote an edge when its source earns it.
+    """The W1 graph must move an edge in both directions with its source.
 
-    Four verified edges of eight is what a graph asserting its own edges would
-    print. The `workflow ↔ runtime` edge is `UNVERIFIED` because both kinds of
-    observation exist and share no identity — the `§48` case. Given
-    observations that do share one, it must become `VERIFIED`.
+    Seven verified edges of eight is what a graph asserting its own edges would
+    print. **This control used to lean on `workflow ↔ runtime` being live-
+    `UNVERIFIED`** — it drove that one edge up and passed. `ACT-CC-P12-016`
+    recorded the hosting relation the edge had always contracted for and the
+    edge became `VERIFIED`, so the control reported the graph undemonstrated
+    when nothing about the graph had changed. A control whose negative depends
+    on the system still having a hole is not a control.
+
+    Re-grounded on the edge's own inputs, both ways: a workflow that names a
+    host an observation covers must verify, and one that names none — the
+    `§48` case, two observations that are not a relationship — must not.
     """
     from unittest import mock
     from tools import p12_integration_graph as graph
 
     live = {e.integration_class: e.classification for e in graph.graph()}
-    if live.get("workflow ↔ runtime") != graph.UNVERIFIED:
+    if live.get("workflow ↔ runtime") != graph.VERIFIED:
         return False, (f"workflow ↔ runtime is "
-                       f"{live.get('workflow ↔ runtime')}; probe assumes it is not")
+                       f"{live.get('workflow ↔ runtime')}; probe assumes VERIFIED")
 
     class _Obs:
-        def __init__(self, kind, rid):
+        def __init__(self, kind, rid, hosted_by=None):
             self.kind, self.runtime_id = kind, rid
+            self.hosted_by = hosted_by
 
-    shared = [_Obs("workflow", "r-1"), _Obs("runtime", "r-1")]
+    joined = [_Obs("workflow", "w-1", hosted_by="r-1"), _Obs("runtime", "r-1")]
     with mock.patch("tools.p12_runtime_observation.observations",
-                    return_value=shared):
+                    return_value=joined):
         promoted = graph._workflow_to_runtime().classification
     if promoted != graph.VERIFIED:
-        return False, f"a shared runtime identity still reported {promoted}"
-    return True, ("moves both ways: UNVERIFIED when two observations share no "
-                  "identity, VERIFIED when they do")
+        return False, f"a recorded, resolved host still reported {promoted}"
+
+    unhosted = [_Obs("workflow", "w-1"), _Obs("runtime", "r-1")]
+    with mock.patch("tools.p12_runtime_observation.observations",
+                    return_value=unhosted):
+        demoted = graph._workflow_to_runtime().classification
+    if demoted != graph.UNVERIFIED:
+        return False, f"two observations with no hosting relation reported {demoted}"
+    return True, ("moves both ways: VERIFIED when a workflow names a host an "
+                  "observation covers, UNVERIFIED when it names none")
 
 
 def _governance_index() -> Tuple[bool, str]:
@@ -580,6 +1001,334 @@ def _governance_index() -> Tuple[bool, str]:
 
 
 #: One entry per P12 verification instrument, with the negative each must reach.
+def _knowledge_admission_writer() -> Tuple[bool, str]:
+    """The admission executor must refuse an admission nobody authorized.
+
+    It succeeded once on the live corpus, which is also what a module that
+    admits unconditionally would do. Three authorizations are removed in turn
+    — the issued status, the human authority, and the candidate the instrument
+    names — and each must stop it before the Governance gate is even reached.
+    """
+    import shutil
+    import tempfile
+    from pathlib import Path
+    from tools import p12_knowledge_admission as ka
+
+    live = ka.founder_authorization()
+    body = (ka.REPO_ROOT / live.instrument).read_text(encoding="utf-8")
+    source = ka.REPO_ROOT / ka.CANDIDATE_SOURCE
+
+    def _world(tmp: Path, text: str) -> Path:
+        (tmp / ka.DECISION_ROOT).mkdir(parents=True, exist_ok=True)
+        (tmp / ka.DECISION_ROOT / "FD.md").write_text(text, encoding="utf-8")
+        shutil.copy(source, tmp / ka.CANDIDATE_SOURCE)
+        return tmp
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _world(Path(tmp), body)
+        if ka.founder_authorization(root).admission != "AUTHORIZED":
+            return False, "the control's own copy of the instrument is not issued"
+
+    for label, mutated in (
+        ("an unissued status",
+         body.replace("FINAL / ISSUED", "PENDING FOUNDER DECISION")),
+        ("no human authority",
+         body.replace("HumanAuthority:\nFounder", "HumanAuthority:\n")),
+    ):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = _world(Path(tmp), mutated)
+            try:
+                ka.founder_authorization(root)
+            except ka.AdmissionAuthorityUnresolved:
+                continue
+            return False, f"{label} was still read as an authorization"
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _world(Path(tmp), body.replace(
+            "Candidate:\nP12 Corpus-Health Assessment Criteria",
+            "Candidate:\nP12 Release Notes"))
+        try:
+            ka.admit(root, store_root=Path(tmp) / "r",
+                     decision_root=Path(tmp) / "d",
+                     provenance_root=Path(tmp) / "p")
+        except ka.AdmissionRefused:
+            pass
+        else:
+            return False, ("an approval naming a different candidate was still "
+                           "spent on this one")
+
+    return True, ("moves both ways: the issued instrument authorizes; an "
+                  "unissued status, an absent human authority and an approval "
+                  "of another candidate are each refused")
+
+
+def _knowledge_admission_verifier() -> Tuple[bool, str]:
+    """The independent admission verifier must be able to report UNSATISFIED.
+
+    Its live answer is ten of ten, which is also what a verifier that checks
+    nothing prints. It is pointed at an empty world, where the admission chain
+    does not exist, and must fail rather than pass by absence.
+    """
+    import tempfile
+    from pathlib import Path
+    from tools import p12_knowledge_admission_verifier as kav
+
+    live = kav.summary()
+    if live["failing"]:
+        return False, f"the live chain already fails {live['failing']}"
+
+    with tempfile.TemporaryDirectory() as tmp:
+        empty = kav.summary(Path(tmp))
+    if empty["satisfied"] == len(kav._CHECKS):
+        return False, "an empty world still satisfied every check"
+    if not empty["failing"]:
+        return False, "an empty world reported nothing failing"
+    return True, (f"moves both ways: 10 of 10 on the live chain; "
+                  f"{len(empty['failing'])} of {len(kav._CHECKS)} fail against "
+                  "a world holding no admission")
+
+
+def _phase_verification_matrix() -> Tuple[bool, str]:
+    """The `§46` matrix must be able to lose a cell it currently measures.
+
+    49 of 80 cells are measured on the live corpus, which is also what a module
+    printing constants would show. Two removals are applied — the Native Core
+    tree it reads boundaries from, and the cross-phase verifier it reads state
+    from — and the affected cells must fall to `UNKNOWN` rather than keep their
+    values. The `OWNER` column is checked in the other direction: it is
+    `UNKNOWN` everywhere and must stay so, because assigning one is `F-17`.
+    """
+    import tempfile
+    from pathlib import Path
+    from unittest import mock
+
+    from tools import p12_cross_phase_verification as cross
+    from tools import p12_phase_verification_matrix as m
+
+    live = m.summary()
+    if live["measured_cells"] == 0:
+        return False, "the live matrix measures nothing; nothing can be lost"
+    if live["complete"]:
+        return False, ("the live matrix reports complete; this control assumes "
+                       "it does not and must be re-grounded")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        empty = m.summary(Path(tmp))
+    if empty["measured_cells"] >= live["measured_cells"]:
+        return False, (f"a world with no Native Core still measured "
+                       f"{empty['measured_cells']} cells")
+
+    absent = tuple(
+        cross.PhaseResult(phase=p, name=n, status=cross.NOT_EXERCISED,
+                          evidence="nothing crossed it", locator="")
+        for p, n in cross.CANONICAL_PHASES)
+    with mock.patch.object(cross, "verify", return_value=absent):
+        rows = m.rows()
+    # `NOT EXERCISED` contains `EXERCISED`; compare the status, never the
+    # substring. The first version of this check did the latter and reported
+    # the matrix undemonstrated against evidence it had correctly read.
+    if any(not r.state.startswith(cross.NOT_EXERCISED) for r in rows):
+        return False, "a phase still reported a crossing with no evidence"
+
+    if any(not r.owner.startswith(m.UNKNOWN) for r in m.rows()):
+        return False, "a phase was assigned an owner no resident source gives"
+
+    return True, (f"moves both ways: {live['measured_cells']}/{live['cells']} "
+                  f"cells measured live, {empty['measured_cells']} against an "
+                  "empty world, every STATE falls to NOT EXERCISED when the "
+                  "evidence does, and no OWNER is ever assigned")
+
+
+def _e12_criteria() -> Tuple[bool, str]:
+    """The `E12-01`…`E12-05` reader must be able to resolve, and to reject.
+
+    Its live answer is five `UNRESOLVED`, which is also what a reader that
+    parsed nothing would print. A filled instrument must resolve all five and
+    yield their boundaries; a selection that is not the canonical package's
+    proposed one must be `REJECTED`; and the sole-candidate case — the package
+    proposes exactly one interpretation per criterion — must still not be
+    adopted from the live instrument.
+    """
+    import shutil
+    import tempfile
+    from pathlib import Path
+    from tools import p12_e12_criteria as ec
+
+    live = ec.summary()
+    if live["resolved"]:
+        return False, (f"the live instrument already resolves "
+                       f"{live['resolved']} criteria; this control assumes it "
+                       "resolves none and must be re-grounded")
+
+    section = ("\n{n}. FOUNDER DECISION — {c}\n\nFounder Selection\n\n"
+               "Founder selects:\n\n{c}\n→ {sel}\n\n"
+               "Founder Decision: RATIFIED\n\nAcceptance Boundary:\n\n"
+               "{bound}\n")
+
+    def _world(tmp: Path, chooser) -> Path:
+        (tmp / ec.DECISION_ROOT).mkdir(parents=True, exist_ok=True)
+        (tmp / ec.E12_PACKAGE).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(ec.REPO_ROOT / ec.E12_PACKAGE, tmp / ec.E12_PACKAGE)
+        proposals = ec.proposed_interpretations(ec.REPO_ROOT)
+        body = "FD\n\nDecision Domain: E12-01 THROUGH E12-05\n"
+        for index, criterion in enumerate(ec.CRITERIA, start=4):
+            body += section.format(
+                n=index, c=criterion,
+                sel=chooser(proposals[criterion]["proposed"]),
+                bound="a bounded, measurable statement")
+        (tmp / ec.DECISION_ROOT / "FD.md").write_text(body, encoding="utf-8")
+        return tmp
+
+    with tempfile.TemporaryDirectory() as tmp:
+        filled = ec.summary(_world(Path(tmp), lambda proposed: proposed))
+        if filled["resolved"] != len(ec.CRITERIA) or not filled["measurable"]:
+            return False, (f"a filled instrument resolved only "
+                           f"{filled['resolved']} of {len(ec.CRITERIA)}")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        wrong = ec.decisions(_world(
+            Path(tmp),
+            lambda proposed: "an interpretation nobody ever proposed here"))
+        if any(d.status != ec.REJECTED for d in wrong):
+            return False, ("a selection that is not the proposed one was not "
+                           f"rejected: {[d.status for d in wrong]}")
+
+    try:
+        ec.boundaries()
+    except ec.AcceptanceBoundaryUnavailable:
+        pass
+    else:
+        return False, "the live unfilled instrument still yielded boundaries"
+
+    return True, (f"moves both ways: 0 of {len(ec.CRITERIA)} resolved on the "
+                  "live instrument and boundaries unavailable, all five "
+                  "resolved when filled, all five REJECTED when the selection "
+                  "is not the canonical proposal")
+
+
+def _e12_source_discovery() -> Tuple[bool, str]:
+    """The E12 source discovery must be able to report a gap and a contradiction.
+
+    Five `RESOLVED` is what a module that checked nothing would print. Three
+    removals are applied: the proposal package, a quotation attributed to a
+    section that does not contain it, and a cited section replaced by a
+    different one. Each must change the status. The `ratified` set is checked
+    in the other direction — it is empty and must stay empty however the
+    sources move, because a proposal is never a ratification.
+    """
+    import shutil
+    import tempfile
+    from pathlib import Path
+    from tools import p12_e12_source_discovery as sd
+
+    live = sd.summary()
+    if live["resolved"] != 5:
+        return False, (f"the live corpus resolves {live['resolved']} of 5; "
+                       "this control assumes all five and must be re-grounded")
+    if live["ratified"]:
+        return False, "a proposal is reported ratified on the live corpus"
+
+    def _world(tmp: Path, *, proposal: bool = True) -> Path:
+        for source in (sd.REQUIREMENT_SOURCE, sd.PROPOSAL_SOURCE):
+            if source == sd.PROPOSAL_SOURCE and not proposal:
+                continue
+            target = tmp / source
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(sd.REPO_ROOT / source, target)
+        return tmp
+
+    with tempfile.TemporaryDirectory() as tmp:
+        gapped = sd.discover(_world(Path(tmp), proposal=False))
+    if any(d.status != sd.SOURCE_GAP for d in gapped):
+        return False, ("an absent proposal package did not yield SOURCE-GAP: "
+                       f"{[d.status for d in gapped]}")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _world(Path(tmp))
+        path = root / sd.PROPOSAL_SOURCE
+        path.write_text(path.read_text(encoding="utf-8").replace(
+            '*"Phase dan Platform Organization harus tetap dibedakan"*',
+            '*"a sentence the cited section does not contain at all"*'),
+            encoding="utf-8")
+        forged = {d.criterion: d.status for d in sd.discover(root)}
+    if forged.get("E12-01") != sd.CONTRADICTION:
+        return False, (f"a quotation absent from its cited section reported "
+                       f"{forged.get('E12-01')}")
+    if any(v != sd.RESOLVED for k, v in forged.items() if k != "E12-01"):
+        return False, "the provenance check is not per-criterion"
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = _world(Path(tmp))
+        path = root / sd.REQUIREMENT_SOURCE
+        path.write_text(path.read_text(encoding="utf-8").replace(
+            "15. P12-W2 — UNIFIED OPERATIONAL STATE AUTHORITY",
+            "15. AN ENTIRELY DIFFERENT SECTION"), encoding="utf-8")
+        swapped = {d.criterion: d.status for d in sd.discover(root)}
+    if swapped.get("E12-02") != sd.CONTRADICTION:
+        return False, (f"a cited section that is a different section reported "
+                       f"{swapped.get('E12-02')}")
+
+    return True, ("moves both ways: 5 of 5 RESOLVED live with 0 ratified; "
+                  "SOURCE-GAP with no proposal package; CONTRADICTION for a "
+                  "quotation absent from its cited body and for a cited "
+                  "section that is a different section")
+
+
+def _e12_measurement() -> Tuple[bool, str]:
+    """The `E12-01`…`E12-05` measurement must be able to report NOT SATISFIED.
+
+    Its live answer is five of five `SATISFIED`, which is what a module
+    returning constants would print — and it reached that state only after
+    three defects in its own first run were corrected, two of which produced a
+    **false FAIL**. The control drives it both ways: a clause whose evidence is
+    removed must fail, a clause whose evidence source raises must report
+    `UNKNOWN` rather than `NOT SATISFIED`, and the decision record must remain
+    load-bearing.
+    """
+    import tempfile
+    from pathlib import Path
+    from unittest import mock
+
+    from tools import p12_e12_measurement as em
+
+    live = em.determination()
+    if live["satisfied"] != len(em.CRITERIA):
+        return False, (f"the live corpus satisfies {live['satisfied']} of "
+                       f"{len(em.CRITERIA)}; this control assumes all five and "
+                       "must be re-grounded")
+
+    # Evidence removed → NOT SATISFIED.
+    from tools import p12_execution_provenance as provenance
+    with mock.patch.object(provenance, "manifests", return_value=()):
+        demoted = {r.criterion: r.verdict for r in em.measure()}
+    if demoted.get("E12-04") != em.NOT_SATISFIED:
+        return False, (f"an absent execution manifest still reported "
+                       f"{demoted.get('E12-04')}")
+
+    # Evidence unreadable → UNKNOWN, never NOT SATISFIED. `UNKNOWN != FALSE`.
+    def _raise(root):
+        raise RuntimeError("evidence source unavailable")
+    with mock.patch.dict(em._CLAUSES, {"E12-01": _raise}):
+        unreadable = {r.criterion: r.verdict for r in em.measure()}
+    if unreadable.get("E12-01") != em.UNKNOWN:
+        return False, (f"an unreadable evidence source reported "
+                       f"{unreadable.get('E12-01')} rather than UNKNOWN")
+
+    # The decision record is the only source of a boundary.
+    with tempfile.TemporaryDirectory() as tmp:
+        try:
+            em.measure(Path(tmp))
+        except em.AcceptanceBoundaryUnavailable:
+            pass
+        else:
+            return False, "a world with no decision record still measured"
+
+    return True, ("moves both ways: 5 of 5 SATISFIED live; NOT SATISFIED when "
+                  "an execution manifest is removed; UNKNOWN (not NOT "
+                  "SATISFIED) when an evidence source raises; and no boundary "
+                  "at all without the decision record")
+
+
 CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_runtime_observation", "cannot answer what is running",
      _runtime_observation),
@@ -588,6 +1337,8 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _certified_evidence_guard),
     ("p12_cross_phase_verification", "a phase is NOT EXERCISED", _cross_phase),
     ("p12_cross_pd_verification", "the registry is UNAVAILABLE", _cross_pd),
+    ("p12_cross_platform_verification", "an absent corpus fails closed",
+     _cross_platform),
     ("p12_fresh_process_verification", "a stage DIVERGED", _fresh_process),
     ("p12_mutation_verification", "a mutation is MISSED", _mutation),
     ("p12_regression_verification", "a class REGRESSED", _regression),
@@ -608,6 +1359,10 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _execution_chain),
     ("p12_execution_provenance", "an incomplete manifest is refused",
      _execution_provenance_writer),
+    ("p12_governance_escalation_join", "an unsanctioned refusal type is "
+     "refused", _governance_join_writer),
+    ("p12_governance_join_reader", "a dangling reference is refused",
+     _governance_join_reader),
     ("p12_operational_state_verifier", "a state property can fail",
      _operational_state),
     ("p12_state_verification", "a consumer is recognised", _state_chain),
@@ -617,6 +1372,25 @@ CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
      _self_model_contract),
     ("p12_integration_graph", "an edge is promoted when earned",
      _integration_graph),
+    ("p12_phase_authorization", "an undeterminable corpus is refused",
+     _phase_authorization_reader),
+    ("p12_phase_authorization_verifier", "a forged authorization claim is "
+     "refused", _phase_authorization_verifier),
+    ("p12_consumer_evidence_verifier", "a wrong consumer claim is rejected",
+     _consumer_evidence_verifier),
+    ("p12_e12_acceptance", "an unearned SATISFIED is refused", _e12_acceptance),
+    ("p12_knowledge_admission", "an unauthorized admission is refused",
+     _knowledge_admission_writer),
+    ("p12_knowledge_admission_verifier", "an unearned SATISFIED is refused",
+     _knowledge_admission_verifier),
+    ("p12_phase_verification_matrix", "an unearned measured cell is refused",
+     _phase_verification_matrix),
+    ("p12_e12_criteria", "an unfilled decision supplies no boundary",
+     _e12_criteria),
+    ("p12_e12_source_discovery", "an unsupported citation is refused",
+     _e12_source_discovery),
+    ("p12_e12_measurement", "an unearned SATISFIED is refused",
+     _e12_measurement),
     ("governance_index", "a source is stale", _governance_index),
 )
 

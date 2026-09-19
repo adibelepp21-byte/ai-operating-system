@@ -1,0 +1,78 @@
+{
+  "act": "ACT-CC-P11-008",
+  "prior_state": {
+    "recovered_instances": [],
+    "recovered_active_grants_before_run": [
+      "08e14bd7aa584ea5",
+      "332d42f021764ab6",
+      "84e94ea2f001444d",
+      "aa591daf55ca4714",
+      "b304c7ecb1024454",
+      "e668a317fa494342"
+    ],
+    "recovered_revoked_grants": 0,
+    "recovered_last_plan": null,
+    "recovered_last_outcomes": [],
+    "recovered_open_escalations": [],
+    "continuation_conditions": [
+      "MORE THAN ONE LIVE GRANT FOR ONE INSTANCE: {'engineering-intelligence-instance-001': ['08e14bd7aa584ea5', '332d42f021764ab6', '84e94ea2f001444d', 'b304c7ecb1024454', 'e668a317fa494342']} \u2014 a re-run must supersede rather than add to them (\u00a734)",
+      "NO LIVE AGENT INSTANCE \u2014 nothing may execute (\u00a726)"
+    ]
+  },
+  "executed_at": "2026-09-16T18:14:42.446610+00:00",
+  "authority_chain": [
+    "delegation:2494015de36246fd",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ],
+  "agent_definition": "engineering-intelligence-agent",
+  "agent_definition_version": "1.0",
+  "agent_instance": "engineering-intelligence-instance-p12w3-005-001",
+  "instance_lifecycle": "REGISTERED",
+  "delegation_id": "2494015de36246fd",
+  "delegation_status": "ACTIVE",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "capability_scope": [
+    "engineering-intelligence"
+  ],
+  "work_scope": [
+    "verify-delegation-elements"
+  ],
+  "goal": "w4-first-execution-proof",
+  "plan": "w4-first-execution-proof-plan-0",
+  "plan_authority": "DP-01 \u00a73 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)",
+  "subject_artifact": "tools/w4_delegation.py",
+  "criteria_total": 14,
+  "criteria_satisfied": 14,
+  "criteria_unsatisfied": [],
+  "outcomes": [
+    {
+      "step": "verify-delegation-elements",
+      "status": "success",
+      "detail": "verified 14 criteria",
+      "instance": "engineering-intelligence-instance-p12w3-005-001",
+      "delegation": "2494015de36246fd",
+      "at": "2026-09-16T18:14:42.446311+00:00"
+    },
+    {
+      "step": "report-conformance",
+      "status": "escalation",
+      "detail": "step 'report-conformance' is outside the delegated work scope \u2014 `\u00a722`: the organization may execute more work, it may not expand the authority under which it operates",
+      "instance": "engineering-intelligence-instance-p12w3-005-001",
+      "delegation": "2494015de36246fd",
+      "at": "2026-09-16T18:14:42.446326+00:00"
+    }
+  ],
+  "refusals": [
+    "step 'report-conformance' is outside the delegated work scope \u2014 `\u00a722`: the organization may execute more work, it may not expand the authority under which it operates"
+  ],
+  "boundary_crossed": true,
+  "superseded_grants": [],
+  "escalations": [
+    "9cb90fa0787a478c"
+  ]
+}

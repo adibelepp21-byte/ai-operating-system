@@ -82,8 +82,22 @@ class DeclaredIsNeverConvertedToVerified(unittest.TestCase):
 
     def test_the_blocking_boundaries_are_named(self):
         blocked = xpd.summary()["verification_blocked_by"]
-        self.assertIn("SOURCE GAP (ESC-C7-01)", blocked)
         self.assertIn("ARCHITECT-RESERVED (ADR-0029)", blocked)
+
+    def test_the_two_source_gaps_are_not_collapsed_into_one(self):
+        """`ACT-CC-P12-021 §16` — non-residency and absence resolve differently.
+
+        This once read `SOURCE GAP (ESC-C7-01)` alone, which attributed all
+        eight silent divisions to an escalation that is expressly about two.
+        `ESC-C7-01 §A`: the PD-03/PD-04 corpora *"exist, are complete, and are
+        not resident"*, which is *"a cheaper problem"*. `§I`: *"PD-05…PD-10
+        remain genuinely absent"*. A single label hides the cheaper one, and a
+        cheaper blocker hidden behind an expensive one is a blocker nobody
+        brings to the Founder.
+        """
+        blocked = xpd.summary()["verification_blocked_by"]
+        self.assertIn("SOURCE GAP — NON-RESIDENCY (ESC-C7-01)", blocked)
+        self.assertIn("SOURCE GAP — ABSENCE (G-01)", blocked)
 
     def test_no_check_claims_an_inv10_violation(self):
         """The registry records POSSIBLE INV-10 EXPOSURE — NOT ASSERTED. This

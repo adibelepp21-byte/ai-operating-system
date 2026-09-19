@@ -1,0 +1,10 @@
+{
+  "escalation_id": "0991300404cf44d8",
+  "subject": "P12-W3 real refusal proof for FD-P11-001 conformance \u2014 structural join only, no parsed reference intended",
+  "required": "report-governance-join-proof",
+  "held": "('verify-delegation-elements',)",
+  "reason": "step 'report-governance-join-proof' is outside the delegated work scope \u2014 `\u00a722`: the organization may execute more work, it may not expand the authority under which it operates",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "raised_at": "2026-09-16T17:11:53.445766+00:00"
+}

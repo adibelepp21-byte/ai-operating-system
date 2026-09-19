@@ -140,6 +140,40 @@ class EscalationRecord:
     ``status`` is derived, never stored as a mutable field: a record is `OPEN`
     unless a response file exists beside it. **A flag that could be set to
     "approved" is precisely what `§14` forbids**, so there is none.
+
+    ``refusal_type`` names **which** refusal occurred. `§33` requires failure
+    behaviour to distinguish `REFUSED`, and until this field existed both
+    `EscalationRequired` (a *plan* exceeding its authority) and
+    `ExecutionRefused` (a *step* exceeding its delegation) persisted into a
+    byte-indistinguishable shape: the distinction was drawn in flight, by the
+    exception type, and lost at rest. `§34` requires provenance to identify the
+    `result`; a preserved result that cannot say which refusal it was is
+    under-identified.
+
+    **It does not distinguish `BLOCKED` from `ESCALATED`, and is not claimed
+    to.** Every persisted refusal is *in the register*, so at rest it is
+    escalated; a block that is not escalated is not persisted at all. Reading
+    `EscalationRequired` as `§33`'s `BLOCKED` would be a semantic decision `§33`
+    does not make about a term it does not define —
+    `P12-027-SECTION-6-7-FRONTIER-DETERMINATION.md §3` records why it was
+    available and not taken.
+
+    Like ``required`` and ``held`` it is **derived from the raised exception,
+    never supplied by a caller** — `record` takes ``type(error).__name__`` and
+    ``__post_init__`` refuses any name outside `SANCTIONED_REFUSALS`, so a
+    record cannot claim a refusal nothing can raise. It adds no state, no
+    lifecycle and no flag anything can read permission out of.
+
+    **Three prior packages declined to add this field on workstream-scope
+    grounds** (`P12-W4 §13`: *"`W4 ≠ W3`"*; `P12-W2 §11`; `P12-005`), and
+    `P12-W3` closed the joinable part *beside* the record instead.
+    `ACT-CC-P12-027 §4` removes the partition those declines rested on. The
+    record is not certified evidence: `p12_certified_evidence_guard.is_protected`
+    returns `False` for this module, whose protected roots are the certified
+    phase evidence and the platform-organization corpus — and the
+    `NATIVE CORE = 11` freeze does not reach `tools/`.
+    **Existing records are not rewritten**; they keep the shape they were
+    written in, and `escalation_join()` still reports `0` of them naming a type.
     """
 
     escalation_id: str
@@ -147,8 +181,15 @@ class EscalationRecord:
     required: str
     held: str
     reason: str
+    refusal_type: str
     authority: AuthorityProvenance
     raised_at: str
+
+    def __post_init__(self):
+        if self.refusal_type not in {t.__name__ for t in SANCTIONED_REFUSALS}:
+            raise EscalationRegisterError(
+                f"{self.refusal_type!r} is not a sanctioned refusal type — a "
+                "record that names a refusal nothing can raise is not evidence")
 
     def to_payload(self) -> dict:
         return {
@@ -157,6 +198,7 @@ class EscalationRecord:
             "required": self.required,
             "held": self.held,
             "reason": self.reason,
+            "refusal_type": self.refusal_type,
             "authority_instrument": self.authority.instrument,
             "authority_record": self.authority.record,
             "raised_at": self.raised_at,
@@ -195,6 +237,7 @@ class EscalationRegister:
             required=str(error.required),
             held=str(error.held),
             reason=str(error),
+            refusal_type=type(error).__name__,
             authority=authority,
             raised_at=datetime.now(timezone.utc).isoformat(),
         )

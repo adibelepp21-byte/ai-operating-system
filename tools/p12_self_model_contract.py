@@ -81,13 +81,21 @@ CONTRACT: Tuple[QuestionContract, ...] = (
         "ownership is an organizational fact; reading it from runtime state "
         "would make whatever happened to run look like what is owned"),
     QuestionContract(
-        "What authority do I have?", "authority", "declared constants",
-        DECLARED,
+        "What authority do I have?", "authority",
+        "tools.p12_phase_authorization",
+        AUTHORITATIVE,
         "Founder and Architect instruments; §40 — no self-model field may "
         "create authority merely by representing it",
-        "changes only when an instrument changes",
+        "reserved-matter holders change only when an instrument changes; the "
+        "phase authorization state is re-read from the decision body on each "
+        "call",
         "authority must come from the instrument. A state surface that "
-        "answered this would become the authority by being read"),
+        "answered this would become the authority by being read — so the "
+        "phase state is read from the Founder decision body itself "
+        "(ACT-CC-P12-007 §3) rather than transcribed into a constant here. "
+        "This row was DECLARED until ACT-CC-P12-007, which is why it was "
+        "exempt from the binding check below; naming the real read path "
+        "subjects it to that check"),
     QuestionContract(
         "What capabilities exist?", "capabilities", "tools.organization_catalog",
         AUTHORITATIVE,
