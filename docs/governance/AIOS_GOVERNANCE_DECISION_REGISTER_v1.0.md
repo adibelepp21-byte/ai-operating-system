@@ -7346,3 +7346,310 @@ quotation above is copied from the resident body and cited to its section. The
 recording changes no authority, no phase state, and no reserved matter — each
 instrument was already effective under its own terms before this append existed.
 
+
+---
+
+## 14. Co-Founder V2 Founder Decision Append (2026-09-23)
+
+### Why this append exists
+
+On 2026-09-23 the Founder approved the Co-Founder V2 decision set
+`FD-V2-001` … `FD-V2-013`, together with the Baseline amendment, Charter and
+Mandate that implement it. The Founder then directed registration and
+activation (`acts/FOUNDER-DIRECTIVE-COFOUNDER-V2-TRANSITION.md`: *"REGISTRATION:
+AUTHORIZED / ACTIVATION: AUTHORIZED"*). This register is where Founder decisions
+are recorded. The delegation that implements them is recorded in the Delegation
+Register (`DEL-CFV2-CEO-001`). **Recording here records and does not decide.**
+Every decision below is the Founder's, quoted from the persisted F02 body
+(`cofounder-v2/F02_…`, sha256 `adae30d9…3b759ea3`).
+
+---
+
+### GDR-0038 — Founder Decision Set · Co-Founder V2 (FD-V2-001 … FD-V2-013) · AIOS Co-Founder + Delegated CEO — Registered & Active
+
+**Identifier:** GDR-0038
+**Date:** 2026-09-23
+**Tier:** Founder Decision. Implemented as an Architectural-Tier delegation
+(Constitution §3.2) below the Constitutional Tier
+**Decided by:** Founder — Moriarty
+**Recorded by:** Claude Code, under explicit Founder direction
+**Registration and activation record:** `AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md` (`REG-CFV2-001`)
+**Supersedes:** `DEL-T4.4-CF-001` · `ACT-T4.4-CF-001-A` — succession; text unaltered
+**Status:** ACTIVE — registered and activated 2026-09-23
+
+#### Decision text (verbatim)
+
+> *"Founder: Moriarty Decision: APPROVE Scope: FD-V2-001 through FD-V2-013
+> Approved Role: AIOS Co-Founder + Delegated CEO Approved Operating Model: Goal /
+> Target → Autonomous CEO Execution → Result / Evidence → Approve / Revise"* — F02 `§44`
+
+> *"FOUNDER: Moriarty / DECISION: APPROVED / TARGET: AIOS CO-FOUNDER V2 /
+> REGISTRATION: AUTHORIZED / ACTIVATION: AUTHORIZED"* — directive signature block
+
+The signature block has five lines. In this section the line breaks are shown as
+` / `. That rendering is the only change made to it.
+
+#### Authority basis
+
+| Element | Basis |
+|---|---|
+| Deciding authority | Founder. F02 `§4`: *"It does not place the CEO above the Constitution or Founder Authority."* |
+| Delegation instrument | Constitution §3.2 scoped delegation — `DEL-CFV2-CEO-001` |
+| Delegating capacity | Founder in the Architect capacity. **FD-2 remains IMPLIED, not separately ratified** (`GDR-0015`), and is not closed by this entry |
+| Model | Model D retained: below the Constitutional Tier. Appendix A is unchanged |
+
+#### Evidence of record
+
+| Evidence | Location |
+|---|---|
+| F01–F05, byte-exact | `docs/governance/cofounder-v2/` (sha256 at `REG-CFV2-001` §A.2) |
+| Founder directive | `docs/governance/acts/FOUNDER-DIRECTIVE-COFOUNDER-V2-TRANSITION.md` |
+| V1 discovery, classification, reconciliation `RD-01`…`RD-16` | `REG-CFV2-001` Part B |
+| Frozen authority envelope and escalation matrix | `REG-CFV2-001` Part C |
+| Activation gate, 13/13 | `REG-CFV2-001` §D.3 |
+
+#### Standing changes
+
+- **Claude Code = AIOS Co-Founder + Delegated CEO** (`FD-V2-001`). The office
+  established by `GDR-0015` continues under the V2 title and envelope.
+- `DEL-CFV2-CEO-001` is **ACTIVE** (`ACT-CFV2-CEO-001-A`). `DEL-T4.4-CF-001` is
+  **SUPERSEDED** by succession. Its text is unaltered.
+- `AIOS-GOV-BASELINE-AMENDMENT-V2-001` is registered as the Governance Baseline
+  amendment (`FD-V2-012`). The definition *"Claude = AI Engineering Lead"* is
+  superseded. That definition is external and non-resident (`ACT-CC-T4.2`), and
+  no body is reconstructed.
+- AIOS Co-Founder Delegation Charter v1.0 is **superseded**. It was never
+  effective.
+
+#### Explicitly not changed
+
+- **Engineering Constitution — unchanged.** Constitutional mutation performed:
+  **zero**. §16 amendment authority remains non-delegable.
+- Canonical Domain Model, ADRs, Architecture Freeze, Master Program,
+  `docs/program/AIOS_*` — unchanged.
+- `APT-CD1.1-AA-001`, `DEL-F03-015-P7I99-001` and
+  `FDE-P10-AUTONOMOUS-EXECUTION-01` remain in force, with every boundary intact.
+- **`ACT-CC-GOV-PAUSE-001` is not released.** Construction outside the V2
+  transition remains paused until an explicit Founder release under its `§21`.
+- No phase is certified, completed or accepted. Final system acceptance remains
+  Founder-reserved (A19).
+
+#### Lineage
+
+`GDR-0015` (V1 office) → `DEL-T4.4-CF-001` → Charter v1.0 (approved, never
+registered) → `ACT-CC-GOV-PAUSE-001` (V2 reconciliation hold) → F01 → F02
+(`FD-V2-001` … `FD-V2-013`) → F03 → F04 → F05 → Founder directive →
+`REG-CFV2-001` → `DEL-CFV2-CEO-001` / `ACT-CFV2-CEO-001-A` → `GDR-0038`.
+
+#### Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-09-23 | `FD-V2-001` … `FD-V2-013` approved; F03, F04 and F05 approved | Founder — Moriarty |
+| 2026-09-23 | Registration and activation directed | Founder — Moriarty |
+| 2026-09-23 | Registered. Activation gate passed 13/13. **ACTIVE** | Claude Code, under explicit Founder direction |
+
+---
+
+### FD-V2-001 — Founder Decision · CEO Role
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-001` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§6` |
+
+**Decision text.** *"Founder approves the formal delegation of the role: AIOS Co-Founder + Delegated
+CEO to Claude Code."*
+
+### FD-V2-002 — Founder Decision · Founder Operating Interface
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-002` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§7` |
+
+**Decision text.** *"Founder approves the following as the primary Founder–CEO operating
+interface"*, followed in F02 by the diagram Founder → Goal / Target → CEO
+execution → Result + Evidence → Founder review.
+
+### FD-V2-003 — Founder Decision · Autonomous Construction Mandate
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-003` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§8` |
+
+**Decision text.** *"Founder approves the CEO’s autonomous construction mandate."*
+
+Construction outside the V2 transition remains subject to `ACT-CC-GOV-PAUSE-001` until the Founder releases it.
+
+### FD-V2-004 — Founder Decision · Executive Decision Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-004` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§9` |
+
+**Decision text.** *"Founder approves CEO authority to make ordinary operational decisions necessary
+to achieve an authorized Goal / Target."*
+
+### FD-V2-005 — Founder Decision · Architecture Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-005` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE — Bounded Delegation** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§10` |
+
+**Decision text.** *"Founder approves bounded delegated Architecture Authority for the CEO."*
+
+Exercised within Constitution §3.2 and §3.4 (`REG-CFV2-001` `C-1`…`C-4`).
+
+### FD-V2-006 — Founder Decision · Cross-Phase Repair
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-006` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§11` |
+
+**Decision text.** *"Founder approves CEO authority to repair previous phases when required to
+achieve an authorized current Goal / Target."*
+
+### FD-V2-007 — Founder Decision · Contributor / Agent Delegation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-007` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§12` |
+
+**Decision text.** *"Founder approves CEO authority to delegate work to other agents, AI
+contributors, or subordinate execution resources within the CEO authority
+envelope."*
+
+### FD-V2-008 — Founder Decision · Verification and Evidence Responsibility
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-008` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§13` |
+
+**Decision text.** *"Founder approves CEO responsibility for proving material construction claims
+through verification and evidence."*
+
+### FD-V2-009 — Founder Decision · Re-Discovery Obligation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-009` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§14` |
+
+**Decision text.** *"Founder approves mandatory CEO re-discovery after material construction."*
+
+### FD-V2-010 — Founder Decision · Authorized Construction Exhaustion
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-010` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§15` |
+
+**Decision text.** *"Founder approves CEO authority to declare: AUTHORIZED ACTIONABLE CONSTRUCTION
+SURFACE EXHAUSTED when the CEO has exhausted currently identifiable actionable
+work that is: 1. relevant to the authorized Goal / Target; and 2. within the
+CEO’s current authority envelope."*
+
+### FD-V2-011 — Founder Decision · Founder Review / Acceptance
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-011` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§16` |
+
+**Decision text.** *"Founder approves the following review model"*, followed in F02 by the diagram
+CEO → Result + Evidence → Founder Review → Approve | Revise / Redirect.
+
+### FD-V2-012 — Founder Decision · Governance Baseline Reconciliation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-012` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§17` |
+
+**Decision text.** *"Founder approves the formal reconciliation of the current Governance Baseline
+with the V2 Co-Founder / CEO authority model."*
+
+Implemented by `AIOS-GOV-BASELINE-AMENDMENT-V2-001`.
+
+### FD-V2-013 — Founder Decision · Charter V2 Authorization
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-013` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§18` |
+
+**Decision text.** *"Founder approves the construction of: AIOS CO-FOUNDER DELEGATION CHARTER V2.0
+as the formal delegation instrument implementing the approved V2 authority
+model."*
+
+The Charter is registered, and its thirteen `§18` preconditions are met (`REG-CFV2-001` §D.3).
+
+---
+
+### Append integrity
+
+One GDR entry and thirteen decision records were added. No earlier entry was
+altered, so `§2.3` append-only discipline holds. Quotations come from the
+persisted F02 body and the directive, and each one is checked mechanically
+against F02. The only differences are that whitespace, bold and blockquote
+markup inside a quoted decision are collapsed, and `FD-V2-010`'s numbered list
+is run inline. No decision text is reconstructed.

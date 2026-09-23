@@ -449,3 +449,124 @@ Constitution §3.2 permits to be delegated.
 
 **Constitutional amendment performed: NONE. Constitution §3.1, §3.2, §3.4, §4,
 §6.2, and §16 are unchanged.**
+
+---
+
+## 12. Co-Founder V2 Append (2026-09-23)
+
+**Why this append exists.** On 2026-09-23 the Founder approved the Co-Founder V2
+package and directed that it be registered and activated: *"REGISTRATION:
+AUTHORIZED / ACTIVATION: AUTHORIZED"* (`acts/FOUNDER-DIRECTIVE-COFOUNDER-V2-TRANSITION.md`).
+V2 is a delegation, and this register is where delegations are recorded, so it
+is registered here and not in a parallel register. Everything above this section
+is unaltered, per `§2` append-only discipline. The full reconciliation and the
+activation gate are in `AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md`
+(`REG-CFV2-001`).
+
+### DEL-CFV2-CEO-001 — AIOS Co-Founder + Delegated CEO Delegation (V2)
+
+| Field | Value |
+|---|---|
+| **Delegation ID** | `DEL-CFV2-CEO-001` |
+| **Date** | 2026-09-23 |
+| **Tier** | Architectural Tier (Constitution §3.2) for A05. Otherwise Implementation-Tier execution and executive coordination, all below the Constitutional Tier |
+| **Delegating Authority** | Founder — Moriarty, acting in the Architect capacity (FD-2 basis — see Authority basis) |
+| **Delegated Role** | AIOS Co-Founder + Delegated CEO (governance office; continues the `GDR-0015` office) |
+| **Current Occupant / Implementation** | Claude Code |
+| **Instrument** | AIOS Co-Founder Delegation Charter V2.0 — `AIOS-COFOUNDER-CHARTER-V2-001` (`cofounder-v2/F04_…`) |
+| **Operating protocol** | `AIOS-CEO-OPERATING-MANDATE-V2-001` (`cofounder-v2/F05_…`) |
+| **Governance Baseline amendment** | `AIOS-GOV-BASELINE-AMENDMENT-V2-001` (`cofounder-v2/F03_…`) |
+| **Governing Decisions** | `FD-V2-001` … `FD-V2-013` — `GDR-0038` |
+| **Scope** | Charter `§33` A01–A18, frozen at `REG-CFV2-001` Part C §C.3 |
+| **Boundaries** | Constitutional `C-1`…`C-7` (§C.4) · Founder-reserved A19–A21 and §C.5 · prohibited A22–A23 · standing decisions `SD-1`…`SD-8` (§C.6) |
+| **Escalation** | `REG-CFV2-001` §C.7; Charter `§24`; Mandate `§24` package |
+| **Effective Date** | 2026-09-23, on activation `ACT-CFV2-CEO-001-A` |
+| **Review Condition** | Founder Review — APPROVE / REVISE / REDIRECT (`FD-V2-011`) |
+| **Amendment · Suspension · Revocation Authority** | Founder (Charter `§4`, `§26`) |
+| **Supersedes** | `DEL-T4.4-CF-001` and `ACT-T4.4-CF-001-A` (succession, not revocation) · Charter v1.0 (never effective) |
+| **Evidence** | `REG-CFV2-001`; directive; F01–F05 (sha256 at `REG-CFV2-001` §A.2) |
+| **Status** | **ACTIVE** |
+
+#### Founder decision text (verbatim)
+
+> *"FOUNDER: Moriarty / DECISION: APPROVED / TARGET: AIOS CO-FOUNDER V2 /
+> REGISTRATION: AUTHORIZED / ACTIVATION: AUTHORIZED"* — directive signature block.
+
+> *"Founder: Moriarty Decision: APPROVE Scope: FD-V2-001 through FD-V2-013
+> Approved Role: AIOS Co-Founder + Delegated CEO"* — F02 `§44`.
+
+The signature block has five lines. In this section the line breaks are shown as
+` / `. That rendering is the only change made to it.
+
+#### Authority basis
+
+| Element | Basis |
+|---|---|
+| Instrument | Constitution §3.2: *"The Architect may delegate a bounded portion of architectural-tier approval authority. Any delegation must state an explicit scope."* The explicit scope is Charter `§33` together with `REG-CFV2-001` Part C |
+| Delegating capacity | Founder acting in the Architect capacity. This is the same basis as `DEL-T4.4-CF-001`, stated in that entry's *Recorded basis note*. **FD-2 (Founder ≡ Architect) remains IMPLIED, not separately ratified.** V2 does not change that |
+| Model | **Model D retained**: authority operates **below** the Constitutional Tier, and Appendix A is unchanged |
+| Non-delegable | Constitution §3.2 and §16 exclusions apply as `C-1`–`C-3`. They are not delegated and not delegable |
+| Recording | Recording is an Implementation-Tier act performed under explicit Founder direction. It is not an approval act (`§2`) |
+
+#### Supersession mark — `DEL-T4.4-CF-001` and `ACT-T4.4-CF-001-A`
+
+| Field | Value |
+|---|---|
+| **Status from 2026-09-23** | **SUPERSEDED** by `DEL-CFV2-CEO-001` / `ACT-CFV2-CEO-001-A` |
+| **Nature** | Succession. **Not revocation.** Actions validly taken under V1 remain valid (`§6`) |
+| **Text** | Unaltered. The *"ACTIVE"* in `§3` and `§4`, *"ACTIVE"* in `§9`, and `§11`'s *"records `DEL-T4.4-CF-001` … and nothing else"* are historical text, superseded by this mark |
+| **Carried forward** | Every V1 exclusion and boundary with a V2 counterpart is mapped at `REG-CFV2-001` `RD-07`. The `§3.4` legal and ownership boundary carries forward unchanged |
+
+#### Relationship to other instruments — one operative delegation model
+
+| Instrument | Nature | Status from 2026-09-23 |
+|---|---|---|
+| `DEL-CFV2-CEO-001` | **The** operative Co-Founder delegation | **ACTIVE** |
+| `DEL-T4.4-CF-001` | Prior Co-Founder delegation (V1) | **SUPERSEDED** — history retained |
+| `DEL-F03-015-P7I99-001` | Bounded P7-I99 execution delegation | **ACTIVE — DORMANT UNTIL INVOKED**. Its Founder-invocation gate stands (`SD-1`) |
+| `APT-CD1.1-AA-001` / `ACT-CD1.1-AA-001-A` | Architecture Authority appointment | **ACTIVE — unchanged** |
+| `FDE-P10-AUTONOMOUS-EXECUTION-01` | Founder event, bounded autonomous execution | **OPERATIVE**. Its hard boundaries stand (`SD-2`) |
+
+These are not competing role models. `DEL-CFV2-CEO-001` defines the role and
+its envelope. The other three are specific-scope Founder instruments that V2
+does not supersede, and each boundary they impose remains in force (Charter
+`§19.2`).
+
+#### Activation record — `ACT-CFV2-CEO-001-A`
+
+| Field | Value |
+|---|---|
+| **Activation ID** | `ACT-CFV2-CEO-001-A` |
+| **Delegation** | `DEL-CFV2-CEO-001` |
+| **Activated by** | Founder — Moriarty (*"ACTIVATION: AUTHORIZED"*) |
+| **Recorded by** | Claude Code, under explicit Founder direction |
+| **Activation date** | 2026-09-23 |
+| **Gate** | Directive `§19` — 13/13 (`REG-CFV2-001` §D.3) |
+| **Prior state** | STATE 6 — V1 Co-Founder construction authority |
+| **Activated state** | **AIOS CO-FOUNDER V2 — ACTIVE** |
+| **Constitutional / amendment / Founder-override authority conferred** | **NONE / NONE / NONE** |
+| **Self-authorization** | **PROHIBITED** (A22) |
+| **Construction pause (`ACT-CC-GOV-PAUSE-001`)** | **IN FORCE** until the Founder releases it |
+| **Status** | **ACTIVE** |
+
+#### Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-09-23 | Founder approves the V2 package (F01–F05) and directs registration and activation | Founder — Moriarty |
+| 2026-09-23 | V1 discovered and classified. Reconciliation `RD-01`–`RD-16` recorded | Claude Code |
+| 2026-09-23 | `DEL-CFV2-CEO-001` registered. `DEL-T4.4-CF-001` marked SUPERSEDED | Claude Code, under explicit Founder direction |
+| 2026-09-23 | `ACT-CFV2-CEO-001-A` recorded. **V2 ACTIVE** | Claude Code, under explicit Founder direction |
+
+#### Open items carried forward
+
+| ID | Item | Status |
+|---|---|---|
+| FD-2 | Founder ≡ Architect ratification | **IMPLIED — open** — Founder review item `FR-2` |
+| — | Construction pause release | **Founder** — `FR-1` |
+| — | Reversion state on V2 revocation | Unspecified by V2. Determined by the revoking instrument |
+| — | Founder succession · AIOS termination authority | **UNKNOWN — open** |
+| — | Governance Index reference to this register | **Deferred**, as in `§10` |
+
+**Constitutional amendment performed: NONE. Constitution §3.1, §3.2, §3.3, §3.4,
+§4, §6.2, §14.1, §16 and Appendix A are unchanged.**
