@@ -7881,3 +7881,23 @@ Dates are given in ISO form, following the register convention. One date,
 `FD-P12-003`'s, looks inconsistent: the instrument's own text is quoted in that
 entry's Status field, and it is not corrected, because correcting it would be
 reinterpretation.
+
+---
+
+## 16. P12 Certification Integrity Status Note (2026-09-24)
+
+This section records a change in how the system **represents and enforces**
+`FD-P12-006`. It records no decision, and the certification itself is
+unchanged. The `§15` entry for `FD-P12-006` states that the certified-evidence
+guard *"does not yet recognize this certification (baseline finding `B-01`)"*.
+That was true when written, and it is kept as written (`§2.3`). From
+2026-09-24, under `GOAL-V2-002`:
+
+| Surface | State |
+|---|---|
+| `tools/p12_certified_evidence_guard.py` | Recognizes `FD-P12-006`'s decision-field form, resolved against its `§15` entry. Certified phases: **10, 11, 12**. `docs/architecture/p12/` and `FD-P12-006` are protected |
+| Phase reader and self-model | Report P12 certified from `FD-P12-006`. The `§37` entry snapshot is kept, and its FALSE values are marked superseded |
+| Certified evidence | 121 files fixed by content in `AIOS_P12_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json` at the certified commit `6968c6e`, verified by `tools/p12_certified_evidence_manifest.py` |
+| Historical anomaly | Two observation files were rewritten after certification, by commits `7f6120c` and `d18bac4`. They were restored to their certified bytes. The later bytes remain in git history |
+
+Record: `AIOS_GOAL_V2_002_P12_CERTIFICATION_INTEGRITY_RECORD_v1.0.md`.

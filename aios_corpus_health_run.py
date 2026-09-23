@@ -142,7 +142,8 @@ def judge(facts: dict, criteria: Optional[dict]) -> dict:
 
 
 def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None,
-        runtime_store: Optional[Path] = None) -> dict:
+        runtime_store: Optional[Path] = None,
+        observation_root: Optional[Path] = None) -> dict:
     """One real work cycle, hosted on a started Runtime and inside a Workflow.
 
     Returns what happened. Decides nothing about `E12-06` — `§29`:
@@ -150,6 +151,19 @@ def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None,
     `tools/p12_e12_acceptance`'s to make from the evidence this leaves behind.
     """
     from tools.p12_trace_registry import STORE_ROOT
+    from tools.p12_certified_evidence_guard import guard
+
+    # `GOAL-V2-002`. Every store this run writes is checked **before** anything
+    # is written. The resident defaults lie in P12's evidence tree, which
+    # `FD-P12-006` certified. A run aimed at them is refused whole, instead of
+    # half-written. Observations were the one store the suites reached through
+    # a default (finding `D.1`, the cause of `B-02`), and they now take a root
+    # like every other store.
+    observation_root = Path(observation_root or observation.OBSERVATION_ROOT)
+    for target in ((store_root or STORE_ROOT) / WORKFLOW_KEY,
+                   Path(runtime_store or KNOWLEDGE_STORE_ROOT),
+                   observation_root):
+        guard(target)
 
     # The Trace goes to the canonical durable store — the same root every other
     # real execution writes to and the one `p12_trace_registry` discovers.
@@ -200,13 +214,13 @@ def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None,
     # — this is an observation of a real crossing, not a demonstration of
     # the observation surface.
     observation.publish(RUNTIME_ID, str(runtime.state),
-                        kind=observation.RUNTIME)
+                        kind=observation.RUNTIME, root=observation_root)
     # The workflow names the Runtime hosting it. This execution holds both
     # identities — it started the Runtime and defined the Workflow on it — so
     # the relation is recorded by the one party that actually knows it, and is
     # never inferred by a reader afterwards.
     observation.publish(WORKFLOW_KEY, str(monitor.state_of(identity).state),
-                        kind=observation.WORKFLOW, hosted_by=RUNTIME_ID)
+                        kind=observation.WORKFLOW, hosted_by=RUNTIME_ID, root=observation_root)
 
     writer = TraceWriter(trace_store)
 
@@ -220,7 +234,7 @@ def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None,
     lifecycle.succeed(identity)
     observation.publish(WORKFLOW_KEY,
                         str(monitor.state_of(identity).state),
-                        kind=observation.WORKFLOW, hosted_by=RUNTIME_ID)
+                        kind=observation.WORKFLOW, hosted_by=RUNTIME_ID, root=observation_root)
     outcome["workflow"] = {
         "key": WORKFLOW_KEY,
         "state": str(monitor.state_of(identity).state),
@@ -228,7 +242,7 @@ def run(*, root: Path = REPO_ROOT, store_root: Optional[Path] = None,
     }
     runtime.stop()
     observation.publish(RUNTIME_ID, str(runtime.state),
-                        kind=observation.RUNTIME)
+                        kind=observation.RUNTIME, root=observation_root)
     outcome["runtime"] = {"id": RUNTIME_ID, "state": str(runtime.state)}
     outcome["trace_records"] = _read_back(trace_store)
     return outcome

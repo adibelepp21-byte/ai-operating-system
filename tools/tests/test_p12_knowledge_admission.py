@@ -52,7 +52,8 @@ class Case1NoActiveKnowledge(unittest.TestCase):
     def test_the_work_withholds_its_verdict(self):
         with tempfile.TemporaryDirectory() as tmp:
             outcome = work.run(store_root=Path(tmp) / "traces",
-                               runtime_store=Path(tmp) / "runtime")
+                               runtime_store=Path(tmp) / "runtime",
+                               observation_root=Path(tmp) / "observations")
         self.assertFalse(outcome["knowledge_consumed"])
         self.assertEqual("WITHHELD", outcome["outputs"]["verdict"]["verdict"])
 

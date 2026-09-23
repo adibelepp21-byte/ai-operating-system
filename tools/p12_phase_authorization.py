@@ -319,6 +319,82 @@ def state_of(entity: str, root: Path = REPO_ROOT) -> Optional[PhaseState]:
     return None
 
 
+def certifications(root: Path = REPO_ROOT) -> dict:
+    """Phase certifications that resolve against the Register, with provenance.
+
+    Added under `GOAL-V2-002`. The state block `phase_states` reads is a
+    **P12-entry snapshot** (`§37`: the state *"immediately after this decision
+    is validly persisted"*). It still says `P12 CERTIFIED = FALSE`, six days
+    after `FD-P12-006` certified P12 (`H-1`). A later Founder instrument decides
+    a later state, and this reports it. The certifying instruments are read by
+    the same resolution rule the certified-evidence guard enforces
+    (`FD-P12-004`: a certification that resolves against no record is
+    rejected), so the self-model and the guard cannot disagree about which
+    phases are certified.
+
+    Fails visibly: when governance cannot be read, it returns
+    `resolved: False` with the reason. It never returns an empty set, which
+    would read as *"nothing is certified"*.
+    """
+    from tools import p12_certified_evidence_guard as sentinel
+    acts = root / "docs/governance/acts"
+    register = root / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+    try:
+        phases = sentinel.certified_phases(acts, register)
+    except sentinel.CertificationUndeterminable as undeterminable:
+        return {"resolved": False, "phases": {}, "detail": str(undeterminable)}
+    register_text = register.read_text(encoding="utf-8")
+    found = {}
+    for phase, name in sentinel.certification_provenance(acts):
+        if phase not in phases:
+            continue
+        found[f"P{phase}"] = {
+            "certified": True,
+            "instrument": (acts / name).relative_to(root).as_posix(),
+            "register_identity": sentinel._register_identity(
+                Path(name).stem, register_text),
+        }
+    return {"resolved": True, "phases": found}
+
+
+def current_states(root: Path = REPO_ROOT) -> Tuple[dict, ...]:
+    """The snapshot states, with what a later certification supersedes set aside.
+
+    For a phase that a resolving instrument has certified, a snapshot dimension
+    stated `FALSE` (other than `AUTHORIZED`) describes a state before
+    certification. Such a dimension is **moved** to
+    `superseded_by_certification`, which names the instrument. It is not
+    deleted and not flipped to `TRUE`. Every dimension left in `dimensions` is
+    still written in the cited section, so the independent check in
+    `p12_phase_authorization_verifier` (reported ⊆ stated) continues to hold.
+    Certification itself is reported by `certifications()`, with its own
+    provenance. Two sources are never folded into one record.
+    """
+    certified = certifications(root)
+    by_phase = certified["phases"] if certified["resolved"] else {}
+    current = []
+    for state in phase_states(root):
+        reported = state.as_reported()
+        certification = by_phase.get(state.entity)
+        if certification is not None:
+            kept, superseded = {}, {}
+            for name, value in state.dimensions.items():
+                if value is False and name != "AUTHORIZED":
+                    superseded[name] = value
+                else:
+                    kept[name] = value
+            reported["dimensions"] = kept
+            if superseded:
+                reported["superseded_by_certification"] = {
+                    "dimensions": superseded,
+                    "stated_in": state.stated_in,
+                    "superseded_by": certification["instrument"],
+                    "register_identity": certification["register_identity"],
+                }
+        current.append(reported)
+    return tuple(current)
+
+
 def issuance_contradiction(root: Path = REPO_ROOT) -> Optional[dict]:
     """The stale header this instrument carries, reported rather than hidden.
 

@@ -141,7 +141,9 @@ SOURCES: Tuple[StateSource, ...] = (
         state_class="RUNTIME", semantics=OBSERVATIONAL,
         owner="P12-W4 runtime observation",
         canonical_source="Blueprint §30 Runtime Integration",
-        read_path="docs/architecture/p12/runtime-observations",
+        # `GOAL-V2-002`: the live, writable root. P12's certified observations
+        # are read too, as history (`p12_runtime_observation.observations`).
+        read_path="docs/operations/runtime-observations",
         authority="observation is evidence, not permission",
         freshness_model="liveness horizon; LIVE / STALE / TERMINATED / UNKNOWN",
         owns_within_class="observed liveness of runtimes and workflows"),

@@ -159,12 +159,17 @@ def authority(root: Path = REPO_ROOT) -> Answer:
     """
     from tools import p12_phase_authorization as phases
     try:
-        states = {state.entity: state.as_reported()
-                  for state in phases.phase_states(root)}
+        # `GOAL-V2-002` (`H-1`). The states are the `§37` snapshot with what a
+        # later certification supersedes set aside, and certification is
+        # reported beside them, from its own instruments. Before this, the
+        # answer said `P12 CERTIFIED = False` after `FD-P12-006` certified P12.
+        states = {state["entity"]: state
+                  for state in phases.current_states(root)}
         contradiction = phases.issuance_contradiction(root)
         phase_authorization = {
             "resolved": True,
             "states": states,
+            "certification": phases.certifications(root),
             "issuance_contradiction": contradiction,
         }
     except phases.PhaseAuthorizationUnresolved as unresolved:

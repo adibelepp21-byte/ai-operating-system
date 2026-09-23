@@ -21,8 +21,13 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 class CertificationComesFromInstrumentBodies(unittest.TestCase):
-    def test_the_resident_certified_phases_are_ten_and_eleven(self):
-        self.assertEqual(sentinel.certified_phases(), frozenset({10, 11}))
+    def test_the_resident_certified_phases_are_ten_eleven_and_twelve(self):
+        """Was `{10, 11}`. Updated under `GOAL-V2-002`: `FD-P12-006` certified
+        P12 on 18 September 2026 and resolves against its Register entry. The
+        old oracle pinned the pre-certification state, and it held while the
+        guard could not read the decision-field form that instrument uses."""
+        self.assertEqual(sentinel.certified_phases(),
+                         frozenset({10, 11, 12}))
 
     def test_a_filename_alone_certifies_nothing(self):
         """IDENTIFIER ≠ DECISION BODY."""
@@ -76,18 +81,30 @@ class TheGuardRefusesTheRightWrites(unittest.TestCase):
         with self.assertRaises(sentinel.CertifiedEvidenceProtected):
             sentinel.guard(target)
 
-    def test_uncertified_phase_evidence_is_permitted(self):
-        target = REPO_ROOT / "docs/architecture/p12/anything.json"
+    def test_uncertified_live_state_is_permitted(self):
+        """Was a P12 path, which is certified evidence since `FD-P12-006`. The
+        permitted case is now the live operational root, which no phase
+        certification covers (`GOAL-V2-002`)."""
+        target = REPO_ROOT / "docs/operations/runtime-observations/anything.json"
         self.assertEqual(sentinel.guard(target), target)
 
     def test_the_guard_returns_the_path_so_it_reads_as_a_checkpoint(self):
-        target = REPO_ROOT / "docs/architecture/p12/x.json"
+        target = REPO_ROOT / "docs/operations/x.json"
         self.assertEqual(sentinel.guard(target), Path(target))
 
-    def test_p11_is_protected_and_p12_is_not(self):
+    def test_p11_and_p12_are_protected_and_live_state_is_not(self):
+        """Was *"p11 is protected and p12 is not"* — true until `FD-P12-006`."""
         roots = [r.name for r in sentinel.protected_roots()]
         self.assertIn("p11", roots)
-        self.assertNotIn("p12", roots)
+        self.assertIn("p12", roots)
+        self.assertFalse(sentinel.is_protected(
+            REPO_ROOT / "docs/operations/runtime-observations/x.json"))
+
+    def test_p12_certified_evidence_is_refused(self):
+        target = (REPO_ROOT / "docs/architecture/p12/runtime-observations"
+                  / "aios-corpus-health.observation.json")
+        with self.assertRaises(sentinel.CertifiedEvidenceProtected):
+            sentinel.guard(target)
 
 
 class EveryWriterIntoCertifiedEvidenceIsGuarded(unittest.TestCase):
@@ -211,9 +228,10 @@ class AttributionAndAnomalyDetection(unittest.TestCase):
 
     def test_each_certified_phase_is_attributed_to_its_instrument(self):
         provenance = dict(sentinel.certification_provenance())
-        self.assertEqual(set(provenance), {10, 11})
+        self.assertEqual(set(provenance), {10, 11, 12})
         self.assertTrue(provenance[10].startswith("FD-P10-005"))
         self.assertTrue(provenance[11].startswith("FD-P11-002"))
+        self.assertTrue(provenance[12].startswith("FD-P12-006"))
 
     def test_the_resident_corpus_raises_no_anomaly(self):
         """A detector that fires on the real corpus is noise, not a control."""
@@ -324,9 +342,13 @@ class TheWarrantIsProtectedAndNotOnlyTheEvidence(unittest.TestCase):
         self.assertTrue(ordinary.is_file())
         self.assertEqual(sentinel.guard(ordinary), ordinary)
 
-    def test_p12_working_files_stay_writable(self):
+    def test_p12_working_files_are_no_longer_writable(self):
+        """Was *"p12 working files stay writable"*, correct while P12 was under
+        construction. After `FD-P12-006`, the P12 root is certified evidence
+        and new work persists elsewhere (`GOAL-V2-002`)."""
         working = sentinel.REPO_ROOT / "docs/architecture/p12/probe.md"
-        self.assertEqual(sentinel.guard(working), working)
+        with self.assertRaises(sentinel.CertifiedEvidenceProtected):
+            sentinel.guard(working)
 
     def test_this_does_not_touch_the_forgery_residual(self):
         """Overwriting an instrument and planting one are different acts.

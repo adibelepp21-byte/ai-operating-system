@@ -51,9 +51,24 @@ REGISTER = REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.m
 #: `FD-P11-002 §1` — "PHASE 11 — AUTONOMOUS ORGANIZATION IS CERTIFIED";
 #: `FD-P10-005 §16` — "Phase 10 — Department Ecosystem is hereby certified as
 #: COMPLETE". Both forms are matched; neither is inferred from a filename.
+#:
+#: A third form was added under `GOAL-V2-002`. `FD-P12-006` certifies P12 in
+#: its Founder decision field, as two lines:
+#:
+#:     FOUNDER DECISION:
+#:     P12 CERTIFICATION = CERTIFY
+#:
+#: The first two forms cannot see that, so the guard answered `{10, 11}` for
+#: six days after P12 was certified, and P12's evidence stayed writable. The
+#: form is anchored to the decision-field label on the preceding line. That is
+#: deliberate. `FD-P12-006 §21` also contains *"P12 CERTIFIED = YES"*, inside
+#: a conditional (*"Certification may be marked … only if"*), and a pattern
+#: that matched the bare equation would read a condition as a decision.
 _CERTIFIES = re.compile(
     r"PHASE\s+(\d+)[^\n]{0,60}\bIS\s+CERTIFIED\b"
     r"|Phase\s+(\d+)[^\n]{0,80}\bis hereby certified\b"
+    r"|^FOUNDER DECISION:[ \t]*\n[ \t]*P(\d+)[ \t]+CERTIFICATION[ \t]*=[ \t]*CERTIFY\b",
+    re.MULTILINE,
 )
 
 

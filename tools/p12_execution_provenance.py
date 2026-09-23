@@ -39,6 +39,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Mapping, Optional, Tuple
 
+from tools.p12_certified_evidence_guard import guard
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 #: Where execution provenance manifests are persisted. Beside the trace stores
@@ -163,8 +165,11 @@ def record(manifest: ExecutionManifest, *,
         raise ProvenanceIncomplete(
             f"a manifest for {manifest.execution_id!r} already exists; a second "
             "execution needs its own identity, not an overwrite")
-    path.write_text(json.dumps(manifest.to_payload(), indent=2, sort_keys=True),
-                    encoding="utf-8")
+    # `GOAL-V2-002`: P12 is certified, so its manifest root is certified
+    # evidence. A new execution's manifest belongs in a live store, never beside
+    # the certified ones, and the guard refuses the certified root.
+    guard(path).write_text(json.dumps(manifest.to_payload(), indent=2,
+                                      sort_keys=True), encoding="utf-8")
     return path
 
 

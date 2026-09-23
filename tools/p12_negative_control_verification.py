@@ -30,6 +30,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Dict, Optional, Tuple
 
+# Every write below goes to a temporary directory, which the guard permits. They
+# route through it anyway so the certified-writer coverage check holds per call
+# site (`GOAL-V2-002`), and a future edit that points one at certified evidence
+# is refused rather than silent.
+from tools.p12_certified_evidence_guard import guard
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
 DEMONSTRATED = "DEMONSTRATED"
@@ -383,9 +389,9 @@ def _runtime_integration() -> Tuple[bool, str]:
 
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
-        (root / "entry.py").write_text("x = 1\n", encoding="utf-8")
+        (guard(root / "entry.py")).write_text("x = 1\n", encoding="utf-8")
         (root / "pkg").mkdir()
-        (root / "pkg" / "c.py").write_text("import entry\n", encoding="utf-8")
+        (guard(root / "pkg" / "c.py")).write_text("import entry\n", encoding="utf-8")
         with mock.patch.object(rt, "REPO_ROOT", root):
             imported = {p.module: p for p in rt.entry_points()}
             imported_status = rt.reachability()["status"]
@@ -395,7 +401,7 @@ def _runtime_integration() -> Tuple[bool, str]:
 
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
-        (root / "entry.py").write_text("x = 1\n", encoding="utf-8")
+        (guard(root / "entry.py")).write_text("x = 1\n", encoding="utf-8")
         with mock.patch.object(rt, "REPO_ROOT", root):
             alone = {p.module: p for p in rt.entry_points()}
             alone_status = rt.reachability()["status"]
@@ -544,7 +550,7 @@ def _governance_join_writer() -> Tuple[bool, str]:
 
     with tempfile.TemporaryDirectory() as tmp:
         tmp_root = Path(tmp)
-        (tmp_root / escalations[0].name).write_text(
+        (guard(tmp_root / escalations[0].name)).write_text(
             escalations[0].read_text(encoding="utf-8"), encoding="utf-8")
         tmp_register = EscalationRegister(tmp_root)
         try:
@@ -592,12 +598,12 @@ def _governance_join_reader() -> Tuple[bool, str]:
     import json
     with tempfile.TemporaryDirectory() as tmp:
         tmp_root = Path(tmp)
-        (tmp_root / f"{escalation_id}.escalation.json").write_text(
+        (guard(tmp_root / f"{escalation_id}.escalation.json")).write_text(
             (root / f"{escalation_id}.escalation.json").read_text(
                 encoding="utf-8"), encoding="utf-8")
         payload = json.loads(joins[0].read_text(encoding="utf-8"))
         payload["delegation_id"] = "0" * 16
-        (tmp_root / f"{escalation_id}.governance-join.json").write_text(
+        (guard(tmp_root / f"{escalation_id}.governance-join.json")).write_text(
             json.dumps(payload), encoding="utf-8")
         broken = reader.resolve(tmp_root, tmp_root, escalation_id)
         if broken["status"] == reader.JOINED:
@@ -636,7 +642,7 @@ def _phase_authorization_reader() -> Tuple[bool, str]:
                            "rather than reporting the corpus undeterminable")
         # A body that names the phase everywhere but carries no structured
         # state block must not yield a state — `§10`'s false-positive case.
-        (empty / "docs" / "governance" / "acts" / "roadmap.md").write_text(
+        (guard(empty / "docs" / "governance" / "acts" / "roadmap.md")).write_text(
             "1. FUTURE WORK\n\nP13 is discussed here. P13 authorization is "
             "described as future work for P13.\n", encoding="utf-8")
         try:
@@ -991,7 +997,7 @@ def _governance_index() -> Tuple[bool, str]:
         for relative in index.sources:
             target = shadow / relative
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text("changed underneath\n", encoding="utf-8")
+            guard(target).write_text("changed underneath\n", encoding="utf-8")
         stale = index.stale_sources(shadow)
     if len(stale) == len(index.sources):
         return True, (f"all {len(stale)} sources report stale once their bytes "
@@ -1020,7 +1026,7 @@ def _knowledge_admission_writer() -> Tuple[bool, str]:
 
     def _world(tmp: Path, text: str) -> Path:
         (tmp / ka.DECISION_ROOT).mkdir(parents=True, exist_ok=True)
-        (tmp / ka.DECISION_ROOT / "FD.md").write_text(text, encoding="utf-8")
+        (guard(tmp / ka.DECISION_ROOT / "FD.md")).write_text(text, encoding="utf-8")
         shutil.copy(source, tmp / ka.CANDIDATE_SOURCE)
         return tmp
 
@@ -1176,7 +1182,7 @@ def _e12_criteria() -> Tuple[bool, str]:
                 n=index, c=criterion,
                 sel=chooser(proposals[criterion]["proposed"]),
                 bound="a bounded, measurable statement")
-        (tmp / ec.DECISION_ROOT / "FD.md").write_text(body, encoding="utf-8")
+        (guard(tmp / ec.DECISION_ROOT / "FD.md")).write_text(body, encoding="utf-8")
         return tmp
 
     with tempfile.TemporaryDirectory() as tmp:
@@ -1246,7 +1252,7 @@ def _e12_source_discovery() -> Tuple[bool, str]:
     with tempfile.TemporaryDirectory() as tmp:
         root = _world(Path(tmp))
         path = root / sd.PROPOSAL_SOURCE
-        path.write_text(path.read_text(encoding="utf-8").replace(
+        guard(path).write_text(path.read_text(encoding="utf-8").replace(
             '*"Phase dan Platform Organization harus tetap dibedakan"*',
             '*"a sentence the cited section does not contain at all"*'),
             encoding="utf-8")
@@ -1260,7 +1266,7 @@ def _e12_source_discovery() -> Tuple[bool, str]:
     with tempfile.TemporaryDirectory() as tmp:
         root = _world(Path(tmp))
         path = root / sd.REQUIREMENT_SOURCE
-        path.write_text(path.read_text(encoding="utf-8").replace(
+        guard(path).write_text(path.read_text(encoding="utf-8").replace(
             "15. P12-W2 — UNIFIED OPERATIONAL STATE AUTHORITY",
             "15. AN ENTIRELY DIFFERENT SECTION"), encoding="utf-8")
         swapped = {d.criterion: d.status for d in sd.discover(root)}
@@ -1329,12 +1335,55 @@ def _e12_measurement() -> Tuple[bool, str]:
                   "at all without the decision record")
 
 
+def _certified_evidence_manifest() -> Tuple[bool, str]:
+    """A changed certified byte must be reported, and so must a missing file.
+
+    `GOAL-V2-002`. A detector that answers `holds` for every tree is a
+    constant, not a control. This one is driven three ways inside a temporary
+    tree: intact, one byte changed, one file removed. An unreadable manifest
+    must raise, not report a clean tree.
+    """
+    import hashlib
+    import json
+    from tools import p12_certified_evidence_manifest as manifest
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        evidence = root / "evidence"
+        evidence.mkdir()
+        guard(evidence / "a.json").write_text("certified\n", encoding="utf-8")
+        guard(evidence / "b.json").write_text("certified\n", encoding="utf-8")
+        digest = hashlib.sha256(b"certified\n").hexdigest()
+        record = root / "manifest.json"
+        guard(record).write_text(json.dumps({
+            "evidence_root": "evidence",
+            "files": {"evidence/a.json": digest, "evidence/b.json": digest},
+        }), encoding="utf-8")
+        if not manifest.verify(root, record).holds:
+            return False, "an intact tree was reported as drifted"
+        guard(evidence / "a.json").write_text("rewritten\n", encoding="utf-8")
+        (evidence / "b.json").unlink()
+        drifted = manifest.verify(root, record)
+        if drifted.holds or drifted.modified != ("evidence/a.json",) \
+                or drifted.missing != ("evidence/b.json",):
+            return False, f"drift was not reported: {drifted.as_reported()}"
+        try:
+            manifest.verify(root, root / "absent.json")
+        except manifest.ManifestUnavailable:
+            pass
+        else:
+            return False, "an unreadable manifest was treated as clean"
+    return True, ("holds on an intact tree; MODIFIED on a changed byte; "
+                  "MISSING on a removed file; raises on an unreadable manifest")
+
+
 CONTROLS: Tuple[Tuple[str, str, Callable], ...] = (
     ("p12_runtime_observation", "cannot answer what is running",
      _runtime_observation),
     ("p12_trace_registry", "nothing has run", _trace_registry),
     ("p12_certified_evidence_guard", "certification undeterminable",
      _certified_evidence_guard),
+    ("p12_certified_evidence_manifest", "a changed certified byte is reported",
+     _certified_evidence_manifest),
     ("p12_cross_phase_verification", "a phase is NOT EXERCISED", _cross_phase),
     ("p12_cross_pd_verification", "the registry is UNAVAILABLE", _cross_pd),
     ("p12_cross_platform_verification", "an absent corpus fails closed",
