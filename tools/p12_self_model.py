@@ -173,6 +173,23 @@ def authority(root: Path = REPO_ROOT) -> Answer:
             "states": {},
             "detail": str(unresolved),
         }
+    # `delegated_to_co_founder` below is the `DP-01 §8` list, written into this
+    # module under P11. It is kept as that instrument's statement. The delegation
+    # actually in force is read from the Delegation Register, with its appended
+    # supersession marks applied (`ACT-CC-GOV-V2-RESUME-001` baseline).
+    from tools import governance_delegation_register as register
+    try:
+        delegations = register.read_register(
+            _under(root, register.REGISTER, register.REPO_ROOT))
+        operative_delegation = {
+            "resolved": True,
+            "in_force": [d.as_reported() for d in delegations if d.in_force],
+            "superseded": [d.as_reported() for d in delegations
+                           if d.effective_status == "SUPERSEDED"],
+        }
+    except register.DelegationRegisterUnreadable as unreadable:
+        operative_delegation = {"resolved": False, "in_force": [],
+                                "superseded": [], "detail": str(unreadable)}
     return Answer(
         "What authority do I have?",
         {
@@ -190,12 +207,14 @@ def authority(root: Path = REPO_ROOT) -> Answer:
                 "integrate", "test", "verify", "persist", "reconcile", "document",
             ),
             "phase_authorization": phase_authorization,
+            "operative_delegation": operative_delegation,
             "self_model_authority": None,
         },
         VERIFIED,
         "DP-01 §8; FD-P11-001 §12; FD-P10-005 §4; P12 Authorization §13; "
         "phase state read from the Founder decision body by "
-        "tools.p12_phase_authorization",
+        "tools.p12_phase_authorization; operative delegation read from "
+        "AIOS_DELEGATION_REGISTER_v1.0.md by tools.governance_delegation_register",
     )
 
 

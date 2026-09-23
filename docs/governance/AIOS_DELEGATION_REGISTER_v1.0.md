@@ -570,3 +570,42 @@ does not supersede, and each boundary they impose remains in force (Charter
 
 **Constitutional amendment performed: NONE. Constitution §3.1, §3.2, §3.3, §3.4,
 §4, §6.2, §14.1, §16 and Appendix A are unchanged.**
+
+---
+
+## 13. V2 Control Surface and Pause Release Append (2026-09-24)
+
+**Why this append exists.** `ACT-CC-GOV-V2-RESUME-001` (Founder — Moriarty,
+24 September 2026) does two things. It releases `ACT-CC-GOV-PAUSE-001`. And it
+directs that the **AIOS CEO Authority / Escalation Matrix** be used *"as the
+operational authority and escalation control surface for execution, subject to
+the higher-order authority hierarchy"* (`§4`). Both change how
+`DEL-CFV2-CEO-001` operates. Neither changes its scope. Everything above this
+section is unaltered (`§2`).
+
+| Field | Value |
+|---|---|
+| **Instrument** | `AIOS-CEO-AUTHORITY-ESCALATION-MATRIX-V2-001` v2.0 — `cofounder-v2/F06_AIOS_CEO_AUTHORITY_ESCALATION_MATRIX_V2.0.txt`, sha256 `5c0e546c019b1ff891d43d3b294e73979b158cf5cb408319a4aed1cd4bdc8342` (byte-exact) |
+| **Founder approval** | Matrix `§51`: *"Founder: Moriarty"* · *"Founder Decision: APPROVE"* |
+| **Directed into use by** | `ACT-CC-GOV-V2-RESUME-001` `§4` |
+| **Position** | Below the CEO Operating Mandate (Matrix `§3`). It *"does not create authority beyond those instruments"* (`§1`) |
+| **Relationship** | Operationalizes `DEL-CFV2-CEO-001`. It adds escalation levels E0–E3, a per-row escalation column, decision trees, and escalation-package and decision-record standards |
+| **Activation conditions (Matrix `§49`)** | 1 Founder approval: `§51` · 2 Baseline amendment registered: `GDR-0038` · 3 Charter registered: `DEL-CFV2-CEO-001` · 4 Mandate registered: `REG-CFV2-001` §A.1 · 5 this Matrix registered: this entry · 6 V2 activation recorded: `ACT-CFV2-CEO-001-A`. **All six met** |
+| **Status** | **ACTIVE** from 2026-09-24 |
+
+**One row is narrower than the Charter, and the narrower row governs.** Matrix
+A17 (Authorized Construction Exhaustion) is **AUTHORIZED WITH BOUNDARY / E1**,
+with a 15-point checklist (`§23`). Charter `§33` A17 is **AUTHORIZED**. The
+Matrix sits lower in precedence, but it restricts rather than expands, so the
+two do not conflict. Applying the stricter row cannot exceed the Charter. All 22
+other rows carry the same status as Charter `§33`, with wording-only
+differences in the boundary column.
+
+**Pause release.**
+
+| Field | Value |
+|---|---|
+| `ACT-CC-GOV-PAUSE-001` | **RELEASED** 2026-09-24 by `ACT-CC-GOV-V2-RESUME-001` `§2`. The Act confirms all seven `§21` resumption elements (`§26`) and identifies `DEL-CFV2-CEO-001` as the operative instrument |
+| Standing decision `SD-3` (`REG-CFV2-001` §C.6) | **Discharged** by the release. `SD-1`, `SD-2` and `SD-4`…`SD-8` stand unchanged |
+| First Founder Goal / Target | **ACTIVE** — `ACT-CC-GOV-V2-RESUME-001` `§5`, `§6` |
+| Authority | **Not expanded** (`§3`) |

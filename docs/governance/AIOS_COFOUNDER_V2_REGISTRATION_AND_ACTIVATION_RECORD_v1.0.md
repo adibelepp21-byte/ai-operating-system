@@ -654,3 +654,18 @@ committed text. None of them reached the remote.
 The test suite rewrites two P12 runtime-observation files as a known recurring
 side effect. After the baseline run they were restored with `git checkout`, and
 they are not part of this change.
+
+---
+
+## Part G — Post-activation record (2026-09-24)
+
+Appended after activation. Parts A–F above are unaltered and describe the state
+on 2026-09-23.
+
+| Change | Effect | Recorded at |
+|---|---|---|
+| `ACT-CC-GOV-V2-RESUME-001` issued by the Founder | Construction pause **RELEASED**. `SD-3` discharged. Founder review item `FR-1` **answered** | Delegation Register `§13`; Decision Register `§15` |
+| CEO Authority / Escalation Matrix (`F06`) registered as the operational control surface | Matrix `§49` conditions 1–6 met. **ACTIVE**. A17 is applied in its narrower Matrix form (AUTHORIZED WITH BOUNDARY / E1) | Delegation Register `§13` |
+| First Founder Goal / Target | **ACTIVE**. Execution record: `AIOS_POST_V2_OPERATIONAL_BASELINE_v1.0.md` | — |
+
+`FR-2` (FD-2) and `FR-3` (Founder review of the transition) remain open.

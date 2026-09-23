@@ -1,7 +1,8 @@
 # AIOS Co-Founder V2 — Founder-Approved Governance Package
 
-**Status of this directory:** the five files below are **byte-exact copies** of
-the Founder-approved V2 package supplied on 2026-09-23. They are registered and
+**Status of this directory:** the files below are **byte-exact copies** of
+the Founder-approved V2 package. F01–F05 were supplied on 2026-09-23, and F06, the
+Authority / Escalation Matrix, on 2026-09-24 with `ACT-CC-GOV-V2-RESUME-001`. They are registered and
 their governance model is **ACTIVE** as of 2026-09-23.
 
 **Operative status is recorded elsewhere, not in these bodies.** Each body is
@@ -24,6 +25,7 @@ the current state.
 | `F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md` | `AIOS-GOV-BASELINE-AMENDMENT-V2-001` | FOUNDER APPROVED — PENDING CANONICAL REGISTRATION & ACTIVATION |
 | `F04_AIOS_COFOUNDER_DELEGATION_CHARTER_V2.0.md` | `AIOS-COFOUNDER-CHARTER-V2-001` | FOUNDER APPROVED — PENDING CANONICAL REGISTRATION & ACTIVATION |
 | `F05_AIOS_CEO_OPERATING_MANDATE_AND_EXECUTION_PROTOCOL_V2.0.md` | `AIOS-CEO-OPERATING-MANDATE-V2-001` | FOUNDER APPROVED — PENDING CANONICAL REGISTRATION & ACTIVATION |
+| `F06_AIOS_CEO_AUTHORITY_ESCALATION_MATRIX_V2.0.txt` | `AIOS-CEO-AUTHORITY-ESCALATION-MATRIX-V2-001` | FOUNDER APPROVED — PENDING CANONICAL REGISTRATION & ACTIVATION. **Registered and ACTIVE 2026-09-24** (Delegation Register `§13`) |
 
 The `F0n_` prefixes follow the Founder directive's own numbering (`§3`, FILE 01
 through FILE 05). File names were normalized from the upload names. Contents

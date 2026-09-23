@@ -7653,3 +7653,231 @@ persisted F02 body and the directive, and each one is checked mechanically
 against F02. The only differences are that whitespace, bold and blockquote
 markup inside a quoted decision are collapsed, and `FD-V2-010`'s numbered list
 is run inline. No decision text is reconstructed.
+
+
+---
+
+## 15. Phase 12 – Phase 13 and Governance Founder Instrument Append (2026-09-24)
+
+### Why this append exists
+
+Sixteen Founder instruments issued between 12 and 24 September 2026 are resident
+in `docs/governance/acts/`, and none had an entry in this register. They
+authorize, ratify, rule on and certify P12; decide the P13 preparation path; and
+pause and then release construction. This is the same recording gap that `§13`
+closed for P10 and P11, and it has the same consequence. `tools/derived_views`
+and the self-model answer *"what decisions are recorded"* from this register, so
+before this append the system could not see the decisions that certify P12 or
+shape P13.
+
+**This is a recording gap, not an authority gap.** Each instrument was
+effective under its own terms before this entry existed. Registration records
+and does not effectuate (Authority Disclaimer). The append is made under
+`ACT-CC-GOV-V2-RESUME-001` `§6` (a verified post-V2 baseline) and V2 A12
+(evidence). No instrument is reinterpreted. Each entry quotes the instrument's
+own decision line and cites the file, with the first 16 hex characters of its
+sha256 at registration.
+
+---
+### P12 Authorization — Founder Decision · Phase 12 Authorization
+
+| Field | Value |
+|---|---|
+| **Identifier** | `P12 Authorization` |
+| **Date** | 2026-09-12 |
+| **Decided by** | AIOS Founder |
+| **Record** | `acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md` · sha256 `045c409ec8152241…` |
+| **Status** | ISSUED, effective 2026-09-12 per the instrument's provenance block. Its `§37` state block is the P12-entry snapshot that `tools/p12_phase_authorization` still reads (`H-1`) |
+
+**Decision text.** *"D1-A — AUTHORIZE P12"*
+
+### FD-P12-001 — Founder Decision · F-16 / E12 Ratification & Acceptance Boundary
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-001` |
+| **Date** | 2026-09-17 |
+| **Decided by** | Founder |
+| **Record** | `acts/FD-P12-001-E12-RATIFICATION-AND-ACCEPTANCE-BOUNDARY.md` · sha256 `1ad7587f0d8bdd35…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"Ratification State: E12 RATIFIED"*; *"R1 — CONSUMPTION BY REAL SYSTEM WORK"*
+
+### FD-P12-002 — Founder Decision · P6 Knowledge Admission / Corpus-Health Criteria
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-002` |
+| **Date** | 2026-09-17 |
+| **Decided by** | Founder |
+| **Record** | `acts/FD-P12-002-P6-KNOWLEDGE-ADMISSION.md` · sha256 `34d753e213c5a606…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"The Founder hereby decides: … APPROVED FOR KNOWLEDGE ADMISSION"*
+
+### FD-P12-003 — Founder Decision · E12-01…E12-05 Measurable Interpretation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-003` |
+| **Date** | 2026-08-17 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P12-003-E12-01-05-MEASURABLE-INTERPRETATION.md` · sha256 `01ee606d6a563bb1…` |
+| **Status** | ISSUED. The instrument states *"Date Issued: 17-08-2026"*, which is shown in ISO form above. That date precedes the P12 authorization of 2026-09-12. It is recorded as stated, not corrected |
+
+**Decision text.** *"Founder Decision: RATIFIED"*
+
+### FD-P12-004 — Founder Ruling · D-P12-027-02 · False-Certification Semantic Boundary
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-004` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P12-004-FALSE-CERTIFICATION-SEMANTIC-BOUNDARY.md` · sha256 `9f9a9ebc83bd6767…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"The system must reject a certification claim that cannot resolve against an authoritative certification record."*
+
+### FD-P12-005 — Founder Ruling · D-P12-027-04 · §6.7 Completion Semantics
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-005` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P12-005-SECTION-6-7-COMPLETION-SEMANTICS.md` · sha256 `51837957211e5ca7…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"This ruling does not declare §6.7 SATISFIED automatically."*
+
+### FD-P12-006 — Founder Decision · P12 Certification & Live Operational Verification
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-006` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md` · sha256 `431adf774fed2be8…` |
+| **Status** | ISSUED. Its live-verification condition was reported as satisfied in `docs/architecture/p12/AIOS-P12-FINAL-CERTIFICATION-AND-P13-TRANSITION-HANDOFF-RECORD.md`. **P12 is certified.** `tools/p12_certified_evidence_guard.py` does not yet recognize this certification (baseline finding `B-01`) |
+
+**Decision text.** *"P12 CERTIFICATION = CERTIFY"*
+
+### ACT-CC-P12-019 — Founder Act · Delegated P12 Completion Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-CC-P12-019` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/ACT-CC-P12-019-P12-COMPLETION-AUTHORITY-DELEGATION.md` · sha256 `3b3149ef709dbd38…` |
+| **Status** | ISSUED. Scoped to P12's E12 criteria, and spent with P12's completion |
+
+**Decision text.** *"The Founder hereby explicitly delegates to Claude Code:"*
+
+### FD-P13-001 — Founder Decision · P13 Identity & Definition Path Selection
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-001` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-001-P13-IDENTITY-AND-DEFINITION-PATH-SELECTION.md` · sha256 `6ea9f287ea1ce9bd…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"[X] OPTION B — NON-CANONICAL DRAFT → FOUNDER CANONICALIZATION"*
+
+### FD-P13-002 — Founder Decision · Blueprint Drafting Scope & Bounded Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-002` |
+| **Date** | 2026-09-19 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-002-BLUEPRINT-DRAFTING-SCOPE-AND-BOUNDED-AUTHORITY.md` · sha256 `f083200dd748203f…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"Selected Option: C — Bounded Act"*
+
+### FI-P13-004 — Founder Issuance · ACT-CC-P13-004 Non-Canonical Blueprint Drafting Authorization
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FI-P13-004` |
+| **Date** | 2026-09-19 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FI-P13-004-FOUNDER-ISSUANCE-OF-ACT-CC-P13-004.md` · sha256 `3831f57037f0ab71…` |
+| **Status** | ISSUED. `ACT-CC-P13-004` is SPENT |
+
+**Decision text.** *"[X] ISSUE ACT-CC-P13-004"*
+
+### FD-P13-003 — Founder Decision · Blueprint v0.1 Review & Disposition
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-003` |
+| **Date** | 2026-09-19 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-003-BLUEPRINT-FOUNDER-REVIEW-AND-DISPOSITION.md` · sha256 `ef637281520bfab8…` |
+| **Status** | ISSUED. `ACT-CC-P13-005` is SPENT |
+
+**Decision text.** *"[X] OPTION D — RETURN FOR REVISION"*; *"[X] RA-2 — NEW FOUNDER-ISSUED BOUNDED ACT REQUIRED"*
+
+### FD-P13-004 — Founder Decision · Blueprint v0.2 Review & Disposition
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-004` |
+| **Date** | 2026-09-19 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-004-BLUEPRINT-V0-2-FOUNDER-REVIEW-AND-DISPOSITION.md` · sha256 `8fe1501306fccd2c…` |
+| **Status** | ISSUED. `ACT-CC-P13-006` and `ACT-CC-P13-007` are SPENT |
+
+**Decision text.** *"[X] OPTION D — RETURN FOR REVISION"*
+
+### FD-P13-005 — Founder Decision · Disposition of Blueprint v0.3
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-005` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-005-FOUNDER-DISPOSITION-OF-BLUEPRINT-V0-3.md` · sha256 `08f687e539806ddc…` |
+| **Status** | ISSUED. `ACT-CC-P13-008` is SPENT and produced v0.4. The next P13 gate is a **fresh Founder review of v0.4**, which has not occurred |
+
+**Decision text.** *"[X] OPTION B — ACCEPT WITH MODIFICATION"*
+
+### ACT-CC-GOV-PAUSE-001 — Founder Act · AIOS Construction Pause & Co-Founder V2 Reconciliation Hold
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-CC-GOV-PAUSE-001` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/ACT-CC-GOV-PAUSE-001-AIOS-CONSTRUCTION-PAUSE.md` · sha256 `a5802a7802e7b495…` |
+| **Status** | ISSUED. **RELEASED** by `ACT-CC-GOV-V2-RESUME-001` on 24 September 2026 |
+
+**Decision text.** *"Decision: ISSUE ACT-CC-GOV-PAUSE-001"*
+
+### ACT-CC-GOV-V2-RESUME-001 — Founder Act · Construction Pause Release & First V2 CEO Goal / Target
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-CC-GOV-V2-RESUME-001` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/ACT-CC-GOV-V2-RESUME-001-CONSTRUCTION-PAUSE-RELEASE-AND-FIRST-CEO-GOAL.md` · sha256 `7303aee5ac2e872a…` |
+| **Status** | ISSUED. First V2 Goal / Target **ACTIVE**. Execution record: `AIOS_POST_V2_OPERATIONAL_BASELINE_v1.0.md` |
+
+**Decision text.** *"AIOS CONSTRUCTION = RELEASED FOR AUTHORIZED EXECUTION"*
+
+---
+
+### Append integrity
+
+Sixteen entries were added, and no earlier entry was altered (`§2.3`). Every
+decision quote was checked mechanically against the instrument body it cites.
+Dates are given in ISO form, following the register convention. One date,
+`FD-P12-003`'s, looks inconsistent: the instrument's own text is quoted in that
+entry's Status field, and it is not corrected, because correcting it would be
+reinterpretation.
