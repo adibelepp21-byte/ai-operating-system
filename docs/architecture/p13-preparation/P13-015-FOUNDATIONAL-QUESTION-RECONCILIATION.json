@@ -27,25 +27,23 @@
    "id": "Q1",
    "domain": "P13 Identity",
    "gloss": "What does 'Super Intelligence Ecosystem' mean in AIOS?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D02",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::SUBSTANTIVE MEANING STILL TO BE ESTABLISHED"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 02"
    ],
-   "note": "FDR-1 §10 leaves the meaning open; FDR-2 item 2"
+   "note": "resolved by FDR-2 D02 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q2",
    "domain": "P13 Identity",
    "gloss": "Why is P13 needed after P12?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D01",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::Whether P13 must proceed at all",
-    "!native_core::class Evaluation|def evaluate\\(",
-    "!native_core::class Reasoning|def reason\\("
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 01"
    ],
-   "note": "Evidence exists (measured absence of evaluation and reasoning); the decision is FDR-2 item 1"
+   "note": "resolved by FDR-2 D01 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q3",
@@ -64,45 +62,45 @@
    "id": "Q4",
    "domain": "P13 Identity",
    "gloss": "What AIOS condition should P13 achieve?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D03",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::C. P13 Mission / Intended Outcome"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 03"
    ],
-   "note": "FDR-2 item 3"
+   "note": "resolved by FDR-2 D03 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q5",
    "domain": "P13 Identity",
    "gloss": "How does AIOS at end-P13 differ from end-P12?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D04",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::5. P12 → P13 boundary"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 04"
    ],
-   "note": "FDR-2 item 5"
+   "note": "resolved by FDR-2 D04 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q6",
    "domain": "P13 Identity",
    "gloss": "Is P13 capability, system or organizational evolution?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D01",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::A. P13 Definition"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 01"
    ],
-   "note": "FDR-2 item 1"
+   "note": "resolved by FDR-2 D01 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q7",
    "domain": "P13 Identity",
    "gloss": "What qualifies a system as having reached P13?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D07",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::P13 EXIT CRITERIA = UNKNOWN / FOUNDER-RESERVED"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 07"
    ],
-   "note": "FDR-2 item 8"
+   "note": "resolved by FDR-2 D07 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q8",
@@ -548,12 +546,12 @@
    "id": "Q48",
    "domain": "Self-Improvement",
    "gloss": "What may AIOS change by itself?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::P13 AUTONOMY BOUNDARY = UNRESOLVED"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
    ],
-   "note": "FDR-2 item 6"
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
   },
   {
    "id": "Q49",
@@ -826,23 +824,23 @@
    "id": "Q74",
    "domain": "Autonomy & Initiative",
    "gloss": "When may AIOS act without instruction?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::P13 AUTONOMY BOUNDARY = UNRESOLVED"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
    ],
-   "note": "today: never (no daemon, scheduler or self-activation)"
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
   },
   {
    "id": "Q75",
    "domain": "Autonomy & Initiative",
    "gloss": "What are the limits of AIOS initiative?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::P13 AUTONOMY BOUNDARY = UNRESOLVED"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
    ],
-   "note": "FDR-2 item 6"
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
   },
   {
    "id": "Q76",
@@ -860,12 +858,12 @@
    "id": "Q77",
    "domain": "Autonomy & Initiative",
    "gloss": "How does AIOS prioritize autonomously?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::P13 AUTONOMY BOUNDARY = UNRESOLVED"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
    ],
-   "note": "prioritization logic would be P13 core; whether it may act is reserved"
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. The prioritization logic itself remains P13 core (Q41, Q69–Q73)."
   },
   {
    "id": "Q78",
@@ -1006,12 +1004,12 @@
    "id": "Q90",
    "domain": "Frontier & Unknown",
    "gloss": "When should AIOS do research?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::P13 AUTONOMY BOUNDARY = UNRESOLVED"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
    ],
-   "note": "self-directed research is an autonomy question"
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
   },
   {
    "id": "Q91",
@@ -1026,12 +1024,12 @@
    "id": "Q92",
    "domain": "Frontier & Unknown",
    "gloss": "May AIOS discover undefined capability or knowledge categories?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::Any such interpretation requires explicit evidence and/or Founder decision"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
    ],
-   "note": ""
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
   },
   {
    "id": "Q93",
@@ -1048,45 +1046,45 @@
    "id": "Q94",
    "domain": "P13 Completion",
    "gloss": "When is P13 complete?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D08",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::P13 EXIT CRITERIA = UNKNOWN / FOUNDER-RESERVED"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 08"
    ],
-   "note": "FDR-2 item 8"
+   "note": "resolved by FDR-2 D08 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q95",
    "domain": "P13 Completion",
    "gloss": "What does 'operational' mean for the ecosystem?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D08",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::9. completion semantics"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 08"
    ],
-   "note": "FDR-2 item 9"
+   "note": "resolved by FDR-2 D08 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q96",
    "domain": "P13 Completion",
    "gloss": "Does P13 have an end point or is it an evolutionary frontier?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D08",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::9. completion semantics"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 08"
    ],
-   "note": "FDR-2 item 9"
+   "note": "resolved by FDR-2 D08 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q97",
    "domain": "P13 Completion",
    "gloss": "How is achieving P13 proven?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D07",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::Verification Method ≠ Completion Criterion"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 07"
    ],
-   "note": "methods exist (F5, v0.4 O9); criteria are reserved"
+   "note": "resolved by FDR-2 D07 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q98",
@@ -1103,12 +1101,12 @@
    "id": "Q99",
    "domain": "P13 Completion",
    "gloss": "How is it proven that AIOS can do what P13 requires?",
-   "category": "FOUNDER RESERVED",
-   "owner": "Founder",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D07",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::F. P13 Exit Contract"
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 07"
    ],
-   "note": "depends on the definition"
+   "note": "resolved by FDR-2 D07 (registered 2026-09-24); was FOUNDER RESERVED. "
   },
   {
    "id": "Q100",
@@ -1120,6 +1118,13 @@
     "docs/governance/cofounder-v2/F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md::Authorized Actionable Construction Exhausted is not Final Founder Acceptance"
    ],
    "note": "negative conditions exist in governance; P13-specific ones follow the exit contract"
+  }
+ ],
+ "revisions": [
+  {
+   "date": "2026-09-24",
+   "by": "FDR-2 registration",
+   "change": "17 FOUNDER RESERVED questions resolved by FDR-2 decisions: Q1, Q2, Q4, Q5, Q6, Q7, Q48, Q74, Q75, Q77, Q90, Q92, Q94, Q95, Q96, Q97, Q99. Categories before: 29/30/21/17/2/1 (P13-016 cites these). After: see counts."
   }
  ]
 }

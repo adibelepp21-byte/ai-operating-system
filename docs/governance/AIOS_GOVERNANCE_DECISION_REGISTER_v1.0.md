@@ -8023,3 +8023,40 @@ Native Core 11 FROZEN. Reject: NO. Path C: NO. Next gate: `FDR-2` — P13
 Definition, Boundary, Meaning & Exit Contract. Its decision surface is prepared
 at `docs/architecture/p13-preparation/P13-016-FDR-2-DECISION-SURFACE.md`,
 which recommends (marked **[REC]**) and decides nothing.
+
+---
+
+## 21. FDR-2 Append — P13 Definition, Boundary, Autonomy & Exit Contract (2026-09-24)
+
+### FDR-2 — Founder Decision · P13 Definition, Boundary, Autonomy & Exit Contract
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-2` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md` · content sha256 `edb5e2fd7055b641…` |
+| **Status** | ISSUED — **APPROVED WITH DEFINED BOUNDARIES**. The instrument states no date; 2026-09-24 is the date of receipt. **This entry is the canonical registration `FDR-2 §5` requires** |
+
+**Canonical P13 definition (`D01`).** *"P13 is the Super Intelligence Ecosystem
+layer of AIOS in which AIOS develops the capability to understand its own
+relevant system state, evaluate that state against defined criteria, reason
+over evidence, determine appropriate next actions, and evolve its capabilities
+within explicit governance and authority boundaries."*
+
+| Decision | Registered effect |
+|---|---|
+| `D02` | "Super Intelligence" is a program identity, not a performance claim |
+| `D03` | Mission: the three-question operational spine, plus the authorized action loop |
+| `D04` | Requirement-driven evolutionary layer over P1–P12; no duplication, no reopening |
+| `D05` | **Bounded Delegated Autonomy**: execute only within an existing valid authority; `GSI-01…10` |
+| `D06` | Requirement-driven relationships; **Memory ↔ Intelligence** is the primary new one |
+| `D07` | Exit contract `E13-01`…`E13-07` |
+| `D08` | Bounded completion with a classified residual frontier |
+| `D09` | Six pre-construction gates; **NATIVE CORE = 11** preserved |
+| `D10` | **Construction authorization remains separate.** Canonicalization and pre-construction reconciliation are authorized to the CEO |
+
+**Closed on registration:** `GAP-0001`, `GAP-0002`, `GAP-0004`. **Not closed:**
+`GAP-0006`, `GAP-0009`, `AD-P13-001`, `AD-P13-002`, `FD-2`. P13 construction
+and certification: **NOT AUTHORIZED**. Gap reconciliation:
+`docs/architecture/p13-preparation/P13-017-POST-FDR-2-GAP-RECONCILIATION.md`.

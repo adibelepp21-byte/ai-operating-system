@@ -56,7 +56,10 @@ REGISTER = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
 #: Identifier classes the Register carries as *decisions*. Derived from the
 #: governance index's own class list rather than restated, so adding a class
 #: there cannot leave this projection behind.
-_DECISION_CLASSES = ("FD", "GDR", "DP")
+# `FDR` joined under `FDR-2`'s registration: a Founder Decision Record is a
+# Founder Decision. `GOAL` is discoverable in the index but is a Goal / Target,
+# not a decision, so it is not listed here.
+_DECISION_CLASSES = ("FD", "GDR", "DP", "FDR")
 
 
 @dataclass(frozen=True)

@@ -102,7 +102,11 @@ _SEGMENT = r"[A-Z0-9][A-Za-z0-9]*"
 #: discoverable. Two of the three were found only because the measurement after
 #: the first edit did not move. They now derive from this tuple, so a class
 #: added here reaches all three.
-IDENTIFIER_CLASS_NAMES = ("DEC", "GDR", "ADR", "ACT", "FD", "DP")
+#: `FDR` (Founder Decision Records, from `FDR-1`) and `GOAL` (V2 Founder Goals,
+#: `GOAL-V2-002` onward) were added under `FDR-2`'s registration. Until then the
+#: index could not see a single V2-era Founder instrument, so the self-model's
+#: *"What decisions are recorded?"* omitted the decisions that define P13.
+IDENTIFIER_CLASS_NAMES = ("DEC", "GDR", "ADR", "ACT", "FD", "DP", "FDR", "GOAL")
 _CLASS_ALT = "|".join(IDENTIFIER_CLASS_NAMES)
 
 IDENTIFIER_RE = re.compile(
