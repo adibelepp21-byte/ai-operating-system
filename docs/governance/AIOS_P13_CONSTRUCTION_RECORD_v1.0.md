@@ -44,8 +44,9 @@ Also built or recorded:
 |---|---|
 | `tools/tests/test_p13.py` | 58 OK. **Live:** two full cycles on the real tree against a temporary live root. **Negative controls:** at least one for every E13 criterion that Blueprint `§7` lists |
 | Mutation check of the negative controls (a scratch copy of each module, reverted afterwards) | 5/5 detected: cycle bound removed · UNKNOWN-as-PASS · dangling premise accepted · envelope sha check removed · reserved check removed |
-| Full suites | see §15 and the commit record: tools, native_core, consumers, bounded_exception |
-| Certified evidence | P10/P11/P12 manifests hold · guard `{10, 11, 12}`, no anomalies · the write probe runs a real P13 cycle as a targeted entry (`tools/certified_write_probe.py` `TARGETED`) |
+| Full suites | **Final tree:** tools 1548 OK (1 skipped) · native_core 801 OK (1 expected failure) · consumers 276 OK · bounded_exception 29 OK. **The first full run** had one failure: the P11 surface-completeness guard caught `tools/p13/authority.py` undeclared. It was declared (§3), and the full re-run above is green |
+| Certified evidence | P10/P11/P12 manifests hold · guard `{10, 11, 12}`, no anomalies |
+| Write probe at `ae1f38a` (`tools/p13/cycle.py`, disposable worktrees) | 3 runs, **0 certified writes**. Run as `-m` or by path without arguments: NON-WRITING. **Targeted, a real cycle:** SAFE, having changed only `docs/operations/p13/trace/trace` and one new `docs/operations/p13/cycles/*.json` |
 | Corpus | citation audit 0 errors · stale-state 0 · `P13-015` checker holds, and now requires evidence on every P13 CORE row |
 
 ## 3. Integrated
