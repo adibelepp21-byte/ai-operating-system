@@ -321,6 +321,16 @@ class EveryEntryPointInstallsTheBarrierBeforeItCanWrite(unittest.TestCase):
         found = probe.discover(REPO_ROOT)
         cls.entries = found["root"] + found["tools"] + found["package"] + found["other"]
 
+    def test_the_probe_refuses_to_run_inside_itself(self):
+        """The probe is an entry point, so it probes itself. Before this guard
+        it recursed without end: every child started another full probe."""
+        env = dict(os.environ, **{probe.NESTED_MARKER: "1"})
+        done = subprocess.run([sys.executable, "-m", "tools.certified_write_probe"],
+                              capture_output=True, text=True, env=env,
+                              cwd=str(REPO_ROOT), timeout=120)
+        self.assertEqual(done.returncode, 3, done.stderr)
+        self.assertIn(probe.NESTED_MARKER, probe._environment(REPO_ROOT))
+
     def test_entry_points_were_found(self):
         self.assertGreaterEqual(len(self.entries), 59)
 

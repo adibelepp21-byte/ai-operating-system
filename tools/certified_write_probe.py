@@ -67,6 +67,10 @@ UNKNOWN = "UNKNOWN"
 
 HISTORY_PREFIX = "docs/architecture/history/"
 BOOTSTRAP_DIR = "tools/certified_write_barrier_site"
+# The probe is itself an entry point, so it finds and runs itself. Unchecked,
+# every run starts another full probe, recursively. Children carry this marker,
+# and a probe started with it refuses to run.
+NESTED_MARKER = "AIOS_CERTIFIED_WRITE_PROBE_CHILD"
 REFUSAL_MARKERS = ("CertifiedWriteRefused", "CertifiedEvidenceProtected",
                    "CERTIFIED-WRITE-REFUSED")
 _PREFIXES = (
@@ -181,6 +185,7 @@ def _environment(root: Path) -> Dict[str, str]:
     if bootstrap.is_dir():
         env["PYTHONPATH"] = str(bootstrap)
     env["PYTHONDONTWRITEBYTECODE"] = "1"
+    env[NESTED_MARKER] = "1"
     return env
 
 
@@ -462,6 +467,9 @@ def mutation_controls(commit: str = "HEAD", repo_root: Path = REPO_ROOT) -> dict
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
     """Print the report on stdout. The probe itself writes no file."""
+    if os.environ.get(NESTED_MARKER):
+        print("refused: a probe does not run inside a probe", file=sys.stderr)
+        return 3
     args = list(sys.argv[1:] if argv is None else argv)
     commit = "HEAD"
     only: List[str] = []
