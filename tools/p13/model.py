@@ -191,6 +191,9 @@ class GateDecision:
     envelope: Optional[str] = None
     escalation_id: Optional[str] = None
     _token: Any = field(default=None, repr=False, compare=False)
+    #: For EXECUTE: the targets the envelope authorizes for this action type.
+    #: Empty means none were declared, which only a read-only type may run with.
+    scope: Tuple[str, ...] = ()
 
     def __post_init__(self):
         if self._token is not _GATE_TOKEN:
@@ -205,7 +208,8 @@ class GateDecision:
         return {"proposal": self.proposal.id, "action_type": self.proposal.action_type,
                 "target": self.proposal.target, "decision": self.decision,
                 "reason": self.reason, "envelope": self.envelope,
-                "escalation_id": self.escalation_id}
+                "escalation_id": self.escalation_id, "scope": list(self.scope),
+                "executes": self.decision == EXECUTE}
 
 
 @dataclass(frozen=True)

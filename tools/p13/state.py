@@ -172,11 +172,12 @@ def _memory(paths: Paths, context: Context) -> Reading:
 
 
 def _authority(paths: Paths, _: Context) -> Reading:
-    from tools.p13.authority import load_envelopes
+    from tools.p13.authority import authority_dimensions, load_envelopes
     envelopes, anomalies = load_envelopes(paths)
     return {"authority.envelopes": ({e.id: list(e.action_types) for e in envelopes},
                                     VERIFIED),
-            "authority.anomalies": (list(anomalies), VERIFIED)}
+            "authority.anomalies": (list(anomalies), VERIFIED),
+            "authority.dimensions": (authority_dimensions(paths), VERIFIED)}
 
 
 def _remembered_verifications(paths: Paths, context: Context) -> Reading:
@@ -216,8 +217,10 @@ SOURCES: Tuple[Source, ...] = (
             "corpus.stale_governance_sources"), _corpus),
     Source("knowledge", "Knowledge retrieval: corpus-health.criteria (FD-P12-002)",
            ("knowledge.corpus_health_criteria",), _knowledge),
-    Source("authority", "Delegation Register + docs/governance/p13-envelopes",
-           ("authority.envelopes", "authority.anomalies"), _authority),
+    Source("authority", "Delegation Register + docs/governance/p13-envelopes "
+           "+ phase snapshot + Decision Register §22 + certification guard",
+           ("authority.envelopes", "authority.anomalies", "authority.dimensions"),
+           _authority),
     Source("remembered", "Memory: verifications recorded by earlier P13 cycles",
            VERIFICATION_KEYS, _remembered_verifications),
 )

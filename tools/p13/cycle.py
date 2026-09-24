@@ -27,7 +27,7 @@ import json
 from typing import List, Optional
 
 from tools.p13.authority import AuthorityGate, load_envelopes, raise_escalation
-from tools.p13.catalog import CATALOG
+from tools.p13.catalog import CATALOG, READ_ONLY
 from tools.p13.evaluation import CRITERIA, Evaluation
 from tools.p13.evidence import EvidenceStore
 from tools.p13.evolution import Evolution
@@ -88,7 +88,13 @@ def run_cycle(paths: Paths = LIVE, *, intent: str, invoker: str,
     outcome = execution.outcome
 
     after, evaluated_after = before, evaluated_before
-    if outcome is not None and outcome.produced:
+    if outcome is not None and catalog[outcome.action_type].effect != READ_ONLY:
+        # A state-changing action is followed by a fresh observation. Its own
+        # report of what changed is kept beside that, never in place of it (§8.5).
+        after = StateUnderstanding(paths, sources, clock).observe().with_facts(
+            outcome.produced, clock())
+        evaluated_after = evaluation.evaluate(after)
+    elif outcome is not None and outcome.produced:
         after = before.with_facts(outcome.produced, clock())
         evaluated_after = evaluation.evaluate(after)
     frontier = Frontier(paths).assess(decisions, outcome, gaps)
@@ -126,7 +132,7 @@ def run_cycle(paths: Paths = LIVE, *, intent: str, invoker: str,
         "proposals": recorded(proposals + evolutions),
         "decisions": [d.recorded() for d in decisions],
         "executed": recorded(outcome) if outcome else None,
-        "verification": {"re_evaluated": outcome is not None and bool(outcome.produced),
+        "verification": {"re_evaluated": evaluated_after is not evaluated_before,
                          "changes": changes},
         "gaps": recorded(gaps),
         "frontier": frontier,
@@ -146,6 +152,10 @@ def run_cycle(paths: Paths = LIVE, *, intent: str, invoker: str,
                  "facts": {f.key: digest(f.value) for f in after.facts},
                  "results": {e.criterion: e.result for e in evaluated_after},
                  "executed": outcome.action_type if outcome else None,
+                 # Case B: every refusal is traced, not only recorded.
+                 "decisions": [{"subject": d.proposal.subject,
+                                "decision": d.decision, "reason": d.reason}
+                               for d in decisions],
                  "verified": verified, "last_executed": last_executed,
                  "exhaustion": frontier["state"]},
         status=("failure" if (outcome and outcome.status != "success") or not readback

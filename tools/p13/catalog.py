@@ -23,13 +23,53 @@ from tools.p13.paths import Paths
 Produced = Dict[str, Any]
 
 
+#: What an action does to state (the post-construction instruction, `§8.1`).
+#: Only `read-only` types are executable today: `P13-ENV-01` permits nothing
+#: else. The other classes exist so the gate can tell them apart and hold each
+#: to its own requirements. A class being named here authorizes nothing.
+READ_ONLY, RECORD, STATE_CHANGING, EXTERNAL = (
+    "read-only", "record", "state-changing", "external")
+EFFECTS = (READ_ONLY, RECORD, STATE_CHANGING, EXTERNAL)
+
+Footprint = Dict[str, str]
+
+
 @dataclass(frozen=True)
 class ActionType:
+    """One action P13 can name.
+
+    A state-changing type is executable only when it also declares how to
+    **observe** its boundary (before and after) and how to **verify** the
+    result. With either missing, the gate refuses it: *"No verification path:
+    NO EXECUTION"* (`§8.5`). Each precondition returns the reason it fails, or
+    None when it holds. One that fails refuses the action (`§8.3`).
+    """
+
     name: str
     reserved: bool
     produces: Tuple[str, ...] = ()
     executor: str = ""
-    run: Optional[Callable[[Paths], Produced]] = None
+    run: Optional[Callable[..., Produced]] = None
+    effect: str = READ_ONLY
+    observe: Optional[Callable[[Paths, str], Footprint]] = None
+    verify: Optional[Callable[[Paths, str, Footprint, Footprint], Tuple[bool, str]]] = None
+    preconditions: Tuple[Callable[[Paths, str], Optional[str]], ...] = ()
+
+    def __post_init__(self):
+        if self.effect not in EFFECTS:
+            raise ValueError(f"{self.name}: {self.effect!r} is not an effect class")
+
+    @property
+    def verifiable(self) -> bool:
+        if self.effect == READ_ONLY:
+            return True      # verified by re-evaluating what it produced
+        return self.observe is not None and self.verify is not None
+
+
+def _exists(relative: str, what: str):
+    def precondition(paths: Paths, target: str) -> Optional[str]:
+        return None if (paths.repo / relative).exists() else f"{what} is absent"
+    return precondition
 
 
 def _integrity(paths: Paths) -> Produced:
@@ -67,7 +107,9 @@ RESERVED = (
 )
 
 CATALOG: Dict[str, ActionType] = {
-    **{name: ActionType(name, reserved=True) for name in RESERVED},
+    **{name: ActionType(name, reserved=True,
+                        effect=EXTERNAL if name == "external.action" else STATE_CHANGING)
+       for name in RESERVED},
     "verify.certified_evidence_integrity": ActionType(
         "verify.certified_evidence_integrity", False,
         ("integrity.holds", "integrity.phases"),
@@ -75,17 +117,22 @@ CATALOG: Dict[str, ActionType] = {
     "verify.foundational_question_reconciliation": ActionType(
         "verify.foundational_question_reconciliation", False,
         ("verification.foundational_question_reconciliation",),
-        "tools.foundational_question_reconciliation.verify", _reconciliation),
+        "tools.foundational_question_reconciliation.verify", _reconciliation,
+        preconditions=(_exists("docs/architecture/p13-preparation/"
+                               "P13-015-FOUNDATIONAL-QUESTION-RECONCILIATION.json",
+                               "the P13-015 matrix"),)),
     "verify.ecosystem_relationships": ActionType(
         "verify.ecosystem_relationships", False,
         ("verification.ecosystem_relationships",),
-        "tools.ecosystem_relationships.report", _ecosystem),
+        "tools.ecosystem_relationships.report", _ecosystem,
+        preconditions=(_exists(".git", "the git tree the import graph is read from"),)),
     "verify.p13_evidence": ActionType(
         "verify.p13_evidence", False, ("verification.p13_evidence",),
         "tools.p13.evidence.EvidenceStore.verify", _own_evidence),
     # Item 5. The gate records escalations itself; this entry is what an
     # envelope must permit for them to stand on it rather than on G-02 alone.
-    "escalate": ActionType("escalate", False, (), "tools.escalation_register"),
+    "escalate": ActionType("escalate", False, (), "tools.escalation_register",
+                           effect=RECORD),
 }
 
 

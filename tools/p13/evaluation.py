@@ -52,7 +52,10 @@ class Criterion:
     requires: Tuple[str, ...]
     judge: Judge
     gap_class: str
-    remedy: str             # the action type a FAIL would need: always reserved
+    remedy: str             # the action type a FAIL would need (reserved, today)
+    #: What the remedy would act on. Empty means the criterion itself, which is
+    #: only a subject, not a scope an envelope could name.
+    remedy_target: str = ""
 
 
 def _within(fact: str) -> Judge:

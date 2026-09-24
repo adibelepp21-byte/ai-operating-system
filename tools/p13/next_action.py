@@ -39,6 +39,7 @@ _WORST = {VERIFIED: 0, INFERRED: 1, UNKNOWN: 2}
 class NextAction:
     def __init__(self, criteria):
         self._remedy = {c.id: c.remedy for c in criteria}
+        self._target = {c.id: c.remedy_target or c.id for c in criteria}
 
     def propose(self, conclusions: Tuple[Conclusion, ...],
                 snapshot: StateSnapshot) -> Tuple[ActionProposal, ...]:
@@ -66,7 +67,8 @@ class NextAction:
         if c.kind == "defect":
             if c.subject == "authority":
                 return ("change.governance", "p13-envelopes")
-            return (self._remedy.get(c.subject, "change.governance"), c.subject)
+            return (self._remedy.get(c.subject, "change.governance"),
+                    self._target.get(c.subject, c.subject))
         if c.kind in ("evidence-obtainable", "evidence-stale"):
             return (c.subject, "state")
         if c.kind == "gap" and c.gap_class == KNOWLEDGE_GAP:

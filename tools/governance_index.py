@@ -186,6 +186,40 @@ _SUBRECORD_RE = re.compile(
     + r"(?:[.-]" + _SEGMENT + r")*)\s*(?P<sep>[-—–:·])"
 )
 
+#: A Register entry that **declares** its identifier. Its heading token is
+#: repeated in an `| **Identifier** |` row, and a `| **Decided by** |` row
+#: follows. Such an entry is a sub-record even when its identifier lies outside
+#: the class grammar. Without this, `P13-018` (Decision Register `§22`) and
+#: `FI-P13-004` were invisible, and their text was folded into the preceding
+#: entry: `FDR-2`'s and `FD-P13-002`'s index records carried the next entry's
+#: mentions. Recognition follows the Register's own declaration. It adds no
+#: class, assigns no alias, and does not change how mentions are matched in
+#: prose (the post-construction reconciliation instruction, FE-1).
+_DECLARED_HEADING_RE = re.compile(
+    r"^(?P<hashes>#{2,4})\s+(?P<identifier>[A-Z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)+)"
+    r"\s*(?P<sep>[—–·])"
+)
+_IDENTIFIER_ROW_RE = re.compile(
+    r"^\|\s*\*\*Identifier\*\*\s*\|\s*`?(?P<identifier>[^`|\s]+)`?\s*\|")
+_DECIDED_ROW_RE = re.compile(r"^\|\s*\*\*Decided by\*\*\s*\|")
+
+
+def _declared_heading(lines: Sequence[str], position: int):
+    """The heading at ``position`` if the entry under it declares that identifier."""
+    match = _DECLARED_HEADING_RE.match(lines[position])
+    if match is None:
+        return None
+    declared = decided = False
+    for line in lines[position + 1:position + 1 + METADATA_FALLBACK_LINES]:
+        if line.startswith("#"):
+            break
+        row = _IDENTIFIER_ROW_RE.match(line)
+        if row is not None:
+            declared = row.group("identifier") == match.group("identifier")
+        decided = decided or _DECIDED_ROW_RE.match(line) is not None
+    return match if declared and decided else None
+
+
 _RULE_RE = re.compile(r"^\s*(?:---+|___+|\*\*\*+)\s*$")
 
 #: How far into a record to look for the metadata block when it has no rule.
@@ -478,7 +512,7 @@ def _subrecord_spans(lines: Sequence[str]) -> List[Tuple[int, int, str, str]]:
     """
     matches: List[Tuple[int, str, str, str]] = []
     for position, line in enumerate(lines):
-        match = _SUBRECORD_RE.match(line)
+        match = _SUBRECORD_RE.match(line) or _declared_heading(lines, position)
         if match is not None:
             matches.append((position, match.group("hashes"), match.group("identifier"), line.strip()))
     if len(matches) < 2:

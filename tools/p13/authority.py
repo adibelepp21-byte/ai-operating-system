@@ -15,14 +15,27 @@ cycle:
 5. the act's fenced Founder text still hashes to the sha256 the envelope records;
 6. it was issued by the Founder. No other issuer is recognized yet, so a
    CEO-issued envelope is an anomaly, not an authority (`G-08`, `R06`);
-7. it designates P13's live root and nothing else.
+7. it designates P13's live root and nothing else;
+8. if it states an `expires` date, that date has not passed (EXPIRED);
+9. its id is recorded once, in one JSON record and one Register entry
+   (AMBIGUOUS otherwise).
 
 A record that fails any check is an **anomaly**. It is not an envelope. It is
 reported, and it escalates. P13 never repairs it, and never reads it as
 partial authority.
 
-The gate applies Blueprint `§5.2` in order. The one addition is `§3.2`'s cycle
-bound: a second EXECUTE in one cycle is REFUSED (E13-05's negative control).
+The gate applies Blueprint `§5.2` in order, then refuses what `§5.2` leaves
+open. Every added check can only refuse, never permit (the post-construction
+instruction, `§8.3`, Case C):
+
+* a target outside the scope the envelope declares for that action type (a
+  state-changing type with no declared targets has no scope at all);
+* an action with no verification path (`§8.5`);
+* a failing precondition;
+* `§3.2`'s cycle bound, so a second EXECUTE in one cycle is REFUSED.
+
+An ESCALATE, REFUSE or UNKNOWN never executes. ESCALATE is a refusal that is
+also escalated.
 ESCALATE is recorded through the existing `EscalationRegister.record` (item 5).
 An identical escalation that is still OPEN is not raised again: nothing new
 would reach the human.
@@ -34,13 +47,22 @@ import hashlib
 import json
 import re
 from dataclasses import dataclass
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 from tools import authority_citation
+from tools.p13.catalog import READ_ONLY
 from tools.p13.model import (ESCALATE, EXECUTE, REFUSE, UNKNOWN, ActionProposal,
                              GateDecision, _GATE_TOKEN)
 from tools.p13.paths import LIVE_ROOT, Paths
+
+AMBIGUOUS = "AMBIGUOUS"
+
+
+def today() -> date:
+    return datetime.now(timezone.utc).date()
+
 
 FDR2_ACT = "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md"
 
@@ -55,16 +77,25 @@ class Envelope:
     action_types: Tuple[str, ...]
     cycle_basis: Tuple[str, ...]
     sha256: str
+    #: action type → the targets it may touch. A type absent here declares
+    #: no target scope.
+    targets: Tuple[Tuple[str, Tuple[str, ...]], ...] = ()
+
+    def targets_for(self, action_type: str) -> Optional[Tuple[str, ...]]:
+        return dict(self.targets).get(action_type)
 
 
 def _section(register: str, envelope_id: str) -> Optional[str]:
+    """The envelope's Register entry. Two entries for one id is AMBIGUOUS."""
     lines = register.splitlines()
-    for i, line in enumerate(lines):
-        if re.match(rf"### {re.escape(envelope_id)} —", line):
-            end = next((j for j in range(i + 1, len(lines))
-                        if lines[j].startswith(("### ", "## "))), len(lines))
-            return "\n".join(lines[i:end])
-    return None
+    found = [i for i, line in enumerate(lines)
+             if re.match(rf"### {re.escape(envelope_id)} —", line)]
+    if len(found) != 1:
+        return None if not found else AMBIGUOUS
+    i = found[0]
+    end = next((j for j in range(i + 1, len(lines))
+                if lines[j].startswith(("### ", "## "))), len(lines))
+    return "\n".join(lines[i:end])
 
 
 def _act_text_sha(path: Path) -> Optional[str]:
@@ -88,6 +119,8 @@ def _validate(path: Path, paths: Paths, register: str) -> Tuple[Optional[Envelop
     section = _section(register, envelope_id)
     if section is None:
         return None, f"{envelope_id}: not recorded in the Delegation Register"
+    if section is AMBIGUOUS:
+        return None, f"{envelope_id}: recorded more than once in the Register (AMBIGUOUS)"
     status = next((l for l in section.splitlines() if l.startswith("| **Status** |")), "")
     if "**ACTIVE**" not in status:
         return None, f"{envelope_id}: its Register entry is not ACTIVE"
@@ -113,11 +146,24 @@ def _validate(path: Path, paths: Paths, register: str) -> Tuple[Optional[Envelop
                       "Founder-issued envelope is recognized")
     if record.get("designated_live_root") != LIVE_ROOT:
         return None, f"{envelope_id}: it does not designate {LIVE_ROOT}"
+    expires = record.get("expires")
+    if expires is not None:
+        try:
+            expired = date.fromisoformat(str(expires)) < today()
+        except ValueError:
+            return None, f"{envelope_id}: its expiry {expires!r} is not a date (AMBIGUOUS)"
+        if expired:
+            return None, f"{envelope_id}: EXPIRED on {expires}"
+    targets = []
+    for action_type, grant in (record.get("action_types") or {}).items():
+        if isinstance(grant, dict) and "targets" in grant:
+            targets.append((action_type, tuple(grant["targets"])))
     return Envelope(
         id=envelope_id, issued_by=record["issued_by"], identifier=identifier,
         instrument=instrument, record=record["record"],
         action_types=tuple(sorted(record.get("action_types", {}))),
-        cycle_basis=tuple(sorted(record.get("cycle_basis", {}))), sha256=sha), None
+        cycle_basis=tuple(sorted(record.get("cycle_basis", {}))), sha256=sha,
+        targets=tuple(sorted(targets))), None
 
 
 def load_envelopes(paths: Paths) -> Tuple[Tuple[Envelope, ...], Tuple[str, ...]]:
@@ -136,6 +182,10 @@ def load_envelopes(paths: Paths) -> Tuple[Tuple[Envelope, ...], Tuple[str, ...]]
                 envelopes.append(envelope)
             else:
                 anomalies.append(anomaly)
+    ids = [e.id for e in envelopes]
+    for twice in sorted({i for i in ids if ids.count(i) > 1}):
+        anomalies.append(f"{twice}: more than one record claims this id (AMBIGUOUS)")
+        envelopes = [e for e in envelopes if e.id != twice]
     return tuple(envelopes), tuple(anomalies)
 
 
@@ -173,22 +223,39 @@ class AuthorityGate:
                 proposal, "envelopes conflict: "
                 + ", ".join(e.id for e in permitting),
                 required="one governing envelope")
+        envelope = permitting[0]
+        scope = envelope.targets_for(proposal.action_type)
+        if scope is None and action.effect != READ_ONLY:
+            return self._decision(proposal, REFUSE, f"{envelope.id} declares no target "
+                                  f"scope for {proposal.action_type}")
+        if scope is not None and not any(
+                proposal.target == t or proposal.target.startswith(t.rstrip("/") + "/")
+                for t in scope):
+            return self._decision(proposal, REFUSE, f"wrong target: {proposal.target!r} "
+                                  f"is outside {envelope.id}'s scope {list(scope)}")
         if action.run is None:
             return self._decision(proposal, REFUSE, "the action type declares no "
                                   "resident executor")
+        if not action.verifiable:
+            return self._decision(proposal, REFUSE, "no verification path: no "
+                                  "execution (post-construction instruction §8.5)")
+        for precondition in action.preconditions:
+            unmet = precondition(self._paths, proposal.target)
+            if unmet:
+                return self._decision(proposal, REFUSE, f"missing precondition: {unmet}")
         if self.executed >= 1:
             return self._decision(proposal, REFUSE, "cycle bound: at most one "
                                   "executed action per cycle (Blueprint §3.2)")
         self.executed += 1
         return self._decision(proposal, EXECUTE,
-                              f"permitted by {permitting[0].id} "
-                              f"({permitting[0].instrument})", permitting[0].id)
+                              f"permitted by {envelope.id} ({envelope.instrument})",
+                              envelope.id, scope=scope or ())
 
     # -- recording ---------------------------------------------------------
     def _decision(self, proposal, decision, reason, envelope=None,
-                  escalation_id=None) -> GateDecision:
+                  escalation_id=None, scope=()) -> GateDecision:
         return GateDecision(proposal, decision, reason, envelope, escalation_id,
-                            _token=_GATE_TOKEN)
+                            _token=_GATE_TOKEN, scope=tuple(scope))
 
     def _refuse_foreign(self, thing) -> GateDecision:
         stand_in = ActionProposal(
@@ -235,3 +302,87 @@ def raise_escalation(paths: Paths, envelopes, subject: str, reason: str, *,
     error = EscalationRequired(reason, required=required, held=held)
     return EscalationRegister(root).record(error, subject=subject,
                                            authority=authority).escalation_id
+
+
+# ---------------------------------------------------------------------------
+# FE-2: the authority dimensions, kept apart (post-construction instruction §5)
+# ---------------------------------------------------------------------------
+
+P13_018_ACT = "docs/governance/acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md"
+
+
+def authority_dimensions(paths: Paths, catalog=None) -> Dict[str, dict]:
+    """Five authority dimensions for P13, each read from its own source.
+
+    Nothing here writes, and no dimension is derived from another. Above all,
+    **construction authority is not phase authorization.** The phase value is
+    read from the phase snapshot exactly as stated (P12 decision `§37`), and
+    P13-018 is never read as changing it.
+    """
+    from tools import p12_certified_evidence_guard as guard
+    from tools import p12_phase_authorization as phases
+    from tools.p13.catalog import CATALOG, READ_ONLY as RO, RECORD
+    catalog = catalog or CATALOG
+    out: Dict[str, dict] = {}
+
+    try:
+        p13 = {s["entity"]: s for s in phases.current_states(paths.repo)}["P13"]
+        out["phase_authorization"] = {
+            "state": "AUTHORIZED" if p13["authorized"] else "NOT AUTHORIZED",
+            "source": f"{p13['authority']}",
+            "meaning": ("Master Program phase authorization. In P12's decision it is "
+                        "the only state authorization produces (§25), and P13 stays "
+                        "NOT AUTHORIZED until a separate valid Founder authorization "
+                        "(§29)"),
+            "verified": "VERIFIED"}
+    except Exception as error:
+        out["phase_authorization"] = {"state": "UNKNOWN", "source": str(error),
+                                      "meaning": "", "verified": "UNKNOWN"}
+
+    try:
+        register = paths.decision_register.read_text(encoding="utf-8")
+        sha = _act_text_sha(paths.repo / P13_018_ACT)
+        registered = ("### P13-018 — Founder Decision" in register
+                      and sha is not None and sha in register)
+    except OSError:
+        registered = False
+    out["construction_authorization"] = {
+        "state": "AUTHORIZED — bounded to Blueprint §10 IN" if registered else "UNKNOWN",
+        "source": "Decision Register §22 · P13-018 D-1 (act hash matches the Register)",
+        "meaning": ("permission to build the named scope. Distinct from phase "
+                    "authorization (FDR-2 D10) and conferring no operational authority"),
+        "verified": "VERIFIED" if registered else "UNKNOWN"}
+
+    envelopes, anomalies = load_envelopes(paths)
+    effects = {t: catalog[t].effect if t in catalog else "unknown"
+               for e in envelopes for t in e.action_types}
+    out["operational_envelope"] = {
+        "state": ("EVIDENCE-ONLY" if envelopes and all(v in (RO, RECORD)
+                                                       for v in effects.values())
+                  else "NONE" if not envelopes else "MIXED"),
+        "source": ", ".join(f"{e.id} ({e.instrument})" for e in envelopes)
+                  or "no resolved envelope",
+        "meaning": "what P13 may execute, from recorded envelopes only",
+        "verified": "VERIFIED", "action_types": effects,
+        "anomalies": list(anomalies)}
+
+    changing = sorted(t for t, v in effects.items() if v not in (RO, RECORD))
+    out["state_changing_authority"] = {
+        "state": "NONE" if not changing else "GRANTED: " + ", ".join(changing),
+        "source": "the effect class of every action type a resolved envelope permits",
+        "meaning": ("authority to change state beyond P13's own records. Required "
+                    "for E13-05's full contract; only a governance decision grants it"),
+        "verified": "VERIFIED"}
+
+    try:
+        certified = 13 in guard.certified_phases()
+        out["certification_authority"] = {
+            "state": "CERTIFIED" if certified else "NOT GRANTED",
+            "source": "p12_certified_evidence_guard.certified_phases()",
+            "meaning": "a Founder certification decision for P13 (Blueprint §11)",
+            "verified": "VERIFIED"}
+    except Exception as error:
+        out["certification_authority"] = {"state": "UNKNOWN", "source": str(error),
+                                          "meaning": "", "verified": "UNKNOWN"}
+    return out
+

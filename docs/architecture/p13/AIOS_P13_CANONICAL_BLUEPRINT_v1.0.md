@@ -303,3 +303,24 @@ claimed, full autonomy is not authorized, and `NATIVE CORE = 11`. The
 construction and its verification are recorded in
 `docs/governance/AIOS_P13_CONSTRUCTION_RECORD_v1.0.md`.
 
+
+## 13. After the post-construction reconciliation (added 2026-09-24; §0–§12 unchanged)
+
+The reconciliation instruction
+(`acts/P13-POST-CONSTRUCTION-RECONCILIATION-AND-E13-05-EXIT-BLOCKER-INSTRUCTION.md`)
+asked for the E13-05 boundary to be made testable. Five additions to §5.2's
+table follow from it. **Every one only refuses:**
+
+* envelope anomalies EXPIRED and AMBIGUOUS;
+* a target outside the envelope's declared scope;
+* a state-changing type with no declared scope;
+* a missing verification path;
+* a failing precondition.
+
+`BoundedExecution` gains §8.5's verification protocol for state-changing
+types: observe the boundary, execute, observe again, compare against the
+authorized targets, check the postcondition, then re-observe from scratch.
+That protocol is **TEST-VERIFIED only**. No envelope grants a state-changing
+type, and the production catalog has no executable one. The Founder decision
+surface is `docs/architecture/p13-preparation/P13-019-E13-05-STATE-CHANGING-AUTHORITY-DECISION-SURFACE.md`,
+and the record is `docs/governance/AIOS_P13_POST_CONSTRUCTION_RECONCILIATION_RECORD_v1.0.md`.
