@@ -49,8 +49,9 @@ CHAIN: Tuple[str, ...] = (
 NODES: Dict[str, Tuple[str, Tuple[str, ...]]] = {
     "Knowledge": ("P6", ("native_core.core.knowledge", "consumers.knowledge_agent")),
     "Memory": ("P7", ("native_core.core.memory", "consumers.memory_agent")),
-    "Intelligence": ("P5", ("consumers.cognitive_intelligence_agent",
-                            "consumers.engineering_intelligence_agent")),
+    "Intelligence": ("P5 + P13", ("consumers.cognitive_intelligence_agent",
+                                  "consumers.engineering_intelligence_agent",
+                                  "tools.p13")),
     "Capability": ("P1–P8 core", ("native_core.core.capability",
                                   "native_core.core.skill")),
     "Workflow": ("P9 (+ P11 bridge)", ("native_core.core.workflow",
@@ -172,15 +173,23 @@ def data_bindings(root: Path, a: str, b: str) -> List[str]:
     pair = {a, b}
     out: List[str] = []
     if pair == {"Governance", "FounderDecision"}:
+        # Each record is resolved against the identifier it cites. Organizational
+        # escalations cite FD-P11-001; P13's cite P13-018, or FDR-2 D05 when no
+        # envelope resolved. Pinning FD-P11-001 would have counted P13's
+        # escalations as unresolved (found building P13 under P13-018).
         records = _records(root, "*.escalation.json")
-        reached = [p for p, r in records if r.get("authority_record") and
-                   authority_citation.refusal(
-                       r.get("authority_instrument", ""), r["authority_record"],
-                       "FD-P11-001", repo_root=root) is None]
-        if reached:
-            out.append(f"{len(reached)}/{len(records)} escalation records cite "
-                       "a Founder Decision that resolves in the Register "
-                       "(FD-P11-001)")
+        cited: Dict[str, int] = {}
+        for _, r in records:
+            identifier = str(r.get("authority_instrument", "")).split(" ")[0]
+            if r.get("authority_record") and identifier and authority_citation.refusal(
+                    r.get("authority_instrument", ""), r["authority_record"],
+                    identifier, repo_root=root) is None:
+                cited[identifier] = cited.get(identifier, 0) + 1
+        if cited:
+            out.append(f"{sum(cited.values())}/{len(records)} escalation records "
+                       "cite a Founder Decision that resolves in the Register ("
+                       + ", ".join(f"{k}: {v}" for k, v in sorted(cited.items()))
+                       + ")")
     if pair == {"Organization", "FounderDecision"}:
         records = (_records(root, "*.delegation.json")
                    + _records(root, "*.instance.json"))
@@ -208,10 +217,12 @@ def data_bindings(root: Path, a: str, b: str) -> List[str]:
             out.append(f"{len(instances)} registered Agent Instances realize an "
                        "intelligence Agent Definition")
     if pair == {"Organization", "Governance"}:
-        records = _records(root, "*.escalation.json")
+        records = [r for _, r in _records(root, "*.escalation.json")
+                   if str(r.get("authority_instrument", "")).split(" ")[0]
+                   == "FD-P11-001"]
         if records:
             out.append(f"{len(records)} escalation records raised by "
-                       "organizational execution")
+                       "organizational execution (FD-P11-001)")
     return out
 
 

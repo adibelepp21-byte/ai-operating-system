@@ -215,6 +215,27 @@ class EveryWriteApiIsRefusedBeforeItBegins(unittest.TestCase):
         finally:
             os.chdir(cwd)
 
+    def test_a_relative_path_with_no_directory_descriptor_is_judged_by_cwd(self):
+        """CPython audits an absent `dir_fd` as -1. Read as a descriptor, it
+        left every relative mkdir/rename/remove/chmod/utime unresolvable, so
+        each one was refused outside certified evidence as well."""
+        cwd = os.getcwd()
+        os.chdir(self.outside)
+        try:
+            os.mkdir("made")
+            Path("made").mkdir(exist_ok=True)
+            os.rename("made", "moved")
+            os.chmod("src.txt", 0o644)
+            os.utime("src.txt")
+            os.rmdir("moved")
+            os.remove("src.txt")
+            os.chdir(self.root)
+            self._refused(lambda: os.mkdir("new"))
+            self._refused(lambda: os.remove("evidence.json"))
+            self._refused(lambda: os.chmod("evidence.json", 0o600))
+        finally:
+            os.chdir(cwd)
+
     def test_it_is_a_permission_error_too(self):
         with self.assertRaises(PermissionError):
             self.file.write_text("x")

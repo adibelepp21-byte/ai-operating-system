@@ -74,7 +74,10 @@ class FDR2ConferredNothingItWithheld(unittest.TestCase):
         self.assertEqual(sentinel.certified_phases(), frozenset({10, 11, 12}))
         self.assertEqual(sentinel.certification_anomalies(), ())
 
-    def test_p13_is_still_not_authorized_for_construction(self):
+    def test_the_phase_snapshot_is_not_rewritten_by_later_decisions(self):
+        """P12 `§37`'s snapshot still says P13 AUTHORIZED: FALSE. `P13-018`
+        authorizes *construction* with bounded scope and states no phase
+        authorization, so nothing here may read it as one."""
         p13 = {s["entity"]: s for s in phases.current_states()}["P13"]
         self.assertIs(p13["authorized"], False)
 
@@ -84,21 +87,31 @@ class FDR2ConferredNothingItWithheld(unittest.TestCase):
                       if d.is_dir() and not d.name.startswith("__")]
         self.assertEqual(len(boundaries), 11)
 
-    def test_no_p13_code_exists(self):
-        self.assertFalse((REPO_ROOT / "tools/p13").exists())
-        self.assertFalse((REPO_ROOT / "docs/operations/p13").exists())
+    def test_p13_code_exists_only_under_the_registered_construction_gate(self):
+        """Pinned absent under FDR-2 (`D10`). Built after `P13-018` `D-1`, which
+        the Register records; the pin now holds that order."""
+        self.assertTrue((REPO_ROOT / "tools/p13/cycle.py").is_file())
+        self.assertRegex(REGISTER.read_text(encoding="utf-8"),
+                         r"### P13-018 — Founder Decision · P13 Construction Authority Gate")
+        self.assertFalse((REPO_ROOT / "native_core/core/p13").exists())
 
     def test_the_p13_document_root_is_not_protected_as_certified(self):
         self.assertFalse(barrier.refuses(
             REPO_ROOT / "docs/architecture/p13/AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md"))
 
-    def test_the_blueprint_and_gate_both_say_construction_is_not_authorized(self):
+    def test_the_blueprint_and_gate_keep_their_text_and_record_the_decision(self):
+        """Both said *not authorized* when written, and still do: that is their
+        history. Each now also records `P13-018`, and neither claims more than
+        bounded construction."""
         for path in (REPO_ROOT / "docs/architecture/p13/AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md",
                      REPO_ROOT / "docs/architecture/p13-preparation/"
                                  "P13-018-CONSTRUCTION-AUTHORITY-GATE.md"):
             with self.subTest(path.name):
-                self.assertTrue(re.search(r"not authorized", path.read_text(
-                    encoding="utf-8"), re.IGNORECASE))
+                text = path.read_text(encoding="utf-8")
+                self.assertTrue(re.search(r"not authorized", text, re.IGNORECASE))
+                self.assertIn("APPROVED WITH BOUNDED INITIAL AUTHORITY", text)
+                self.assertIn("acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md",
+                              text)
 
 
 if __name__ == "__main__":

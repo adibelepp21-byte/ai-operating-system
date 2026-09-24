@@ -6,6 +6,7 @@
 | **Date** | 2026-09-24 |
 | **Canonical basis** | `docs/architecture/p13/AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md` |
 | **Status** | **PREPARED, NOT DECIDED.** P13 construction is **not authorized** until the Founder records a decision on §2 |
+| **Decided** | 2026-09-24 — **APPROVED WITH BOUNDED INITIAL AUTHORITY**: `D-1` APPROVE · `D-2b` · `D-3` YES. Decision: `docs/governance/acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md` (Decision Register `§22`). The status row above is this surface as prepared |
 
 ## 1. FDR-2 §9's twenty required contents
 

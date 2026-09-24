@@ -94,6 +94,9 @@ TARGETED: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
     ("tools.governance_index",
      ("--index", "docs/architecture/p12/probe-index.json", "build")),
     ("p12_w4_integrated_execution.py", ("probe",)),
+    # P13-018: a real P13 cycle, which must write only docs/operations/p13.
+    ("tools.p13.cycle", ("--invoker", "certified_write_probe",
+                         "--intent", "probe: a cycle writes only its live root")),
 )
 
 SUITES: Tuple[Tuple[str, Tuple[str, ...]], ...] = (

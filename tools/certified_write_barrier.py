@@ -266,7 +266,10 @@ def _resolve(path, dir_fd=None) -> Optional[str]:
     except TypeError:
         return None
     if not os.path.isabs(text):
-        if isinstance(dir_fd, int):
+        # CPython audits an absent `dir_fd` as -1. Reading -1 as a descriptor
+        # made every relative mkdir/rename/remove/chmod/utime unresolvable and
+        # therefore refused, anywhere (found building P13 under P13-018).
+        if isinstance(dir_fd, int) and dir_fd >= 0:
             base = _fd_path(dir_fd)
             if base is None:
                 return None

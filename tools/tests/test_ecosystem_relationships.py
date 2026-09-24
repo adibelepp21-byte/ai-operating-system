@@ -32,7 +32,8 @@ class TheMeasuredChain(unittest.TestCase):
         the evidence, never to make the suite pass."""
         self.assertEqual({k: r.status for k, r in self.result.items()}, {
             ("Knowledge", "Memory"): eco.CONNECTED_CODE,
-            ("Memory", "Intelligence"): eco.NOT_CONNECTED,
+            # P13-018: tools.p13 reads Memory through MemoryReader.
+            ("Memory", "Intelligence"): eco.CONNECTED_CODE,
             ("Intelligence", "Capability"): eco.CONNECTED_DATA,
             ("Capability", "Workflow"): eco.MEDIATED,
             ("Workflow", "Organization"): eco.CONNECTED_CODE,
@@ -41,6 +42,8 @@ class TheMeasuredChain(unittest.TestCase):
         })
 
     def test_every_absence_carries_its_recorded_reason_and_none_is_stale(self):
+        # Memory ↔ Intelligence is connected by P13 now. Its reasons are still
+        # reported, and still true, of the P5 consumers they quote.
         for key in (("Memory", "Intelligence"), ("Capability", "Workflow")):
             with self.subTest(key):
                 self.assertTrue(self.result[key].recorded_reason)
@@ -48,8 +51,10 @@ class TheMeasuredChain(unittest.TestCase):
 
     def test_the_founder_decision_link_is_every_escalation_resolving(self):
         data = self.result[("Governance", "FounderDecision")].data
-        self.assertTrue(any(d.startswith("4/4 escalation records") for d in data),
-                        data)
+        line = next(d for d in data if "escalation records" in d)
+        resolved, total = line.split(" ")[0].split("/")
+        self.assertEqual(resolved, total, line)
+        self.assertIn("FD-P11-001: 4", line)
 
 
 class EachKindOfEvidenceCanComeBackNegative(unittest.TestCase):

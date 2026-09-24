@@ -1,0 +1,46 @@
+{
+  "envelope_id": "P13-ENV-01",
+  "kind": "P13 action envelope",
+  "issued_by": "Founder — Moriarty",
+  "instrument": "P13-018 D-2b",
+  "record": "docs/governance/acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md",
+  "decision_content_sha256": "6dd19861d9ab4fb964590f2a5e6b7601c8ef819b8b353b347a002f19a63c0372",
+  "recorded_by": "Claude Code — AIOS Co-Founder + Delegated CEO. Recording what the Founder issued; not issuing it (G-08)",
+  "date": "2026-09-24",
+  "nature": "initial envelope; not the permanent or maximum P13 autonomy envelope (P13-018 §4)",
+  "permitted": [
+    "1. authorized read-only verification;",
+    "2. authorized reading of AIOS state and evidence;",
+    "3. creation of P13-specific records and evidence in the designated live root;",
+    "4. creation of traceable P13 evidence;",
+    "5. creation of escalation records;",
+    "6. verification of its own authorized evidence operations."
+  ],
+  "prohibited": [
+    "modify certified P10–P12 evidence;",
+    "modify Founder Decisions;",
+    "modify governance authority;",
+    "create or grant authority;",
+    "alter Native Core boundaries;",
+    "execute external/business actions;",
+    "alter Founder Reserved Authority;",
+    "alter Architect Reserved matters;",
+    "self-expand its action envelope;",
+    "grant authority to itself;",
+    "grant authority to another component;",
+    "interpret an unrecorded proposal as authorization."
+  ],
+  "designated_live_root": "docs/operations/p13",
+  "cycle_basis": {
+    "observe": [2],
+    "record": [3, 4]
+  },
+  "action_types": {
+    "verify.certified_evidence_integrity": [1],
+    "verify.foundational_question_reconciliation": [1],
+    "verify.ecosystem_relationships": [1],
+    "verify.p13_evidence": [6],
+    "escalate": [5]
+  },
+  "reading_note": "Each machine action type names the permitted item it transcribes. The mapping can only narrow: an action type absent from this list is not permitted, whatever item it might be argued to fall under, and the P13 AuthorityGate escalates it."
+}

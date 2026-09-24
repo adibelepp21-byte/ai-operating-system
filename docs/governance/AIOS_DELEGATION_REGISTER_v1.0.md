@@ -609,3 +609,51 @@ differences in the boundary column.
 | Standing decision `SD-3` (`REG-CFV2-001` §C.6) | **Discharged** by the release. `SD-1`, `SD-2` and `SD-4`…`SD-8` stand unchanged |
 | First Founder Goal / Target | **ACTIVE** — `ACT-CC-GOV-V2-RESUME-001` `§5`, `§6` |
 | Authority | **Not expanded** (`§3`) |
+
+---
+
+## 14. P13-ENV-01 Append — Initial P13 Action Envelope (2026-09-24)
+
+**Why this append exists.** `P13-018` `D-2b` (Founder — Moriarty, received
+2026-09-24; Decision Register `§22`) issues P13's initial action envelope. The
+canonical P13 Blueprint (`§5.1`) makes an envelope executable only when it is
+recorded in this register and resolvable. This entry records what the Founder
+issued. **Recording it is not issuing it** (`P13-018` `G-08`). Everything above
+this section is unaltered (`§2`).
+
+### P13-ENV-01 — P13 Evidence-Only Initial Action Envelope
+
+| Field | Value |
+|---|---|
+| **Envelope ID** | `P13-ENV-01` |
+| **Date** | 2026-09-24 |
+| **Issued by** | Founder — Moriarty, in `P13-018` `D-2b` |
+| **Instrument** | `acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md` · content sha256 `6dd19861d9ab4fb964590f2a5e6b7601c8ef819b8b353b347a002f19a63c0372` |
+| **Holder** | the P13 ecosystem layer (`tools/p13/`), when invoked by a human or by the CEO; P13 runs when it is run |
+| **Machine-readable record** | `docs/governance/p13-envelopes/P13-ENV-01.json` · sha256 `d9ad1e36ca98bd4a458e143991b765491365fb2cfe92e42822d9996053d9e694` |
+| **Designated live root** | `docs/operations/p13/` |
+| **Nature** | **Initial, not maximum** (`P13-018` `§4`). Expansion requires the applicable governance decision; P13 may not infer it from capability |
+| **Amendment · Suspension · Revocation Authority** | Founder |
+| **Recorded by** | Claude Code, under explicit Founder direction |
+| **Status** | **ACTIVE** |
+
+**Permitted (`P13-018` `§3`, verbatim).** 1 authorized read-only verification ·
+2 authorized reading of AIOS state and evidence · 3 creation of P13-specific
+records and evidence in the designated live root · 4 creation of traceable P13
+evidence · 5 creation of escalation records · 6 verification of its own
+authorized evidence operations.
+
+**Prohibited (`§3`, verbatim).** modify certified P10–P12 evidence · modify
+Founder Decisions · modify governance authority · create or grant authority ·
+alter Native Core boundaries · execute external/business actions · alter
+Founder Reserved Authority · alter Architect Reserved matters · self-expand its
+action envelope · grant authority to itself · grant authority to another
+component · interpret an unrecorded proposal as authorization.
+
+**How the machine record reads the permitted items.** Each action type in the
+JSON names the item it transcribes: three `verify.*` types (item 1),
+`verify.p13_evidence` (item 6) and `escalate` (item 5). Observation stands on
+item 2, and the cycle's own records on items 3 and 4. The mapping can only
+narrow. A type that is not listed is not permitted, and the P13 AuthorityGate
+escalates it. The gate executes nothing unless this entry names the envelope,
+the entry's sha256 matches the JSON, and the instrument resolves.

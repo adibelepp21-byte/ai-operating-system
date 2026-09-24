@@ -216,8 +216,12 @@
    "gloss": "How does AIOS decide what it needs to know?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "no resident mechanism"
+   "evidence": [
+    "tools/p13/reasoning.py::| `R-OBTAINABLE` |",
+    "tools/tests/test_p13.py::def test_e13_05_one_authorized_read_only_action_executed_per_cycle"
+   ],
+   "note": "no resident mechanism. P13-018 construction: Reasoning concludes which facts an authority-bearing criterion lacks, and which resident verifier produces them (R-OBTAINABLE); NextAction proposes it.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q18",
@@ -236,8 +240,12 @@
    "gloss": "How does AIOS decide a knowledge gap matters?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "no resident prioritization"
+   "evidence": [
+    "tools/p13/reasoning.py::An unknown **matters** (Q19, Q89) exactly when an authority-bearing criterion",
+    "tools/tests/test_p13.py::def test_absent_knowledge_is_a_knowledge_gap_that_escalates"
+   ],
+   "note": "no resident prioritization. P13-018 construction: A knowledge gap matters exactly when an authority-bearing criterion needs it; it escalates as admit.knowledge.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q20",
@@ -323,8 +331,13 @@
    "gloss": "How does AIOS find a capability gap?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "no resident mechanism"
+   "evidence": [
+    "tools/p13/evolution.py::def _core_rows_without_evidence(self):",
+    "tools/p13/reasoning.py::| `R-GAP` |",
+    "tools/tests/test_p13.py::def test_a_core_question_without_evidence_is_a_gap_whose_evolution_escalates"
+   ],
+   "note": "no resident mechanism. P13-018 construction: R-GAP: an UNKNOWN nothing resident can resolve is a capability gap; Evolution also reads the P13 CORE rows that cite no evidence.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q28",
@@ -332,8 +345,12 @@
    "gloss": "How does AIOS choose how a gap is resolved?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "no resident mechanism"
+   "evidence": [
+    "tools/p13/evolution.py::a code change is proposed and escalated; P13 never builds itself",
+    "tools/p13/next_action.py::| defect | the criterion's remedy"
+   ],
+   "note": "no resident mechanism. P13-018 construction: Resolution is chosen by gap class: verify when evidence is obtainable; otherwise a reserved remedy, which the gate escalates. P13 resolves nothing reserved by itself.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q29",
@@ -388,9 +405,12 @@
    "category": "P13 CORE",
    "owner": "P13 candidate",
    "evidence": [
-    "!native_core::class Evaluation|def evaluate\\("
+    "!native_core::class Evaluation|def evaluate\\(",
+    "tools/p13/cycle.py::\"verification\": {\"re_evaluated\"",
+    "tools/tests/test_p13.py::def test_e13_06_after_execution_state_is_re_derived_and_the_difference_recorded"
    ],
-   "note": "requires evaluation"
+   "note": "requires evaluation. P13-018 construction: Every executed action is followed by re-derivation and re-evaluation, and the per-criterion difference is recorded.",
+   "p13_status": "ANSWERED — BOUNDED: improvement is measured only against the admitted, authority-bearing criteria (before/after re-evaluation). A broader measure of improvement needs its own evaluation contract (FDR-2 D02)"
   },
   {
    "id": "Q34",
@@ -440,12 +460,12 @@
    "id": "Q38",
    "domain": "Self-Evaluation",
    "gloss": "How are reasoning/knowledge/execution/workflow/decision-support quality measured?",
-   "category": "P13 CORE",
-   "owner": "P13 candidate",
+   "category": "P13 FRONTIER",
+   "owner": "P13 frontier",
    "evidence": [
-    "!native_core::class Evaluation|def evaluate\\("
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 02"
    ],
-   "note": "0 Evaluation symbols in native_core"
+   "note": "0 Evaluation symbols in native_core. P13-018 construction: reclassified P13 CORE → P13 FRONTIER. P13 measures state against authority-bearing criteria; quality of reasoning, knowledge, execution, workflow and decision-support has no admitted criterion, and FDR-2 D02 requires a measurable intelligence claim to have its own evaluation contract. Residual frontier, classified."
   },
   {
    "id": "Q39",
@@ -462,8 +482,12 @@
    "gloss": "How does AIOS tell error, limitation, knowledge gap, architecture gap and capability gap apart?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "done by humans in governance records; no system mechanism"
+   "evidence": [
+    "tools/p13/model.py::# Q40: the kinds of shortfall AIOS tells apart",
+    "tools/tests/test_p13.py::def test_shortfalls_are_classified_apart"
+   ],
+   "note": "done by humans in governance records; no system mechanism. P13-018 construction: error / limitation / knowledge gap / capability gap / architecture gap, each assigned by rule.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q41",
@@ -471,8 +495,12 @@
    "gloss": "How does AIOS prioritize repairs?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "no resident mechanism"
+   "evidence": [
+    "tools/p13/next_action.py::**Priority** (Q41, Q63, Q69, Q73) is a fixed rule",
+    "tools/tests/test_p13.py::def test_memory_recency_orders_proposals"
+   ],
+   "note": "no resident mechanism. P13-018 construction: Fixed rule: defects, then missing evidence, then knowledge gaps, then stale evidence; within a rank, least recently verified per Memory.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q42",
@@ -526,9 +554,13 @@
    "category": "P13 CORE",
    "owner": "P13 candidate",
    "evidence": [
-    "!native_core::class Evaluation|def evaluate\\("
+    "!native_core::class Evaluation|def evaluate\\(",
+    "tools/p13/evaluation.py::**Missing evidence gives UNKNOWN, never PASS.**",
+    "tools/p13/reasoning.py::| `R-DEFECT` |",
+    "tools/tests/test_p13.py::def test_e13_02_the_admitted_knowledge_criteria_are_judged_live"
    ],
-   "note": "requires evaluation"
+   "note": "requires evaluation. P13-018 construction: An improvement is needed when an authority-bearing criterion FAILs on verified evidence (R-DEFECT); absent evidence proves nothing.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q47",
@@ -605,9 +637,12 @@
    "category": "P13 CORE",
    "owner": "P13 candidate",
    "evidence": [
-    "!native_core::class Evaluation|def evaluate\\("
+    "!native_core::class Evaluation|def evaluate\\(",
+    "tools/p13/cycle.py::\"verification\": {\"re_evaluated\"",
+    "tools/tests/test_p13.py::def test_e13_06_after_execution_state_is_re_derived_and_the_difference_recorded"
    ],
-   "note": "system-level evaluation"
+   "note": "system-level evaluation. P13-018 construction: All admitted criteria are re-evaluated after an executed action and the difference is recorded.",
+   "p13_status": "ANSWERED — BOUNDED: \"the whole system\" means every admitted criterion, all re-evaluated after an action; nothing wider is claimed (FDR-2 D02)"
   },
   {
    "id": "Q54",
@@ -651,9 +686,12 @@
    "category": "P13 CORE",
    "owner": "P13 candidate",
    "evidence": [
-    "!native_core::class Reasoning|def reason\\("
+    "!native_core::class Reasoning|def reason\\(",
+    "tools/p13/reasoning.py::| `R-SYSTEMIC` |",
+    "tools/tests/test_p13.py::def test_one_source_behind_several_failures_is_concluded_systemic"
    ],
-   "note": "0 Reasoning symbols"
+   "note": "0 Reasoning symbols. P13-018 construction: Rules combine facts across domains (governance registers, Knowledge criteria, Memory, certified evidence).",
+   "p13_status": "ANSWERED — BOUNDED: deterministic rules over typed facts from governance, knowledge, memory and evidence; no open-ended cross-domain inference (Blueprint §3.4)"
   },
   {
    "id": "Q58",
@@ -674,9 +712,12 @@
    "category": "P13 CORE",
    "owner": "P13 candidate",
    "evidence": [
-    "!native_core::class Reasoning|def reason\\("
+    "!native_core::class Reasoning|def reason\\(",
+    "tools/p13/reasoning.py::| `R-SYSTEMIC` |",
+    "tools/tests/test_p13.py::def test_one_source_behind_several_failures_is_concluded_systemic"
    ],
-   "note": "no resident mechanism"
+   "note": "no resident mechanism. P13-018 construction: Two or more non-PASS results sharing a source are concluded to be one systemic cause.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q60",
@@ -695,8 +736,11 @@
    "gloss": "How does AIOS know what context the Founder needs?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "context assembly is a v0.4 candidate surface"
+   "evidence": [
+    "tools/p13/cycle.py::What the Founder needs from this cycle, most pressing first (Q61, Q62)"
+   ],
+   "note": "context assembly is a v0.4 candidate surface. P13-018 construction: Each cycle record carries a briefing of escalations and non-PASS criteria.",
+   "p13_status": "ANSWERED — BOUNDED: the Founder's context is what is escalated to them and what fails their recorded criteria"
   },
   {
    "id": "Q62",
@@ -704,8 +748,12 @@
    "gloss": "How does AIOS compose briefings for the Founder?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "no resident mechanism"
+   "evidence": [
+    "tools/p13/cycle.py::What the Founder needs from this cycle, most pressing first (Q61, Q62)",
+    "tools/tests/test_p13.py::def test_records_carry_the_twelve_section_29_elements"
+   ],
+   "note": "no resident mechanism. P13-018 construction: The cycle composes a briefing (escalations first, then failing criteria, then exhaustion state).",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q63",
@@ -713,8 +761,11 @@
    "gloss": "How does AIOS know what matters most to the Founder?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": "no resident prioritization"
+   "evidence": [
+    "tools/p13/next_action.py::*what matters most to the Founder* (Q63) is answered only"
+   ],
+   "note": "no resident prioritization. P13-018 construction: Every criterion cites a Founder-issued instrument; priority follows that.",
+   "p13_status": "ANSWERED — BOUNDED: answered only as far as the Founder's recorded decisions state it; anything beyond is residual frontier"
   },
   {
    "id": "Q64",
@@ -780,9 +831,12 @@
    "category": "P13 CORE",
    "owner": "P13 candidate + Founder",
    "evidence": [
-    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::autonomous next-action selection"
+    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::autonomous next-action selection",
+    "tools/p13/next_action.py::class NextAction:",
+    "tools/tests/test_p13.py::def test_e13_05_one_authorized_read_only_action_executed_per_cycle"
    ],
-   "note": "v0.4 next-action surface (propose-only); its boundary is FDR-2 item 6"
+   "note": "v0.4 next-action surface (propose-only); its boundary is FDR-2 item 6. P13-018 construction: NextAction proposes; the AuthorityGate decides; at most one action executes per cycle.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q70",
@@ -790,8 +844,13 @@
    "gloss": "How does AIOS decide what to learn first?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": ""
+   "evidence": [
+    "tools/p13/next_action.py::| knowledge gap | `admit.knowledge`",
+    "tools/p13/evolution.py::*Learning* here means a proposal into governed admission",
+    "tools/tests/test_p13.py::def test_absent_knowledge_is_a_knowledge_gap_that_escalates"
+   ],
+   "note": "P13-018 construction: The highest-priority knowledge gap is proposed as admit.knowledge, which escalates.",
+   "p13_status": "ANSWERED — BOUNDED: learning is a proposal into governed admission, never admission (GAP-0022)"
   },
   {
    "id": "Q71",
@@ -799,8 +858,12 @@
    "gloss": "How does AIOS decide which capability to improve first?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": ""
+   "evidence": [
+    "tools/p13/evolution.py::ActionProposal(id=f\"e:{g.id[2:]}\", action_type=\"change.code\",",
+    "tools/tests/test_p13.py::def test_a_core_question_without_evidence_is_a_gap_whose_evolution_escalates"
+   ],
+   "note": "P13-018 construction: Capability gaps become change.code proposals, escalated in order.",
+   "p13_status": "ANSWERED — BOUNDED: capability gaps are ordered after defects and missing evidence, and among themselves by identifier only; a value-based ranking is frontier"
   },
   {
    "id": "Q72",
@@ -808,8 +871,11 @@
    "gloss": "How does AIOS decide which knowledge to update?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": ""
+   "evidence": [
+    "tools/p13/next_action.py::| knowledge gap | `admit.knowledge`"
+   ],
+   "note": "P13-018 construction: A missing or unreadable Knowledge input is proposed for governed admission.",
+   "p13_status": "ANSWERED — BOUNDED: only the admitted corpus-health criteria are Knowledge P13 reads; updating them is a governed revision P13 can only propose"
   },
   {
    "id": "Q73",
@@ -817,8 +883,12 @@
    "gloss": "How does AIOS decide which problem to solve?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": ""
+   "evidence": [
+    "tools/p13/next_action.py::**Priority** (Q41, Q63, Q69, Q73) is a fixed rule",
+    "tools/tests/test_p13.py::def test_memory_recency_orders_proposals"
+   ],
+   "note": "P13-018 construction: The first proposal by the fixed priority rule; a reserved one escalates instead of executing.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q74",
@@ -997,8 +1067,12 @@
    "gloss": "How does AIOS decide whether an unknown matters?",
    "category": "P13 CORE",
    "owner": "P13 candidate",
-   "evidence": [],
-   "note": ""
+   "evidence": [
+    "tools/p13/reasoning.py::An unknown **matters** (Q19, Q89) exactly when an authority-bearing criterion",
+    "tools/tests/test_p13.py::def test_absent_knowledge_is_a_knowledge_gap_that_escalates"
+   ],
+   "note": "P13-018 construction: An unknown matters exactly when an authority-bearing criterion needs it.",
+   "p13_status": "ANSWERED"
   },
   {
    "id": "Q90",
@@ -1125,6 +1199,11 @@
    "date": "2026-09-24",
    "by": "FDR-2 registration",
    "change": "17 FOUNDER RESERVED questions resolved by FDR-2 decisions: Q1, Q2, Q4, Q5, Q6, Q7, Q48, Q74, Q75, Q77, Q90, Q92, Q94, Q95, Q96, Q97, Q99. Categories before: 29/30/21/17/2/1 (P13-016 cites these). After: see counts."
+  },
+  {
+   "date": "2026-09-24",
+   "by": "P13-018 construction (tools/p13)",
+   "change": "20 P13 CORE questions now cite evidence of an answer in tools/p13 and tools/tests/test_p13.py, with p13_status ANSWERED or ANSWERED — BOUNDED (the bound is stated): Q17, Q19, Q27, Q28, Q33, Q40, Q41, Q46, Q53, Q57, Q59, Q61, Q62, Q63, Q69, Q70, Q71, Q72, Q73, Q89. Q38 reclassified P13 CORE → P13 FRONTIER (FDR-2 D02). The checker now requires every P13 CORE row to cite evidence (Blueprint §7 E13-07)."
   }
  ]
 }

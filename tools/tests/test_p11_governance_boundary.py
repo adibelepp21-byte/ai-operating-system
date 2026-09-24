@@ -465,6 +465,12 @@ P11_SURFACES = (
     # citation into free text could report a phase as unauthorized on the
     # strength of a string.
     REPO_ROOT / "tools" / "p12_phase_authorization.py",
+    # The P13 AuthorityGate, added under `P13-018` `D-1`. **Declared because the
+    # completeness guard below failed the run that created it.** It builds an
+    # `AuthorityProvenance` for every escalation it records, and it is the one
+    # place P13 decides whether authority exists. A gate that could hold an
+    # unverified citation could escalate on, or execute under, a string.
+    REPO_ROOT / "tools" / "p13" / "authority.py",
 )
 
 

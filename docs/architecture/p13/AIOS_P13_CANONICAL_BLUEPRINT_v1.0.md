@@ -6,6 +6,7 @@
 | **Predecessors** | v0.1–v0.4 (preserved; v0.4 `00efeeae…` is the review basis under `FDR-1`) · `P13-015` · `P13-016` · `P13-017` |
 | **Prepared by** | Claude Code — AIOS Co-Founder + Delegated CEO · 2026-09-24 |
 | **Construction** | **NOT AUTHORIZED.** This Blueprint defines what a construction authorization would authorize. It authorizes nothing (`D10`, `GSI-10`) |
+| **Construction decision (2026-09-24)** | `P13-018` — **APPROVED WITH BOUNDED INITIAL AUTHORITY** (`acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md`; Decision Register `§22`): `D-1` §10 IN authorized · `D-2b` envelope `P13-ENV-01` · `D-3` criteria read-only. The row above is this Blueprint as written. See §12 |
 
 ## 0. What is canonical here, and on what authority
 
@@ -281,3 +282,24 @@ action's effects are those of an existing executor, recorded with an outcome.
 Reversal goes through that executor's own lifecycle (a W4 grant revoked, a
 record superseded) and never through deletion. Certified evidence cannot be
 harmed: the barrier refuses the write.
+
+---
+
+## 12. After the construction gate (added 2026-09-24; §0–§11 unchanged)
+
+`P13-018` (Founder — Moriarty; Decision Register `§22`) decided the gate:
+**APPROVED WITH BOUNDED INITIAL AUTHORITY**. Three statements above were true when
+written and are superseded by that decision. They are left in place, as
+written:
+
+| Where | As written | Since `P13-018` |
+|---|---|---|
+| header, §5.1 | construction not authorized; *"Today no P13 action envelope exists"* | construction of §10 IN is authorized. `P13-ENV-01` (evidence-only, **initial, not maximum**) is recorded in the Delegation Register `§14` and `docs/governance/p13-envelopes/P13-ENV-01.json` |
+| §4 | Memory → P13 **NOT CONNECTED**; Knowledge → P13 conditional | Memory → P13 is built (`tools/p13/state.py`, `MemoryReader`), and `tools/ecosystem_relationships.py` measures Memory ↔ Intelligence as CODE. Knowledge → P13 is required and read-only (`D-3`) |
+| §8 last row | initial envelope is a gate decision | decided: `D-2b` |
+
+**What is not changed:** certification is not granted, P13 completion is not
+claimed, full autonomy is not authorized, and `NATIVE CORE = 11`. The
+construction and its verification are recorded in
+`docs/governance/AIOS_P13_CONSTRUCTION_RECORD_v1.0.md`.
+

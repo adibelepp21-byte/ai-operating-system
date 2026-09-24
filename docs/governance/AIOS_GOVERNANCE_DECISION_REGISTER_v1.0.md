@@ -8060,3 +8060,36 @@ within explicit governance and authority boundaries."*
 `GAP-0006`, `GAP-0009`, `AD-P13-001`, `AD-P13-002`, `FD-2`. P13 construction
 and certification: **NOT AUTHORIZED**. Gap reconciliation:
 `docs/architecture/p13-preparation/P13-017-POST-FDR-2-GAP-RECONCILIATION.md`.
+
+---
+
+## 22. P13-018 Append — Founder Construction Authority Gate Decision (2026-09-24)
+
+### P13-018 — Founder Decision · P13 Construction Authority Gate
+
+| Field | Value |
+|---|---|
+| **Identifier** | `P13-018` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | `FDR-2` (`D10`: construction authorization is separate) |
+| **Record** | `acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md` · content sha256 `6dd19861d9ab4fb964590f2a5e6b7601c8ef819b8b353b347a002f19a63c0372` |
+| **Answers** | the prepared gate `docs/architecture/p13-preparation/P13-018-CONSTRUCTION-AUTHORITY-GATE.md`, which carries the same number |
+| **Status** | ISSUED — **APPROVED WITH BOUNDED INITIAL AUTHORITY**. The instrument states no date; 2026-09-24 is the date of receipt |
+
+| Decision | Registered effect |
+|---|---|
+| `D-1` | **APPROVE.** Construction of the Blueprint `§10` IN scope is authorized. `§10` OUT stays prohibited. A requirement outside scope follows DISCOVER → CLASSIFY → CHECK AUTHORITY → PROCEED or ESCALATE; no silent expansion |
+| `D-2` | **D-2b — evidence-only initial action envelope.** Six permitted items and twelve prohibitions (`§3`). Recorded as `P13-ENV-01` in the Delegation Register `§14`. **Initial, not maximum** (`§4`). `CAPABILITY ≠ AUTHORITY` |
+| `D-3` | **YES.** `FD-P12-002`'s corpus-health criteria are admitted to P13 evaluation, **read-only**. Ownership stays with the existing source (`§6`) |
+
+**Binding with this decision:** `NO RECORDED AUTHORITY → NO EXECUTION` · D-2b does
+**not** automatically prove E13-05; results are classified by what is
+demonstrated (`§5`) · Memory → P13 read path authorized, Memory ownership stays
+outside P13 (`§7`) · `NATIVE CORE = 11`; a Native Core need stops at the
+boundary (`§8`) · `G-01`…`G-08` (`§9`) · the `§12` construction report must
+distinguish fifteen items, and nothing is complete because code exists.
+
+**Not authorized:** unrestricted autonomous P13 execution · Native Core
+expansion · self-generated authority · certification of P13. P13 completion is
+**not claimed**.

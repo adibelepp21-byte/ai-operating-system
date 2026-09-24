@@ -33,8 +33,10 @@ MATRIX = (REPO_ROOT / "docs/architecture/p13-preparation/"
           "P13-015-FOUNDATIONAL-QUESTION-RECONCILIATION.json")
 CATEGORIES = ("ALREADY SOLVED", "PARTIAL", "P13 DEPENDENCY", "P13 CORE",
               "P13 FRONTIER", "OUT OF SCOPE", "FOUNDER RESERVED", "UNKNOWN")
-# A claim that the system already answers a question must say where.
-MUST_CITE = ("ALREADY SOLVED", "PARTIAL", "FOUNDER RESERVED")
+# A claim that the system already answers a question must say where. Since
+# P13-018 construction, so must every P13 CORE row: Blueprint §7 E13-07 fails
+# the checker on a CORE row that cites no evidence.
+MUST_CITE = ("ALREADY SOLVED", "PARTIAL", "FOUNDER RESERVED", "P13 CORE")
 
 
 def pointer_holds(pointer: str, root: Path = REPO_ROOT) -> bool:

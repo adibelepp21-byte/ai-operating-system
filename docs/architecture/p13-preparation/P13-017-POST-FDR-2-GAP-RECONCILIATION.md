@@ -74,3 +74,12 @@ UNCHANGED                5   0007 0023 0024 0025 · 0011
 **Blocking P13 canonicalization: none.** **Blocking P13 construction: `D10`
 only.** That gate is the construction authority gate, prepared in
 `P13-018-CONSTRUCTION-AUTHORITY-GATE.md`.
+
+## 6. After construction under `P13-018` (appended 2026-09-24; §1–§5 unchanged)
+
+The eleven gaps §5 counts as *SPECIFIED, not built* (`0012`–`0016`,
+`0019`–`0022`, `0026`, `0027`) are **BUILT and verified** in `tools/p13/`. The
+bounds are stated per question in `P13-015` (`p13_status`) and per criterion in
+`docs/governance/AIOS_P13_CONSTRUCTION_RECORD_v1.0.md` §9. `0017` and `0018`
+remain residual frontier, and each live cycle reads them from §2 as such.
+Nothing else in this record changes.
