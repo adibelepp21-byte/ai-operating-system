@@ -8,7 +8,8 @@
 | **Date** | 2026-09-24 |
 | **Measured from** | `ef89545`, clean tree (baseline) |
 | **Construction commit** | `67b405b` |
-| **Result** | See §1 and §26 |
+| **Re-discovery commit** | `7e45d9d` (pushed) |
+| **Result** | **GOAL-V2-004 TARGET ACHIEVED — CERTIFIED-EVIDENCE WRITE CLOSURE ESTABLISHED FOR P10, P11, AND P12** (§1, §26) |
 
 Labels: **[OBS]** observed or measured this execution · **[INF]** inference ·
 **[REC]** recommendation. No prior report is relied on. Each prior claim used
@@ -18,10 +19,13 @@ here was re-measured.
 
 ## 1. Target status
 
-**Pending the re-discovery pass (§24).** Construction, verification and the
-post-construction probe are complete and pass (§6–§16). §24, §26 and this
-section are finalized after the re-discovery pass has run on the commit that
-carries this record.
+**GOAL-V2-004 TARGET ACHIEVED — CERTIFIED-EVIDENCE WRITE CLOSURE ESTABLISHED FOR P10, P11, AND P12.**
+
+That claim means only that the evidence-protection Target was achieved (Goal
+`§27`). It does not mean P10, P11 or P12 are complete again, AIOS complete,
+system integrity complete, architecture final, or Founder acceptance. The
+sequence was verify (`acc8bb3`), persist (`7e45d9d`, pushed), re-discover and
+verify again (`7e45d9d`, §24).
 
 ## 2. Current certified state of P10
 
@@ -190,7 +194,9 @@ xattr, the `shutil` copy, move, rmtree and archive family, and
 * **Stated limits** [INF]. The hook governs Python code. It does not govern
   native code that writes directly (C extensions, `ctypes`). It cannot see the
   `dir_fd` of `os.open(..., dir_fd=)`. A test holds that no resident code uses
-  that form. Detection covers whatever passes regardless.
+  that form. It does not defend against resident code deliberately rewriting
+  the barrier's own in-process state. Detection covers whatever passes
+  regardless.
 
 ## 10. P10 integrity mechanism
 
@@ -393,7 +399,18 @@ separately classified. `docs/program/AIOS_*` were not touched.
 
 ## 24. Re-discovery result
 
-*Pending the re-discovery pass on the commit carrying this record (§22 of the Goal: verify → persist → re-discover → verify again).*
+Run on the pushed commit `7e45d9d`, which carries this record (verify →
+persist → **re-discover → verify again**) [OBS]:
+
+| Question (Goal `§22`) | Result |
+|---|---|
+| New write paths? | None. 133 invocations over 11 + 50 + 1 + 13 entry points, 4 targeted runs and 4 suites. **0 certified writes**, 0 UNKNOWN, 0 half-writes, and no GUARDED run changed any file. Static: every write added since `ef89545` is either a guarded write into a disposable worktree or a test write into a temporary copy |
+| New certified surfaces? | None. The guard still resolves `{10, 11, 12}` from the same three instruments, with 0 anomalies. No file under `docs/architecture/`, `native_core/` or `docs/program/` changed |
+| Protection bypass? | Only the stated limits (§9), plus deliberate tampering with the barrier's in-process state by code that is itself resident. That is detection's case, not prevention's. M1 shows detection catching a write made with the barrier removed |
+| New live/certified conflicts? | None. The three observation proofs still write only the live root (SAFE) |
+| Existing consumers broke? | No. All four suites pass inside the re-discovery worktree (tools 1454, native_core 801, consumers 276, bounded_exception 29). The post-construction worktree run at `acc8bb3` had failed four tools tests only because this record was not yet committed, so the act and Register cited a missing file |
+| New dependencies? | D-1…D-3 (§18). Nothing new at re-discovery |
+| Integrity model coherent? | Yes. The mutation controls re-run on `7e45d9d` give the same results as §13 (M1 MODIFIED, M2 refused, M3 all four findings, M4a–c faults), and the authoritative tree held before and after |
 
 ## 25. Founder decisions required
 
@@ -402,12 +419,38 @@ None for this Target. The standing items are unchanged: Founder review of
 
 ## 26. Whether Target is achieved
 
-*Pending the re-discovery pass on the commit carrying this record (§22 of the Goal: verify → persist → re-discover → verify again).*
+**Yes.** Every criterion is supported by the evidence cited:
+
+| Criterion | Evidence |
+|---|---|
+| T4-01 entry points discovered or classified | §5: content discovery, 133 runs, 0 UNKNOWN |
+| T4-02 write paths identified | §6: W-1…W-9, the static writer scan, subprocess use |
+| T4-03 live-only or refused before first certified write | §5 classification, §8, §24 |
+| T4-04 no half-write | §5 and §24: no GUARDED run changed any file. The three `B-03` half-writers are now refused first |
+| T4-05 P10 integrity | §2, §10 |
+| T4-06 P11 integrity | §3, §11 |
+| T4-07 P12 mechanism still valid | §4, §12 |
+| T4-08 detects modification, addition, deletion and drift | §13 M3/M4, unit controls, and `UNREADABLE` |
+| T4-09 mutation testing effective | §13 (twice: `67b405b` and `7e45d9d`) |
+| T4-10 authoritative evidence intact | §15, before and after every run |
+| T4-11 live/certified separation valid | §16 |
+| T4-12 historical records preserved | §17 |
+| T4-13 full regression passes | §14 (two clean runs) and §24 (a third, in the worktree) |
+| T4-14 post-construction re-discovery complete | §24 |
+| T4-15 evidence persisted | §23, pushed |
 
 ## 27. Whether authorized construction remains
 
-*Pending the re-discovery pass on the commit carrying this record (§22 of the Goal: verify → persist → re-discover → verify again).*
+**None within `GOAL-V2-004`.** No actionable construction item remains inside
+this Goal's envelope. Stated residuals (§9, §18) are governed, not open write
+paths. Work outside the envelope is not absorbed (Goal `§20`). Any next
+construction needs its own Goal or frontier determination (`IAM-04`).
 
 ## 28. Whether V2 exhaustion applies
 
-*Pending the re-discovery pass on the commit carrying this record (§22 of the Goal: verify → persist → re-discover → verify again).*
+**Not declared.** The Goal (`§26`) forbids declaring exhaustion because the
+known writers are fixed or the tests pass. What this record establishes is
+narrower: under `GOAL-V2-004`, discovery, classification, authorized work,
+verification, evidence and re-discovery found no further item. V2 exhaustion
+as a program-level condition is not assessed here. The standing Founder
+matters (§20, §25) remain.
