@@ -682,11 +682,18 @@ class Boundaries(unittest.TestCase):
                               if d.is_dir() and not d.name.startswith("__")]), 11)
         self.assertFalse((core / "p13").exists())
 
-    def test_every_executable_action_is_a_read_only_verifier(self):
+    def test_every_executable_action_is_a_read_only_verifier_or_an_s_ops_transition(self):
+        # FDR-3 (Decision Register §23) grants the two S-OPS transitions, and
+        # P13-ENV-02 records them. Every other executable type stays a
+        # read-only verifier.
         for action in CATALOG.values():
             if action.run is not None:
-                self.assertTrue(action.name.startswith("verify."), action.name)
                 self.assertFalse(action.reserved)
+                if action.name in ("s_ops.open", "s_ops.close"):
+                    self.assertEqual(action.executor, "tools.s_ops.surface.transition")
+                else:
+                    self.assertTrue(action.name.startswith("verify."), action.name)
+                    self.assertEqual(action.effect, "read-only", action.name)
         for name in RESERVED:
             self.assertIsNone(CATALOG[name].run)
 

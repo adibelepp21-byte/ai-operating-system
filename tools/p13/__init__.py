@@ -27,9 +27,13 @@ it.
 
 **Boundaries this package keeps.** It lives in the tools layer: `NATIVE CORE =
 11`, and it changes nothing under `native_core/`. It imports nothing from
-`consumers/`. It reads P1–P12 and changes none of them. It writes only under
-`docs/operations/p13/`. It has no scheduler, thread or daemon, and runs when it
-is run. It executes only what a recorded envelope permits, and today that is
-`P13-ENV-01`: evidence-only, initial, not maximum. `CAPABILITY ≠ AUTHORITY`.
-Importing this package does nothing.
+`consumers/`. It reads P1–P12 and changes none of them. It writes its evidence
+only under `docs/operations/p13/`. It has no scheduler, thread or daemon, and
+runs when it is run. It executes only what a recorded envelope permits:
+
+* `P13-ENV-01`: evidence-only, initial, not maximum;
+* `P13-ENV-02` (`FDR-3`): two transitions of the S-OPS proof object, made
+  through that surface's own API and nothing else.
+
+`CAPABILITY ≠ AUTHORITY`. Importing this package does nothing.
 """

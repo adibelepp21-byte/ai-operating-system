@@ -8,14 +8,20 @@ delegation issuance, knowledge admission, Native Core change, Constitution
 change. `P13-018 §3` adds three: self-expanding the envelope, granting
 authority, and external or business action.
 
-Every executable type runs an **existing resident verifier, read-only**. That is
-all `P13-ENV-01` permits: items 1 and 6. P13 has no executor that writes.
-The cycle's own records are written by the evidence store, on items 3 and 4.
+Every executable type but two runs an **existing resident verifier,
+read-only**. That is all `P13-ENV-01` permits: items 1 and 6. The cycle's own
+records are written by the evidence store, on items 3 and 4.
+
+The two others are the only state-changing types P13 can execute:
+`s_ops.open` and `s_ops.close`. `FDR-3` grants them and `P13-ENV-02` records
+them, on one object, `docs/operations/s-ops/S-OPS-01.json`. P13 does not write
+that object itself. It calls the S-OPS surface's own `transition`.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 from typing import Any, Callable, Dict, Optional, Tuple
 
 from tools.p13.paths import Paths
@@ -24,9 +30,9 @@ Produced = Dict[str, Any]
 
 
 #: What an action does to state (the post-construction instruction, `§8.1`).
-#: Only `read-only` types are executable today: `P13-ENV-01` permits nothing
-#: else. The other classes exist so the gate can tell them apart and hold each
-#: to its own requirements. A class being named here authorizes nothing.
+#: The classes exist so the gate can tell them apart and hold each to its own
+#: requirements. A class being named here authorizes nothing: only a recorded
+#: envelope does.
 READ_ONLY, RECORD, STATE_CHANGING, EXTERNAL = (
     "read-only", "record", "state-changing", "external")
 EFFECTS = (READ_ONLY, RECORD, STATE_CHANGING, EXTERNAL)
@@ -99,6 +105,131 @@ def _own_evidence(paths: Paths) -> Produced:
     return {"verification.p13_evidence": EvidenceStore(paths).verify()}
 
 
+# ---------------------------------------------------------------------------
+# S-OPS (FDR-3; P13-ENV-02): the only state-changing types P13 can execute
+# ---------------------------------------------------------------------------
+#
+# Two transitions of one object, `docs/operations/s-ops/S-OPS-01.json`, owned
+# by the S-OPS operational proof surface (`docs/operations/s-ops/
+# S-OPS-DEFINITION.md`). P13 never writes the object itself. It calls the
+# surface's own `transition`, which compares and sets on the recorded state and
+# enforces the window again.
+
+#: Everything an S-OPS execution could touch and must not, besides its target:
+#: the authority records. The whole S-OPS root is observed as well.
+S_OPS_AUTHORITY = (
+    "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md",
+    "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md",
+    "docs/governance/acts/FDR-3-S-OPS-DEDICATED-BOUNDED-OPERATIONAL-PROOF-SURFACE-FOR-E13-05.md",
+)
+S_OPS_ACTOR = "P13 (tools.p13, BoundedExecution)"
+
+
+def _digest_file(path) -> str:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return "absent"
+
+
+def _s_ops_boundary(paths: Paths, target: str) -> Footprint:
+    """The whole S-OPS root, the envelopes and the authority records, hashed."""
+    from tools.s_ops import surface
+    footprint: Footprint = {}
+    if paths.s_ops.is_dir():
+        for path in sorted(paths.s_ops.rglob("*")):
+            if path.is_file():
+                relative = path.relative_to(paths.s_ops).as_posix()
+                footprint[f"{surface.ROOT}/{relative}"] = _digest_file(path)
+    if paths.envelopes.is_dir():
+        for path in sorted(paths.envelopes.glob("*.json")):
+            footprint[f"docs/governance/p13-envelopes/{path.name}"] = _digest_file(path)
+    physical = {S_OPS_AUTHORITY[0]: paths.delegation_register,
+                S_OPS_AUTHORITY[1]: paths.decision_register,
+                S_OPS_AUTHORITY[2]: paths.repo / S_OPS_AUTHORITY[2]}
+    for relative, path in physical.items():
+        footprint[relative] = _digest_file(path)
+    return footprint
+
+
+def _s_ops_read(paths: Paths):
+    from tools.s_ops import surface
+    return surface.read(paths.s_ops)
+
+
+def _is_the_s_ops_object(paths: Paths, target: str) -> Optional[str]:
+    from tools.s_ops import surface
+    if target != surface.OBJECT:
+        return f"{target!r} is not the S-OPS object {surface.OBJECT}"
+    try:
+        found = _s_ops_read(paths)
+    except (OSError, ValueError) as error:
+        return f"the S-OPS object is not the surface's own ({error})"
+    return None if found is not None else "the S-OPS object is not provisioned"
+
+
+def _s_ops_state_is(required: str):
+    def precondition(paths: Paths, target: str) -> Optional[str]:
+        try:
+            state = (_s_ops_read(paths) or {}).get("state")
+        except (OSError, ValueError) as error:
+            return f"the S-OPS object cannot be read ({error})"
+        return None if state == required else f"S-OPS-01 is {state}, not {required}"
+    return precondition
+
+
+def _s_ops_phase_in(allowed: Tuple[str, ...]):
+    def precondition(paths: Paths, target: str) -> Optional[str]:
+        from tools.s_ops import surface
+        try:
+            found = _s_ops_read(paths)
+            now = surface.phase(found["window"], surface.utcnow()) if found else None
+        except (OSError, ValueError, KeyError) as error:
+            return f"the S-OPS window cannot be read ({error})"
+        return (None if now in allowed else
+                f"S-OPS-01's window phase is now {now}, not {'/'.join(allowed)}")
+    return precondition
+
+
+def _s_ops_run(name: str):
+    def run(paths: Paths, target: str) -> Produced:
+        from tools.s_ops import surface
+        if target != surface.OBJECT:
+            raise ValueError(f"{target!r} is not the S-OPS object")
+        done = surface.transition(paths.s_ops, name, actor=S_OPS_ACTOR,
+                                  basis="P13-ENV-02 (FDR-3 §4), after the AuthorityGate's EXECUTE")
+        return {"s_ops.transition": done}
+    return run
+
+
+def _s_ops_verify(name: str, to_state: str):
+    def verify(paths: Paths, target: str, before: Footprint,
+               after: Footprint) -> Tuple[bool, str]:
+        try:
+            found = _s_ops_read(paths)
+        except (OSError, ValueError) as error:
+            return False, f"S-OPS-01 cannot be read back ({error})"
+        if found is None:
+            return False, "S-OPS-01 is gone"
+        last = found["history"][-1]
+        holds = (found["state"] == to_state and last.get("event") == name
+                 and last.get("to") == to_state and before.get(target) != after.get(target))
+        return holds, (f"S-OPS-01 reads back {found['state']}; its last history entry "
+                       f"is {last.get('event')} {last.get('from')} → {last.get('to')}")
+    return verify
+
+
+def _s_ops_type(name: str) -> ActionType:
+    from tools.s_ops import surface
+    source, target, phases = surface.TRANSITIONS[name]
+    return ActionType(
+        f"s_ops.{name}", False, (), "tools.s_ops.surface.transition",
+        _s_ops_run(name), effect=STATE_CHANGING, observe=_s_ops_boundary,
+        verify=_s_ops_verify(name, target),
+        preconditions=(_is_the_s_ops_object, _s_ops_state_is(source),
+                       _s_ops_phase_in(phases)))
+
+
 RESERVED = (
     "change.code", "change.governance", "change.certified_evidence",
     "issue.delegation", "admit.knowledge", "change.native_core",
@@ -136,6 +267,9 @@ CATALOG: Dict[str, ActionType] = {
     # envelope must permit for them to stand on it rather than on G-02 alone.
     "escalate": ActionType("escalate", False, (), "tools.escalation_register",
                            effect=RECORD),
+    # FDR-3 / P13-ENV-02: the S-OPS proof surface's two transitions.
+    "s_ops.open": _s_ops_type("open"),
+    "s_ops.close": _s_ops_type("close"),
 }
 
 

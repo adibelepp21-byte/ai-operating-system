@@ -20,7 +20,8 @@ from tools.p13.model import (ARCHITECTURE_GAP, CAPABILITY_GAP, ERROR,
 from tools.p13.paths import Paths
 
 DISPOSITION = {
-    ERROR: "a remedy is proposed; the remedy is reserved, so it escalates",
+    ERROR: ("a remedy is proposed; the gate decides it: a reserved remedy "
+            "escalates, and one a recorded envelope permits may execute"),
     ARCHITECTURE_GAP: "stop at the boundary; Architect / Founder authority (P13-018 §8)",
     KNOWLEDGE_GAP: "admission is governed: admit.knowledge escalates",
     CAPABILITY_GAP: "a code change is proposed and escalated; P13 never builds itself",

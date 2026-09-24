@@ -4,9 +4,11 @@ The instruction is `acts/P13-POST-CONSTRUCTION-RECONCILIATION-AND-E13-05-EXIT-BL
 
 **Cases A and D are TEST-VERIFIED, not LIVE-VERIFIED.** They run a fixture
 state-changing action under a fixture envelope, written into a *temporary copy*
-of the Delegation Register, against a temporary sandbox. No recorded envelope
-permits a state-changing action. The production catalog has none, and nothing
-here adds one. `EXECUTION CAPABLE ≠ EXECUTION AUTHORIZED`.
+of the Delegation Register, against a temporary sandbox. Nothing here adds a
+production action type. Since `FDR-3`, the production catalog holds exactly
+two executable state-changing types, the S-OPS transitions that `P13-ENV-02`
+permits. They are tested in `test_s_ops.py`. `EXECUTION CAPABLE ≠ EXECUTION
+AUTHORIZED`.
 """
 
 from __future__ import annotations
@@ -469,10 +471,13 @@ class CaseDVerifiedStateChange(Fixture):
 
 class TheProductionCatalogStaysReadOnly(unittest.TestCase):
 
-    def test_no_production_type_that_changes_state_is_executable(self):
-        for action in CATALOG.values():
-            if action.effect != READ_ONLY:
-                self.assertTrue(action.reserved or action.run is None, action.name)
+    def test_the_only_executable_state_changing_types_are_fdr3s(self):
+        # Until FDR-3 there were none. FDR-3 grants exactly the two S-OPS
+        # transitions (P13-ENV-02); every other non-read-only type is reserved
+        # or has no executor.
+        executable = sorted(a.name for a in CATALOG.values()
+                            if a.effect != READ_ONLY and not a.reserved and a.run)
+        self.assertEqual(executable, ["s_ops.close", "s_ops.open"])
         self.assertNotIn(FIXTURE, CATALOG)
 
     def test_the_evidence_envelope_grants_no_state_change_and_declares_no_targets(self):

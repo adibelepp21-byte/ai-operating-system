@@ -57,6 +57,9 @@ class Context:
 
     previous: Optional[dict] = None
     memory_available: bool = False
+    #: When this observation is taken. A phase of the S-OPS window is observed
+    #: at this instant, so the snapshot is consistent with its own time.
+    taken_at: Optional[str] = None
 
 
 # -- the sources ------------------------------------------------------------
@@ -180,6 +183,20 @@ def _authority(paths: Paths, _: Context) -> Reading:
             "authority.dimensions": (authority_dimensions(paths), VERIFIED)}
 
 
+def _s_ops(paths: Paths, context: Context) -> Reading:
+    """S-OPS-01, read from disk through its surface (`FDR-3`).
+
+    Its phase is observed at this snapshot's own instant. An object that does
+    not exist is observed as UNPROVISIONED. That is a verified observation,
+    not missing evidence.
+    """
+    from tools.s_ops import surface
+    at = (datetime.fromisoformat(context.taken_at) if context.taken_at
+          else datetime.now(timezone.utc))
+    seen = surface.observe(paths.s_ops, at)
+    return {key: (seen[field], VERIFIED) for field, key in S_OPS_KEYS.items()}
+
+
 def _remembered_verifications(paths: Paths, context: Context) -> Reading:
     """What earlier cycles verified, as INFERRED evidence (Memory is history).
 
@@ -202,6 +219,10 @@ VERIFICATION_KEYS = (
 
 SELF_MODEL_KEYS = tuple(f"self_model.{_slug(q)}" for q in QUESTIONS)
 
+#: The S-OPS facts: the object's state, the window's phase now, the window.
+S_OPS_KEYS = {"state": "s_ops.S-OPS-01.state", "phase": "s_ops.S-OPS-01.phase",
+              "window": "s_ops.S-OPS-01.window"}
+
 SOURCES: Tuple[Source, ...] = (
     Source("memory", "Memory via MemoryReader over Trace (P12 stores + P13 store)",
            ("memory.stores", "memory.p13.previous", "memory.corpus_health.last"),
@@ -223,6 +244,9 @@ SOURCES: Tuple[Source, ...] = (
            _authority),
     Source("remembered", "Memory: verifications recorded by earlier P13 cycles",
            VERIFICATION_KEYS, _remembered_verifications),
+    Source("s_ops", "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its "
+           "window phase at the observation instant (FDR-3)",
+           tuple(S_OPS_KEYS.values()), _s_ops),
 )
 
 
@@ -237,6 +261,7 @@ class StateUnderstanding:
     def observe(self) -> StateSnapshot:
         facts = []
         taken_at = self._clock()
+        self.context.taken_at = taken_at
         for source in self._sources:
             try:
                 reading = source.read(self._paths, self.context)
