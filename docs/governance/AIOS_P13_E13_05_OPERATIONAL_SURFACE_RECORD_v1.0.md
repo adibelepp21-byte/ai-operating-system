@@ -198,3 +198,21 @@ the live cycle had run: `…131930-e36c14c7`, `CR-MEMORY-INTELLIGENCE`. They wer
 a placeholder presented as evidence. I caught this before any commit and
 replaced them with the actual cycle (`20260924T144955-e18d957a`). The committed
 record carries only measured values.
+
+---
+
+### Later (appended 2026-09-24; the record above is unchanged and historical)
+
+This record's classification, **E13-05 BLOCKED — FOUNDER DECISION
+REQUIRED**, was the state at its commit, before any operational authority
+existed.
+
+1. The Founder decision it called for was issued as `FDR-3` (Decision Register
+   `§23`).
+2. The live proof followed:
+   `docs/governance/AIOS_P13_E13_05_S_OPS_LIVE_PROOF_RECORD_v1.0.md`
+   (**E13-05 VERIFIED**).
+3. `FDR-4` (`§24`) then confirmed that status and retired the S-OPS envelope.
+
+BLOCKED at that time, then VERIFIED after `FDR-3`, is historical progression,
+not contradiction.

@@ -12,10 +12,12 @@ Every executable type but two runs an **existing resident verifier,
 read-only**. That is all `P13-ENV-01` permits: items 1 and 6. The cycle's own
 records are written by the evidence store, on items 3 and 4.
 
-The two others are the only state-changing types P13 can execute:
-`s_ops.open` and `s_ops.close`. `FDR-3` grants them and `P13-ENV-02` records
-them, on one object, `docs/operations/s-ops/S-OPS-01.json`. P13 does not write
-that object itself. It calls the S-OPS surface's own `transition`.
+The two others are state-changing: `s_ops.open` and `s_ops.close`, on one
+object, `docs/operations/s-ops/S-OPS-01.json`. `FDR-3` granted them through
+`P13-ENV-02` for the E13-05 proof, and `FDR-4` `FD-B` retired that envelope once
+the proof completed. They remain in the catalog, with no envelope permitting
+them, so the gate escalates any proposal of either. P13 never wrote the object
+itself. It called the S-OPS surface's own `transition`.
 """
 
 from __future__ import annotations

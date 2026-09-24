@@ -257,3 +257,20 @@ Nothing below is resolved by this proof:
 | Live cycles | `20260924T163728-11fe8aed` · `20260924T164000-d1954b46` · `20260924T164018-34223b91` · `20260924T164501-7f84980f` · `20260924T164519-b7456bbc` (`docs/operations/p13/cycles/`) |
 | S-OPS-01 | `docs/operations/s-ops/S-OPS-01.json`, final sha256 `e2781df37148d80b1e404c2cba9583d50daeee35271cdece12fc4f018c527edd` |
 | Tests at `de0fc36` | tools 1632 OK (1 skipped) · native_core 801 OK (1 expected failure) · consumers 276 OK · bounded_exception 29 OK |
+
+---
+
+### Appended 2026-09-24 — FDR-4 (everything above unchanged)
+
+`FDR-4` (Decision Register `§24`):
+
+* **`FD-A`.** Live ESCALATE proof is not required for E13-05 verification.
+  The escalate branch is test-proven and remains so. **E13-05 remains
+  VERIFIED.**
+* **`FD-B`.** `P13-ENV-02` is spent / retired / revoked (Delegation Register
+  `§16`). §I item 4 above is therefore settled by decision, not only by the
+  object's state.
+* **`FD-C`.** §I item 8 is reconciled by an append-only Blueprint note
+  (`§15`); `§13` and `§14` are kept as written.
+* **`FD-D`.** P13 is EXIT-READY. The reconciled state is in
+  `docs/governance/AIOS_P13_EXIT_READINESS_PACKAGE_v1.0.md`.

@@ -83,3 +83,27 @@ bounds are stated per question in `P13-015` (`p13_status`) and per criterion in
 `docs/governance/AIOS_P13_CONSTRUCTION_RECORD_v1.0.md` §9. `0017` and `0018`
 remain residual frontier, and each live cycle reads them from §2 as such.
 Nothing else in this record changes.
+
+## 7. After the E13-05 proof and `FDR-4` (appended 2026-09-24; §1–§6 unchanged)
+
+This section reconciles only what the evidence moved. Each row states its own
+closure basis.
+
+| Item | Before | Evidence | Now |
+|---|---|---|---|
+| E13-05 state-changing authority (the post-construction record's primary exit blocker) | OPEN, Founder-reserved | `FDR-3` (Decision Register `§23`) → `P13-ENV-02` → live proof, cycles `20260924T164000-d1954b46` and `20260924T164501-7f84980f` (`docs/governance/AIOS_P13_E13_05_S_OPS_LIVE_PROOF_RECORD_v1.0.md`) | **CLOSED** |
+| E13-05 escalate branch (no live ESCALATE event exists) | OPEN, pending an interpretation | `FDR-4` `FD-A`: a live ESCALATE is not required. The behaviour is **test-proven** (NC-01, NC-02; the gate's `§5.2` escalation rows) | **CLOSED by decision.** No live escalation event is claimed |
+| `P13-ENV-02` | ACTIVE; exhausted only by the object's state | `FDR-4` `FD-B`; Delegation Register `§16`. The gate no longer resolves it, and the projection lists it as retired | **RETIRED** (REVOKED — spent) |
+| Blueprint §13/§14 stale status notes | OPEN; needed Founder authority | `FDR-4` `FD-C`; Blueprint `§15` appended, §0–§14 byte-identical | **CLOSED** (historical text preserved) |
+| S-OPS read-only observation | — | P13 still reads S-OPS-01 each cycle, and still evaluates two criteria that can no longer fail within the contract. Execution dependency: none | **OPEN, non-blocking.** Retiring the Source and criteria would be construction |
+| `0017` replanning | residual frontier | not required by any E13 criterion | **RESIDUAL FRONTIER** (unchanged) |
+| `0018` recovery beyond escalation | residual frontier | escalation remains the recovery path; retry stays frontier | **RESIDUAL FRONTIER** (unchanged) |
+| E13-07 residual frontier register | epistemic; definition *"semantically adequate with open authority questions"* | not built. Not an exit requirement under Blueprint §7; the checker is | **OPEN, non-blocking** |
+| E13-03 rules not live-exercised: `R-MISMATCH`, `R-AUTHORITY`, `R-GAP` | fixture only | fixture only. `R-DEFECT` is now live (the S-OPS proof) | **BOUNDED** (unchanged in kind) |
+| E13-06 evolution proposal through the gate | fixture only | fixture only; no live capability gap has arisen | **BOUNDED** (unchanged) |
+| `FD-2` Founder ≡ Architect | implied, not ratified | none | **OPEN**, not relied on |
+| F-4 index synchronization authority | governance authority unknown | none | **OPEN**, not converted into authorization |
+| `0005`, `0006`, `0009`, `0010` · `0007`, `0023`–`0025`, `0011` | §5 | not touched by the E13-05 work | **unchanged** |
+
+**E13-05 VERIFIED does not mean P13 is gap-free.** Residual frontier and open
+non-blocking items remain, and are listed above.

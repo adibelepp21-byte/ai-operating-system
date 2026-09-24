@@ -33,7 +33,8 @@ runs when it is run. It executes only what a recorded envelope permits:
 
 * `P13-ENV-01`: evidence-only, initial, not maximum;
 * `P13-ENV-02` (`FDR-3`): two transitions of the S-OPS proof object, made
-  through that surface's own API and nothing else.
+  through that surface's own API. **Spent and retired** under `FDR-4`
+  `FD-B` once the E13-05 proof completed, so it permits nothing now.
 
 `CAPABILITY ≠ AUTHORITY`. Importing this package does nothing.
 """

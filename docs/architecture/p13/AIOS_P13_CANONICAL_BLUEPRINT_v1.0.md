@@ -343,3 +343,39 @@ its own record, to premises P13 observed.
 **No production state-changing action exists**, and no envelope grants one.
 The operational surface is a Founder decision:
 `docs/architecture/p13-preparation/P13-E13-05-OPERATIONAL-SURFACE-FOUNDER-DECISION-PACKAGE.md`.
+
+## 15. Post-FDR-3 reconciliation (added 2026-09-24 under `FDR-4` `FD-C`; §0–§14 unchanged)
+
+`FDR-4` (Founder — Moriarty; Decision Register `§24`) authorizes this
+append-only note. §13 and §14 stay **as written**. They were correct when
+written, before any state-changing authority existed. This note records what
+followed. It does not revise them.
+
+| Where | As written | Since `FDR-3` and `FDR-4` |
+|---|---|---|
+| §13 | *"No envelope grants a state-changing type, and the production catalog has no executable one"* | `FDR-3` (`§23`) authorized a dedicated, bounded S-OPS proof surface. `P13-ENV-02` (Delegation Register `§15`) granted `s_ops.open` / `s_ops.close` on `docs/operations/s-ops/S-OPS-01.json` only. §13's verification protocol then ran **live** |
+| §14 | *"**No production state-changing action exists**, and no envelope grants one"* | the production catalog holds the two S-OPS transitions. `P13-ENV-02` granted them for the E13-05 proof alone, and is now **spent / retired / revoked** under `FDR-4` `FD-B` (Delegation Register `§16`). **No envelope grants a state-changing type today** |
+
+**E13-05: VERIFIED.** The live proof is recorded in
+`docs/governance/AIOS_P13_E13_05_S_OPS_LIVE_PROOF_RECORD_v1.0.md`:
+
+* P13 decided from observed state;
+* authority was checked against `P13-ENV-02`;
+* a real state change was executed;
+* the expected and actual consequences matched;
+* the evidence and Trace were recorded;
+* re-observation and rediscovery followed, and so did the reversal.
+
+`FDR-4` `FD-A` holds that a live ESCALATE is not required for E13-05. The
+escalate branch is test-proven.
+
+**What did not change:**
+
+* no general or production write authority was granted;
+* no P1–P12 or P11 ownership changed;
+* §5's authority contract and §7's verification contract stand as written;
+* the S-OPS surface is a historical proof surface, not a P13 component.
+
+**Status:** P13 is **EXIT-READY** (`FDR-4` `FD-D`), which is not exit contract
+satisfied, not certified, and not Phase 13 closed. The Founder decides the exit
+gate.

@@ -24,6 +24,14 @@ A record that fails any check is an **anomaly**. It is not an envelope. It is
 reported, and it escalates. P13 never repairs it, and never reads it as
 partial authority.
 
+One failure is not an anomaly: an envelope **retired** by a Founder decision.
+Its REVOKED line in the Register names that decision, and the decision
+resolves (`authority_citation.refusal` against its own act). An example is
+`P13-ENV-02`, spent under `FDR-4` `FD-B`. A retired envelope is no authority,
+exactly like an anomaly. It is reported as retired rather than as a defect,
+because nothing about it needs a human's repair. A REVOKED line that names no
+resolving decision is still an anomaly.
+
 The gate applies Blueprint `§5.2` in order, then refuses what `§5.2` leaves
 open. Every added check can only refuse, never permit (the post-construction
 instruction, `§8.3`, Case C):
@@ -107,6 +115,51 @@ def _act_text_sha(path: Path) -> Optional[str]:
     return hashlib.sha256(body.encode("utf-8")).hexdigest()
 
 
+def _retired_by(marked, paths: Paths) -> Optional[str]:
+    """The Founder decision a REVOKED line names, if that decision resolves.
+
+    Only REVOKED counts, never SUSPENDED. The decision must be an act under
+    `docs/governance/acts/` that `authority_citation.refusal` resolves against
+    the Decision Register. Anything less leaves the envelope an anomaly.
+    """
+    from tools.governance_index import IDENTIFIER_RE
+    acts = paths.repo / "docs/governance/acts"
+    for line in marked:
+        if not re.search(r"\bREVOKED\b", line):
+            continue
+        for identifier in IDENTIFIER_RE.findall(line):
+            record = next((p for p in sorted(acts.glob(f"{identifier}-*.md"))), None)
+            if record is None:
+                continue
+            relative = record.relative_to(paths.repo).as_posix()
+            if authority_citation.refusal(identifier, relative, identifier, paths.repo,
+                                          paths.decision_register) is None:
+                return identifier
+    return None
+
+
+def retired_envelopes(paths: Paths) -> Tuple[dict, ...]:
+    """Envelopes a resolving Founder decision retired. None of them is authority."""
+    try:
+        register = paths.delegation_register.read_text(encoding="utf-8")
+    except OSError:
+        return ()
+    out = []
+    if paths.envelopes.is_dir():
+        for path in sorted(paths.envelopes.glob("*.json")):
+            try:
+                envelope_id = json.loads(path.read_bytes())["envelope_id"]
+            except (OSError, ValueError, KeyError, TypeError):
+                continue
+            whole = re.compile(r"(?<![\w-])" + re.escape(envelope_id) + r"(?![-\w])")
+            marked = [l for l in register.splitlines()
+                      if whole.search(l) and re.search(r"\b(REVOKED|SUSPENDED)\b", l)]
+            by = _retired_by(marked, paths) if marked else None
+            if by:
+                out.append({"envelope": envelope_id, "retired_by": by})
+    return tuple(out)
+
+
 def _validate(path: Path, paths: Paths, register: str) -> Tuple[Optional[Envelope], Optional[str]]:
     name = path.name
     try:
@@ -125,8 +178,11 @@ def _validate(path: Path, paths: Paths, register: str) -> Tuple[Optional[Envelop
     if "**ACTIVE**" not in status:
         return None, f"{envelope_id}: its Register entry is not ACTIVE"
     whole = re.compile(r"(?<![\w-])" + re.escape(envelope_id) + r"(?![-\w])")
-    if any(whole.search(l) and re.search(r"\b(REVOKED|SUSPENDED)\b", l)
-           for l in register.splitlines()):
+    marked = [l for l in register.splitlines()
+              if whole.search(l) and re.search(r"\b(REVOKED|SUSPENDED)\b", l)]
+    if marked:
+        if _retired_by(marked, paths):
+            return None, None            # retired: no authority, and no defect
         return None, f"{envelope_id}: the Register marks it revoked or suspended"
     if sha not in section:
         return None, (f"{envelope_id}: the record's sha256 {sha[:16]}… is not the "
@@ -180,7 +236,7 @@ def load_envelopes(paths: Paths) -> Tuple[Tuple[Envelope, ...], Tuple[str, ...]]
             envelope, anomaly = _validate(path, paths, register)
             if envelope:
                 envelopes.append(envelope)
-            else:
+            elif anomaly:                    # None: retired, which is no defect
                 anomalies.append(anomaly)
     ids = [e.id for e in envelopes]
     for twice in sorted({i for i in ids if ids.count(i) > 1}):
@@ -388,7 +444,8 @@ def authority_dimensions(paths: Paths, catalog=None) -> Dict[str, dict]:
                   or "no resolved envelope",
         "meaning": "what P13 may execute, from recorded envelopes only",
         "verified": "VERIFIED", "action_types": effects,
-        "anomalies": list(anomalies)}
+        "anomalies": list(anomalies),
+        "retired": list(retired_envelopes(paths))}
 
     def shown(g):
         scope = ", ".join(g["targets"]) or "no target scope, so the gate refuses it"
@@ -405,7 +462,8 @@ def authority_dimensions(paths: Paths, catalog=None) -> Dict[str, dict]:
                    "declared targets"),
         "meaning": ("authority to change state beyond P13's own records. Required "
                     "for E13-05's full contract; only a governance decision grants it"),
-        "verified": "VERIFIED", "grants": grants}
+        "verified": "VERIFIED", "grants": grants,
+        "retired": list(retired_envelopes(paths))}
 
     try:
         certified = 13 in guard.certified_phases()

@@ -722,3 +722,29 @@ unaltered (`§2`).
 Execution then compares the whole S-OPS root, both Registers, the envelopes and
 the `FDR-3` act before and after. Any change outside the one object is a
 failure.
+
+---
+
+## 16. P13-ENV-02 Retirement Append (2026-09-24)
+
+**Why this append exists.** `FDR-4` `FD-B` (Founder — Moriarty, received
+2026-09-24; Decision Register `§24`) determines that the S-OPS envelope has
+fulfilled its specific purpose under `FDR-3`, and is spent, retired and
+revoked now that the E13-05 proof is complete. `§15` is unaltered: its Status
+row records the envelope as it stood during the proof. This append records the
+retirement. It adds no authority.
+
+| Envelope | Disposition |
+|---|---|
+| `P13-ENV-02` | **REVOKED** — spent / retired under `FDR-4` `FD-B`, 2026-09-24. Purpose fulfilled: the E13-05 live proof on S-OPS-01 (`docs/governance/AIOS_P13_E13_05_S_OPS_LIVE_PROOF_RECORD_v1.0.md`) |
+
+**Effect.** The P13 AuthorityGate reads the revocation line above at its next
+decision. `s_ops.open` and `s_ops.close` have no permitting envelope from then
+on, so any proposal of either is escalated, never executed. Retained as
+historical evidence, unaltered:
+
+* the JSON record `docs/governance/p13-envelopes/P13-ENV-02.json` and its
+  sha256;
+* the `§15` entry;
+* the S-OPS object and its history;
+* the proof's cycle records and Trace.

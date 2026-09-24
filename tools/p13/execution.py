@@ -16,10 +16,11 @@ OBSERVE BEFORE → EXECUTE → OBSERVE AFTER → COMPARE → VERIFY → (trace, 
 The type observes its whole boundary, which is wider than the target, so the
 comparison can show that nothing **outside** the authorized scope changed. Any
 change outside the scope, or a postcondition that does not hold, is a FAILURE
-outcome. It is never a success. One recorded envelope permits
-state-changing types: `P13-ENV-02` (`FDR-3`). It covers `s_ops.open` and
-`s_ops.close` on the one S-OPS object (`EXECUTION CAPABLE ≠ EXECUTION
-AUTHORIZED` everywhere else).
+outcome. It is never a success. `P13-ENV-02` (`FDR-3`) permitted
+`s_ops.open` and `s_ops.close` on the one S-OPS object, and the path ran live
+for the E13-05 proof. `FDR-4` `FD-B` retired that envelope afterwards. No
+recorded envelope permits a state-changing type now (`EXECUTION CAPABLE ≠
+EXECUTION AUTHORIZED`).
 """
 
 from __future__ import annotations

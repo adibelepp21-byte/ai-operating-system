@@ -205,3 +205,19 @@ rewinding of history, no schedule change. Anything else would be a STOP.
   *"expand the S-OPS boundary"*).
 
 This file carries no authority. `FDR-3` does.
+
+---
+
+**Retired (appended 2026-09-24; everything above unchanged).** The E13-05 proof
+on this surface is complete: `docs/governance/AIOS_P13_E13_05_S_OPS_LIVE_PROOF_RECORD_v1.0.md`.
+`FDR-4` `FD-B` (Decision Register `§24`) retires `P13-ENV-02` as spent, and the
+retirement is recorded in Delegation Register `§16`. S-OPS is now a **historical
+proof surface**:
+
+* its operational authority is retired, and no envelope permits either
+  transition;
+* its evidence is retained: this definition, `S-OPS-01.json` and its history,
+  the envelope record, the cycle records and the Trace.
+
+P13 still reads the object each cycle, read-only. That is not an execution
+dependency.

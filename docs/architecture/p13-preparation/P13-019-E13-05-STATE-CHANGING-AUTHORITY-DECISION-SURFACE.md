@@ -233,3 +233,9 @@ documents refine this surface:
 E-1's workspace boundary alone is not a proof surface. The decision now
 pending is the package's §1.
 
+
+**Decided (appended 2026-09-24; the text above is unchanged).** The package's
+`§1` question was answered by `FDR-3` (Decision Register `§23`). The proof and
+its outcome are recorded in `docs/governance/AIOS_P13_E13_05_S_OPS_LIVE_PROOF_RECORD_v1.0.md`,
+and the S-OPS envelope was later retired under `FDR-4` (`§24`). Nothing is
+pending on this surface.

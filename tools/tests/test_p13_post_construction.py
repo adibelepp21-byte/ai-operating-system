@@ -6,8 +6,9 @@ The instruction is `acts/P13-POST-CONSTRUCTION-RECONCILIATION-AND-E13-05-EXIT-BL
 state-changing action under a fixture envelope, written into a *temporary copy*
 of the Delegation Register, against a temporary sandbox. Nothing here adds a
 production action type. Since `FDR-3`, the production catalog holds exactly
-two executable state-changing types, the S-OPS transitions that `P13-ENV-02`
-permits. They are tested in `test_s_ops.py`. `EXECUTION CAPABLE ≠ EXECUTION
+two state-changing types with an executor, the S-OPS transitions. `P13-ENV-02`
+permitted them for the E13-05 proof, until `FDR-4` `FD-B` retired it. They are
+tested in `test_s_ops.py`. `EXECUTION CAPABLE ≠ EXECUTION
 AUTHORIZED`.
 """
 
@@ -122,20 +123,17 @@ class FE2TheAuthorityDimensionsAreKeptApart(unittest.TestCase):
         self.assertEqual({k: v["state"] for k, v in dims.items()}, {
             "phase_authorization": "NOT AUTHORIZED",
             "construction_authorization": "AUTHORIZED — bounded to Blueprint §10 IN",
-            "operational_envelope": "EVIDENCE-ONLY + BOUNDED STATE-CHANGING",
-            "state_changing_authority": dims["state_changing_authority"]["state"],
+            "operational_envelope": "EVIDENCE-ONLY",
+            "state_changing_authority": "NONE",
             "certification_authority": "NOT GRANTED",
         })
-        # FDR-3 (Decision Register §23) → P13-ENV-02 (Delegation Register §15):
-        # the only state-changing grants, each bounded to the one S-OPS object.
-        grants = dims["state_changing_authority"]["grants"]
-        self.assertEqual(sorted(g["action_type"] for g in grants),
-                         ["s_ops.close", "s_ops.open"])
-        for grant in grants:
-            self.assertEqual((grant["envelope"], grant["instrument"], grant["targets"]),
-                             ("P13-ENV-02", "FDR-3 §4",
-                              ["docs/operations/s-ops/S-OPS-01.json"]))
-        self.assertTrue(dims["state_changing_authority"]["state"].startswith("BOUNDED: "))
+        # FDR-3's S-OPS grant (P13-ENV-02) is spent: retired under FDR-4 FD-B
+        # (Delegation Register §16). It is reported, and grants nothing.
+        retired = [{"envelope": "P13-ENV-02", "retired_by": "FDR-4"}]
+        self.assertEqual(dims["state_changing_authority"]["retired"], retired)
+        self.assertEqual(dims["operational_envelope"]["retired"], retired)
+        self.assertEqual(dims["state_changing_authority"]["grants"], [])
+        self.assertEqual(dims["operational_envelope"]["anomalies"], [])
         self.assertEqual({v["verified"] for v in dims.values()}, {VERIFIED})
         self.assertIn("§37", dims["phase_authorization"]["source"])
         self.assertIn("§22", dims["construction_authorization"]["source"])
@@ -487,16 +485,19 @@ class TheProductionCatalogStaysReadOnly(unittest.TestCase):
         for action_type in envelope.action_types:
             self.assertIn(CATALOG[action_type].effect, ("read-only", "record"))
 
-    def test_the_only_state_changing_envelope_is_fdr3s_and_names_one_object(self):
-        envelopes, _ = load_envelopes(Paths(REPO_ROOT))
-        self.assertEqual([e.id for e in envelopes], ["P13-ENV-01", "P13-ENV-02"])
-        envelope = {e.id: e for e in envelopes}["P13-ENV-02"]
-        self.assertEqual(envelope.identifier, "FDR-3")
-        self.assertEqual(envelope.action_types, ("s_ops.close", "s_ops.open"))
-        self.assertEqual(envelope.cycle_basis, ())
-        self.assertEqual(dict(envelope.targets), {
-            "s_ops.close": ("docs/operations/s-ops/S-OPS-01.json",),
-            "s_ops.open": ("docs/operations/s-ops/S-OPS-01.json",)})
+    def test_fdr3s_envelope_is_retained_as_evidence_and_retired_as_authority(self):
+        # FDR-4 FD-B: spent. The record is kept exactly as recorded (§15 fixes
+        # its sha256), and it no longer resolves as an envelope.
+        from tools.p13.authority import retired_envelopes
+        record = REPO_ROOT / "docs/governance/p13-envelopes/P13-ENV-02.json"
+        self.assertIn(_sha(record.read_bytes()), DELEGATIONS.read_text(encoding="utf-8"))
+        grant = json.loads(record.read_text(encoding="utf-8"))
+        self.assertEqual(grant["instrument"], "FDR-3 §4")
+        self.assertEqual(sorted(grant["action_types"]), ["s_ops.close", "s_ops.open"])
+        envelopes, anomalies = load_envelopes(Paths(REPO_ROOT))
+        self.assertEqual(([e.id for e in envelopes], anomalies), (["P13-ENV-01"], ()))
+        self.assertEqual(retired_envelopes(Paths(REPO_ROOT)),
+                         ({"envelope": "P13-ENV-02", "retired_by": "FDR-4"},))
 
 
 if __name__ == "__main__":

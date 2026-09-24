@@ -20,9 +20,11 @@ result. P13 derives all three from the state it observes. The same
 capabilities in a different world yield a different decision, or none
 (`test_the_harness_cannot_make_p13_act`).
 
-**What this is not.** Nothing here is LIVE evidence. The production catalog has
-no state-changing action, the live envelope grants none, and no recorded
-authority permits one. `EXECUTION CAPABLE ≠ EXECUTION AUTHORIZED`.
+**What this is not.** Nothing here is LIVE evidence. The fixture action is not
+in the production catalog. The production catalog's own state-changing types,
+the S-OPS transitions, were permitted only by `P13-ENV-02` (`FDR-3`) for the
+E13-05 live proof, and `FDR-4` `FD-B` has since retired that envelope. They are
+tested in `test_s_ops.py`. `EXECUTION CAPABLE ≠ EXECUTION AUTHORIZED`.
 """
 
 from __future__ import annotations

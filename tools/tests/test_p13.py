@@ -486,9 +486,13 @@ class EnvelopesResolveOrAreAnomalies(Tmp):
 
     def test_the_live_envelope_resolves(self):
         envelopes, anomalies = load_envelopes(Paths(REPO_ROOT))
-        # P13-ENV-02 is FDR-3's S-OPS envelope (Delegation Register §15).
-        self.assertEqual([e.id for e in envelopes], ["P13-ENV-01", "P13-ENV-02"])
+        # P13-ENV-02 (FDR-3's S-OPS envelope, Delegation Register §15) is
+        # retired under FDR-4 FD-B (§16): no authority, and not an anomaly.
+        self.assertEqual([e.id for e in envelopes], ["P13-ENV-01"])
         self.assertEqual(anomalies, ())
+        from tools.p13.authority import retired_envelopes
+        self.assertEqual(retired_envelopes(Paths(REPO_ROOT)),
+                         ({"envelope": "P13-ENV-02", "retired_by": "FDR-4"},))
         for envelope in envelopes:
             self.assertFalse(set(envelope.action_types) & set(RESERVED))
 

@@ -44,6 +44,17 @@ DELEGATIONS = REPO_ROOT / "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md"
 OPEN_CR = "CR-SOPS-01-OPEN-WITHIN-WINDOW"
 CLOSED_CR = "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW"
 STATE_KEY = "s_ops.S-OPS-01.state"
+#: The Delegation Register append that retires P13-ENV-02 (FDR-4 FD-B). The
+#: proof-window tests run on the Register as it stood before it.
+RETIREMENT = "\n---\n\n## 16. P13-ENV-02 Retirement Append"
+
+
+def register_during_the_proof() -> str:
+    text = DELEGATIONS.read_text(encoding="utf-8")
+    assert RETIREMENT in text, "the retirement append moved; re-derive the proof-window Register"
+    return text.split(RETIREMENT, 1)[0] + "\n"
+
+
 S_OPS_SOURCES = tuple(s for s in SOURCES if s.name in ("memory", "authority", "s_ops"))
 S_OPS_CRITERIA = tuple(c for c in CRITERIA if c.id.startswith("CR-SOPS-"))
 
@@ -194,7 +205,9 @@ class Loop(unittest.TestCase):
         for name in ("P13-ENV-01.json", "P13-ENV-02.json"):
             (self.envelope_dir / name).write_bytes((ENVELOPES / name).read_bytes())
         self.register = self.tmp / "delegations.md"
-        self.register.write_text(DELEGATIONS.read_text(encoding="utf-8"), encoding="utf-8")
+        # Authority as recorded during the proof window: P13-ENV-02 ACTIVE,
+        # before FDR-4 FD-B retired it. `Retired` below tests the Register now.
+        self.register.write_text(register_during_the_proof(), encoding="utf-8")
         self.paths = Governed(REPO_ROOT, self.tmp / "live", self.envelope_dir,
                               self.register)
         self.assertTrue(str(self.paths.s_ops).startswith(str(self.tmp)))
@@ -604,13 +617,75 @@ class TheBoundary(unittest.TestCase):
             self.assertIn(key, keys)
             self.assertNotEqual(keys[key], "absent", key)
 
-    def test_the_projection_names_the_grant_and_its_one_target(self):
-        state = authority_dimensions(Paths(REPO_ROOT))["state_changing_authority"]["state"]
-        self.assertEqual(state, "BOUNDED: "
-                         "s_ops.close → docs/operations/s-ops/S-OPS-01.json "
-                         "(P13-ENV-02 · FDR-3 §4); "
-                         "s_ops.open → docs/operations/s-ops/S-OPS-01.json "
-                         "(P13-ENV-02 · FDR-3 §4)")
+    def test_the_projection_shows_no_state_changing_authority_and_the_retirement(self):
+        dims = authority_dimensions(Paths(REPO_ROOT))["state_changing_authority"]
+        self.assertEqual((dims["state"], dims["grants"], dims["retired"]),
+                         ("NONE", [], [{"envelope": "P13-ENV-02", "retired_by": "FDR-4"}]))
+
+
+# ---------------------------------------------------------------------------
+# FDR-4 FD-B: P13-ENV-02 is spent. Its authority is gone; its evidence stays.
+# ---------------------------------------------------------------------------
+
+class Retired(Loop):
+    """The Register as it is now, with the §16 retirement line."""
+
+    def setUp(self):
+        super().setUp()
+        self.register.write_text(DELEGATIONS.read_text(encoding="utf-8"), encoding="utf-8")
+
+    def test_p13_can_no_longer_open_s_ops_it_escalates_instead(self):
+        self.provision()                              # WITHIN, CLOSED: the contract fails
+        before = self.raw()
+        result = self.run_cycle()
+        self.assertEqual(result["results"][OPEN_CR], "FAIL/VERIFIED")
+        self.assert_refused_untouched_and_traced(result, before, ESCALATE,
+                                                 "no recorded envelope permits")
+        self.assertEqual(self.record(result)["authority"]["anomalies"], [])
+
+    def append(self, line):
+        with open(self.register, "a", encoding="utf-8") as handle:
+            handle.write("\n" + line + "\n")
+
+    def test_retirement_needs_a_resolving_founder_decision(self):
+        # These all leave P13-ENV-02 without authority. Only a REVOKED line
+        # naming a resolving decision is "retired"; the rest are anomalies.
+        for line in ("| `P13-ENV-02` | **REVOKED** |",
+                     "| `P13-ENV-02` | **REVOKED** under `FDR-99` |",
+                     "| `P13-ENV-02` | **SUSPENDED** under `FDR-4` |"):
+            self.register.write_text(register_during_the_proof(), encoding="utf-8")
+            self.append(line)
+            envelopes, anomalies = load_envelopes(self.paths)
+            self.assertNotIn("P13-ENV-02", [e.id for e in envelopes], line)
+            self.assertTrue(any("revoked or suspended" in a for a in anomalies), line)
+
+    def test_a_decision_the_decision_register_does_not_hold_retires_nothing(self):
+        # FDR-4's act exists, but read against a Decision Register without §24
+        # it does not resolve: the REVOKED line is then an anomaly.
+        decisions = self.tmp / "decisions.md"
+        text = (REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+                ).read_text(encoding="utf-8")
+        marker = "\n---\n\n## 24. FDR-4 Append"
+        self.assertIn(marker, text)
+        decisions.write_text(text.split(marker, 1)[0] + "\n", encoding="utf-8")
+
+        @dataclass(frozen=True)
+        class WithoutFDR4(Governed):
+            @property
+            def decision_register(self):
+                return decisions
+        paths = WithoutFDR4(REPO_ROOT, self.tmp / "live", self.envelope_dir, self.register)
+        envelopes, anomalies = load_envelopes(paths)
+        self.assertNotIn("P13-ENV-02", [e.id for e in envelopes])
+        self.assertTrue(any("P13-ENV-02" in a and "revoked" in a for a in anomalies))
+
+    def test_the_proof_evidence_is_retained(self):
+        self.assertTrue((REPO_ROOT / "docs/operations/s-ops/S-OPS-DEFINITION.md").is_file())
+        self.assertTrue((ENVELOPES / "P13-ENV-02.json").is_file())
+        real = json.loads((REPO_ROOT / surface.OBJECT).read_text(encoding="utf-8"))
+        self.assertEqual([h["event"] for h in real["history"]],
+                         ["provisioned", "open", "close"])
+        self.assertEqual(real["state"], surface.CLOSED)
 
 
 if __name__ == "__main__":

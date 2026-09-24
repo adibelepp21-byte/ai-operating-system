@@ -1,9 +1,10 @@
 """Where P13 reads and where it may write (Blueprint `§3.1`, `§6`).
 
 P13 writes its evidence only beneath `live` (`docs/operations/p13/`), the root
-`P13-ENV-01` designates. Its one state-changing capability (`FDR-3`,
-`P13-ENV-02`) reaches the S-OPS object beneath `s_ops`, and only through that
-surface's own `transition`. Everything else here is read.
+`P13-ENV-01` designates. Its one state-changing capability reaches the S-OPS
+object beneath `s_ops`, and only through that surface's own `transition`.
+`FDR-3` authorized that capability through `P13-ENV-02` for the E13-05 proof,
+and `FDR-4` retired the envelope afterwards. Everything else here is read.
 
 Tests keep the real tree for reading and point `live_override` at a temporary
 directory. That moves the S-OPS root into the same temporary directory, so no
