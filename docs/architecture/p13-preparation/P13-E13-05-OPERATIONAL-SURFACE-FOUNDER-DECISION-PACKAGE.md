@@ -168,3 +168,13 @@ For the chosen surface only:
 * the live Cases A–F against the real object.
 
 **Nothing else is blocked.**
+
+---
+
+**Answered (appended 2026-09-24; everything above unchanged).** The Founder
+decided `FDR-3` (Decision Register `§23`). It is a dedicated, bounded,
+reversible S-OPS object, which is none of `S-HOLD`, `S-CITE` or `S-W4` (this
+package's `O-4`). Its executable form is `P13-ENV-02` (Delegation Register
+`§15`). The S-OPS surface is defined in
+`docs/operations/s-ops/S-OPS-DEFINITION.md`. The live proof and its disposition
+are in `docs/governance/AIOS_P13_E13_05_S_OPS_LIVE_PROOF_RECORD_v1.0.md`.

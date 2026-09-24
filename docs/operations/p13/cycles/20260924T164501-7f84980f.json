@@ -1,0 +1,2705 @@
+{
+  "authority": {
+    "anomalies": [],
+    "envelopes": [
+      "P13-ENV-01",
+      "P13-ENV-02"
+    ],
+    "refused_criteria": []
+  },
+  "briefing": [
+    "exhaustion: EXHAUSTED_WITH_CLASSIFIED_REMAINDER; deferred 0, classified remainder 9"
+  ],
+  "conclusions": [
+    {
+      "certainty": "INFERRED",
+      "gap_class": "",
+      "id": "c:stale:CR-RECONCILIATION:verify.foundational_question_reconciliation",
+      "kind": "evidence-stale",
+      "premises": [
+        "eval:CR-RECONCILIATION",
+        "verification.foundational_question_reconciliation"
+      ],
+      "rule": "R-STALE",
+      "statement": "CR-RECONCILIATION is PASS on remembered evidence only; verify.foundational_question_reconciliation would make it current",
+      "subject": "verify.foundational_question_reconciliation"
+    },
+    {
+      "certainty": "INFERRED",
+      "gap_class": "",
+      "id": "c:stale:CR-MEMORY-INTELLIGENCE:verify.ecosystem_relationships",
+      "kind": "evidence-stale",
+      "premises": [
+        "eval:CR-MEMORY-INTELLIGENCE",
+        "verification.ecosystem_relationships"
+      ],
+      "rule": "R-STALE",
+      "statement": "CR-MEMORY-INTELLIGENCE is PASS on remembered evidence only; verify.ecosystem_relationships would make it current",
+      "subject": "verify.ecosystem_relationships"
+    },
+    {
+      "certainty": "INFERRED",
+      "gap_class": "",
+      "id": "c:stale:CR-P13-EVIDENCE:verify.p13_evidence",
+      "kind": "evidence-stale",
+      "premises": [
+        "eval:CR-P13-EVIDENCE",
+        "verification.p13_evidence"
+      ],
+      "rule": "R-STALE",
+      "statement": "CR-P13-EVIDENCE is PASS on remembered evidence only; verify.p13_evidence would make it current",
+      "subject": "verify.p13_evidence"
+    },
+    {
+      "certainty": "VERIFIED",
+      "gap_class": "error",
+      "id": "c:defect:CR-SOPS-01-CLOSED-OUTSIDE-WINDOW",
+      "kind": "defect",
+      "premises": [
+        "eval:CR-SOPS-01-CLOSED-OUTSIDE-WINDOW",
+        "s_ops.S-OPS-01.state",
+        "s_ops.S-OPS-01.phase"
+      ],
+      "rule": "R-DEFECT",
+      "statement": "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW violated: outside its window, S-OPS-01 is CLOSED — violated",
+      "subject": "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW"
+    },
+    {
+      "certainty": "VERIFIED",
+      "gap_class": "",
+      "id": "c:changed",
+      "kind": "changed",
+      "premises": [
+        "memory.p13.previous",
+        "s_ops.S-OPS-01.phase"
+      ],
+      "rule": "R-CHANGED",
+      "statement": "changed since cycle 20260924T164018-34223b91: s_ops.S-OPS-01.phase",
+      "subject": "state"
+    },
+    {
+      "certainty": "VERIFIED",
+      "gap_class": "",
+      "id": "c:awaiting",
+      "kind": "awaiting-human",
+      "premises": [
+        "escalations.open"
+      ],
+      "rule": "R-AWAITING",
+      "statement": "4 escalation(s) OPEN; only a human response closes one (record_response requires HumanAuthority)",
+      "subject": "escalations"
+    }
+  ],
+  "cycle_id": "20260924T164501-7f84980f",
+  "decisions": [
+    {
+      "action_type": "s_ops.close",
+      "decision": "EXECUTE",
+      "envelope": "P13-ENV-02",
+      "escalation_id": null,
+      "executes": true,
+      "proposal": "p:s_ops.close:docs/operations/s-ops/S-OPS-01.json",
+      "reason": "permitted by P13-ENV-02 (FDR-3 §4)",
+      "scope": [
+        "docs/operations/s-ops/S-OPS-01.json"
+      ],
+      "target": "docs/operations/s-ops/S-OPS-01.json"
+    },
+    {
+      "action_type": "verify.p13_evidence",
+      "decision": "REFUSE",
+      "envelope": null,
+      "escalation_id": null,
+      "executes": false,
+      "proposal": "p:verify.p13_evidence:state",
+      "reason": "cycle bound: at most one executed action per cycle (Blueprint §3.2)",
+      "scope": [],
+      "target": "state"
+    },
+    {
+      "action_type": "verify.ecosystem_relationships",
+      "decision": "REFUSE",
+      "envelope": null,
+      "escalation_id": null,
+      "executes": false,
+      "proposal": "p:verify.ecosystem_relationships:state",
+      "reason": "cycle bound: at most one executed action per cycle (Blueprint §3.2)",
+      "scope": [],
+      "target": "state"
+    },
+    {
+      "action_type": "verify.foundational_question_reconciliation",
+      "decision": "REFUSE",
+      "envelope": null,
+      "escalation_id": null,
+      "executes": false,
+      "proposal": "p:verify.foundational_question_reconciliation:state",
+      "reason": "cycle bound: at most one executed action per cycle (Blueprint §3.2)",
+      "scope": [],
+      "target": "state"
+    }
+  ],
+  "evaluations_after": [
+    {
+      "authority": "P13-018 §9 G-05",
+      "certainty": "VERIFIED",
+      "criterion": "CR-INTEGRITY",
+      "evidence": {
+        "integrity.holds": true
+      },
+      "gap_class": "error",
+      "reason": "certified P10–P12 evidence holds — holds",
+      "requires": [
+        "integrity.holds"
+      ],
+      "result": "PASS",
+      "sources": [
+        "tools.certified_evidence_integrity.verify()"
+      ]
+    },
+    {
+      "authority": "FDR-2 D09",
+      "certainty": "VERIFIED",
+      "criterion": "CR-NATIVE-CORE",
+      "evidence": {
+        "native_core.boundaries": 11
+      },
+      "gap_class": "architecture gap",
+      "reason": "NATIVE CORE = 11 — holds",
+      "requires": [
+        "native_core.boundaries"
+      ],
+      "result": "PASS",
+      "sources": [
+        "native_core/core boundary directories"
+      ]
+    },
+    {
+      "authority": "FD-P12-002",
+      "certainty": "VERIFIED",
+      "criterion": "CR-CORPUS-CITATION-ERRORS",
+      "evidence": {
+        "corpus.citation_errors": 0,
+        "knowledge.corpus_health_criteria": {
+          "content": {
+            "citation_errors_max": 0,
+            "live_stale_assertions_max": 0,
+            "stale_governance_sources_max": 0
+          },
+          "version_sequence": 1
+        }
+      },
+      "gap_class": "error",
+      "reason": "citation_errors within the admitted corpus-health criteria — holds",
+      "requires": [
+        "corpus.citation_errors",
+        "knowledge.corpus_health_criteria"
+      ],
+      "result": "PASS",
+      "sources": [
+        "corpus_citation_audit · stale_state_audit · governance_index",
+        "Knowledge retrieval: corpus-health.criteria (FD-P12-002)"
+      ]
+    },
+    {
+      "authority": "FD-P12-002",
+      "certainty": "VERIFIED",
+      "criterion": "CR-CORPUS-LIVE-STALE-ASSERTIONS",
+      "evidence": {
+        "corpus.live_stale_assertions": 0,
+        "knowledge.corpus_health_criteria": {
+          "content": {
+            "citation_errors_max": 0,
+            "live_stale_assertions_max": 0,
+            "stale_governance_sources_max": 0
+          },
+          "version_sequence": 1
+        }
+      },
+      "gap_class": "error",
+      "reason": "live_stale_assertions within the admitted corpus-health criteria — holds",
+      "requires": [
+        "corpus.live_stale_assertions",
+        "knowledge.corpus_health_criteria"
+      ],
+      "result": "PASS",
+      "sources": [
+        "corpus_citation_audit · stale_state_audit · governance_index",
+        "Knowledge retrieval: corpus-health.criteria (FD-P12-002)"
+      ]
+    },
+    {
+      "authority": "FD-P12-002",
+      "certainty": "VERIFIED",
+      "criterion": "CR-CORPUS-STALE-GOVERNANCE-SOURCES",
+      "evidence": {
+        "corpus.stale_governance_sources": 0,
+        "knowledge.corpus_health_criteria": {
+          "content": {
+            "citation_errors_max": 0,
+            "live_stale_assertions_max": 0,
+            "stale_governance_sources_max": 0
+          },
+          "version_sequence": 1
+        }
+      },
+      "gap_class": "error",
+      "reason": "stale_governance_sources within the admitted corpus-health criteria — holds",
+      "requires": [
+        "corpus.stale_governance_sources",
+        "knowledge.corpus_health_criteria"
+      ],
+      "result": "PASS",
+      "sources": [
+        "corpus_citation_audit · stale_state_audit · governance_index",
+        "Knowledge retrieval: corpus-health.criteria (FD-P12-002)"
+      ]
+    },
+    {
+      "authority": "FDR-1 §12",
+      "certainty": "INFERRED",
+      "criterion": "CR-RECONCILIATION",
+      "evidence": {
+        "verification.foundational_question_reconciliation": {
+          "counts": {
+            "ALREADY SOLVED": 46,
+            "P13 CORE": 20,
+            "P13 FRONTIER": 3,
+            "PARTIAL": 30,
+            "UNKNOWN": 1
+          },
+          "faults": 0,
+          "holds": true
+        }
+      },
+      "gap_class": "error",
+      "reason": "the foundational-question matrix verifies — holds",
+      "requires": [
+        "verification.foundational_question_reconciliation"
+      ],
+      "result": "PASS",
+      "sources": [
+        "Memory: verified by P13 cycle 20260924T164018-34223b91 at 2026-09-24T16:40:27.070821+00:00"
+      ]
+    },
+    {
+      "authority": "FDR-2 D06",
+      "certainty": "INFERRED",
+      "criterion": "CR-MEMORY-INTELLIGENCE",
+      "evidence": {
+        "verification.ecosystem_relationships": {
+          "Capability↔Workflow": "MEDIATED",
+          "Governance↔FounderDecision": "DATA",
+          "Intelligence↔Capability": "DATA",
+          "Knowledge↔Memory": "CODE",
+          "Memory↔Intelligence": "CODE",
+          "Organization↔Governance": "CODE",
+          "Workflow↔Organization": "CODE"
+        }
+      },
+      "gap_class": "error",
+      "reason": "Memory ↔ Intelligence is connected — holds",
+      "requires": [
+        "verification.ecosystem_relationships"
+      ],
+      "result": "PASS",
+      "sources": [
+        "Memory: verified by P13 cycle 20260924T163728-11fe8aed at 2026-09-24T16:37:37.510450+00:00"
+      ]
+    },
+    {
+      "authority": "P13-018 §9 G-04",
+      "certainty": "INFERRED",
+      "criterion": "CR-P13-EVIDENCE",
+      "evidence": {
+        "verification.p13_evidence": {
+          "faults": [],
+          "holds": true,
+          "records": 5,
+          "trace_entries": 5
+        }
+      },
+      "gap_class": "error",
+      "reason": "P13's own records and Trace verify — holds",
+      "requires": [
+        "verification.p13_evidence"
+      ],
+      "result": "PASS",
+      "sources": [
+        "Memory: verified by P13 cycle 20260924T144955-e18d957a at 2026-09-24T14:50:04.721724+00:00"
+      ]
+    },
+    {
+      "authority": "FDR-3 §4 · S-OPS definition §3",
+      "certainty": "VERIFIED",
+      "criterion": "CR-SOPS-01-OPEN-WITHIN-WINDOW",
+      "evidence": {
+        "s_ops.S-OPS-01.phase": "AFTER",
+        "s_ops.S-OPS-01.state": "CLOSED"
+      },
+      "gap_class": "error",
+      "reason": "while S-OPS-01 is within its window, it is OPEN — holds",
+      "requires": [
+        "s_ops.S-OPS-01.state",
+        "s_ops.S-OPS-01.phase"
+      ],
+      "result": "PASS",
+      "sources": [
+        "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+        "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)"
+      ]
+    },
+    {
+      "authority": "FDR-3 §4 · S-OPS definition §3",
+      "certainty": "VERIFIED",
+      "criterion": "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW",
+      "evidence": {
+        "s_ops.S-OPS-01.phase": "AFTER",
+        "s_ops.S-OPS-01.state": "CLOSED"
+      },
+      "gap_class": "error",
+      "reason": "outside its window, S-OPS-01 is CLOSED — holds",
+      "requires": [
+        "s_ops.S-OPS-01.state",
+        "s_ops.S-OPS-01.phase"
+      ],
+      "result": "PASS",
+      "sources": [
+        "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+        "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)"
+      ]
+    }
+  ],
+  "evaluations_before": [
+    {
+      "authority": "P13-018 §9 G-05",
+      "certainty": "VERIFIED",
+      "criterion": "CR-INTEGRITY",
+      "evidence": {
+        "integrity.holds": true
+      },
+      "gap_class": "error",
+      "reason": "certified P10–P12 evidence holds — holds",
+      "requires": [
+        "integrity.holds"
+      ],
+      "result": "PASS",
+      "sources": [
+        "tools.certified_evidence_integrity.verify()"
+      ]
+    },
+    {
+      "authority": "FDR-2 D09",
+      "certainty": "VERIFIED",
+      "criterion": "CR-NATIVE-CORE",
+      "evidence": {
+        "native_core.boundaries": 11
+      },
+      "gap_class": "architecture gap",
+      "reason": "NATIVE CORE = 11 — holds",
+      "requires": [
+        "native_core.boundaries"
+      ],
+      "result": "PASS",
+      "sources": [
+        "native_core/core boundary directories"
+      ]
+    },
+    {
+      "authority": "FD-P12-002",
+      "certainty": "VERIFIED",
+      "criterion": "CR-CORPUS-CITATION-ERRORS",
+      "evidence": {
+        "corpus.citation_errors": 0,
+        "knowledge.corpus_health_criteria": {
+          "content": {
+            "citation_errors_max": 0,
+            "live_stale_assertions_max": 0,
+            "stale_governance_sources_max": 0
+          },
+          "version_sequence": 1
+        }
+      },
+      "gap_class": "error",
+      "reason": "citation_errors within the admitted corpus-health criteria — holds",
+      "requires": [
+        "corpus.citation_errors",
+        "knowledge.corpus_health_criteria"
+      ],
+      "result": "PASS",
+      "sources": [
+        "corpus_citation_audit · stale_state_audit · governance_index",
+        "Knowledge retrieval: corpus-health.criteria (FD-P12-002)"
+      ]
+    },
+    {
+      "authority": "FD-P12-002",
+      "certainty": "VERIFIED",
+      "criterion": "CR-CORPUS-LIVE-STALE-ASSERTIONS",
+      "evidence": {
+        "corpus.live_stale_assertions": 0,
+        "knowledge.corpus_health_criteria": {
+          "content": {
+            "citation_errors_max": 0,
+            "live_stale_assertions_max": 0,
+            "stale_governance_sources_max": 0
+          },
+          "version_sequence": 1
+        }
+      },
+      "gap_class": "error",
+      "reason": "live_stale_assertions within the admitted corpus-health criteria — holds",
+      "requires": [
+        "corpus.live_stale_assertions",
+        "knowledge.corpus_health_criteria"
+      ],
+      "result": "PASS",
+      "sources": [
+        "corpus_citation_audit · stale_state_audit · governance_index",
+        "Knowledge retrieval: corpus-health.criteria (FD-P12-002)"
+      ]
+    },
+    {
+      "authority": "FD-P12-002",
+      "certainty": "VERIFIED",
+      "criterion": "CR-CORPUS-STALE-GOVERNANCE-SOURCES",
+      "evidence": {
+        "corpus.stale_governance_sources": 0,
+        "knowledge.corpus_health_criteria": {
+          "content": {
+            "citation_errors_max": 0,
+            "live_stale_assertions_max": 0,
+            "stale_governance_sources_max": 0
+          },
+          "version_sequence": 1
+        }
+      },
+      "gap_class": "error",
+      "reason": "stale_governance_sources within the admitted corpus-health criteria — holds",
+      "requires": [
+        "corpus.stale_governance_sources",
+        "knowledge.corpus_health_criteria"
+      ],
+      "result": "PASS",
+      "sources": [
+        "corpus_citation_audit · stale_state_audit · governance_index",
+        "Knowledge retrieval: corpus-health.criteria (FD-P12-002)"
+      ]
+    },
+    {
+      "authority": "FDR-1 §12",
+      "certainty": "INFERRED",
+      "criterion": "CR-RECONCILIATION",
+      "evidence": {
+        "verification.foundational_question_reconciliation": {
+          "counts": {
+            "ALREADY SOLVED": 46,
+            "P13 CORE": 20,
+            "P13 FRONTIER": 3,
+            "PARTIAL": 30,
+            "UNKNOWN": 1
+          },
+          "faults": 0,
+          "holds": true
+        }
+      },
+      "gap_class": "error",
+      "reason": "the foundational-question matrix verifies — holds",
+      "requires": [
+        "verification.foundational_question_reconciliation"
+      ],
+      "result": "PASS",
+      "sources": [
+        "Memory: verified by P13 cycle 20260924T164018-34223b91 at 2026-09-24T16:40:27.070821+00:00"
+      ]
+    },
+    {
+      "authority": "FDR-2 D06",
+      "certainty": "INFERRED",
+      "criterion": "CR-MEMORY-INTELLIGENCE",
+      "evidence": {
+        "verification.ecosystem_relationships": {
+          "Capability↔Workflow": "MEDIATED",
+          "Governance↔FounderDecision": "DATA",
+          "Intelligence↔Capability": "DATA",
+          "Knowledge↔Memory": "CODE",
+          "Memory↔Intelligence": "CODE",
+          "Organization↔Governance": "CODE",
+          "Workflow↔Organization": "CODE"
+        }
+      },
+      "gap_class": "error",
+      "reason": "Memory ↔ Intelligence is connected — holds",
+      "requires": [
+        "verification.ecosystem_relationships"
+      ],
+      "result": "PASS",
+      "sources": [
+        "Memory: verified by P13 cycle 20260924T163728-11fe8aed at 2026-09-24T16:37:37.510450+00:00"
+      ]
+    },
+    {
+      "authority": "P13-018 §9 G-04",
+      "certainty": "INFERRED",
+      "criterion": "CR-P13-EVIDENCE",
+      "evidence": {
+        "verification.p13_evidence": {
+          "faults": [],
+          "holds": true,
+          "records": 5,
+          "trace_entries": 5
+        }
+      },
+      "gap_class": "error",
+      "reason": "P13's own records and Trace verify — holds",
+      "requires": [
+        "verification.p13_evidence"
+      ],
+      "result": "PASS",
+      "sources": [
+        "Memory: verified by P13 cycle 20260924T144955-e18d957a at 2026-09-24T14:50:04.721724+00:00"
+      ]
+    },
+    {
+      "authority": "FDR-3 §4 · S-OPS definition §3",
+      "certainty": "VERIFIED",
+      "criterion": "CR-SOPS-01-OPEN-WITHIN-WINDOW",
+      "evidence": {
+        "s_ops.S-OPS-01.phase": "AFTER",
+        "s_ops.S-OPS-01.state": "OPEN"
+      },
+      "gap_class": "error",
+      "reason": "while S-OPS-01 is within its window, it is OPEN — holds",
+      "requires": [
+        "s_ops.S-OPS-01.state",
+        "s_ops.S-OPS-01.phase"
+      ],
+      "result": "PASS",
+      "sources": [
+        "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+        "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)"
+      ]
+    },
+    {
+      "authority": "FDR-3 §4 · S-OPS definition §3",
+      "certainty": "VERIFIED",
+      "criterion": "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW",
+      "evidence": {
+        "s_ops.S-OPS-01.phase": "AFTER",
+        "s_ops.S-OPS-01.state": "OPEN"
+      },
+      "gap_class": "error",
+      "reason": "outside its window, S-OPS-01 is CLOSED — violated",
+      "requires": [
+        "s_ops.S-OPS-01.state",
+        "s_ops.S-OPS-01.phase"
+      ],
+      "result": "FAIL",
+      "sources": [
+        "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+        "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)"
+      ]
+    }
+  ],
+  "executed": {
+    "action_type": "s_ops.close",
+    "detail": "tools.s_ops.surface.transition changed ['docs/operations/s-ops/S-OPS-01.json']; verified: S-OPS-01 reads back CLOSED; its last history entry is close OPEN → CLOSED",
+    "envelope": "P13-ENV-02",
+    "executor": "tools.s_ops.surface.transition",
+    "produced": [
+      {
+        "key": "execution.s_ops.close",
+        "observed_at": "2026-09-24T16:45:10.161159+00:00",
+        "source": "tools.s_ops.surface.transition (executed under P13-ENV-02)",
+        "status": "VERIFIED",
+        "value": {
+          "changed": [
+            "docs/operations/s-ops/S-OPS-01.json"
+          ],
+          "outside_scope": [],
+          "postcondition": "S-OPS-01 reads back CLOSED; its last history entry is close OPEN → CLOSED",
+          "postcondition_holds": true,
+          "scope": [
+            "docs/operations/s-ops/S-OPS-01.json"
+          ],
+          "target": "docs/operations/s-ops/S-OPS-01.json",
+          "verified": true
+        }
+      },
+      {
+        "key": "s_ops.transition",
+        "observed_at": "2026-09-24T16:45:10.161159+00:00",
+        "source": "tools.s_ops.surface.transition (executed under P13-ENV-02)",
+        "status": "VERIFIED",
+        "value": {
+          "actor": "P13 (tools.p13, BoundedExecution)",
+          "at": "2026-09-24T16:45:10.162958+00:00",
+          "basis": "P13-ENV-02 (FDR-3 §4), after the AuthorityGate's EXECUTE",
+          "event": "close",
+          "from": "OPEN",
+          "object": "S-OPS-01",
+          "phase": "AFTER",
+          "to": "CLOSED"
+        }
+      }
+    ],
+    "proposal": "p:s_ops.close:docs/operations/s-ops/S-OPS-01.json",
+    "status": "success"
+  },
+  "frontier": {
+    "deferred": [],
+    "remainder": [
+      {
+        "class": "refreshable",
+        "item": "P13 verify.p13_evidence state"
+      },
+      {
+        "class": "refreshable",
+        "item": "P13 verify.ecosystem_relationships state"
+      },
+      {
+        "class": "refreshable",
+        "item": "P13 verify.foundational_question_reconciliation state"
+      },
+      {
+        "class": "frontier",
+        "item": "P13-015 Q23 (UNKNOWN): How does AIOS handle conflicting sources?"
+      },
+      {
+        "class": "frontier",
+        "item": "P13-015 Q38 (P13 FRONTIER): How are reasoning/knowledge/execution/workflow/decision-support quality measured?"
+      },
+      {
+        "class": "frontier",
+        "item": "P13-015 Q39 (P13 FRONTIER): How does AIOS find previously unknown weaknesses?"
+      },
+      {
+        "class": "frontier",
+        "item": "P13-015 Q91 (P13 FRONTIER): How does AIOS know a frontier is worth exploring?"
+      },
+      {
+        "class": "frontier",
+        "item": "GAP-0017 (P13-017 §2)"
+      },
+      {
+        "class": "frontier",
+        "item": "GAP-0018 (P13-017 §2)"
+      }
+    ],
+    "state": "EXHAUSTED_WITH_CLASSIFIED_REMAINDER",
+    "unclassified_core": []
+  },
+  "gaps": [
+    {
+      "derived_from": [
+        "c:defect:CR-SOPS-01-CLOSED-OUTSIDE-WINDOW"
+      ],
+      "disposition": "a remedy is proposed; the gate decides it: a reserved remedy escalates, and one a recorded envelope permits may execute",
+      "gap_class": "error",
+      "id": "g:defect:CR-SOPS-01-CLOSED-OUTSIDE-WINDOW",
+      "statement": "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW violated: outside its window, S-OPS-01 is CLOSED — violated"
+    }
+  ],
+  "intent": "E13-05 controlled live proof under FDR-3: observe, evaluate, reason and decide; act only within recorded authority",
+  "invoker": "Claude Code — AIOS Co-Founder + Delegated CEO (runner; FDR-3 §8)",
+  "lifecycle": "RECORDED — append-only; never rewritten",
+  "observation": {
+    "after": {
+      "facts": [
+        {
+          "key": "memory.stores",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Memory via MemoryReader over Trace (P12 stores + P13 store)",
+          "status": "VERIFIED",
+          "value": {
+            "aios-corpus-health": 7,
+            "p12-live-verification": 1,
+            "p12-w1-integration-edge": 1,
+            "p12-w2-state-transition": 1,
+            "p12-w4-integrated-execution": 3,
+            "p12-w4-integrated-execution-failure": 1,
+            "p13": 9,
+            "w4-conformance-verification": 2
+          }
+        },
+        {
+          "key": "memory.p13.previous",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Memory via MemoryReader over Trace (P12 stores + P13 store)",
+          "status": "VERIFIED",
+          "value": {
+            "consequence": {
+              "action_type": "verify.foundational_question_reconciliation",
+              "actual": {
+                "CR-RECONCILIATION": "PASS/VERIFIED"
+              },
+              "execution_status": "success",
+              "expected": {
+                "CR-RECONCILIATION": "VERIFIED"
+              },
+              "matched": true,
+              "target": "state"
+            },
+            "cycle_id": "20260924T164018-34223b91",
+            "decisions": [
+              {
+                "decision": "EXECUTE",
+                "reason": "permitted by P13-ENV-01 (P13-018 D-2b)",
+                "subject": "P13 verify.foundational_question_reconciliation state"
+              },
+              {
+                "decision": "REFUSE",
+                "reason": "cycle bound: at most one executed action per cycle (Blueprint §3.2)",
+                "subject": "P13 verify.p13_evidence state"
+              },
+              {
+                "decision": "REFUSE",
+                "reason": "cycle bound: at most one executed action per cycle (Blueprint §3.2)",
+                "subject": "P13 verify.ecosystem_relationships state"
+              }
+            ],
+            "digest_after": "7549e16e6e34d04dc751b9c813fad703eccc4205640a3a6a53730aa3b402acad",
+            "digest_before": "34223b918fbfe0320beeddcc33c975bdabf65aa251c419e2e0c571ff50ba2813",
+            "executed": "verify.foundational_question_reconciliation",
+            "execution": {
+              "action_type": "verify.foundational_question_reconciliation",
+              "authority": "P13-018 D-2b",
+              "authority_record": "docs/governance/acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md",
+              "consequence": {
+                "action_type": "verify.foundational_question_reconciliation",
+                "actual": {
+                  "CR-RECONCILIATION": "PASS/VERIFIED"
+                },
+                "execution_status": "success",
+                "expected": {
+                  "CR-RECONCILIATION": "VERIFIED"
+                },
+                "matched": true,
+                "target": "state"
+              },
+              "derived_from": [
+                "c:stale:CR-RECONCILIATION:verify.foundational_question_reconciliation"
+              ],
+              "detail": "tools.foundational_question_reconciliation.verify ran",
+              "envelope": "P13-ENV-01",
+              "gate": "permitted by P13-ENV-01 (P13-018 D-2b)",
+              "scope": [],
+              "status": "success",
+              "target": "state"
+            },
+            "exhaustion": "EXHAUSTED_WITH_CLASSIFIED_REMAINDER",
+            "facts": {
+              "authority.anomalies": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "authority.dimensions": "ab2d297cb249cbd3aa8eb23efeaa4a246ec811d4c8c7f9fce1ae8165a84f53f9",
+              "authority.envelopes": "09da755b8b66d4d843287de618be369f7b953774b5d47d8856cba5c445500dd8",
+              "corpus.citation_errors": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+              "corpus.live_stale_assertions": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+              "corpus.stale_governance_sources": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+              "escalations.open": "7ca8fb3af9d37b4b35b87e9214580dcd292ab2de38b7035941d1320f715f2252",
+              "integrity.holds": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+              "integrity.phases": "f07e17c1cbad7697cf09c62fce332d6be9765c3b688a21c3d477d00a94bf6743",
+              "knowledge.corpus_health_criteria": "45336692431263f3b76dca9c4022a6508afc5bcb9b376de80b054ed168396d23",
+              "memory.corpus_health.last": "fafc473e6449e42ce922233c067c449bff3eac8b755110439e2522d9f66f496b",
+              "memory.p13.previous": "61e1f39fa0696f716d7e91b1a9fb0dbb084127faebef22fe637b16380bb7f85d",
+              "memory.stores": "4561838fa475fd22f0184f21ae14e99b5ab7cf3af89a0d24176bdc790bc7108c",
+              "native_core.boundaries": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+              "s_ops.S-OPS-01.phase": "97656e2b03fc46f38b9ae53b4a16d803cb62a09fa45fbd635e0e2442ca9027c8",
+              "s_ops.S-OPS-01.state": "be0a10fd97364a8fcdbc5bee5360b8ef41f3693ffcef3804485a3b96c2b2ab65",
+              "s_ops.S-OPS-01.window": "b10dd65e9e14479a8f4a7fa4b549208feadd2cb2f70390d1c18ae67aef8d3929",
+              "self_model.what_am_i": "1d6f6386e697b11c9739093f2e6da0b0630c5b82f48605a551b71b371f50ad6a",
+              "self_model.what_authority_do_i_have": "f821f4921c5b04bd882951f9cb820d4ee441cd5fefd7c15b9d245f1d39d39492",
+              "self_model.what_capabilities_exist": "3946bf88763fe18106e72cf6c986980ac9114310b6b2be6352acb27a83095e30",
+              "self_model.what_changed": "a71a32b975ddf064346a3bbcf9244db17c527756e295d384bcac9749fe353876",
+              "self_model.what_decisions_are_recorded": "bc22bbc1659a95abc14b6cbd816f395e5e811437158b4fa33e38978b5fb92c70",
+              "self_model.what_do_i_not_know": "b8e628e8de7cf97188ca7e7ee4517ebb71b9145e22a576abfefcf8fd4266b54f",
+              "self_model.what_do_i_own": "ce198403c28ef74f7011b9f68819a9f4c26d2bd59731e557c98377b128fae049",
+              "self_model.what_failed": "7fa4baf799300cce6c3fc86d20119719efe0d88b851da6fde6cc029e89c75450",
+              "self_model.what_is_authoritative": "763b04226177843d17b812f5f88cd3533041887d943e3f2e7111e4e6e5888245",
+              "self_model.what_is_incomplete": "bb98ffac4511348be677a38fd6a42b2b3a668f1a5160fbc40d3b548b7430753a",
+              "self_model.what_is_running": "5bb9ee5d4589e9beed6be2f07979b61cd0066a6dcfe207ba3f605a8d4ec65def",
+              "self_model.what_is_stale": "94af567642e6a687898a564a9024970fe1c08cdb128cf3f0ff21b7229f3c54c0",
+              "verification.ecosystem_relationships": "ab1358650fd20e47f9f993d671b2628c292586cfb6c86dd33aa898915105dd53",
+              "verification.foundational_question_reconciliation": "b07faff3260759aec5ace1ebff9c388c3fc1d037b7c9c7b1ec52099e185c7ee0",
+              "verification.p13_evidence": "cb57a91f7716618136052e8250290b1895b7ffbf0f98ac08ea3624970ce2278a"
+            },
+            "last_executed": {
+              "s_ops.open": "2026-09-24T16:40:17.801302+00:00",
+              "verify.ecosystem_relationships": "2026-09-24T16:37:37.510450+00:00",
+              "verify.foundational_question_reconciliation": "2026-09-24T16:40:27.070821+00:00",
+              "verify.p13_evidence": "2026-09-24T14:50:04.721724+00:00"
+            },
+            "readback_holds": true,
+            "record_digest": "f9d9bccbad65ac8632c50898ebd2f2f1e836ba5f179bd1b31fa402568cae76ec",
+            "results": {
+              "CR-CORPUS-CITATION-ERRORS": "PASS",
+              "CR-CORPUS-LIVE-STALE-ASSERTIONS": "PASS",
+              "CR-CORPUS-STALE-GOVERNANCE-SOURCES": "PASS",
+              "CR-INTEGRITY": "PASS",
+              "CR-MEMORY-INTELLIGENCE": "PASS",
+              "CR-NATIVE-CORE": "PASS",
+              "CR-P13-EVIDENCE": "PASS",
+              "CR-RECONCILIATION": "PASS",
+              "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW": "PASS",
+              "CR-SOPS-01-OPEN-WITHIN-WINDOW": "PASS"
+            },
+            "verified": {
+              "verification.ecosystem_relationships": {
+                "at": "2026-09-24T16:37:37.510450+00:00",
+                "cycle_id": "20260924T163728-11fe8aed",
+                "value": {
+                  "Capability↔Workflow": "MEDIATED",
+                  "Governance↔FounderDecision": "DATA",
+                  "Intelligence↔Capability": "DATA",
+                  "Knowledge↔Memory": "CODE",
+                  "Memory↔Intelligence": "CODE",
+                  "Organization↔Governance": "CODE",
+                  "Workflow↔Organization": "CODE"
+                }
+              },
+              "verification.foundational_question_reconciliation": {
+                "at": "2026-09-24T16:40:27.070821+00:00",
+                "cycle_id": "20260924T164018-34223b91",
+                "value": {
+                  "counts": {
+                    "ALREADY SOLVED": 46,
+                    "P13 CORE": 20,
+                    "P13 FRONTIER": 3,
+                    "PARTIAL": 30,
+                    "UNKNOWN": 1
+                  },
+                  "faults": 0,
+                  "holds": true
+                }
+              },
+              "verification.p13_evidence": {
+                "at": "2026-09-24T14:50:04.721724+00:00",
+                "cycle_id": "20260924T144955-e18d957a",
+                "value": {
+                  "faults": [],
+                  "holds": true,
+                  "records": 5,
+                  "trace_entries": 5
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "memory.corpus_health.last",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Memory via MemoryReader over Trace (P12 stores + P13 store)",
+          "status": "VERIFIED",
+          "value": {
+            "facts": {
+              "citation_documents": 314,
+              "citation_errors": 0,
+              "citations_checked": 1814,
+              "documents_scanned": 578,
+              "governance_records": 496,
+              "governance_sources": 442,
+              "historical_uses": 55,
+              "live_stale_assertions": 0,
+              "stale_governance_sources": 0
+            },
+            "verdict": {
+              "breaches": [],
+              "reason": "measured against the admitted criteria",
+              "verdict": "HEALTHY"
+            }
+          }
+        },
+        {
+          "key": "self_model.what_am_i",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "boundaries": [
+              "agent",
+              "capability",
+              "governance",
+              "infrastructure",
+              "knowledge",
+              "memory",
+              "optimization",
+              "runtime",
+              "skill",
+              "trace",
+              "workflow"
+            ],
+            "frozen": true,
+            "native_core_boundaries": 11,
+            "system": "AIOS"
+          }
+        },
+        {
+          "key": "self_model.what_do_i_own",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "identified": 133,
+            "records": 599
+          }
+        },
+        {
+          "key": "self_model.what_authority_do_i_have",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "architect_reserved": [
+              "ADP-P10-001 entity semantics",
+              "prioritization/ranking/heuristics",
+              "escalation entity semantics"
+            ],
+            "delegated_to_co_founder": [
+              "discover",
+              "design within issued architecture",
+              "implement",
+              "integrate",
+              "test",
+              "verify",
+              "persist",
+              "reconcile",
+              "document"
+            ],
+            "founder_reserved": [
+              "phase authorization",
+              "phase certification",
+              "E-criteria ratification",
+              "constitutional boundary",
+              "Native Core expansion",
+              "FDP-P10-001 Security",
+              "FDP-P10-002 Quality",
+              "FDP-P10-003 Governance"
+            ],
+            "operative_delegation": {
+              "in_force": [
+                {
+                  "declared_status": "ACTIVE — DORMANT UNTIL INVOKED",
+                  "effective_status": "ACTIVE — DORMANT UNTIL INVOKED",
+                  "identifier": "DEL-F03-015-P7I99-001",
+                  "role": "Co-Founder — Construction Phase (occupant: Claude Code)",
+                  "scope": "Execution of the P7-I99 integrated architecture review (R1–R11) for a Volume, only when a separate Founder-authorized Act expressly invokes this authority for that Volume",
+                  "source": "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md:221",
+                  "superseded_by": [],
+                  "title": "Bounded P7-I99 Execution Delegation"
+                },
+                {
+                  "declared_status": "ACTIVE",
+                  "effective_status": "ACTIVE",
+                  "identifier": "DEL-CFV2-CEO-001",
+                  "role": "AIOS Co-Founder + Delegated CEO (governance office; continues the GDR-0015 office)",
+                  "scope": "Charter §33 A01–A18, frozen at REG-CFV2-001 Part C §C.3",
+                  "source": "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md:466",
+                  "superseded_by": [],
+                  "title": "AIOS Co-Founder + Delegated CEO Delegation (V2)"
+                }
+              ],
+              "resolved": true,
+              "superseded": [
+                {
+                  "declared_status": "ACTIVE",
+                  "effective_status": "SUPERSEDED",
+                  "identifier": "DEL-T4.4-CF-001",
+                  "role": "Co-Founder — Construction Phase (governance office)",
+                  "scope": "§3.1 below",
+                  "source": "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md:60",
+                  "superseded_by": [
+                    "DEL-CFV2-CEO-001"
+                  ],
+                  "title": "Co-Founder Construction-Phase Delegation"
+                }
+              ]
+            },
+            "phase_authorization": {
+              "certification": {
+                "phases": {
+                  "P10": {
+                    "certified": true,
+                    "instrument": "docs/governance/acts/FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM.md",
+                    "register_identity": "FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM"
+                  },
+                  "P11": {
+                    "certified": true,
+                    "instrument": "docs/governance/acts/FD-P11-002-P11-CERTIFICATION.md",
+                    "register_identity": "FD-P11-002-P11-CERTIFICATION"
+                  },
+                  "P12": {
+                    "certified": true,
+                    "instrument": "docs/governance/acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md",
+                    "register_identity": "FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION"
+                  }
+                },
+                "resolved": true
+              },
+              "issuance_contradiction": {
+                "authoritative": "§35 FINAL FOUNDER DECISION: Status: ISSUED",
+                "determination": "the decision section governs; the header is unchanged template text from the surface sent for signature. Disclosed, not resolved away",
+                "instrument": "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+                "stale_header": [
+                  "Status: PENDING FOUNDER DECISION"
+                ]
+              },
+              "resolved": true,
+              "states": {
+                "P11": {
+                  "authority": "P12 Authorization Founder Decision §37 FINAL STATE TRANSITION (docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md)",
+                  "authority_record": "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+                  "authorized": null,
+                  "corroborated_by": [],
+                  "dimensions": {
+                    "CERTIFIED": true
+                  },
+                  "entity": "P11",
+                  "stated_in": "§37 FINAL STATE TRANSITION",
+                  "unstated_dimensions": [
+                    "AUTHORIZED",
+                    "COMPLETE",
+                    "CONSTRUCTED",
+                    "EXHAUSTED",
+                    "OPERATIONAL",
+                    "VERIFIED"
+                  ]
+                },
+                "P12": {
+                  "authority": "P12 Authorization Founder Decision §37 FINAL STATE TRANSITION (docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md)",
+                  "authority_record": "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+                  "authorized": true,
+                  "corroborated_by": [],
+                  "dimensions": {
+                    "AUTHORIZED": true
+                  },
+                  "entity": "P12",
+                  "stated_in": "§37 FINAL STATE TRANSITION",
+                  "superseded_by_certification": {
+                    "dimensions": {
+                      "CERTIFIED": false,
+                      "COMPLETE": false,
+                      "CONSTRUCTED": false,
+                      "EXHAUSTED": false,
+                      "OPERATIONAL": false,
+                      "VERIFIED": false
+                    },
+                    "register_identity": "FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION",
+                    "stated_in": "§37 FINAL STATE TRANSITION",
+                    "superseded_by": "docs/governance/acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md"
+                  },
+                  "unstated_dimensions": []
+                },
+                "P13": {
+                  "authority": "P12 Authorization Founder Decision §37 FINAL STATE TRANSITION (docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md)",
+                  "authority_record": "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+                  "authorized": false,
+                  "corroborated_by": [
+                    "§13 DECISION D8 — EXPLICIT EXCLUSIONS",
+                    "§29 P12 → P13 RULE",
+                    "§34 FOUNDER ATTESTATION"
+                  ],
+                  "dimensions": {
+                    "AUTHORIZED": false
+                  },
+                  "entity": "P13",
+                  "stated_in": "§37 FINAL STATE TRANSITION",
+                  "unstated_dimensions": [
+                    "CERTIFIED",
+                    "COMPLETE",
+                    "CONSTRUCTED",
+                    "EXHAUSTED",
+                    "OPERATIONAL",
+                    "VERIFIED"
+                  ]
+                }
+              }
+            },
+            "self_model_authority": null
+          }
+        },
+        {
+          "key": "self_model.what_capabilities_exist",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "INFERRED",
+          "value": {
+            "count": 3,
+            "declared": [
+              "cognitive-intelligence",
+              "engineering-intelligence",
+              "governance-artifact-integrity"
+            ],
+            "departments": 2
+          }
+        },
+        {
+          "key": "self_model.what_is_running",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "live": [],
+            "live_by_kind": {
+              "runtime": [],
+              "workflow": []
+            },
+            "observations": 10,
+            "scope": "runtimes and workflows that publish observations; unobserved subjects of either kind are not covered",
+            "terminated": [
+              "aios-corpus-health-runtime",
+              "aios-corpus-health",
+              "p11-w1-runtime",
+              "p12-f11-workflow-observation",
+              "p12-f4-runtime-observation",
+              "p12-live-verification-runtime",
+              "p12-w1-integration-edge-runtime",
+              "p12-w2-state-transition-runtime",
+              "p12-w4-integrated-execution-failure-runtime",
+              "p12-w4-integrated-execution-runtime"
+            ]
+          }
+        },
+        {
+          "key": "self_model.what_failed",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "failures": 7,
+            "outputs": [
+              "{'facts': mappingproxy({'citation_documents': 277, 'citation_errors': 0, 'citations_checked': 1655, 'documents_scanned': 548, 'governance_records': 469, 'governance_sources': 415, 'historical_uses': 55, 'live_stale_assertions': 0, 'stale_governance_sources': 0}), 'knowledge_available': False, 'memory_keys_consumed': ('corpus-health.finding.governance', 'corpus-health.finding.citations', 'corpus-health.finding.stale-state'), 'memory_keys_retained': ('corpus-health.finding.governance', 'corpus-health.finding.citations', 'corpus-health.finding.stale-state'), 'verdict': mappingproxy({'breaches': None, 'reason': \"no Active Knowledge version for 'corpus-health.criteria'; the criteria this work judges against are governed and none has been admitted\", 'verdict': 'WITHHELD'})}",
+              "{'facts': mappingproxy({'citation_documents': 277, 'citation_errors': 0, 'citations_checked': 1655, 'documents_scanned': 548, 'governance_records': 469, 'governance_sources': 415, 'historical_uses': 55, 'live_stale_assertions': 0, 'stale_governance_sources': 0}), 'knowledge_available': False, 'memory_keys_consumed': ('corpus-health.finding.governance', 'corpus-health.finding.citations', 'corpus-health.finding.stale-state'), 'memory_keys_retained': ('corpus-health.finding.governance', 'corpus-health.finding.citations', 'corpus-health.finding.stale-state'), 'verdict': mappingproxy({'breaches': None, 'reason': \"no Active Knowledge version for 'corpus-health.criteria'; the criteria this work judges against are governed and none has been admitted\", 'verdict': 'WITHHELD'})}",
+              "{'criteria': 14, 'satisfied': 3, 'unsatisfied': ('delegator', 'authority_provenance', 'objective', 'capability_scope', 'work_scope', 'lifecycle_boundary', 'resource_boundary', 'output_expectation', 'verification_requirement', 'escalation_condition', 'termination_condition')}",
+              "{'criteria': 14, 'satisfied': 3, 'unsatisfied': ('recipient_instance', 'authority_provenance', 'objective', 'capability_scope', 'work_scope', 'lifecycle_boundary', 'resource_boundary', 'output_expectation', 'escalation_condition', 'accountable_party', 'termination_condition')}",
+              "{'criteria': 14, 'satisfied': 4, 'unsatisfied': ('delegator', 'authority_provenance', 'objective', 'lifecycle_boundary', 'resource_boundary', 'output_expectation', 'verification_requirement', 'escalation_condition', 'accountable_party', 'termination_condition')}",
+              "{'criteria': 14, 'satisfied': 5, 'unsatisfied': ('recipient_instance', 'authority_provenance', 'objective', 'lifecycle_boundary', 'resource_boundary', 'output_expectation', 'escalation_condition', 'accountable_party', 'termination_condition')}",
+              "{'error': \"AttributeError: 'TracedAction' object has no attribute 'record'\"}"
+            ],
+            "records_examined": 16
+          }
+        },
+        {
+          "key": "self_model.what_is_incomplete",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "INFERRED",
+          "value": {
+            "escalations_by_root": {
+              "docs/architecture/p11/w4-operations": {
+                "answered": [],
+                "open": [
+                  "23f315ba9f504272"
+                ]
+              },
+              "docs/architecture/p12/w3-operations": {
+                "answered": [],
+                "open": [
+                  "0991300404cf44d8",
+                  "9d6bc0ad47294ef0"
+                ]
+              },
+              "docs/architecture/p12/w4-operations": {
+                "answered": [],
+                "open": [
+                  "9cb90fa0787a478c"
+                ]
+              }
+            },
+            "open_escalations": [
+              "0991300404cf44d8",
+              "23f315ba9f504272",
+              "9cb90fa0787a478c",
+              "9d6bc0ad47294ef0"
+            ],
+            "unbridged_gates": 43
+          }
+        },
+        {
+          "key": "self_model.what_is_authoritative",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "canonical_architecture_adopted": false,
+            "hierarchy": [
+              "Mission / Constitution",
+              "Canonical Architecture",
+              "Master Program",
+              "Canonical P10-P13 Blueprint",
+              "Ratified Founder Decisions",
+              "Ratified Architect Decisions",
+              "Current repository / implementation",
+              "Current evidence / verification"
+            ]
+          }
+        },
+        {
+          "key": "self_model.what_changed",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "claims": [
+              "S-9",
+              "S-13",
+              "S-14",
+              "S-15",
+              "S-16",
+              "S-17"
+            ],
+            "recorded_supersessions": 6
+          }
+        },
+        {
+          "key": "self_model.what_is_stale",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "open_synchronizations": [
+              "S-1",
+              "S-2",
+              "S-3",
+              "S-4",
+              "S-5",
+              "S-6",
+              "S-7",
+              "S-8",
+              "S-9",
+              "S-10",
+              "S-11",
+              "S-12",
+              "S-13",
+              "S-14",
+              "S-15",
+              "S-16",
+              "S-17"
+            ]
+          }
+        },
+        {
+          "key": "self_model.what_do_i_not_know",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "count": 0,
+            "unanswered_questions": []
+          }
+        },
+        {
+          "key": "self_model.what_decisions_are_recorded",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "count": 83,
+            "identifiers": [
+              "DP-01",
+              "DP-02",
+              "FD-P10-003",
+              "FD-P10-004",
+              "FD-P10-005",
+              "FD-P11-001",
+              "FD-P11-002",
+              "FD-P12-001",
+              "FD-P12-002",
+              "FD-P12-003",
+              "FD-P12-004",
+              "FD-P12-005",
+              "FD-P12-006",
+              "FD-P13-001",
+              "FD-P13-002",
+              "FD-P13-003",
+              "FD-P13-004",
+              "FD-P13-005",
+              "FD-P5-001",
+              "FD-P6-001",
+              "FD-P6-002",
+              "FD-P7-001",
+              "FD-P7-002",
+              "FD-P7-003",
+              "FD-P8-001",
+              "FD-P8-002",
+              "FD-P9-001",
+              "FD-P9-002",
+              "FD-V2-001",
+              "FD-V2-002",
+              "FD-V2-003",
+              "FD-V2-004",
+              "FD-V2-005",
+              "FD-V2-006",
+              "FD-V2-007",
+              "FD-V2-008",
+              "FD-V2-009",
+              "FD-V2-010",
+              "FD-V2-011",
+              "FD-V2-012",
+              "FD-V2-013",
+              "FDR-1",
+              "FDR-2",
+              "FDR-3",
+              "GDR-0001",
+              "GDR-0002",
+              "GDR-0003",
+              "GDR-0004",
+              "GDR-0005",
+              "GDR-0006",
+              "GDR-0007",
+              "GDR-0008",
+              "GDR-0009",
+              "GDR-0010",
+              "GDR-0011",
+              "GDR-0012",
+              "GDR-0013",
+              "GDR-0014",
+              "GDR-0015",
+              "GDR-0016",
+              "GDR-0017",
+              "GDR-0018",
+              "GDR-0019",
+              "GDR-0020",
+              "GDR-0021",
+              "GDR-0022",
+              "GDR-0023",
+              "GDR-0024",
+              "GDR-0025",
+              "GDR-0026",
+              "GDR-0027",
+              "GDR-0028",
+              "GDR-0029",
+              "GDR-0030",
+              "GDR-0031",
+              "GDR-0032",
+              "GDR-0033",
+              "GDR-0034",
+              "GDR-0035",
+              "GDR-0036",
+              "GDR-0037",
+              "GDR-0038",
+              "P13-018"
+            ]
+          }
+        },
+        {
+          "key": "escalations.open",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": [
+            "0991300404cf44d8",
+            "23f315ba9f504272",
+            "9cb90fa0787a478c",
+            "9d6bc0ad47294ef0"
+          ]
+        },
+        {
+          "key": "integrity.holds",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.certified_evidence_integrity.verify()",
+          "status": "VERIFIED",
+          "value": true
+        },
+        {
+          "key": "integrity.phases",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.certified_evidence_integrity.verify()",
+          "status": "VERIFIED",
+          "value": {
+            "P10": true,
+            "P11": true,
+            "P12": true
+          }
+        },
+        {
+          "key": "native_core.boundaries",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "native_core/core boundary directories",
+          "status": "VERIFIED",
+          "value": 11
+        },
+        {
+          "key": "corpus.citation_errors",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "corpus_citation_audit · stale_state_audit · governance_index",
+          "status": "VERIFIED",
+          "value": 0
+        },
+        {
+          "key": "corpus.live_stale_assertions",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "corpus_citation_audit · stale_state_audit · governance_index",
+          "status": "VERIFIED",
+          "value": 0
+        },
+        {
+          "key": "corpus.stale_governance_sources",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "corpus_citation_audit · stale_state_audit · governance_index",
+          "status": "VERIFIED",
+          "value": 0
+        },
+        {
+          "key": "knowledge.corpus_health_criteria",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Knowledge retrieval: corpus-health.criteria (FD-P12-002)",
+          "status": "VERIFIED",
+          "value": {
+            "content": {
+              "citation_errors_max": 0,
+              "live_stale_assertions_max": 0,
+              "stale_governance_sources_max": 0
+            },
+            "version_sequence": 1
+          }
+        },
+        {
+          "key": "authority.envelopes",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Delegation Register + docs/governance/p13-envelopes + phase snapshot + Decision Register §22 + certification guard",
+          "status": "VERIFIED",
+          "value": {
+            "P13-ENV-01": [
+              "escalate",
+              "verify.certified_evidence_integrity",
+              "verify.ecosystem_relationships",
+              "verify.foundational_question_reconciliation",
+              "verify.p13_evidence"
+            ],
+            "P13-ENV-02": [
+              "s_ops.close",
+              "s_ops.open"
+            ]
+          }
+        },
+        {
+          "key": "authority.anomalies",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Delegation Register + docs/governance/p13-envelopes + phase snapshot + Decision Register §22 + certification guard",
+          "status": "VERIFIED",
+          "value": []
+        },
+        {
+          "key": "authority.dimensions",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Delegation Register + docs/governance/p13-envelopes + phase snapshot + Decision Register §22 + certification guard",
+          "status": "VERIFIED",
+          "value": {
+            "certification_authority": {
+              "meaning": "a Founder certification decision for P13 (Blueprint §11)",
+              "source": "p12_certified_evidence_guard.certified_phases()",
+              "state": "NOT GRANTED",
+              "verified": "VERIFIED"
+            },
+            "construction_authorization": {
+              "meaning": "permission to build the named scope. Distinct from phase authorization (FDR-2 D10) and conferring no operational authority",
+              "source": "Decision Register §22 · P13-018 D-1 (act hash matches the Register)",
+              "state": "AUTHORIZED — bounded to Blueprint §10 IN",
+              "verified": "VERIFIED"
+            },
+            "operational_envelope": {
+              "action_types": {
+                "escalate": "record",
+                "s_ops.close": "state-changing",
+                "s_ops.open": "state-changing",
+                "verify.certified_evidence_integrity": "read-only",
+                "verify.ecosystem_relationships": "read-only",
+                "verify.foundational_question_reconciliation": "read-only",
+                "verify.p13_evidence": "read-only"
+              },
+              "anomalies": [],
+              "meaning": "what P13 may execute, from recorded envelopes only",
+              "source": "P13-ENV-01 (P13-018 D-2b), P13-ENV-02 (FDR-3 §4)",
+              "state": "EVIDENCE-ONLY + BOUNDED STATE-CHANGING",
+              "verified": "VERIFIED"
+            },
+            "phase_authorization": {
+              "meaning": "Master Program phase authorization. In P12's decision it is the only state authorization produces (§25), and P13 stays NOT AUTHORIZED until a separate valid Founder authorization (§29)",
+              "source": "P12 Authorization Founder Decision §37 FINAL STATE TRANSITION (docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md)",
+              "state": "NOT AUTHORIZED",
+              "verified": "VERIFIED"
+            },
+            "state_changing_authority": {
+              "grants": [
+                {
+                  "action_type": "s_ops.close",
+                  "effect": "state-changing",
+                  "envelope": "P13-ENV-02",
+                  "executable": true,
+                  "instrument": "FDR-3 §4",
+                  "targets": [
+                    "docs/operations/s-ops/S-OPS-01.json"
+                  ]
+                },
+                {
+                  "action_type": "s_ops.open",
+                  "effect": "state-changing",
+                  "envelope": "P13-ENV-02",
+                  "executable": true,
+                  "instrument": "FDR-3 §4",
+                  "targets": [
+                    "docs/operations/s-ops/S-OPS-01.json"
+                  ]
+                }
+              ],
+              "meaning": "authority to change state beyond P13's own records. Required for E13-05's full contract; only a governance decision grants it",
+              "source": "every action type a resolved envelope permits whose effect class is not read-only or record, with that envelope's declared targets",
+              "state": "BOUNDED: s_ops.close → docs/operations/s-ops/S-OPS-01.json (P13-ENV-02 · FDR-3 §4); s_ops.open → docs/operations/s-ops/S-OPS-01.json (P13-ENV-02 · FDR-3 §4)",
+              "verified": "VERIFIED"
+            }
+          }
+        },
+        {
+          "key": "verification.foundational_question_reconciliation",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Memory: verified by P13 cycle 20260924T164018-34223b91 at 2026-09-24T16:40:27.070821+00:00",
+          "status": "INFERRED",
+          "value": {
+            "counts": {
+              "ALREADY SOLVED": 46,
+              "P13 CORE": 20,
+              "P13 FRONTIER": 3,
+              "PARTIAL": 30,
+              "UNKNOWN": 1
+            },
+            "faults": 0,
+            "holds": true
+          }
+        },
+        {
+          "key": "verification.ecosystem_relationships",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Memory: verified by P13 cycle 20260924T163728-11fe8aed at 2026-09-24T16:37:37.510450+00:00",
+          "status": "INFERRED",
+          "value": {
+            "Capability↔Workflow": "MEDIATED",
+            "Governance↔FounderDecision": "DATA",
+            "Intelligence↔Capability": "DATA",
+            "Knowledge↔Memory": "CODE",
+            "Memory↔Intelligence": "CODE",
+            "Organization↔Governance": "CODE",
+            "Workflow↔Organization": "CODE"
+          }
+        },
+        {
+          "key": "verification.p13_evidence",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "Memory: verified by P13 cycle 20260924T144955-e18d957a at 2026-09-24T14:50:04.721724+00:00",
+          "status": "INFERRED",
+          "value": {
+            "faults": [],
+            "holds": true,
+            "records": 5,
+            "trace_entries": 5
+          }
+        },
+        {
+          "key": "s_ops.S-OPS-01.state",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+          "status": "VERIFIED",
+          "value": "CLOSED"
+        },
+        {
+          "key": "s_ops.S-OPS-01.phase",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+          "status": "VERIFIED",
+          "value": "AFTER"
+        },
+        {
+          "key": "s_ops.S-OPS-01.window",
+          "observed_at": "2026-09-24T16:45:10.166073+00:00",
+          "source": "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+          "status": "VERIFIED",
+          "value": {
+            "closes_at": "2026-09-24T16:44:57+00:00",
+            "opens_at": "2026-09-24T16:39:57+00:00"
+          }
+        },
+        {
+          "key": "execution.s_ops.close",
+          "observed_at": "2026-09-24T16:45:10.161159+00:00",
+          "source": "tools.s_ops.surface.transition (executed under P13-ENV-02)",
+          "status": "VERIFIED",
+          "value": {
+            "changed": [
+              "docs/operations/s-ops/S-OPS-01.json"
+            ],
+            "outside_scope": [],
+            "postcondition": "S-OPS-01 reads back CLOSED; its last history entry is close OPEN → CLOSED",
+            "postcondition_holds": true,
+            "scope": [
+              "docs/operations/s-ops/S-OPS-01.json"
+            ],
+            "target": "docs/operations/s-ops/S-OPS-01.json",
+            "verified": true
+          }
+        },
+        {
+          "key": "s_ops.transition",
+          "observed_at": "2026-09-24T16:45:10.161159+00:00",
+          "source": "tools.s_ops.surface.transition (executed under P13-ENV-02)",
+          "status": "VERIFIED",
+          "value": {
+            "actor": "P13 (tools.p13, BoundedExecution)",
+            "at": "2026-09-24T16:45:10.162958+00:00",
+            "basis": "P13-ENV-02 (FDR-3 §4), after the AuthorityGate's EXECUTE",
+            "event": "close",
+            "from": "OPEN",
+            "object": "S-OPS-01",
+            "phase": "AFTER",
+            "to": "CLOSED"
+          }
+        }
+      ],
+      "taken_at": "2026-09-24T16:45:18.997185+00:00"
+    },
+    "before": {
+      "facts": [
+        {
+          "key": "memory.stores",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Memory via MemoryReader over Trace (P12 stores + P13 store)",
+          "status": "VERIFIED",
+          "value": {
+            "aios-corpus-health": 7,
+            "p12-live-verification": 1,
+            "p12-w1-integration-edge": 1,
+            "p12-w2-state-transition": 1,
+            "p12-w4-integrated-execution": 3,
+            "p12-w4-integrated-execution-failure": 1,
+            "p13": 9,
+            "w4-conformance-verification": 2
+          }
+        },
+        {
+          "key": "memory.p13.previous",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Memory via MemoryReader over Trace (P12 stores + P13 store)",
+          "status": "VERIFIED",
+          "value": {
+            "consequence": {
+              "action_type": "verify.foundational_question_reconciliation",
+              "actual": {
+                "CR-RECONCILIATION": "PASS/VERIFIED"
+              },
+              "execution_status": "success",
+              "expected": {
+                "CR-RECONCILIATION": "VERIFIED"
+              },
+              "matched": true,
+              "target": "state"
+            },
+            "cycle_id": "20260924T164018-34223b91",
+            "decisions": [
+              {
+                "decision": "EXECUTE",
+                "reason": "permitted by P13-ENV-01 (P13-018 D-2b)",
+                "subject": "P13 verify.foundational_question_reconciliation state"
+              },
+              {
+                "decision": "REFUSE",
+                "reason": "cycle bound: at most one executed action per cycle (Blueprint §3.2)",
+                "subject": "P13 verify.p13_evidence state"
+              },
+              {
+                "decision": "REFUSE",
+                "reason": "cycle bound: at most one executed action per cycle (Blueprint §3.2)",
+                "subject": "P13 verify.ecosystem_relationships state"
+              }
+            ],
+            "digest_after": "7549e16e6e34d04dc751b9c813fad703eccc4205640a3a6a53730aa3b402acad",
+            "digest_before": "34223b918fbfe0320beeddcc33c975bdabf65aa251c419e2e0c571ff50ba2813",
+            "executed": "verify.foundational_question_reconciliation",
+            "execution": {
+              "action_type": "verify.foundational_question_reconciliation",
+              "authority": "P13-018 D-2b",
+              "authority_record": "docs/governance/acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md",
+              "consequence": {
+                "action_type": "verify.foundational_question_reconciliation",
+                "actual": {
+                  "CR-RECONCILIATION": "PASS/VERIFIED"
+                },
+                "execution_status": "success",
+                "expected": {
+                  "CR-RECONCILIATION": "VERIFIED"
+                },
+                "matched": true,
+                "target": "state"
+              },
+              "derived_from": [
+                "c:stale:CR-RECONCILIATION:verify.foundational_question_reconciliation"
+              ],
+              "detail": "tools.foundational_question_reconciliation.verify ran",
+              "envelope": "P13-ENV-01",
+              "gate": "permitted by P13-ENV-01 (P13-018 D-2b)",
+              "scope": [],
+              "status": "success",
+              "target": "state"
+            },
+            "exhaustion": "EXHAUSTED_WITH_CLASSIFIED_REMAINDER",
+            "facts": {
+              "authority.anomalies": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "authority.dimensions": "ab2d297cb249cbd3aa8eb23efeaa4a246ec811d4c8c7f9fce1ae8165a84f53f9",
+              "authority.envelopes": "09da755b8b66d4d843287de618be369f7b953774b5d47d8856cba5c445500dd8",
+              "corpus.citation_errors": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+              "corpus.live_stale_assertions": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+              "corpus.stale_governance_sources": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+              "escalations.open": "7ca8fb3af9d37b4b35b87e9214580dcd292ab2de38b7035941d1320f715f2252",
+              "integrity.holds": "b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+              "integrity.phases": "f07e17c1cbad7697cf09c62fce332d6be9765c3b688a21c3d477d00a94bf6743",
+              "knowledge.corpus_health_criteria": "45336692431263f3b76dca9c4022a6508afc5bcb9b376de80b054ed168396d23",
+              "memory.corpus_health.last": "fafc473e6449e42ce922233c067c449bff3eac8b755110439e2522d9f66f496b",
+              "memory.p13.previous": "61e1f39fa0696f716d7e91b1a9fb0dbb084127faebef22fe637b16380bb7f85d",
+              "memory.stores": "4561838fa475fd22f0184f21ae14e99b5ab7cf3af89a0d24176bdc790bc7108c",
+              "native_core.boundaries": "4fc82b26aecb47d2868c4efbe3581732a3e7cbcc6c2efb32062c08170a05eeb8",
+              "s_ops.S-OPS-01.phase": "97656e2b03fc46f38b9ae53b4a16d803cb62a09fa45fbd635e0e2442ca9027c8",
+              "s_ops.S-OPS-01.state": "be0a10fd97364a8fcdbc5bee5360b8ef41f3693ffcef3804485a3b96c2b2ab65",
+              "s_ops.S-OPS-01.window": "b10dd65e9e14479a8f4a7fa4b549208feadd2cb2f70390d1c18ae67aef8d3929",
+              "self_model.what_am_i": "1d6f6386e697b11c9739093f2e6da0b0630c5b82f48605a551b71b371f50ad6a",
+              "self_model.what_authority_do_i_have": "f821f4921c5b04bd882951f9cb820d4ee441cd5fefd7c15b9d245f1d39d39492",
+              "self_model.what_capabilities_exist": "3946bf88763fe18106e72cf6c986980ac9114310b6b2be6352acb27a83095e30",
+              "self_model.what_changed": "a71a32b975ddf064346a3bbcf9244db17c527756e295d384bcac9749fe353876",
+              "self_model.what_decisions_are_recorded": "bc22bbc1659a95abc14b6cbd816f395e5e811437158b4fa33e38978b5fb92c70",
+              "self_model.what_do_i_not_know": "b8e628e8de7cf97188ca7e7ee4517ebb71b9145e22a576abfefcf8fd4266b54f",
+              "self_model.what_do_i_own": "ce198403c28ef74f7011b9f68819a9f4c26d2bd59731e557c98377b128fae049",
+              "self_model.what_failed": "7fa4baf799300cce6c3fc86d20119719efe0d88b851da6fde6cc029e89c75450",
+              "self_model.what_is_authoritative": "763b04226177843d17b812f5f88cd3533041887d943e3f2e7111e4e6e5888245",
+              "self_model.what_is_incomplete": "bb98ffac4511348be677a38fd6a42b2b3a668f1a5160fbc40d3b548b7430753a",
+              "self_model.what_is_running": "5bb9ee5d4589e9beed6be2f07979b61cd0066a6dcfe207ba3f605a8d4ec65def",
+              "self_model.what_is_stale": "94af567642e6a687898a564a9024970fe1c08cdb128cf3f0ff21b7229f3c54c0",
+              "verification.ecosystem_relationships": "ab1358650fd20e47f9f993d671b2628c292586cfb6c86dd33aa898915105dd53",
+              "verification.foundational_question_reconciliation": "b07faff3260759aec5ace1ebff9c388c3fc1d037b7c9c7b1ec52099e185c7ee0",
+              "verification.p13_evidence": "cb57a91f7716618136052e8250290b1895b7ffbf0f98ac08ea3624970ce2278a"
+            },
+            "last_executed": {
+              "s_ops.open": "2026-09-24T16:40:17.801302+00:00",
+              "verify.ecosystem_relationships": "2026-09-24T16:37:37.510450+00:00",
+              "verify.foundational_question_reconciliation": "2026-09-24T16:40:27.070821+00:00",
+              "verify.p13_evidence": "2026-09-24T14:50:04.721724+00:00"
+            },
+            "readback_holds": true,
+            "record_digest": "f9d9bccbad65ac8632c50898ebd2f2f1e836ba5f179bd1b31fa402568cae76ec",
+            "results": {
+              "CR-CORPUS-CITATION-ERRORS": "PASS",
+              "CR-CORPUS-LIVE-STALE-ASSERTIONS": "PASS",
+              "CR-CORPUS-STALE-GOVERNANCE-SOURCES": "PASS",
+              "CR-INTEGRITY": "PASS",
+              "CR-MEMORY-INTELLIGENCE": "PASS",
+              "CR-NATIVE-CORE": "PASS",
+              "CR-P13-EVIDENCE": "PASS",
+              "CR-RECONCILIATION": "PASS",
+              "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW": "PASS",
+              "CR-SOPS-01-OPEN-WITHIN-WINDOW": "PASS"
+            },
+            "verified": {
+              "verification.ecosystem_relationships": {
+                "at": "2026-09-24T16:37:37.510450+00:00",
+                "cycle_id": "20260924T163728-11fe8aed",
+                "value": {
+                  "Capability↔Workflow": "MEDIATED",
+                  "Governance↔FounderDecision": "DATA",
+                  "Intelligence↔Capability": "DATA",
+                  "Knowledge↔Memory": "CODE",
+                  "Memory↔Intelligence": "CODE",
+                  "Organization↔Governance": "CODE",
+                  "Workflow↔Organization": "CODE"
+                }
+              },
+              "verification.foundational_question_reconciliation": {
+                "at": "2026-09-24T16:40:27.070821+00:00",
+                "cycle_id": "20260924T164018-34223b91",
+                "value": {
+                  "counts": {
+                    "ALREADY SOLVED": 46,
+                    "P13 CORE": 20,
+                    "P13 FRONTIER": 3,
+                    "PARTIAL": 30,
+                    "UNKNOWN": 1
+                  },
+                  "faults": 0,
+                  "holds": true
+                }
+              },
+              "verification.p13_evidence": {
+                "at": "2026-09-24T14:50:04.721724+00:00",
+                "cycle_id": "20260924T144955-e18d957a",
+                "value": {
+                  "faults": [],
+                  "holds": true,
+                  "records": 5,
+                  "trace_entries": 5
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "memory.corpus_health.last",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Memory via MemoryReader over Trace (P12 stores + P13 store)",
+          "status": "VERIFIED",
+          "value": {
+            "facts": {
+              "citation_documents": 314,
+              "citation_errors": 0,
+              "citations_checked": 1814,
+              "documents_scanned": 578,
+              "governance_records": 496,
+              "governance_sources": 442,
+              "historical_uses": 55,
+              "live_stale_assertions": 0,
+              "stale_governance_sources": 0
+            },
+            "verdict": {
+              "breaches": [],
+              "reason": "measured against the admitted criteria",
+              "verdict": "HEALTHY"
+            }
+          }
+        },
+        {
+          "key": "self_model.what_am_i",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "boundaries": [
+              "agent",
+              "capability",
+              "governance",
+              "infrastructure",
+              "knowledge",
+              "memory",
+              "optimization",
+              "runtime",
+              "skill",
+              "trace",
+              "workflow"
+            ],
+            "frozen": true,
+            "native_core_boundaries": 11,
+            "system": "AIOS"
+          }
+        },
+        {
+          "key": "self_model.what_do_i_own",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "identified": 133,
+            "records": 599
+          }
+        },
+        {
+          "key": "self_model.what_authority_do_i_have",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "architect_reserved": [
+              "ADP-P10-001 entity semantics",
+              "prioritization/ranking/heuristics",
+              "escalation entity semantics"
+            ],
+            "delegated_to_co_founder": [
+              "discover",
+              "design within issued architecture",
+              "implement",
+              "integrate",
+              "test",
+              "verify",
+              "persist",
+              "reconcile",
+              "document"
+            ],
+            "founder_reserved": [
+              "phase authorization",
+              "phase certification",
+              "E-criteria ratification",
+              "constitutional boundary",
+              "Native Core expansion",
+              "FDP-P10-001 Security",
+              "FDP-P10-002 Quality",
+              "FDP-P10-003 Governance"
+            ],
+            "operative_delegation": {
+              "in_force": [
+                {
+                  "declared_status": "ACTIVE — DORMANT UNTIL INVOKED",
+                  "effective_status": "ACTIVE — DORMANT UNTIL INVOKED",
+                  "identifier": "DEL-F03-015-P7I99-001",
+                  "role": "Co-Founder — Construction Phase (occupant: Claude Code)",
+                  "scope": "Execution of the P7-I99 integrated architecture review (R1–R11) for a Volume, only when a separate Founder-authorized Act expressly invokes this authority for that Volume",
+                  "source": "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md:221",
+                  "superseded_by": [],
+                  "title": "Bounded P7-I99 Execution Delegation"
+                },
+                {
+                  "declared_status": "ACTIVE",
+                  "effective_status": "ACTIVE",
+                  "identifier": "DEL-CFV2-CEO-001",
+                  "role": "AIOS Co-Founder + Delegated CEO (governance office; continues the GDR-0015 office)",
+                  "scope": "Charter §33 A01–A18, frozen at REG-CFV2-001 Part C §C.3",
+                  "source": "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md:466",
+                  "superseded_by": [],
+                  "title": "AIOS Co-Founder + Delegated CEO Delegation (V2)"
+                }
+              ],
+              "resolved": true,
+              "superseded": [
+                {
+                  "declared_status": "ACTIVE",
+                  "effective_status": "SUPERSEDED",
+                  "identifier": "DEL-T4.4-CF-001",
+                  "role": "Co-Founder — Construction Phase (governance office)",
+                  "scope": "§3.1 below",
+                  "source": "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md:60",
+                  "superseded_by": [
+                    "DEL-CFV2-CEO-001"
+                  ],
+                  "title": "Co-Founder Construction-Phase Delegation"
+                }
+              ]
+            },
+            "phase_authorization": {
+              "certification": {
+                "phases": {
+                  "P10": {
+                    "certified": true,
+                    "instrument": "docs/governance/acts/FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM.md",
+                    "register_identity": "FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM"
+                  },
+                  "P11": {
+                    "certified": true,
+                    "instrument": "docs/governance/acts/FD-P11-002-P11-CERTIFICATION.md",
+                    "register_identity": "FD-P11-002-P11-CERTIFICATION"
+                  },
+                  "P12": {
+                    "certified": true,
+                    "instrument": "docs/governance/acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md",
+                    "register_identity": "FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION"
+                  }
+                },
+                "resolved": true
+              },
+              "issuance_contradiction": {
+                "authoritative": "§35 FINAL FOUNDER DECISION: Status: ISSUED",
+                "determination": "the decision section governs; the header is unchanged template text from the surface sent for signature. Disclosed, not resolved away",
+                "instrument": "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+                "stale_header": [
+                  "Status: PENDING FOUNDER DECISION"
+                ]
+              },
+              "resolved": true,
+              "states": {
+                "P11": {
+                  "authority": "P12 Authorization Founder Decision §37 FINAL STATE TRANSITION (docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md)",
+                  "authority_record": "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+                  "authorized": null,
+                  "corroborated_by": [],
+                  "dimensions": {
+                    "CERTIFIED": true
+                  },
+                  "entity": "P11",
+                  "stated_in": "§37 FINAL STATE TRANSITION",
+                  "unstated_dimensions": [
+                    "AUTHORIZED",
+                    "COMPLETE",
+                    "CONSTRUCTED",
+                    "EXHAUSTED",
+                    "OPERATIONAL",
+                    "VERIFIED"
+                  ]
+                },
+                "P12": {
+                  "authority": "P12 Authorization Founder Decision §37 FINAL STATE TRANSITION (docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md)",
+                  "authority_record": "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+                  "authorized": true,
+                  "corroborated_by": [],
+                  "dimensions": {
+                    "AUTHORIZED": true
+                  },
+                  "entity": "P12",
+                  "stated_in": "§37 FINAL STATE TRANSITION",
+                  "superseded_by_certification": {
+                    "dimensions": {
+                      "CERTIFIED": false,
+                      "COMPLETE": false,
+                      "CONSTRUCTED": false,
+                      "EXHAUSTED": false,
+                      "OPERATIONAL": false,
+                      "VERIFIED": false
+                    },
+                    "register_identity": "FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION",
+                    "stated_in": "§37 FINAL STATE TRANSITION",
+                    "superseded_by": "docs/governance/acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md"
+                  },
+                  "unstated_dimensions": []
+                },
+                "P13": {
+                  "authority": "P12 Authorization Founder Decision §37 FINAL STATE TRANSITION (docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md)",
+                  "authority_record": "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+                  "authorized": false,
+                  "corroborated_by": [
+                    "§13 DECISION D8 — EXPLICIT EXCLUSIONS",
+                    "§29 P12 → P13 RULE",
+                    "§34 FOUNDER ATTESTATION"
+                  ],
+                  "dimensions": {
+                    "AUTHORIZED": false
+                  },
+                  "entity": "P13",
+                  "stated_in": "§37 FINAL STATE TRANSITION",
+                  "unstated_dimensions": [
+                    "CERTIFIED",
+                    "COMPLETE",
+                    "CONSTRUCTED",
+                    "EXHAUSTED",
+                    "OPERATIONAL",
+                    "VERIFIED"
+                  ]
+                }
+              }
+            },
+            "self_model_authority": null
+          }
+        },
+        {
+          "key": "self_model.what_capabilities_exist",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "INFERRED",
+          "value": {
+            "count": 3,
+            "declared": [
+              "cognitive-intelligence",
+              "engineering-intelligence",
+              "governance-artifact-integrity"
+            ],
+            "departments": 2
+          }
+        },
+        {
+          "key": "self_model.what_is_running",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "live": [],
+            "live_by_kind": {
+              "runtime": [],
+              "workflow": []
+            },
+            "observations": 10,
+            "scope": "runtimes and workflows that publish observations; unobserved subjects of either kind are not covered",
+            "terminated": [
+              "aios-corpus-health-runtime",
+              "aios-corpus-health",
+              "p11-w1-runtime",
+              "p12-f11-workflow-observation",
+              "p12-f4-runtime-observation",
+              "p12-live-verification-runtime",
+              "p12-w1-integration-edge-runtime",
+              "p12-w2-state-transition-runtime",
+              "p12-w4-integrated-execution-failure-runtime",
+              "p12-w4-integrated-execution-runtime"
+            ]
+          }
+        },
+        {
+          "key": "self_model.what_failed",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "failures": 7,
+            "outputs": [
+              "{'facts': mappingproxy({'citation_documents': 277, 'citation_errors': 0, 'citations_checked': 1655, 'documents_scanned': 548, 'governance_records': 469, 'governance_sources': 415, 'historical_uses': 55, 'live_stale_assertions': 0, 'stale_governance_sources': 0}), 'knowledge_available': False, 'memory_keys_consumed': ('corpus-health.finding.governance', 'corpus-health.finding.citations', 'corpus-health.finding.stale-state'), 'memory_keys_retained': ('corpus-health.finding.governance', 'corpus-health.finding.citations', 'corpus-health.finding.stale-state'), 'verdict': mappingproxy({'breaches': None, 'reason': \"no Active Knowledge version for 'corpus-health.criteria'; the criteria this work judges against are governed and none has been admitted\", 'verdict': 'WITHHELD'})}",
+              "{'facts': mappingproxy({'citation_documents': 277, 'citation_errors': 0, 'citations_checked': 1655, 'documents_scanned': 548, 'governance_records': 469, 'governance_sources': 415, 'historical_uses': 55, 'live_stale_assertions': 0, 'stale_governance_sources': 0}), 'knowledge_available': False, 'memory_keys_consumed': ('corpus-health.finding.governance', 'corpus-health.finding.citations', 'corpus-health.finding.stale-state'), 'memory_keys_retained': ('corpus-health.finding.governance', 'corpus-health.finding.citations', 'corpus-health.finding.stale-state'), 'verdict': mappingproxy({'breaches': None, 'reason': \"no Active Knowledge version for 'corpus-health.criteria'; the criteria this work judges against are governed and none has been admitted\", 'verdict': 'WITHHELD'})}",
+              "{'criteria': 14, 'satisfied': 3, 'unsatisfied': ('delegator', 'authority_provenance', 'objective', 'capability_scope', 'work_scope', 'lifecycle_boundary', 'resource_boundary', 'output_expectation', 'verification_requirement', 'escalation_condition', 'termination_condition')}",
+              "{'criteria': 14, 'satisfied': 3, 'unsatisfied': ('recipient_instance', 'authority_provenance', 'objective', 'capability_scope', 'work_scope', 'lifecycle_boundary', 'resource_boundary', 'output_expectation', 'escalation_condition', 'accountable_party', 'termination_condition')}",
+              "{'criteria': 14, 'satisfied': 4, 'unsatisfied': ('delegator', 'authority_provenance', 'objective', 'lifecycle_boundary', 'resource_boundary', 'output_expectation', 'verification_requirement', 'escalation_condition', 'accountable_party', 'termination_condition')}",
+              "{'criteria': 14, 'satisfied': 5, 'unsatisfied': ('recipient_instance', 'authority_provenance', 'objective', 'lifecycle_boundary', 'resource_boundary', 'output_expectation', 'escalation_condition', 'accountable_party', 'termination_condition')}",
+              "{'error': \"AttributeError: 'TracedAction' object has no attribute 'record'\"}"
+            ],
+            "records_examined": 16
+          }
+        },
+        {
+          "key": "self_model.what_is_incomplete",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "INFERRED",
+          "value": {
+            "escalations_by_root": {
+              "docs/architecture/p11/w4-operations": {
+                "answered": [],
+                "open": [
+                  "23f315ba9f504272"
+                ]
+              },
+              "docs/architecture/p12/w3-operations": {
+                "answered": [],
+                "open": [
+                  "0991300404cf44d8",
+                  "9d6bc0ad47294ef0"
+                ]
+              },
+              "docs/architecture/p12/w4-operations": {
+                "answered": [],
+                "open": [
+                  "9cb90fa0787a478c"
+                ]
+              }
+            },
+            "open_escalations": [
+              "0991300404cf44d8",
+              "23f315ba9f504272",
+              "9cb90fa0787a478c",
+              "9d6bc0ad47294ef0"
+            ],
+            "unbridged_gates": 43
+          }
+        },
+        {
+          "key": "self_model.what_is_authoritative",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "canonical_architecture_adopted": false,
+            "hierarchy": [
+              "Mission / Constitution",
+              "Canonical Architecture",
+              "Master Program",
+              "Canonical P10-P13 Blueprint",
+              "Ratified Founder Decisions",
+              "Ratified Architect Decisions",
+              "Current repository / implementation",
+              "Current evidence / verification"
+            ]
+          }
+        },
+        {
+          "key": "self_model.what_changed",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "claims": [
+              "S-9",
+              "S-13",
+              "S-14",
+              "S-15",
+              "S-16",
+              "S-17"
+            ],
+            "recorded_supersessions": 6
+          }
+        },
+        {
+          "key": "self_model.what_is_stale",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "open_synchronizations": [
+              "S-1",
+              "S-2",
+              "S-3",
+              "S-4",
+              "S-5",
+              "S-6",
+              "S-7",
+              "S-8",
+              "S-9",
+              "S-10",
+              "S-11",
+              "S-12",
+              "S-13",
+              "S-14",
+              "S-15",
+              "S-16",
+              "S-17"
+            ]
+          }
+        },
+        {
+          "key": "self_model.what_do_i_not_know",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "count": 0,
+            "unanswered_questions": []
+          }
+        },
+        {
+          "key": "self_model.what_decisions_are_recorded",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": {
+            "count": 83,
+            "identifiers": [
+              "DP-01",
+              "DP-02",
+              "FD-P10-003",
+              "FD-P10-004",
+              "FD-P10-005",
+              "FD-P11-001",
+              "FD-P11-002",
+              "FD-P12-001",
+              "FD-P12-002",
+              "FD-P12-003",
+              "FD-P12-004",
+              "FD-P12-005",
+              "FD-P12-006",
+              "FD-P13-001",
+              "FD-P13-002",
+              "FD-P13-003",
+              "FD-P13-004",
+              "FD-P13-005",
+              "FD-P5-001",
+              "FD-P6-001",
+              "FD-P6-002",
+              "FD-P7-001",
+              "FD-P7-002",
+              "FD-P7-003",
+              "FD-P8-001",
+              "FD-P8-002",
+              "FD-P9-001",
+              "FD-P9-002",
+              "FD-V2-001",
+              "FD-V2-002",
+              "FD-V2-003",
+              "FD-V2-004",
+              "FD-V2-005",
+              "FD-V2-006",
+              "FD-V2-007",
+              "FD-V2-008",
+              "FD-V2-009",
+              "FD-V2-010",
+              "FD-V2-011",
+              "FD-V2-012",
+              "FD-V2-013",
+              "FDR-1",
+              "FDR-2",
+              "FDR-3",
+              "GDR-0001",
+              "GDR-0002",
+              "GDR-0003",
+              "GDR-0004",
+              "GDR-0005",
+              "GDR-0006",
+              "GDR-0007",
+              "GDR-0008",
+              "GDR-0009",
+              "GDR-0010",
+              "GDR-0011",
+              "GDR-0012",
+              "GDR-0013",
+              "GDR-0014",
+              "GDR-0015",
+              "GDR-0016",
+              "GDR-0017",
+              "GDR-0018",
+              "GDR-0019",
+              "GDR-0020",
+              "GDR-0021",
+              "GDR-0022",
+              "GDR-0023",
+              "GDR-0024",
+              "GDR-0025",
+              "GDR-0026",
+              "GDR-0027",
+              "GDR-0028",
+              "GDR-0029",
+              "GDR-0030",
+              "GDR-0031",
+              "GDR-0032",
+              "GDR-0033",
+              "GDR-0034",
+              "GDR-0035",
+              "GDR-0036",
+              "GDR-0037",
+              "GDR-0038",
+              "P13-018"
+            ]
+          }
+        },
+        {
+          "key": "escalations.open",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.p12_self_model.self_model()",
+          "status": "VERIFIED",
+          "value": [
+            "0991300404cf44d8",
+            "23f315ba9f504272",
+            "9cb90fa0787a478c",
+            "9d6bc0ad47294ef0"
+          ]
+        },
+        {
+          "key": "integrity.holds",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.certified_evidence_integrity.verify()",
+          "status": "VERIFIED",
+          "value": true
+        },
+        {
+          "key": "integrity.phases",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.certified_evidence_integrity.verify()",
+          "status": "VERIFIED",
+          "value": {
+            "P10": true,
+            "P11": true,
+            "P12": true
+          }
+        },
+        {
+          "key": "native_core.boundaries",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "native_core/core boundary directories",
+          "status": "VERIFIED",
+          "value": 11
+        },
+        {
+          "key": "corpus.citation_errors",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "corpus_citation_audit · stale_state_audit · governance_index",
+          "status": "VERIFIED",
+          "value": 0
+        },
+        {
+          "key": "corpus.live_stale_assertions",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "corpus_citation_audit · stale_state_audit · governance_index",
+          "status": "VERIFIED",
+          "value": 0
+        },
+        {
+          "key": "corpus.stale_governance_sources",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "corpus_citation_audit · stale_state_audit · governance_index",
+          "status": "VERIFIED",
+          "value": 0
+        },
+        {
+          "key": "knowledge.corpus_health_criteria",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Knowledge retrieval: corpus-health.criteria (FD-P12-002)",
+          "status": "VERIFIED",
+          "value": {
+            "content": {
+              "citation_errors_max": 0,
+              "live_stale_assertions_max": 0,
+              "stale_governance_sources_max": 0
+            },
+            "version_sequence": 1
+          }
+        },
+        {
+          "key": "authority.envelopes",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Delegation Register + docs/governance/p13-envelopes + phase snapshot + Decision Register §22 + certification guard",
+          "status": "VERIFIED",
+          "value": {
+            "P13-ENV-01": [
+              "escalate",
+              "verify.certified_evidence_integrity",
+              "verify.ecosystem_relationships",
+              "verify.foundational_question_reconciliation",
+              "verify.p13_evidence"
+            ],
+            "P13-ENV-02": [
+              "s_ops.close",
+              "s_ops.open"
+            ]
+          }
+        },
+        {
+          "key": "authority.anomalies",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Delegation Register + docs/governance/p13-envelopes + phase snapshot + Decision Register §22 + certification guard",
+          "status": "VERIFIED",
+          "value": []
+        },
+        {
+          "key": "authority.dimensions",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Delegation Register + docs/governance/p13-envelopes + phase snapshot + Decision Register §22 + certification guard",
+          "status": "VERIFIED",
+          "value": {
+            "certification_authority": {
+              "meaning": "a Founder certification decision for P13 (Blueprint §11)",
+              "source": "p12_certified_evidence_guard.certified_phases()",
+              "state": "NOT GRANTED",
+              "verified": "VERIFIED"
+            },
+            "construction_authorization": {
+              "meaning": "permission to build the named scope. Distinct from phase authorization (FDR-2 D10) and conferring no operational authority",
+              "source": "Decision Register §22 · P13-018 D-1 (act hash matches the Register)",
+              "state": "AUTHORIZED — bounded to Blueprint §10 IN",
+              "verified": "VERIFIED"
+            },
+            "operational_envelope": {
+              "action_types": {
+                "escalate": "record",
+                "s_ops.close": "state-changing",
+                "s_ops.open": "state-changing",
+                "verify.certified_evidence_integrity": "read-only",
+                "verify.ecosystem_relationships": "read-only",
+                "verify.foundational_question_reconciliation": "read-only",
+                "verify.p13_evidence": "read-only"
+              },
+              "anomalies": [],
+              "meaning": "what P13 may execute, from recorded envelopes only",
+              "source": "P13-ENV-01 (P13-018 D-2b), P13-ENV-02 (FDR-3 §4)",
+              "state": "EVIDENCE-ONLY + BOUNDED STATE-CHANGING",
+              "verified": "VERIFIED"
+            },
+            "phase_authorization": {
+              "meaning": "Master Program phase authorization. In P12's decision it is the only state authorization produces (§25), and P13 stays NOT AUTHORIZED until a separate valid Founder authorization (§29)",
+              "source": "P12 Authorization Founder Decision §37 FINAL STATE TRANSITION (docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md)",
+              "state": "NOT AUTHORIZED",
+              "verified": "VERIFIED"
+            },
+            "state_changing_authority": {
+              "grants": [
+                {
+                  "action_type": "s_ops.close",
+                  "effect": "state-changing",
+                  "envelope": "P13-ENV-02",
+                  "executable": true,
+                  "instrument": "FDR-3 §4",
+                  "targets": [
+                    "docs/operations/s-ops/S-OPS-01.json"
+                  ]
+                },
+                {
+                  "action_type": "s_ops.open",
+                  "effect": "state-changing",
+                  "envelope": "P13-ENV-02",
+                  "executable": true,
+                  "instrument": "FDR-3 §4",
+                  "targets": [
+                    "docs/operations/s-ops/S-OPS-01.json"
+                  ]
+                }
+              ],
+              "meaning": "authority to change state beyond P13's own records. Required for E13-05's full contract; only a governance decision grants it",
+              "source": "every action type a resolved envelope permits whose effect class is not read-only or record, with that envelope's declared targets",
+              "state": "BOUNDED: s_ops.close → docs/operations/s-ops/S-OPS-01.json (P13-ENV-02 · FDR-3 §4); s_ops.open → docs/operations/s-ops/S-OPS-01.json (P13-ENV-02 · FDR-3 §4)",
+              "verified": "VERIFIED"
+            }
+          }
+        },
+        {
+          "key": "verification.foundational_question_reconciliation",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Memory: verified by P13 cycle 20260924T164018-34223b91 at 2026-09-24T16:40:27.070821+00:00",
+          "status": "INFERRED",
+          "value": {
+            "counts": {
+              "ALREADY SOLVED": 46,
+              "P13 CORE": 20,
+              "P13 FRONTIER": 3,
+              "PARTIAL": 30,
+              "UNKNOWN": 1
+            },
+            "faults": 0,
+            "holds": true
+          }
+        },
+        {
+          "key": "verification.ecosystem_relationships",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Memory: verified by P13 cycle 20260924T163728-11fe8aed at 2026-09-24T16:37:37.510450+00:00",
+          "status": "INFERRED",
+          "value": {
+            "Capability↔Workflow": "MEDIATED",
+            "Governance↔FounderDecision": "DATA",
+            "Intelligence↔Capability": "DATA",
+            "Knowledge↔Memory": "CODE",
+            "Memory↔Intelligence": "CODE",
+            "Organization↔Governance": "CODE",
+            "Workflow↔Organization": "CODE"
+          }
+        },
+        {
+          "key": "verification.p13_evidence",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "Memory: verified by P13 cycle 20260924T144955-e18d957a at 2026-09-24T14:50:04.721724+00:00",
+          "status": "INFERRED",
+          "value": {
+            "faults": [],
+            "holds": true,
+            "records": 5,
+            "trace_entries": 5
+          }
+        },
+        {
+          "key": "s_ops.S-OPS-01.state",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+          "status": "VERIFIED",
+          "value": "OPEN"
+        },
+        {
+          "key": "s_ops.S-OPS-01.phase",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+          "status": "VERIFIED",
+          "value": "AFTER"
+        },
+        {
+          "key": "s_ops.S-OPS-01.window",
+          "observed_at": "2026-09-24T16:45:01.034796+00:00",
+          "source": "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its window phase at the observation instant (FDR-3)",
+          "status": "VERIFIED",
+          "value": {
+            "closes_at": "2026-09-24T16:44:57+00:00",
+            "opens_at": "2026-09-24T16:39:57+00:00"
+          }
+        }
+      ],
+      "taken_at": "2026-09-24T16:45:01.034796+00:00"
+    },
+    "digest_after": "28ef5279599a86451aa44da5d88d6d7e626542c2cd6ead05dd8aa45805526bea",
+    "digest_before": "7f84980f1bd92f26d2483df3fb965b0e18b6a55555854eea61496c1a0fee5fe4"
+  },
+  "p13": "tools/p13 · Blueprint v1.0 · P13-018",
+  "proposals": [
+    {
+      "action_type": "s_ops.close",
+      "certainty": "VERIFIED",
+      "derived_from": [
+        "c:defect:CR-SOPS-01-CLOSED-OUTSIDE-WINDOW"
+      ],
+      "expected": [
+        [
+          "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW",
+          "PASS"
+        ]
+      ],
+      "id": "p:s_ops.close:docs/operations/s-ops/S-OPS-01.json",
+      "origin": "next-action",
+      "priority": [
+        0,
+        "",
+        "s_ops.close:docs/operations/s-ops/S-OPS-01.json"
+      ],
+      "rationale": "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW violated: outside its window, S-OPS-01 is CLOSED — violated",
+      "target": "docs/operations/s-ops/S-OPS-01.json"
+    },
+    {
+      "action_type": "verify.p13_evidence",
+      "certainty": "INFERRED",
+      "derived_from": [
+        "c:stale:CR-P13-EVIDENCE:verify.p13_evidence"
+      ],
+      "expected": [
+        [
+          "CR-P13-EVIDENCE",
+          "VERIFIED"
+        ]
+      ],
+      "id": "p:verify.p13_evidence:state",
+      "origin": "next-action",
+      "priority": [
+        3,
+        "2026-09-24T14:50:04.721724+00:00",
+        "verify.p13_evidence:state"
+      ],
+      "rationale": "CR-P13-EVIDENCE is PASS on remembered evidence only; verify.p13_evidence would make it current",
+      "target": "state"
+    },
+    {
+      "action_type": "verify.ecosystem_relationships",
+      "certainty": "INFERRED",
+      "derived_from": [
+        "c:stale:CR-MEMORY-INTELLIGENCE:verify.ecosystem_relationships"
+      ],
+      "expected": [
+        [
+          "CR-MEMORY-INTELLIGENCE",
+          "VERIFIED"
+        ]
+      ],
+      "id": "p:verify.ecosystem_relationships:state",
+      "origin": "next-action",
+      "priority": [
+        3,
+        "2026-09-24T16:37:37.510450+00:00",
+        "verify.ecosystem_relationships:state"
+      ],
+      "rationale": "CR-MEMORY-INTELLIGENCE is PASS on remembered evidence only; verify.ecosystem_relationships would make it current",
+      "target": "state"
+    },
+    {
+      "action_type": "verify.foundational_question_reconciliation",
+      "certainty": "INFERRED",
+      "derived_from": [
+        "c:stale:CR-RECONCILIATION:verify.foundational_question_reconciliation"
+      ],
+      "expected": [
+        [
+          "CR-RECONCILIATION",
+          "VERIFIED"
+        ]
+      ],
+      "id": "p:verify.foundational_question_reconciliation:state",
+      "origin": "next-action",
+      "priority": [
+        3,
+        "2026-09-24T16:40:27.070821+00:00",
+        "verify.foundational_question_reconciliation:state"
+      ],
+      "rationale": "CR-RECONCILIATION is PASS on remembered evidence only; verify.foundational_question_reconciliation would make it current",
+      "target": "state"
+    }
+  ],
+  "record_digest": "a8726100b9a9f37d98e64859c49fe3ff5ddd81998ea812983b690dd2d259f0e2",
+  "section_29": {
+    "actor": "invoker",
+    "authority": "authority",
+    "decision": "decisions",
+    "evidence": "observation.before.facts",
+    "execution": "executed",
+    "intent": "intent",
+    "lifecycle": "lifecycle",
+    "observation": "observation",
+    "provenance": "conclusions[].premises · proposals[].derived_from",
+    "scope": "executed.action_type",
+    "verification": "verification",
+    "work": "executed"
+  },
+  "verification": {
+    "changes": [
+      {
+        "after": "PASS",
+        "before": "FAIL",
+        "certainty_after": "VERIFIED",
+        "certainty_before": "VERIFIED",
+        "criterion": "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW"
+      }
+    ],
+    "consequence": {
+      "action_type": "s_ops.close",
+      "actual": {
+        "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW": "PASS/VERIFIED"
+      },
+      "execution_status": "success",
+      "expected": {
+        "CR-SOPS-01-CLOSED-OUTSIDE-WINDOW": "PASS"
+      },
+      "matched": true,
+      "target": "docs/operations/s-ops/S-OPS-01.json"
+    },
+    "re_evaluated": true
+  }
+}
