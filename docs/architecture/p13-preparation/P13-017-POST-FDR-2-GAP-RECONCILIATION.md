@@ -107,3 +107,20 @@ closure basis.
 
 **E13-05 VERIFIED does not mean P13 is gap-free.** Residual frontier and open
 non-blocking items remain, and are listed above.
+
+## 8. After the Founder Exit Decision (appended 2026-09-24; §1–§7 unchanged)
+
+`FDR-5` (Decision Register `§25`) accepts the residual frontier recorded in `§7`
+as **known, classified and non-blocking** to the P13 Exit Contract (`FD-E`:
+**SATISFIED**). It adopts this record's classifications for that decision
+only.
+
+**No status in `§7` changes.** Each item stays as classified there:
+
+* `GAP-0017` and `GAP-0018`: residual frontier;
+* the E13-07 register: open, non-blocking;
+* the three reasoning rules and the evolution-proposal path: bounded;
+* the S-OPS observation: open, non-blocking;
+* `FD-2` and F-4: open.
+
+Non-blocking to this exit contract does not mean solved.

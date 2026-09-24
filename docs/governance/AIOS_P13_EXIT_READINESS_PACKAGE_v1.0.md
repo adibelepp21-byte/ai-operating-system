@@ -231,3 +231,23 @@ this package:
 * `tools/p13/cycle.py`'s targeted run wrote only `docs/operations/p13/`, and
   did so inside the probe's disposable worktree. That cycle is not a live
   record.
+
+---
+
+### Founder Exit Decision (appended 2026-09-24; everything above unchanged and historical)
+
+The package above was prepared **before** the Exit Gate. Its §A row *"P13 Exit
+Contract — Founder disposition required"* was the state at that time. The
+Founder has since decided `FDR-5` (Decision Register `§25`):
+
+| | Before (this package) | After `FDR-5` |
+|---|---|---|
+| P13 Exit Contract | Founder disposition required | **SATISFIED** (`FD-E`) |
+| Residual frontier | classified | **known, classified and non-blocking**. Not solved, and each item keeps its own classification |
+| P13 Certification | NOT GRANTED | **NOT GRANTED** |
+| Phase 13 | NOT CLOSED | **NOT CLOSED** |
+| Master Program phase authorization | `AUTHORIZED = FALSE` | **`AUTHORIZED = FALSE`, unchanged** |
+| Phase 14 | not authorized | **NOT AUTHORIZED** |
+
+The next gate is the **P13 Certification Gate**, prepared in
+`docs/governance/AIOS_P13_CERTIFICATION_GATE_HANDOFF_v1.0.md`.
