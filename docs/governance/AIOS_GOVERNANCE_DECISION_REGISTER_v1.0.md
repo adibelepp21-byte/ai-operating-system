@@ -7901,3 +7901,36 @@ That was true when written, and it is kept as written (`§2.3`). From
 | Historical anomaly | Two observation files were rewritten after certification, by commits `7f6120c` and `d18bac4`. They were restored to their certified bytes. The later bytes remain in git history |
 
 Record: `AIOS_GOAL_V2_002_P12_CERTIFICATION_INTEGRITY_RECORD_v1.0.md`.
+
+---
+
+## 17. V2 Founder Goal / Target Append (2026-09-24)
+
+Founder Goals are Founder-issued instruments. Each one sets what the CEO
+executes under `DEL-CFV2-CEO-001` (Matrix `IAM-04`). The Resume Act's first
+Goal is registered in `§15`. The next two were resident but unregistered. This
+append records them. It decides nothing.
+
+### GOAL-V2-002 — Founder Goal / Target · P12 Certification & Evidence Integrity
+
+| Field | Value |
+|---|---|
+| **Identifier** | `GOAL-V2-002` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/GOAL-V2-002-P12-CERTIFICATION-AND-EVIDENCE-INTEGRITY.md` · sha256 `c5ce309fcfaf7366…` |
+| **Status** | ISSUED. Target reported ACHIEVED in `AIOS_GOAL_V2_002_P12_CERTIFICATION_INTEGRITY_RECORD_v1.0.md`. Founder review pending |
+
+**Goal text.** *"RESTORE AND ENFORCE THE INTEGRITY OF P12 CERTIFICATION STATE AND ITS ASSOCIATED CERTIFIED EVIDENCE."*
+
+### GOAL-V2-003 — Founder Goal / Target · Post-GOAL-002 Re-Discovery & Next Authorized Construction Frontier
+
+| Field | Value |
+|---|---|
+| **Identifier** | `GOAL-V2-003` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/GOAL-V2-003-POST-GOAL-002-REDISCOVERY-AND-NEXT-FRONTIER.md` · sha256 `ad6e85698b7b2cd9…` |
+| **Status** | ISSUED. Execution record: `AIOS_GOAL_V2_003_FRONTIER_DETERMINATION_RECORD_v1.0.md` |
+
+**Goal text.** *"PERFORM A FRESH POST-GOAL-002 DISCOVERY OF AIOS ACTUAL STATE AND DETERMINE THE NEXT AUTHORIZED ACTIONABLE CONSTRUCTION FRONTIER FROM CURRENT EVIDENCE, DEPENDENCIES, AND AUTHORITY."*
