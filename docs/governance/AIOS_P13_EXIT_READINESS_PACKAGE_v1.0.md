@@ -221,3 +221,13 @@ All values below were measured on this package's tree.
 | Boundary | no change under `native_core/`, `consumers/`, a certified P10–P12 root, `docs/program/AIOS_*`, the P13 live evidence, `S-OPS-01.json` or the envelope JSON |
 | Write probe | run on the commit that carries this package. The result is appended below, in the commit that follows |
 | Live execution | **none** in this operation: no P13 cycle was run, and no S-OPS transition was made |
+
+**Write probe result (appended).** Commit `990a208`, the commit that carries
+this package:
+
+* **0 certified writes** (`holds: true`). Classification counts: NON-WRITING
+  113, GUARDED 12, SAFE 4, RETIRED/HISTORICAL 13.
+* `tools/s_ops/surface.py` is NON-WRITING by both routes.
+* `tools/p13/cycle.py`'s targeted run wrote only `docs/operations/p13/`, and
+  did so inside the probe's disposable worktree. That cycle is not a live
+  record.
