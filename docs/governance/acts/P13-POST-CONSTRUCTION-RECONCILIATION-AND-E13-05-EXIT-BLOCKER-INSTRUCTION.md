@@ -1,6 +1,6 @@
 # P13 Post-Construction Reconciliation & E13-05 Exit-Blocker Instruction
 
-**Document type (as issued):** Co-Founder / Claude Code Execution Instruction · **Identifier:** none stated in the instrument · **Dated:** not stated; received 2026-09-24
+**Document type (as issued):** Co-Founder / Claude Code Execution Instruction · No identifier is stated in the instrument · **Dated:** not stated; received 2026-09-24
 **Received from:** the Founder's session (Moriarty), after the `P13-018` construction report · **Grants:** nothing. *"This instruction does not itself grant new state-changing authority."*
 **Execution record:** `docs/governance/AIOS_P13_POST_CONSTRUCTION_RECONCILIATION_RECORD_v1.0.md`
 

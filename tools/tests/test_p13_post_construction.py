@@ -82,6 +82,19 @@ class FE1TheDecisionResolvesTheSameWayEverywhere(unittest.TestCase):
         self.assertIsNotNone(authority_citation.refusal("P13-018", PREP_018, "P13-018"))
         self.assertIsNone(authority_citation.refusal("P13-018 D-1", P13_018, "P13-018"))
 
+    def test_an_instrument_without_an_identifier_is_not_given_one_by_its_record(self):
+        """The persisted headers once read `**Identifier:** none stated`, and the
+        index took that phrase as an identifier. Two such acts then collided."""
+        for name in ("P13-POST-CONSTRUCTION-RECONCILIATION-AND-E13-05-EXIT-BLOCKER-INSTRUCTION.md",
+                     "P13-E13-05-SEMANTIC-PROOF-SURFACE-DISCOVERY-INSTRUCTION.md",
+                     "P13-CONTROLLED-OPERATIONAL-STATE-DEFINITION-INSTRUCTION.md"):
+            with self.subTest(name):
+                path = f"docs/governance/acts/{name}"
+                self.assertTrue((REPO_ROOT / path).is_file())
+                identifiers = {r.identifier for r in self.index.records
+                               if r.source_path == path}
+                self.assertLessEqual(identifiers, {"ABSENT"})
+
     def test_a_heading_is_a_declared_entry_only_when_the_register_declares_it(self):
         from tools.governance_index import _subrecord_spans
         declared = ["### X13-1 — Founder Decision · a", "", "| Field | Value |",

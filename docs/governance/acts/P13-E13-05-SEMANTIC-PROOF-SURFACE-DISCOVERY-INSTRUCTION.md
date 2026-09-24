@@ -1,6 +1,6 @@
 # E13-05 Semantic Proof Surface Discovery — Instruction
 
-**Instruction type (as issued):** Pre-FDR-3 Discovery / Semantic Architecture Analysis · **Identifier:** none stated in the instrument · **Dated:** not stated; received 2026-09-24
+**Instruction type (as issued):** Pre-FDR-3 Discovery / Semantic Architecture Analysis · No identifier is stated in the instrument · **Dated:** not stated; received 2026-09-24
 **Received from:** the Founder's session (Moriarty) · **Authorizes:** discovery, semantic analysis, evidence reconciliation, boundary analysis and decision preparation only (instrument `§24`)
 **Discovery report:** `docs/architecture/p13-preparation/P13-E13-05-SEMANTIC-PROOF-SURFACE-DISCOVERY.md`
 
