@@ -212,6 +212,18 @@ P13's own evidence verifies: 5 records, 5 Trace entries, one to one. Across all
 live cycles to date: 5 EXECUTE (all read-only), 10 REFUSE (cycle bound), 0
 state changes beyond P13's records.
 
+**Boundary checks on the final tree (MEASURED).**
+
+* Suites: tools 1581 OK (1 skipped) · native_core 801 OK (1 expected failure)
+  · consumers 276 OK · bounded_exception 29 OK.
+* Audits: citation 0 errors / 89 warnings (baseline) · stale-state 0 ·
+  `P13-015` holds.
+* Certified-evidence integrity holds; the guard reports `{10, 11, 12}` with no
+  anomalies.
+* Write probe at `7b85562` (`tools/p13/cycle.py`): **0 certified writes**.
+  The real cycle, run in a disposable worktree, changed only
+  `docs/operations/p13/`.
+
 ## H. Certification
 
 **P13 CERTIFICATION = NOT REQUESTED / NOT AUTHORIZED.**
