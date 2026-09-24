@@ -204,7 +204,25 @@ map reads the live tree and records.
 
 ## 14. Verification results
 
-⟨VERIFICATION⟩
+Measured on the construction commit `843c0ca` [OBS]:
+
+| Check | Run A | Run B |
+|---|---|---|
+| tools suite | **1473 OK** (1 skipped) | **1473 OK** (1 skipped) |
+| native_core | 801 OK (1 expected failure) | — |
+| consumers | 276 OK | — |
+| bounded_exception | 29 OK | — |
+| Citation audit | 0 errors · 89 warnings (unchanged) | |
+| Stale-state audit | 0 live stale · 55 historical | |
+| Certified-evidence integrity | P10 36/36 · P11 58/58 · P12 121/121 · 0 faults | |
+| Unbridged gates | 43 (phantoms removed) | |
+| Self-model | 12 questions · 10 VERIFIED · 2 INFERRED | |
+
+Tools went from 1454 to 1473 tests: 19 new. No existing test was weakened.
+The only barrier refusals outside temp roots were GOAL-V2-004's 8 deliberate
+launch controls. An earlier run on the uncommitted tree failed two citation
+tests, because the Goal act cited this record before it existed. Both pass
+once the record exists.
 
 ## 15. Negative-control results
 
@@ -229,7 +247,17 @@ and `test_ecosystem_relationships.py` (7); the repaired modules.
 
 ## 17. Re-discovery results
 
-⟨REDISCOVERY⟩
+Run on the **pushed** commit `843c0ca` (verify → persist → re-discover →
+verify again) [OBS]:
+
+| Question (Goal `§17`) | Result |
+|---|---|
+| New entry points / writers | 1 new entry point (`tools/ecosystem_relationships.py`), **NON-WRITING** in both forms. Probe: 135 invocations, **0 certified writes**, 0 UNKNOWN, no GUARDED run changed any file |
+| Broken consumers | none. All four suites pass inside the re-discovery worktree |
+| Evidence integrity | mutation controls M1–M4 re-run: barrier removal → P11 `MODIFIED`; live writer at P12 → refused; change/delete/add/unreadable → each named; Register strike, manifest and instrument alteration → faults. Authoritative tree held before and after |
+| Stale indexes / invalid registrations | citation 0 errors, stale 0, unbridged gates 43, Register `§19` appended |
+| New gaps | none actionable. The relationship map is stable: 3 CODE · 2 DATA · 1 MEDIATED · 1 NOT CONNECTED, 0 stale reasons |
+| New state transitions | none. P13 `AUTHORIZED False`, `GAP-0001` OPEN |
 
 ## 18. Remaining gaps
 
