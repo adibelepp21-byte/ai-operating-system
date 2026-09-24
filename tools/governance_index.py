@@ -43,7 +43,7 @@ The index file itself is a generated artifact and is deliberately not tracked --
 the repository's stated convention is that every tracked file is an authored
 artifact -- so ``build`` has no default output path.
 
-Dependencies: Python standard library only.
+Dependencies: Python standard library only. Run as a program, it first installs the `tools` certified-write barrier (`GOAL-V2-004`).
 """
 
 from __future__ import annotations
@@ -836,4 +836,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
 
 if __name__ == "__main__":
+    # GOAL-V2-004: install the certified-write barrier before anything runs,
+    # even when this file is run by path and has not imported `tools`.
+    import os, sys  # noqa: E401
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import tools  # noqa: E402,F401
     raise SystemExit(main())

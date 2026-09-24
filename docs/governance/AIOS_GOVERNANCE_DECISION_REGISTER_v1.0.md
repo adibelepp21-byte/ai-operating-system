@@ -7934,3 +7934,39 @@ append records them. It decides nothing.
 | **Status** | ISSUED. Execution record: `AIOS_GOAL_V2_003_FRONTIER_DETERMINATION_RECORD_v1.0.md` |
 
 **Goal text.** *"PERFORM A FRESH POST-GOAL-002 DISCOVERY OF AIOS ACTUAL STATE AND DETERMINE THE NEXT AUTHORIZED ACTIONABLE CONSTRUCTION FRONTIER FROM CURRENT EVIDENCE, DEPENDENCIES, AND AUTHORITY."*
+
+---
+
+## 18. GOAL-V2-004 Append and Certified-Evidence Write Closure Status Note (2026-09-24)
+
+This append registers `GOAL-V2-004`, the Founder Goal for the frontier that
+`GOAL-V2-003` determined (`FR-3-01`). It then records how the system now
+**protects and detects** the certified evidence of P10, P11 and P12. It records
+no decision. No certification is created, changed or revoked.
+
+### GOAL-V2-004 — Founder Goal / Target · Certified-Evidence Write Closure · P10 · P11 · P12
+
+| Field | Value |
+|---|---|
+| **Identifier** | `GOAL-V2-004` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/GOAL-V2-004-CERTIFIED-EVIDENCE-WRITE-CLOSURE.md` · content sha256 `1f04d491af5c67fb…` |
+| **Status** | ISSUED. Execution record: `AIOS_GOAL_V2_004_CERTIFIED_EVIDENCE_WRITE_CLOSURE_RECORD_v1.0.md` |
+
+**Goal text.** *"CLOSE THE CERTIFIED-EVIDENCE WRITE PATHS ACROSS P10, P11, AND P12 SO THAT NO RESIDENT EXECUTABLE ENTRY POINT CAN MODIFY CERTIFIED EVIDENCE WITHOUT BEING REFUSED BEFORE THE FIRST WRITE."*
+
+### Status note — certified-evidence protection and detection
+
+| Surface | State from 2026-09-24 |
+|---|---|
+| Prevention | `tools/certified_write_barrier.py`, installed when the `tools` package is imported. It refuses any write into a certified root, a certifying instrument or a manifest, through any Python write API, before that write begins. It also governs process launches |
+| Detection | `tools/certified_evidence_integrity.py` checks every certified phase by content and reports `MODIFIED`, `MISSING`, `UNREADABLE` and `UNEXPECTED`. It also cross-checks certified phases against manifests |
+| P10 manifest | `AIOS_P10_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json`: 36 files under `docs/architecture/platform-organization`, anchored at `e7a3d73`, the commit persisting `FD-P10-005` |
+| P11 manifest | `AIOS_P11_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json`: 58 files under `docs/architecture/p11`, anchored at `98c0a1e`, the commit persisting `FD-P11-002` |
+| P12 manifest | `AIOS_P12_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json` (`§16`), unchanged: 121 files at `6968c6e` |
+| Manifest index | `AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json` · sha256 `34f9673a7a2fcd0ed6bd075d67b3dc5059f739085496886f6a5913a9ea44eb8e`. The index records each manifest's and instrument's sha256. Detection requires the index's own sha256 to appear here |
+
+The P10 and P11 anchors are an implementation choice, stated as such. Neither
+instrument names an evidence commit, and no later commit changes either root.
+Record: `AIOS_GOAL_V2_004_CERTIFIED_EVIDENCE_WRITE_CLOSURE_RECORD_v1.0.md`.

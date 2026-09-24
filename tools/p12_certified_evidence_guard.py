@@ -190,7 +190,7 @@ def _register_identity(stem: str, register_text: str) -> Optional[str]:
     tokens = stem.split("-")
     for length in range(len(tokens), 1, -1):
         candidate = "-".join(tokens[:length])
-        if any(c.isdigit() for c in candidate) and candidate in register_text:
+        if any(c.isdigit() for c in candidate) and re.search(re.escape(candidate) + r"(?![-\w])", register_text):
             return candidate
     return None
 
@@ -361,4 +361,9 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":  # pragma: no cover
+    # GOAL-V2-004: install the certified-write barrier before anything runs,
+    # even when this file is run by path and has not imported `tools`.
+    import os, sys  # noqa: E401
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import tools  # noqa: E402,F401
     raise SystemExit(main())

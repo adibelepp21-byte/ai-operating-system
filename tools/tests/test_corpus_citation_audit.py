@@ -476,7 +476,12 @@ class ScopeGuardTests(unittest.TestCase):
         A verifier that silently ignores newly authored files reports the safety
         of the previous state as though it were the safety of the current one.
         """
-        probe = REPO_ROOT / "docs" / "architecture" / "platform-organization" / "ZZ-VF11-PROBE.md"
+        # The probe used to be written into `platform-organization/`, which is
+        # certified P10 evidence. It left no diff, because it was unlinked
+        # afterwards, but it was still a write into certified evidence, on
+        # every run. `GOAL-V2-004`'s barrier refused it. A non-certified root
+        # that the audit also scans tests the same property.
+        probe = REPO_ROOT / "docs" / "architecture" / "candidates" / "ZZ-VF11-PROBE.md"
         probe.write_text(
             "# probe\nBroken: `docs/architecture/NO_SUCH_FILE_vf11.md`\n",
             encoding="utf-8",
@@ -485,7 +490,7 @@ class ScopeGuardTests(unittest.TestCase):
             report = json.loads(run("--json").stdout)
             sources = {f["source"].split(":")[0] for f in report["findings"]}
             self.assertIn(
-                "docs/architecture/platform-organization/ZZ-VF11-PROBE.md", sources,
+                "docs/architecture/candidates/ZZ-VF11-PROBE.md", sources,
                 "an untracked, non-protected new file was not scanned",
             )
         finally:
