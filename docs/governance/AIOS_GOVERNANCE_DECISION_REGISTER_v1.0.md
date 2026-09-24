@@ -8093,3 +8093,61 @@ distinguish fifteen items, and nothing is complete because code exists.
 **Not authorized:** unrestricted autonomous P13 execution · Native Core
 expansion · self-generated authority · certification of P13. P13 completion is
 **not claimed**.
+
+---
+
+## 23. FDR-3 Append — S-OPS Operational Proof Surface for E13-05 (2026-09-24)
+
+### FDR-3 — Founder Decision · S-OPS: Dedicated Bounded Operational Proof Surface for E13-05
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-3` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | as stated: *"Explicit Founder approval in the current Founder Decision Gate"* · within `FDR-2` (`D05`, `D07`) and `P13-018` (`§4`) |
+| **Record** | `acts/FDR-3-S-OPS-DEDICATED-BOUNDED-OPERATIONAL-PROOF-SURFACE-FOR-E13-05.md` · content sha256 `e7dc3fa9bdf8ed81bb6decff3f0b0d4a3d4fcab2c781fd8efabacc87fb3a820f` |
+| **Answers** | `docs/architecture/p13-preparation/P13-E13-05-OPERATIONAL-SURFACE-FOUNDER-DECISION-PACKAGE.md` `§1`. None of `S-HOLD`, `S-CITE` or `S-W4`: a new dedicated object (the package's `O-4`) |
+| **Status** | ISSUED — **APPROVED: minimum authority to construct and execute the S-OPS proof**. The instrument states neither a date nor an identifier; 2026-09-24 is the date of receipt. `FDR-3` is the next identifier in the `FDR` series, and the one the Founder's own instruments give this decision (act header, *"How the identifier was determined"*) |
+
+**Registered effect.** A dedicated, bounded, reversible operational object
+(**S-OPS**) is approved as the first live proof surface for E13-05, so that
+the loop *decision → authority → execution → consequence → verification →
+trace → re-observation → rediscovery* can be tested on real operational state.
+The surface must be all of the following:
+
+* outside P13's epistemic state;
+* not a P1–P12 canonical artifact, not P11 organizational state, and not
+  production or external state;
+* bounded and reversible;
+* explicitly owned (*"S-OPS operational proof surface"*);
+* explicit in its transitions, preconditions, expected consequences and
+  verification conditions;
+* used only for the E13-05 proof.
+
+**Only the minimum authority** to construct and execute that proof is
+granted. Its executable form is an envelope recorded in the Delegation Register
+after the S-OPS definition exists. The envelope can only be narrower than this
+decision.
+
+**Not authorized:**
+
+* general write authority, or expanding the S-OPS boundary;
+* modifying P1–P12, canonical architecture, the Governance Baseline, Founder
+  Decisions or governance authority;
+* P11 organizational work;
+* production or external systems;
+* arbitrary repository mutation;
+* modifying P13's implementation as part of the live proof;
+* synthesizing authority;
+* certifying P13;
+* E13-05 PASS without its evidence contract;
+* P13 completion, Phase 13 completion, or any later phase.
+
+**Unchanged:**
+
+* phase authorization NOT AUTHORIZED;
+* certification NOT GRANTED;
+* `P13-ENV-01` stays evidence-only;
+* `FD-2` stays open;
+* `NATIVE CORE = 11`.
