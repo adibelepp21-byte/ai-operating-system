@@ -241,7 +241,8 @@ class Fixture(unittest.TestCase):
         envelopes, anomalies = load_envelopes(self.paths)
         gate = AuthorityGate(self.paths, catalog, envelopes)
         proposal = ActionProposal(f"p:{FIXTURE}", FIXTURE, target, ("c:fixture",),
-                                  "fixture", VERIFIED, (0, "", FIXTURE))
+                                  "fixture", VERIFIED, (0, "", FIXTURE),
+                                  expected=(("CR-FIXTURE", "PASS"),))
         decision = gate.decide(proposal)
         outcome = None
         if decision.decision == EXECUTE:

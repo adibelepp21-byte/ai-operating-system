@@ -324,3 +324,22 @@ That protocol is **TEST-VERIFIED only**. No envelope grants a state-changing
 type, and the production catalog has no executable one. The Founder decision
 surface is `docs/architecture/p13-preparation/P13-019-E13-05-STATE-CHANGING-AUTHORITY-DECISION-SURFACE.md`,
 and the record is `docs/governance/AIOS_P13_POST_CONSTRUCTION_RECONCILIATION_RECORD_v1.0.md`.
+
+## 14. E13-05 consequence mechanism (added 2026-09-24; §0–§13 unchanged)
+
+This follows the bounded-operational-state instruction
+(`acts/P13-E13-05-BOUNDED-OPERATIONAL-STATE-PROOF-SURFACE-INSTRUCTION.md`).
+
+**Proposals carry an expected consequence**, fixed before the gate:
+
+* the gate refuses a state change that has none;
+* the cycle compares expected against actual after re-evaluation;
+* a mismatch is never a success, and the remedy goes to review
+  (`review.consequence`, reserved) instead of being retried.
+
+**Decision provenance is checked from evidence.** Every EXECUTE must trace, in
+its own record, to premises P13 observed.
+
+**No production state-changing action exists**, and no envelope grants one.
+The operational surface is a Founder decision:
+`docs/architecture/p13-preparation/P13-E13-05-OPERATIONAL-SURFACE-FOUNDER-DECISION-PACKAGE.md`.

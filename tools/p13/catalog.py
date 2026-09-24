@@ -104,6 +104,9 @@ RESERVED = (
     "issue.delegation", "admit.knowledge", "change.native_core",
     "change.constitution", "expand.envelope", "grant.authority",
     "external.action",
+    # A remedy that did not bring about its expected consequence goes to a
+    # human for review. It is never retried blindly, and never executable.
+    "review.consequence",
 )
 
 CATALOG: Dict[str, ActionType] = {

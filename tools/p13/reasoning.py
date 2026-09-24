@@ -13,6 +13,7 @@ is rejected (E13-03's negative controls).
 | `R-GAP` | an UNKNOWN that nothing resident can resolve | a knowledge gap, a limitation, or a capability gap | Q19, Q27, Q40, Q89 |
 | `R-SYSTEMIC` | two or more FAILs that share a source, or UNKNOWNs whose shared source is down | one common cause, not several problems | Q57, Q59 |
 | `R-CHANGED` | this cycle's facts vs the last cycle's, from Memory | what changed | E13-06 |
+| `R-MISMATCH` | Memory: the last executed action's consequence did not match its expectation | the remedy did not work: review it, do not repeat it | E13-05, instruction `§19` |
 | `R-AUTHORITY` | an envelope anomaly | a governance defect | `G-02` |
 | `R-AWAITING` | OPEN escalations | a human response is pending; P13 cannot give one | `§5.3` |
 
@@ -88,6 +89,7 @@ class Reasoning:
                         (e.id,) + tuple(stale), INFERRED, action))
         out.extend(self._systemic(evaluations))
         out.extend(self._changed(snapshot))
+        out.extend(self._mismatch(snapshot))
         out.extend(self._authority(snapshot))
         out.extend(self._awaiting(snapshot))
         for c in out:
@@ -150,6 +152,23 @@ class Reasoning:
              + ", ".join(changed)) if changed else
             f"no observed fact changed since cycle {memory.value.get('cycle_id')}",
             ("memory.p13.previous",) + tuple(changed), VERIFIED, "state")]
+
+    @staticmethod
+    def _mismatch(snapshot: StateSnapshot) -> List[Conclusion]:
+        """R-MISMATCH: the last executed action did not bring about what it expected."""
+        memory = snapshot.get("memory.p13.previous")
+        if memory is None or memory.status == UNKNOWN or not memory.value:
+            return []
+        consequence = memory.value.get("consequence") or {}
+        if consequence.get("matched") is not False:
+            return []
+        subject = f"{consequence['action_type']}|{consequence['target']}"
+        return [Conclusion(
+            f"c:mismatch:{subject}", "R-MISMATCH", "consequence-mismatch",
+            f"cycle {memory.value.get('cycle_id')} executed {consequence['action_type']} "
+            f"on {consequence['target']}, expecting {consequence['expected']}, and "
+            f"observed {consequence['actual']}: the remedy did not work as expected",
+            ("memory.p13.previous",), VERIFIED, subject)]
 
     @staticmethod
     def _authority(snapshot: StateSnapshot) -> List[Conclusion]:

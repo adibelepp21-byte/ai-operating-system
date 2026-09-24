@@ -219,3 +219,17 @@ Irreversible / external actions remain prohibited:       [ ] YES   [ ] NO: _____
 Optional — identifier policy for future P13 decisions:   ______
 Optional — P13 phase authorization:  [ ] not now   [ ] AUTHORIZE   [ ] other: ______
 ```
+
+---
+
+**Later (2026-09-24, appended; the text above is unchanged).** Three
+documents refine this surface:
+
+* the semantic discovery (`P13-E13-05-SEMANTIC-PROOF-SURFACE-DISCOVERY.md`);
+* the definition (`P13-CONTROLLED-OPERATIONAL-STATE-DEFINITION-RESIDUAL-FRONTIER-REGISTER.md`);
+* the operational-surface package
+  (`P13-E13-05-OPERATIONAL-SURFACE-FOUNDER-DECISION-PACKAGE.md`).
+
+E-1's workspace boundary alone is not a proof surface. The decision now
+pending is the package's §1.
+

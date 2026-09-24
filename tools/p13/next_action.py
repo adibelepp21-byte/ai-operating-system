@@ -32,7 +32,12 @@ from typing import Dict, List, Tuple
 from tools.p13.model import (INFERRED, KNOWLEDGE_GAP, UNKNOWN, VERIFIED,
                              ActionProposal, Conclusion, StateSnapshot)
 
-RANK = {"defect": 0, "evidence-obtainable": 1, "gap": 2, "evidence-stale": 3}
+RANK = {"consequence-mismatch": 0, "defect": 0, "evidence-obtainable": 1, "gap": 2,
+        "evidence-stale": 3}
+#: What each kind of conclusion expects its action to bring about (see
+#: `ActionProposal.expected`). A mismatch review expects nothing of the world.
+EXPECT = {"defect": "PASS", "evidence-obtainable": "DETERMINED", "gap": "DETERMINED",
+          "evidence-stale": "VERIFIED"}
 _WORST = {VERIFIED: 0, INFERRED: 1, UNKNOWN: 2}
 
 
@@ -46,10 +51,15 @@ class NextAction:
         memory = snapshot.get("memory.p13.previous")
         last = ((memory.value or {}).get("last_executed", {})
                 if memory and memory.status != UNKNOWN else {})
+        # An action whose last execution did not bring about its expected
+        # consequence is not proposed again. The mismatch goes to review
+        # instead (instruction §19: re-evaluate, never retry blindly).
+        failed = {tuple(c.subject.split("|", 1)) for c in conclusions
+                  if c.kind == "consequence-mismatch"}
         grouped: Dict[Tuple[str, str], List[Conclusion]] = {}
         for c in conclusions:
             key = self._action(c)
-            if key:
+            if key and key not in failed:
                 grouped.setdefault(key, []).append(c)
         proposals = []
         for (action, target), group in grouped.items():
@@ -60,10 +70,13 @@ class NextAction:
                 derived_from=tuple(c.id for c in group),
                 rationale="; ".join(c.statement for c in group),
                 certainty=certainty,
-                priority=(rank, last.get(action, ""), f"{action}:{target}")))
+                priority=(rank, last.get(action, ""), f"{action}:{target}"),
+                expected=_expected(group)))
         return tuple(sorted(proposals, key=lambda p: p.priority))
 
     def _action(self, c: Conclusion):
+        if c.kind == "consequence-mismatch":
+            return ("review.consequence", c.subject.replace("|", ":", 1))
         if c.kind == "defect":
             if c.subject == "authority":
                 return ("change.governance", "p13-envelopes")
@@ -74,3 +87,14 @@ class NextAction:
         if c.kind == "gap" and c.gap_class == KNOWLEDGE_GAP:
             return ("admit.knowledge", c.subject)
         return None
+
+
+def _expected(group: List[Conclusion]) -> Tuple[Tuple[str, str], ...]:
+    """(criterion, expectation) for every criterion the group's conclusions rest on."""
+    out = {}
+    for c in group:
+        expectation = EXPECT.get(c.kind)
+        criterion = next((p[len("eval:"):] for p in c.premises if p.startswith("eval:")), None)
+        if expectation and criterion:
+            out[criterion] = expectation
+    return tuple(sorted(out.items()))

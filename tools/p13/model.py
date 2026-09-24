@@ -169,6 +169,12 @@ class ActionProposal:
     certainty: str
     priority: Tuple[int, str, str]
     origin: str = "next-action"      # or "evolution"
+    #: What P13 expects the action to bring about, fixed **before** the gate
+    #: sees the proposal: (criterion, expectation) pairs, where the expectation
+    #: is PASS, DETERMINED (PASS or FAIL, no longer UNKNOWN) or VERIFIED
+    #: (certainty VERIFIED). The cycle compares it with what re-evaluation
+    #: actually shows. The expectation is never rewritten to fit the result.
+    expected: Tuple[Tuple[str, str], ...] = ()
 
     def __post_init__(self):
         if not self.derived_from:

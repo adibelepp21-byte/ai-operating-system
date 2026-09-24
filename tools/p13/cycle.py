@@ -33,8 +33,8 @@ from tools.p13.evidence import EvidenceStore
 from tools.p13.evolution import Evolution
 from tools.p13.execution import BoundedExecution
 from tools.p13.frontier import Frontier
-from tools.p13.model import (ESCALATE, EXECUTE, P13Error, UNKNOWN, VERIFIED,
-                             digest, recorded)
+from tools.p13.model import (ESCALATE, EXECUTE, FAIL, PASS, P13Error, UNKNOWN,
+                             VERIFIED, digest, recorded)
 from tools.p13.next_action import NextAction
 from tools.p13.paths import LIVE, Paths
 from tools.p13.reasoning import Reasoning
@@ -116,6 +116,23 @@ def run_cycle(paths: Paths = LIVE, *, intent: str, invoker: str,
                for b, a in zip(evaluated_before, evaluated_after)
                if (b.result, b.certainty) != (a.result, a.certainty)]
     escalations = [d.escalation_id for d in decisions if d.decision == ESCALATE]
+    executed = next((d for d in decisions if d.decision == EXECUTE), None)
+    consequence = _consequence(executed, outcome, evaluated_after)
+    execution_trace = None
+    if executed is not None:
+        envelope = next((e for e in envelopes if e.id == executed.envelope), None)
+        execution_trace = {
+            "action_type": executed.proposal.action_type,
+            "target": executed.proposal.target,
+            "derived_from": list(executed.proposal.derived_from),
+            "envelope": executed.envelope,
+            "authority": envelope.instrument if envelope else None,
+            "authority_record": envelope.record if envelope else None,
+            "scope": list(executed.scope),
+            "gate": executed.reason,
+            "status": outcome.status if outcome else None,
+            "detail": outcome.detail if outcome else None,
+            "consequence": consequence}
 
     record = {
         "cycle_id": cycle_id,
@@ -133,7 +150,7 @@ def run_cycle(paths: Paths = LIVE, *, intent: str, invoker: str,
         "decisions": [d.recorded() for d in decisions],
         "executed": recorded(outcome) if outcome else None,
         "verification": {"re_evaluated": evaluated_after is not evaluated_before,
-                         "changes": changes},
+                         "changes": changes, "consequence": consequence},
         "gaps": recorded(gaps),
         "frontier": frontier,
         "briefing": _briefing(decisions, evaluated_after, frontier),
@@ -157,8 +174,11 @@ def run_cycle(paths: Paths = LIVE, *, intent: str, invoker: str,
                                 "decision": d.decision, "reason": d.reason}
                                for d in decisions],
                  "verified": verified, "last_executed": last_executed,
+                 # §16: the executed action's full chain, not a success flag.
+                 "execution": execution_trace, "consequence": consequence,
                  "exhaustion": frontier["state"]},
         status=("failure" if (outcome and outcome.status != "success") or not readback
+                or (consequence and consequence["matched"] is False)
                 else "escalation" if escalations else "success"),
         tools_used=[outcome.executor] if outcome else [],
         knowledge_consumed=([{"key": "corpus-health.criteria",
@@ -172,8 +192,37 @@ def run_cycle(paths: Paths = LIVE, *, intent: str, invoker: str,
             "decisions": {d.proposal.subject: d.decision for d in decisions},
             "escalations": escalations,
             "results": {e.criterion: f"{e.result}/{e.certainty}" for e in evaluated_after},
-            "changes": changes, "exhaustion": frontier["state"],
+            "changes": changes, "consequence": consequence,
+            "exhaustion": frontier["state"],
             "digest_after": after.digest, "briefing": record["briefing"]}
+
+
+def _consequence(executed, outcome, evaluations) -> Optional[dict]:
+    """Expected vs actual consequence of the executed action (instruction §7.5–7.7).
+
+    The expectation was fixed on the proposal before the gate decided. Here it
+    is only compared, never adjusted. An execution whose own postcondition held
+    but whose expected consequence did not occur is **not** a success.
+    """
+    if executed is None:
+        return None
+    results = {e.criterion: e for e in evaluations}
+    actual, matched = {}, True
+    for criterion, expectation in executed.proposal.expected:
+        e = results.get(criterion)
+        actual[criterion] = f"{e.result}/{e.certainty}" if e else "ABSENT"
+        holds = e is not None and (
+            (expectation == "PASS" and e.result == PASS)
+            or (expectation == "DETERMINED" and e.result in (PASS, FAIL))
+            or (expectation == "VERIFIED" and e.certainty == VERIFIED))
+        matched = matched and holds
+    if outcome is None or outcome.status != "success":
+        matched = False
+    return {"action_type": executed.proposal.action_type,
+            "target": executed.proposal.target,
+            "expected": dict(executed.proposal.expected), "actual": actual,
+            "execution_status": outcome.status if outcome else None,
+            "matched": matched if executed.proposal.expected else None}
 
 
 def _shown(path, paths: Paths) -> str:

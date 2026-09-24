@@ -239,6 +239,10 @@ class AuthorityGate:
         if not action.verifiable:
             return self._decision(proposal, REFUSE, "no verification path: no "
                                   "execution (post-construction instruction §8.5)")
+        if action.effect != READ_ONLY and not proposal.expected:
+            return self._decision(proposal, REFUSE, "no expected consequence: a "
+                                  "state change must say beforehand what it should "
+                                  "bring about")
         for precondition in action.preconditions:
             unmet = precondition(self._paths, proposal.target)
             if unmet:
