@@ -8000,3 +8000,26 @@ nor authorizes P13 construction.
 | W4 authority citations | `tools/w4_delegation.py` and `tools/agent_instance_registry.py` now require the citation to reach `FD-P11-001` itself (`FD-P11-001 §24`) through `tools/authority_citation.py`. Every resident record still resolves |
 | Self-model open escalations | four, not one: `23f315ba9f504272` (P11), plus `0991300404cf44d8`, `9d6bc0ad47294ef0` and `9cb90fa0787a478c` (P12). All four are OPEN by the escalation register's own rule |
 | Ecosystem relationships | measured by `tools/ecosystem_relationships.py`. Of the seven relationships in the Goal's `§14` chain, 3 are bound in code, 2 by data and 1 only through Organization. Memory ↔ Intelligence is not connected, by the recorded design of the P5 realization |
+
+---
+
+## 20. FDR-1 Append — P13 Blueprint v0.4 Disposition (2026-09-24)
+
+### FDR-1 — Founder Decision · Review & Disposition of P13 Blueprint v0.4
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-1` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md` · content sha256 `286613a3e1b249f3…` |
+| **Status** | ISSUED — **MODIFY / PROCEED TO FDR-2**. The instrument states no date; 2026-09-24 is the date of receipt |
+
+**Effect.** v0.4 (`00efeeae…`) becomes the Founder review basis, architectural
+hypothesis and decision-preparation artifact. It remains **non-canonical**.
+Unchanged: P13 canonical definition NOT ESTABLISHED (`GAP-0001` OPEN), P13
+authorization NOT GRANTED, construction and certification NOT AUTHORIZED,
+Native Core 11 FROZEN. Reject: NO. Path C: NO. Next gate: `FDR-2` — P13
+Definition, Boundary, Meaning & Exit Contract. Its decision surface is prepared
+at `docs/architecture/p13-preparation/P13-016-FDR-2-DECISION-SURFACE.md`,
+which recommends (marked **[REC]**) and decides nothing.
