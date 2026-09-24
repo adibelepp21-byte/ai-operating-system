@@ -657,3 +657,68 @@ item 2, and the cycle's own records on items 3 and 4. The mapping can only
 narrow. A type that is not listed is not permitted, and the P13 AuthorityGate
 escalates it. The gate executes nothing unless this entry names the envelope,
 the entry's sha256 matches the JSON, and the instrument resolves.
+
+---
+
+## 15. P13-ENV-02 Append — S-OPS Operational Proof Envelope (2026-09-24)
+
+**Why this append exists.** `FDR-3` (Founder — Moriarty, received 2026-09-24;
+Decision Register `§23`) approves a dedicated S-OPS object as the first live
+proof surface for E13-05. It grants *"only the minimum authority required to
+construct and execute that S-OPS proof"*, and it requires the surface's
+owner, transitions, preconditions, expected consequences and verification
+conditions to be made explicit (`FDR-3` `§4`, `§7`). They are defined in
+`docs/operations/s-ops/S-OPS-DEFINITION.md`.
+
+This entry records the executable form of that grant, applied to that one
+object. The gate executes nothing on it until this entry exists. **Recording it
+is not issuing it** (`P13-018` `G-08`). Everything above this section is
+unaltered (`§2`).
+
+### P13-ENV-02 — P13 S-OPS Operational Proof Envelope
+
+| Field | Value |
+|---|---|
+| **Envelope ID** | `P13-ENV-02` |
+| **Date** | 2026-09-24 |
+| **Issued by** | Founder — Moriarty, in `FDR-3` `§4` |
+| **Instrument** | `acts/FDR-3-S-OPS-DEDICATED-BOUNDED-OPERATIONAL-PROOF-SURFACE-FOR-E13-05.md` · content sha256 `e7dc3fa9bdf8ed81bb6decff3f0b0d4a3d4fcab2c781fd8efabacc87fb3a820f` |
+| **Holder** | the P13 ecosystem layer (`tools/p13/`), when invoked by a human or by the CEO |
+| **Machine-readable record** | `docs/governance/p13-envelopes/P13-ENV-02.json` · sha256 `b572ebf5c392a6689eaaf6195562d58640c0cfb4f84c1664bbf2621b38c59871` |
+| **Target** | `docs/operations/s-ops/S-OPS-01.json` only. Owner: S-OPS operational proof surface |
+| **Action types** | `s_ops.open` (`CLOSED → OPEN`, only within the object's window) · `s_ops.close` (`OPEN → CLOSED`, only outside it). Nothing else |
+| **Cycle basis** | none. Observing and recording stand on `P13-ENV-01` |
+| **Designated live root** | `docs/operations/p13/`, where P13's evidence goes. The S-OPS object is the target, not the live root |
+| **Expiry** | none stated in `FDR-3`, and none is added. The grant exhausts itself: once the window has ended and the object is CLOSED, no precondition of either transition can hold again (definition `§11`) |
+| **Nature** | **Minimum, not general** (`FDR-3` `§1`, `§4`). Narrower than `FDR-3`, never wider |
+| **Amendment · Suspension · Revocation Authority** | Founder |
+| **Recorded by** | Claude Code, under `FDR-3` `§5` (the decision must be referenceable by the Authority Gate) |
+| **Status** | **ACTIVE** |
+
+**Prohibited** (from `FDR-3` `§3`, and narrowed):
+
+* any other transition, field, object or path;
+* changing the window, deleting the object, or rewriting its history;
+* creating S-OPS objects;
+* modifying P1–P12, P11 organizational state, canonical architecture, the
+  Governance Baseline, Founder Decisions or governance authority;
+* production or external systems;
+* modifying P13's implementation;
+* synthesizing, granting or expanding authority, this envelope included;
+* certifying P13, or declaring E13-05 PASS without its evidence contract.
+
+**What the gate checks.** For every S-OPS proposal, in this order:
+
+* the action type is one of the two;
+* exactly one envelope permits it;
+* the target is the one object;
+* the type has an executor and a verification path;
+* the proposal fixed its expected consequence beforehand;
+* each precondition holds **now**: the object exists and is owned by the
+  surface, the state is the transition's `from` state, and the window phase
+  is the one required;
+* no other action has executed in this cycle.
+
+Execution then compares the whole S-OPS root, both Registers, the envelopes and
+the `FDR-3` act before and after. Any change outside the one object is a
+failure.

@@ -1,0 +1,52 @@
+{
+  "envelope_id": "P13-ENV-02",
+  "kind": "P13 action envelope",
+  "issued_by": "Founder — Moriarty",
+  "instrument": "FDR-3 §4",
+  "record": "docs/governance/acts/FDR-3-S-OPS-DEDICATED-BOUNDED-OPERATIONAL-PROOF-SURFACE-FOR-E13-05.md",
+  "decision_content_sha256": "e7dc3fa9bdf8ed81bb6decff3f0b0d4a3d4fcab2c781fd8efabacc87fb3a820f",
+  "recorded_by": "Claude Code — AIOS Co-Founder + Delegated CEO. Recording the executable form of the grant FDR-3 issued, as applied to the S-OPS object FDR-3 §7 required to be defined; narrower than FDR-3, never wider; not issuing authority (G-08)",
+  "date": "2026-09-24",
+  "nature": "the minimum authority to execute the S-OPS proof (FDR-3 §4); not general write authority",
+  "surface": {
+    "owner": "S-OPS operational proof surface",
+    "definition": "docs/operations/s-ops/S-OPS-DEFINITION.md",
+    "root": "docs/operations/s-ops",
+    "object": "S-OPS-01"
+  },
+  "permitted": [
+    "s_ops.open: S-OPS-01 CLOSED → OPEN, only while S-OPS-01 is within its window;",
+    "s_ops.close: S-OPS-01 OPEN → CLOSED, only while S-OPS-01 is outside its window."
+  ],
+  "prohibited": [
+    "any other transition, field, object or path;",
+    "changing S-OPS-01's window, deleting it, or rewriting its history;",
+    "creating S-OPS objects;",
+    "modifying P1–P12, P11 organizational state, canonical architecture, the Governance Baseline, Founder Decisions or governance authority;",
+    "production or external systems;",
+    "modifying P13's implementation;",
+    "synthesizing, granting or expanding authority, including this envelope;",
+    "certifying P13 or declaring E13-05 PASS without its evidence contract."
+  ],
+  "designated_live_root": "docs/operations/p13",
+  "cycle_basis": {},
+  "action_types": {
+    "s_ops.open": {
+      "items": [
+        "FDR-3 §4: S-OPS-01 CLOSED → OPEN within its window"
+      ],
+      "targets": [
+        "docs/operations/s-ops/S-OPS-01.json"
+      ]
+    },
+    "s_ops.close": {
+      "items": [
+        "FDR-3 §4: S-OPS-01 OPEN → CLOSED outside its window (the reversal, FDR-3 §14)"
+      ],
+      "targets": [
+        "docs/operations/s-ops/S-OPS-01.json"
+      ]
+    }
+  },
+  "reading_note": "The two action types and their one target are the whole grant. An action type absent here is not permitted by this envelope; a target outside the list is refused by the P13 AuthorityGate. This envelope grants no cycle basis: observing and recording stand on P13-ENV-01. It states no expiry because FDR-3 states none; it exhausts itself once S-OPS-01's window has ended and the object is CLOSED (definition §11). Revocable by the Founder through a Register line marking it REVOKED."
+}

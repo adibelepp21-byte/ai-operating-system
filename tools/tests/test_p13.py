@@ -486,9 +486,11 @@ class EnvelopesResolveOrAreAnomalies(Tmp):
 
     def test_the_live_envelope_resolves(self):
         envelopes, anomalies = load_envelopes(Paths(REPO_ROOT))
-        self.assertEqual([e.id for e in envelopes], ["P13-ENV-01"])
+        # P13-ENV-02 is FDR-3's S-OPS envelope (Delegation Register §15).
+        self.assertEqual([e.id for e in envelopes], ["P13-ENV-01", "P13-ENV-02"])
         self.assertEqual(anomalies, ())
-        self.assertFalse(set(envelopes[0].action_types) & set(RESERVED))
+        for envelope in envelopes:
+            self.assertFalse(set(envelope.action_types) & set(RESERVED))
 
     def test_a_tampered_envelope_is_not_the_recorded_one(self):
         shutil.copy(ENVELOPE, self.envelope_dir / "P13-ENV-01.json")
@@ -502,7 +504,8 @@ class EnvelopesResolveOrAreAnomalies(Tmp):
         self.assertIn("tampered or unrecorded", anomalies[0])
 
     def test_a_planted_envelope_is_not_recorded(self):
-        self._write("P13-ENV-02.json", self._base(envelope_id="P13-ENV-02"),
+        # An id no Register entry holds (P13-ENV-02 is recorded, since FDR-3).
+        self._write("P13-ENV-99.json", self._base(envelope_id="P13-ENV-99"),
                     register_it=False)
         envelopes, anomalies = load_envelopes(self.paths)
         self.assertEqual(envelopes, ())
@@ -536,7 +539,8 @@ class EnvelopesResolveOrAreAnomalies(Tmp):
         self.assertIn("does not designate", load_envelopes(self.paths)[1][0])
 
     def test_with_no_recorded_authority_a_cycle_does_nothing_but_escalate(self):
-        self._write("P13-ENV-02.json", self._base(envelope_id="P13-ENV-02"),
+        # An id no Register entry holds (P13-ENV-02 is recorded, since FDR-3).
+        self._write("P13-ENV-99.json", self._base(envelope_id="P13-ENV-99"),
                     register_it=False)
         result = cycle.run_cycle(self.paths, intent="t", invoker="t", sources=FAST)
         self.assertEqual(result["status"], "REFUSED")

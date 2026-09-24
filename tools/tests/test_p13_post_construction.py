@@ -120,10 +120,20 @@ class FE2TheAuthorityDimensionsAreKeptApart(unittest.TestCase):
         self.assertEqual({k: v["state"] for k, v in dims.items()}, {
             "phase_authorization": "NOT AUTHORIZED",
             "construction_authorization": "AUTHORIZED — bounded to Blueprint §10 IN",
-            "operational_envelope": "EVIDENCE-ONLY",
-            "state_changing_authority": "NONE",
+            "operational_envelope": "EVIDENCE-ONLY + BOUNDED STATE-CHANGING",
+            "state_changing_authority": dims["state_changing_authority"]["state"],
             "certification_authority": "NOT GRANTED",
         })
+        # FDR-3 (Decision Register §23) → P13-ENV-02 (Delegation Register §15):
+        # the only state-changing grants, each bounded to the one S-OPS object.
+        grants = dims["state_changing_authority"]["grants"]
+        self.assertEqual(sorted(g["action_type"] for g in grants),
+                         ["s_ops.close", "s_ops.open"])
+        for grant in grants:
+            self.assertEqual((grant["envelope"], grant["instrument"], grant["targets"]),
+                             ("P13-ENV-02", "FDR-3 §4",
+                              ["docs/operations/s-ops/S-OPS-01.json"]))
+        self.assertTrue(dims["state_changing_authority"]["state"].startswith("BOUNDED: "))
         self.assertEqual({v["verified"] for v in dims.values()}, {VERIFIED})
         self.assertIn("§37", dims["phase_authorization"]["source"])
         self.assertIn("§22", dims["construction_authorization"]["source"])
@@ -138,8 +148,12 @@ class FE2TheAuthorityDimensionsAreKeptApart(unittest.TestCase):
             Paths(REPO_ROOT),
             catalog={**CATALOG, "verify.p13_evidence": ActionType(
                 "verify.p13_evidence", False, effect=STATE_CHANGING)})
-        self.assertEqual(dims["state_changing_authority"]["state"],
-                         "GRANTED: verify.p13_evidence")
+        state = dims["state_changing_authority"]["state"]
+        # Declared without a target scope, so it is not BOUNDED, and the
+        # projection says the gate refuses it.
+        self.assertTrue(state.startswith("GRANTED: "), state)
+        self.assertIn("verify.p13_evidence → no target scope, so the gate refuses it "
+                      "(P13-ENV-01 · P13-018 D-2b)", state)
 
 
 # ---------------------------------------------------------------------------
@@ -461,12 +475,23 @@ class TheProductionCatalogStaysReadOnly(unittest.TestCase):
                 self.assertTrue(action.reserved or action.run is None, action.name)
         self.assertNotIn(FIXTURE, CATALOG)
 
-    def test_the_live_envelope_grants_no_state_change_and_declares_no_targets(self):
+    def test_the_evidence_envelope_grants_no_state_change_and_declares_no_targets(self):
         envelopes, _ = load_envelopes(Paths(REPO_ROOT))
-        (envelope,) = envelopes
+        envelope = {e.id: e for e in envelopes}["P13-ENV-01"]
         self.assertEqual(envelope.targets, ())
         for action_type in envelope.action_types:
             self.assertIn(CATALOG[action_type].effect, ("read-only", "record"))
+
+    def test_the_only_state_changing_envelope_is_fdr3s_and_names_one_object(self):
+        envelopes, _ = load_envelopes(Paths(REPO_ROOT))
+        self.assertEqual([e.id for e in envelopes], ["P13-ENV-01", "P13-ENV-02"])
+        envelope = {e.id: e for e in envelopes}["P13-ENV-02"]
+        self.assertEqual(envelope.identifier, "FDR-3")
+        self.assertEqual(envelope.action_types, ("s_ops.close", "s_ops.open"))
+        self.assertEqual(envelope.cycle_basis, ())
+        self.assertEqual(dict(envelope.targets), {
+            "s_ops.close": ("docs/operations/s-ops/S-OPS-01.json",),
+            "s_ops.open": ("docs/operations/s-ops/S-OPS-01.json",)})
 
 
 if __name__ == "__main__":

@@ -315,6 +315,17 @@ def raise_escalation(paths: Paths, envelopes, subject: str, reason: str, *,
 P13_018_ACT = "docs/governance/acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md"
 
 
+def _executable(action):
+    """True, or why the gate could not execute this type at all."""
+    if action is None:
+        return "not in the ActionCatalog"
+    if action.reserved or action.run is None:
+        return "no executor"
+    if not action.verifiable:
+        return "no verification path"
+    return True
+
+
 def authority_dimensions(paths: Paths, catalog=None) -> Dict[str, dict]:
     """Five authority dimensions for P13, each read from its own source.
 
@@ -360,23 +371,41 @@ def authority_dimensions(paths: Paths, catalog=None) -> Dict[str, dict]:
     envelopes, anomalies = load_envelopes(paths)
     effects = {t: catalog[t].effect if t in catalog else "unknown"
                for e in envelopes for t in e.action_types}
+    # A state-changing grant is projected with its envelope, instrument and
+    # target scope, so the projection names exactly what may change and on
+    # what authority (FDR-3 §5: "an unambiguous authority projection").
+    grants = [{"action_type": t, "effect": effects[t], "envelope": e.id,
+               "instrument": e.instrument, "targets": list(e.targets_for(t) or ()),
+               "executable": _executable(catalog.get(t))}
+              for e in envelopes for t in e.action_types
+              if effects[t] not in (RO, RECORD)]
+    bounded = bool(grants) and all(g["targets"] for g in grants)
     out["operational_envelope"] = {
-        "state": ("EVIDENCE-ONLY" if envelopes and all(v in (RO, RECORD)
-                                                       for v in effects.values())
-                  else "NONE" if not envelopes else "MIXED"),
+        "state": ("NONE" if not envelopes else "EVIDENCE-ONLY" if not grants
+                  else "EVIDENCE-ONLY + BOUNDED STATE-CHANGING" if bounded
+                  else "MIXED"),
         "source": ", ".join(f"{e.id} ({e.instrument})" for e in envelopes)
                   or "no resolved envelope",
         "meaning": "what P13 may execute, from recorded envelopes only",
         "verified": "VERIFIED", "action_types": effects,
         "anomalies": list(anomalies)}
 
-    changing = sorted(t for t, v in effects.items() if v not in (RO, RECORD))
+    def shown(g):
+        scope = ", ".join(g["targets"]) or "no target scope, so the gate refuses it"
+        ready = "" if g["executable"] is True else f" [not executable: {g['executable']}]"
+        return (f"{g['action_type']} → {scope} "
+                f"({g['envelope']} · {g['instrument']}){ready}")
     out["state_changing_authority"] = {
-        "state": "NONE" if not changing else "GRANTED: " + ", ".join(changing),
-        "source": "the effect class of every action type a resolved envelope permits",
+        "state": ("NONE" if not grants else
+                  ("BOUNDED: " if bounded else "GRANTED: ")
+                  + "; ".join(shown(g) for g in sorted(grants, key=lambda g:
+                                                       g["action_type"]))),
+        "source": ("every action type a resolved envelope permits whose effect "
+                   "class is not read-only or record, with that envelope's "
+                   "declared targets"),
         "meaning": ("authority to change state beyond P13's own records. Required "
                     "for E13-05's full contract; only a governance decision grants it"),
-        "verified": "VERIFIED"}
+        "verified": "VERIFIED", "grants": grants}
 
     try:
         certified = 13 in guard.certified_phases()
