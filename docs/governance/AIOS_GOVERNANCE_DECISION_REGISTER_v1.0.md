@@ -8151,3 +8151,36 @@ decision.
 * `P13-ENV-01` stays evidence-only;
 * `FD-2` stays open;
 * `NATIVE CORE = 11`.
+
+---
+
+## 24. FDR-4 Append — P13 Post-E13-05 Governance Reconciliation & Exit Readiness (2026-09-24)
+
+### FDR-4 — Founder Decision · P13 Post-E13-05 Governance Reconciliation & Exit Readiness
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-4` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | as stated: *"Founder-approved disposition contained in this instruction + existing Co-Founder Delegation Charter V2 + applicable canonical AIOS governance"* · follows `FDR-3` |
+| **Record** | `acts/FDR-4-P13-POST-E13-05-GOVERNANCE-RECONCILIATION-AND-EXIT-READINESS.md` · content sha256 `5ee930d0358d9ec3f3b351c17d422e726d9aad88e16f194db0ed6ba56f86259a` |
+| **Status** | ISSUED — **four dispositions, FD-A to FD-D**. The instrument states neither a date nor an identifier; 2026-09-24 is the date of receipt. `FDR-4` is the next identifier in the `FDR` series |
+
+| Disposition | Registered effect |
+|---|---|
+| `FD-A` | Live ESCALATE proof is **not required** for E13-05 verification. Controlled/test evidence suffices for the reserved/ambiguous escalation branch. **E13-05 remains VERIFIED** |
+| `FD-B` | `P13-ENV-02` has fulfilled its `FDR-3` purpose and is **spent / retired / revoked**. It adds no authority |
+| `FD-C` | An **append-only** reconciliation note to the P13 Blueprint is authorized. Historical `§13`/`§14` must not be rewritten, deleted or corrected |
+| `FD-D` | The substantive P13 exit evidence establishes **EXIT-READY**. EXIT-READY ≠ exit contract satisfied ≠ certified ≠ Phase 13 closed. The next step is a Founder Exit Gate |
+
+**Not authorized:**
+
+* new capability;
+* a second live E13-05 proof;
+* a new S-OPS;
+* new or widened authority;
+* P1–P12 or P11 mutation;
+* certification;
+* Phase 13 closure;
+* Phase 14 authorization.
