@@ -343,15 +343,33 @@ def incomplete(root: Path = REPO_ROOT) -> Answer:
     collapsing the two would manufacture certainty `§23` forbids.
     """
     unbridged = views.unbridged_gates(root)
-    escalations = tuple(sorted(
-        p.stem.replace(".escalation", "")
-        for p in (root / "docs/architecture/p11").rglob("*.escalation.json")
-    ))
+    # Every resident escalation record, read with the register's own meaning
+    # of OPEN (no human response recorded). The first version globbed
+    # `docs/architecture/p11` only and ignored responses. When P12's W3/W4
+    # proofs raised three real escalations under `docs/architecture/p12`, it
+    # went on reporting one open escalation where the register holds four
+    # (`GOAL-V2-005`). The contract's declared source was already "resident
+    # escalation records"; the code had drifted from it.
+    from tools.escalation_register import EscalationRegister
+
+    by_root = {}
+    for base in (root / "docs/architecture", root / "docs/operations"):
+        for directory in sorted({p.parent for p in base.rglob("*.escalation.json")}):
+            register = EscalationRegister(directory)
+            opened = register.open_escalations()
+            by_root[directory.relative_to(root).as_posix()] = {
+                "open": opened,
+                "answered": tuple(e for e in register.all_escalations()
+                                  if e not in opened),
+            }
+    escalations = tuple(sorted(e for r in by_root.values() for e in r["open"]))
     return Answer(
         "What is incomplete?",
-        {"unbridged_gates": len(unbridged), "open_escalations": escalations},
+        {"unbridged_gates": len(unbridged), "open_escalations": escalations,
+         "escalations_by_root": by_root},
         INFERRED,
-        "Register headings; escalation records under docs/architecture/p11",
+        "Register headings; every resident escalation record, OPEN by the "
+        "escalation register's own rule (no recorded human response)",
     )
 
 

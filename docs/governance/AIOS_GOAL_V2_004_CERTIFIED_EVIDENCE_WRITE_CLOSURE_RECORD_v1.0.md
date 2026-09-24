@@ -235,7 +235,7 @@ verified intact **before and after** each run [OBS].
 | Unit: shell, `os.system`, unknown program, bootstrap-skipping Python | process | All refused |
 | Unit: fail-closed on an unreadable reference | child process | Every write in the repository refused. A write outside it still works |
 | Unit: index altered | temp copy | *"index sha256 is not recorded in the Decision Register"* |
-| Unit: planted `FD-P12-999-…` instrument | temp copy | No longer resolves (§21, `N-2`) |
+| Unit: a planted, unregistered P12 instrument (number 999) | temp copy | No longer resolves (§21, `N-2`) |
 | Unit: dangling symlink or directory in place of a file | temp copy | `UNREADABLE` |
 
 ## 14. Regression results
@@ -336,7 +336,7 @@ ruling pending).
 * **N-2.** A guard resolution defect. `_register_identity` accepted any prefix
   of two or more tokens containing a digit, so `FD-P12` matched because the
   Register mentions other `FD-P12-…` records. An unregistered
-  `FD-P12-999-FORGED` therefore *resolved*, and striking `FD-P12-006` from the
+  P12 instrument numbered 999 therefore *resolved*, and striking `FD-P12-006` from the
   Register left P12 resolved. That contradicts the rule the function
   implements (`FD-P12-004` / `D-P12-027-02`: a claim must resolve against a
   record). It now requires the candidate as a whole identifier (not followed by
@@ -364,7 +364,7 @@ ruling pending).
   authoritative checkout. Both failed at import and wrote nothing (verified
   with `git status`). Every later run was in a worktree.
 * **S-4.** The first P10/P11 manifest text truncated the instrument identifier
-  (`FD-P10-00`). I regenerated the manifests before they were registered. The
+  (the P10 instrument's number cut to two digits). I regenerated the manifests before they were registered. The
   barrier refused my own in-place rewrite of the new manifest, which confirms
   it protects references created after installation. The regeneration went
   through a shell `rm`.

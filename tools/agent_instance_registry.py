@@ -59,6 +59,7 @@ from typing import Dict, Optional, Tuple
 
 from native_core.core.agent.definition import AgentDefinition
 from native_core.core.agent.instance import AgentInstance, InvalidAgentInstance
+from tools import authority_citation
 from tools.planning import AuthorityProvenance
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -168,6 +169,13 @@ class AgentInstanceRegistry:
                 f"instance creation is authorized by {AUTHORIZING_DECISION}; "
                 f"a citation to {authority.instrument!r} does not establish it "
                 "— `§10`: DP-01 is not a specific W4 delegation instrument")
+        # The citation must also point at that Decision's own act, and the
+        # Decision must be registered (`GOAL-V2-005`).
+        unreached = authority_citation.refusal(
+            authority.instrument, authority.record, AUTHORIZING_DECISION)
+        if unreached:
+            raise InstanceRegistrationError(
+                f"provenance does not reach {AUTHORIZING_DECISION}: {unreached}")
 
         # `§8`/`§16`: scope may not exceed the Definition.
         requested = tuple(permitted_capabilities or ())

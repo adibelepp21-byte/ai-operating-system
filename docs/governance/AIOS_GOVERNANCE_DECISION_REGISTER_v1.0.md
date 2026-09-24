@@ -7970,3 +7970,33 @@ no decision. No certification is created, changed or revoked.
 The P10 and P11 anchors are an implementation choice, stated as such. Neither
 instrument names an evidence commit, and no later commit changes either root.
 Record: `AIOS_GOAL_V2_004_CERTIFIED_EVIDENCE_WRITE_CLOSURE_RECORD_v1.0.md`.
+
+---
+
+## 19. GOAL-V2-005 Append and P13 Status Note (2026-09-24)
+
+This append registers `GOAL-V2-005`. It records no decision. P13's
+authorization, canonical definition and construction state are **unchanged**:
+the Goal directs work *"where authorized"*, and it neither canonicalizes P13
+nor authorizes P13 construction.
+
+### GOAL-V2-005 — Founder Goal / Target · P13 Completion & Systemic Gap Closure
+
+| Field | Value |
+|---|---|
+| **Identifier** | `GOAL-V2-005` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/GOAL-V2-005-P13-COMPLETION-AND-SYSTEMIC-GAP-CLOSURE.md` · content sha256 `e278c7214480ff89…` |
+| **Status** | ISSUED. Terminal condition reported: **TARGET BLOCKED** at Founder-reserved decisions. Execution record: `AIOS_GOAL_V2_005_P13_COMPLETION_RECORD_v1.0.md` |
+
+**Goal text (primary goal).** *"Advance AIOS toward the currently authorized P13 end-state"*, with P13 identity stated as *"SUPER INTELLIGENCE ECOSYSTEM"*.
+
+### Status note
+
+| Surface | State from 2026-09-24 |
+|---|---|
+| P13 | Preparation only. `AUTHORIZED = False`. `GAP-0001` OPEN (apex). v0.4 `00efeeae…` awaits a fresh Founder review (`FD-P13-005 §11`), unchanged |
+| W4 authority citations | `tools/w4_delegation.py` and `tools/agent_instance_registry.py` now require the citation to reach `FD-P11-001` itself (`FD-P11-001 §24`) through `tools/authority_citation.py`. Every resident record still resolves |
+| Self-model open escalations | four, not one: `23f315ba9f504272` (P11), plus `0991300404cf44d8`, `9d6bc0ad47294ef0` and `9cb90fa0787a478c` (P12). All four are OPEN by the escalation register's own rule |
+| Ecosystem relationships | measured by `tools/ecosystem_relationships.py`. Of the seven relationships in the Goal's `§14` chain, 3 are bound in code, 2 by data and 1 only through Organization. Memory ↔ Intelligence is not connected, by the recorded design of the P5 realization |

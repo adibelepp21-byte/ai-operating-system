@@ -55,6 +55,7 @@ from tools.agent_instance_registry import (
     InstanceRegistration,
     REGISTERED,
 )
+from tools import authority_citation
 from tools.planning import AuthorityProvenance
 
 #: `§4.1`. The delegator is fixed by the Decision, not chosen by a caller.
@@ -202,6 +203,14 @@ class W4DelegationRegistry:
                 f"a W4 delegation must cite {AUTHORIZING_DECISION}; "
                 f"{authority.instrument!r} is insufficient — `§9`: "
                 "'DP-01 → somehow create Delegation' is invalid")
+        # `§24`: the chain must actually reach the Decision. A citation that
+        # names it but points elsewhere produces no chain (`GOAL-V2-005`).
+        unreached = authority_citation.refusal(
+            authority.instrument, authority.record, AUTHORIZING_DECISION)
+        if unreached:
+            raise DelegationError(
+                f"`§24` provenance does not reach {AUTHORIZING_DECISION}: "
+                f"{unreached}")
 
         # `§6.1`: only a registered instance may receive.
         if not self._instances.is_registered(recipient_instance):
