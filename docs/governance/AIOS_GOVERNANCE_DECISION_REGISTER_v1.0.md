@@ -8184,3 +8184,32 @@ decision.
 * certification;
 * Phase 13 closure;
 * Phase 14 authorization.
+
+---
+
+## 25. FDR-5 Append — P13 Exit Contract Satisfaction (2026-09-24)
+
+### FDR-5 — Founder Decision · P13 Exit Contract Satisfaction
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-5` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | as stated: *"Founder Exit Gate"*; predecessor `FDR-4` and the P13 Founder Exit Gate Finding |
+| **Record** | `acts/FDR-5-P13-EXIT-CONTRACT-SATISFACTION.md` · content sha256 `bcad3a5816078a7c911be49de7a7a61ce6bd70174160a66ac0d994ad0db5181a` |
+| **Status** | ISSUED — **P13 EXIT CONTRACT: SATISFIED**. The instrument states neither a date nor an identifier; 2026-09-24 is the date of receipt. `FDR-5` is the next identifier in the `FDR` series. An unissued `FDR-5` label in two earlier records is disclosed in the act header |
+
+| Disposition | Registered effect |
+|---|---|
+| `FD-E` | **P13 Exit Contract SATISFIED.** E13-01 → E13-07 are accepted within their authorized bounded definitions (`FDR-2` `D07`), with no unresolved blocking requirement, no unauthorized boundary crossing and no false completion claim |
+| Residual frontier | known, classified and **non-blocking** under `D08`. It is **not solved**. Each item keeps its own classification |
+| Frontier authority | the P13-015 and P13-017 classifications are adopted **for this decision only**. They gain no independent governance authority |
+| Certification | **NOT GRANTED.** A separate P13 Certification Gate follows |
+| Phase 13 | **NOT CLOSED** |
+| Phase authorization | P13 Master Program `AUTHORIZED = FALSE`, **unchanged**. It is not inferred from exit satisfaction |
+| Phase 14 | **NOT AUTHORIZED**, not prepared, not opened |
+
+**Not authorized:** certification, Phase 13 closure, phase authorization,
+Phase 14, new capability, new authority, a new live proof, or any revival of
+S-OPS authority.
