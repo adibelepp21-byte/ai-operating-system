@@ -379,3 +379,54 @@ escalate branch is test-proven.
 **Status:** P13 is **EXIT-READY** (`FDR-4` `FD-D`), which is not exit contract
 satisfied, not certified, and not Phase 13 closed. The Founder decides the exit
 gate.
+
+## 16. Post-FDR-5 Certification Gate Reconciliation (added 2026-09-25 under `FDR-6` `FDQ-3`; §0–§15 unchanged)
+
+`FDR-6` (Founder — Moriarty; Decision Register `§26`) authorizes this
+append-only reconciliation. §0–§15 stay **as written**, including §15's status
+line. This section records what followed. It does not revise them. It records
+only what a Founder decision has decided.
+
+| # | Item | As of this reconciliation |
+|---|---|---|
+| 1 | P13 Exit Contract | **SATISFIED.** `FDR-5` `FD-E` (Decision Register `§25`) |
+| 2 | Exit and certification | **distinct.** Satisfying the exit contract is not certification (`FDR-5` `§4`; `FDR-6` `§1`) |
+| 3 | Certification | **NOT GRANTED.** P13 is uncertified. Certification needs a separate Founder Certification Decision |
+| 4 | §15's status line | **preserved as written.** It recorded *EXIT-READY*, which `FDR-4` `FD-D` decided. `FDR-5` then decided the exit contract satisfied. §15 is history, not the current state |
+| 5 | Certification Gate state | set out below |
+| 6 | Residual frontier | **unresolved where unresolved.** P13-015 still classifies Q38, Q39 and Q91 as P13 FRONTIER and Q23 as UNKNOWN |
+| 7 | Classification and resolution | **a classification is not a resolution.** `FDR-6` `FDQ-4` adopts the `FDR-5`, P13-015 and P13-017 classifications for the Certification Gate. An item classified non-blocking under `FDR-2` `D08` stays non-blocking. The decision resolves no frontier item. A future item must be classified against the applicable contract, and P13 may not declare one non-blocking itself |
+| 8 | Capability | **none new.** This section is documentary |
+| 9 | Operational authority | **none new.** `P13-ENV-01` is evidence-only. `P13-ENV-02` stays retired and revoked (`FDR-6` `CR-5`). State-changing authority is NONE. S-OPS is historical evidence only |
+| 10 | Certification declared | **none.** Nothing in this section certifies P13 |
+
+**The Certification Gate state (item 5):**
+
+* **Phase authorization.** `FDR-6` `FDQ-1` authorizes Phase 13 as a phase of
+  the AIOS Master Program. The phase-authorization machinery reports P13
+  `AUTHORIZED = TRUE`, cited to `FDR-6` `§19`. It keeps the P12 decision's
+  `§37` value, `FALSE`, as the superseded snapshot. Phase authorization is not
+  certification, closure or Phase 14 authorization.
+* **Fresh live verification: not required** (`FDQ-2`). Evidence keeps its
+  actual class. E13-05's live proof stays live evidence, and its escalate
+  branch stays test-proven.
+* **The certified root** (`FDQ-5`). For an eventual certification, the P13
+  certified root is `docs/architecture/p13/`, the directory holding this
+  Blueprint. It is not protected as certified today. Everything else P13
+  relies on stays outside it:
+  * `tools/p13/`;
+  * the P13 governance records;
+  * `docs/operations/p13/`;
+  * S-OPS;
+  * `docs/architecture/p13-preparation/`;
+  * the P1–P12 substrate.
+* **The manifest.** `CR-1` authorizes a P13 certification manifest that
+  enumerates this directory's actual contents. It is prepared so the
+  certification machinery can recognize P13 once a Founder Certification
+  Decision exists. Preparing it certifies nothing.
+* **Closure and Phase 14.** Phase 13 closure is **NOT GRANTED**. Phase 14 is
+  **NOT AUTHORIZED**.
+
+**Status:** P13 is phase-authorized (`FDR-6`) and its exit contract is
+satisfied (`FDR-5`). It is **not certified**, and Phase 13 is **not closed**.
+The Founder decides certification.
