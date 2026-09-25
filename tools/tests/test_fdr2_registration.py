@@ -77,9 +77,19 @@ class FDR2ConferredNothingItWithheld(unittest.TestCase):
     def test_the_phase_snapshot_is_not_rewritten_by_later_decisions(self):
         """P12 `§37`'s snapshot still says P13 AUTHORIZED: FALSE. `P13-018`
         authorizes *construction* with bounded scope and states no phase
-        authorization, so nothing here may read it as one."""
+        authorization, so nothing here may read it as one.
+
+        `FDR-6` `FDQ-1` is a phase authorization. The current state is `True`
+        and is cited to `FDR-6` only. The snapshot is kept as written and is
+        reported as superseded."""
+        self.assertIs(phases.state_of("P13").authorized, False)
         p13 = {s["entity"]: s for s in phases.current_states()}["P13"]
-        self.assertIs(p13["authorized"], False)
+        self.assertIs(p13["authorized"], True)
+        superseded = p13["superseded_by_authorization"]
+        self.assertEqual(superseded["dimensions"], {"AUTHORIZED": False})
+        self.assertTrue(superseded["superseded_by"].endswith(
+            "FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md"))
+        self.assertNotIn("P13-018", p13["authority_record"])
 
     def test_native_core_is_still_eleven(self):
         core = REPO_ROOT / "native_core/core"

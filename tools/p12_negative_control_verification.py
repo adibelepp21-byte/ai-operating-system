@@ -663,6 +663,11 @@ def _phase_authorization_verifier() -> Tuple[bool, str]:
     checking nothing prints. The self-model's reported value is replaced with a
     forged one — right shape, wrong state, provenance pointing at a file that
     exists but does not state it — and the verifier must fail on it.
+
+    `FDR-6`: the wrong state is the opposite of the live one. It was always
+    `True` while P13 was unauthorized. P13 is now Founder-authorized, so a
+    forged `True` would be the right state, and only the provenance checks
+    could fail on it.
     """
     from unittest import mock
     from tools import p12_phase_authorization_verifier as verifier
@@ -671,12 +676,16 @@ def _phase_authorization_verifier() -> Tuple[bool, str]:
     live = verifier.summary()
     if live["unsatisfied"] or live["unresolved"]:
         return False, f"the live representation already fails {live['not_satisfied']}"
+    stated = verifier.current_state("P13")
+    if stated is None or stated["dimensions"].get("AUTHORIZED") is None:
+        return False, "the live corpus states no P13 authorization state to forge against"
+    wrong = not stated["dimensions"]["AUTHORIZED"]
 
     forged = {
         "resolved": True,
         "states": {"P13": {
-            "entity": "P13", "authorized": True,
-            "dimensions": {"AUTHORIZED": True},
+            "entity": "P13", "authorized": wrong,
+            "dimensions": {"AUTHORIZED": wrong},
             "unstated_dimensions": (), "stated_in": "§37 FINAL STATE TRANSITION",
             "corroborated_by": (),
             "authority": "a citation that resolves",
@@ -694,7 +703,7 @@ def _phase_authorization_verifier() -> Tuple[bool, str]:
         return False, (f"a forged authorization claim was not refused: only "
                        f"{sorted(failed)} failed")
     return True, ("moves both ways: six of six satisfied on the real "
-                  "representation; a forged P13 AUTHORIZED=True citing a "
+                  f"representation; a forged P13 AUTHORIZED={wrong} citing a "
                   f"resolving but unsupporting record fails {sorted(failed)}")
 
 

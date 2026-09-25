@@ -234,6 +234,18 @@ def _unauthorized_p13_authorization() -> Tuple[bool, bool, str]:
     absent, unverifiable, or merely mentions the entity, `ACCEPTED` is the
     correct and preserved result — `tools/tests/test_p12_phase_authorization.py`
     drives it to `ACCEPTED` six ways to prove the outcome is measured.
+
+    **`FDR-6` — P13 is now authorized, so the attempt had to change.** `FDR-6`
+    `FDQ-1` authorizes Phase 13, and the self-model reports `AUTHORIZED=True`.
+    A claim that P13 is authorized is now true, so the first question is
+    whether the `True` is the Founder's. The independent verifier must confirm
+    that the cited source is a registered Founder instrument that states it.
+    The control then makes the attempt its name describes: an **unauthorized**
+    authorization. An instrument that writes the same decision but resolves
+    against no Register record is planted in a sandbox holding only the P12
+    snapshot. It must be rejected, and P13 must stay unauthorized there. This
+    is the chain `FD-P12-004` fixed for certification, applied to
+    authorization. If either leg fails, the result is `ACCEPTED`.
     """
     from tools import p12_self_model as model
     from tools import p12_phase_authorization_verifier as verifier
@@ -253,12 +265,26 @@ def _unauthorized_p13_authorization() -> Tuple[bool, bool, str]:
         return True, False, (
             "P13's authorization state is reported as undeterminable, which is "
             "not a contradiction of a claim that it is authorized")
-    if authorized is not False:
+    if authorized is not False and authorized is not True:
         return True, False, (
             f"the authority surface reports P13 AUTHORIZED={authorized!r}; a "
             "claim that P13 is authorized would meet no contradiction")
     checks = verifier.verify("P13")
     failed = [c.name for c in checks if c.status != verifier.SATISFIED]
+    if authorized is True:
+        if failed:
+            return True, False, (
+                "the authority surface reports P13 AUTHORIZED=True, and "
+                "independent verification does not establish that a Founder "
+                f"instrument states it: {', '.join(failed)}")
+        rejected, why = _unresolvable_authorization_rejected()
+        if not rejected:
+            return True, False, why
+        return True, True, (
+            "refused: the authority surface reports P13 AUTHORIZED=True only "
+            f"under {claim.get('stated_in')}, cited to "
+            f"{claim.get('authority_record')}, and {len(checks)} independent "
+            f"checks confirm the cited decision states it; {why}")
     if failed:
         return True, False, (
             "P13 is reported unauthorized, but independent verification does "
@@ -268,6 +294,48 @@ def _unauthorized_p13_authorization() -> Tuple[bool, bool, str]:
         f"structured state under {claim.get('stated_in')}, cited to "
         f"{claim.get('authority_record')}, and {len(checks)} independent "
         "checks confirm the cited section states it")
+
+
+#: The instrument `_unresolvable_authorization_rejected` plants. No Register
+#: record carries its identifier.
+FORGED_AUTHORIZATION = "FDR-99-FORGED-PHASE-AUTHORIZATION.md"
+
+
+def _unresolvable_authorization_rejected() -> Tuple[bool, str]:
+    """Plant an authorization that resolves against no record, in a sandbox.
+
+    The sandbox holds the P12 snapshot instrument, a copy of the Decision
+    Register, and the forged act. It holds no real authorization, so the only
+    thing that could move P13 there is the forgery.
+    """
+    from tools import p12_phase_authorization as phases
+
+    snapshot = phases.decision_instrument()
+    register = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        acts = root / "docs" / "governance" / "acts"
+        acts.mkdir(parents=True)
+        shutil.copyfile(snapshot, acts / snapshot.name)
+        shutil.copyfile(REPO_ROOT / register, root / register)
+        (acts / FORGED_AUTHORIZATION).write_text(
+            "19. FOUNDER DECISION\n\nAUTHORIZE PHASE 13\n", encoding="utf-8")
+        seen = phases.authorizations(root)
+        detected = any(r["instrument"].endswith(FORGED_AUTHORIZATION)
+                       for r in seen.get("rejected", ()))
+        if not detected:
+            return False, ("an authorization resolving against no record "
+                           "raised no rejection")
+        try:
+            p13 = {s["entity"]: s
+                   for s in phases.current_states(root)}.get("P13", {})
+        except Exception as error:  # an unreadable sandbox is not a refusal
+            return False, f"the sandbox state could not be read: {error}"
+    if p13.get("authorized") is not False:
+        return False, ("the unresolvable authorization was detected and still "
+                       f"moved P13 to AUTHORIZED={p13.get('authorized')!r}")
+    return True, ("an authorization resolving against no record was rejected "
+                  "in a sandbox, and P13 stayed AUTHORIZED=False there")
 
 
 def _false_completion() -> Tuple[bool, bool, str]:

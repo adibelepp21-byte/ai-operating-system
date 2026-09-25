@@ -387,8 +387,10 @@ def authority_dimensions(paths: Paths, catalog=None) -> Dict[str, dict]:
 
     Nothing here writes, and no dimension is derived from another. Above all,
     **construction authority is not phase authorization.** The phase value is
-    read from the phase snapshot exactly as stated (P12 decision `§37`), and
-    P13-018 is never read as changing it.
+    the current state from `p12_phase_authorization`: the P12 decision `§37`
+    snapshot, superseded only by a Register-resolving Founder authorization
+    (`FDR-6` `FDQ-1`). P13-018 is never read as changing it, and phase
+    authorization is never read as certification.
     """
     from tools import p12_certified_evidence_guard as guard
     from tools import p12_phase_authorization as phases
@@ -404,7 +406,8 @@ def authority_dimensions(paths: Paths, catalog=None) -> Dict[str, dict]:
             "meaning": ("Master Program phase authorization. In P12's decision it is "
                         "the only state authorization produces (§25), and P13 stays "
                         "NOT AUTHORIZED until a separate valid Founder authorization "
-                        "(§29)"),
+                        "(§29). FDR-6 FDQ-1 is that authorization. It is not "
+                        "certification, closure or Phase 14 authorization"),
             "verified": "VERIFIED"}
     except Exception as error:
         out["phase_authorization"] = {"state": "UNKNOWN", "source": str(error),

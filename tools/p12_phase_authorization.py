@@ -53,6 +53,12 @@ inferring a state from anything but an authoritative source — so the six
 dimensions P13 does not carry are reported as `unstated_dimensions` and not as
 `False`. An unauthorized phase is very probably not constructed; *probably* is
 not what a self-model may report.
+
+**A later Founder decision supersedes the snapshot; it does not rewrite it.**
+`certifications()` (`GOAL-V2-002`) and `authorizations()` (`FDR-6` `CR-3`)
+read later resolving instruments, and `current_states()` sets aside what they
+supersede with the provenance of both. `phase_states()` keeps returning the
+`§37` block exactly as the Founder wrote it.
 """
 
 from __future__ import annotations
@@ -357,8 +363,95 @@ def certifications(root: Path = REPO_ROOT) -> dict:
     return {"resolved": True, "phases": found}
 
 
+#: A later Founder phase authorization, read under `FDR-6` (`CR-3`): the
+#: section it is read from, matched as a heading, and the one line form that
+#: is recognised inside it. `FDR-6 §19` writes the decision as a line that is
+#: nothing but ``AUTHORIZE PHASE 13``, under ``19. FOUNDER DECISION``.
+AUTHORIZATION_SECTION = "FOUNDER DECISION"
+_AUTHORIZES = re.compile(r"^AUTHORIZE PHASE (\d+)$")
+
+
+def authorizations(root: Path = REPO_ROOT) -> dict:
+    """Phase authorizations a later Founder instrument decided, with provenance.
+
+    Added under `FDR-6` (`CR-3`). The `§37` block is a snapshot, and its `§29`
+    keeps P13 unauthorized *"until a separate valid Founder authorization"*.
+    `FDR-6` `FDQ-1` is that authorization, and it asks for *"canonical
+    representation melalui phase-authorization machinery"*. The machinery could
+    not represent it before this: it reads exactly one state block, and
+    `certifications()` never supersedes `AUTHORIZED`. This mirrors
+    `certifications()` rather than adding a second state block, which
+    `decision_instrument` would rightly refuse as two instruments disagreeing.
+
+    **Recognised by body, and resolved against the Register.** An instrument
+    counts only if all of these hold:
+
+    - it is in the curated acts root;
+    - a numbered section is headed exactly `FOUNDER DECISION`;
+    - that section holds a line that is nothing but `AUTHORIZE PHASE <n>`;
+    - it resolves against the Decision Register, under the rule the
+      certified-evidence guard applies to certifications (`FD-P12-004`).
+
+    An instrument that fails the last test is **rejected** and listed under
+    `rejected`, not silently skipped. Two resolving instruments for one phase
+    are reported under `ambiguous` and neither is applied.
+
+    **Authorization is not certification.** Nothing here reads, sets or implies
+    a certification, a closure or any dimension other than `AUTHORIZED`.
+
+    Fails visibly: when governance cannot be read, it returns `resolved: False`
+    with the reason. It never returns an empty set, which would read as
+    *"nothing is authorized"*.
+    """
+    from tools import p12_certified_evidence_guard as sentinel
+    acts = root / DECISION_ROOT
+    register = root / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+    if not acts.is_dir():
+        return {"resolved": False, "phases": {}, "ambiguous": {}, "rejected": (),
+                "detail": f"the governance acts root does not resolve: {DECISION_ROOT}"}
+    try:
+        register_text = register.read_text(encoding="utf-8")
+    except OSError as error:
+        return {"resolved": False, "phases": {}, "ambiguous": {}, "rejected": (),
+                "detail": (f"the Decision Register cannot be read ({error}); an "
+                           "authorization cannot be resolved against it")}
+    found, rejected = {}, []
+    for path in sorted(acts.glob("*.md")):
+        try:
+            sections = _sections(path.read_text(encoding="utf-8"))
+        except OSError:
+            continue
+        section = _section(sections, AUTHORIZATION_SECTION)
+        if section is None:
+            continue
+        number, heading, body = section
+        claimed = sorted({f"P{match.group(1)}" for match in
+                          (_AUTHORIZES.match(line.strip()) for line in body)
+                          if match})
+        if not claimed:
+            continue
+        record = path.relative_to(root).as_posix()
+        identity = sentinel._register_identity(path.stem, register_text)
+        if identity is None:
+            rejected.append({"instrument": record, "phases": tuple(claimed),
+                             "reason": "resolves against no Decision Register record"})
+            continue
+        for phase in claimed:
+            found.setdefault(phase, []).append({
+                "instrument": record, "register_identity": identity,
+                "stated_in": f"§{number} {heading}"})
+    phases, ambiguous = {}, {}
+    for phase, instruments in found.items():
+        if len(instruments) == 1:
+            phases[phase] = {"authorized": True, **instruments[0]}
+        else:
+            ambiguous[phase] = tuple(i["instrument"] for i in instruments)
+    return {"resolved": True, "phases": phases, "ambiguous": ambiguous,
+            "rejected": tuple(rejected)}
+
+
 def current_states(root: Path = REPO_ROOT) -> Tuple[dict, ...]:
-    """The snapshot states, with what a later certification supersedes set aside.
+    """The snapshot states, with what a later Founder instrument supersedes set aside.
 
     For a phase that a resolving instrument has certified, a snapshot dimension
     stated `FALSE` (other than `AUTHORIZED`) describes a state before
@@ -369,12 +462,42 @@ def current_states(root: Path = REPO_ROOT) -> Tuple[dict, ...]:
     `p12_phase_authorization_verifier` (reported ⊆ stated) continues to hold.
     Certification itself is reported by `certifications()`, with its own
     provenance. Two sources are never folded into one record.
+
+    **`FDR-6` (`CR-3`).** For a phase the snapshot states `AUTHORIZED = FALSE`
+    and a resolving Founder instrument authorizes (`authorizations()`), the
+    reported `AUTHORIZED` is `TRUE`. The snapshot value is moved to
+    `superseded_by_authorization`, with its section, record and corroboration.
+    The entry's `stated_in`, `authority` and `authority_record` then cite the
+    authorizing instrument, because that is where the reported value is
+    written. `phase_states()` and `state_of()` still return the snapshot as the
+    Founder wrote it.
     """
     certified = certifications(root)
     by_phase = certified["phases"] if certified["resolved"] else {}
+    authorized = authorizations(root)
+    by_authorization = authorized["phases"] if authorized["resolved"] else {}
     current = []
     for state in phase_states(root):
         reported = state.as_reported()
+        authorization = by_authorization.get(state.entity)
+        if authorization is not None and state.authorized is False:
+            citation = AuthorityProvenance(
+                f"Founder authorization {authorization['register_identity']} "
+                f"{authorization['stated_in']}", authorization["instrument"])
+            reported["dimensions"] = {**reported["dimensions"], "AUTHORIZED": True}
+            reported["authorized"] = True
+            reported["superseded_by_authorization"] = {
+                "dimensions": {"AUTHORIZED": False},
+                "stated_in": state.stated_in,
+                "authority_record": state.authority.record,
+                "corroborated_by": state.corroborated_by,
+                "superseded_by": authorization["instrument"],
+                "register_identity": authorization["register_identity"],
+            }
+            reported["stated_in"] = authorization["stated_in"]
+            reported["corroborated_by"] = ()
+            reported["authority"] = citation.cited()
+            reported["authority_record"] = citation.record
         certification = by_phase.get(state.entity)
         if certification is not None:
             kept, superseded = {}, {}
@@ -426,6 +549,7 @@ def summary(root: Path = REPO_ROOT) -> dict:
         "instrument": decision_instrument(root).relative_to(root).as_posix(),
         "phases": len(states),
         "states": {s.entity: s.authorized for s in states},
+        "current": {s["entity"]: s["authorized"] for s in current_states(root)},
         "unstated": {s.entity: s.unstated_dimensions for s in states},
         "issuance_contradiction": issuance_contradiction(root) is not None,
     }

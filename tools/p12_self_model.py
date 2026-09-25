@@ -163,6 +163,9 @@ def authority(root: Path = REPO_ROOT) -> Answer:
         # later certification supersedes set aside, and certification is
         # reported beside them, from its own instruments. Before this, the
         # answer said `P12 CERTIFIED = False` after `FD-P12-006` certified P12.
+        # `FDR-6` (`CR-3`): a later Founder phase authorization supersedes the
+        # snapshot's `AUTHORIZED = FALSE` the same way, and is reported beside
+        # the states from its own instrument.
         states = {state["entity"]: state
                   for state in phases.current_states(root)}
         contradiction = phases.issuance_contradiction(root)
@@ -170,6 +173,7 @@ def authority(root: Path = REPO_ROOT) -> Answer:
             "resolved": True,
             "states": states,
             "certification": phases.certifications(root),
+            "authorization": phases.authorizations(root),
             "issuance_contradiction": contradiction,
         }
     except phases.PhaseAuthorizationUnresolved as unresolved:

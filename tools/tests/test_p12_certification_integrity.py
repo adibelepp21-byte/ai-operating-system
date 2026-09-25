@@ -206,9 +206,14 @@ class ThePhaseStateNoLongerContradictsTheCertification(unittest.TestCase):
         self.assertIs(False, phases.state_of("P12").dimensions["CERTIFIED"])
 
     def test_p13_is_not_touched(self):
+        """Certification never touches P13. `FDR-6` `FDQ-1` authorized the
+        phase, which is reported as authorization, and P13 remains
+        uncertified."""
         p13 = {s["entity"]: s for s in phases.current_states()}["P13"]
-        self.assertIs(False, p13["authorized"])
+        self.assertIs(True, p13["authorized"])
+        self.assertIn("superseded_by_authorization", p13)
         self.assertNotIn("superseded_by_certification", p13)
+        self.assertNotIn("P13", phases.certifications()["phases"])
 
     def test_the_self_model_carries_both(self):
         from tools import p12_self_model as model

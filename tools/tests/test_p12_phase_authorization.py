@@ -94,9 +94,16 @@ class Case1OnTheLiveCorpus(unittest.TestCase):
         self.assertIn("FINAL STATE TRANSITION", state.stated_in)
 
     def test_the_self_model_reports_the_same_state_the_reader_read(self):
+        """The self-model reports the current state: the snapshot with `FDR-6`
+        `FDQ-1` applied. The snapshot value it supersedes travels with it."""
         reported = model.authority().value["phase_authorization"]
         self.assertTrue(reported["resolved"])
-        self.assertIs(False, reported["states"]["P13"]["authorized"])
+        p13 = reported["states"]["P13"]
+        self.assertIs(True, p13["authorized"])
+        self.assertEqual(
+            {"AUTHORIZED": phases.state_of("P13").authorized},
+            p13["superseded_by_authorization"]["dimensions"])
+        self.assertIn("P13", reported["authorization"]["phases"])
 
     def test_an_unstated_dimension_is_not_reported_as_false(self):
         """`§4`/`§9` — the Founder states one dimension for P13 and seven for
@@ -191,9 +198,12 @@ class Case4MissingProvenance(_TemporaryWorld):
     def test_the_verifier_refuses_provenance_that_resolves_but_does_not_state_it(self):
         """`§16` — textual similarity must not substitute for authority. The
         record exists; it simply does not say what is claimed of it."""
+        # `FDR-6`: the wrong state is the opposite of the live one. P13 is
+        # now authorized, so a forged `True` would only be wrongly sourced.
+        wrong = not verifier.current_state("P13")["dimensions"]["AUTHORIZED"]
         forged = {"resolved": True, "states": {"P13": {
-            "entity": "P13", "authorized": True,
-            "dimensions": {"AUTHORIZED": True},
+            "entity": "P13", "authorized": wrong,
+            "dimensions": {"AUTHORIZED": wrong},
             "authority_record": "README.md"}}}
         failed = self._failed_names(forged)
         self.assertIn("provenance supports the claim", failed)
@@ -259,6 +269,168 @@ class Case6FutureRoadmapReference(_TemporaryWorld):
             phases.phase_states(self.root)
 
 
+REGISTER_PATH = Path("docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md")
+AUTHORIZATION = "19. FOUNDER DECISION\n\nFDQ-1\n\nAUTHORIZE PHASE 13\n"
+
+
+def _register(root: Path, *records: str) -> None:
+    path = root / REGISTER_PATH
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("".join(f"| **Record** | `acts/{r}` |\n" for r in records),
+                    encoding="utf-8")
+
+
+def _authorization(root: Path, name: str, body: str = AUTHORIZATION) -> str:
+    acts = root / "docs" / "governance" / "acts"
+    acts.mkdir(parents=True, exist_ok=True)
+    (acts / name).write_text(body, encoding="utf-8")
+    return f"docs/governance/acts/{name}"
+
+
+class LaterFounderAuthorization(_TemporaryWorld):
+    """`FDR-6` `CR-3` — a later Founder instrument authorizes a phase the
+    snapshot holds unauthorized. It supersedes the snapshot value and never
+    rewrites it, and only a Register-resolving instrument can do it."""
+
+    SNAPSHOT = "P12\nAUTHORIZED = TRUE\nP13\nAUTHORIZED = FALSE"
+
+    def _current(self) -> dict:
+        return {s["entity"]: s for s in phases.current_states(self.root)}
+
+    def test_a_registered_authorization_supersedes_the_snapshot(self):
+        _instrument(self.root, self.SNAPSHOT)
+        record = _authorization(self.root, "FDR-60-AUTHORIZATION.md")
+        _register(self.root, "FDR-60-AUTHORIZATION.md")
+        p13 = self._current()["P13"]
+        self.assertIs(True, p13["authorized"])
+        self.assertEqual({"AUTHORIZED": True}, p13["dimensions"])
+        self.assertEqual(record, p13["authority_record"])
+        self.assertEqual("§19 FOUNDER DECISION", p13["stated_in"])
+        superseded = p13["superseded_by_authorization"]
+        self.assertEqual({"AUTHORIZED": False}, superseded["dimensions"])
+        self.assertEqual("docs/governance/acts/decision.md",
+                         superseded["authority_record"])
+        self.assertIs(False, phases.state_of("P13", self.root).authorized,
+                      "the snapshot is kept as the Founder wrote it")
+        self.assertNotIn("superseded_by_authorization", self._current()["P12"])
+
+    def test_an_unregistered_authorization_is_rejected_not_applied(self):
+        _instrument(self.root, self.SNAPSHOT)
+        record = _authorization(self.root, "FDR-61-UNREGISTERED.md")
+        _register(self.root)
+        found = phases.authorizations(self.root)
+        self.assertEqual({}, found["phases"])
+        self.assertEqual([record], [r["instrument"] for r in found["rejected"]])
+        self.assertIs(False, self._current()["P13"]["authorized"])
+
+    def test_the_form_outside_its_section_or_inside_prose_is_not_read(self):
+        _instrument(self.root, self.SNAPSHOT)
+        _authorization(self.root, "FDR-62-NOTES.md",
+                       "1. NOTES\n\nAUTHORIZE PHASE 13\n")
+        _authorization(self.root, "FDR-63-PROSE.md",
+                       "19. FOUNDER DECISION\n\nWe may AUTHORIZE PHASE 13 "
+                       "later.\n")
+        _register(self.root, "FDR-62-NOTES.md", "FDR-63-PROSE.md")
+        self.assertEqual({}, phases.authorizations(self.root)["phases"])
+        self.assertIs(False, self._current()["P13"]["authorized"])
+
+    def test_two_registered_authorizations_are_ambiguous_and_neither_applies(self):
+        _instrument(self.root, self.SNAPSHOT)
+        _authorization(self.root, "FDR-64-A.md")
+        _authorization(self.root, "FDR-65-B.md")
+        _register(self.root, "FDR-64-A.md", "FDR-65-B.md")
+        found = phases.authorizations(self.root)
+        self.assertIn("P13", found["ambiguous"])
+        self.assertIs(False, self._current()["P13"]["authorized"])
+        checks = {c.name: c.status for c in verifier.verify("P13", self.root)}
+        self.assertEqual(verifier.UNRESOLVED, checks["authoritative source"])
+
+    def test_an_authorization_certifies_nothing(self):
+        _instrument(self.root, self.SNAPSHOT)
+        _authorization(self.root, "FDR-66-AUTHORIZATION.md")
+        _register(self.root, "FDR-66-AUTHORIZATION.md")
+        p13 = self._current()["P13"]
+        self.assertEqual({}, phases.certifications(self.root)["phases"])
+        self.assertNotIn("CERTIFIED", p13["dimensions"])
+        self.assertNotIn("superseded_by_certification", p13)
+
+    def test_an_authorization_for_a_phase_the_snapshot_does_not_state_adds_none(self):
+        _instrument(self.root, self.SNAPSHOT)
+        _authorization(self.root, "FDR-67-P14.md",
+                       "19. FOUNDER DECISION\n\nAUTHORIZE PHASE 14\n")
+        _register(self.root, "FDR-67-P14.md")
+        self.assertIn("P14", phases.authorizations(self.root)["phases"])
+        self.assertNotIn("P14", self._current(),
+                         "no state is inferred for a phase the snapshot "
+                         "does not carry")
+
+    def test_the_verifier_reaches_the_same_state_its_own_way(self):
+        _instrument(self.root, self.SNAPSHOT)
+        _authorization(self.root, "FDR-68-AUTHORIZATION.md")
+        _register(self.root, "FDR-68-AUTHORIZATION.md")
+        checks = verifier.verify("P13", self.root)
+        self.assertEqual([], [c.name for c in checks
+                              if c.status != verifier.SATISFIED])
+
+    def test_the_two_register_rules_disagree_visibly(self):
+        """The reader resolves an act by filename prefix and the verifier by
+        the act's path in the Register. A Register naming only the identifier
+        satisfies the first and not the second, and the checks fail."""
+        _instrument(self.root, self.SNAPSHOT)
+        _authorization(self.root, "FDR-69-AUTHORIZATION.md")
+        path = self.root / REGISTER_PATH
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("| **Identifier** | `FDR-69` |\n", encoding="utf-8")
+        self.assertIs(True, self._current()["P13"]["authorized"])
+        failed = {c.name for c in verifier.verify("P13", self.root)
+                  if c.status != verifier.SATISFIED}
+        self.assertIn("authorization state", failed)
+
+
+class TheLiveCorpusAfterFDR6(unittest.TestCase):
+    """`FDR-6` `§11`: *"P13 AUTHORIZED = TRUE / P13 CERTIFIED = FALSE / P13
+    CLOSED = FALSE / P14 AUTHORIZED = FALSE"*, on the real corpus."""
+
+    FDR6 = "docs/governance/acts/FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md"
+
+    def test_p13_is_authorized_by_fdr_6(self):
+        p13 = {s["entity"]: s for s in phases.current_states()}["P13"]
+        self.assertIs(True, p13["authorized"])
+        self.assertEqual(self.FDR6, p13["authority_record"])
+        self.assertEqual({"AUTHORIZED": True}, p13["dimensions"])
+
+    def test_p13_is_not_certified(self):
+        from tools import p12_certified_evidence_guard as sentinel
+        self.assertNotIn("P13", phases.certifications()["phases"])
+        self.assertEqual(frozenset({10, 11, 12}), sentinel.certified_phases())
+
+    def test_no_instrument_closes_p13(self):
+        """No closure dimension is reported, and none is inferred."""
+        p13 = {s["entity"]: s for s in phases.current_states()}["P13"]
+        self.assertNotIn("CLOSED", p13["dimensions"])
+        self.assertNotIn("COMPLETE", p13["dimensions"])
+
+    def test_p14_is_not_authorized(self):
+        found = phases.authorizations()
+        self.assertEqual({"P13"}, set(found["phases"]))
+        self.assertEqual({}, found["ambiguous"])
+        self.assertEqual((), found["rejected"])
+        self.assertNotIn("P14", {s["entity"] for s in phases.current_states()})
+
+    def test_p11_and_p12_are_unchanged(self):
+        current = {s["entity"]: s for s in phases.current_states()}
+        self.assertIs(True, current["P12"]["authorized"])
+        self.assertIsNone(current["P11"]["authorized"])
+        for entity in ("P11", "P12"):
+            self.assertNotIn("superseded_by_authorization", current[entity])
+
+    def test_the_verifier_confirms_it_independently(self):
+        self.assertIs(True, verifier.current_state("P13")["dimensions"]["AUTHORIZED"])
+        self.assertEqual(self.FDR6, verifier.current_state("P13")["instrument"])
+        self.assertEqual(0, verifier.summary()["unsatisfied"])
+        self.assertEqual(0, verifier.summary()["unresolved"])
+
+
 class TheStrengthenedControlCanStillReportAccepted(unittest.TestCase):
     """`§11` — a control that cannot fail is a constant, not a measurement.
 
@@ -300,10 +472,26 @@ class TheStrengthenedControlCanStillReportAccepted(unittest.TestCase):
                 self.assertFalse(refused, f"{name}: {detail}")
 
     def test_the_live_system_refuses(self):
+        """`FDR-6`: P13 is Founder-authorized, so the live refusal is of an
+        unresolvable authorization, and the real one is cited to `FDR-6`."""
         attempted, refused, detail = controls._unauthorized_p13_authorization()
         self.assertTrue(attempted)
         self.assertTrue(refused, detail)
-        self.assertIn("AUTHORIZED=False", detail)
+        self.assertIn("AUTHORIZED=True only under §19 FOUNDER DECISION", detail)
+        self.assertIn("FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md", detail)
+        self.assertIn("stayed AUTHORIZED=False there", detail)
+
+    def test_the_authorized_branch_can_still_report_accepted(self):
+        """If an unresolvable authorization were believed, the control must
+        say so. The Register rule is disabled so the planted forgery resolves."""
+        from tools import p12_certified_evidence_guard as sentinel
+        with mock.patch.object(sentinel, "_register_identity",
+                               return_value="ANY-1"):
+            attempted, refused, detail = (
+                controls._unauthorized_p13_authorization())
+        self.assertTrue(attempted)
+        self.assertFalse(refused, detail)
+        self.assertIn("raised no rejection", detail)
 
     def test_the_old_substring_shape_would_have_passed_every_defective_case(self):
         """The defect `ACT-CC-P12-006` found, kept as a control on the fix: the

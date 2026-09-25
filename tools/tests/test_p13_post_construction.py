@@ -121,7 +121,8 @@ class FE2TheAuthorityDimensionsAreKeptApart(unittest.TestCase):
     def test_each_dimension_is_read_from_its_own_source(self):
         dims = authority_dimensions(Paths(REPO_ROOT))
         self.assertEqual({k: v["state"] for k, v in dims.items()}, {
-            "phase_authorization": "NOT AUTHORIZED",
+            # FDR-6 FDQ-1 authorized Phase 13 (Decision Register §26).
+            "phase_authorization": "AUTHORIZED",
             "construction_authorization": "AUTHORIZED — bounded to Blueprint §10 IN",
             "operational_envelope": "EVIDENCE-ONLY",
             "state_changing_authority": "NONE",
@@ -135,13 +136,21 @@ class FE2TheAuthorityDimensionsAreKeptApart(unittest.TestCase):
         self.assertEqual(dims["state_changing_authority"]["grants"], [])
         self.assertEqual(dims["operational_envelope"]["anomalies"], [])
         self.assertEqual({v["verified"] for v in dims.values()}, {VERIFIED})
-        self.assertIn("§37", dims["phase_authorization"]["source"])
+        self.assertIn("FDR-6", dims["phase_authorization"]["source"])
+        self.assertIn("§19 FOUNDER DECISION", dims["phase_authorization"]["source"])
         self.assertIn("§22", dims["construction_authorization"]["source"])
 
     def test_construction_authority_never_moves_the_phase_value(self):
+        """P13-018 authorized construction and never the phase. The phase
+        value moved only when a Founder instrument authorized the phase
+        (FDR-6 FDQ-1), and it is cited to that instrument alone."""
         from tools import p12_phase_authorization as phases
         p13 = {s["entity"]: s for s in phases.current_states()}["P13"]
-        self.assertIs(p13["authorized"], False)
+        self.assertIs(p13["authorized"], True)
+        self.assertTrue(p13["authority_record"].endswith(
+            "FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md"))
+        self.assertNotIn("P13-018", p13["authority_record"])
+        self.assertIs(phases.state_of("P13").authorized, False)
 
     def test_a_state_changing_grant_would_show_as_one(self):
         dims = authority_dimensions(
