@@ -424,8 +424,9 @@ only what a Founder decision has decided.
   enumerates this directory's actual contents. It is prepared so the
   certification machinery can recognize P13 once a Founder Certification
   Decision exists. Preparing it certifies nothing.
-* **Closure and Phase 14.** Phase 13 closure is **NOT GRANTED**. Phase 14 is
-  **NOT AUTHORIZED**.
+* **Closure and roadmap endpoint.** Phase 13 closure is **NOT GRANTED**.
+  The current AIOS roadmap terminates at Phase 13.
+  No subsequent phase is established by the current roadmap.
 
 **Status:** P13 is phase-authorized (`FDR-6`) and its exit contract is
 satisfied (`FDR-5`). It is **not certified**, and Phase 13 is **not closed**.
