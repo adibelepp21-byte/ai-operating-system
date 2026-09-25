@@ -8421,3 +8421,25 @@ every plain date, because raw text sorts after digits.
 - The chronology tests now compare the ISO date each entry states. That is
   the key `since()` already orders by.
 - Only this entry's index record changes (619 records before and after).
+
+---
+
+## 34. FDR-G1 Execution Append — Successor Versions, P13 Closure Gate, Baseline Reporting (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `FDR-G1` (`§32`), `§32`–`§34`, `§36` |
+| **Record** | `AIOS_POST_FDR_G1_EXECUTION_REPORT_v1.0.md` · sha256 `1881f7d953333d6ecc0e7bdb56fe8bc2ea0d5bee3e02525435c8d6c874efc1d3` |
+| **Commits** | `27eabdd` (persist and register) · `6e3f1bc` (machinery, tests, `§33` correction) |
+| **Built** | successor-version recognition in `tools/certified_evidence_integrity.py` (FD-G1) · evaluation-only P13 closure gate `tools/p13_closure_gate.py` (FD-G2) · certification-baseline reporting `tools/certification_baseline.py`, surfaced in the self-model (FD-G3) |
+| **Result** | every certified phase is v1 `CURRENT`; no successor exists. Closure gate NOT SATISFIED: 3 items EVIDENCED, 5 FOUNDER DETERMINATION REQUIRED. It closes nothing. The baseline reads as `§40` states it, with no discrepancy |
+| **Verification** | integrity holds · certified phases {10, 11, 12, 13} · suites at `6e3f1bc`: tools 1729, native_core 801, consumers 276, bounded_exception 29, all OK · probe at `6e3f1bc`: 0 certified writes · NC-01 … NC-12 held |
+| **Not built** | an architecture-to-implementation conformance mechanism (`§12`: needs a Founder Decision or Goal) · an amendment mechanism (`§14`) · a successor-certification guard form · P4–P9 machine protection · P1–P3 certification · the P1–P6 declaration |
+
+**Not changed:**
+- any certified root, manifest, index or certifying instrument;
+- the guard and the write barrier;
+- P13 closure (NOT GRANTED);
+- authority (`P13-ENV-02` retired; state-changing NONE);
+- `FDR-1` → `FDR-7`, `FDR-G1` and every earlier Register entry;
+- no subsequent phase.
