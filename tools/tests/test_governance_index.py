@@ -637,7 +637,12 @@ class Queries(_Corpus):
     def test_j_what_changed_after_a_date(self):
         recent = self.index.since("2026-08-20")
         self.assertTrue(recent)
-        self.assertEqual(sorted(r.date for r in recent), [r.date for r in recent])
+        # Ordered by the ISO date each record states, which is what `since()`
+        # sorts by. Decision Register `§32` states its date in words around
+        # the ISO date (`§33`), and raw text would sort those words after it.
+        dates = [gi._recency(r) for r in recent]
+        self.assertEqual(sorted(dates), dates)
+        self.assertTrue(all(d >= "2026-08-20" for d in dates))
 
 
 if __name__ == "__main__":

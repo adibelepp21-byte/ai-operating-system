@@ -32,6 +32,13 @@ MUST NOT be interpreted as: P13 CLOSED."* (`§33`).
 It does not decide which items the Founder must determine. It reports where
 the record is silent and says so.
 
+**`FDR-G2` answered the Founder items it could (`FD-G2-C5`, `-C6`, `-C8`).** The
+gate reads those dispositions from the registered decision. C5's acceptance
+covers the residual frontier only *"where their current classification remains
+unchanged"* (`§4.1`, `§5`). So C5 also compares the live residual sets with
+the sets that were accepted. A new or changed residual item makes C5 NOT
+EVIDENCED until it is classified (`§4.3`).
+
 Nothing here authorizes anything, and nothing here writes.
 """
 
@@ -48,6 +55,21 @@ REGISTER = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
 FDR5 = f"{ACTS}/FDR-5-P13-EXIT-CONTRACT-SATISFACTION.md"
 FDR7 = f"{ACTS}/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md"
 FDRG1 = f"{ACTS}/FDR-G1-POST-P13-GOVERNANCE-FOUNDATION.md"
+FDRG2 = f"{ACTS}/FDR-G2-P13-CLOSURE-RESIDUAL-GOVERNANCE-AND-POST-CLOSURE-OPERATING-MODEL.md"
+MATRIX = "docs/architecture/p13-preparation/P13-015-FOUNDATIONAL-QUESTION-RECONCILIATION.json"
+#: The residual sets `FD-G2-C5` accepted as non-blocking to closure: `§4.1` names
+#: Q38, Q39 and Q91; `§5` the four inherited escalations. Q23 is the matrix's
+#: one UNKNOWN row, classified non-blocking in the Resolution Package `§11`
+#: (Register `§37`).
+ACCEPTED_RESIDUAL = {
+    "P13 FRONTIER": ("Q38", "Q39", "Q91"),
+    "UNKNOWN": ("Q23",),
+    "open escalations": ("0991300404cf44d8", "23f315ba9f504272",
+                         "9cb90fa0787a478c", "9d6bc0ad47294ef0"),
+}
+C5_ACCEPTED = "ACCEPTED AS NON-BLOCKING TO P13 CLOSURE"
+C6_STANDARD = "CURRENT CLOSURE GATE\n+\nFRESH VERIFICATION\n+\nFOUNDER CLOSURE DECISION"
+C8_MODEL = "AIOS CONTINUES UNDER GOVERNED OPERATION"
 DELEGATIONS = "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md"
 #: `ACT-CC-POST-P13-GOV-002` `§5`: the CEO's bounded A17 determination
 #: (F04 `§22`, F06 A17, E1) that `P13-018` `D-1`'s authorized scope has no
@@ -96,6 +118,40 @@ def _registered_text(relative: str, root: Path, register_text: str) -> Optional[
     return text
 
 
+def open_escalations(root: Path) -> List[str]:
+    """Every OPEN escalation, by the escalation register's own rule."""
+    from tools.escalation_register import EscalationRegister
+    opened: List[str] = []
+    for base in (root / "docs/architecture", root / "docs/operations"):
+        if base.is_dir():
+            for directory in sorted({p.parent for p in base.rglob("*.escalation.json")}):
+                opened.extend(EscalationRegister(directory).open_escalations())
+    return sorted(opened)
+
+
+def residual_sets(root: Path) -> Dict[str, tuple]:
+    """The live residual sets, keyed as `ACCEPTED_RESIDUAL` is."""
+    rows = json.loads((root / MATRIX).read_text(encoding="utf-8"))["questions"]
+    return {
+        "P13 FRONTIER": tuple(sorted(r["id"] for r in rows
+                                     if r.get("category") == "P13 FRONTIER")),
+        "UNKNOWN": tuple(sorted(r["id"] for r in rows if r.get("category") == "UNKNOWN")),
+        "open escalations": tuple(open_escalations(root)),
+    }
+
+
+def residual_drift(root: Path) -> Dict[str, dict]:
+    """How the live residual sets differ from what `FD-G2-C5` accepted."""
+    live = residual_sets(root)
+    drift = {}
+    for name, accepted in ACCEPTED_RESIDUAL.items():
+        added = sorted(set(live[name]) - set(accepted))
+        gone = sorted(set(accepted) - set(live[name]))
+        if added or gone:
+            drift[name] = {"new": added, "no longer present": gone}
+    return drift
+
+
 def _item(number: int, status: str, evidence: List[str], note: str = "") -> dict:
     return {"id": f"C{number}", "criterion": CRITERIA[number - 1], "status": status,
             "evidence": evidence, "note": note}
@@ -113,6 +169,7 @@ def evaluate(root: Path = REPO_ROOT) -> Dict[str, object]:
     fdr5 = _registered_text(FDR5, root, register_text)
     fdr7 = _registered_text(FDR7, root, register_text)
     g1 = _registered_text(FDRG1, root, register_text)
+    g2 = _registered_text(FDRG2, root, register_text)
     items = []
 
     # C1: the obligations the record defines are the exit contract and
@@ -146,11 +203,13 @@ def evaluate(root: Path = REPO_ROOT) -> Dict[str, object]:
     evidence = ([f"{FDRG1} §39: P13 CONSTRUCTION FRONTIER NONE"] if frontier_none else [])
     if exhausted:
         evidence.append(f"Decision Register: {EXHAUSTION} (A17)")
+    if g2 is not None and "P13-018 D-1\n=\nEXHAUSTED" in g2:
+        evidence.append(f"{FDRG2} §7.5: the Founder accepts the exhaustion")
     evidence.append(f"P13 authority projection: construction_authorization = "
                     f"{construction} (the record, not remaining work)")
     items.append(_item(2, EVIDENCED if frontier_none and exhausted else NOT_EVIDENCED,
-                       evidence, "The P13-018 authorization record stays in force. "
-                       "Its disposition at closure is the Founder's (C8)."))
+                       evidence, "The P13-018 record is preserved (FDR-G2 §7.5). Its "
+                       "formal retirement needs the applicable authority."))
 
     # C3: every frontier row cites evidence that still verifies, and the
     # Founder accepted the frontier as classified (`FDQ-7.7`).
@@ -201,39 +260,65 @@ def evaluate(root: Path = REPO_ROOT) -> Dict[str, object]:
     items.append(_item(4, EVIDENCED if retained and "DEL-CFV2-CEO-001" in in_force
                        else NOT_EVIDENCED, evidence,
                        retention_note or "Explicitly retained through certification, "
-                       "not transferred. Retention after closure is part of the "
-                       "post-closure model (C8)."))
+                       "not transferred. After closure, AIOS continues under governed "
+                       "operation (C8)."))
 
-    # C5: what remains open is listed; whether it is acceptable is a judgement.
-    from tools.escalation_register import EscalationRegister
-    opened = []
-    for base in (root / "docs/architecture", root / "docs/operations"):
-        if base.is_dir():
-            for directory in sorted({p.parent for p in base.rglob("*.escalation.json")}):
-                opened.extend(EscalationRegister(directory).open_escalations())
-    items.append(_item(5, FOUNDER, [f"open escalations: {sorted(opened)}"],
-                       "Acceptability is the Founder's judgement."))
+    # C5: the Founder accepted the classified residual as non-blocking
+    # (`FD-G2-C5`), while its classification stays unchanged.
+    try:
+        live, drift = residual_sets(root), residual_drift(root)
+    except (OSError, ValueError, KeyError) as error:
+        items.append(_item(5, UNDETERMINABLE, [], f"residual sets unreadable: {error}"))
+    else:
+        accepted = g2 is not None and C5_ACCEPTED in g2
+        evidence = [f"{name}: {list(ids)}" for name, ids in live.items()]
+        if accepted:
+            evidence.append(f"{FDRG2} FD-G2-C5: {C5_ACCEPTED}")
+        if not accepted:
+            status, note = FOUNDER, "Acceptability is the Founder's judgement."
+        elif drift:
+            status, note = NOT_EVIDENCED, (
+                f"The residual changed since FD-G2-C5 accepted it: {drift}. "
+                "Classify the change first (FDR-G2 §4.3).")
+        else:
+            status, note = EVIDENCED, ("Accepted as non-blocking; not solved "
+                                       "(FDR-G2 §4.2).")
+        items.append(_item(5, status, evidence, note))
 
-    # C6: `FD-G2` leaves the criteria, and so the closure evidence, to be defined.
-    defined = g1 is not None and "CLOSURE CRITERIA\nTO BE DEFINED" in g1
-    items.append(_item(6, FOUNDER,
-                       [f"{FDRG1} §44 FD-G2: CLOSURE CRITERIA TO BE DEFINED"] if defined
-                       else [], "The closure evidence is not yet defined."))
+    # C6: `FD-G2-C6` defines the closure evidence standard.
+    if g2 is not None and C6_STANDARD in g2:
+        items.append(_item(6, EVIDENCED,
+                           [f"{FDRG2} FD-G2-C6: current closure gate + fresh "
+                            "verification + Founder closure decision"],
+                           "The standard is defined. The gate runs first, then "
+                           "fresh verification, then the Founder decides "
+                           "(FDR-G2 §6.2–§6.4)."))
+    else:
+        defined = g1 is not None and "CLOSURE CRITERIA\nTO BE DEFINED" in g1
+        items.append(_item(6, FOUNDER,
+                           [f"{FDRG1} §44 FD-G2: CLOSURE CRITERIA TO BE DEFINED"]
+                           if defined else [], "The closure evidence is not yet defined."))
 
     # C7: `FD-G2` names the closure authority.
     named = g1 is not None and "CLOSURE AUTHORITY\nFOUNDER" in g1
     items.append(_item(7, EVIDENCED if named else NOT_EVIDENCED,
                        [f"{FDRG1} §44 FD-G2: CLOSURE AUTHORITY FOUNDER"] if named else []))
 
-    # C8: `§19`–`§20` set a default boundary and leave operation to be governed.
+    # C8: `FD-G2-C8` establishes the post-closure model.
     default = g1 is not None and ("Closing P13 terminates P13 as an active phase "
                                   "lifecycle state") in g1
-    items.append(_item(8, FOUNDER,
-                       [f"{FDRG1} §19: closure retains certified evidence and history; "
-                        "§20: post-closure operation must be governed separately"]
-                       if default else [],
-                       "The default boundary is set. The post-closure operating model "
-                       "is not."))
+    evidence = ([f"{FDRG1} §19: closure retains certified evidence and history; "
+                 "§20: post-closure operation must be governed separately"]
+                if default else [])
+    if g2 is not None and C8_MODEL in g2:
+        evidence.append(f"{FDRG2} FD-G2-C8: P13 CLOSED -> {C8_MODEL}")
+        items.append(_item(8, EVIDENCED, evidence,
+                           "Closure ends P13's phase lifecycle. It creates no "
+                           "authority (FDR-G2 §7.3)."))
+    else:
+        items.append(_item(8, FOUNDER, evidence,
+                           "The default boundary is set. The post-closure operating "
+                           "model is not."))
     return _report(items)
 
 
@@ -241,7 +326,7 @@ def _report(items: List[dict]) -> Dict[str, object]:
     satisfied = all(item["status"] == EVIDENCED for item in items)
     return {
         "phase": "P13",
-        "instrument": "FDR-G1 FD-G2, §18",
+        "instrument": "FDR-G1 FD-G2, §18; FDR-G2",
         "gate": SATISFIED if satisfied else NOT_SATISFIED,
         "closes": False,
         "closure_authority": "Founder (FDR-G1 FD-G2)",

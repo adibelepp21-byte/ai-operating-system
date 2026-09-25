@@ -49,20 +49,26 @@ class TheLiveGate(unittest.TestCase):
                          [c["criterion"] for c in self.report["criteria"]])
         self.assertEqual(8, len(self.report["criteria"]))
 
-    def test_it_is_not_satisfied_and_closes_nothing(self):
-        self.assertEqual(gate.NOT_SATISFIED, self.report["gate"])
+    def test_it_is_satisfied_and_still_closes_nothing(self):
+        """`FDR-G2` answered the Founder items. A satisfied gate is still not a
+        closure (`FDR-G2` `§6.4`)."""
+        self.assertEqual(gate.SATISFIED, self.report["gate"])
         self.assertIs(False, self.report["closes"])
-        self.assertNotIn("CLOSED", json.dumps(self.report).replace("NOT CLOSED", ""))
+        self.assertNotIn("GRANTED", json.dumps(self.report))
+        self.assertIn("A satisfied gate is not a closure", self.report["statement"])
 
-    def test_what_the_record_answers_is_evidenced(self):
-        for number in (1, 2, 3, 4, 7):
+    def test_every_item_is_evidenced_from_the_record(self):
+        for number in range(1, 9):
             with self.subTest(f"C{number}"):
                 self.assertEqual(gate.EVIDENCED, _status(self.report, number))
 
-    def test_what_the_record_leaves_open_is_the_founders(self):
-        for number in (5, 6, 8):
+    def test_c5_to_c8_read_the_founder_dispositions(self):
+        for number, text in ((5, "FD-G2-C5"), (6, "FD-G2-C6"), (8, "FD-G2-C8")):
             with self.subTest(f"C{number}"):
-                self.assertEqual(gate.FOUNDER, _status(self.report, number))
+                self.assertIn(text, " ".join(self.report["criteria"][number - 1]["evidence"]))
+
+    def test_the_accepted_residual_is_the_live_residual(self):
+        self.assertEqual({}, gate.residual_drift(REPO_ROOT))
 
     def test_the_open_escalations_are_listed_not_judged(self):
         evidence = " ".join(self.report["criteria"][4]["evidence"])
@@ -143,16 +149,44 @@ class RemovedEvidenceIsNotEvidenced(unittest.TestCase):
                          {c["status"] for c in report["criteria"]})
         self.assertEqual(gate.NOT_SATISFIED, report["gate"])
 
-    def test_founder_items_never_become_evidenced(self):
-        """Nothing in the record can turn a Founder judgement into evidence,
-        not even a closure line planted in a registered act."""
-        with (self.repo / gate.FDRG1).open("a", encoding="utf-8") as act:
-            act.write("\nP13 CLOSED\nFOUNDER DECISION: CLOSE P13.\n")
+    def test_without_fdr_g2_the_founder_items_return(self):
+        """C5, C6 and C8 are evidenced only by the registered `FDR-G2`."""
+        self._edit(gate.REGISTER, "FDR-G2", "FDR-YY")
         report = gate.evaluate(self.repo)
         for number in (5, 6, 8):
             with self.subTest(f"C{number}"):
                 self.assertEqual(gate.FOUNDER, _status(report, number))
+        self.assertEqual(gate.NOT_SATISFIED, report["gate"])
+
+    def test_a_planted_closure_line_changes_nothing(self):
+        """A closure line in an act is not a closure, and the gate never reads
+        one as such."""
+        before = [c["status"] for c in gate.evaluate(self.repo)["criteria"]]
+        with (self.repo / gate.FDRG1).open("a", encoding="utf-8") as act:
+            act.write("\nP13 CLOSURE = GRANTED\nFOUNDER DECISION: CLOSE P13.\n")
+        report = gate.evaluate(self.repo)
+        self.assertEqual(before, [c["status"] for c in report["criteria"]])
         self.assertIs(False, report["closes"])
+
+    def test_a_new_open_escalation_is_residual_drift(self):
+        """`FDR-G2` `§4.3`: a new item is classified before C5 holds again."""
+        source = next((self.repo / "docs/architecture/p11").rglob("23f315ba9f504272.escalation.json"))
+        target = self.repo / "docs/operations/test-drift/1111111111111111.escalation.json"
+        target.parent.mkdir(parents=True)
+        record = json.loads(source.read_text(encoding="utf-8"))
+        record["escalation_id"] = "1111111111111111"
+        target.write_text(json.dumps(record), encoding="utf-8")
+        report = gate.evaluate(self.repo)
+        self.assertEqual(gate.NOT_EVIDENCED, _status(report, 5))
+        self.assertIn("1111111111111111", report["criteria"][4]["note"])
+
+    def test_a_reclassified_frontier_row_is_residual_drift(self):
+        path = self.repo / gate.MATRIX
+        matrix = json.loads(path.read_text(encoding="utf-8"))
+        (row,) = [r for r in matrix["questions"] if r["id"] == "Q23"]
+        row["category"] = "P13 FRONTIER"
+        path.write_text(json.dumps(matrix), encoding="utf-8")
+        self.assertEqual(gate.NOT_EVIDENCED, _status(gate.evaluate(self.repo), 5))
 
     def test_without_the_registered_a17_determination_c2_is_not_evidenced(self):
         """`GOV-002` `§5`: an authorization record in force is not remaining

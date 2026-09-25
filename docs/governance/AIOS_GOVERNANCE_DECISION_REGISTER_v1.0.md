@@ -8516,3 +8516,35 @@ authority then applicable.
 - the certification baseline;
 - every Founder Decision and earlier Register entry;
 - no subsequent phase.
+
+---
+
+## 38. FDR-G2 Append — P13 Closure, Residual Governance & Post-Closure Operating Model (2026-09-25)
+
+### FDR-G2 — Founder Decision · P13 Closure, Residual Governance & Post-Closure Operating Model
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-G2` |
+| **Date** | 2026-09-25 |
+| **Decided by** | Founder |
+| **Authority basis** | Founder-reserved closure governance. It answers the three items left by `ACT-CC-POST-P13-GOV-002` (`§37`) |
+| **Record** | `acts/FDR-G2-P13-CLOSURE-RESIDUAL-GOVERNANCE-AND-POST-CLOSURE-OPERATING-MODEL.md` · content sha256 `53c1b2d2ca4e10f80c1846f7ff2b788cece4f167ca60cbc32fbfedd1ba2ba005` |
+| **Status** | ISSUED — *"APPROVED — AUTHORIZE BOUNDED EXECUTION"* |
+
+| Disposition | Registered effect |
+|---|---|
+| FD-G2-C5 | residual governance **accepted as non-blocking to P13 closure**, while its classification stays unchanged. Nothing is solved or closed by it |
+| FD-G2-C6 | closure evidence = the current closure gate + fresh verification + the Founder Closure Decision |
+| FD-G2-C8 | after closure, AIOS continues under governed operation. No authority is created; `P13-ENV-02` stays retired; S-OPS stays historical |
+| `P13-018` `D-1` | the A17 exhaustion (`§36`) is accepted. The record is preserved |
+
+**Unchanged:**
+- **P13 closure: NOT GRANTED.** `FDR-G2` is not the Closure Decision. Its
+  `§6.4` states the form that decision shall use, and grants nothing;
+- certification;
+- the certified phases {10, 11, 12, 13};
+- the certification baseline;
+- `FDR-G1`'s successor model;
+- every earlier Founder Decision and Register entry;
+- no subsequent phase.
