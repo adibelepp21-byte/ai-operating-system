@@ -59,6 +59,12 @@ not what a self-model may report.
 read later resolving instruments, and `current_states()` sets aside what they
 supersede with the provenance of both. `phase_states()` keeps returning the
 `§37` block exactly as the Founder wrote it.
+
+**Closure is read beside the states (`FDR-G3`).** `closures()` recognises a
+Founder closure decision under the conditions of `FDR-G3` `§27`. `lifecycle()`
+reports the `§27` state machine (AUTHORIZED → EXIT SATISFIED → CERTIFIED →
+CLOSED), each state from its own source. Closure is never folded into a
+phase's `dimensions`, which hold only what their cited section states.
 """
 
 from __future__ import annotations
@@ -448,6 +454,222 @@ def authorizations(root: Path = REPO_ROOT) -> dict:
             ambiguous[phase] = tuple(i["instrument"] for i in instruments)
     return {"resolved": True, "phases": phases, "ambiguous": ambiguous,
             "rejected": tuple(rejected)}
+
+
+#: A Founder closure decision, read under `FDR-G3` `§25`, `§27`. The line is
+#: recognised only directly under the Founder's decision label, as `FDR-G3`
+#: writes it in `§1` and `§36`:
+#:
+#:     The Founder hereby decides:
+#:
+#:     P13 CLOSURE = GRANTED
+#:
+#: `FDR-G2` `§6.4` carries the same line under *"The Closure Decision shall
+#: explicitly state:"*. That is a stated form, and it is not read as a decision.
+#: The guard's third certification form is anchored the same way, for the
+#: same reason.
+_CLOSES = re.compile(
+    r"^The Founder hereby (?:decides|grants):[ \t]*\n(?:[ \t]*\n)*"
+    r"[ \t]*P(\d+) CLOSURE[ \t]*=[ \t]*GRANTED[ \t]*$", re.MULTILINE)
+#: Any closure line at all, anchored or not. Used only to report mentions.
+_CLOSURE_LINE = re.compile(r"^[ \t]*P(\d+) CLOSURE[ \t]*=[ \t]*GRANTED[ \t]*$",
+                           re.MULTILINE)
+REGISTER_PATH = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+
+
+def _founder_entry(register_text: str, record: str) -> Optional[Tuple[str, int]]:
+    """The Register's Founder Decision entry recording `record`: its identifier
+    and the offset of its heading. `None` if no such entry exists.
+
+    An entry ends at the next heading of any level. Ending it only at the next
+    Founder Decision heading would let the last one absorb every later entry,
+    and a later entry's record would then read as decided by the Founder."""
+    for heading in re.finditer(r"^### (\S+) — Founder Decision\b.*$", register_text,
+                               re.MULTILINE):
+        rest = register_text[heading.end():]
+        following = re.search(r"^#{1,6} ", rest, re.MULTILINE)
+        block = register_text[heading.start():
+                              heading.end() + (following.start() if following else len(rest))]
+        if (f"acts/{record}" in block
+                and re.search(r"^\| \*\*Decided by\*\* \| Founder\b", block, re.MULTILINE)):
+            return heading.group(1), heading.start()
+    return None
+
+
+def _superseded_by(register_text: str, identifier: str) -> Optional[str]:
+    """The Register row that declares `identifier` superseded, if any."""
+    match = re.search(r"^\| \*\*Supersedes\*\* \|[^\n]*`" + re.escape(identifier)
+                      + r"`", register_text, re.MULTILINE)
+    return match.group(0) if match else None
+
+
+def _closure_evidence(number: str, root: Path, register_text: str,
+                      before: int) -> Tuple[Optional[dict], str]:
+    """The `FD-G2-C6` evidence for closing phase `number`, registered before the
+    decision: a SATISFIED closure gate and a holding fresh verification, both
+    taken at the same commit. Returns `(evidence, "")` or `(None, reason)`."""
+    import hashlib
+    import json
+    directory = root / f"docs/governance/p{number}-closure"
+
+    def registered(path: Path) -> bool:
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        offset = register_text.find(digest)
+        return 0 <= offset < before
+
+    gates = {}
+    for path in sorted(directory.glob(f"P{number}-CLOSURE-GATE-*.json")):
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if (registered(path) and record.get("gate") == "SATISFIED"
+                and record.get("closes") is False):
+            gates[path.stem.rsplit("-", 1)[-1]] = path
+    for path in sorted(directory.glob(f"P{number}-FRESH-VERIFICATION-*.json")):
+        try:
+            record = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        commit = str(record.get("commit", ""))
+        gate = next((g for tag, g in gates.items() if tag and commit.startswith(tag)), None)
+        if registered(path) and record.get("holds") is True and gate is not None:
+            return {"closure_gate": gate.relative_to(root).as_posix(),
+                    "fresh_verification": path.relative_to(root).as_posix(),
+                    "commit": commit}, ""
+    return None, ("no registered SATISFIED closure gate with a holding fresh "
+                  "verification at the same commit, registered before the "
+                  "decision (FD-G2-C6)")
+
+
+def closures(root: Path = REPO_ROOT) -> dict:
+    """Phase closures a Founder decision granted, with provenance (`FDR-G3`).
+
+    Closure is reported beside the phase states, never folded into them, as
+    certification is. The independent verifier holds every reported dimension
+    to what its cited section states, and a closure is not written there.
+
+    **A closure counts only if every condition of `FDR-G3` `§27` holds:**
+
+    - the decision line is anchored on the Founder's decision label (`_CLOSES`);
+    - it is in the curated acts root;
+    - the Register records the act's path under a `### … — Founder Decision`
+      entry decided by the Founder;
+    - no Register entry declares that decision superseded;
+    - the `FD-G2-C6` evidence was registered before the decision
+      (`_closure_evidence`).
+
+    An instrument failing a condition is listed under `rejected`, with the
+    reason. A closure line that is not a decision (a stated form, a quotation)
+    is listed under `mentions` and closes nothing. Two valid decisions for one
+    phase are `ambiguous`, and neither is applied.
+
+    **Closure is not certification, and grants no authority.** Nothing here
+    reads or sets any other state.
+
+    Fails visibly: an unreadable governance source returns `resolved: False`.
+    """
+    acts = root / DECISION_ROOT
+    try:
+        register_text = (root / REGISTER_PATH).read_text(encoding="utf-8")
+    except OSError as error:
+        return {"resolved": False, "phases": {}, "ambiguous": {}, "rejected": (),
+                "mentions": (), "detail": f"the Decision Register cannot be read ({error})"}
+    if not acts.is_dir():
+        return {"resolved": False, "phases": {}, "ambiguous": {}, "rejected": (),
+                "mentions": (), "detail": f"the acts root does not resolve: {DECISION_ROOT}"}
+    found, rejected, mentions = {}, [], []
+    for path in sorted(acts.glob("*.md")):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        decided = sorted({m.group(1) for m in _CLOSES.finditer(text)})
+        mentioned = sorted({m.group(1) for m in _CLOSURE_LINE.finditer(text)})
+        record = path.relative_to(root).as_posix()
+        if not decided:
+            if mentioned:
+                mentions.append({"instrument": record,
+                                 "phases": tuple(f"P{n}" for n in mentioned)})
+            continue
+        entry = _founder_entry(register_text, path.name)
+        for number in decided:
+            phase = f"P{number}"
+            if entry is None:
+                rejected.append({"instrument": record, "phase": phase, "reason":
+                                 "not recorded in the Register as a Founder Decision"})
+                continue
+            identifier, offset = entry
+            superseded = _superseded_by(register_text, identifier)
+            if superseded:
+                rejected.append({"instrument": record, "phase": phase,
+                                 "reason": f"superseded: {superseded}"})
+                continue
+            evidence, reason = _closure_evidence(number, root, register_text, offset)
+            if evidence is None:
+                rejected.append({"instrument": record, "phase": phase, "reason": reason})
+                continue
+            # Line numbers, not section names: a list item in capitals
+            # (`4. ACT-CC-POST-P13-GOV-002;`) reads as a section heading to
+            # `_sections`, and would misattribute the decision.
+            stated = [f"line {text.count(chr(10), 0, m.end()) + 1}"
+                      for m in _CLOSES.finditer(text) if m.group(1) == number]
+            found.setdefault(phase, []).append({
+                "instrument": record, "register_identity": identifier,
+                "stated_in": tuple(stated), "evidence": evidence})
+    phases, ambiguous = {}, {}
+    for phase, instruments in found.items():
+        if len(instruments) == 1:
+            phases[phase] = {"closed": True, **instruments[0]}
+        else:
+            ambiguous[phase] = tuple(i["instrument"] for i in instruments)
+    return {"resolved": True, "phases": phases, "ambiguous": ambiguous,
+            "rejected": tuple(rejected), "mentions": tuple(mentions)}
+
+
+#: `FDR-5`'s decision of the P13 exit contract, read for `lifecycle()`.
+_EXIT_SATISFIED = re.compile(r"^P(\d+) Exit Contract = SATISFIED$", re.MULTILINE)
+
+
+def lifecycle(entity: str = "P13", root: Path = REPO_ROOT) -> dict:
+    """The `FDR-G3` `§27` state machine for one phase, from its separate sources:
+
+    ```text
+    AUTHORIZED → EXIT SATISFIED → CERTIFIED → CLOSED
+    ```
+
+    Each state is read where it is decided: authorization from
+    `current_states()`; exit from a Register-recorded Founder Decision carrying
+    the exit line; certification from `certifications()`; closure from
+    `closures()`. It derives nothing from anything else, so a closure without
+    certification, for example, is reported as exactly that.
+    """
+    states = {s["entity"]: s for s in current_states(root)}
+    certified = certifications(root)
+    closed = closures(root)
+    exit_source = None
+    try:
+        register_text = (root / REGISTER_PATH).read_text(encoding="utf-8")
+        for path in sorted((root / DECISION_ROOT).glob("*.md")):
+            text = path.read_text(encoding="utf-8")
+            if (any(m.group(1) == entity[1:] for m in _EXIT_SATISFIED.finditer(text))
+                    and _founder_entry(register_text, path.name) is not None):
+                exit_source = path.relative_to(root).as_posix()
+                break
+    except OSError:
+        exit_source = None
+    return {
+        "entity": entity,
+        "authorized": (states.get(entity) or {}).get("authorized"),
+        "exit_satisfied": exit_source is not None,
+        "exit_source": exit_source,
+        "certified": entity in (certified.get("phases") or {}),
+        "certification_source": ((certified.get("phases") or {}).get(entity) or {})
+        .get("instrument"),
+        "closed": entity in (closed.get("phases") or {}),
+        "closure_source": ((closed.get("phases") or {}).get(entity) or {}).get("instrument"),
+        "resolved": bool(certified.get("resolved")) and bool(closed.get("resolved")),
+    }
 
 
 def current_states(root: Path = REPO_ROOT) -> Tuple[dict, ...]:

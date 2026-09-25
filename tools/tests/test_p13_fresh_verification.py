@@ -56,7 +56,7 @@ class TheLiveVerification(unittest.TestCase):
 
     def test_the_stated_closure_form_in_fdr_g2_is_not_a_grant(self):
         (check,) = [c for c in self.report["checks"] if c["id"] == "V16"]
-        self.assertIn("closure grants in Register-resolving instruments: []",
+        self.assertIn("unrecognised closure grants in Register-resolving instruments: []",
                       check["evidence"])
         self.assertTrue(any("FDR-G2" in e for e in check["evidence"]))
 

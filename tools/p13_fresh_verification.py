@@ -18,10 +18,20 @@ state-changing and writes nothing. Each check is `PASS`, `FAIL` or
 **Closure statements are read carefully.** `FDR-G2` `§6.4` contains the line
 *"P13 CLOSURE = GRANTED"*. It is the form the Founder's Closure Decision shall
 use, and it grants nothing. V16 treats that one occurrence as a stated form:
-the same instrument says *"FDR-G2 does not itself close P13."* Any other
-Register-resolving instrument carrying the line fails V16, because before the
-Founder decides, closure must be NOT GRANTED. The guard learned the same lesson
-from negations: a reader fooled by a stated form is worse than none.
+the same instrument says *"FDR-G2 does not itself close P13."* The guard learned
+the same lesson from negations: a reader fooled by a stated form is worse than
+none.
+
+**After `FDR-G3`.** V16 scans closure lines by its own parse. Each one it finds
+in a Register-resolving instrument must be either that stated form or a closure
+`tools.p12_phase_authorization.closures()` recognises as valid under `FDR-G3`
+`§27`. Every closure the reader recognises must also appear in the scan. Any
+other closure line fails. V13 reads the `§27` lifecycle.
+
+`post_closure()` is the `FDR-G3` `§30` verification. It holds all 17 checks, and
+also requires P13 CLOSED and the three `FDR-G2` dispositions evidenced. The
+certified-write probe is external (it runs in disposable worktrees), and its
+result is recorded beside this output.
 
 Nothing here closes, certifies or authorizes anything.
 """
@@ -194,11 +204,16 @@ def verify(root: Path = REPO_ROOT) -> Dict[str, object]:
 
     def v13():
         states = {s["entity"]: s for s in phases.current_states(root)}
-        closed = [k for k in states["P13"].get("dimensions", {}) if "CLOS" in k.upper()]
-        return (set(states) == {"P11", "P12", "P13"} and not closed
-                and states["P13"]["authorized"] is True,
+        folded = [k for k in states["P13"].get("dimensions", {}) if "CLOS" in k.upper()]
+        state = phases.lifecycle("P13", root)
+        return (set(states) == {"P11", "P12", "P13"} and not folded
+                and state["authorized"] is True and state["exit_satisfied"]
+                and state["certified"] and state["resolved"],
                 [f"phase model: {sorted(states)}",
-                 f"P13 dimensions: {states['P13'].get('dimensions')}"])
+                 f"P13 dimensions: {states['P13'].get('dimensions')}",
+                 f"lifecycle: authorized {state['authorized']}, exit "
+                 f"{state['exit_satisfied']}, certified {state['certified']}, "
+                 f"closed {state['closed']} ({state['closure_source']})"])
 
     def v14():
         roadmap = (root / ROADMAP).read_text(encoding="utf-8").splitlines()
@@ -229,7 +244,9 @@ def verify(root: Path = REPO_ROOT) -> Dict[str, object]:
                  f"baseline holds: {base.get('holds')}"])
 
     def v16():
-        found, stated = [], []
+        recognised = {Path(c["instrument"]).name
+                      for c in (phases.closures(root).get("phases") or {}).values()}
+        found, stated, valid = [], [], []
         for path in sorted(acts.glob("*.md")):
             text = path.read_text(encoding="utf-8")
             if not _CLOSURE_GRANTED.search(text):
@@ -238,11 +255,14 @@ def verify(root: Path = REPO_ROOT) -> Dict[str, object]:
                 continue
             if STATED_FORM.get(path.name, "\0") in text:
                 stated.append(path.name)
+            elif path.name in recognised:
+                valid.append(path.name)
             else:
                 found.append(path.name)
         report = gate.evaluate(root)
-        return (not found and report["closes"] is False,
-                [f"closure grants in Register-resolving instruments: {found}",
+        return (not found and set(valid) == recognised and report["closes"] is False,
+                [f"unrecognised closure grants in Register-resolving instruments: {found}",
+                 f"valid Founder closure decisions: {valid}",
                  f"stated forms, not grants: {stated}",
                  f"closure gate closes: {report['closes']}"])
 
@@ -296,7 +316,60 @@ def verify(root: Path = REPO_ROOT) -> Dict[str, object]:
     }
 
 
+def post_closure(root: Path = REPO_ROOT) -> Dict[str, object]:
+    """The `FDR-G3` `§30` post-closure verification.
+
+    All 17 checks of `verify()` must pass. On top of them, P13 must be CLOSED by
+    a valid Founder decision, and the gate must still evidence `FD-G2-C5`,
+    `-C6` and `-C8`. The certified-write probe is recorded beside this output.
+    """
+    from tools import p12_phase_authorization as phases
+    from tools import p13_closure_gate as gate
+    fresh = verify(root)
+    by_id = {c["id"]: c["status"] for c in fresh["checks"]}
+    state = phases.lifecycle("P13", root)
+    criteria = {c["id"]: c["status"] for c in gate.evaluate(root)["criteria"]}
+
+    def item(label: str, passed: bool, source: str) -> dict:
+        return {"state": label, "status": PASS if passed else FAIL, "source": source}
+
+    items = [
+        item("P13 AUTHORIZATION TRUE", state["authorized"] is True, "lifecycle; V01"),
+        item("P13 EXIT SATISFIED", state["exit_satisfied"], f"{state['exit_source']}; V02"),
+        item("P13 CERTIFICATION TRUE", state["certified"],
+             f"{state['certification_source']}; V03"),
+        item("P13 CLOSURE CLOSED", state["closed"], f"{state['closure_source']}; V16"),
+        item("P13 CONSTRUCTION FRONTIER NONE", by_id.get("V04") == PASS, "V04"),
+        item("P13-018 D-1 EXHAUSTED", by_id.get("V05") == PASS, "V05"),
+        item("P13-ENV-02 RETIRED", by_id.get("V07") == PASS, "V07"),
+        item("S-OPS HISTORICAL ONLY", by_id.get("V08") == PASS, "V08"),
+        item("STATE-CHANGING AUTHORITY NONE", by_id.get("V06") == PASS, "V06"),
+        item("C5 RESIDUALS NON-BLOCKING", criteria.get("C5") == gate.EVIDENCED, "gate C5"),
+        item("C6 EVIDENCE MODEL SATISFIED", criteria.get("C6") == gate.EVIDENCED
+             and state["closed"], "gate C6; closure evidence"),
+        item("C8 OPERATING MODEL GOVERNED OPERATION", criteria.get("C8") == gate.EVIDENCED,
+             "gate C8"),
+        item("CERTIFIED ROOT UNCHANGED", by_id.get("V09") == PASS, "V09"),
+        item("PHASE 14 NOT ESTABLISHED", by_id.get("V14") == PASS, "V14"),
+    ]
+    return {
+        "instrument": "FDR-G3 §30",
+        "commit": fresh["commit"],
+        "holds": fresh["holds"] and all(i["status"] == PASS for i in items),
+        "items": items,
+        "fresh_verification": fresh,
+        "external": {"CERTIFIED WRITE PROBE 0": "recorded beside this output "
+                     "(tools/certified_write_probe.py)"},
+        "statement": "Verification only. It grants, closes and certifies nothing.",
+    }
+
+
 def main() -> int:
+    import sys
+    if "--post-closure" in sys.argv[1:]:
+        result = post_closure()
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        return 0 if result["holds"] else 1
     result = verify()
     print(json.dumps(result, indent=2, ensure_ascii=False))
     return 0 if result["holds"] else 1

@@ -24,10 +24,12 @@ words, against the resident record. Each gets one of four statuses:
 | `FOUNDER DETERMINATION REQUIRED` | a judgement, or a definition the Founder has not made |
 | `UNDETERMINABLE` | a source could not be read |
 
-The gate is `SATISFIED` only when every item is `EVIDENCED`. It is not
-satisfied today, because several items are the Founder's to determine. Even a
-satisfied gate closes nothing: *"The existence of a closure gate implementation
-MUST NOT be interpreted as: P13 CLOSED."* (`§33`).
+The gate is `SATISFIED` only when every item is `EVIDENCED`. It was not
+satisfied until `FDR-G2` determined C5, C6 and C8. Even a satisfied gate closes
+nothing: *"The existence of a closure gate implementation MUST NOT be
+interpreted as: P13 CLOSED."* (`§33`). P13 was closed by the Founder's own
+decision, `FDR-G3`. The gate reports that as `closure_state`, read from
+`p12_phase_authorization.closures()`, and never sets it.
 
 It does not decide which items the Founder must determine. It reports where
 the record is silent and says so.
@@ -319,16 +321,25 @@ def evaluate(root: Path = REPO_ROOT) -> Dict[str, object]:
         items.append(_item(8, FOUNDER, evidence,
                            "The default boundary is set. The post-closure operating "
                            "model is not."))
-    return _report(items)
+    try:
+        from tools import p12_phase_authorization as phases
+        closure = (phases.closures(root).get("phases") or {}).get("P13")
+        state = (f"CLOSED by {closure['register_identity']} ({closure['instrument']})"
+                 if closure else "NOT GRANTED")
+    except Exception as error:  # reported, never assumed
+        state = f"UNDETERMINABLE: {error}"
+    return _report(items, state)
 
 
-def _report(items: List[dict]) -> Dict[str, object]:
+def _report(items: List[dict], closure: str = "NOT DETERMINED") -> Dict[str, object]:
     satisfied = all(item["status"] == EVIDENCED for item in items)
     return {
         "phase": "P13",
         "instrument": "FDR-G1 FD-G2, §18; FDR-G2",
         "gate": SATISFIED if satisfied else NOT_SATISFIED,
         "closes": False,
+        #: Read from the Founder's decision (`FDR-G3`), never set by this gate.
+        "closure_state": closure,
         "closure_authority": "Founder (FDR-G1 FD-G2)",
         "criteria": items,
         "counts": {status: sum(1 for item in items if item["status"] == status)

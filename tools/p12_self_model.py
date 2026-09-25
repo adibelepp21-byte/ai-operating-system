@@ -174,6 +174,10 @@ def authority(root: Path = REPO_ROOT) -> Answer:
             "states": states,
             "certification": phases.certifications(root),
             "authorization": phases.authorizations(root),
+            # `FDR-G3` `§25`, `§27`: closure, and the state machine it ends,
+            # each from its own source and never folded into `states`.
+            "closure": phases.closures(root),
+            "lifecycle": phases.lifecycle("P13", root),
             "issuance_contradiction": contradiction,
         }
     except phases.PhaseAuthorizationUnresolved as unresolved:

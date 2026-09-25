@@ -8572,3 +8572,35 @@ authority then applicable.
 - the certification baseline;
 - every earlier Register entry;
 - no subsequent phase.
+
+---
+
+## 40. FDR-G3 Append — P13 Closure & Transition to Governed AIOS Operation (2026-09-25)
+
+### FDR-G3 — Founder Decision · P13 Closure & Transition to Governed AIOS Operation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-G3` |
+| **Date** | 2026-09-25 |
+| **Decided by** | Founder |
+| **Authority basis** | closure is Founder-reserved (`FDR-G1` FD-G2; `FDR-G2` `§6.4`). Decided after the closure evidence registered at `§39` |
+| **Record** | `acts/FDR-G3-P13-CLOSURE-AND-TRANSITION-TO-GOVERNED-AIOS-OPERATION.md` · content sha256 `ee6665d5f152e15892a953f64e10c4acd6677f96b308e20a05dae9336abe6038` |
+| **Status** | ISSUED — *"APPROVED — CERTIFY CLOSURE / AUTHORIZE BOUNDED EXECUTION"* |
+
+| Disposition | Registered effect |
+|---|---|
+| P13 closure | **GRANTED.** P13 is closed as a phase lifecycle state. P13 construction is complete |
+| Closure evidence | the closure gate (SATISFIED, 8 of 8) + fresh verification (17 of 17) + this decision, as `FD-G2-C6` requires (`§39`) |
+| Operating model | AIOS continues under governed operation. No authority is created |
+
+**Unchanged:**
+- P13 certification (TRUE) and the certified phases {10, 11, 12, 13};
+- the certified root and every certified manifest;
+- E13-01 … E13-07;
+- authority: state-changing NONE; `P13-ENV-02` retired; S-OPS historical;
+- the `P13-018` record (preserved; scope exhausted);
+- the residual frontier: non-blocking, not solved;
+- the certification baseline and `FDR-G1`'s evolution model;
+- every earlier Founder Decision and Register entry;
+- no subsequent phase.
