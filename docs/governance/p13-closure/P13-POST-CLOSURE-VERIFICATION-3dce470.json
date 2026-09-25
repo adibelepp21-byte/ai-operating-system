@@ -1,0 +1,256 @@
+{
+  "instrument": "FDR-G3 §30",
+  "commit": "3dce4709ef971a6b6dfba67411b54cfc9a6ecd51",
+  "holds": true,
+  "items": [
+    {
+      "state": "P13 AUTHORIZATION TRUE",
+      "status": "PASS",
+      "source": "lifecycle; V01"
+    },
+    {
+      "state": "P13 EXIT SATISFIED",
+      "status": "PASS",
+      "source": "docs/governance/acts/FDR-5-P13-EXIT-CONTRACT-SATISFACTION.md; V02"
+    },
+    {
+      "state": "P13 CERTIFICATION TRUE",
+      "status": "PASS",
+      "source": "docs/governance/acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md; V03"
+    },
+    {
+      "state": "P13 CLOSURE CLOSED",
+      "status": "PASS",
+      "source": "docs/governance/acts/FDR-G3-P13-CLOSURE-AND-TRANSITION-TO-GOVERNED-AIOS-OPERATION.md; V16"
+    },
+    {
+      "state": "P13 CONSTRUCTION FRONTIER NONE",
+      "status": "PASS",
+      "source": "V04"
+    },
+    {
+      "state": "P13-018 D-1 EXHAUSTED",
+      "status": "PASS",
+      "source": "V05"
+    },
+    {
+      "state": "P13-ENV-02 RETIRED",
+      "status": "PASS",
+      "source": "V07"
+    },
+    {
+      "state": "S-OPS HISTORICAL ONLY",
+      "status": "PASS",
+      "source": "V08"
+    },
+    {
+      "state": "STATE-CHANGING AUTHORITY NONE",
+      "status": "PASS",
+      "source": "V06"
+    },
+    {
+      "state": "C5 RESIDUALS NON-BLOCKING",
+      "status": "PASS",
+      "source": "gate C5"
+    },
+    {
+      "state": "C6 EVIDENCE MODEL SATISFIED",
+      "status": "PASS",
+      "source": "gate C6; closure evidence"
+    },
+    {
+      "state": "C8 OPERATING MODEL GOVERNED OPERATION",
+      "status": "PASS",
+      "source": "gate C8"
+    },
+    {
+      "state": "CERTIFIED ROOT UNCHANGED",
+      "status": "PASS",
+      "source": "V09"
+    },
+    {
+      "state": "PHASE 14 NOT ESTABLISHED",
+      "status": "PASS",
+      "source": "V14"
+    }
+  ],
+  "fresh_verification": {
+    "instrument": "FDR-G2 FD-G2-C6, §6.3",
+    "commit": "3dce4709ef971a6b6dfba67411b54cfc9a6ecd51",
+    "holds": true,
+    "checks": [
+      {
+        "id": "V01",
+        "check": "P13 authorization state",
+        "status": "PASS",
+        "evidence": [
+          "authorized: True",
+          "Founder authorization FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION §19 FOUNDER DECISION (docs/governance/acts/FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md)"
+        ]
+      },
+      {
+        "id": "V02",
+        "check": "P13 exit state",
+        "status": "PASS",
+        "evidence": [
+          "docs/governance/acts/FDR-5-P13-EXIT-CONTRACT-SATISFACTION.md: P13 Exit Contract = SATISFIED"
+        ]
+      },
+      {
+        "id": "V03",
+        "check": "P13 certification state",
+        "status": "PASS",
+        "evidence": [
+          "certified: True",
+          "provenance: ['FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md']"
+        ]
+      },
+      {
+        "id": "V04",
+        "check": "P13 construction frontier",
+        "status": "PASS",
+        "evidence": [
+          "FDR-G1 §39: P13 CONSTRUCTION FRONTIER NONE",
+          "A17 exhaustion registered: True"
+        ]
+      },
+      {
+        "id": "V05",
+        "check": "P13-018 disposition",
+        "status": "PASS",
+        "evidence": [
+          "record preserved: AUTHORIZED — bounded to Blueprint §10 IN",
+          "A17 exhaustion: True",
+          "FDR-G2 §7.5 accepts it: True"
+        ]
+      },
+      {
+        "id": "V06",
+        "check": "P13 state-changing authority",
+        "status": "PASS",
+        "evidence": [
+          "state_changing_authority: NONE"
+        ]
+      },
+      {
+        "id": "V07",
+        "check": "P13-ENV-02 status",
+        "status": "PASS",
+        "evidence": [
+          "active: ['P13-ENV-01']",
+          "retired: {'P13-ENV-02': 'FDR-4'}"
+        ]
+      },
+      {
+        "id": "V08",
+        "check": "S-OPS status",
+        "status": "PASS",
+        "evidence": [
+          "active S-OPS action types: []",
+          "operational_envelope: EVIDENCE-ONLY"
+        ]
+      },
+      {
+        "id": "V09",
+        "check": "certified-root integrity",
+        "status": "PASS",
+        "evidence": [
+          "holds: True",
+          "faults: []",
+          "versions: {'P10': [(1, 'CURRENT')], 'P11': [(1, 'CURRENT')], 'P12': [(1, 'CURRENT')], 'P13': [(1, 'CURRENT')]}"
+        ]
+      },
+      {
+        "id": "V10",
+        "check": "write-protection integrity",
+        "status": "PASS",
+        "evidence": [
+          "guard roots covered by the barrier: True",
+          "barrier installed and refusing each root: True"
+        ]
+      },
+      {
+        "id": "V11",
+        "check": "residual-frontier classification",
+        "status": "PASS",
+        "evidence": [
+          "P13-015 matrix holds: True",
+          "drift from FD-G2-C5: none"
+        ]
+      },
+      {
+        "id": "V12",
+        "check": "current authority projection",
+        "status": "PASS",
+        "evidence": [
+          "phase_authorization: AUTHORIZED",
+          "construction_authorization: AUTHORIZED — bounded to Blueprint §10 IN",
+          "operational_envelope: EVIDENCE-ONLY",
+          "state_changing_authority: NONE",
+          "certification_authority: CERTIFIED"
+        ]
+      },
+      {
+        "id": "V13",
+        "check": "current phase state",
+        "status": "PASS",
+        "evidence": [
+          "phase model: ['P11', 'P12', 'P13']",
+          "P13 dimensions: {'AUTHORIZED': True}",
+          "lifecycle: authorized True, exit True, certified True, closed True (docs/governance/acts/FDR-G3-P13-CLOSURE-AND-TRANSITION-TO-GOVERNED-AIOS-OPERATION.md)"
+        ]
+      },
+      {
+        "id": "V14",
+        "check": "absence of Phase 14",
+        "status": "PASS",
+        "evidence": [
+          "roadmap phase rows: 0–13",
+          "highest phase anywhere read: 13"
+        ]
+      },
+      {
+        "id": "V15",
+        "check": "absence of unauthorized certification",
+        "status": "PASS",
+        "evidence": [
+          "certified: [10, 11, 12, 13]",
+          "anomalies: []",
+          "baseline holds: True"
+        ]
+      },
+      {
+        "id": "V16",
+        "check": "absence of unauthorized closure",
+        "status": "PASS",
+        "evidence": [
+          "unrecognised closure grants in Register-resolving instruments: []",
+          "valid Founder closure decisions: ['FDR-G3-P13-CLOSURE-AND-TRANSITION-TO-GOVERNED-AIOS-OPERATION.md']",
+          "stated forms, not grants: ['FDR-G2-P13-CLOSURE-RESIDUAL-GOVERNANCE-AND-POST-CLOSURE-OPERATING-MODEL.md']",
+          "closure gate closes: False"
+        ]
+      },
+      {
+        "id": "V17",
+        "check": "absence of contradictory current-state assertions",
+        "status": "PASS",
+        "evidence": [
+          "self-model reports P10–P13 certified: True",
+          "self-model reports the accepted baseline: True",
+          "projection certification agrees with the guard: True",
+          "operations README states P13-ENV-02 retired: True"
+        ]
+      }
+    ],
+    "counts": {
+      "PASS": 17,
+      "FAIL": 0,
+      "UNDETERMINABLE": 0
+    },
+    "statement": "State verification only. It is not an E13-05 live proof, executes nothing state-changing, and closes nothing (FDR-G2 §6.3, §6.4)."
+  },
+  "external": {
+    "CERTIFIED WRITE PROBE 0": "recorded beside this output (tools/certified_write_probe.py)"
+  },
+  "statement": "Verification only. It grants, closes and certifies nothing."
+}

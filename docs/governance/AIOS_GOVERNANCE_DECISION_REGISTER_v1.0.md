@@ -8604,3 +8604,28 @@ authority then applicable.
 - the certification baseline and `FDR-G1`'s evolution model;
 - every earlier Founder Decision and Register entry;
 - no subsequent phase.
+
+---
+
+## 41. FDR-G3 Execution — P13 Closure Execution Record (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Under** | `FDR-G3` (`§40`), `§25`–`§30` |
+| **Date** | 2026-09-25 |
+| **Record** | `AIOS_P13_CLOSURE_EXECUTION_RECORD_v1.0.md` · sha256 `0d3f7836d5a8e2e34492155a58dd936b5dccbc278d07f89992299416e23f1564` |
+| **Post-closure verification** | `p13-closure/P13-POST-CLOSURE-VERIFICATION-3dce470.json` · sha256 `fe3c5f4ea58aaf8d09d60b59577a3658468b8ca2288a87466537f35ab5e49bb7`: 14 of 14 `§30` items PASS; fresh verification 17 of 17 PASS |
+| **Closure recognition** | `p12_phase_authorization.closures()` / `lifecycle()`: P13 CLOSED by `FDR-G3` alone, under every `§27` condition. Reported beside the phase states; P13's dimensions unchanged |
+| **Negative controls** | NC-01 … NC-12 refused or failed as `§28` requires (`tools/tests/test_p13_closure_state.py`, 30 tests); 19 of 19 mutations caught |
+| **Verification** | suites at `3dce470`: tools 1783, native_core 801, consumers 276, bounded_exception 29, all OK · probe: 0 certified writes · integrity holds · independent phase verifier 6 of 6 |
+| **Commits** | `af23a02`, `3dce470` |
+
+**Not changed:**
+- certification, and the certified phases {10, 11, 12, 13};
+- every certified root and manifest;
+- authority (state-changing NONE; `P13-ENV-02` retired; S-OPS historical);
+- the `P13-018` record (preserved; scope exhausted);
+- the residual frontier (non-blocking, not solved);
+- the certification baseline and `FDR-G1`'s evolution model;
+- every earlier Founder Decision and Register entry;
+- no subsequent phase: Phase 14 is not established.
