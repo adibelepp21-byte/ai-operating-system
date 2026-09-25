@@ -8629,3 +8629,14 @@ authority then applicable.
 - the certification baseline and `FDR-G1`'s evolution model;
 - every earlier Founder Decision and Register entry;
 - no subsequent phase: Phase 14 is not established.
+
+---
+
+## 42. ACT-CC-POST-P13-PLATFORM-ORG-001 Append — Platform Organization Completion & Construction Act (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Act** | `ACT-CC-POST-P13-PLATFORM-ORG-001` · `acts/ACT-CC-POST-P13-PLATFORM-ORG-001-PLATFORM-ORGANIZATION-COMPLETION-AND-CONSTRUCTION.md` · content sha256 `f5d9bd39ce625c98d922bba796ebf80e5de1e12b1f5bbb0fc5973d95679305d5` |
+| **Date** | 2026-09-25 |
+| **Received** | from the Founder, 2026-09-25. The instrument names no issuer or date. It is not a Founder Decision, and it changes none |
+| **Scope** | the Platform Organization Construction Track, `PD-01` … `PD-10`: discover, then construct only what is source-supported and within delegated authority. It creates no phase, certifies and closes nothing, authorizes no material change to certified architecture, and grants no state-changing authority (header, `§3`, `§26`, `§61`) |

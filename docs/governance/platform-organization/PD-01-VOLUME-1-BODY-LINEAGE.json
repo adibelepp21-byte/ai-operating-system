@@ -1,0 +1,384 @@
+{
+  "record": "PD-01 Volume 1 — body lineage from recovery to the current tree",
+  "status": "EVIDENCE. Derived from git history. Not canonical; modifies no Volume 1 file",
+  "under": "ACT-CC-POST-P13-PLATFORM-ORG-001 §11 (PD-01 reference pattern validation), §42",
+  "why": "RECOVERY-MANIFEST.md §2 states its SHA-256 values 'remain authoritative'. They are, for the recovered state (commit 4af690e, 45 of 45 match). Two later, authorized changes altered 41 bodies (C6 and C8 by both), and no record held the current hashes. This record joins the two states.",
+  "corpus": "docs/architecture/volume-1/pd-01-executive-office",
+  "manifest": "docs/architecture/volume-1/pd-01-executive-office/RECOVERY-MANIFEST.md",
+  "recovered_commit": "4af690e",
+  "changes": [
+    {
+      "commit": "b48281e",
+      "record": "acts/ACT-CC-REM-003.5.md",
+      "act": "ACT-CC-REM-003.5",
+      "authority": "ACT-CC-REM-003.4 (acts/ACT-CC-REM-003.4.md): the Founder authorized MC-1, MC-2, MC-3, MC-4, MC-6"
+    },
+    {
+      "commit": "82bc832",
+      "record": "AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md §6B",
+      "act": "ACT-CC-F03-023",
+      "authority": "the Founder selected Branch B (PD-01 / Volume 1) and named the targets (AIOS_VOLUME_ACTIVATION_MODEL v1.4 §6B)"
+    }
+  ],
+  "bodies": [
+    {
+      "section": "A1",
+      "recovered_sha256": "088cecdd04abd42d4ae38af7bff893567ab1ca698855f104265b7f7b63243838",
+      "current_sha256": "1d815529bed520e2b46d956edf439a1a8ad5c38dbcac3178e9a3b8c859c38917",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A2",
+      "recovered_sha256": "82a99842ce47d5f4f3050fd31b509b5b7cf3a3760d8757683e3c27d87ac5f820",
+      "current_sha256": "2f2834e4e38285dd250b530b9eea470180082afb98b41d491f1097170f67259b",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A3",
+      "recovered_sha256": "1434c49492615d91e2f18703d052fdb95b02de71794a001c071ac4ccedfd4422",
+      "current_sha256": "7268e22861535a2e4b1726fb2ca7a9f42a5df5f80bb67c17072f6222d218e736",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A4",
+      "recovered_sha256": "c2329ca413d7122cbb3a01e7da5205dca627a39b9db7de7f30a2a4a8a582c4ea",
+      "current_sha256": "f193bc2adac01f619922c20c479a01f4dfd95e32fb5e9650feec74eaea848569",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A5",
+      "recovered_sha256": "33181d351b5b1f92bcf6453fb4ddfd166af2f6d886e5f3fdbbe40882eb179078",
+      "current_sha256": "5fa165a712507c7cceb6747bf1a24546858cc59dd4d9b78ab5d3f8885d0e8f01",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A6",
+      "recovered_sha256": "bf30b7a95a0ca77ae53f69ef8144e65002aa3c2dae6a88924916d25f1be1ccc5",
+      "current_sha256": "b9c4e2cdf0e965d704b5b3e2dd6542a8b03a6d4ff3a7a5baba9d71fe3532abd4",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A7",
+      "recovered_sha256": "e7abfc9fb8b7e8e237ebc52fc7df9fc19d5102551bcfb06b5826b9670c905e8e",
+      "current_sha256": "601da40d535f3c59351093d924ddf00f6fdf680dde4a3d1f9a9b265f42359706",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A8",
+      "recovered_sha256": "79f3b1d5082ef6b135afd326fb1d08e754194bfb4168d6e754484e95ba02352e",
+      "current_sha256": "706b8863b6cd3b5e4ede6da58c4e1a1cd63676238299bfff0a1c7f1133af88b6",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A9",
+      "recovered_sha256": "0dfb2c6157451dc73ebb565d46eee7d1799e5971c9e13c81c18b400ac875fded",
+      "current_sha256": "60319e13bf0245dd590df1f46317e1f025f642c12f6df00d3b04207cba8ab03e",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "A10",
+      "recovered_sha256": "3d70a901608ab1a9dfb28bcfd351c4efea31c821111a169d1ac03ef82be0cbbe",
+      "current_sha256": "fab389785a754b9388928b7bd32ca6440890e7c892771cc8e649d4ed2bc7fd66",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "B1",
+      "recovered_sha256": "a6a50a99719d467b1f536187baab4e7208cc4da7c5ec74414d75ace6d53ba949",
+      "current_sha256": "3cc5492dfa7dfe3a8fa6f5cb0c186aee6ba8aa6e766193a8af03e8109e407d5c",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "B2",
+      "recovered_sha256": "0814cff260384bfc40e95b97c2cf82a3d3e99d27893050c3e88f519173fdc42d",
+      "current_sha256": "0814cff260384bfc40e95b97c2cf82a3d3e99d27893050c3e88f519173fdc42d",
+      "changed_by": []
+    },
+    {
+      "section": "B3",
+      "recovered_sha256": "32ed429629fae4f46713ef1b18997576c0f7e34a1173e78602c943c059325aab",
+      "current_sha256": "32ed429629fae4f46713ef1b18997576c0f7e34a1173e78602c943c059325aab",
+      "changed_by": []
+    },
+    {
+      "section": "B4",
+      "recovered_sha256": "5ab49cd41948af953bc39fbf3e78a76d847b7f5d29f4aeffe3c31c72edc2225f",
+      "current_sha256": "5ab49cd41948af953bc39fbf3e78a76d847b7f5d29f4aeffe3c31c72edc2225f",
+      "changed_by": []
+    },
+    {
+      "section": "B5",
+      "recovered_sha256": "79003f0faab8f0b041c3ad32a745996256820b4e75f5ea5f2fc76b15e2997281",
+      "current_sha256": "79003f0faab8f0b041c3ad32a745996256820b4e75f5ea5f2fc76b15e2997281",
+      "changed_by": []
+    },
+    {
+      "section": "C1",
+      "recovered_sha256": "6f446f94a9bfb87c957fec8f330d2ed9893ed34a4d0998b6621410080c6ae4b7",
+      "current_sha256": "a0a07e90b9ce07da17dd9b68d27c97561cc297aeac599d3e282c302a12d4c088",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "C2",
+      "recovered_sha256": "76392509337a24ee499640d81a18d6419c6dea26be0dc7273b710c62633c79a3",
+      "current_sha256": "3a4730f0ec614a5dd120e011e293bd8457928c6c01d7baeb04d47a38336ef1d1",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "C3",
+      "recovered_sha256": "c7cef0fa727deaa2ab37f373399b766104d057e7fa5b80273c1073dec876787b",
+      "current_sha256": "cf40ec84f34509f85cc1005b60fb1bd4ad9a2e45e6458839b31ee727b496a2be",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "C4",
+      "recovered_sha256": "63fa87f896281d96fdde568e371f465a801986c3bf82d8c507ab57981f647ddc",
+      "current_sha256": "42bf5c3c34cdc945d4cb3d368f940ea5b199c4889a05b0b2892f2a9869c6a435",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "C5",
+      "recovered_sha256": "6ebe88cf214b16ca7850a8eab479081acc12009aed583c00cf37e536415c0458",
+      "current_sha256": "162bcea3f1e56fdcb20a39a73091ad265e50f2e3bb6b82da6ad75b596c200cbd",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "C6",
+      "recovered_sha256": "5a8e8d28d9ee5858eb09dfb6cb8ca202d8e13df5146519eecbeae82369a52266",
+      "current_sha256": "4ee73abdc82a324681cb5b53946ac15a3d23dbb1512ebfbc719403c1a7be7e40",
+      "changed_by": [
+        "ACT-CC-REM-003.5",
+        "ACT-CC-F03-023"
+      ]
+    },
+    {
+      "section": "C7",
+      "recovered_sha256": "50f16418aa4de53d8d942ea103a49070d21431676d165d386e93193ce94accd6",
+      "current_sha256": "c012abfe03038f88295c743c03e07cc2627e392fcd7daaccdc41fa7202efbf42",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "C8",
+      "recovered_sha256": "2c99c9cb9fc5b07462c68b0f8bc12ddb7777ad4d316516b489fc3c2e66934a31",
+      "current_sha256": "8e995ff68e7ac94191f57d376224a13a232143fbc0b32aa864460810e0017a98",
+      "changed_by": [
+        "ACT-CC-REM-003.5",
+        "ACT-CC-F03-023"
+      ]
+    },
+    {
+      "section": "C9",
+      "recovered_sha256": "ce437b60437c5c0792070268edfa0e9068bd26cb163147b5a1fd777b85d52924",
+      "current_sha256": "596e269940f5e4fa2835d35d15437c5479163442d50e6d09cd78459f74d5769d",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "C10",
+      "recovered_sha256": "be8cf1abe2c6aa83aa0e1fa5faa8f810d85be14aaa28576fd080c398d6771c70",
+      "current_sha256": "e99baab5e9c91accbcd688a6a31db748423d8bc954caf2b4ab9e720cbeb0db68",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D1",
+      "recovered_sha256": "d634a42451243652f2b6d23f40759e8c30279c081d7eab808bfbef153e047048",
+      "current_sha256": "defa10089bd3f2ac19624121b64180c534caaa319071fbde4da0627903c6ed55",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D2",
+      "recovered_sha256": "e57ff58e39d0160593282e0d7e53e04f421b8ad4d9ce6918a380231d7e75440d",
+      "current_sha256": "848ab6c6a527eb3eb9694b9646a2477164f18511709f537247a76e13552a99be",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D3",
+      "recovered_sha256": "717b4871999ec9109a0d0b7f4d414c180b2b5ac3d57b971a59b707ddcbe21fd8",
+      "current_sha256": "c841f9a3a777e53b598cdd09d56ee63f45c83617ac6884e5755c1b3ef906a192",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D4",
+      "recovered_sha256": "177e95f24c8651cb6138116f122cb8e4785b59b86d8e83d25b36eaf8823271ef",
+      "current_sha256": "f0134fa052d4bb0f383d56ffbe6ca00dbb5ecccff94029fbdb010f33afe0aceb",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D5",
+      "recovered_sha256": "9618a30f23cc82f8d6ac6a65099198eea3a31d3453026b02add70d41d917ae04",
+      "current_sha256": "5d8b6b1c9629c67dea87f7480a27f49532235226392e9052c1ce265cb0ed71dd",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D6",
+      "recovered_sha256": "8230d2ee1ce190faf5a4f4b8d7a223df20b35d5471bfb41052a564d1ea491abc",
+      "current_sha256": "eaa5d6f092d4ac34af7eb0dc9678a1a9ddaf7a9da4ad0c9ea8fc801dddff2025",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D7",
+      "recovered_sha256": "cc16585d012cd55eb0a18394b56c0c96fdc01e3fbf1039048604a113e08a40a4",
+      "current_sha256": "9f019c5d3599e08a7a80d80bdfb3ce73bc7719a0fa28e93f7a32cf67a5879be6",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D8",
+      "recovered_sha256": "59e64bb4356a50bdc84e9f96b99c022ceb8024a44ae128ccaa64b23be3831fcc",
+      "current_sha256": "4cd2a3946dcf2ca43af215c23627cd76ff1054f2c4ee59c3d78c779d0d79e12a",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D9",
+      "recovered_sha256": "8d44d4b72b4ee0ad88fe1f44aedb327af4dac918b34bc48b3c626cec56806da8",
+      "current_sha256": "76d61c33775d7e2e4e974574c8c917c73c20787b97de12bd97d88721078edcec",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "D10",
+      "recovered_sha256": "868a62ea3c2a748150917f4ef11909ccfa1e3a393098a48915efc78456f8df5e",
+      "current_sha256": "5370f20f71f969447c1f02d27a94d11643339b83260d7e7d64a5d6a60801ee39",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E1",
+      "recovered_sha256": "d187574dff36e29484823d6a07a6e590ae1b88a3337d980261b70338eec80901",
+      "current_sha256": "10de99bc17f26e2fbcfbd6bc2b3a3d8d3da78f88b85fdcbb62d9ed050a5f09b5",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E2",
+      "recovered_sha256": "e6e5a7b8c8b8ce720be4ebfc08af1e05d380986d28ce6c0ac23406f05ff075a4",
+      "current_sha256": "4caabf01a2e0e82a6d257355cd2133968a2bc4db26d0e39479b8ef575c03ffc5",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E3",
+      "recovered_sha256": "4bc13eaf218b915ebd4e33c70ab020c941386fa3b1774930e2f4fa48f34bfa8f",
+      "current_sha256": "e2e6160ebe6ddf663e4c849dfbd838db97dc5c89e8c081a0fcc1bf68c22c2a00",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E4",
+      "recovered_sha256": "9cbd9a76c504d3edf74c2fe074c326db31d947f65bb0ef7d67f580eac411726c",
+      "current_sha256": "31db91b68924a62555ca24318d5a889eb71e38693aae7479adfbce532482e861",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E5",
+      "recovered_sha256": "5a0cc5f208d0b5c5a3e885cf326f90ac8a76504597c8978e05cbc07ad9a5b38c",
+      "current_sha256": "5084e0dfe676ef105902d73ece91bc129d50db58bcc21991677acca719d7a65d",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E6",
+      "recovered_sha256": "084d359b5d096bfb328546de2ddf365b81b2c58392c7d61b6e64dedde7d37be5",
+      "current_sha256": "cf2b74153e08ecd8c85cef010f521d3ac1195271ddcc1fe20564df3da55c74ef",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E7",
+      "recovered_sha256": "7fa73bc75b2de36921213579c8be41258967a5f14bc96477c0ffa531a655b6c5",
+      "current_sha256": "ef20c9c7bb97019a493ffc3e3460c66123ce7aa13ca29ace0a16c13510712cf8",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E8",
+      "recovered_sha256": "2ec39ff929d4ed94229e4024b3c33442c7a6feb6a9478a5031ab894e81a3b852",
+      "current_sha256": "08da5c5966471dba4b49b328831438a96075343e8ea349dedb509df45cae5535",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E9",
+      "recovered_sha256": "7b89daa523fdca4b6226875b610754110e72093fa58ecdfedbecd1782f50720d",
+      "current_sha256": "ef1be6181e32a7fd63e8b0ad4630dec9f496ff3dcbe194c96e513ff54f934c3f",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    },
+    {
+      "section": "E10",
+      "recovered_sha256": "bc0153d5fa73f88ca01d7568922d8d29f9b7cbe32ca6ca9e1056645715443f39",
+      "current_sha256": "94cea5bf5074beac37319e6907571102a3c57d28e82699d7650f79542570ed67",
+      "changed_by": [
+        "ACT-CC-REM-003.5"
+      ]
+    }
+  ],
+  "counts": {
+    "bodies": 45,
+    "unchanged_since_recovery": 4,
+    "changed_since_recovery": 41
+  }
+}
