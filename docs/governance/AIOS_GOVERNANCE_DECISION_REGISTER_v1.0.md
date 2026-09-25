@@ -8361,3 +8361,37 @@ the Founder Certification Decision.
 - authority (`P13-ENV-02` retired; state-changing NONE);
 - the four open escalations;
 - no subsequent phase.
+
+---
+
+## 32. FDR-G1 Append — Post-P13 Governance Foundation (2026-09-25)
+
+### FDR-G1 — Founder Decision · Post-P13 Governance Foundation: Certified Architecture Evolution, P13 Closure & Certification Baseline
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-G1`, with sub-decisions `FD-G1`, `FD-G2` and `FD-G3` (`§44`) |
+| **Date** | the instrument states none; received 2026-09-25 |
+| **Decided by** | Founder / Program Owner (as stated) |
+| **Authority basis** | Founder-reserved governance decision. It answers FQ-1, FQ-2 and FQ-3 as prepared by `ACT-CC-POST-P13-GOV-001` (`§31`) |
+| **Record** | `acts/FDR-G1-POST-P13-GOVERNANCE-FOUNDATION.md` · content sha256 `8c078e182b5ae4c78e860e434c931c5fd0aabe533127fd338ca8e8364ca6bbff` |
+| **Status** | ISSUED — *"APPROVED FOR PERSISTENCE AND BOUNDED EXECUTION"* |
+
+| Sub-decision | Registered effect |
+|---|---|
+| FD-G1 | **Certified architecture may evolve** by a versioned successor, with the prior baseline immutable and preserved, verification, re-certification and explicit supersession. In-place amendment is not the default mechanism. Current certified architecture stays **FROZEN**. Change authorization and certification stay Founder-reserved |
+| FD-G2 | **P13 remains CERTIFIED + OPEN.** Closure requires an explicit gate, not yet defined, and a Founder closure decision. It is not executed or authorized here |
+| FD-G3 | **The historical certification distribution is accepted.** P1–P3 NO CERTIFICATION RECORD IDENTIFIED · P4–P9 CERTIFIED VIA FOUNDER DECISIONS / REGISTER · P10–P13 CERTIFIED + MACHINE-PROTECTED. There is no retroactive certification and no P4–P9 machine protection, and the missing P1–P6 declaration is not reconstructed |
+
+**Bounded execution authorized:**
+- `§32`: successor-version certification machinery, under its nine constraints;
+- `§33`: a P13 closure-gate mechanism that only records or evaluates criteria;
+- `§34`: accurate non-certified reporting.
+
+**Unchanged:**
+- every certified root, manifest, index and certifying instrument;
+- the certified phases {10, 11, 12, 13};
+- P13 closure (NOT GRANTED);
+- authority (`P13-ENV-02` retired; state-changing NONE);
+- `FDR-1` → `FDR-7` and every earlier Register entry;
+- no subsequent phase.
