@@ -8268,3 +8268,18 @@ Founder Certification Decision.
 
 If P13 is certified before its manifest is promoted, detection reports a
 fault.
+
+---
+
+## 28. ACT-CC-P13-CERT-GATE-003 Append — Blueprint §16 Roadmap Endpoint; P13 Manifest Rebuilt (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Act** | `ACT-CC-P13-CERT-GATE-003` · `acts/ACT-CC-P13-CERT-GATE-003-BLUEPRINT-S16-ROADMAP-ENDPOINT-RECONCILIATION.md` · content sha256 `ac06f24c0d2de312cf7b8e7a00e4283798f8f271c1499f6f159c4005e610f7d6` |
+| **Received** | from the Founder, 2026-09-25. Authority context as stated: `FDR-6` and existing P13 certification-preparation authority. It is not a Founder Decision and changes none |
+| **Blueprint §16** | *"Phase 14 is NOT AUTHORIZED"* replaced by *"The current AIOS roadmap terminates at Phase 13."* / *"No subsequent phase is established by the current roadmap."*. The bullet's label changes with it. §0–§15 are byte-identical (prefix sha256 `6f022d89…`). Blueprint sha256 goes from `0b13e300…` to `aaa87315e2d4690636faa07cbd0fe50b459fff8270576b78d56c3be8a9c6abe4`, at commit `c76e420` |
+| **P13 manifest** | `AIOS_P13_CERTIFICATION_MANIFEST_v1.0.json` rebuilt from `c76e420` · sha256 `6265477fce788de0dc940b0e1d5b35bf247374b746ca829279bae8a67893e72a`. **Status: PREPARED — NOT CERTIFIED.** 1 file. It supersedes the §27 manifest (`127b97fd…`), which described the Blueprint before this change |
+| **Not changed** | the certified manifest index (`34f9673a…`) and certified phases `{10, 11, 12}`; `FDR-4`, `FDR-5`, `FDR-6` and every earlier Register entry; the roadmap |
+
+No certification, closure, new phase or authority is granted. The next gate is
+the Founder Certification Decision.
