@@ -8491,3 +8491,28 @@ authority then applicable.
 - the P13 authority projection, which still reports the record as authorized;
 - certification and closure;
 - every earlier Register entry.
+
+---
+
+## 37. ACT-CC-POST-P13-GOV-002 Result — Post-P13 Governance Resolution Package (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Under** | `ACT-CC-POST-P13-GOV-002` (`§35`), `§15`–`§17` |
+| **Record** | `AIOS_POST_P13_GOVERNANCE_RESOLUTION_PACKAGE_v1.0.md` · sha256 `f72e7f1116f405aaa76287e88aa86b59aa5dc8511c72332f76d3792e02eefa5f` |
+| **Closure readiness** | FOUNDER DECISION REQUIRED ON SPECIFIC ITEMS: C5 (acceptance of residual governance at closure), C6 (closure evidence), C8 (post-closure operating model) |
+| **Resolved** | `P13-018` `D-1`: record in force, scope exhausted (`§36`). Remaining authorized construction: NONE. Operational responsibility: retained, not transferred (`FDR-7` `§8`). FQ-1 model: implemented / operationally ready. FQ-3 controls hold. No false current state found |
+| **Closure gate** | NOT SATISFIED: 5 EVIDENCED, 3 FOUNDER DETERMINATION REQUIRED |
+| **Construction required** | NONE |
+| **Verification** | suites at `711984c`: tools 1732, native_core 801, consumers 276, bounded_exception 29, all OK · probe: 0 certified writes · integrity holds · readers unchanged |
+
+**Not changed:**
+- P13 closure (NOT GRANTED);
+- certification;
+- the certified phases {10, 11, 12, 13};
+- every certified root, manifest and index;
+- `P13-018`;
+- envelopes and delegations;
+- the certification baseline;
+- every Founder Decision and earlier Register entry;
+- no subsequent phase.
