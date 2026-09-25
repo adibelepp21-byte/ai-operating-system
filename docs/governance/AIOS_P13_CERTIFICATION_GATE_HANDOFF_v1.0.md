@@ -102,3 +102,22 @@ P13 EXIT CONTRACT = SATISFIED  ─── STOP ───▶  P13 CERTIFICATION GA
 ```
 
 Phase 14 lies outside all of the above.
+
+## E. After `FDR-6` (appended 2026-09-25; §A–§D unchanged)
+
+`FDR-6` (Decision Register `§26`) decided the questions the Certification Gate
+put to the Founder. §A records the state **before** it and is kept as written.
+
+| §C question | Disposition under `FDR-6` |
+|---|---|
+| 1. Phase authorization | `FDQ-1`: Phase 13 **authorized**, as a separate decision before certification. P13 `AUTHORIZED = TRUE` (`CR-3`) |
+| 2. Evidence standard | `FDQ-2`: fresh live verification **not required**. Evidence keeps its actual class |
+| 3. Certified scope | `FDQ-5`: `docs/architecture/p13/` only. `tools/p13/`, governance records, `docs/operations/p13/`, S-OPS and `p13-preparation/` stay outside |
+| 4. Blueprint accuracy | `FDQ-3`: Blueprint `§16` appended (`CR-4`); §0–§15 preserved |
+| 7. Certified-evidence protection | `CR-1`/`CR-2`: a P13 manifest prepared, not protecting (Decision Register `§27`) |
+| 6. S-OPS residue | **partly.** `§14`: S-OPS is historical evidence only, outside the root, with no new capability. Nothing retires the `s_ops` code in `tools/p13/`, and retiring it would be construction |
+| 8. Bounded items | **partly.** `FDQ-2` carries evidence into the readiness package *"according to its actual evidence classification"*. Whether the bounded items are acceptable for certification is left to the Founder Certification Decision |
+| 9. Residual frontier | `FDQ-4`: classifications adopted for certification. The frontier is not resolved |
+| 5, 10, 11 | not addressed by `FDR-6`. They are carried into the P13 Certification Readiness Package |
+
+**Still not granted:** certification, Phase 13 closure, Phase 14.

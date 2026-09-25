@@ -124,3 +124,25 @@ only.
 * `FD-2` and F-4: open.
 
 Non-blocking to this exit contract does not mean solved.
+
+## 9. After the Certification Gate Founder Decision (appended 2026-09-25; §1–§8 unchanged)
+
+`FDR-6` (Decision Register `§26`) `FDQ-4` adopts the `FDR-5`, P13-015 and
+P13-017 classifications **for the Certification Gate and the eventual
+certification evaluation**. `FDR-5` adopted them for the exit contract only.
+
+**No status in `§7` or `§8` changes.** Adoption is not resolution:
+
+* `GAP-0017` and `GAP-0018` stay residual frontier;
+* the E13-07 register stays open and non-blocking;
+* the three reasoning rules and the evolution-proposal path stay bounded;
+* the S-OPS observation stays open and non-blocking;
+* `FD-2` and F-4 stay open.
+
+A future frontier item must be classified against the applicable contract.
+P13 may not declare one non-blocking on its own authority. Certification, if
+the Founder grants it, would not erase or solve anything recorded here.
+
+`FDR-6` also resolves one gate-level item. `FDQ-1` authorizes Phase 13, and the
+phase machinery now reports P13 `AUTHORIZED = TRUE` (`CR-3`). This record's
+gaps are unaffected.
