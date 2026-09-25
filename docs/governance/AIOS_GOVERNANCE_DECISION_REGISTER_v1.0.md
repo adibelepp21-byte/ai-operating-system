@@ -8548,3 +8548,27 @@ authority then applicable.
 - `FDR-G1`'s successor model;
 - every earlier Founder Decision and Register entry;
 - no subsequent phase.
+
+---
+
+## 39. FDR-G2 Execution — P13 Closure Readiness Package (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Under** | `FDR-G2` (`§38`), `§6.2`–`§6.5`, `§19` |
+| **Record** | `AIOS_P13_CLOSURE_READINESS_PACKAGE_v1.0.md` · sha256 `cb15da71f1940c4def9440a573a8fbef587797e8150efd86abf48fab10cc6087` |
+| **Closure gate** | `p13-closure/P13-CLOSURE-GATE-f9e7652.json` · sha256 `d5d9f2e15b15fc5e532033de01d7d9026b6acc63c0775195cc93df9dffa725a9`: SATISFIED, 8 of 8 EVIDENCED. It closes nothing |
+| **Fresh verification** | `p13-closure/P13-FRESH-VERIFICATION-f9e7652.json` · sha256 `da213c3e7f13e15aa2ecc0b36a91032023cb90adac1f6b814426ef3351ea0fd5`: 17 of 17 PASS. A state verification, not an E13-05 live proof |
+| **Readiness** | READY FOR FOUNDER CLOSURE DECISION |
+| **Verification** | suites at `f9e7652`: tools 1753, native_core 801, consumers 276, bounded_exception 29, all OK · probe: 0 certified writes · integrity holds |
+
+**Not changed:**
+- **P13 closure: NOT GRANTED.** The Founder Closure Decision is not issued;
+- certification;
+- the certified phases {10, 11, 12, 13};
+- every certified root and manifest;
+- authority (state-changing NONE; `P13-ENV-02` retired; S-OPS historical);
+- the `P13-018` record (preserved);
+- the certification baseline;
+- every earlier Register entry;
+- no subsequent phase.

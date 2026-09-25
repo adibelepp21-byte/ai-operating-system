@@ -1,0 +1,101 @@
+{
+  "phase": "P13",
+  "instrument": "FDR-G1 FD-G2, \u00a718; FDR-G2",
+  "gate": "SATISFIED",
+  "closes": false,
+  "closure_authority": "Founder (FDR-G1 FD-G2)",
+  "criteria": [
+    {
+      "id": "C1",
+      "criterion": "whether all authorized P13 obligations are satisfied",
+      "status": "EVIDENCED",
+      "evidence": [
+        "docs/governance/acts/FDR-5-P13-EXIT-CONTRACT-SATISFACTION.md: P13 Exit Contract = SATISFIED",
+        "guard: P13 certified (docs/governance/acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md)"
+      ],
+      "note": "No record lists P13 obligations beyond the exit contract and certification."
+    },
+    {
+      "id": "C2",
+      "criterion": "whether no authorized construction remains",
+      "status": "EVIDENCED",
+      "evidence": [
+        "docs/governance/acts/FDR-G1-POST-P13-GOVERNANCE-FOUNDATION.md \u00a739: P13 CONSTRUCTION FRONTIER NONE",
+        "Decision Register: P13-018 D-1: AUTHORIZED ACTIONABLE CONSTRUCTION SURFACE EXHAUSTED (A17)",
+        "docs/governance/acts/FDR-G2-P13-CLOSURE-RESIDUAL-GOVERNANCE-AND-POST-CLOSURE-OPERATING-MODEL.md \u00a77.5: the Founder accepts the exhaustion",
+        "P13 authority projection: construction_authorization = AUTHORIZED \u2014 bounded to Blueprint \u00a710 IN (the record, not remaining work)"
+      ],
+      "note": "The P13-018 record is preserved (FDR-G2 \u00a77.5). Its formal retirement needs the applicable authority."
+    },
+    {
+      "id": "C3",
+      "criterion": "whether remaining frontier items are appropriately classified",
+      "status": "EVIDENCED",
+      "evidence": [
+        "P13-015 matrix holds: True; counts {\"ALREADY SOLVED\": 46, \"P13 CORE\": 20, \"P13 FRONTIER\": 3, \"PARTIAL\": 30, \"UNKNOWN\": 1}",
+        "docs/governance/acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md: FDQ-7.7 = ACCEPT AS CLASSIFIED / NON-BLOCKING"
+      ],
+      "note": "Accepted as classified at certification. The frontier is not solved."
+    },
+    {
+      "id": "C4",
+      "criterion": "whether required operational responsibilities have been transferred or explicitly retained",
+      "status": "EVIDENCED",
+      "evidence": [
+        "active envelope P13-ENV-01",
+        "retired envelope P13-ENV-02 (FDR-4)",
+        "live record root docs/operations/p13",
+        "delegations in force: ['DEL-F03-015-P7I99-001', 'DEL-CFV2-CEO-001']",
+        "docs/governance/acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md \u00a78: The existing bounded delegated autonomy model remains in force"
+      ],
+      "note": "Explicitly retained through certification, not transferred. After closure, AIOS continues under governed operation (C8)."
+    },
+    {
+      "id": "C5",
+      "criterion": "whether residual governance matters are acceptable",
+      "status": "EVIDENCED",
+      "evidence": [
+        "P13 FRONTIER: ['Q38', 'Q39', 'Q91']",
+        "UNKNOWN: ['Q23']",
+        "open escalations: ['0991300404cf44d8', '23f315ba9f504272', '9cb90fa0787a478c', '9d6bc0ad47294ef0']",
+        "docs/governance/acts/FDR-G2-P13-CLOSURE-RESIDUAL-GOVERNANCE-AND-POST-CLOSURE-OPERATING-MODEL.md FD-G2-C5: ACCEPTED AS NON-BLOCKING TO P13 CLOSURE"
+      ],
+      "note": "Accepted as non-blocking; not solved (FDR-G2 \u00a74.2)."
+    },
+    {
+      "id": "C6",
+      "criterion": "what evidence constitutes closure",
+      "status": "EVIDENCED",
+      "evidence": [
+        "docs/governance/acts/FDR-G2-P13-CLOSURE-RESIDUAL-GOVERNANCE-AND-POST-CLOSURE-OPERATING-MODEL.md FD-G2-C6: current closure gate + fresh verification + Founder closure decision"
+      ],
+      "note": "The standard is defined. The gate runs first, then fresh verification, then the Founder decides (FDR-G2 \u00a76.2\u2013\u00a76.4)."
+    },
+    {
+      "id": "C7",
+      "criterion": "what authority grants closure",
+      "status": "EVIDENCED",
+      "evidence": [
+        "docs/governance/acts/FDR-G1-POST-P13-GOVERNANCE-FOUNDATION.md \u00a744 FD-G2: CLOSURE AUTHORITY FOUNDER"
+      ],
+      "note": ""
+    },
+    {
+      "id": "C8",
+      "criterion": "what post-closure operating state means",
+      "status": "EVIDENCED",
+      "evidence": [
+        "docs/governance/acts/FDR-G1-POST-P13-GOVERNANCE-FOUNDATION.md \u00a719: closure retains certified evidence and history; \u00a720: post-closure operation must be governed separately",
+        "docs/governance/acts/FDR-G2-P13-CLOSURE-RESIDUAL-GOVERNANCE-AND-POST-CLOSURE-OPERATING-MODEL.md FD-G2-C8: P13 CLOSED -> AIOS CONTINUES UNDER GOVERNED OPERATION"
+      ],
+      "note": "Closure ends P13's phase lifecycle. It creates no authority (FDR-G2 \u00a77.3)."
+    }
+  ],
+  "counts": {
+    "EVIDENCED": 8,
+    "NOT EVIDENCED": 0,
+    "FOUNDER DETERMINATION REQUIRED": 0,
+    "UNDETERMINABLE": 0
+  },
+  "statement": "Evaluation only. This closes nothing and grants no closure authority. A satisfied gate is not a closure: closure is a Founder decision (FDR-G1 \u00a716, \u00a733)."
+}
