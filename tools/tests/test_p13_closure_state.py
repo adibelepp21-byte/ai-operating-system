@@ -175,7 +175,10 @@ class TheReaderRefusesAnInvalidClosure(_Copy):
                          [r["instrument"] for r in result["rejected"]])
 
     def test_nc06_closure_without_valid_evidence_does_not_close(self):
-        for evidence in sorted((self.repo / EVIDENCE).glob("*.json")):
+        # The `FD-G2-C6` evidence only. The directory also holds records made
+        # after closure, which are not evidence for it.
+        for evidence in sorted([*(self.repo / EVIDENCE).glob("P13-CLOSURE-GATE-*.json"),
+                                *(self.repo / EVIDENCE).glob("P13-FRESH-VERIFICATION-*.json")]):
             with self.subTest(evidence.name):
                 saved = evidence.read_bytes()
                 evidence.unlink()
