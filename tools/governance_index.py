@@ -357,7 +357,17 @@ def _normalize_identifier(value: str) -> str:
     The backticks are presentation, not part of the identifier, and §6 permits
     normalizing metadata. Only the identifier field is normalized; every other
     value is kept in the source's own wording, as §13 requires.
+
+    A cell that opens with a code-formatted identifier and then goes on in
+    prose is read as that identifier. Decision Register `§32` writes
+    `` `FDR-G1`, with sub-decisions … ``. `_IDENTIFIER_ROW_RE` already reads the
+    leading code span as the identifier the entry declares, and the
+    projection now agrees with it. The Register is append-only, so the cell
+    stays as written, and `§33` records the correction.
     """
+    leading = re.match(r"`([^`\s]+)`\s*[,;(]", value.strip())
+    if leading is not None:
+        return leading.group(1)
     return value.strip().strip("`*").strip()
 
 

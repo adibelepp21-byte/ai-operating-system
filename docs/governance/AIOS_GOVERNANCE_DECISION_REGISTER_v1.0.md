@@ -8395,3 +8395,29 @@ the Founder Certification Decision.
 - authority (`P13-ENV-02` retired; state-changing NONE);
 - `FDR-1` → `FDR-7` and every earlier Register entry;
 - no subsequent phase.
+
+---
+
+## 33. Correction of record — §32 FDR-G1 Registration Metadata (2026-09-25)
+
+Two metadata cells of the `§32` entry do not follow this Register's
+metadata form. They carry prose where the form expects a plain value:
+
+| Cell in `§32` | As written | Of record |
+|---|---|---|
+| **Identifier** | `` `FDR-G1`, with sub-decisions `FD-G1`, `FD-G2` and `FD-G3` (`§44`) `` | `FDR-G1`. Its sub-decisions are `FD-G1`, `FD-G2` and `FD-G3` |
+| **Date** | *"the instrument states none; received 2026-09-25"* | the instrument states no date. It was received and recorded 2026-09-25 |
+
+**`§32`'s text is not altered.** `§2.3`: *"Append-only. Entries are added,
+never rewritten."* On the `GDR-0036` precedent (`§8`), this entry is the mark,
+and `§32` stands as written. Its decision content is unaffected: the act, its
+content sha256 `8c078e18…` and the registered effects are as `§32` states them.
+
+**Found by the governance-index suite, after `§32` was committed.** The index
+read the identifier cell whole. It also ranked the date cell's words above
+every plain date, because raw text sorts after digits.
+- The identifier projection now reads a leading code span followed by prose as
+  the declared identifier. That is what `_IDENTIFIER_ROW_RE` already did.
+- The chronology tests now compare the ISO date each entry states. That is
+  the key `since()` already orders by.
+- Only this entry's index record changes (619 records before and after).

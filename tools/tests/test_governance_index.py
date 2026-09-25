@@ -752,6 +752,17 @@ class IndexIntegrity(_Corpus):
 
         self.assertEqual(len(identified), len(set(identified)))
 
+    def test_a_leading_code_span_is_the_declared_identifier(self):
+        """Decision Register `§32`: the identifier cell goes on in prose after
+        the identifier. Only a code span followed by `,`, `;` or `(` is read
+        this way; every other value is normalized as before."""
+        self.assertEqual("FDR-G1", gi._normalize_identifier(
+            "`FDR-G1`, with sub-decisions `FD-G1`, `FD-G2` and `FD-G3` (`§44`)"))
+        for value, expected in (("`GDR-0002`", "GDR-0002"), ("FD-P5-001", "FD-P5-001"),
+                                ("**FD-P13-005**", "FD-P13-005")):
+            with self.subTest(value):
+                self.assertEqual(expected, gi._normalize_identifier(value))
+
     def test_every_register_subrecord_reaches_the_index(self):
         """Source count == indexed count for the register's own headings."""
         register = REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
@@ -829,8 +840,12 @@ class SameDateEntriesAreUnordered(_Corpus):
     def test_the_newest_answer_is_a_date_and_every_entry_carrying_it(self):
         entries = self._register_entries()
         self.assertGreater(len(entries), 20)
-        newest_date = max(r.date for r in entries)
-        newest = {r.identifier for r in entries if r.date == newest_date}
+        # Dates are compared as the ISO date each states, which is what
+        # `since()` and `_recency` order by. A stated value may carry words
+        # around its date (Decision Register `§32`), and raw text would sort
+        # those above every plain date.
+        newest_date = max(gi._recency(r) for r in entries)
+        newest = {r.identifier for r in entries if gi._recency(r) == newest_date}
         self.assertGreaterEqual(len(newest), 1, "a maximal date always has members")
         surfaced = {r.identifier for r in self.index.since(newest_date)
                     if r.source_path == REGISTER and r.identifier != ABSENT}
@@ -873,4 +888,15 @@ class SameDateEntriesAreUnordered(_Corpus):
         stated = re.findall(r"\*\*Dates?[^*]*\*\*:?\s*\|?\s*\**\s*(\d{4}-\d{2}-\d{2})",
                             source)
         self.assertGreater(len(stated), 20)
-        self.assertEqual(max(stated), max(r.date for r in self._register_entries()))
+        self.assertEqual(max(stated),
+                         max(gi._recency(r) for r in self._register_entries()))
+
+    def test_a_date_stated_in_words_keeps_its_words_and_its_place(self):
+        """Decision Register `§32` states *"the instrument states none;
+        received 2026-09-25"*. The index keeps that wording (`§13`) and orders
+        the entry by the ISO date inside it; `§33` records the correction. The
+        entry is not dropped, and its words are not ranked as a date."""
+        (record,) = [r for r in self._register_entries() if r.identifier == "FDR-G1"]
+        self.assertEqual("the instrument states none; received 2026-09-25", record.date)
+        self.assertEqual("2026-09-25", gi._recency(record))
+        self.assertIn(record, self.index.since("2026-09-25"))

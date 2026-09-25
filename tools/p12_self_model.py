@@ -199,6 +199,15 @@ def authority(root: Path = REPO_ROOT) -> Answer:
     except register.DelegationRegisterUnreadable as unreadable:
         operative_delegation = {"resolved": False, "in_force": [],
                                 "superseded": [], "detail": str(unreadable)}
+    # `FDR-G1` `§34`, `§40`: the certification baseline as the Founder accepted
+    # it. `certification` above is only what the guard reads (P10–P13). Left
+    # alone, it said nothing about P4–P9, which a reader could take for
+    # "uncertified".
+    from tools import certification_baseline
+    try:
+        baseline = certification_baseline.baseline(root)
+    except Exception as error:  # an unreadable baseline is reported, not hidden
+        baseline = {"resolved": False, "detail": f"{type(error).__name__}: {error}"}
     return Answer(
         "What authority do I have?",
         {
@@ -216,6 +225,7 @@ def authority(root: Path = REPO_ROOT) -> Answer:
                 "integrate", "test", "verify", "persist", "reconcile", "document",
             ),
             "phase_authorization": phase_authorization,
+            "certification_baseline": baseline,
             "operative_delegation": operative_delegation,
             "self_model_authority": None,
         },
@@ -223,7 +233,8 @@ def authority(root: Path = REPO_ROOT) -> Answer:
         "DP-01 §8; FD-P11-001 §12; FD-P10-005 §4; P12 Authorization §13; "
         "phase state read from the Founder decision body by "
         "tools.p12_phase_authorization; operative delegation read from "
-        "AIOS_DELEGATION_REGISTER_v1.0.md by tools.governance_delegation_register",
+        "AIOS_DELEGATION_REGISTER_v1.0.md by tools.governance_delegation_register; "
+        "certification baseline (FDR-G1 §40) by tools.certification_baseline",
     )
 
 
