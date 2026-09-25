@@ -8283,3 +8283,36 @@ fault.
 
 No certification, closure, new phase or authority is granted. The next gate is
 the Founder Certification Decision.
+
+---
+
+## 29. FDR-7 Append — P13 Founder Certification & Final System Acceptance (2026-09-25)
+
+### FDR-7 — Founder Decision · P13 Certification & Final System Acceptance
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-7` |
+| **Date** | 2026-09-25 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | Founder; certification is Founder-reserved. Follows `FDR-6` and the Certification Gate (`ACT-CC-P13-CERT-GATE-001` → `003`) |
+| **Record** | `acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md` · content sha256 `09b47c62e6efaa49606ee98fa0d4c9420293b4f16b443e355cd073bfa49ff833` |
+| **Status** | ISSUED — **APPROVED — CERTIFY.** The instrument states its identifier and date. A PENDING template of the same record came first and was superseded by this one. The act header records it |
+
+| Disposition | Registered effect |
+|---|---|
+| FDQ-7.1 | **Final System Acceptance: ACCEPT** |
+| FDQ-7.2 | **P13 certification: CERTIFY** |
+| FDQ-7.3 | certified root: `docs/architecture/p13/` |
+| FDQ-7.4 | the prepared P13 manifest is promoted |
+| FDQ-7.5 | certified phase set: {10, 11, 12, 13} |
+| FDQ-7.6 | post-certification boundaries confirmed: bounded delegated autonomy; no authority synthesis, self-authorization or governance override |
+| FDQ-7.7 | residual frontier accepted as classified and non-blocking. **Not solved** |
+| FDQ-7.8 | **P13 closure: NOT GRANTED** (kept open) |
+
+**Unchanged:**
+- `P13-ENV-02` stays retired;
+- S-OPS stays historical evidence only;
+- P13 state-changing authority stays NONE;
+- no subsequent phase is established;
+- no historical Founder Decision is modified.
