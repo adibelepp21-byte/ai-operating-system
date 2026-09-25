@@ -8213,3 +8213,41 @@ decision.
 **Not authorized:** certification, Phase 13 closure, phase authorization,
 Phase 14, new capability, new authority, a new live proof, or any revival of
 S-OPS authority.
+
+---
+
+## 26. FDR-6 Append — P13 Certification Gate Founder Decision (2026-09-25)
+
+### FDR-6 — Founder Decision · P13 Certification Gate
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-6` |
+| **Date** | 2026-09-25 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | as stated: *"Founder"*; related gate `ACT-CC-P13-CERT-GATE-001`; predecessor `FDR-5` |
+| **Record** | `acts/FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md` · content sha256 `473f6e33a3eb82d1ac0606bcdff5df39a700d1b34bed9d59e384a0c8dc47862b` |
+| **Status** | ISSUED — **five dispositions, `FDQ-1` to `FDQ-5`, and construction `CR-1` to `CR-4`**. The instrument states its identifier and its date. Its header reads *"PENDING FOUNDER AUTHORIZATION"*, and its signature block reads *"APPROVED FOR PERSISTENCE AND BOUNDED EXECUTION"*. The act header discloses the contradiction and an unissued `FDR-6` label in `GOAL-V2-005` `§12` |
+
+| Disposition | Registered effect |
+|---|---|
+| `FDQ-1` | **AUTHORIZE PHASE 13.** P13 Master Program phase authorization becomes **TRUE**, represented through the phase-authorization machinery (`CR-3`). It is not certification, closure, Phase 14 authorization, unrestricted operational authority or self-certification |
+| `FDQ-2` | **Fresh live verification NOT REQUIRED** for the Certification Gate. No new state-changing live proof is authorized. Test-proven evidence stays test-proven |
+| `FDQ-3` | An **append-only Blueprint `§16`** (*POST-FDR-5 CERTIFICATION GATE RECONCILIATION*) is authorized. `§0`–`§15` are preserved |
+| `FDQ-4` | The residual-frontier classifications of `FDR-5`, P13-015 and P13-017 are **adopted for the Certification Gate** and the eventual certification evaluation. The frontier is **not resolved**. P13 may not self-declare a future item non-blocking |
+| `FDQ-5` | **`docs/architecture/p13/` is the P13 certified root.** Supporting implementation, governance records, live operational evidence, preparation material and S-OPS stay outside it |
+| `CR-1` → `CR-4` | **Authorized, bounded:** the P13 certification manifest; integrity and test reconciliation; the phase-authorization representation; the Blueprint `§16` append |
+| `CR-5` | `P13-ENV-02` stays **RETIRED / REVOKED**. No revival and no new S-OPS execution |
+| S-OPS | **Historical evidence only** |
+
+**Not granted or delegated:**
+
+* certification (**NOT GRANTED**) and final system acceptance;
+* Phase 13 closure (**NOT GRANTED**);
+* Phase 14 authorization (**NOT AUTHORIZED**);
+* authority synthesis, self-certification or governance override;
+* unrestricted state-changing execution;
+* modification of Founder-reserved matters.
+
+The next gate is the P13 Certification Readiness Package, then a separate
+Founder Certification Decision.
