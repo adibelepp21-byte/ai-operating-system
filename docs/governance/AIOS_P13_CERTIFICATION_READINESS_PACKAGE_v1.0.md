@@ -240,3 +240,10 @@ the Founder's non-grant clause, and it is preserved. `FDR-6` `§11` and `§16`
 include a line about the next phase number. It is satisfied in its strongest
 form: no roadmap artifact, state reader, verifier or authorization defines,
 holds or authorizes any phase beyond P13.
+
+## H. Superseded for current state (2026-09-25)
+
+`ACT-CC-P13-CERT-GATE-003` changed Blueprint §16 and rebuilt the prepared
+manifest (now `6265477f…`, Decision Register `§28`). This package stays as
+the record of the state at `FDR-6` execution. The current package is
+`AIOS_P13_CERTIFICATION_READINESS_PACKAGE_v1.1.md`.
