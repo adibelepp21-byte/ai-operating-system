@@ -4,7 +4,8 @@
 |---|---|
 | **Instrument** | `FDR-6` (Decision Register `§26`; act content sha256 `473f6e33…`), `§15` step 19 and `§17` |
 | **Prepared by** | Claude Code — AIOS Co-Founder + Delegated CEO · 2026-09-25 |
-| **Nature** | the readiness package the Founder Certification Decision follows. **It certifies nothing and decides nothing. It creates no certification, closure or Phase 14 record, and it is not a draft of the Certification Decision** |
+| **Nature** | the readiness package the Founder Certification Decision follows. **It certifies nothing and decides nothing. It creates no certification or closure record, and it is not a draft of the Certification Decision** |
+| **Revised** | 2026-09-25 under `ACT-CC-P13-CERT-GATE-002` (see §G) |
 | **Commits** | `4d12c4c` persist and register `FDR-6` · `0eb2900` `CR-3` · `8114f9b` `CR-4` · `edd7219` `CR-1`/`CR-2` · `2ffb175` `FDQ-4`/`FDQ-5` records |
 
 ## A. Founder Decision Integrity
@@ -165,7 +166,7 @@ Every item is classified. None is inferred resolved. **UNKNOWN: none.**
 | 16 | Guard recognition of a P13 certification | **RESOLVED** | the guard's default root is `docs/architecture/p13`. A resolving certification is recognised and protects it (tested in a disposable copy) |
 | 17 | Promotion of the manifest after a certification | **CONSTRUCTION REQUIRED**, but only after a Founder Certification Decision, and not before it | create the certified manifest and an index supplement, and register both hashes. The machinery supports this and a test shows it; until then detection faults |
 | 18 | Phase 13 closure | **NON-BLOCKING** to certification | a separate gate. **NOT GRANTED** |
-| 19 | Phase 14 | **NON-BLOCKING**: outside the gate | **NOT AUTHORIZED**. `authorizations()` holds no P14 |
+| 19 | Roadmap endpoint | **RESOLVED** | the Master Roadmap (`AIOS_MASTER_ROADMAP_CONSOLIDATED_v1.0.md` §4) establishes Phases 0–13. P13 is the final phase currently established. The phase model holds P11–P13 and authorizations hold P13 only, so no phase beyond P13 exists there. Certification of P13 depends on no later phase |
 | 20 | `P13-ENV-02` | **RESOLVED**: retired | `FDR-4` `FD-B`; `CR-5` |
 
 **What the machinery recognises as a certification.** This describes the
@@ -200,7 +201,7 @@ P13 MASTER PROGRAM AUTHORIZATION = TRUE              (FDR-6 FDQ-1; CR-3)
 P13 EXIT CONTRACT               = SATISFIED          (FDR-5)
 P13 CERTIFICATION               = NOT GRANTED
 P13 PHASE CLOSURE               = NOT GRANTED
-P14 AUTHORIZATION               = FALSE
+ROADMAP                         = P0–P13   (P13 = final currently established phase)
 P13-ENV-01                      = ACTIVE / EVIDENCE-ONLY
 P13-ENV-02                      = RETIRED / REVOKED
 S-OPS                           = HISTORICAL EVIDENCE ONLY
@@ -218,3 +219,24 @@ BLUEPRINT §0–§15                = PRESERVED
 ```text
 P13 CERTIFICATION READINESS PACKAGE  ─── HARD STOP ───▶  FOUNDER CERTIFICATION DECISION  ▶  certification only if the Founder explicitly certifies
 ```
+
+## G. Revision under `ACT-CC-P13-CERT-GATE-002` (2026-09-25)
+
+`ACT-CC-P13-CERT-GATE-002` reconciles assertions about a phase beyond P13. Its
+premise, verified independently: the Master Roadmap ends at P13 and
+establishes no later phase. Three phrases in this package, written during the
+`FDR-6` execution, treated such a phase as having an authorization state. They
+were corrected:
+
+* the **Nature** row no longer names a record for it;
+* blocker item 19 is now **Roadmap endpoint**;
+* the Final State line is now `ROADMAP = P0–P13`.
+
+**Nothing else changed.** P13 authorization, exit, certification state,
+certified root, manifest (`127b97fd…`), guard, blocker classifications 1–18
+and 20, and every `FDQ` disposition are as before. `FDR-6` is unchanged. Its
+own text still states that it grants no authority for a later phase; that is
+the Founder's non-grant clause, and it is preserved. `FDR-6` `§11` and `§16`
+include a line about the next phase number. It is satisfied in its strongest
+form: no roadmap artifact, state reader, verifier or authorization defines,
+holds or authorizes any phase beyond P13.

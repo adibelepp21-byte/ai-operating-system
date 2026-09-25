@@ -407,7 +407,8 @@ def authority_dimensions(paths: Paths, catalog=None) -> Dict[str, dict]:
                         "the only state authorization produces (§25), and P13 stays "
                         "NOT AUTHORIZED until a separate valid Founder authorization "
                         "(§29). FDR-6 FDQ-1 is that authorization. It is not "
-                        "certification, closure or Phase 14 authorization"),
+                        "certification or closure, and it grants no operational "
+                        "authority"),
             "verified": "VERIFIED"}
     except Exception as error:
         out["phase_authorization"] = {"state": "UNKNOWN", "source": str(error),

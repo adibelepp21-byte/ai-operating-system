@@ -356,11 +356,13 @@ class LaterFounderAuthorization(_TemporaryWorld):
 
     def test_an_authorization_for_a_phase_the_snapshot_does_not_state_adds_none(self):
         _instrument(self.root, self.SNAPSHOT)
-        _authorization(self.root, "FDR-67-P14.md",
-                       "19. FOUNDER DECISION\n\nAUTHORIZE PHASE 14\n")
-        _register(self.root, "FDR-67-P14.md")
-        self.assertIn("P14", phases.authorizations(self.root)["phases"])
-        self.assertNotIn("P14", self._current(),
+        # A fixture number outside the roadmap (P0–P13), not a next phase
+        # (ACT-CC-P13-CERT-GATE-002).
+        _authorization(self.root, "FDR-67-P42.md",
+                       "19. FOUNDER DECISION\n\nAUTHORIZE PHASE 42\n")
+        _register(self.root, "FDR-67-P42.md")
+        self.assertIn("P42", phases.authorizations(self.root)["phases"])
+        self.assertNotIn("P42", self._current(),
                          "no state is inferred for a phase the snapshot "
                          "does not carry")
 
@@ -388,8 +390,12 @@ class LaterFounderAuthorization(_TemporaryWorld):
 
 
 class TheLiveCorpusAfterFDR6(unittest.TestCase):
-    """`FDR-6` `§11`: *"P13 AUTHORIZED = TRUE / P13 CERTIFIED = FALSE / P13
-    CLOSED = FALSE / P14 AUTHORIZED = FALSE"*, on the real corpus."""
+    """`FDR-6` `§11`'s required result on the real corpus: P13 authorized, not
+    certified and not closed, and nothing authorized beyond P13.
+
+    `ACT-CC-P13-CERT-GATE-002`: the Master Roadmap ends at P13 and establishes
+    no later phase. So the last part is checked as *no phase beyond P13
+    exists in the phase model*, not as the state of a later phase."""
 
     FDR6 = "docs/governance/acts/FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md"
 
@@ -410,12 +416,14 @@ class TheLiveCorpusAfterFDR6(unittest.TestCase):
         self.assertNotIn("CLOSED", p13["dimensions"])
         self.assertNotIn("COMPLETE", p13["dimensions"])
 
-    def test_p14_is_not_authorized(self):
+    def test_no_phase_beyond_p13_exists_in_the_phase_model(self):
         found = phases.authorizations()
         self.assertEqual({"P13"}, set(found["phases"]))
         self.assertEqual({}, found["ambiguous"])
         self.assertEqual((), found["rejected"])
-        self.assertNotIn("P14", {s["entity"] for s in phases.current_states()})
+        entities = {s["entity"] for s in phases.current_states()}
+        self.assertEqual({"P11", "P12", "P13"}, entities)
+        self.assertEqual(13, max(int(e[1:]) for e in entities | set(found["phases"])))
 
     def test_p11_and_p12_are_unchanged(self):
         current = {s["entity"]: s for s in phases.current_states()}

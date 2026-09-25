@@ -120,4 +120,6 @@ put to the Founder. §A records the state **before** it and is kept as written.
 | 9. Residual frontier | `FDQ-4`: classifications adopted for certification. The frontier is not resolved |
 | 5, 10, 11 | not addressed by `FDR-6`. They are carried into the P13 Certification Readiness Package |
 
-**Still not granted:** certification, Phase 13 closure, Phase 14.
+**Still not granted:** certification and Phase 13 closure. *(Corrected under
+`ACT-CC-P13-CERT-GATE-002`: this line also listed a phase beyond P13. The
+Master Roadmap ends at P13 and establishes no later phase.)*
