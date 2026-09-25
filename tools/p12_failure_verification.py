@@ -159,14 +159,36 @@ def escalation_join() -> dict:
     """How a persisted refusal reaches the grant it was refused under.
 
     `§34` provenance and `§29`'s contract both require a refusal to be traceable
-    to its authority. It is — but through a regex over the record's prose
-    `subject` field, not through a structured reference. That works until
-    somebody rewords the subject, which is the same class of fragility as
-    joining on an actor name: the relation is carried by a spelling.
+    to its authority. Historically that meant a regex over the record's prose
+    `subject` field — fragile, because it works only until somebody rewords the
+    subject, the same class of fragility as joining on an actor name.
+
+    `P12-W3` (`tools/p12_governance_escalation_join.py`,
+    `docs/architecture/p12/P12-W3-GOVERNANCE-INTEGRATION.md`) added a
+    structural alternative: a beside-record naming the delegation and refusal
+    type by reference, resolved independently by
+    `tools/p12_governance_join_reader.py` rather than by regex.
+    `EscalationRecord` itself was not widened — `§34`'s `structured field on the
+    escalation record` reading of "structured" therefore still measures 0 for
+    every record produced before or after this addition; what changed is that
+    a record can now be joined by a *separate, independently resolvable*
+    structural reference, which this function counts as its own category
+    rather than silently merging into the two that predate it.
+
+    `ACT-CC-P12-005` resolves the join **per escalation, beside whichever
+    directory that escalation actually lives in** — not against one hardcoded
+    directory. The first version hardcoded `docs/architecture/p12/w3-operations`
+    and silently missed a real, resident join this same Act produced in
+    `docs/architecture/p12/w4-operations` once resident call sites started
+    writing joins of their own. Caught by re-running this function against
+    the new evidence rather than trusting the old figure, and fixed the same
+    Act it was found in — the exact `DELEGATION_ROOTS`-shaped defect
+    `tools/p12_provenance_verification.py`'s own comment already names once.
     """
     import json
     import re
     from tools.p12_provenance_verification import delegation_records
+    from tools.p12_governance_join_reader import resolve, JOINED
 
     known = {d["delegation_id"] for d in delegation_records()}
     records = sorted(
@@ -174,6 +196,7 @@ def escalation_join() -> dict:
     structured = 0
     parsed = 0
     typed = 0
+    governance_surface = 0
     for path in records:
         try:
             payload = json.loads(path.read_text(encoding="utf-8"))
@@ -188,11 +211,17 @@ def escalation_join() -> dict:
                 parsed += 1
         if any(key in payload for key in ("refusal_type", "kind", "type")):
             typed += 1
+        escalation_id = payload.get("escalation_id")
+        if escalation_id and resolve(
+                path.parent, path.parent, escalation_id)["status"] == JOINED:
+            governance_surface += 1
+
     return {
         "records": len(records),
         "joined_by_structured_field": structured,
         "joined_by_parsed_prose": parsed,
         "naming_the_refusal_type": typed,
+        "joined_by_governance_surface": governance_surface,
     }
 
 
@@ -209,10 +238,13 @@ def _refused() -> StateResult:
     join = escalation_join()
     return StateResult(
         "REFUSED", RAISED_ONLY, " / ".join(names), "escalation record",
-        f"{len(names)} refusal types raised; no field names which one; "
+        f"{len(names)} refusal types raised; no field names which one on "
+        f"the escalation record itself, which is unmodified; "
         f"{join['joined_by_structured_field']}/{join['records']} join their "
-        f"grant by a structured field and {join['joined_by_parsed_prose']} by "
-        "parsed prose")
+        f"grant by a field on the record, {join['joined_by_parsed_prose']} by "
+        f"parsed prose, and {join['joined_by_governance_surface']} by the "
+        "independently-resolved P12-W3 governance-join surface, which also "
+        "names the refusal type beside the record")
 
 
 def _failed() -> StateResult:
@@ -331,4 +363,9 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":
+    # GOAL-V2-004: install the certified-write barrier before anything runs,
+    # even when this file is run by path and has not imported `tools`.
+    import os, sys  # noqa: E401
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import tools  # noqa: E402,F401
     raise SystemExit(main())

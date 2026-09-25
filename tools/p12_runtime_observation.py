@@ -56,8 +56,35 @@ from typing import Optional, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
-#: Where published runtime observations are kept. One file per runtime id.
-OBSERVATION_ROOT = REPO_ROOT / "docs/architecture/p12/runtime-observations"
+from tools.p12_certified_evidence_guard import guard  # noqa: E402
+
+#: Where **live** runtime observations are published. One file per runtime id.
+#:
+#: Moved here under `GOAL-V2-002`. Until then this pointed into
+#: `docs/architecture/p12/`, which became certified evidence under `FD-P12-006`.
+#: An observation is a live projection (*"these files state what was last
+#: observed"*), so every run rewrote the file, and certified evidence was
+#: rewritten with it. That happened in commits `7f6120c` and `d18bac4`, and on
+#: every run of the tools suite since.
+#:
+#: The live root sits outside every phase directory. Certifying a phase can
+#: therefore never freeze a live projection again.
+OBSERVATION_ROOT = REPO_ROOT / "docs/operations/runtime-observations"
+
+#: P12's observations **as certified**. They are read as history and never
+#: written. `publish` routes through the certified-evidence guard, which refuses
+#: this root.
+CERTIFIED_OBSERVATION_ROOT = REPO_ROOT / "docs/architecture/p12/runtime-observations"
+
+#: The live root's own default, kept so that a caller passing
+#: `OBSERVATION_ROOT` unpatched gets the merged view, while a test that
+#: redirects `OBSERVATION_ROOT` to an isolated directory reads that directory
+#: alone.
+_LIVE_DEFAULT = OBSERVATION_ROOT
+
+#: Provenance of an observation: where it was read from.
+LIVE_ORIGIN = "live"
+CERTIFIED_ORIGIN = "certified-p12"
 
 #: How long a `RUNNING` observation may be trusted as live. Beyond this a record
 #: is `STALE`: the runtime may still be up, or may have died without publishing
@@ -91,6 +118,14 @@ class Observation:
     pid: int
     age_seconds: float
     classification: str
+    #: For a workflow observation, the identity of the Runtime hosting it.
+    #: `None` for a runtime observation, and for any workflow observation
+    #: published before this field existed — absence is absence, never a guess.
+    hosted_by: Optional[str] = None
+    #: Where the record was read from: `live`, or `certified-p12` for an
+    #: observation frozen by P12's certification. A reader answering *"what is
+    #: running?"* sees both, and can tell them apart.
+    origin: str = LIVE_ORIGIN
 
     @property
     def is_live(self) -> bool:
@@ -107,6 +142,7 @@ def publish(
     root: Path = OBSERVATION_ROOT,
     now: Optional[datetime] = None,
     kind: str = RUNTIME,
+    hosted_by: Optional[str] = None,
 ) -> Path:
     """Publish the runtime's *current* state so another process can read it.
 
@@ -114,24 +150,34 @@ def publish(
     computes, guesses or defaults a state: a caller that cannot read a real
     runtime has nothing to publish, and publishing a fabricated state would
     manufacture exactly the certainty the governing Act forbids.
+
+    `hosted_by` is the identity of the Runtime hosting a Workflow, supplied by
+    the caller that actually holds both. **It is never inferred.** The W1 edge
+    `workflow ↔ runtime` states its contract as *"a workflow observation names
+    the runtime hosting it"*, and until this field existed the record had
+    nowhere to put that: `runtime_id` is the subject's own identity, so a
+    workflow could only have shared it by being published under the runtime's
+    name and losing its own. The edge therefore read `UNVERIFIED` — correctly,
+    because nothing recorded the relation — while the relation itself was real
+    in every hosted run. The field is written only when supplied, so a record
+    without it is a record that did not claim one.
     """
     root.mkdir(parents=True, exist_ok=True)
     moment = (now or _now()).isoformat()
     path = root / f"{runtime_id}.observation.json"
-    path.write_text(
-        json.dumps(
-            {
-                "runtime_id": runtime_id,
-                "kind": kind,
-                "state": state,
-                "observed_at": moment,
-                "pid": os.getpid(),
-            },
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    payload = {
+        "runtime_id": runtime_id,
+        "kind": kind,
+        "state": state,
+        "observed_at": moment,
+        "pid": os.getpid(),
+    }
+    if hosted_by is not None:
+        payload["hosted_by"] = hosted_by
+    # Refuses a write into certified-phase evidence. The default root is live,
+    # so the guard only fires for a caller aiming at a certified root.
+    guard(path).write_text(json.dumps(payload, indent=2) + "\n",
+                           encoding="utf-8")
     return path
 
 
@@ -155,10 +201,33 @@ def observations(
     now: Optional[datetime] = None,
     horizon: float = LIVE_HORIZON_SECONDS,
 ) -> Tuple[Observation, ...]:
-    """Every published observation, each qualified by its own age."""
+    """Every published observation, each qualified by its own age.
+
+    Called with the live default, this reads P12's certified observations too,
+    and lets a live record supersede a certified one for the same runtime id.
+    Each observation carries its `origin`. Called with any other root, it reads
+    that root alone, which is how the suites isolate it.
+    """
+    if Path(root) == _LIVE_DEFAULT:
+        sources = ((CERTIFIED_OBSERVATION_ROOT, CERTIFIED_ORIGIN),
+                   (Path(root), LIVE_ORIGIN))
+    else:
+        sources = ((Path(root), LIVE_ORIGIN),)
+    moment = now or _now()
+    merged = {}
+    for source, origin in sources:
+        for observation in _read(source, moment, horizon, origin):
+            merged[observation.runtime_id] = observation
+    # Ordered as the files were always read: by file name, which is the
+    # runtime id plus a fixed suffix.
+    return tuple(merged[key] for key in
+                 sorted(merged, key=lambda k: f"{k}.observation.json"))
+
+
+def _read(root: Path, moment: datetime, horizon: float,
+          origin: str) -> Tuple[Observation, ...]:
     if not root.is_dir():
         return ()
-    moment = now or _now()
     found = []
     for path in sorted(root.glob("*.observation.json")):
         payload = json.loads(path.read_text(encoding="utf-8"))
@@ -176,6 +245,8 @@ def observations(
                 pid=int(payload["pid"]),
                 age_seconds=age,
                 classification=_classify(payload["state"], age, horizon),
+                hosted_by=payload.get("hosted_by"),
+                origin=origin,
             )
         )
     return tuple(found)

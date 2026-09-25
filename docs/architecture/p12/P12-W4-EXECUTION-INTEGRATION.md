@@ -220,6 +220,21 @@ shape was removed rather than the guard loosened, as before.
   constructing one inside W4 would establish operational authority by engineering
   convention — `STOP-D`.
 
+**Reclassified by `ACT-CC-P12-OA-001`,
+[`P12-OA-001-ACTIVATION-AUTHORITY-DISCOVERY.md`](P12-OA-001-ACTIVATION-AUTHORITY-DISCOVERY.md).**
+Not withdrawn — disclosed. The `STOP-D` reasoning above (technical reachability
+is not authority) stands and was independently re-confirmed. What did not
+survive falsification was the *canonical requirement* citation: `§17, §29 "of
+the Act"` cites `ACT-CC-P12-W4-001`, which has no persisted body anywhere in
+this repository — an identifier without a verifiable decision body. Read
+directly, the Founder's own `§17` (`P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md §17`)
+requires proving the relationship between execution-chain surfaces, which this
+record already does, and says nothing about invocation mechanism; `P12-W6-RUNTIME-AND-WORKFLOW-VERIFICATION.md §A.1`
+had already disclosed, at the point of measurement, that reachability is
+"what `§30` implies without spelling out" — an inference, not canonical text.
+**Final classification: `OA-1 — NOT-A-GAP`.** No activation mechanism is
+required, authorized, or needed for W4, P12-W6, or P12 exit.
+
 ## 8. `§38` Regression
 
 [E] Pre- and post-construction: **no regression.**
@@ -317,6 +332,26 @@ relation is carried by a spelling rather than by a reference.**
 - [C] A conformance control asserts the current values and says in its own
   message that the finding closes if escalation records gain the field.
 
+**Constructed by `ACT-CC-P12-003`,
+[`P12-W3-GOVERNANCE-INTEGRATION.md`](P12-W3-GOVERNANCE-INTEGRATION.md).** Not
+by widening `EscalationRecord` — that boundary above still holds, and the
+control referenced above still reads `joined_by_structured_field == 0`, still
+true. Instead, a `P12-W3` surface joins a real, newly-escalated refusal to its
+grant beside the record, resolved independently and proven not to ride along
+on the existing prose regex (a deliberately non-matching `subject`). **Final
+classification: `CONSTRUCTED — BESIDE THE RECORD`.** The one historical
+escalation (`23f315ba9f504272`) is unchanged and gained no join — `§22`
+forbids manufacturing one for a record that never captured it.
+
+**Wired into this file by `ACT-CC-P12-005`, `P12-W3-GOVERNANCE-INTEGRATION.md
+§14`.** `tools/w4_first_run.py` — this file's own real execution path — now
+calls the join, in place of a bare `record_refusals`, and a real run
+(`p12_w3_resident_wiring_proof.py`, isolated from this file's certified
+historical evidence) produced a real refusal, escalation, and structural
+join, independently verified. **Classification unchanged
+(`CONSTRUCTED — BESIDE THE RECORD`); resident consumption added.** The
+historical run this file documents (`23f315ba9f504272`) remains untouched.
+
 ## 14. Remaining W4 frontier
 
 [E] Re-discovered after construction. **No actionable authorized W4 frontier
@@ -325,7 +360,7 @@ remains.**
 | Item | Classification | Why it stops here |
 |---|---|---|
 | W4-GAP-003 historical executions | OUT OF SCOPE | manifests for them would manufacture history (`§22`) |
-| W4-GAP-007 runtime reachability | BLOCKED | a resident non-manual entry decides *when* AIOS acts — operational authority, `STOP-D` |
+| W4-GAP-007 runtime reachability | **NOT-A-GAP** (`ACT-CC-P12-OA-001`) | canonical requirement citation unsupported; capability not required |
 | W4-GAP-008 refusal join | DEPENDENCY (W3) | `EscalationRecord` is a governance surface; `W4 ≠ W3` (`§30`) |
 
 ## 9. What this does not establish

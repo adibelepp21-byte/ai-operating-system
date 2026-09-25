@@ -1,0 +1,1209 @@
+{
+ "instrument": "P13 Foundational 100-Question Set — reconciliation against the live system",
+ "source": {
+  "document": "AIOS-P13-PRD-BLUEPRINT-v1.0 (corpus F1) §5",
+  "sha256": "a1f12997822273451651cb5a35d31e5e4fe30edbb6966e1c5f8710a28c4c746f",
+  "residency": "NOT RESIDENT — Founder-supplied upload; question text is paraphrased here as a gloss, not reproduced",
+  "canonical": false
+ },
+ "authority": "FDR-1 §12: the question set is a reconciliation instrument. Each classification below is CEO evidence for FDR-2, not a decision.",
+ "prepared_under": "FDR-1 §18/§21 (proceed to FDR-2); GOAL-V2-005",
+ "categories": [
+  "ALREADY SOLVED",
+  "PARTIAL",
+  "P13 DEPENDENCY",
+  "P13 CORE",
+  "P13 FRONTIER",
+  "OUT OF SCOPE",
+  "FOUNDER RESERVED",
+  "UNKNOWN"
+ ],
+ "evidence_pointer_forms": {
+  "path::text": "text must appear in the file",
+  "!dir::regex": "no .py file under dir may match (a measured absence)"
+ },
+ "questions": [
+  {
+   "id": "Q1",
+   "domain": "P13 Identity",
+   "gloss": "What does 'Super Intelligence Ecosystem' mean in AIOS?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D02",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 02"
+   ],
+   "note": "resolved by FDR-2 D02 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q2",
+   "domain": "P13 Identity",
+   "gloss": "Why is P13 needed after P12?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D01",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 01"
+   ],
+   "note": "resolved by FDR-2 D01 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q3",
+   "domain": "P13 Identity",
+   "gloss": "What fundamental problem does P12 leave unsolved?",
+   "category": "PARTIAL",
+   "owner": "CEO evidence → Founder",
+   "evidence": [
+    "tools/p12_self_model.py::def incomplete",
+    "!native_core::class Evaluation|def evaluate\\(",
+    "!native_core::class Reasoning|def reason\\("
+   ],
+   "note": "P12 answers 'what state am I in'; nothing answers 'is it good' or 'what next' (v0.4 O2, re-measured)"
+  },
+  {
+   "id": "Q4",
+   "domain": "P13 Identity",
+   "gloss": "What AIOS condition should P13 achieve?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D03",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 03"
+   ],
+   "note": "resolved by FDR-2 D03 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q5",
+   "domain": "P13 Identity",
+   "gloss": "How does AIOS at end-P13 differ from end-P12?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D04",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 04"
+   ],
+   "note": "resolved by FDR-2 D04 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q6",
+   "domain": "P13 Identity",
+   "gloss": "Is P13 capability, system or organizational evolution?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D01",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 01"
+   ],
+   "note": "resolved by FDR-2 D01 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q7",
+   "domain": "P13 Identity",
+   "gloss": "What qualifies a system as having reached P13?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D07",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 07"
+   ],
+   "note": "resolved by FDR-2 D07 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q8",
+   "domain": "Self-Knowledge",
+   "gloss": "How does AIOS know what it is?",
+   "category": "ALREADY SOLVED",
+   "owner": "P12",
+   "evidence": [
+    "tools/p12_self_model.py::def identity"
+   ],
+   "note": "self-model 'What am I?' VERIFIED"
+  },
+  {
+   "id": "Q9",
+   "domain": "Self-Knowledge",
+   "gloss": "How does AIOS know its current architecture?",
+   "category": "ALREADY SOLVED",
+   "owner": "P12",
+   "evidence": [
+    "tools/p12_self_model.py::native_core_boundaries",
+    "tools/derived_views.py::def interface_graph",
+    "tools/ecosystem_relationships.py::def measure"
+   ],
+   "note": "boundary count, import graph, relationship map"
+  },
+  {
+   "id": "Q10",
+   "domain": "Self-Knowledge",
+   "gloss": "How does AIOS know which capabilities exist and which do not?",
+   "category": "PARTIAL",
+   "owner": "P10–P12",
+   "evidence": [
+    "tools/p12_self_model.py::def capabilities"
+   ],
+   "note": "declared capabilities only; INFERRED — a declaration is not executability"
+  },
+  {
+   "id": "Q11",
+   "domain": "Self-Knowledge",
+   "gloss": "How does AIOS know its runtime condition?",
+   "category": "ALREADY SOLVED",
+   "owner": "P12",
+   "evidence": [
+    "tools/p12_self_model.py::def running",
+    "tools/p12_runtime_observation.py::def observations"
+   ],
+   "note": "live observation with liveness horizon"
+  },
+  {
+   "id": "Q12",
+   "domain": "Self-Knowledge",
+   "gloss": "How does AIOS know the condition of its knowledge?",
+   "category": "PARTIAL",
+   "owner": "P6 / P12",
+   "evidence": [
+    "aios_corpus_health_run.py::def judge",
+    "tools/stale_state_audit.py::def audit",
+    "tools/corpus_citation_audit.py::def audit"
+   ],
+   "note": "corpus health, staleness and citation integrity; no knowledge-quality evaluation"
+  },
+  {
+   "id": "Q13",
+   "domain": "Self-Knowledge",
+   "gloss": "How does AIOS know its decisions and evolution history?",
+   "category": "ALREADY SOLVED",
+   "owner": "P12 / governance",
+   "evidence": [
+    "tools/p12_self_model.py::def decisions",
+    "tools/p12_self_model.py::def changed",
+    "tools/derived_views.py::def decision_lineage"
+   ],
+   "note": "Register-derived, append-only"
+  },
+  {
+   "id": "Q14",
+   "domain": "Self-Knowledge",
+   "gloss": "How does AIOS know its weaknesses and limitations?",
+   "category": "PARTIAL",
+   "owner": "P12 → P13",
+   "evidence": [
+    "tools/p12_self_model.py::def failed",
+    "tools/p12_self_model.py::def incomplete",
+    "!native_core::class Evaluation|def evaluate\\("
+   ],
+   "note": "failures and incompleteness are reported; no evaluation of weakness"
+  },
+  {
+   "id": "Q15",
+   "domain": "Self-Knowledge",
+   "gloss": "How does AIOS know its self-model has become inaccurate?",
+   "category": "PARTIAL",
+   "owner": "P12 → P13",
+   "evidence": [
+    "tools/p12_self_model_contract.py::def answers_bound_to_their_source"
+   ],
+   "note": "binding drift is detected; content drift was not (GOAL-V2-005 found 1 of 4 escalations reported)"
+  },
+  {
+   "id": "Q16",
+   "domain": "Self-Knowledge",
+   "gloss": "Who may declare the self-model valid?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder (certification)",
+   "evidence": [
+    "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md::FD-P12-006"
+   ],
+   "note": "validated as part of P12 certification; governance-only"
+  },
+  {
+   "id": "Q17",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How does AIOS decide what it needs to know?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/reasoning.py::| `R-OBTAINABLE` |",
+    "tools/tests/test_p13.py::def test_e13_05_one_authorized_read_only_action_executed_per_cycle"
+   ],
+   "note": "no resident mechanism. P13-018 construction: Reasoning concludes which facts an authority-bearing criterion lacks, and which resident verifier produces them (R-OBTAINABLE); NextAction proposes it.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q18",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How does AIOS find a knowledge gap?",
+   "category": "PARTIAL",
+   "owner": "P6 / P12 → P13",
+   "evidence": [
+    "tools/corpus_citation_audit.py::def audit"
+   ],
+   "note": "unresolved citations only; no general gap discovery"
+  },
+  {
+   "id": "Q19",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How does AIOS decide a knowledge gap matters?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/reasoning.py::An unknown **matters** (Q19, Q89) exactly when an authority-bearing criterion",
+    "tools/tests/test_p13.py::def test_absent_knowledge_is_a_knowledge_gap_that_escalates"
+   ],
+   "note": "no resident prioritization. P13-018 construction: A knowledge gap matters exactly when an authority-bearing criterion needs it; it escalates as admit.knowledge.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q20",
+   "domain": "Knowledge Acquisition",
+   "gloss": "Where does new knowledge come from?",
+   "category": "ALREADY SOLVED",
+   "owner": "P6",
+   "evidence": [
+    "native_core/core/knowledge/admission.py::class KnowledgeAdmission"
+   ],
+   "note": "governed admission of promotion candidates"
+  },
+  {
+   "id": "Q21",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How does AIOS distinguish information from knowledge?",
+   "category": "ALREADY SOLVED",
+   "owner": "P6 / P7",
+   "evidence": [
+    "native_core/core/knowledge/admission.py::def admit",
+    "native_core/core/memory/lifecycle.py::class MemoryState"
+   ],
+   "note": "candidate → governed admission; memory CANDIDATE is never eligible"
+  },
+  {
+   "id": "Q22",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How does AIOS decide a source is trustworthy?",
+   "category": "PARTIAL",
+   "owner": "P6 / governance",
+   "evidence": [
+    "native_core/core/governance/review.py::def promotion_authorized"
+   ],
+   "note": "human-authorized promotion; no source-trust model"
+  },
+  {
+   "id": "Q23",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How does AIOS handle conflicting sources?",
+   "category": "UNKNOWN",
+   "owner": "—",
+   "evidence": [],
+   "note": "no resident conflict-resolution mechanism was found; not asserted absent"
+  },
+  {
+   "id": "Q24",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How does AIOS know previously true knowledge is stale?",
+   "category": "PARTIAL",
+   "owner": "P6 / P12",
+   "evidence": [
+    "tools/stale_state_audit.py::def audit"
+   ],
+   "note": "governance-corpus staleness; not general knowledge staleness"
+  },
+  {
+   "id": "Q25",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How are update, supersession, expiry, invalidation performed?",
+   "category": "ALREADY SOLVED",
+   "owner": "P6 / P7",
+   "evidence": [
+    "native_core/core/knowledge/versioning.py::def derive_active",
+    "native_core/core/memory/lifecycle.py::SUPERSEDED",
+    "native_core/core/memory/lifecycle.py::INVALIDATED"
+   ],
+   "note": "E7-04/E7-05"
+  },
+  {
+   "id": "Q26",
+   "domain": "Knowledge Acquisition",
+   "gloss": "How does AIOS know what it does not know?",
+   "category": "PARTIAL",
+   "owner": "P12 → P13",
+   "evidence": [
+    "tools/p12_self_model.py::def unknowns"
+   ],
+   "note": "scoped to the self-model's own questions; recorded program unknowns are not surfaced"
+  },
+  {
+   "id": "Q27",
+   "domain": "Capability Evolution",
+   "gloss": "How does AIOS find a capability gap?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/evolution.py::def _core_rows_without_evidence(self):",
+    "tools/p13/reasoning.py::| `R-GAP` |",
+    "tools/tests/test_p13.py::def test_a_core_question_without_evidence_is_a_gap_whose_evolution_escalates"
+   ],
+   "note": "no resident mechanism. P13-018 construction: R-GAP: an UNKNOWN nothing resident can resolve is a capability gap; Evolution also reads the P13 CORE rows that cite no evidence.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q28",
+   "domain": "Capability Evolution",
+   "gloss": "How does AIOS choose how a gap is resolved?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/evolution.py::a code change is proposed and escalated; P13 never builds itself",
+    "tools/p13/next_action.py::| defect | the criterion's remedy"
+   ],
+   "note": "no resident mechanism. P13-018 construction: Resolution is chosen by gap class: verify when evidence is obtainable; otherwise a reserved remedy, which the gate escalates. P13 resolves nothing reserved by itself.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q29",
+   "domain": "Capability Evolution",
+   "gloss": "How does a new capability become official?",
+   "category": "ALREADY SOLVED",
+   "owner": "P10 / governance",
+   "evidence": [
+    "tools/organization_catalog.py::def read_departments"
+   ],
+   "note": "Department declaration under Founder/governance decision"
+  },
+  {
+   "id": "Q30",
+   "domain": "Capability Evolution",
+   "gloss": "How does a capability get a contract?",
+   "category": "ALREADY SOLVED",
+   "owner": "P1–P8 core",
+   "evidence": [
+    "native_core/core/infrastructure/tool_lifecycle.py::class ToolContract",
+    "native_core/core/skill/declaration.py::class SkillDeclaration"
+   ],
+   "note": "tool contracts, skill declarations"
+  },
+  {
+   "id": "Q31",
+   "domain": "Capability Evolution",
+   "gloss": "How is a capability integrated into the runtime?",
+   "category": "ALREADY SOLVED",
+   "owner": "P2–P4 / P12",
+   "evidence": [
+    "native_core/core/runtime/discovery.py::class DefinitionCatalog",
+    "tools/runtime_composition.py::def create_definition_catalog"
+   ],
+   "note": "runtime discovery and composition"
+  },
+  {
+   "id": "Q32",
+   "domain": "Capability Evolution",
+   "gloss": "How is a capability verified?",
+   "category": "ALREADY SOLVED",
+   "owner": "all phases / P12",
+   "evidence": [
+    "tools/p12_regression_verification.py::def verify"
+   ],
+   "note": "conformance suites and the P12 verification architecture"
+  },
+  {
+   "id": "Q33",
+   "domain": "Capability Evolution",
+   "gloss": "How does AIOS know a new capability improves the system?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "!native_core::class Evaluation|def evaluate\\(",
+    "tools/p13/cycle.py::\"verification\": {\"re_evaluated\"",
+    "tools/tests/test_p13.py::def test_e13_06_after_execution_state_is_re_derived_and_the_difference_recorded"
+   ],
+   "note": "requires evaluation. P13-018 construction: Every executed action is followed by re-derivation and re-evaluation, and the per-criterion difference is recorded.",
+   "p13_status": "ANSWERED — BOUNDED: improvement is measured only against the admitted, authority-bearing criteria (before/after re-evaluation). A broader measure of improvement needs its own evaluation contract (FDR-2 D02)"
+  },
+  {
+   "id": "Q34",
+   "domain": "Capability Evolution",
+   "gloss": "How is a capability upgraded without breaking others?",
+   "category": "PARTIAL",
+   "owner": "P12",
+   "evidence": [
+    "tools/p12_regression_verification.py::def verify"
+   ],
+   "note": "regression anchors; no capability-level compatibility model"
+  },
+  {
+   "id": "Q35",
+   "domain": "Capability Evolution",
+   "gloss": "How is a failed capability suspended, deprecated or retired?",
+   "category": "PARTIAL",
+   "owner": "P8",
+   "evidence": [
+    "native_core/core/infrastructure/tool_lifecycle.py::RETIRED"
+   ],
+   "note": "tools: DISABLED/RETIRED; no equivalent for capabilities"
+  },
+  {
+   "id": "Q36",
+   "domain": "Self-Evaluation",
+   "gloss": "How does AIOS know it works well?",
+   "category": "PARTIAL",
+   "owner": "P12 → P13",
+   "evidence": [
+    "aios_corpus_health_run.py::HEALTHY"
+   ],
+   "note": "one bounded health verdict; no system-level evaluation"
+  },
+  {
+   "id": "Q37",
+   "domain": "Self-Evaluation",
+   "gloss": "What indicates degradation?",
+   "category": "PARTIAL",
+   "owner": "P12",
+   "evidence": [
+    "aios_corpus_health_run.py::DEGRADED"
+   ],
+   "note": "corpus criteria only"
+  },
+  {
+   "id": "Q38",
+   "domain": "Self-Evaluation",
+   "gloss": "How are reasoning/knowledge/execution/workflow/decision-support quality measured?",
+   "category": "P13 FRONTIER",
+   "owner": "P13 frontier",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 02"
+   ],
+   "note": "0 Evaluation symbols in native_core. P13-018 construction: reclassified P13 CORE → P13 FRONTIER. P13 measures state against authority-bearing criteria; quality of reasoning, knowledge, execution, workflow and decision-support has no admitted criterion, and FDR-2 D02 requires a measurable intelligence claim to have its own evaluation contract. Residual frontier, classified."
+  },
+  {
+   "id": "Q39",
+   "domain": "Self-Evaluation",
+   "gloss": "How does AIOS find previously unknown weaknesses?",
+   "category": "P13 FRONTIER",
+   "owner": "P13 frontier",
+   "evidence": [],
+   "note": "open research direction"
+  },
+  {
+   "id": "Q40",
+   "domain": "Self-Evaluation",
+   "gloss": "How does AIOS tell error, limitation, knowledge gap, architecture gap and capability gap apart?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/model.py::# Q40: the kinds of shortfall AIOS tells apart",
+    "tools/tests/test_p13.py::def test_shortfalls_are_classified_apart"
+   ],
+   "note": "done by humans in governance records; no system mechanism. P13-018 construction: error / limitation / knowledge gap / capability gap / architecture gap, each assigned by rule.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q41",
+   "domain": "Self-Evaluation",
+   "gloss": "How does AIOS prioritize repairs?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/next_action.py::**Priority** (Q41, Q63, Q69, Q73) is a fixed rule",
+    "tools/tests/test_p13.py::def test_memory_recency_orders_proposals"
+   ],
+   "note": "no resident mechanism. P13-018 construction: Fixed rule: defects, then missing evidence, then knowledge gaps, then stale evidence; within a rank, least recently verified per Memory.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q42",
+   "domain": "Self-Evaluation",
+   "gloss": "When should AIOS propose change?",
+   "category": "PARTIAL",
+   "owner": "P1 core → Architect",
+   "evidence": [
+    "native_core/core/optimization/proposals.py::class OptimizationProposal"
+   ],
+   "note": "proposals exist; Optimization → Governance is Architect-reserved (AD-P13-001)"
+  },
+  {
+   "id": "Q43",
+   "domain": "Self-Evaluation",
+   "gloss": "When must AIOS stop and ask the Founder?",
+   "category": "ALREADY SOLVED",
+   "owner": "P11 / governance",
+   "evidence": [
+    "tools/escalation_register.py::def record_refusals",
+    "native_core/core/governance/authority.py::class HumanAuthority"
+   ],
+   "note": "out-of-scope work escalates; human authority fails closed"
+  },
+  {
+   "id": "Q44",
+   "domain": "Self-Improvement",
+   "gloss": "How does AIOS generate improvement proposals?",
+   "category": "PARTIAL",
+   "owner": "P1 core",
+   "evidence": [
+    "native_core/core/optimization/proposals.py::class OptimizationProposal"
+   ],
+   "note": "structure exists; no generation from evaluation"
+  },
+  {
+   "id": "Q45",
+   "domain": "Self-Improvement",
+   "gloss": "Where do improvement proposals come from?",
+   "category": "PARTIAL",
+   "owner": "P1 core",
+   "evidence": [
+    "native_core/core/optimization/observation.py::class OptimizationObservation"
+   ],
+   "note": "observations"
+  },
+  {
+   "id": "Q46",
+   "domain": "Self-Improvement",
+   "gloss": "How does AIOS prove an improvement is needed?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "!native_core::class Evaluation|def evaluate\\(",
+    "tools/p13/evaluation.py::**Missing evidence gives UNKNOWN, never PASS.**",
+    "tools/p13/reasoning.py::| `R-DEFECT` |",
+    "tools/tests/test_p13.py::def test_e13_02_the_admitted_knowledge_criteria_are_judged_live"
+   ],
+   "note": "requires evaluation. P13-018 construction: An improvement is needed when an authority-bearing criterion FAILs on verified evidence (R-DEFECT); absent evidence proves nothing.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q47",
+   "domain": "Self-Improvement",
+   "gloss": "How are changes to AIOS itself controlled?",
+   "category": "ALREADY SOLVED",
+   "owner": "governance / GOAL-V2-004",
+   "evidence": [
+    "native_core/core/governance/authority.py::class HumanAuthority",
+    "tools/certified_write_barrier.py::def install"
+   ],
+   "note": "human authority, certified-evidence barrier, Native Core freeze"
+  },
+  {
+   "id": "Q48",
+   "domain": "Self-Improvement",
+   "gloss": "What may AIOS change by itself?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
+   ],
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
+  },
+  {
+   "id": "Q49",
+   "domain": "Self-Improvement",
+   "gloss": "What may AIOS never change by itself?",
+   "category": "PARTIAL",
+   "owner": "governance → Founder",
+   "evidence": [
+    "docs/governance/cofounder-v2/F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md::R01 — Constitution"
+   ],
+   "note": "reserved matters R01–R09 are fixed; the complete P13 list is FDR-2 item 6"
+  },
+  {
+   "id": "Q50",
+   "domain": "Self-Improvement",
+   "gloss": "Which changes always need the Founder?",
+   "category": "ALREADY SOLVED",
+   "owner": "V2 governance",
+   "evidence": [
+    "docs/governance/cofounder-v2/F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md::R08 — Final Founder Acceptance"
+   ],
+   "note": "R01–R09, A19–A23"
+  },
+  {
+   "id": "Q51",
+   "domain": "Self-Improvement",
+   "gloss": "How is a failed improvement rolled back?",
+   "category": "PARTIAL",
+   "owner": "governance / P6 / P7",
+   "evidence": [
+    "tools/certified_evidence_integrity.py::def verify",
+    "native_core/core/knowledge/versioning.py::def derive_history"
+   ],
+   "note": "evidence restoration and versioned history; no runtime rollback model"
+  },
+  {
+   "id": "Q52",
+   "domain": "Self-Improvement",
+   "gloss": "How is AIOS's evolution history recorded?",
+   "category": "ALREADY SOLVED",
+   "owner": "governance",
+   "evidence": [
+    "tools/derived_views.py::def decision_lineage"
+   ],
+   "note": "append-only Registers, git, supersession ledger"
+  },
+  {
+   "id": "Q53",
+   "domain": "Self-Improvement",
+   "gloss": "How does AIOS know a change improves the whole system?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "!native_core::class Evaluation|def evaluate\\(",
+    "tools/p13/cycle.py::\"verification\": {\"re_evaluated\"",
+    "tools/tests/test_p13.py::def test_e13_06_after_execution_state_is_re_derived_and_the_difference_recorded"
+   ],
+   "note": "system-level evaluation. P13-018 construction: All admitted criteria are re-evaluated after an executed action and the difference is recorded.",
+   "p13_status": "ANSWERED — BOUNDED: \"the whole system\" means every admitted criterion, all re-evaluated after an action; nothing wider is claimed (FDR-2 D02)"
+  },
+  {
+   "id": "Q54",
+   "domain": "Systemic Intelligence",
+   "gloss": "How does AIOS connect its domains?",
+   "category": "PARTIAL",
+   "owner": "P12 → P13",
+   "evidence": [
+    "tools/ecosystem_relationships.py::def measure"
+   ],
+   "note": "6 of 7 chain relationships bound; Memory ↔ Intelligence not connected"
+  },
+  {
+   "id": "Q55",
+   "domain": "Systemic Intelligence",
+   "gloss": "How does AIOS know component relationships?",
+   "category": "ALREADY SOLVED",
+   "owner": "P12",
+   "evidence": [
+    "tools/derived_views.py::def interface_graph",
+    "tools/p12_integration_graph.py::class IntegrationEdge"
+   ],
+   "note": "import graph, integration graph, relationship map"
+  },
+  {
+   "id": "Q56",
+   "domain": "Systemic Intelligence",
+   "gloss": "How does AIOS find side effects of a change?",
+   "category": "PARTIAL",
+   "owner": "P12 / GOAL-V2-004",
+   "evidence": [
+    "tools/p12_regression_verification.py::def verify",
+    "tools/certified_write_probe.py::def probe"
+   ],
+   "note": "regression anchors and write probe; no general impact analysis"
+  },
+  {
+   "id": "Q57",
+   "domain": "Systemic Intelligence",
+   "gloss": "How does AIOS reason across domains?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "!native_core::class Reasoning|def reason\\(",
+    "tools/p13/reasoning.py::| `R-SYSTEMIC` |",
+    "tools/tests/test_p13.py::def test_one_source_behind_several_failures_is_concluded_systemic"
+   ],
+   "note": "0 Reasoning symbols. P13-018 construction: Rules combine facts across domains (governance registers, Knowledge criteria, Memory, certified evidence).",
+   "p13_status": "ANSWERED — BOUNDED: deterministic rules over typed facts from governance, knowledge, memory and evidence; no open-ended cross-domain inference (Blueprint §3.4)"
+  },
+  {
+   "id": "Q58",
+   "domain": "Systemic Intelligence",
+   "gloss": "How does AIOS build system-level understanding?",
+   "category": "PARTIAL",
+   "owner": "P12 → P13",
+   "evidence": [
+    "tools/p12_self_model.py::def identity",
+    "tools/ecosystem_relationships.py::def measure"
+   ],
+   "note": "a self-model exists; synthesis does not"
+  },
+  {
+   "id": "Q59",
+   "domain": "Systemic Intelligence",
+   "gloss": "How does AIOS know a problem is systemic?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "!native_core::class Reasoning|def reason\\(",
+    "tools/p13/reasoning.py::| `R-SYSTEMIC` |",
+    "tools/tests/test_p13.py::def test_one_source_behind_several_failures_is_concluded_systemic"
+   ],
+   "note": "no resident mechanism. P13-018 construction: Two or more non-PASS results sharing a source are concluded to be one systemic cause.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q60",
+   "domain": "Founder Intelligence",
+   "gloss": "How does AIOS manage knowledge to help the Founder?",
+   "category": "PARTIAL",
+   "owner": "P12 / governance",
+   "evidence": [
+    "tools/governance_index.py::class GovernanceIndex"
+   ],
+   "note": "discovery aid, explicitly non-authoritative"
+  },
+  {
+   "id": "Q61",
+   "domain": "Founder Intelligence",
+   "gloss": "How does AIOS know what context the Founder needs?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/cycle.py::What the Founder needs from this cycle, most pressing first (Q61, Q62)"
+   ],
+   "note": "context assembly is a v0.4 candidate surface. P13-018 construction: Each cycle record carries a briefing of escalations and non-PASS criteria.",
+   "p13_status": "ANSWERED — BOUNDED: the Founder's context is what is escalated to them and what fails their recorded criteria"
+  },
+  {
+   "id": "Q62",
+   "domain": "Founder Intelligence",
+   "gloss": "How does AIOS compose briefings for the Founder?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/cycle.py::What the Founder needs from this cycle, most pressing first (Q61, Q62)",
+    "tools/tests/test_p13.py::def test_records_carry_the_twelve_section_29_elements"
+   ],
+   "note": "no resident mechanism. P13-018 construction: The cycle composes a briefing (escalations first, then failing criteria, then exhaustion state).",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q63",
+   "domain": "Founder Intelligence",
+   "gloss": "How does AIOS know what matters most to the Founder?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/next_action.py::*what matters most to the Founder* (Q63) is answered only"
+   ],
+   "note": "no resident prioritization. P13-018 construction: Every criterion cites a Founder-issued instrument; priority follows that.",
+   "p13_status": "ANSWERED — BOUNDED: answered only as far as the Founder's recorded decisions state it; anything beyond is residual frontier"
+  },
+  {
+   "id": "Q64",
+   "domain": "Founder Intelligence",
+   "gloss": "How does AIOS find changes the Founder should know?",
+   "category": "PARTIAL",
+   "owner": "P12",
+   "evidence": [
+    "tools/p12_self_model.py::def changed",
+    "tools/p12_self_model.py::def stale"
+   ],
+   "note": "recorded supersession and staleness"
+  },
+  {
+   "id": "Q65",
+   "domain": "Founder Intelligence",
+   "gloss": "How does AIOS know when to notify the Founder?",
+   "category": "PARTIAL",
+   "owner": "P11",
+   "evidence": [
+    "tools/escalation_register.py::def record_refusals"
+   ],
+   "note": "on refusal only"
+  },
+  {
+   "id": "Q66",
+   "domain": "Founder Intelligence",
+   "gloss": "How does AIOS convey uncertainty to the Founder?",
+   "category": "ALREADY SOLVED",
+   "owner": "P12",
+   "evidence": [
+    "tools/p12_self_model.py::INFERRED"
+   ],
+   "note": "VERIFIED / INFERRED / UNKNOWN on every answer"
+  },
+  {
+   "id": "Q67",
+   "domain": "Founder Intelligence",
+   "gloss": "How does AIOS keep a recommendation from becoming a Founder Decision?",
+   "category": "ALREADY SOLVED",
+   "owner": "P11 / governance",
+   "evidence": [
+    "tools/escalation_register.py::Never `APPROVED`",
+    "tools/planning/goal.py::There is no ``is_authorized()`` here"
+   ],
+   "note": "structural: no approval state, no authorization method"
+  },
+  {
+   "id": "Q68",
+   "domain": "Founder Intelligence",
+   "gloss": "How is Founder decision lineage preserved?",
+   "category": "ALREADY SOLVED",
+   "owner": "governance",
+   "evidence": [
+    "tools/derived_views.py::def decision_lineage"
+   ],
+   "note": ""
+  },
+  {
+   "id": "Q69",
+   "domain": "Autonomy & Initiative",
+   "gloss": "How does AIOS decide what to do next?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate + Founder",
+   "evidence": [
+    "docs/governance/acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md::autonomous next-action selection",
+    "tools/p13/next_action.py::class NextAction:",
+    "tools/tests/test_p13.py::def test_e13_05_one_authorized_read_only_action_executed_per_cycle"
+   ],
+   "note": "v0.4 next-action surface (propose-only); its boundary is FDR-2 item 6. P13-018 construction: NextAction proposes; the AuthorityGate decides; at most one action executes per cycle.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q70",
+   "domain": "Autonomy & Initiative",
+   "gloss": "How does AIOS decide what to learn first?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/next_action.py::| knowledge gap | `admit.knowledge`",
+    "tools/p13/evolution.py::*Learning* here means a proposal into governed admission",
+    "tools/tests/test_p13.py::def test_absent_knowledge_is_a_knowledge_gap_that_escalates"
+   ],
+   "note": "P13-018 construction: The highest-priority knowledge gap is proposed as admit.knowledge, which escalates.",
+   "p13_status": "ANSWERED — BOUNDED: learning is a proposal into governed admission, never admission (GAP-0022)"
+  },
+  {
+   "id": "Q71",
+   "domain": "Autonomy & Initiative",
+   "gloss": "How does AIOS decide which capability to improve first?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/evolution.py::ActionProposal(id=f\"e:{g.id[2:]}\", action_type=\"change.code\",",
+    "tools/tests/test_p13.py::def test_a_core_question_without_evidence_is_a_gap_whose_evolution_escalates"
+   ],
+   "note": "P13-018 construction: Capability gaps become change.code proposals, escalated in order.",
+   "p13_status": "ANSWERED — BOUNDED: capability gaps are ordered after defects and missing evidence, and among themselves by identifier only; a value-based ranking is frontier"
+  },
+  {
+   "id": "Q72",
+   "domain": "Autonomy & Initiative",
+   "gloss": "How does AIOS decide which knowledge to update?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/next_action.py::| knowledge gap | `admit.knowledge`"
+   ],
+   "note": "P13-018 construction: A missing or unreadable Knowledge input is proposed for governed admission.",
+   "p13_status": "ANSWERED — BOUNDED: only the admitted corpus-health criteria are Knowledge P13 reads; updating them is a governed revision P13 can only propose"
+  },
+  {
+   "id": "Q73",
+   "domain": "Autonomy & Initiative",
+   "gloss": "How does AIOS decide which problem to solve?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/next_action.py::**Priority** (Q41, Q63, Q69, Q73) is a fixed rule",
+    "tools/tests/test_p13.py::def test_memory_recency_orders_proposals"
+   ],
+   "note": "P13-018 construction: The first proposal by the fixed priority rule; a reserved one escalates instead of executing.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q74",
+   "domain": "Autonomy & Initiative",
+   "gloss": "When may AIOS act without instruction?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
+   ],
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
+  },
+  {
+   "id": "Q75",
+   "domain": "Autonomy & Initiative",
+   "gloss": "What are the limits of AIOS initiative?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
+   ],
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
+  },
+  {
+   "id": "Q76",
+   "domain": "Autonomy & Initiative",
+   "gloss": "How does AIOS tell legitimate initiative from exceeding authority?",
+   "category": "ALREADY SOLVED",
+   "owner": "P11 / GOAL-V2-005",
+   "evidence": [
+    "tools/w4_execution.py::class W4Executor",
+    "tools/authority_citation.py::def refusal"
+   ],
+   "note": "out-of-scope steps refused and escalated; citations must reach their decision"
+  },
+  {
+   "id": "Q77",
+   "domain": "Autonomy & Initiative",
+   "gloss": "How does AIOS prioritize autonomously?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
+   ],
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. The prioritization logic itself remains P13 core (Q41, Q69–Q73)."
+  },
+  {
+   "id": "Q78",
+   "domain": "Autonomy & Initiative",
+   "gloss": "When is doing nothing the right decision?",
+   "category": "PARTIAL",
+   "owner": "governance",
+   "evidence": [
+    "native_core/core/governance/authority.py::class HumanAuthority"
+   ],
+   "note": "fail-closed defaults; UNKNOWN authority is not authorized"
+  },
+  {
+   "id": "Q79",
+   "domain": "Governance of Evolution",
+   "gloss": "Who has authority over AIOS evolution?",
+   "category": "ALREADY SOLVED",
+   "owner": "V2 governance",
+   "evidence": [
+    "docs/governance/cofounder-v2/F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md::R02 — Mission and Identity"
+   ],
+   "note": ""
+  },
+  {
+   "id": "Q80",
+   "domain": "Governance of Evolution",
+   "gloss": "Must all evolution go through the Founder?",
+   "category": "ALREADY SOLVED",
+   "owner": "V2 governance",
+   "evidence": [
+    "docs/governance/cofounder-v2/F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md::A02|Autonomous Construction"
+   ],
+   "note": "Goal-driven delegation; reserved matters escalate"
+  },
+  {
+   "id": "Q81",
+   "domain": "Governance of Evolution",
+   "gloss": "Which parts can be delegated?",
+   "category": "ALREADY SOLVED",
+   "owner": "V2 governance",
+   "evidence": [
+    "docs/governance/cofounder-v2/F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md::A18|Founder Review Interface"
+   ],
+   "note": "A01–A23"
+  },
+  {
+   "id": "Q82",
+   "domain": "Governance of Evolution",
+   "gloss": "How does delegation work?",
+   "category": "ALREADY SOLVED",
+   "owner": "P11 / governance",
+   "evidence": [
+    "tools/w4_delegation.py::class W4DelegationRegistry",
+    "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md::DEL-CFV2-CEO-001"
+   ],
+   "note": ""
+  },
+  {
+   "id": "Q83",
+   "domain": "Governance of Evolution",
+   "gloss": "How does AIOS prove a change is within its authority boundary?",
+   "category": "PARTIAL",
+   "owner": "governance",
+   "evidence": [
+    "tools/authority_citation.py::def refusal",
+    "tools/p12_certified_evidence_guard.py::def is_protected"
+   ],
+   "note": "pointers are verified; whether they grant is a human reading"
+  },
+  {
+   "id": "Q84",
+   "domain": "Governance of Evolution",
+   "gloss": "How does AIOS handle conflicts between authorities?",
+   "category": "ALREADY SOLVED",
+   "owner": "V2 governance",
+   "evidence": [
+    "docs/governance/cofounder-v2/F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md::R07 — Higher-Order Canonical Override"
+   ],
+   "note": "precedence hierarchy; escalation"
+  },
+  {
+   "id": "Q85",
+   "domain": "Governance of Evolution",
+   "gloss": "How does AIOS keep self-improvement from becoming uncontrolled self-modification?",
+   "category": "ALREADY SOLVED",
+   "owner": "governance / GOAL-V2-004",
+   "evidence": [
+    "tools/certified_write_barrier.py::def install",
+    "native_core/core/governance/authority.py::class HumanAuthority"
+   ],
+   "note": "no autonomous runtime; barrier; freeze. A future P13 mechanism falls under FDR-2 item 6"
+  },
+  {
+   "id": "Q86",
+   "domain": "Governance of Evolution",
+   "gloss": "How does AIOS audit its own evolution?",
+   "category": "ALREADY SOLVED",
+   "owner": "governance",
+   "evidence": [
+    "tools/certified_evidence_integrity.py::def verify",
+    "tools/corpus_citation_audit.py::def audit"
+   ],
+   "note": ""
+  },
+  {
+   "id": "Q87",
+   "domain": "Frontier & Unknown",
+   "gloss": "How does AIOS handle what it does not know?",
+   "category": "ALREADY SOLVED",
+   "owner": "P12 / governance",
+   "evidence": [
+    "tools/p12_self_model.py::UNKNOWN",
+    "docs/architecture/p13-preparation/P13-BLUEPRINT-DRAFT-v0.4-NON-CANONICAL.md::UNKNOWN ≠ FALSE"
+   ],
+   "note": ""
+  },
+  {
+   "id": "Q88",
+   "domain": "Frontier & Unknown",
+   "gloss": "How does AIOS distinguish kinds of unknown?",
+   "category": "PARTIAL",
+   "owner": "governance",
+   "evidence": [
+    "docs/architecture/p13-preparation/P13-BLUEPRINT-DRAFT-v0.4-NON-CANONICAL.md::NOT FOUND ≠ FALSE"
+   ],
+   "note": "evidence classes exist in records, not in a system mechanism"
+  },
+  {
+   "id": "Q89",
+   "domain": "Frontier & Unknown",
+   "gloss": "How does AIOS decide whether an unknown matters?",
+   "category": "P13 CORE",
+   "owner": "P13 candidate",
+   "evidence": [
+    "tools/p13/reasoning.py::An unknown **matters** (Q19, Q89) exactly when an authority-bearing criterion",
+    "tools/tests/test_p13.py::def test_absent_knowledge_is_a_knowledge_gap_that_escalates"
+   ],
+   "note": "P13-018 construction: An unknown matters exactly when an authority-bearing criterion needs it.",
+   "p13_status": "ANSWERED"
+  },
+  {
+   "id": "Q90",
+   "domain": "Frontier & Unknown",
+   "gloss": "When should AIOS do research?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
+   ],
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
+  },
+  {
+   "id": "Q91",
+   "domain": "Frontier & Unknown",
+   "gloss": "How does AIOS know a frontier is worth exploring?",
+   "category": "P13 FRONTIER",
+   "owner": "P13 frontier",
+   "evidence": [],
+   "note": ""
+  },
+  {
+   "id": "Q92",
+   "domain": "Frontier & Unknown",
+   "gloss": "May AIOS discover undefined capability or knowledge categories?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D05",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 05"
+   ],
+   "note": "resolved by FDR-2 D05 (registered 2026-09-24); was FOUNDER RESERVED. D05: only within an existing valid authority envelope; never self-authorized. "
+  },
+  {
+   "id": "Q93",
+   "domain": "Frontier & Unknown",
+   "gloss": "How does such a discovery enter governance?",
+   "category": "PARTIAL",
+   "owner": "governance",
+   "evidence": [
+    "tools/escalation_register.py::def record_refusals"
+   ],
+   "note": "escalation and Founder decision; no discovery intake mechanism"
+  },
+  {
+   "id": "Q94",
+   "domain": "P13 Completion",
+   "gloss": "When is P13 complete?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D08",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 08"
+   ],
+   "note": "resolved by FDR-2 D08 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q95",
+   "domain": "P13 Completion",
+   "gloss": "What does 'operational' mean for the ecosystem?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D08",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 08"
+   ],
+   "note": "resolved by FDR-2 D08 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q96",
+   "domain": "P13 Completion",
+   "gloss": "Does P13 have an end point or is it an evolutionary frontier?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D08",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 08"
+   ],
+   "note": "resolved by FDR-2 D08 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q97",
+   "domain": "P13 Completion",
+   "gloss": "How is achieving P13 proven?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D07",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 07"
+   ],
+   "note": "resolved by FDR-2 D07 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q98",
+   "domain": "P13 Completion",
+   "gloss": "What evidence must exist?",
+   "category": "PARTIAL",
+   "owner": "P12 method → Founder",
+   "evidence": [
+    "tools/p12_regression_verification.py::def verify"
+   ],
+   "note": "the evidence architecture exists; the required evidence set follows the exit contract"
+  },
+  {
+   "id": "Q99",
+   "domain": "P13 Completion",
+   "gloss": "How is it proven that AIOS can do what P13 requires?",
+   "category": "ALREADY SOLVED",
+   "owner": "Founder — FDR-2 D07",
+   "evidence": [
+    "docs/governance/acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md::FDR-2 / DECISION 07"
+   ],
+   "note": "resolved by FDR-2 D07 (registered 2026-09-24); was FOUNDER RESERVED. "
+  },
+  {
+   "id": "Q100",
+   "domain": "P13 Completion",
+   "gloss": "What conditions forbid declaring P13 complete?",
+   "category": "PARTIAL",
+   "owner": "governance → Founder",
+   "evidence": [
+    "docs/governance/cofounder-v2/F03_AIOS_GOVERNANCE_BASELINE_COFOUNDER_V2_AUTHORITY_RECONCILIATION_AMENDMENT.md::Authorized Actionable Construction Exhausted is not Final Founder Acceptance"
+   ],
+   "note": "negative conditions exist in governance; P13-specific ones follow the exit contract"
+  }
+ ],
+ "revisions": [
+  {
+   "date": "2026-09-24",
+   "by": "FDR-2 registration",
+   "change": "17 FOUNDER RESERVED questions resolved by FDR-2 decisions: Q1, Q2, Q4, Q5, Q6, Q7, Q48, Q74, Q75, Q77, Q90, Q92, Q94, Q95, Q96, Q97, Q99. Categories before: 29/30/21/17/2/1 (P13-016 cites these). After: see counts."
+  },
+  {
+   "date": "2026-09-24",
+   "by": "P13-018 construction (tools/p13)",
+   "change": "20 P13 CORE questions now cite evidence of an answer in tools/p13 and tools/tests/test_p13.py, with p13_status ANSWERED or ANSWERED — BOUNDED (the bound is stated): Q17, Q19, Q27, Q28, Q33, Q40, Q41, Q46, Q53, Q57, Q59, Q61, Q62, Q63, Q69, Q70, Q71, Q72, Q73, Q89. Q38 reclassified P13 CORE → P13 FRONTIER (FDR-2 D02). The checker now requires every P13 CORE row to cite evidence (Blueprint §7 E13-07)."
+  }
+ ]
+}

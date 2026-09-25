@@ -111,6 +111,42 @@ class EachNegativeIsDrivenNotCited(unittest.TestCase):
         self.assertTrue(demonstrated)
         self.assertIn("hash recorded at build", detail)
 
+    def test_the_mutation_negative_is_driven_not_read_off_the_live_corpus(self):
+        """It used to require `missed > 0` live, so it went NOT DEMONSTRATED
+        the moment `§50` reached 10/10 — reading only in a fire."""
+        from tools import p12_mutation_verification as mutation
+        demonstrated, detail = neg._mutation()
+        self.assertTrue(demonstrated)
+        self.assertIn("reaches MISSED", detail)
+        self.assertEqual(len(mutation.MUTATIONS), 10,
+                         "the live registry must be restored after the drive")
+        self.assertEqual(mutation.summary()["missed"], 0,
+                         "the live result must be untouched by the negative")
+
+    def test_the_mutation_negative_separates_missed_from_unavailable(self):
+        """A mutation never applied must not report as one that was applied
+        and went undetected. Collapsing those is the defect, not the pass."""
+        demonstrated, detail = neg._mutation()
+        self.assertTrue(demonstrated)
+        self.assertIn("UNAVAILABLE — not MISSED", detail)
+
+    def test_the_runtime_integration_negative_drives_both_directions(self):
+        demonstrated, detail = neg._runtime_integration()
+        self.assertTrue(demonstrated)
+        self.assertIn("REACHED", detail)
+        self.assertIn("HAND-INVOKED ONLY", detail)
+
+    def test_the_runtime_integration_negative_reports_the_live_status_rather_than_gating_on_it(self):
+        """It used to refuse to demonstrate unless the live system was
+        HAND-INVOKED ONLY, which made a real improvement look like a broken
+        control. Whatever the live answer is, it must appear in the detail and
+        must not decide whether the negative can be shown."""
+        from tools import p12_runtime_verification as rt
+        live = rt.reachability()["status"]
+        demonstrated, detail = neg._runtime_integration()
+        self.assertTrue(demonstrated)
+        self.assertIn(f"the live status is {live}", detail)
+
 
 class TheSelfModelHonoursItsRootParameter(unittest.TestCase):
     """The finding this scope produced, held closed."""

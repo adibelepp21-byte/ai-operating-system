@@ -1,0 +1,40 @@
+{
+  "object": "S-OPS-01",
+  "owner": "S-OPS operational proof surface",
+  "kind": "scheduled operational window",
+  "definition": "docs/operations/s-ops/S-OPS-DEFINITION.md",
+  "authority": "FDR-3",
+  "state": "CLOSED",
+  "window": {
+    "opens_at": "2026-09-24T16:39:57+00:00",
+    "closes_at": "2026-09-24T16:44:57+00:00"
+  },
+  "history": [
+    {
+      "at": "2026-09-24T16:37:27.950535+00:00",
+      "event": "provisioned",
+      "from": null,
+      "to": "CLOSED",
+      "actor": "Claude Code — AIOS Co-Founder + Delegated CEO (operator; S-OPS definition §9)",
+      "basis": "FDR-3; definition §9 (the operator provisions)"
+    },
+    {
+      "at": "2026-09-24T16:40:09.047035+00:00",
+      "event": "open",
+      "from": "CLOSED",
+      "to": "OPEN",
+      "phase": "WITHIN",
+      "actor": "P13 (tools.p13, BoundedExecution)",
+      "basis": "P13-ENV-02 (FDR-3 §4), after the AuthorityGate's EXECUTE"
+    },
+    {
+      "at": "2026-09-24T16:45:10.162958+00:00",
+      "event": "close",
+      "from": "OPEN",
+      "to": "CLOSED",
+      "phase": "AFTER",
+      "actor": "P13 (tools.p13, BoundedExecution)",
+      "basis": "P13-ENV-02 (FDR-3 §4), after the AuthorityGate's EXECUTE"
+    }
+  ]
+}

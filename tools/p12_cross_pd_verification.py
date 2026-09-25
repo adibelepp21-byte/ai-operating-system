@@ -9,9 +9,20 @@ merely because both surfaces exist"* — cannot be met here by any amount of wor
 Two pre-existing boundaries hold it there, and neither is `F-16` or `F-17`:
 
 ```text
-SOURCE GAP          eight divisions' Volume 1/2 corpora are non-resident (ESC-C7-01)
+SOURCE GAP          no division's canonical corpus is resident:
+                      PD-03 / PD-04  exist, verified, NOT RESIDENT  (ESC-C7-01)
+                      PD-05 … PD-10  genuinely absent               (G-01)
 ARCHITECT-RESERVED  INV-10 applicability awaits ADR-0029 / ADP-P10-001
 ```
+
+**The two halves of the source gap are different problems** and were conflated
+in the first version of this line, which attributed all eight silent divisions
+to `ESC-C7-01`. Corrected under `ACT-CC-P12-021 §16` after reading the
+escalation's body: `ESC-C7-01 §A` is expressly about **non-residency** — *"The
+PD-03 and PD-04 canonical corpora exist, are complete, and are not resident"* —
+and `§I` is equally express that *"`PD-05`…`PD-10` remain genuinely absent"*.
+Non-residency is, in the escalation's own words, *"a cheaper problem"* than
+absence; recording them as one hides the cheaper one.
 
 The registry itself already refuses to cross either: it records
 `POSSIBLE INV-10 EXPOSURE — NOT ASSERTED`, and *"No violation is claimed, and
@@ -161,7 +172,12 @@ def summary() -> dict:
         "unavailable": sum(1 for c in checks if c.status == UNAVAILABLE),
         "drifted_checks": tuple(c.name for c in checks if c.status == DRIFTED),
         "interfaces_verified": 0,
-        "verification_blocked_by": ("SOURCE GAP (ESC-C7-01)",
+        # Named separately because they resolve separately: `ESC-C7-01` is a
+        # Founder residency decision over corpora that exist and are verified,
+        # `G-01` is genuine absence. Collapsing them was corrected under
+        # `ACT-CC-P12-021 §16`.
+        "verification_blocked_by": ("SOURCE GAP — NON-RESIDENCY (ESC-C7-01)",
+                                    "SOURCE GAP — ABSENCE (G-01)",
                                     "ARCHITECT-RESERVED (ADR-0029)"),
     }
 
@@ -181,4 +197,9 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":  # pragma: no cover
+    # GOAL-V2-004: install the certified-write barrier before anything runs,
+    # even when this file is run by path and has not imported `tools`.
+    import os, sys  # noqa: E401
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import tools  # noqa: E402,F401
     raise SystemExit(main())

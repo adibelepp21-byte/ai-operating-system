@@ -1,0 +1,25 @@
+{
+  "manifest": "AIOS P13 Certification Manifest",
+  "version": "1.0",
+  "phase": 13,
+  "status": "PREPARED — NOT CERTIFIED",
+  "certifying_instrument": null,
+  "certified_commit": null,
+  "authorizing_instrument": "docs/governance/acts/FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md",
+  "authorizing_instrument_sha256": "8d1ef837aa13931f5d6ac6342f196d2544f27f3cc71a233642edc0a4fb841d9e",
+  "registered_at": "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md §28 — ACT-CC-P13-CERT-GATE-003 (rebuild); §27 — FDR-6 (CR-1)",
+  "prepared_commit": "c76e420a9402579ba7a014be345f0ebf989ec3ca",
+  "prepared_commit_basis": "The commit that reconciled Blueprint §16's roadmap-endpoint wording under ACT-CC-P13-CERT-GATE-003. It is the certified root's actual content at preparation. A Founder Certification Decision names the certified commit. If the root is unchanged by then, the certified manifest is these bytes.",
+  "evidence_root": "docs/architecture/p13",
+  "generated_under": "FDR-6 CR-1; rebuilt under ACT-CC-P13-CERT-GATE-003",
+  "generated_by": "tools/p12_certified_evidence_manifest.py from_commit(); reproducible from git history",
+  "supersedes": {
+    "manifest_sha256": "127b97fd9dcd8aaa14f2f94039a86655fe5b8f21a77b2c1e349a4701a27d259d",
+    "prepared_commit": "8114f9bd575aed24feb099f02759b3253da1ae6f",
+    "registered_at": "Decision Register §27"
+  },
+  "authority": "Detection record, prepared for an eventual certification. It confers, changes and revokes no certification and protects nothing. Certification is read from the instruments and the Decision Register.",
+  "files": {
+    "docs/architecture/p13/AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md": "aaa87315e2d4690636faa07cbd0fe50b459fff8270576b78d56c3be8a9c6abe4"
+  }
+}

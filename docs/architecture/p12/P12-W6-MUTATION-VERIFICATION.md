@@ -158,3 +158,100 @@ and not ratified (`F-16`, Founder-reserved).
 
 **Suite state at this record:** `native_core` 801 (1 expected failure) ·
 `consumers` 276 · `tools` 857 · total **1934**.
+
+---
+
+# 8. Correction under `ACT-CC-P12-021` — `duplicate delegation` was a test-oracle defect
+
+> **Appended, not rewritten.** `§3` and `§4.2` above are the measurement as it
+> stood, and they were an honest report of what the probe then asked. What was
+> wrong was the question, and that is recorded here rather than edited out.
+
+## 8.1 What `§4.2` got right, and what it got wrong
+
+[E] **Right, and still right:** `delegation_reconciliation.reconcile` does not
+detect two independent `ACTIVE` grants conveying one capability to one recipient
+instance. Re-verified this Act. `§4.2`'s observation stands unaltered.
+
+[D] **Wrong:** the conclusion drawn from it. `reconcile` was never the component
+that owns grant accumulation. Its `DEFECT_KINDS` are about the
+ledger ↔ projection relationship — unrepresented grants, stale claims,
+provenance mismatch, duplicated representation. Accumulation is not among them
+and never was. Asking `reconcile` whether an instance holds two live grants is
+asking the wrong surface, and a null answer from the wrong surface is not
+evidence that the system is blind.
+
+[E] The component that owns it is **`tools/w4_continuity.py`**, built under
+`ACT-CC-P11-009`, whose `continuation_conditions` raises:
+
+```text
+MORE THAN ONE LIVE GRANT FOR ONE INSTANCE: {…}
+ — a re-run must supersede rather than add to them (§34)
+```
+
+## 8.2 The classification that rested on it, falsified
+
+Seven P12 records carry the same claim in near-identical wording — *"no
+canonical prohibition exists; `DP-02 §11` item 10 legitimises multi-context
+grants"* (`P12-006`, `P12-007`, `P12-008`, `P12-009`, `P12-016`, `P12-019`,
+`P12-74`). Both halves are false, and the second is a misattribution.
+
+[E] **`DP-02 §11` is `REQUIRED POST-DECISION ACTION`.** Item 10 reads, in full:
+
+> *"Continue only where existing authority permits."*
+
+It says nothing about grants, instances, contexts, or multiplicity. The
+citation was never checked at body level; this Act read it.
+
+[E] **A canonical requirement does exist**, and three independent resident
+records carry it:
+
+| Record | What it says |
+|---|---|
+| `w4_continuity.continuation_conditions` (`ACT-CC-P11-009 §34`) | *"a re-run must supersede rather than add to them"* |
+| `ACT-CC-P11-009 §22`, as implemented | `duplicate` is one of nine states that must stay distinguishable and must not collapse into `DONE` |
+| `AIOS_P10_AUTONOMOUS_EXECUTION_VERIFICATION_v1.0 §94.3` (**certified**) | the second run *"superseded rather than accumulated"* — supersession recorded as the behaviour that actually occurred |
+
+[E] And the detector is not theoretical. The resident P12 W4 evidence record
+`docs/architecture/p12/w4-operations/first-execution.evidence.json` already
+contains a fired instance of the condition at
+`prior_state.continuation_conditions[0]` — written by `ACT-CC-P11-008`'s first
+execution on 2026-09-16 — naming five accumulated grants for
+`engineering-intelligence-instance-001`. **The system detected this in a real
+run, and the mutation suite was reporting that it could not.**
+
+## 8.3 The remediation, and its limits
+
+[E] `_duplicate_delegation` now drives `w4_continuity` and carries a control in
+both directions:
+
+| Shape | Required result | Why |
+|---|---|---|
+| one instance, two live grants | **must fire** | the mutation `§50` names |
+| two instances, one live grant each | **must not fire** | the legitimate cross-Department state; `duplicate_active` was once `len(active) > 1` and reported it as a permanent blocker — a false positive P11 corrected |
+
+[E] Result: `duplicate delegation` **DETECTED**. Suite moves `8 / 10 → 9 / 10`.
+
+[C] **Correspondence is a superset, not an identity.** `§50` names two grants of
+the *same capability*; `w4_continuity` fires on any two live grants held by one
+instance, whatever their scope. Detecting a superset does detect the named
+mutation, and this is recorded as the broader reading it is rather than claimed
+as an exact match.
+
+[U] **`§20` check.** This repair is not justified by the metric. It is justified
+by `§48` — a relationship is not verified merely because both surfaces exist —
+applied to the probe itself: the probe asserted a system property from a
+component that does not hold it. Had the repair been metric-driven it would have
+changed the completion state; it does not. `§6.9` remains **NO** on `forge
+decision`, and `P12 COMPLETE` remains **NO**.
+
+## 8.4 Result after correction
+
+```text
+{'mutations': 10, 'attempted': 10, 'detected': 9, 'missed': 1,
+ 'unavailable': 0, 'missed_mutations': ('forge decision',)}
+```
+
+`alter state authority` is no longer `UNAVAILABLE` (recorded separately when
+`P12-W2` was built). `forge decision` is unchanged and is analysed in
+`P12-021-RETURN-PACKAGE.md`.

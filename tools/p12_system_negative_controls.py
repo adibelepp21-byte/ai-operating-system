@@ -35,6 +35,7 @@ copies; attempts against governance records are made in memory.
 
 from __future__ import annotations
 
+import shutil
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -194,18 +195,147 @@ def _unauthorized_p13_authorization() -> Tuple[bool, bool, str]:
     The attempt is made against the surface that answers authority questions
     about the programme — the Self-Model — because that is what a consumer would
     read to learn whether P13 is authorized.
+
+    **`ACT-CC-P12-007 §10` — what this used to be, and why that was not a
+    control.** The first version decided the question with
+
+    ```python
+    if "NOT AUTHORIZED" in value.upper() or "P13" in value:
+    ```
+
+    — bare substring presence. `ACT-CC-P12-006` found it and named the defect:
+    the second clause makes the first dead code, so *any* appearance of the
+    three characters would have reported the system as refusing, including the
+    word inside an unrelated sentence. The Founder instrument itself defeats it
+    twice, writing ``P12 ≠ P13`` in `§38` and naming P13 in prose throughout.
+    A control that a mention satisfies measures spelling, not refusal.
+
+    **The property now tested** is the one `§10` names: *does the resident
+    Self-Model represent the authoritative P13 authorization state, with
+    provenance, verifiably?* A false claim meets a resident contradiction only
+    if all of the following hold, and the control reports `ACCEPTED` if any
+    fails:
+
+    - the surface carries a **structured entry** for the entity, not text;
+    - its `authorized` is an explicit boolean — `None` is *undeterminable*, and
+      `§9` forbids reading that as `False`;
+    - that boolean is `False`, matching the instrument;
+    - provenance is present and resolves to a real file;
+    - `p12_phase_authorization_verifier` — which imports nothing from the
+      module that produced the value — independently agrees on all six of
+      `ACT-CC-P12-007 §14`'s checks, including that the cited section actually
+      *contains* the claimed state.
+
+    The verifier is consulted rather than re-implemented because `§14` requires
+    the establishing path to be independent of the writer, and a second copy of
+    the check here would be neither independent nor a second opinion.
+
+    **`§11`:** this is not written to move the counter. If the representation is
+    absent, unverifiable, or merely mentions the entity, `ACCEPTED` is the
+    correct and preserved result — `tools/tests/test_p12_phase_authorization.py`
+    drives it to `ACCEPTED` six ways to prove the outcome is measured.
+
+    **`FDR-6` — P13 is now authorized, so the attempt had to change.** `FDR-6`
+    `FDQ-1` authorizes Phase 13, and the self-model reports `AUTHORIZED=True`.
+    A claim that P13 is authorized is now true, so the first question is
+    whether the `True` is the Founder's. The independent verifier must confirm
+    that the cited source is a registered Founder instrument that states it.
+    The control then makes the attempt its name describes: an **unauthorized**
+    authorization. An instrument that writes the same decision but resolves
+    against no Register record is planted in a sandbox holding only the P12
+    snapshot. It must be rejected, and P13 must stay unauthorized there. This
+    is the chain `FD-P12-004` fixed for certification, applied to
+    authorization. If either leg fails, the result is `ACCEPTED`.
     """
     from tools import p12_self_model as model
-    answer = model.authority()
-    value = repr(answer.value)
-    if "P13" not in value:
+    from tools import p12_phase_authorization_verifier as verifier
+
+    reported = (model.authority().value or {}).get("phase_authorization")
+    if not isinstance(reported, dict) or not reported.get("resolved"):
         return True, False, (
-            "no resident surface states P13's authorization status, so nothing "
-            "would contradict a claim that it is authorized")
-    if "NOT AUTHORIZED" in value.upper() or "P13" in value:
-        return True, True, ("the authority model states P13's status; a claim "
-                            "to the contrary contradicts a resident answer")
-    return True, False, "P13 authorization is not constrained by any surface"
+            "the authority surface carries no resolved phase-authorization "
+            "state, so nothing would contradict a claim that P13 is authorized")
+    claim = (reported.get("states") or {}).get("P13")
+    if not isinstance(claim, dict):
+        return True, False, (
+            "the authority surface states no structured entry for P13; a "
+            "mention is not a state")
+    authorized = claim.get("authorized")
+    if authorized is None:
+        return True, False, (
+            "P13's authorization state is reported as undeterminable, which is "
+            "not a contradiction of a claim that it is authorized")
+    if authorized is not False and authorized is not True:
+        return True, False, (
+            f"the authority surface reports P13 AUTHORIZED={authorized!r}; a "
+            "claim that P13 is authorized would meet no contradiction")
+    checks = verifier.verify("P13")
+    failed = [c.name for c in checks if c.status != verifier.SATISFIED]
+    if authorized is True:
+        if failed:
+            return True, False, (
+                "the authority surface reports P13 AUTHORIZED=True, and "
+                "independent verification does not establish that a Founder "
+                f"instrument states it: {', '.join(failed)}")
+        rejected, why = _unresolvable_authorization_rejected()
+        if not rejected:
+            return True, False, why
+        return True, True, (
+            "refused: the authority surface reports P13 AUTHORIZED=True only "
+            f"under {claim.get('stated_in')}, cited to "
+            f"{claim.get('authority_record')}, and {len(checks)} independent "
+            f"checks confirm the cited decision states it; {why}")
+    if failed:
+        return True, False, (
+            "P13 is reported unauthorized, but independent verification does "
+            f"not establish the representation: {', '.join(failed)}")
+    return True, True, (
+        "refused: the authority surface reports P13 AUTHORIZED=False as a "
+        f"structured state under {claim.get('stated_in')}, cited to "
+        f"{claim.get('authority_record')}, and {len(checks)} independent "
+        "checks confirm the cited section states it")
+
+
+#: The instrument `_unresolvable_authorization_rejected` plants. No Register
+#: record carries its identifier.
+FORGED_AUTHORIZATION = "FDR-99-FORGED-PHASE-AUTHORIZATION.md"
+
+
+def _unresolvable_authorization_rejected() -> Tuple[bool, str]:
+    """Plant an authorization that resolves against no record, in a sandbox.
+
+    The sandbox holds the P12 snapshot instrument, a copy of the Decision
+    Register, and the forged act. It holds no real authorization, so the only
+    thing that could move P13 there is the forgery.
+    """
+    from tools import p12_phase_authorization as phases
+
+    snapshot = phases.decision_instrument()
+    register = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        acts = root / "docs" / "governance" / "acts"
+        acts.mkdir(parents=True)
+        shutil.copyfile(snapshot, acts / snapshot.name)
+        shutil.copyfile(REPO_ROOT / register, root / register)
+        (acts / FORGED_AUTHORIZATION).write_text(
+            "19. FOUNDER DECISION\n\nAUTHORIZE PHASE 13\n", encoding="utf-8")
+        seen = phases.authorizations(root)
+        detected = any(r["instrument"].endswith(FORGED_AUTHORIZATION)
+                       for r in seen.get("rejected", ()))
+        if not detected:
+            return False, ("an authorization resolving against no record "
+                           "raised no rejection")
+        try:
+            p13 = {s["entity"]: s
+                   for s in phases.current_states(root)}.get("P13", {})
+        except Exception as error:  # an unreadable sandbox is not a refusal
+            return False, f"the sandbox state could not be read: {error}"
+    if p13.get("authorized") is not False:
+        return False, ("the unresolvable authorization was detected and still "
+                       f"moved P13 to AUTHORIZED={p13.get('authorized')!r}")
+    return True, ("an authorization resolving against no record was rejected "
+                  "in a sandbox, and P13 stayed AUTHORIZED=False there")
 
 
 def _false_completion() -> Tuple[bool, bool, str]:
@@ -222,8 +352,179 @@ def _false_completion() -> Tuple[bool, bool, str]:
 
 
 def _false_certification() -> Tuple[bool, bool, str]:
-    from tools.p12_mutation_verification import _forge_decision
-    return _forge_decision()
+    """A certification claim that cannot resolve against an authoritative record.
+
+    **Implements the Founder ruling on `D-P12-027-02`** (`FD-P12-004`), which
+    fixed `§49`'s semantic boundary:
+
+        *"The system must reject a certification claim that cannot resolve
+        against an authoritative certification record."*
+
+    and stated the chain it must demonstrate:
+
+    ```text
+    UNRESOLVABLE CERTIFICATION CLAIM  →  VIOLATION DETECTED  →  REJECT / BLOCK
+    ```
+
+    **The reported number was not what changed.** Before the ruling the guard
+    *reported* an unresolvable certification through `certification_anomalies`
+    and went on believing it — detection without rejection, the middle of that
+    chain and not its end. `certified_phases` now **rejects** it, so this control
+    exercises the whole chain: the claim is planted, the violation is detected,
+    and the phase does not enter the certified set.
+
+    The ruling expressly does **not** establish a coordinated-forgery
+    requirement, and none is introduced here. That residual — a forger who also
+    writes the Register row — is unchanged, and is measured separately by
+    `coordinated forgery residual` among the supplementary controls, so it stays
+    visible without being counted as a `§49` finding the canon does not ask for.
+    """
+    from tools import p12_certified_evidence_guard as guard
+
+    # Control: the resident corpus must still certify what it certifies, or a
+    # rejection below would only prove the guard rejects everything.
+    resident = guard.certified_phases()
+    if not resident:
+        return True, False, (
+            "the resident corpus certifies nothing; a rejection cannot be "
+            "distinguished from a guard that rejects everything")
+
+    with tempfile.TemporaryDirectory() as tmp:
+        acts = Path(tmp) / "acts"
+        acts.mkdir()
+        (acts / "FD-P42-001-FABRICATED.md").write_text(
+            "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
+        detected = bool(guard.certification_anomalies(acts))
+        accepted = guard.certified_phases(acts)
+
+    if not detected:
+        return True, False, (
+            "a certification claim resolving against no record raised no "
+            "violation")
+    if 42 in accepted:
+        return True, False, (
+            "the violation was detected and the claim was still believed; "
+            "detection without rejection is not the ruled requirement")
+    return True, True, (
+        f"refused: an unresolvable certification claim was detected and "
+        f"rejected — certified set stayed {sorted(resident)}")
+
+
+def _unregistered_certification() -> Tuple[bool, bool, str]:
+    """A certification from an instrument no governance record mentions.
+
+    Restored under `ACT-CC-P12-027` after being removed earlier in the same Act.
+    It is only redundant with `false certification` under the reading Claude
+    referred to the Founder; while that reading is unratified the two measure
+    different adversaries, and removing this one would have quietly narrowed the
+    suite on the strength of a decision not yet made.
+    """
+    from tools import p12_certified_evidence_guard as guard
+    with tempfile.TemporaryDirectory() as tmp:
+        acts = Path(tmp) / "acts"
+        acts.mkdir()
+        (acts / "FD-P42-001-FABRICATED.md").write_text(
+            "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
+        if guard.certification_anomalies():
+            return True, False, (
+                "the resident certifications are reported anomalous; the "
+                "detector cannot distinguish a forgery from the real corpus")
+        anomalies = guard.certification_anomalies(acts)
+    if anomalies:
+        return True, True, f"reported: {anomalies[0][:74]}"
+    return True, False, (
+        "a certification from an instrument no governance record mentions "
+        "raised no anomaly")
+
+
+def _coordinated_forgery_residual() -> Tuple[bool, bool, str]:
+    """The limit the ruling expressly left open, kept measured.
+
+    `FD-P12-004 §5`: *"This ruling does not establish or eliminate any
+    Identity/Auth or trust-anchor capability."* So the residual stands — a
+    forger who writes the Register row as well as the instrument resolves, and
+    is believed.
+
+    It is measured here, outside `§49`, for the reason the ruling gives: it is
+    real, and it is not what `§49` asks. Reported as `ACCEPTED` because that is
+    what it is; a supplementary `ACCEPTED` cannot inflate `§6.8` and cannot be
+    mistaken for one.
+    """
+    from tools import p12_certified_evidence_guard as guard
+    with tempfile.TemporaryDirectory() as tmp:
+        acts = Path(tmp) / "acts"
+        acts.mkdir()
+        (acts / "FD-P42-001-FABRICATED.md").write_text(
+            "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED.", encoding="utf-8")
+        register = Path(tmp) / "register.md"
+        register.write_text("| `FD-P42-001` | Certification of Phase 42 | ISSUED |\n",
+                            encoding="utf-8")
+        if 42 not in guard.certified_phases(acts, register):
+            return True, True, "a coordinated forgery was rejected"
+    return True, False, (
+        "a coordinated forgery — instrument plus matching Register row — "
+        "resolves and is believed; closing it needs the Freeze §10 anchor")
+
+
+def _forged_certification_permitting_a_write() -> Tuple[bool, bool, str]:
+    """Can *any* forged certification make a refused write permitted?
+
+    **The question `false certification` does not ask.** `ACT-CC-P12-021`
+    established that the guard cannot authenticate and stopped there, which
+    left the impact unmeasured and let the finding be recorded as `F-G1`'s
+    equal. It is not `F-G1`'s equal. `F-G1` was an authority **inversion** — a
+    forged record made `promotion_authorized` return `True`, granting something.
+    Here `certified_phases` feeds a **prohibition set**, so injection can only
+    ever expand it.
+
+    Driven rather than argued, over the three shapes a forger has: a phase with
+    no evidence root (fails closed — every write refused), a phase whose root
+    exists (protects more), and a phase already certified (no change). The
+    control is the unforged baseline, so "nothing became permitted" cannot be
+    a probe that never ran.
+    """
+    from tools import p12_certified_evidence_guard as guard
+
+    # Derived from the guard's own protected set rather than written out.
+    # Hardcoding a certified-phase path here would also drag this module into
+    # the unguarded-writer coverage check, which reads such a literal as a
+    # module that writes into certified evidence — and it would be right to.
+    targets = [root / "probe.md" for root in guard.protected_roots()]
+    targets.append(guard.REPO_ROOT / "docs" / "architecture" / "p12" / "probe.md")
+
+    def outcomes(acts_root: Optional[Path]):
+        try:
+            return tuple(guard.is_protected(t, guard.REPO_ROOT, acts_root)
+                         for t in targets)
+        except guard.CertificationUndeterminable:
+            return "ALL REFUSED"
+
+    baseline = outcomes(None)
+    if baseline == "ALL REFUSED" or not any(baseline):
+        return True, False, (
+            "the unforged baseline protects nothing, so a forgery could not be "
+            "shown to relax anything")
+
+    relaxed = []
+    for label, statement in (
+            ("no such phase root", "PHASE 42 — FABRICATED ECOSYSTEM IS CERTIFIED."),
+            ("existing phase root", "PHASE 12 — AI OPERATING SYSTEM IS CERTIFIED."),
+            ("already certified", "PHASE 11 — ANYTHING AT ALL IS CERTIFIED.")):
+        with tempfile.TemporaryDirectory() as tmp:
+            copy = Path(tmp) / "acts"
+            shutil.copytree(guard.ACTS_ROOT, copy)
+            (copy / "FORGED.md").write_text(statement, encoding="utf-8")
+            after = outcomes(copy)
+        if after == "ALL REFUSED":
+            continue                      # fail-closed: nothing was permitted
+        if any(was and not now for was, now in zip(baseline, after)):
+            relaxed.append(label)
+    if relaxed:
+        return True, False, (
+            f"a forged certification relaxed protection: {relaxed}")
+    return True, True, (
+        "no forged certification permits a write the resident corpus refuses; "
+        "injection expands the prohibition set or fails closed")
 
 
 def _stale_state_acceptance() -> Tuple[bool, bool, str]:
@@ -269,9 +570,26 @@ CONTROLS: Tuple[Tuple[str, Callable], ...] = (
 )
 
 
-def verify() -> Tuple[ControlResult, ...]:
+#: Controls that are **not** `§49`'s, kept separate so they can never inflate
+#: it. `§6.8` asks whether `§49`'s thirteen hold, and a supplementary control
+#: that passes must not make that number look better than it is.
+#:
+#: Added under `ACT-CC-P12-022`, both about the forgery finding `§49`'s `false
+#: certification` leaves `ACCEPTED`: one asks whether a *lone* planted
+#: instrument is at least visible, the other whether any forged certification
+#: can make a refused write permitted. Neither closes `false certification`,
+#: which is still `ACCEPTED` beside them.
+SUPPLEMENTARY_CONTROLS: Tuple[Tuple[str, Callable[[], Tuple[bool, bool, str]]], ...] = (
+    ("unregistered certification", _unregistered_certification),
+    ("coordinated forgery residual", _coordinated_forgery_residual),
+    ("forged certification permitting a write",
+     _forged_certification_permitting_a_write),
+)
+
+
+def _run(controls) -> Tuple[ControlResult, ...]:
     results = []
-    for name, attempt in CONTROLS:
+    for name, attempt in controls:
         try:
             attempted, refused, detail = attempt()
         except Exception as exc:  # pragma: no cover - defensive
@@ -287,8 +605,18 @@ def verify() -> Tuple[ControlResult, ...]:
     return tuple(results)
 
 
+def supplementary() -> Tuple[ControlResult, ...]:
+    return _run(SUPPLEMENTARY_CONTROLS)
+
+
+def verify() -> Tuple[ControlResult, ...]:
+    """`§49`'s thirteen, and only those. `§6.8` is measured from this."""
+    return _run(CONTROLS)
+
+
 def summary() -> dict:
     results = verify()
+    extra = supplementary()
     return {
         "controls": len(results),
         "attempted": sum(1 for r in results if r.attempted),
@@ -297,12 +625,23 @@ def summary() -> dict:
         "uncontrolled": sum(1 for r in results if r.status == UNCONTROLLED),
         "not_refused": tuple(r.control for r in results
                              if r.status != REFUSED),
+        # Reported beside `§49`'s numbers, never inside them.
+        "supplementary": len(extra),
+        "supplementary_refused": sum(1 for r in extra if r.status == REFUSED),
+        "supplementary_not_refused": tuple(r.control for r in extra
+                                           if r.status != REFUSED),
     }
 
 
 def main(argv=None) -> int:
     for result in verify():
         print(f"{result.control:<36} {result.status:<13} "
+              f"{'attempted' if result.attempted else 'NOT ATTEMPTED':<14} "
+              f"{result.detail[:52]}")
+    print()
+    print("supplementary (NOT §49; reported separately so they cannot inflate it):")
+    for result in supplementary():
+        print(f"  {result.control:<34} {result.status:<13} "
               f"{'attempted' if result.attempted else 'NOT ATTEMPTED':<14} "
               f"{result.detail[:52]}")
     print()
@@ -314,4 +653,9 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":
+    # GOAL-V2-004: install the certified-write barrier before anything runs,
+    # even when this file is run by path and has not imported `tools`.
+    import os, sys  # noqa: E401
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import tools  # noqa: E402,F401
     raise SystemExit(main())

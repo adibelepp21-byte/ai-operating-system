@@ -7,6 +7,7 @@ the system earns it, and must not count a state it cannot reach.
 
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -84,13 +85,62 @@ class DistinguishedMeansReachableAndTellableApart(unittest.TestCase):
                 self.assertEqual(results[state].status, fail.DISTINGUISHED)
                 self.assertTrue(results[state].persisted_as)
 
-    def test_refused_is_raised_but_not_persisted_distinguishably(self):
+    def test_refused_is_now_persisted_distinguishably(self):
+        """Closed by `ACT-CC-P12-027`, on the criterion the previous control
+        pre-declared: the record gained `refusal_type`, and `_refused()` —
+        which was **not** modified — reads it."""
         result = {r.state: r for r in fail.verify()}["REFUSED"]
-        self.assertEqual(result.status, fail.RAISED_ONLY)
-        self.assertIn("no field names which one", result.detail)
+        self.assertEqual(result.status, fail.DISTINGUISHED)
+        self.assertEqual(result.persisted_as, "escalation record .refusal_type")
 
-    def test_a_refusal_joins_its_grant_only_through_prose(self):
-        """`§34` traceability carried by a spelling, not by a reference."""
+    def test_the_field_is_derived_from_the_raised_refusal_not_supplied(self):
+        """The distinction is worth nothing if a caller can assert it.
+
+        A record is built from the exception, so the persisted name is the one
+        the refusal was actually made under — the same discipline `required`
+        and `held` already carry — and a name outside `SANCTIONED_REFUSALS`
+        cannot be constructed at all."""
+        import tempfile
+        from tools.escalation_register import (
+            EscalationRecord, EscalationRegister, EscalationRegisterError)
+        from tools.planning import AuthorityProvenance, EscalationRequired
+        from tools.w4_execution import ExecutionRefused
+
+        provenance = AuthorityProvenance(
+            "FD-P11-001 §9",
+            "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-"
+            "INSTANCE-AUTHORIZATION.md")
+        with tempfile.TemporaryDirectory() as tmp:
+            register = EscalationRegister(Path(tmp))
+            blocked = register.record(
+                EscalationRequired("plan exceeds authority", required="r",
+                                   held="h"),
+                subject="a plan", authority=provenance)
+            refused = register.record(
+                ExecutionRefused("step exceeds delegation", required="r",
+                                 held="h"),
+                subject="a step", authority=provenance)
+            self.assertEqual(blocked.refusal_type, "EscalationRequired")
+            self.assertEqual(refused.refusal_type, "ExecutionRefused")
+            self.assertNotEqual(register.load(blocked.escalation_id)
+                                ["refusal_type"],
+                                register.load(refused.escalation_id)
+                                ["refusal_type"])
+
+        with self.assertRaises(EscalationRegisterError):
+            EscalationRecord(
+                escalation_id="0" * 16, subject="s", required="r", held="h",
+                reason="why", refusal_type="TotallyLegitimateRefusal",
+                authority=provenance, raised_at="2026-09-18T00:00:00+00:00")
+
+    def test_the_escalation_record_still_carries_no_structured_join(self):
+        """Two different findings shared one control, and only one closed.
+
+        `§33`'s *which refusal occurred* is now on the record. `§34`'s
+        *which delegation it was refused under* is **not**: no delegation
+        field was added, and the resident records still join their grant by a
+        spelling. `P12-W3`'s beside-the-record surface remains the structural
+        answer to that one."""
         join = fail.escalation_join()
         self.assertGreater(join["records"], 0)
         self.assertEqual(join["joined_by_structured_field"], 0,
@@ -98,13 +148,89 @@ class DistinguishedMeansReachableAndTellableApart(unittest.TestCase):
                          "field, this finding is closed and the evidence "
                          "record must say so")
         self.assertGreater(join["joined_by_parsed_prose"], 0)
-        self.assertEqual(join["naming_the_refusal_type"], 0)
 
-    def test_refused_would_be_distinguished_if_the_record_named_the_type(self):
-        """The finding must close by itself once the record gains the field."""
+    #: The escalations that predate `refusal_type`. Named, because "the count
+    #: is 0" stopped being the right control the moment a live run under
+    #: `FD-P12-006 §16` wrote a real escalation that does carry one.
+    PREDATING = ("23f315ba9f504272", "0991300404cf44d8", "9cb90fa0787a478c")
+
+    def test_the_records_predating_the_field_were_not_backfilled(self):
+        """`refusal_type` is for records written from the field onward.
+
+        Backfilling a value nobody observed onto a historical record would be
+        manufacturing evidence. These three keep the shape they were written
+        in, and the control names them rather than asserting a total — a total
+        of `0` would now be false for an honest reason, and a control that has
+        to be relaxed to stay true is not measuring what it claims."""
+        import json
+        records = {
+            json.loads(path.read_text(encoding="utf-8"))["escalation_id"]:
+                json.loads(path.read_text(encoding="utf-8"))
+            for path in (fail.REPO_ROOT / "docs/architecture")
+            .rglob("*.escalation.json")}
+        for escalation_id in self.PREDATING:
+            with self.subTest(escalation_id):
+                self.assertIn(escalation_id, records)
+                self.assertNotIn("refusal_type", records[escalation_id])
+
+    def test_a_record_written_since_the_field_carries_it(self):
+        """The other half: the field must actually reach resident records, or
+        it is a schema change nothing exercises."""
+        naming = fail.escalation_join()["naming_the_refusal_type"]
+        self.assertGreater(naming, 0,
+                           "no resident escalation names its refusal type; "
+                           "the field is not reaching real records")
+
+    def test_refused_falls_back_if_the_record_ever_loses_the_field(self):
+        """The falsification: the state must not stay `DISTINGUISHED` on
+        habit. Strip the field and the finding must re-open."""
         with mock.patch.object(fail, "_escalation_record_fields",
-                               return_value=("escalation_id", "refusal_type")):
-            self.assertEqual(fail._refused().status, fail.DISTINGUISHED)
+                               return_value=("escalation_id", "subject")):
+            result = fail._refused()
+            self.assertEqual(result.status, fail.RAISED_ONLY)
+            self.assertIn("no field names which one", result.detail)
+
+
+class GovernanceJoinSurfaceIsMeasuredSeparately(unittest.TestCase):
+    """`P12-W3`/`P12-005`: a refusal now also joins its grant through an
+    independently resolvable, beside-the-record reference — real, persisted
+    instances, not mocks. `docs/architecture/p12/w3-operations/` carries the
+    run `p12_w3_governance_escalation.py` produced (`ACT-CC-P12-003`);
+    `docs/architecture/p12/w4-operations/` now also carries one produced by
+    the wired resident call site `tools/w4_first_run.py`
+    (`p12_w3_resident_wiring_proof.py`, `ACT-CC-P12-005`) — proof the join
+    resolves per-escalation, beside whichever directory each one actually
+    lives in, not against one hardcoded root (the defect this Act found and
+    fixed in `escalation_join()` itself)."""
+
+    def test_at_least_two_real_runs_join_by_the_new_surface(self):
+        join = fail.escalation_join()
+        self.assertGreaterEqual(join["joined_by_governance_surface"], 2,
+                                "expected both the P12-W3 cycle's run and "
+                                "this cycle's resident-wiring run to have "
+                                "left an independently-resolvable join on "
+                                "disk, in their own directories")
+
+    def test_the_w3_cycle_record_does_not_depend_on_prose_matching(self):
+        """`ACT-CC-P12-003`'s record's subject was deliberately worded so
+        the old regex does not match it — proof that record specifically is
+        resolved by the governance surface, not the prose fallback. A
+        second, later real record (`ACT-CC-P12-005`, `w4-operations`) was
+        *not* given adversarial wording — its subject follows
+        `tools/w4_first_run.py`'s own unchanged format, which happens to
+        satisfy the old regex too — so the aggregate count below is not, by
+        itself, proof of independence; this test checks the one record that
+        is."""
+        from tools.p12_governance_join_reader import resolve, JOINED
+        root = fail.REPO_ROOT / "docs/architecture/p12/w3-operations"
+        escalation_id = next(
+            p.name.split(".")[0]
+            for p in root.glob("*.escalation.json"))
+        payload = json.loads(
+            (root / f"{escalation_id}.escalation.json").read_text())
+        self.assertNotRegex(payload["subject"], r"delegation [0-9a-f]{16}")
+        self.assertEqual(
+            resolve(root, root, escalation_id)["status"], JOINED)
 
     def test_verified_is_unreachable_in_the_ratified_vocabulary(self):
         result = {r.state: r for r in fail.verify()}["VERIFIED"]

@@ -39,6 +39,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from tools.governance_index import (
     GovernanceIndex,
+    IDENTIFIER_RE,
     REPO_ROOT,
     _SUBRECORD_RE,
     tracked_markdown,
@@ -56,7 +57,27 @@ REGISTER = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
 #: Identifier classes the Register carries as *decisions*. Derived from the
 #: governance index's own class list rather than restated, so adding a class
 #: there cannot leave this projection behind.
-_DECISION_CLASSES = ("FD", "GDR", "DP")
+# `FDR` joined under `FDR-2`'s registration: a Founder Decision Record is a
+# Founder Decision. `GOAL` is discoverable in the index but is a Goal / Target,
+# not a decision, so it is not listed here.
+_DECISION_CLASSES = ("FD", "GDR", "DP", "FDR")
+
+
+def _declared_founder_decisions(index) -> List[str]:
+    """Register entries outside the class grammar that the Register itself
+    heads as a *Founder Decision*.
+
+    The class rule above decides for grammar identifiers, unchanged. An
+    identifier outside the grammar (today `P13-018`) is a decision only
+    where its Register heading says so: `### P13-018 — Founder Decision · …`.
+    `FI-P13-004` is headed *Founder Issuance* and is not listed, just as
+    `GOAL-*` and `ACT-*` entries are not (post-construction reconciliation,
+    FE-1).
+    """
+    return [r.identifier for r in index.records
+            if r.source_path == REGISTER and r.identifier != "ABSENT"
+            and not IDENTIFIER_RE.fullmatch(r.identifier)
+            and r.title.startswith(f"{r.identifier} — Founder Decision")]
 
 
 @dataclass(frozen=True)
@@ -341,7 +362,8 @@ def self_knowledge(
     # hardcoded two-prefix filter silently excluded them. The prefixes are read
     # from the index's own class list so the two cannot drift apart again.
     decisions = sorted(
-        i for i in identified if i.startswith(tuple(f"{c}-" for c in _DECISION_CLASSES))
+        {i for i in identified if i.startswith(tuple(f"{c}-" for c in _DECISION_CLASSES))}
+        | set(_declared_founder_decisions(index))
     )
     facts.append(
         Fact("what decisions are recorded", decisions, VERIFIED, REGISTER)

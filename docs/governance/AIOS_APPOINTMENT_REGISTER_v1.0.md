@@ -289,3 +289,25 @@ grants no authority beyond the boundary recorded in §3.1.
 
 **REM-003: NOT EXECUTED · NOT AUTHORIZED by this appointment. P7-I99: HOLD.
 Volume 1 Freeze: HOLD. Roadmap: NOT ADVANCED.**
+
+---
+
+## 10. Co-Founder V2 Continuity Note (2026-09-23)
+
+**This note records no appointment and changes none.** It exists because
+`§3.4` above shows `DEL-T4.4-CF-001` as *"ACTIVE — scope unchanged by this
+Act"*. From 2026-09-23 that line is historical.
+
+| Instrument | Status from 2026-09-23 | Source |
+|---|---|---|
+| `DEL-T4.4-CF-001` | **SUPERSEDED** by `DEL-CFV2-CEO-001` (succession) | Delegation Register `§12` |
+| `DEL-CFV2-CEO-001` | **ACTIVE** — AIOS Co-Founder + Delegated CEO | Delegation Register `§12`; `GDR-0038` |
+| `APT-CD1.1-AA-001` / `ACT-CD1.1-AA-001-A` | **ACTIVE — unchanged** | this register |
+
+**`APT-CD1.1-AA-001` is not amended, expanded or superseded.** Its holder,
+Claude Code / Co-Founder, holds the office that continues under V2. Its `§3.2`
+list is a non-conferral clause (`ACT-CC-F03-015 §2`). It neither narrows nor is
+narrowed by the V2 architecture envelope (Charter A05). Reconciliation:
+`AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md` `RD-10`.
+
+Everything above this note is unaltered, per `§2`.

@@ -7346,3 +7346,996 @@ quotation above is copied from the resident body and cited to its section. The
 recording changes no authority, no phase state, and no reserved matter — each
 instrument was already effective under its own terms before this append existed.
 
+
+---
+
+## 14. Co-Founder V2 Founder Decision Append (2026-09-23)
+
+### Why this append exists
+
+On 2026-09-23 the Founder approved the Co-Founder V2 decision set
+`FD-V2-001` … `FD-V2-013`, together with the Baseline amendment, Charter and
+Mandate that implement it. The Founder then directed registration and
+activation (`acts/FOUNDER-DIRECTIVE-COFOUNDER-V2-TRANSITION.md`: *"REGISTRATION:
+AUTHORIZED / ACTIVATION: AUTHORIZED"*). This register is where Founder decisions
+are recorded. The delegation that implements them is recorded in the Delegation
+Register (`DEL-CFV2-CEO-001`). **Recording here records and does not decide.**
+Every decision below is the Founder's, quoted from the persisted F02 body
+(`cofounder-v2/F02_…`, sha256 `adae30d9…3b759ea3`).
+
+---
+
+### GDR-0038 — Founder Decision Set · Co-Founder V2 (FD-V2-001 … FD-V2-013) · AIOS Co-Founder + Delegated CEO — Registered & Active
+
+**Identifier:** GDR-0038
+**Date:** 2026-09-23
+**Tier:** Founder Decision. Implemented as an Architectural-Tier delegation
+(Constitution §3.2) below the Constitutional Tier
+**Decided by:** Founder — Moriarty
+**Recorded by:** Claude Code, under explicit Founder direction
+**Registration and activation record:** `AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md` (`REG-CFV2-001`)
+**Supersedes:** `DEL-T4.4-CF-001` · `ACT-T4.4-CF-001-A` — succession; text unaltered
+**Status:** ACTIVE — registered and activated 2026-09-23
+
+#### Decision text (verbatim)
+
+> *"Founder: Moriarty Decision: APPROVE Scope: FD-V2-001 through FD-V2-013
+> Approved Role: AIOS Co-Founder + Delegated CEO Approved Operating Model: Goal /
+> Target → Autonomous CEO Execution → Result / Evidence → Approve / Revise"* — F02 `§44`
+
+> *"FOUNDER: Moriarty / DECISION: APPROVED / TARGET: AIOS CO-FOUNDER V2 /
+> REGISTRATION: AUTHORIZED / ACTIVATION: AUTHORIZED"* — directive signature block
+
+The signature block has five lines. In this section the line breaks are shown as
+` / `. That rendering is the only change made to it.
+
+#### Authority basis
+
+| Element | Basis |
+|---|---|
+| Deciding authority | Founder. F02 `§4`: *"It does not place the CEO above the Constitution or Founder Authority."* |
+| Delegation instrument | Constitution §3.2 scoped delegation — `DEL-CFV2-CEO-001` |
+| Delegating capacity | Founder in the Architect capacity. **FD-2 remains IMPLIED, not separately ratified** (`GDR-0015`), and is not closed by this entry |
+| Model | Model D retained: below the Constitutional Tier. Appendix A is unchanged |
+
+#### Evidence of record
+
+| Evidence | Location |
+|---|---|
+| F01–F05, byte-exact | `docs/governance/cofounder-v2/` (sha256 at `REG-CFV2-001` §A.2) |
+| Founder directive | `docs/governance/acts/FOUNDER-DIRECTIVE-COFOUNDER-V2-TRANSITION.md` |
+| V1 discovery, classification, reconciliation `RD-01`…`RD-16` | `REG-CFV2-001` Part B |
+| Frozen authority envelope and escalation matrix | `REG-CFV2-001` Part C |
+| Activation gate, 13/13 | `REG-CFV2-001` §D.3 |
+
+#### Standing changes
+
+- **Claude Code = AIOS Co-Founder + Delegated CEO** (`FD-V2-001`). The office
+  established by `GDR-0015` continues under the V2 title and envelope.
+- `DEL-CFV2-CEO-001` is **ACTIVE** (`ACT-CFV2-CEO-001-A`). `DEL-T4.4-CF-001` is
+  **SUPERSEDED** by succession. Its text is unaltered.
+- `AIOS-GOV-BASELINE-AMENDMENT-V2-001` is registered as the Governance Baseline
+  amendment (`FD-V2-012`). The definition *"Claude = AI Engineering Lead"* is
+  superseded. That definition is external and non-resident (`ACT-CC-T4.2`), and
+  no body is reconstructed.
+- AIOS Co-Founder Delegation Charter v1.0 is **superseded**. It was never
+  effective.
+
+#### Explicitly not changed
+
+- **Engineering Constitution — unchanged.** Constitutional mutation performed:
+  **zero**. §16 amendment authority remains non-delegable.
+- Canonical Domain Model, ADRs, Architecture Freeze, Master Program,
+  `docs/program/AIOS_*` — unchanged.
+- `APT-CD1.1-AA-001`, `DEL-F03-015-P7I99-001` and
+  `FDE-P10-AUTONOMOUS-EXECUTION-01` remain in force, with every boundary intact.
+- **`ACT-CC-GOV-PAUSE-001` is not released.** Construction outside the V2
+  transition remains paused until an explicit Founder release under its `§21`.
+- No phase is certified, completed or accepted. Final system acceptance remains
+  Founder-reserved (A19).
+
+#### Lineage
+
+`GDR-0015` (V1 office) → `DEL-T4.4-CF-001` → Charter v1.0 (approved, never
+registered) → `ACT-CC-GOV-PAUSE-001` (V2 reconciliation hold) → F01 → F02
+(`FD-V2-001` … `FD-V2-013`) → F03 → F04 → F05 → Founder directive →
+`REG-CFV2-001` → `DEL-CFV2-CEO-001` / `ACT-CFV2-CEO-001-A` → `GDR-0038`.
+
+#### Status history
+
+| Date | Event | Actor |
+|---|---|---|
+| 2026-09-23 | `FD-V2-001` … `FD-V2-013` approved; F03, F04 and F05 approved | Founder — Moriarty |
+| 2026-09-23 | Registration and activation directed | Founder — Moriarty |
+| 2026-09-23 | Registered. Activation gate passed 13/13. **ACTIVE** | Claude Code, under explicit Founder direction |
+
+---
+
+### FD-V2-001 — Founder Decision · CEO Role
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-001` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§6` |
+
+**Decision text.** *"Founder approves the formal delegation of the role: AIOS Co-Founder + Delegated
+CEO to Claude Code."*
+
+### FD-V2-002 — Founder Decision · Founder Operating Interface
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-002` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§7` |
+
+**Decision text.** *"Founder approves the following as the primary Founder–CEO operating
+interface"*, followed in F02 by the diagram Founder → Goal / Target → CEO
+execution → Result + Evidence → Founder review.
+
+### FD-V2-003 — Founder Decision · Autonomous Construction Mandate
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-003` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§8` |
+
+**Decision text.** *"Founder approves the CEO’s autonomous construction mandate."*
+
+Construction outside the V2 transition remains subject to `ACT-CC-GOV-PAUSE-001` until the Founder releases it.
+
+### FD-V2-004 — Founder Decision · Executive Decision Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-004` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§9` |
+
+**Decision text.** *"Founder approves CEO authority to make ordinary operational decisions necessary
+to achieve an authorized Goal / Target."*
+
+### FD-V2-005 — Founder Decision · Architecture Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-005` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE — Bounded Delegation** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§10` |
+
+**Decision text.** *"Founder approves bounded delegated Architecture Authority for the CEO."*
+
+Exercised within Constitution §3.2 and §3.4 (`REG-CFV2-001` `C-1`…`C-4`).
+
+### FD-V2-006 — Founder Decision · Cross-Phase Repair
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-006` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§11` |
+
+**Decision text.** *"Founder approves CEO authority to repair previous phases when required to
+achieve an authorized current Goal / Target."*
+
+### FD-V2-007 — Founder Decision · Contributor / Agent Delegation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-007` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§12` |
+
+**Decision text.** *"Founder approves CEO authority to delegate work to other agents, AI
+contributors, or subordinate execution resources within the CEO authority
+envelope."*
+
+### FD-V2-008 — Founder Decision · Verification and Evidence Responsibility
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-008` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§13` |
+
+**Decision text.** *"Founder approves CEO responsibility for proving material construction claims
+through verification and evidence."*
+
+### FD-V2-009 — Founder Decision · Re-Discovery Obligation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-009` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§14` |
+
+**Decision text.** *"Founder approves mandatory CEO re-discovery after material construction."*
+
+### FD-V2-010 — Founder Decision · Authorized Construction Exhaustion
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-010` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§15` |
+
+**Decision text.** *"Founder approves CEO authority to declare: AUTHORIZED ACTIONABLE CONSTRUCTION
+SURFACE EXHAUSTED when the CEO has exhausted currently identifiable actionable
+work that is: 1. relevant to the authorized Goal / Target; and 2. within the
+CEO’s current authority envelope."*
+
+### FD-V2-011 — Founder Decision · Founder Review / Acceptance
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-011` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§16` |
+
+**Decision text.** *"Founder approves the following review model"*, followed in F02 by the diagram
+CEO → Result + Evidence → Founder Review → Approve | Revise / Redirect.
+
+### FD-V2-012 — Founder Decision · Governance Baseline Reconciliation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-012` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§17` |
+
+**Decision text.** *"Founder approves the formal reconciliation of the current Governance Baseline
+with the V2 Co-Founder / CEO authority model."*
+
+Implemented by `AIOS-GOV-BASELINE-AMENDMENT-V2-001`.
+
+### FD-V2-013 — Founder Decision · Charter V2 Authorization
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-V2-013` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Decision** | **APPROVE** |
+| **Status** | OPERATIVE — registered and activated 2026-09-23 (`GDR-0038`) |
+| **Record** | F02 `§18` |
+
+**Decision text.** *"Founder approves the construction of: AIOS CO-FOUNDER DELEGATION CHARTER V2.0
+as the formal delegation instrument implementing the approved V2 authority
+model."*
+
+The Charter is registered, and its thirteen `§18` preconditions are met (`REG-CFV2-001` §D.3).
+
+---
+
+### Append integrity
+
+One GDR entry and thirteen decision records were added. No earlier entry was
+altered, so `§2.3` append-only discipline holds. Quotations come from the
+persisted F02 body and the directive, and each one is checked mechanically
+against F02. The only differences are that whitespace, bold and blockquote
+markup inside a quoted decision are collapsed, and `FD-V2-010`'s numbered list
+is run inline. No decision text is reconstructed.
+
+
+---
+
+## 15. Phase 12 – Phase 13 and Governance Founder Instrument Append (2026-09-24)
+
+### Why this append exists
+
+Sixteen Founder instruments issued between 12 and 24 September 2026 are resident
+in `docs/governance/acts/`, and none had an entry in this register. They
+authorize, ratify, rule on and certify P12; decide the P13 preparation path; and
+pause and then release construction. This is the same recording gap that `§13`
+closed for P10 and P11, and it has the same consequence. `tools/derived_views`
+and the self-model answer *"what decisions are recorded"* from this register, so
+before this append the system could not see the decisions that certify P12 or
+shape P13.
+
+**This is a recording gap, not an authority gap.** Each instrument was
+effective under its own terms before this entry existed. Registration records
+and does not effectuate (Authority Disclaimer). The append is made under
+`ACT-CC-GOV-V2-RESUME-001` `§6` (a verified post-V2 baseline) and V2 A12
+(evidence). No instrument is reinterpreted. Each entry quotes the instrument's
+own decision line and cites the file, with the first 16 hex characters of its
+sha256 at registration.
+
+---
+### P12 Authorization — Founder Decision · Phase 12 Authorization
+
+| Field | Value |
+|---|---|
+| **Identifier** | `P12 Authorization` |
+| **Date** | 2026-09-12 |
+| **Decided by** | AIOS Founder |
+| **Record** | `acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md` · sha256 `045c409ec8152241…` |
+| **Status** | ISSUED, effective 2026-09-12 per the instrument's provenance block. Its `§37` state block is the P12-entry snapshot that `tools/p12_phase_authorization` still reads (`H-1`) |
+
+**Decision text.** *"D1-A — AUTHORIZE P12"*
+
+### FD-P12-001 — Founder Decision · F-16 / E12 Ratification & Acceptance Boundary
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-001` |
+| **Date** | 2026-09-17 |
+| **Decided by** | Founder |
+| **Record** | `acts/FD-P12-001-E12-RATIFICATION-AND-ACCEPTANCE-BOUNDARY.md` · sha256 `1ad7587f0d8bdd35…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"Ratification State: E12 RATIFIED"*; *"R1 — CONSUMPTION BY REAL SYSTEM WORK"*
+
+### FD-P12-002 — Founder Decision · P6 Knowledge Admission / Corpus-Health Criteria
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-002` |
+| **Date** | 2026-09-17 |
+| **Decided by** | Founder |
+| **Record** | `acts/FD-P12-002-P6-KNOWLEDGE-ADMISSION.md` · sha256 `34d753e213c5a606…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"The Founder hereby decides: … APPROVED FOR KNOWLEDGE ADMISSION"*
+
+### FD-P12-003 — Founder Decision · E12-01…E12-05 Measurable Interpretation
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-003` |
+| **Date** | 2026-08-17 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P12-003-E12-01-05-MEASURABLE-INTERPRETATION.md` · sha256 `01ee606d6a563bb1…` |
+| **Status** | ISSUED. The instrument states *"Date Issued: 17-08-2026"*, which is shown in ISO form above. That date precedes the P12 authorization of 2026-09-12. It is recorded as stated, not corrected |
+
+**Decision text.** *"Founder Decision: RATIFIED"*
+
+### FD-P12-004 — Founder Ruling · D-P12-027-02 · False-Certification Semantic Boundary
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-004` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P12-004-FALSE-CERTIFICATION-SEMANTIC-BOUNDARY.md` · sha256 `9f9a9ebc83bd6767…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"The system must reject a certification claim that cannot resolve against an authoritative certification record."*
+
+### FD-P12-005 — Founder Ruling · D-P12-027-04 · §6.7 Completion Semantics
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-005` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P12-005-SECTION-6-7-COMPLETION-SEMANTICS.md` · sha256 `51837957211e5ca7…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"This ruling does not declare §6.7 SATISFIED automatically."*
+
+### FD-P12-006 — Founder Decision · P12 Certification & Live Operational Verification
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-006` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md` · sha256 `431adf774fed2be8…` |
+| **Status** | ISSUED. Its live-verification condition was reported as satisfied in `docs/architecture/p12/AIOS-P12-FINAL-CERTIFICATION-AND-P13-TRANSITION-HANDOFF-RECORD.md`. **P12 is certified.** `tools/p12_certified_evidence_guard.py` does not yet recognize this certification (baseline finding `B-01`) |
+
+**Decision text.** *"P12 CERTIFICATION = CERTIFY"*
+
+### ACT-CC-P12-019 — Founder Act · Delegated P12 Completion Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-CC-P12-019` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/ACT-CC-P12-019-P12-COMPLETION-AUTHORITY-DELEGATION.md` · sha256 `3b3149ef709dbd38…` |
+| **Status** | ISSUED. Scoped to P12's E12 criteria, and spent with P12's completion |
+
+**Decision text.** *"The Founder hereby explicitly delegates to Claude Code:"*
+
+### FD-P13-001 — Founder Decision · P13 Identity & Definition Path Selection
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-001` |
+| **Date** | 2026-09-18 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-001-P13-IDENTITY-AND-DEFINITION-PATH-SELECTION.md` · sha256 `6ea9f287ea1ce9bd…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"[X] OPTION B — NON-CANONICAL DRAFT → FOUNDER CANONICALIZATION"*
+
+### FD-P13-002 — Founder Decision · Blueprint Drafting Scope & Bounded Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-002` |
+| **Date** | 2026-09-19 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-002-BLUEPRINT-DRAFTING-SCOPE-AND-BOUNDED-AUTHORITY.md` · sha256 `f083200dd748203f…` |
+| **Status** | ISSUED |
+
+**Decision text.** *"Selected Option: C — Bounded Act"*
+
+### FI-P13-004 — Founder Issuance · ACT-CC-P13-004 Non-Canonical Blueprint Drafting Authorization
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FI-P13-004` |
+| **Date** | 2026-09-19 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FI-P13-004-FOUNDER-ISSUANCE-OF-ACT-CC-P13-004.md` · sha256 `3831f57037f0ab71…` |
+| **Status** | ISSUED. `ACT-CC-P13-004` is SPENT |
+
+**Decision text.** *"[X] ISSUE ACT-CC-P13-004"*
+
+### FD-P13-003 — Founder Decision · Blueprint v0.1 Review & Disposition
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-003` |
+| **Date** | 2026-09-19 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-003-BLUEPRINT-FOUNDER-REVIEW-AND-DISPOSITION.md` · sha256 `ef637281520bfab8…` |
+| **Status** | ISSUED. `ACT-CC-P13-005` is SPENT |
+
+**Decision text.** *"[X] OPTION D — RETURN FOR REVISION"*; *"[X] RA-2 — NEW FOUNDER-ISSUED BOUNDED ACT REQUIRED"*
+
+### FD-P13-004 — Founder Decision · Blueprint v0.2 Review & Disposition
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-004` |
+| **Date** | 2026-09-19 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-004-BLUEPRINT-V0-2-FOUNDER-REVIEW-AND-DISPOSITION.md` · sha256 `8fe1501306fccd2c…` |
+| **Status** | ISSUED. `ACT-CC-P13-006` and `ACT-CC-P13-007` are SPENT |
+
+**Decision text.** *"[X] OPTION D — RETURN FOR REVISION"*
+
+### FD-P13-005 — Founder Decision · Disposition of Blueprint v0.3
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P13-005` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FD-P13-005-FOUNDER-DISPOSITION-OF-BLUEPRINT-V0-3.md` · sha256 `08f687e539806ddc…` |
+| **Status** | ISSUED. `ACT-CC-P13-008` is SPENT and produced v0.4. The next P13 gate is a **fresh Founder review of v0.4**, which has not occurred |
+
+**Decision text.** *"[X] OPTION B — ACCEPT WITH MODIFICATION"*
+
+### ACT-CC-GOV-PAUSE-001 — Founder Act · AIOS Construction Pause & Co-Founder V2 Reconciliation Hold
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-CC-GOV-PAUSE-001` |
+| **Date** | 2026-09-23 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/ACT-CC-GOV-PAUSE-001-AIOS-CONSTRUCTION-PAUSE.md` · sha256 `a5802a7802e7b495…` |
+| **Status** | ISSUED. **RELEASED** by `ACT-CC-GOV-V2-RESUME-001` on 24 September 2026 |
+
+**Decision text.** *"Decision: ISSUE ACT-CC-GOV-PAUSE-001"*
+
+### ACT-CC-GOV-V2-RESUME-001 — Founder Act · Construction Pause Release & First V2 CEO Goal / Target
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-CC-GOV-V2-RESUME-001` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/ACT-CC-GOV-V2-RESUME-001-CONSTRUCTION-PAUSE-RELEASE-AND-FIRST-CEO-GOAL.md` · sha256 `7303aee5ac2e872a…` |
+| **Status** | ISSUED. First V2 Goal / Target **ACTIVE**. Execution record: `AIOS_POST_V2_OPERATIONAL_BASELINE_v1.0.md` |
+
+**Decision text.** *"AIOS CONSTRUCTION = RELEASED FOR AUTHORIZED EXECUTION"*
+
+---
+
+### Append integrity
+
+Sixteen entries were added, and no earlier entry was altered (`§2.3`). Every
+decision quote was checked mechanically against the instrument body it cites.
+Dates are given in ISO form, following the register convention. One date,
+`FD-P12-003`'s, looks inconsistent: the instrument's own text is quoted in that
+entry's Status field, and it is not corrected, because correcting it would be
+reinterpretation.
+
+---
+
+## 16. P12 Certification Integrity Status Note (2026-09-24)
+
+This section records a change in how the system **represents and enforces**
+`FD-P12-006`. It records no decision, and the certification itself is
+unchanged. The `§15` entry for `FD-P12-006` states that the certified-evidence
+guard *"does not yet recognize this certification (baseline finding `B-01`)"*.
+That was true when written, and it is kept as written (`§2.3`). From
+2026-09-24, under `GOAL-V2-002`:
+
+| Surface | State |
+|---|---|
+| `tools/p12_certified_evidence_guard.py` | Recognizes `FD-P12-006`'s decision-field form, resolved against its `§15` entry. Certified phases: **10, 11, 12**. `docs/architecture/p12/` and `FD-P12-006` are protected |
+| Phase reader and self-model | Report P12 certified from `FD-P12-006`. The `§37` entry snapshot is kept, and its FALSE values are marked superseded |
+| Certified evidence | 121 files fixed by content in `AIOS_P12_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json` at the certified commit `6968c6e`, verified by `tools/p12_certified_evidence_manifest.py` |
+| Historical anomaly | Two observation files were rewritten after certification, by commits `7f6120c` and `d18bac4`. They were restored to their certified bytes. The later bytes remain in git history |
+
+Record: `AIOS_GOAL_V2_002_P12_CERTIFICATION_INTEGRITY_RECORD_v1.0.md`.
+
+---
+
+## 17. V2 Founder Goal / Target Append (2026-09-24)
+
+Founder Goals are Founder-issued instruments. Each one sets what the CEO
+executes under `DEL-CFV2-CEO-001` (Matrix `IAM-04`). The Resume Act's first
+Goal is registered in `§15`. The next two were resident but unregistered. This
+append records them. It decides nothing.
+
+### GOAL-V2-002 — Founder Goal / Target · P12 Certification & Evidence Integrity
+
+| Field | Value |
+|---|---|
+| **Identifier** | `GOAL-V2-002` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/GOAL-V2-002-P12-CERTIFICATION-AND-EVIDENCE-INTEGRITY.md` · sha256 `c5ce309fcfaf7366…` |
+| **Status** | ISSUED. Target reported ACHIEVED in `AIOS_GOAL_V2_002_P12_CERTIFICATION_INTEGRITY_RECORD_v1.0.md`. Founder review pending |
+
+**Goal text.** *"RESTORE AND ENFORCE THE INTEGRITY OF P12 CERTIFICATION STATE AND ITS ASSOCIATED CERTIFIED EVIDENCE."*
+
+### GOAL-V2-003 — Founder Goal / Target · Post-GOAL-002 Re-Discovery & Next Authorized Construction Frontier
+
+| Field | Value |
+|---|---|
+| **Identifier** | `GOAL-V2-003` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/GOAL-V2-003-POST-GOAL-002-REDISCOVERY-AND-NEXT-FRONTIER.md` · sha256 `ad6e85698b7b2cd9…` |
+| **Status** | ISSUED. Execution record: `AIOS_GOAL_V2_003_FRONTIER_DETERMINATION_RECORD_v1.0.md` |
+
+**Goal text.** *"PERFORM A FRESH POST-GOAL-002 DISCOVERY OF AIOS ACTUAL STATE AND DETERMINE THE NEXT AUTHORIZED ACTIONABLE CONSTRUCTION FRONTIER FROM CURRENT EVIDENCE, DEPENDENCIES, AND AUTHORITY."*
+
+---
+
+## 18. GOAL-V2-004 Append and Certified-Evidence Write Closure Status Note (2026-09-24)
+
+This append registers `GOAL-V2-004`, the Founder Goal for the frontier that
+`GOAL-V2-003` determined (`FR-3-01`). It then records how the system now
+**protects and detects** the certified evidence of P10, P11 and P12. It records
+no decision. No certification is created, changed or revoked.
+
+### GOAL-V2-004 — Founder Goal / Target · Certified-Evidence Write Closure · P10 · P11 · P12
+
+| Field | Value |
+|---|---|
+| **Identifier** | `GOAL-V2-004` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/GOAL-V2-004-CERTIFIED-EVIDENCE-WRITE-CLOSURE.md` · content sha256 `1f04d491af5c67fb…` |
+| **Status** | ISSUED. Execution record: `AIOS_GOAL_V2_004_CERTIFIED_EVIDENCE_WRITE_CLOSURE_RECORD_v1.0.md` |
+
+**Goal text.** *"CLOSE THE CERTIFIED-EVIDENCE WRITE PATHS ACROSS P10, P11, AND P12 SO THAT NO RESIDENT EXECUTABLE ENTRY POINT CAN MODIFY CERTIFIED EVIDENCE WITHOUT BEING REFUSED BEFORE THE FIRST WRITE."*
+
+### Status note — certified-evidence protection and detection
+
+| Surface | State from 2026-09-24 |
+|---|---|
+| Prevention | `tools/certified_write_barrier.py`, installed when the `tools` package is imported. It refuses any write into a certified root, a certifying instrument or a manifest, through any Python write API, before that write begins. It also governs process launches |
+| Detection | `tools/certified_evidence_integrity.py` checks every certified phase by content and reports `MODIFIED`, `MISSING`, `UNREADABLE` and `UNEXPECTED`. It also cross-checks certified phases against manifests |
+| P10 manifest | `AIOS_P10_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json`: 36 files under `docs/architecture/platform-organization`, anchored at `e7a3d73`, the commit persisting `FD-P10-005` |
+| P11 manifest | `AIOS_P11_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json`: 58 files under `docs/architecture/p11`, anchored at `98c0a1e`, the commit persisting `FD-P11-002` |
+| P12 manifest | `AIOS_P12_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json` (`§16`), unchanged: 121 files at `6968c6e` |
+| Manifest index | `AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json` · sha256 `34f9673a7a2fcd0ed6bd075d67b3dc5059f739085496886f6a5913a9ea44eb8e`. The index records each manifest's and instrument's sha256. Detection requires the index's own sha256 to appear here |
+
+The P10 and P11 anchors are an implementation choice, stated as such. Neither
+instrument names an evidence commit, and no later commit changes either root.
+Record: `AIOS_GOAL_V2_004_CERTIFIED_EVIDENCE_WRITE_CLOSURE_RECORD_v1.0.md`.
+
+---
+
+## 19. GOAL-V2-005 Append and P13 Status Note (2026-09-24)
+
+This append registers `GOAL-V2-005`. It records no decision. P13's
+authorization, canonical definition and construction state are **unchanged**:
+the Goal directs work *"where authorized"*, and it neither canonicalizes P13
+nor authorizes P13 construction.
+
+### GOAL-V2-005 — Founder Goal / Target · P13 Completion & Systemic Gap Closure
+
+| Field | Value |
+|---|---|
+| **Identifier** | `GOAL-V2-005` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/GOAL-V2-005-P13-COMPLETION-AND-SYSTEMIC-GAP-CLOSURE.md` · content sha256 `e278c7214480ff89…` |
+| **Status** | ISSUED. Terminal condition reported: **TARGET BLOCKED** at Founder-reserved decisions. Execution record: `AIOS_GOAL_V2_005_P13_COMPLETION_RECORD_v1.0.md` |
+
+**Goal text (primary goal).** *"Advance AIOS toward the currently authorized P13 end-state"*, with P13 identity stated as *"SUPER INTELLIGENCE ECOSYSTEM"*.
+
+### Status note
+
+| Surface | State from 2026-09-24 |
+|---|---|
+| P13 | Preparation only. `AUTHORIZED = False`. `GAP-0001` OPEN (apex). v0.4 `00efeeae…` awaits a fresh Founder review (`FD-P13-005 §11`), unchanged |
+| W4 authority citations | `tools/w4_delegation.py` and `tools/agent_instance_registry.py` now require the citation to reach `FD-P11-001` itself (`FD-P11-001 §24`) through `tools/authority_citation.py`. Every resident record still resolves |
+| Self-model open escalations | four, not one: `23f315ba9f504272` (P11), plus `0991300404cf44d8`, `9d6bc0ad47294ef0` and `9cb90fa0787a478c` (P12). All four are OPEN by the escalation register's own rule |
+| Ecosystem relationships | measured by `tools/ecosystem_relationships.py`. Of the seven relationships in the Goal's `§14` chain, 3 are bound in code, 2 by data and 1 only through Organization. Memory ↔ Intelligence is not connected, by the recorded design of the P5 realization |
+
+---
+
+## 20. FDR-1 Append — P13 Blueprint v0.4 Disposition (2026-09-24)
+
+### FDR-1 — Founder Decision · Review & Disposition of P13 Blueprint v0.4
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-1` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FDR-1-FOUNDER-REVIEW-AND-DISPOSITION-OF-P13-BLUEPRINT-V0-4.md` · content sha256 `286613a3e1b249f3…` |
+| **Status** | ISSUED — **MODIFY / PROCEED TO FDR-2**. The instrument states no date; 2026-09-24 is the date of receipt |
+
+**Effect.** v0.4 (`00efeeae…`) becomes the Founder review basis, architectural
+hypothesis and decision-preparation artifact. It remains **non-canonical**.
+Unchanged: P13 canonical definition NOT ESTABLISHED (`GAP-0001` OPEN), P13
+authorization NOT GRANTED, construction and certification NOT AUTHORIZED,
+Native Core 11 FROZEN. Reject: NO. Path C: NO. Next gate: `FDR-2` — P13
+Definition, Boundary, Meaning & Exit Contract. Its decision surface is prepared
+at `docs/architecture/p13-preparation/P13-016-FDR-2-DECISION-SURFACE.md`,
+which recommends (marked **[REC]**) and decides nothing.
+
+---
+
+## 21. FDR-2 Append — P13 Definition, Boundary, Autonomy & Exit Contract (2026-09-24)
+
+### FDR-2 — Founder Decision · P13 Definition, Boundary, Autonomy & Exit Contract
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-2` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Record** | `acts/FDR-2-P13-DEFINITION-BOUNDARY-AUTONOMY-AND-EXIT-CONTRACT.md` · content sha256 `edb5e2fd7055b641…` |
+| **Status** | ISSUED — **APPROVED WITH DEFINED BOUNDARIES**. The instrument states no date; 2026-09-24 is the date of receipt. **This entry is the canonical registration `FDR-2 §5` requires** |
+
+**Canonical P13 definition (`D01`).** *"P13 is the Super Intelligence Ecosystem
+layer of AIOS in which AIOS develops the capability to understand its own
+relevant system state, evaluate that state against defined criteria, reason
+over evidence, determine appropriate next actions, and evolve its capabilities
+within explicit governance and authority boundaries."*
+
+| Decision | Registered effect |
+|---|---|
+| `D02` | "Super Intelligence" is a program identity, not a performance claim |
+| `D03` | Mission: the three-question operational spine, plus the authorized action loop |
+| `D04` | Requirement-driven evolutionary layer over P1–P12; no duplication, no reopening |
+| `D05` | **Bounded Delegated Autonomy**: execute only within an existing valid authority; `GSI-01…10` |
+| `D06` | Requirement-driven relationships; **Memory ↔ Intelligence** is the primary new one |
+| `D07` | Exit contract `E13-01`…`E13-07` |
+| `D08` | Bounded completion with a classified residual frontier |
+| `D09` | Six pre-construction gates; **NATIVE CORE = 11** preserved |
+| `D10` | **Construction authorization remains separate.** Canonicalization and pre-construction reconciliation are authorized to the CEO |
+
+**Closed on registration:** `GAP-0001`, `GAP-0002`, `GAP-0004`. **Not closed:**
+`GAP-0006`, `GAP-0009`, `AD-P13-001`, `AD-P13-002`, `FD-2`. P13 construction
+and certification: **NOT AUTHORIZED**. Gap reconciliation:
+`docs/architecture/p13-preparation/P13-017-POST-FDR-2-GAP-RECONCILIATION.md`.
+
+---
+
+## 22. P13-018 Append — Founder Construction Authority Gate Decision (2026-09-24)
+
+### P13-018 — Founder Decision · P13 Construction Authority Gate
+
+| Field | Value |
+|---|---|
+| **Identifier** | `P13-018` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | `FDR-2` (`D10`: construction authorization is separate) |
+| **Record** | `acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECISION.md` · content sha256 `6dd19861d9ab4fb964590f2a5e6b7601c8ef819b8b353b347a002f19a63c0372` |
+| **Answers** | the prepared gate `docs/architecture/p13-preparation/P13-018-CONSTRUCTION-AUTHORITY-GATE.md`, which carries the same number |
+| **Status** | ISSUED — **APPROVED WITH BOUNDED INITIAL AUTHORITY**. The instrument states no date; 2026-09-24 is the date of receipt |
+
+| Decision | Registered effect |
+|---|---|
+| `D-1` | **APPROVE.** Construction of the Blueprint `§10` IN scope is authorized. `§10` OUT stays prohibited. A requirement outside scope follows DISCOVER → CLASSIFY → CHECK AUTHORITY → PROCEED or ESCALATE; no silent expansion |
+| `D-2` | **D-2b — evidence-only initial action envelope.** Six permitted items and twelve prohibitions (`§3`). Recorded as `P13-ENV-01` in the Delegation Register `§14`. **Initial, not maximum** (`§4`). `CAPABILITY ≠ AUTHORITY` |
+| `D-3` | **YES.** `FD-P12-002`'s corpus-health criteria are admitted to P13 evaluation, **read-only**. Ownership stays with the existing source (`§6`) |
+
+**Binding with this decision:** `NO RECORDED AUTHORITY → NO EXECUTION` · D-2b does
+**not** automatically prove E13-05; results are classified by what is
+demonstrated (`§5`) · Memory → P13 read path authorized, Memory ownership stays
+outside P13 (`§7`) · `NATIVE CORE = 11`; a Native Core need stops at the
+boundary (`§8`) · `G-01`…`G-08` (`§9`) · the `§12` construction report must
+distinguish fifteen items, and nothing is complete because code exists.
+
+**Not authorized:** unrestricted autonomous P13 execution · Native Core
+expansion · self-generated authority · certification of P13. P13 completion is
+**not claimed**.
+
+---
+
+## 23. FDR-3 Append — S-OPS Operational Proof Surface for E13-05 (2026-09-24)
+
+### FDR-3 — Founder Decision · S-OPS: Dedicated Bounded Operational Proof Surface for E13-05
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-3` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | as stated: *"Explicit Founder approval in the current Founder Decision Gate"* · within `FDR-2` (`D05`, `D07`) and `P13-018` (`§4`) |
+| **Record** | `acts/FDR-3-S-OPS-DEDICATED-BOUNDED-OPERATIONAL-PROOF-SURFACE-FOR-E13-05.md` · content sha256 `e7dc3fa9bdf8ed81bb6decff3f0b0d4a3d4fcab2c781fd8efabacc87fb3a820f` |
+| **Answers** | `docs/architecture/p13-preparation/P13-E13-05-OPERATIONAL-SURFACE-FOUNDER-DECISION-PACKAGE.md` `§1`. None of `S-HOLD`, `S-CITE` or `S-W4`: a new dedicated object (the package's `O-4`) |
+| **Status** | ISSUED — **APPROVED: minimum authority to construct and execute the S-OPS proof**. The instrument states neither a date nor an identifier; 2026-09-24 is the date of receipt. `FDR-3` is the next identifier in the `FDR` series, and the one the Founder's own instruments give this decision (act header, *"How the identifier was determined"*) |
+
+**Registered effect.** A dedicated, bounded, reversible operational object
+(**S-OPS**) is approved as the first live proof surface for E13-05, so that
+the loop *decision → authority → execution → consequence → verification →
+trace → re-observation → rediscovery* can be tested on real operational state.
+The surface must be all of the following:
+
+* outside P13's epistemic state;
+* not a P1–P12 canonical artifact, not P11 organizational state, and not
+  production or external state;
+* bounded and reversible;
+* explicitly owned (*"S-OPS operational proof surface"*);
+* explicit in its transitions, preconditions, expected consequences and
+  verification conditions;
+* used only for the E13-05 proof.
+
+**Only the minimum authority** to construct and execute that proof is
+granted. Its executable form is an envelope recorded in the Delegation Register
+after the S-OPS definition exists. The envelope can only be narrower than this
+decision.
+
+**Not authorized:**
+
+* general write authority, or expanding the S-OPS boundary;
+* modifying P1–P12, canonical architecture, the Governance Baseline, Founder
+  Decisions or governance authority;
+* P11 organizational work;
+* production or external systems;
+* arbitrary repository mutation;
+* modifying P13's implementation as part of the live proof;
+* synthesizing authority;
+* certifying P13;
+* E13-05 PASS without its evidence contract;
+* P13 completion, Phase 13 completion, or any later phase.
+
+**Unchanged:**
+
+* phase authorization NOT AUTHORIZED;
+* certification NOT GRANTED;
+* `P13-ENV-01` stays evidence-only;
+* `FD-2` stays open;
+* `NATIVE CORE = 11`.
+
+---
+
+## 24. FDR-4 Append — P13 Post-E13-05 Governance Reconciliation & Exit Readiness (2026-09-24)
+
+### FDR-4 — Founder Decision · P13 Post-E13-05 Governance Reconciliation & Exit Readiness
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-4` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | as stated: *"Founder-approved disposition contained in this instruction + existing Co-Founder Delegation Charter V2 + applicable canonical AIOS governance"* · follows `FDR-3` |
+| **Record** | `acts/FDR-4-P13-POST-E13-05-GOVERNANCE-RECONCILIATION-AND-EXIT-READINESS.md` · content sha256 `5ee930d0358d9ec3f3b351c17d422e726d9aad88e16f194db0ed6ba56f86259a` |
+| **Status** | ISSUED — **four dispositions, FD-A to FD-D**. The instrument states neither a date nor an identifier; 2026-09-24 is the date of receipt. `FDR-4` is the next identifier in the `FDR` series |
+
+| Disposition | Registered effect |
+|---|---|
+| `FD-A` | Live ESCALATE proof is **not required** for E13-05 verification. Controlled/test evidence suffices for the reserved/ambiguous escalation branch. **E13-05 remains VERIFIED** |
+| `FD-B` | `P13-ENV-02` has fulfilled its `FDR-3` purpose and is **spent / retired / revoked**. It adds no authority |
+| `FD-C` | An **append-only** reconciliation note to the P13 Blueprint is authorized. Historical `§13`/`§14` must not be rewritten, deleted or corrected |
+| `FD-D` | The substantive P13 exit evidence establishes **EXIT-READY**. EXIT-READY ≠ exit contract satisfied ≠ certified ≠ Phase 13 closed. The next step is a Founder Exit Gate |
+
+**Not authorized:**
+
+* new capability;
+* a second live E13-05 proof;
+* a new S-OPS;
+* new or widened authority;
+* P1–P12 or P11 mutation;
+* certification;
+* Phase 13 closure;
+* Phase 14 authorization.
+
+---
+
+## 25. FDR-5 Append — P13 Exit Contract Satisfaction (2026-09-24)
+
+### FDR-5 — Founder Decision · P13 Exit Contract Satisfaction
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-5` |
+| **Date** | 2026-09-24 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | as stated: *"Founder Exit Gate"*; predecessor `FDR-4` and the P13 Founder Exit Gate Finding |
+| **Record** | `acts/FDR-5-P13-EXIT-CONTRACT-SATISFACTION.md` · content sha256 `bcad3a5816078a7c911be49de7a7a61ce6bd70174160a66ac0d994ad0db5181a` |
+| **Status** | ISSUED — **P13 EXIT CONTRACT: SATISFIED**. The instrument states neither a date nor an identifier; 2026-09-24 is the date of receipt. `FDR-5` is the next identifier in the `FDR` series. An unissued `FDR-5` label in two earlier records is disclosed in the act header |
+
+| Disposition | Registered effect |
+|---|---|
+| `FD-E` | **P13 Exit Contract SATISFIED.** E13-01 → E13-07 are accepted within their authorized bounded definitions (`FDR-2` `D07`), with no unresolved blocking requirement, no unauthorized boundary crossing and no false completion claim |
+| Residual frontier | known, classified and **non-blocking** under `D08`. It is **not solved**. Each item keeps its own classification |
+| Frontier authority | the P13-015 and P13-017 classifications are adopted **for this decision only**. They gain no independent governance authority |
+| Certification | **NOT GRANTED.** A separate P13 Certification Gate follows |
+| Phase 13 | **NOT CLOSED** |
+| Phase authorization | P13 Master Program `AUTHORIZED = FALSE`, **unchanged**. It is not inferred from exit satisfaction |
+| Phase 14 | **NOT AUTHORIZED**, not prepared, not opened |
+
+**Not authorized:** certification, Phase 13 closure, phase authorization,
+Phase 14, new capability, new authority, a new live proof, or any revival of
+S-OPS authority.
+
+---
+
+## 26. FDR-6 Append — P13 Certification Gate Founder Decision (2026-09-25)
+
+### FDR-6 — Founder Decision · P13 Certification Gate
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-6` |
+| **Date** | 2026-09-25 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | as stated: *"Founder"*; related gate `ACT-CC-P13-CERT-GATE-001`; predecessor `FDR-5` |
+| **Record** | `acts/FDR-6-P13-CERTIFICATION-GATE-FOUNDER-DECISION.md` · content sha256 `473f6e33a3eb82d1ac0606bcdff5df39a700d1b34bed9d59e384a0c8dc47862b` |
+| **Status** | ISSUED — **five dispositions, `FDQ-1` to `FDQ-5`, and construction `CR-1` to `CR-4`**. The instrument states its identifier and its date. Its header reads *"PENDING FOUNDER AUTHORIZATION"*, and its signature block reads *"APPROVED FOR PERSISTENCE AND BOUNDED EXECUTION"*. The act header discloses the contradiction and an unissued `FDR-6` label in `GOAL-V2-005` `§12` |
+
+| Disposition | Registered effect |
+|---|---|
+| `FDQ-1` | **AUTHORIZE PHASE 13.** P13 Master Program phase authorization becomes **TRUE**, represented through the phase-authorization machinery (`CR-3`). It is not certification, closure, Phase 14 authorization, unrestricted operational authority or self-certification |
+| `FDQ-2` | **Fresh live verification NOT REQUIRED** for the Certification Gate. No new state-changing live proof is authorized. Test-proven evidence stays test-proven |
+| `FDQ-3` | An **append-only Blueprint `§16`** (*POST-FDR-5 CERTIFICATION GATE RECONCILIATION*) is authorized. `§0`–`§15` are preserved |
+| `FDQ-4` | The residual-frontier classifications of `FDR-5`, P13-015 and P13-017 are **adopted for the Certification Gate** and the eventual certification evaluation. The frontier is **not resolved**. P13 may not self-declare a future item non-blocking |
+| `FDQ-5` | **`docs/architecture/p13/` is the P13 certified root.** Supporting implementation, governance records, live operational evidence, preparation material and S-OPS stay outside it |
+| `CR-1` → `CR-4` | **Authorized, bounded:** the P13 certification manifest; integrity and test reconciliation; the phase-authorization representation; the Blueprint `§16` append |
+| `CR-5` | `P13-ENV-02` stays **RETIRED / REVOKED**. No revival and no new S-OPS execution |
+| S-OPS | **Historical evidence only** |
+
+**Not granted or delegated:**
+
+* certification (**NOT GRANTED**) and final system acceptance;
+* Phase 13 closure (**NOT GRANTED**);
+* Phase 14 authorization (**NOT AUTHORIZED**);
+* authority synthesis, self-certification or governance override;
+* unrestricted state-changing execution;
+* modification of Founder-reserved matters.
+
+The next gate is the P13 Certification Readiness Package, then a separate
+Founder Certification Decision.
+
+---
+
+## 27. FDR-6 CR-1 Append — P13 Certification Manifest, Prepared (2026-09-25)
+
+### Status note — P13 manifest prepared, not certified
+
+| Surface | State from 2026-09-25 |
+|---|---|
+| Authority | `FDR-6` (`§26`) `CR-1` and `FDQ-5`. No certification is granted |
+| P13 manifest | `AIOS_P13_CERTIFICATION_MANIFEST_v1.0.json` · sha256 `127b97fd9dcd8aaa14f2f94039a86655fe5b8f21a77b2c1e349a4701a27d259d`. **Status: PREPARED — NOT CERTIFIED.** It enumerates `docs/architecture/p13/` at `8114f9b`, the commit that appended Blueprint `§16`: 1 file, `AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md`, sha256 `0b13e3009c1c583c…` |
+| Protection | none. The name does not match the certified-write barrier's manifest pattern, so `docs/architecture/p13/` stays writable until a Founder Certification Decision certifies P13 |
+| Detection | `tools/certified_evidence_integrity.py` verifies the prepared manifest: its sha256 here, the guard's root for P13, no claim of certification, P13 phase-authorized, and the root byte for byte |
+| Certified manifest index | `AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json` is **unchanged** (sha256 `34f9673a…`, above). Promotion at certification adds an index file beside it, whose sha256 must also be recorded here. It does not rewrite the registered index |
+
+If P13 is certified before its manifest is promoted, detection reports a
+fault.
+
+---
+
+## 28. ACT-CC-P13-CERT-GATE-003 Append — Blueprint §16 Roadmap Endpoint; P13 Manifest Rebuilt (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Act** | `ACT-CC-P13-CERT-GATE-003` · `acts/ACT-CC-P13-CERT-GATE-003-BLUEPRINT-S16-ROADMAP-ENDPOINT-RECONCILIATION.md` · content sha256 `ac06f24c0d2de312cf7b8e7a00e4283798f8f271c1499f6f159c4005e610f7d6` |
+| **Received** | from the Founder, 2026-09-25. Authority context as stated: `FDR-6` and existing P13 certification-preparation authority. It is not a Founder Decision and changes none |
+| **Blueprint §16** | *"Phase 14 is NOT AUTHORIZED"* replaced by *"The current AIOS roadmap terminates at Phase 13."* / *"No subsequent phase is established by the current roadmap."*. The bullet's label changes with it. §0–§15 are byte-identical (prefix sha256 `6f022d89…`). Blueprint sha256 goes from `0b13e300…` to `aaa87315e2d4690636faa07cbd0fe50b459fff8270576b78d56c3be8a9c6abe4`, at commit `c76e420` |
+| **P13 manifest** | `AIOS_P13_CERTIFICATION_MANIFEST_v1.0.json` rebuilt from `c76e420` · sha256 `6265477fce788de0dc940b0e1d5b35bf247374b746ca829279bae8a67893e72a`. **Status: PREPARED — NOT CERTIFIED.** 1 file. It supersedes the §27 manifest (`127b97fd…`), which described the Blueprint before this change |
+| **Not changed** | the certified manifest index (`34f9673a…`) and certified phases `{10, 11, 12}`; `FDR-4`, `FDR-5`, `FDR-6` and every earlier Register entry; the roadmap |
+
+No certification, closure, new phase or authority is granted. The next gate is
+the Founder Certification Decision.
+
+---
+
+## 29. FDR-7 Append — P13 Founder Certification & Final System Acceptance (2026-09-25)
+
+### FDR-7 — Founder Decision · P13 Certification & Final System Acceptance
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDR-7` |
+| **Date** | 2026-09-25 |
+| **Decided by** | Founder — Moriarty |
+| **Authority basis** | Founder; certification is Founder-reserved. Follows `FDR-6` and the Certification Gate (`ACT-CC-P13-CERT-GATE-001` → `003`) |
+| **Record** | `acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md` · content sha256 `09b47c62e6efaa49606ee98fa0d4c9420293b4f16b443e355cd073bfa49ff833` |
+| **Status** | ISSUED — **APPROVED — CERTIFY.** The instrument states its identifier and date. A PENDING template of the same record came first and was superseded by this one. The act header records it |
+
+| Disposition | Registered effect |
+|---|---|
+| FDQ-7.1 | **Final System Acceptance: ACCEPT** |
+| FDQ-7.2 | **P13 certification: CERTIFY** |
+| FDQ-7.3 | certified root: `docs/architecture/p13/` |
+| FDQ-7.4 | the prepared P13 manifest is promoted |
+| FDQ-7.5 | certified phase set: {10, 11, 12, 13} |
+| FDQ-7.6 | post-certification boundaries confirmed: bounded delegated autonomy; no authority synthesis, self-authorization or governance override |
+| FDQ-7.7 | residual frontier accepted as classified and non-blocking. **Not solved** |
+| FDQ-7.8 | **P13 closure: NOT GRANTED** (kept open) |
+
+**Unchanged:**
+- `P13-ENV-02` stays retired;
+- S-OPS stays historical evidence only;
+- P13 state-changing authority stays NONE;
+- no subsequent phase is established;
+- no historical Founder Decision is modified.
+
+---
+
+## 30. FDR-7 Append — P13 Certification Mechanics: Manifest Promotion and Guard Resolution (2026-09-25)
+
+### Status note — P13 certified-evidence protection and detection
+
+| Surface | State from 2026-09-25 |
+|---|---|
+| Authority | `FDR-7` (`§29`) `§16`: the bounded certification mechanics only |
+| Guard resolution | `tools/p12_certified_evidence_guard.py` now recognises a fourth statement form, the decision line `FDR-7` states (a line that is exactly *"FOUNDER DECISION: CERTIFY P<n>."*). It is still resolved against this Register. The certified phase set is **{10, 11, 12, 13}** |
+| Certifying instrument | `acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md` · file sha256 `a2241bb3400fe940b2e6cf6117b43722911e402c4da018618738b46705dffcdd` |
+| P13 certified manifest | `AIOS_P13_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json` · sha256 `cab8b7b3333db806df4006f0435c3d646a300fb2183264cb99a3330798851c6f`. It promotes the prepared manifest (`6265477f…`, `§28`): 1 file under `docs/architecture/p13`, anchored at `6ada59b`, the commit persisting `FDR-7`. The root is unchanged since `c76e420` |
+| Index supplement | `AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_P13_v1.0.json` · sha256 `6c3401ed9f731b52340a4001c0dfecb6b66d58d96ecc44d98997d398e38bb882`. Detection requires this sha256 here. The registered index `AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json` (`34f9673a…`) is **unchanged** |
+| Protection | the barrier now refuses writes to `docs/architecture/p13/`, the `FDR-7` act, the certified manifest and the supplement |
+
+**Not changed:**
+- `FDR-1` → `FDR-6`;
+- the P10–P12 manifests and the registered index;
+- the P13 root's content;
+- P13 closure (NOT GRANTED);
+- authority (`P13-ENV-02` retired; state-changing NONE);
+- no subsequent phase.

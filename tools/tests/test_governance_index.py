@@ -503,9 +503,21 @@ class IncrementalRebuild(unittest.TestCase):
 
 class Boundaries(unittest.TestCase):
     def test_the_module_imports_nothing_outside_the_standard_library(self):
+        """The library is stdlib-only. The one exception is the program: its
+        `__main__` block imports `tools`, and only to install the
+        certified-write barrier before anything runs (`GOAL-V2-004`)."""
         tree = ast.parse(MODULE_PATH.read_text(encoding="utf-8"))
         imported = set()
+        main = [n for n in tree.body if isinstance(n, ast.If)
+                and "__main__" in ast.unparse(n.test)]
+        self.assertEqual(len(main), 1)
+        in_main = {id(n) for n in ast.walk(main[0])}
+        program = {alias.name for n in ast.walk(main[0])
+                   if isinstance(n, ast.Import) for alias in n.names}
+        self.assertLessEqual(program - set(sys.stdlib_module_names), {"tools"})
         for node in ast.walk(tree):
+            if id(node) in in_main:
+                continue
             if isinstance(node, ast.Import):
                 imported.update(alias.name.split(".")[0] for alias in node.names)
             elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:

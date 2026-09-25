@@ -1,0 +1,299 @@
+# P12 — Fresh Independent Exit Contract Determination
+
+**Required by:** `FD-P12-004` — *"After applying the ruling, perform a fresh
+independent P12 Exit Contract determination… Do not assume `§6.8 SATISFIED` +
+`§6.9 SATISFIED` = `P12 COMPLETE`."*
+
+```text
+P12 COMPLETE = NO
+
+Blocking: §6.7  system-wide verification has been completed
+          §6.14 completion conditions independently satisfied (through §6.7)
+```
+
+**The instruction not to assume was the load-bearing one.** `§6.8` and `§6.9`
+did both close, and had the determination been taken as their sum, P12 would
+have been declared complete. Re-measuring every condition instead surfaced a
+different blocker — **live W6 findings that have nothing to do with `R-A`,
+`R-B`, or anything the last six Acts were chasing.** They were never hidden;
+they were simply never the thing being looked at, because the blocker set had
+been fixed on `§6.8`/`§6.9`/`§6.11` since `ACT-CC-P12-022`.
+
+---
+
+## 1. Every condition, measured fresh
+
+Each row re-run against the repository at the head of this record, not carried
+from a prior package.
+
+| | Condition | Measurement | State |
+|---|---|---|---|
+| 1 | W1–W6 satisfied | `E12-01…05` **5/5**; `E12-06` ratified `R1` | **SATISFIED** |
+| 2 | P4–P11 integration coherent | 8 classes · 7 VERIFIED · 1 RESERVED (`F-17`) · **0 invalid · 0 dangling** | **SATISFIED** |
+| 3 | unified operational state valid | 9 checks · **9 verified** · 0 violated | **SATISFIED** |
+| 4 | governance integration valid | `E12-03` | **SATISFIED** |
+| 5 | execution integration traceable | `E12-04`; 4 provenance manifests, each resolving a delegation and a Trace record | **SATISFIED** |
+| 6 | self-model sufficiently accurate | 12 questions · 10 verified · 2 inferred · **0 unknown** | **SATISFIED** |
+| **7** | **system-wide verification has been completed** | **see §2 — five live findings** | **NOT SATISFIED** |
+| 8 | negative controls hold | `§49` **13 / 13 refused** (`FD-P12-004`) | **SATISFIED** |
+| 9 | mutation tests hold | `§50` **10 / 10 detected** (`D-P12-027-01`) | **SATISFIED** |
+| 10 | regression integrity holds | `§51` **11 / 11 HELD** · 0 REGRESSED · 0 UNANCHORED | **SATISFIED** |
+| 11 | cross-phase / cross-platform evidence | cross-phase **8/8**; cross-platform **18/18** readable, `MENTIONED 0` (`D-P12-027-03`) | **SATISFIED** |
+| 12 | remaining frontiers classified | every residual classified, owned, sourced | **SATISFIED** |
+| 13 | no authorized actionable construction remains | **see §3** | **NOT SATISFIED** |
+| **14** | **completion conditions independently satisfied** | `§56`'s `VERIFICATION` rests on `§6.7` | **NOT SATISFIED** |
+
+```text
+11 SATISFIED · 3 NOT SATISFIED   (11 + 3 = 14)
+```
+
+---
+
+## 2. `§6.7` — what the W6 surfaces actually report
+
+`§6.7` is the only condition that carries the results of the W6 surfaces
+`§6.8`–`§6.11` do not cover. `§6.8` carries negative controls, `§6.9`
+mutations, `§6.10` regression, `§6.11` cross-phase and cross-platform evidence.
+**Nothing else carries `§30` runtime, `§31` workflow, `§33` failure semantics or
+`§34` provenance** — so `§6.7` does, and these are its findings.
+
+### 2.1 `§33` — failure states · **3 of 7 distinguished**
+
+`§33`: *"Failure behavior **must** distinguish: `RETRYABLE BLOCKED REFUSED
+FAILED ESCALATED SUCCEEDED VERIFIED`."*
+
+```text
+RETRYABLE   UNREACHABLE    no live retry mechanism exists
+BLOCKED     RAISED ONLY    persisted as required-vs-held; not told apart afterwards
+REFUSED     RAISED ONLY    2 refusal types raised; no field names which one
+FAILED      DISTINGUISHED  Trace status='failure'
+ESCALATED   DISTINGUISHED  Trace status='escalation' + escalation record
+SUCCEEDED   DISTINGUISHED  Trace status='success'
+VERIFIED    UNREACHABLE    ratified Trace vocabulary is ['escalation','failure','success']
+
+retry prohibitions (5): NOT APPLICABLE — no live retry mechanism exists, so
+none of the five can be violated, and none is controlled against
+```
+
+*"A state is distinguished only if it can be reached AND told apart afterwards.
+The record is what anyone reads later, not the traceback."*
+
+### 2.2 `§34` — execution provenance · **NOT ASSEMBLABLE**
+
+11 of 11 elements are carried, and the chain still does not join:
+
+```text
+7 / 15 executions name their delegation
+  evidence records  3 / 3
+  Trace records     4 / 12
+8 could only be matched by actor name, which identifies a set of grants
+rather than the one in force
+```
+
+*"An element carried on one record and another on a different record is
+provenance only if the two records can be joined."*
+
+### 2.3 `§31` — workflow chain · **NOT CONNECTED**
+
+```text
+PLAN → HANDOFF        EVIDENCED      31/31 delegations name their bound plan
+HANDOFF → WORK        EVIDENCED      31/31 declare the work they author
+WORK → EXECUTION      BY CONVENTION  7/15 executions name the work performed  ← weakest
+EXECUTION → OBSERVATION  EVIDENCED   4/4 manifests name an observation subject
+OBSERVATION → VERIFICATION EVIDENCED 4 manifests carry requirement and outcome
+```
+
+*"The unit is the link, not the element."* One link of five holds only by
+convention, so the chain is not connected.
+
+### 2.4 `§30` — runtime · **1 of 9 items absent**
+
+`verification` is absent from the ratified Trace vocabulary — the same cause as
+`VERIFIED` in `§33`.
+
+### 2.5 `§35` — governance evidence · **2 of 9 elements absent**
+
+Over **436** instruments: 1 element `ESTABLISHED`, 6 `PARTIAL`, 2 `ABSENT`
+(`affected surfaces`, `verification`). A property of a corpus issued across the
+whole programme; retrofitting labels onto historical instruments would be
+rewriting historical evidence.
+
+### 2.6 Classification of each
+
+| Finding | Class | Closable by P12? |
+|---|---|---|
+| `VERIFIED` unreachable; runtime `verification` absent | **RATIFIED-CONTRACT RESERVED** — the Trace vocabulary is ratified and `NATIVE CORE = 11` is frozen | **No** — altering it is outside P12 |
+| `RETRYABLE` unreachable | **CAPABILITY ABSENT** — no retry mechanism exists anywhere resident | **Unknown** — building one is construction no Act has authorized, and `§33` does not require a retry mechanism to exist, only that the state be distinguished if it occurs |
+| `BLOCKED` / `REFUSED` raised-only | **P12 GAP** — the escalation record carries no field naming which refusal occurred | **Plausibly yes** — a record field, for future records |
+| provenance `NOT ASSEMBLABLE` (8/15) | **HISTORICAL RECORD** — the eight unjoinable executions are already written | **Not retrospectively** — rewriting them is forbidden |
+| workflow `WORK→EXECUTION` by convention | **HISTORICAL RECORD** — same eight executions | **Not retrospectively** |
+| governance elements absent over 436 | **HISTORICAL CORPUS** | **No** — would rewrite history |
+
+**This is not a claim that `§6.7` is unclosable.** Two of the six look closable
+for future records. It is a statement that `§6.7` is **not satisfied now**, on
+measurements taken now.
+
+---
+
+## 3. `§6.13` — and the correction it forces
+
+`ACT-CC-P12-026` recorded *"no authorized actionable construction remains"* and
+this determination cannot repeat it. `§2.6` identifies at least one finding —
+the escalation record naming which refusal occurred — that is **plausibly
+closable P12 construction** and is authorized under `ACT-CC-P12-027 §4`, which
+covers implementation, verifier correction and evidence generation without a
+further Act.
+
+**`§6.13` is therefore `NOT SATISFIED`**, and that is a correction against the
+Handoff Record's `P12 ACTIONABLE WORK = NONE`. Whether the work closes `§6.7` is
+not yet established; that it exists and is authorized is.
+
+**No such work is performed in this record.** `FD-P12-004`'s required action was
+a determination, and a determination that started constructing would stop being
+one.
+
+---
+
+## 4. What did **not** block, and is worth stating
+
+`R-A` and `R-B` — the two residuals five Acts were organised around — **do not
+appear in this determination at all.**
+
+- `R-A` (instrument authenticity) was never needed: `§6.9` closed against the
+  canonical decision contract, and `§6.8` closed on the Founder's ruled
+  semantics. Neither required a trust anchor.
+- `R-B` (corpus residency) was never a requirement: `ESC-C7-01`, `E-29`,
+  Volumes 3/4, `G-01` and `F-18` appear **zero times** in the canonical Exit
+  Contract (`ACT-CC-P12-026`).
+
+Both remain real external matters owned by the Founder and Architect. Neither
+is a P12 completion dependency, and neither is what P12 is waiting on.
+
+---
+
+## 5. Determination
+
+```text
+P12 COMPLETE = NO
+
+EXACT CONDITIONS AND BASIS
+  §6.7   NOT SATISFIED   §33 3/7 failure states distinguished ·
+                         §34 provenance NOT ASSEMBLABLE (7/15) ·
+                         §31 workflow chain not connected ·
+                         §30 1/9 runtime items absent ·
+                         §35 2/9 governance elements absent over 436
+  §6.13  NOT SATISFIED   at least one authorized, plausibly closable item
+                         exists — correcting ACT-CC-P12-026
+  §6.14  NOT SATISFIED   §56 VERIFICATION rests on §6.7
+
+P12 CONSTRUCTION   = NOT EXHAUSTED   ← corrected
+P12 CERTIFICATION  = NOT CLAIMED     (§57 Founder-reserved)
+P13                = NOT AUTHORIZED  (§58; P13 AUTHORIZED = false, stated)
+```
+
+`FD-P12-004`: *"If any condition remains NOT SATISFIED or NOT ESTABLISHED,
+report the exact condition and basis."* Three do, and none of them is
+`§6.8`, `§6.9` or `§6.11`.
+
+## 6. Corrections this determination makes to the record
+
+| Previous | Correction |
+|---|---|
+| `P12 CONSTRUCTION = EXHAUSTED` (Handoff Record `§2`, `ACT-CC-P12-025`) | **NOT EXHAUSTED** — `§2.6` identifies authorized, plausibly closable work |
+| `P12 ACTIONABLE WORK = NONE` (Handoff `§10`; `ACT-CC-P12-026`) | **Work exists**; `§6.13` is `NOT SATISFIED` |
+| `§6.7 PARTIAL` because of cross-PD interfaces | **NOT SATISFIED for different reasons** — the cross-PD half resolved under `D-P12-027-03`; the actual findings are `§30`/`§31`/`§33`/`§34`/`§35` |
+| Blocking set = `R-A` + `R-B` | **Neither blocks.** The blocking findings are internal to W6 and were never examined while the blocker set was fixed |
+
+Historical records are preserved; these corrections are additive and named.
+
+---
+
+## 7. Verification, as measured
+
+Added after the run reported. No count appeared here before it was measured.
+
+| | Result |
+|---|---|
+| `unittest discover -s tools/tests -t .` | **1356** · OK (1 skipped) |
+| `unittest discover -s native_core -t .` | **801** · OK (1 expected failure) |
+| `unittest discover -s consumers -t .` | **276** · OK |
+| `p12_system_negative_controls` | `§49` **13 / 13 refused** · supplementary 3, of which `coordinated forgery residual` `ACCEPTED` |
+| `p12_mutation_verification` | `§50` **10 / 10 detected** · 0 missed |
+| `p12_regression_verification` | `§51` **11 / 11 HELD** · 0 REGRESSED · 0 UNANCHORED |
+| `p12_fresh_process_verification` | `§52` **8 / 8** reproduced · 0 diverged |
+| `p12_failure_verification` | `§33` **3 / 7 distinguished** ← blocking |
+| `p12_provenance_verification` | `§34` **NOT ASSEMBLABLE**, 7/15 joined ← blocking |
+| `p12_workflow_verification` | `§31` `chain_connected: False` ← blocking |
+| `p12_cross_platform_verification` | **18 / 18** readable pairs · `interfaces_defined 0` |
+| `p12_e12_measurement` | `E12-01…05` **5 / 5** SATISFIED |
+| `corpus_citation_audit` | **0 errors** |
+
+**The suite being green is not the determination**, and the gap between the two
+rows is the point: `1356 OK` sits beside `§33` at 3/7 and `§34` `NOT
+ASSEMBLABLE`. `§56` forbids inferring completion from test count, and `§6`'s own
+closing line says *"Exit is not established by document completion or test count
+alone."* Every test passes because every test asserts what the system actually
+does — including the tests that assert these findings.
+
+Seven tests changed under `FD-P12-004`, each labelled in its own body with the
+ruling and the reason. Two of them (`restricting the acts root`, `an
+authentication block is not a defence`) were written by Claude in
+`ACT-CC-P12-021`/`-022` to pin that certain repairs would *not* close the
+forgery; under the ruled semantics the lone plant is now rejected, so each was
+re-pinned to the **residual**, where the point they were making still holds.
+
+---
+
+# Appendix — corrections and supersession (Founder CONTINUE directive)
+
+**Appended, not rewritten.** The body above is the determination as it was made
+at `86c11c2` and stays exactly as issued. This appendix records what continued
+work found wrong in it, and what has changed since.
+
+## A.1 Two corrections against this record
+
+| | What it said | What is correct |
+|---|---|---|
+| `§2.5` heading | *"`§35` — governance evidence · 2 of 9 elements absent"* | The nine elements are **`§26` Governance Evidence**. `§35` is *P12-W5 — AIOS Self-Model*. `tools/p12_governance_evidence_verification.py` cites `§26` in its own first line; the citation here was wrong, the finding was not |
+| `§2.5` by implication | that `§35` carries a `§6.7` shortfall | `§35` measures **12 questions · 10 VERIFIED · 2 INFERRED · 0 UNKNOWN**, no element absent. It is the surface `§6.6` carries, and `§6.6` is SATISFIED |
+
+## A.2 `§2.6`'s `BLOCKED` / `REFUSED` row was half right
+
+It read *"**P12 GAP** — the escalation record carries no field naming which
+refusal occurred… **Plausibly yes** — a record field, for future records."*
+
+- **`REFUSED`: right, and now closed.** `EscalationRecord` gained
+  `refusal_type`, derived from the raised exception. `§33` is **4 / 7**.
+- **`BLOCKED`: wrong.** That field does not distinguish `BLOCKED`, because every
+  persisted refusal is *in the escalation register* and so is escalated at rest,
+  and `ExecutionOutcome.status` is likewise confined to the ratified
+  `success / failure / escalation`. `BLOCKED` belongs with `VERIFIED`, under the
+  ratified outcome vocabulary — **not** with the closable gap.
+
+Full reasoning, with each residual classified and its dependency evidence named
+as `§27` requires: `P12-027-SECTION-6-7-FRONTIER-DETERMINATION.md`.
+
+## A.3 What this changes in `§1`'s table
+
+| Condition | Was | Now | Basis |
+|---|---|---|---|
+| `§6.7` system-wide verification | NOT SATISFIED | **NOT SATISFIED** — unchanged | one `A` finding closed; the rest classified `B`/`D`/`E`/`F`. Whether the remainder *is* a shortfall turns on `D-P12-027-04`, prepared and **not taken** |
+| `§6.13` no authorized actionable construction remains | NOT SATISFIED | **SATISFIED** | the single item this record identified has been constructed; no other survives classification |
+| `§6.14` completion conditions | NOT SATISFIED | **NOT SATISFIED** | rests on `§6.7` through `§56` |
+
+```text
+12 SATISFIED · 2 NOT SATISFIED   (12 + 2 = 14)
+P12 COMPLETE = NO   — blocking: §6.7, §6.14
+```
+
+**`§6.13` moved in Claude's favour and is stated with its counterargument.**
+`ACT-CC-P12-026` recorded *"no authorized actionable construction remains"*;
+this record overturned it by finding one item; that item is now built, so the
+condition returns to where `P12-026` had it. The counterargument is that an
+enumeration which has already been wrong once may be wrong again — which is why
+`§6.13` is recorded as *satisfied on the enumeration in
+`P12-027-SECTION-6-7-FRONTIER-DETERMINATION.md §8`*, an enumeration written to
+be checked, and not as a claim that nothing further exists.
+
+**It does not matter to the verdict.** `P12 COMPLETE = NO` on `§6.7` and
+`§6.14`, exactly as before.

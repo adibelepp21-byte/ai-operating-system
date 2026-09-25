@@ -1,0 +1,44 @@
+{
+  "index": "AIOS Certified Evidence Manifest Index",
+  "version": "1.0",
+  "generated_under": "GOAL-V2-004",
+  "authority": "Detection record. It confers, changes and revokes no certification; certification is read from the instruments and the Decision Register.",
+  "verified_by": "tools/certified_evidence_integrity.py verify()",
+  "phases": {
+    "P10": {
+      "manifest": "docs/governance/AIOS_P10_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json",
+      "manifest_sha256": "2de6d85bcd1d02b03d3d6a4d370a5453f5fd7d7e91012022230760e6bb727422",
+      "evidence_root": "docs/architecture/platform-organization",
+      "certified_commit": "e7a3d73adc9a2385137215eddcb595578efc2a42",
+      "certified_commit_basis": "FD-P10-005 names no evidence commit. This manifest is anchored at the commit that persisted FD-P10-005 (a GOAL-V2-004 anchor choice). No commit after the anchor changes any file under docs/architecture/platform-organization, so every anchor from certification onward yields these same bytes.",
+      "certifying_instrument": "docs/governance/acts/FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM.md",
+      "certifying_instrument_sha256": "21bf68d5e263c8b817142f12b37c2625c38ad48fd50f4d59bf4cc5d0ab0a14e5",
+      "file_count": 36,
+      "declared_additions": {}
+    },
+    "P11": {
+      "manifest": "docs/governance/AIOS_P11_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json",
+      "manifest_sha256": "40ce62c93f438161f49393fddad3a0279d74ffcc592adaa0eab44391828336c6",
+      "evidence_root": "docs/architecture/p11",
+      "certified_commit": "98c0a1e51ee369ea33a017e4cbaccb4187035fe1",
+      "certified_commit_basis": "FD-P11-002 names no evidence commit. This manifest is anchored at the commit that persisted FD-P11-002 (a GOAL-V2-004 anchor choice). No commit after the anchor changes any file under docs/architecture/p11, so every anchor from certification onward yields these same bytes.",
+      "certifying_instrument": "docs/governance/acts/FD-P11-002-P11-CERTIFICATION.md",
+      "certifying_instrument_sha256": "c5771f0b32d7ca2f631bf1626c2ae44f08836d7975211361436674660d39e5a9",
+      "file_count": 58,
+      "declared_additions": {}
+    },
+    "P12": {
+      "manifest": "docs/governance/AIOS_P12_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json",
+      "manifest_sha256": "b2099e9c6ed80abd45f59d2417efd3dc775f74949d6b5e04f662972666f09bbb",
+      "evidence_root": "docs/architecture/p12",
+      "certified_commit": "6968c6e1fda014ff4c07cd1f82762d3190918895",
+      "certified_commit_basis": "AIOS-P12-FINAL-CERTIFICATION-AND-P13-TRANSITION-HANDOFF-RECORD.md \u00a71.2 names 6968c6e as the 'final measured certified state'",
+      "certifying_instrument": "docs/governance/acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md",
+      "certifying_instrument_sha256": "431adf774fed2be82e4e59fec668758b311a844453ba1e30c785444ed826b32c",
+      "file_count": 121,
+      "declared_additions": {
+        "docs/architecture/p12/AIOS-P12-FINAL-CERTIFICATION-AND-P13-TRANSITION-HANDOFF-RECORD.md": "The certification handoff record, committed after 6968c6e. It records the certification and is not certified evidence (GOAL-V2-002)."
+      }
+    }
+  }
+}

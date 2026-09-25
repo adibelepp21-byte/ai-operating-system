@@ -165,6 +165,56 @@ class TheResidentObservationIsHonestAboutItself(unittest.TestCase):
         )
 
 
+class TheHostingRelationIsRecordedNeverInferred(unittest.TestCase):
+    """`ACT-CC-P12-016` — a workflow observation may name its hosting Runtime.
+
+    The field exists because the W1 edge `workflow ↔ runtime` states its
+    contract as *"a workflow observation names the runtime hosting it"* and the
+    record had nowhere to put it. It is supplied by the caller that holds both
+    identities; nothing here derives it.
+    """
+
+    def test_a_published_host_round_trips(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            obs.publish("wf", "WorkflowState.RUNNING", root=root,
+                        kind=obs.WORKFLOW, hosted_by="rt")
+            found = {o.runtime_id: o for o in obs.observations(root)}
+        self.assertEqual("rt", found["wf"].hosted_by)
+
+    def test_a_record_without_a_host_reports_none_not_a_guess(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            obs.publish("wf", "WorkflowState.RUNNING", root=root,
+                        kind=obs.WORKFLOW)
+            obs.publish("rt", "RuntimeState.RUNNING", root=root)
+            found = {o.runtime_id: o for o in obs.observations(root)}
+        self.assertIsNone(found["wf"].hosted_by)
+        self.assertIsNone(found["rt"].hosted_by)
+
+    def test_the_key_is_absent_from_a_record_that_claims_no_host(self):
+        """Absence in the file, not a null. A record that did not claim a host
+        must not look like one that claimed nothing in particular."""
+        with tempfile.TemporaryDirectory() as tmp:
+            path = obs.publish("rt", "RuntimeState.RUNNING", root=Path(tmp))
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        self.assertNotIn("hosted_by", payload)
+
+    def test_a_record_written_before_the_field_existed_still_reads(self):
+        """`§17.7` — historical evidence is not rewritten to carry new fields."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            root.mkdir(parents=True, exist_ok=True)
+            (root / "old.observation.json").write_text(json.dumps({
+                "runtime_id": "old", "kind": "workflow",
+                "state": "WorkflowState.RUNNING",
+                "observed_at": obs._now().isoformat(), "pid": 1,
+            }), encoding="utf-8")
+            found = obs.observations(root)
+        self.assertEqual(1, len(found))
+        self.assertIsNone(found[0].hosted_by)
+
+
 if __name__ == "__main__":  # pragma: no cover
     unittest.main()
 

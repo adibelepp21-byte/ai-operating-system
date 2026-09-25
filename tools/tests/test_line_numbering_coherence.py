@@ -153,7 +153,8 @@ class NoToolInTheCitationFabricUsesThePythonDefault(unittest.TestCase):
     #: fabric. A tool joins this list when it emits one — not when someone
     #: remembers to add it.
     MODULES = ("tools/derived_views.py", "tools/corpus_citation_audit.py",
-               "tools/stale_state_audit.py")
+               "tools/stale_state_audit.py",
+               "tools/governance_delegation_register.py")
 
     def test_no_splitlines_call_survives_in_either_module(self) -> None:
         # ``.`` and ``splitlines`` are separate tokens, so the stripper's

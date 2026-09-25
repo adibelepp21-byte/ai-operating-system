@@ -74,7 +74,7 @@ from tools.planning import (
     PlanStep,
     PlanningSurface,
 )
-from tools.escalation_register import record_refusals
+from tools.p12_governance_escalation_join import join_refusals_to_grants
 from tools.w4_continuity import ContinuityError
 from tools.w4_delegation import (
     AUTHORIZED_DELEGATOR, REQUIRED_ELEMENTS, W4DelegationRegistry)
@@ -306,13 +306,19 @@ def run(perform_verification, *, persist: bool = True,
     # Wired here rather than inside `W4Executor`, so the executor keeps no handle
     # on persistence and can still run without it. `§16`: routing a decision to
     # an authorized authority is not creating that authority.
-    # Routed through `record_refusals` under `ACT-CC-P11-014`, so this path and
-    # the W1 path share **one** wiring rather than two copies of it — `§13`:
-    # `REUSE → FIX → INTEGRATE → VERIFY` before building anything new.
-    escalations = list(record_refusals(
+    # Routed through `join_refusals_to_grants` under `ACT-CC-P12-005`, so this
+    # path and the two `tools/w1_*_run.py` paths share **one** wiring rather
+    # than three copies of it — `§13`: `REUSE → FIX → INTEGRATE → VERIFY`
+    # before building anything new. It calls the unmodified
+    # `record_refusals` internally (unchanged behaviour, unchanged shape),
+    # then joins each escalation to `delegation.delegation_id` — the one
+    # delegation this whole plan executes under, so every refusal it
+    # produces was necessarily raised under it.
+    escalations = list(join_refusals_to_grants(
         OPERATIONS if persist else None, report.refusals,
         subject=f"plan {plan.key} / delegation {delegation.delegation_id}",
-        authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD)))
+        authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD),
+        delegation_for=lambda refusal: delegation.delegation_id))
 
     # ── stage 4: evidence (§22, §46) ──────────────────────────────────────
     evidence = {

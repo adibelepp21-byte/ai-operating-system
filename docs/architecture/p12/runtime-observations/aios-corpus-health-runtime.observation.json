@@ -1,0 +1,7 @@
+{
+  "runtime_id": "aios-corpus-health-runtime",
+  "kind": "runtime",
+  "state": "RuntimeState.STOPPED",
+  "observed_at": "2026-09-18T16:05:40.435654+00:00",
+  "pid": 3734
+}

@@ -323,9 +323,18 @@ class C9_FreshProcess(TempRegister):
 class E2_BothCanonicalPathsAreWired(unittest.TestCase):
     """The repair: refusals reach organizational state from **both** paths.
 
-    Read by AST. A substring search for `record_refusals` would match the
-    import, a comment, or this docstring — the false-positive class `§22` names,
-    and one this programme has already produced five times.
+    Read by AST. A substring search for `join_refusals_to_grants` would match
+    the import, a comment, or this docstring — the false-positive class `§22`
+    names, and one this programme has already produced five times.
+
+    `ACT-CC-P12-005`: the wiring call itself was renamed from
+    `record_refusals` to `join_refusals_to_grants`
+    (`tools/p12_governance_escalation_join.py`), which calls the original,
+    unmodified `record_refusals` internally and additionally joins each
+    escalation to its grant. Every guarantee this class checks — exactly
+    one call, the executor's own `report.refusals`, a validated authority
+    citation, no direct `EscalationRegister` construction — still holds; it
+    holds of the wider call now, not a narrower one.
     """
 
     #: Every production module that runs a `W4Executor`. Hand-maintained lists
@@ -371,7 +380,7 @@ class E2_BothCanonicalPathsAreWired(unittest.TestCase):
         return [n for n in ast.walk(tree)
                 if isinstance(n, ast.Call)
                 and isinstance(n.func, ast.Name)
-                and n.func.id == "record_refusals"]
+                and n.func.id == "join_refusals_to_grants"]
 
     def test_each_canonical_run_path_calls_the_wiring_exactly_once(self):
         for module in self.PATHS:
@@ -396,6 +405,19 @@ class E2_BothCanonicalPathsAreWired(unittest.TestCase):
                 self.assertIn("AuthorityProvenance", keywords["authority"])
                 self.assertIn("subject", keywords)
 
+    def test_each_call_supplies_a_real_delegation_lookup(self):
+        """`ACT-CC-P12-005 §8` — the join needs to know which grant, and the
+        answer must come from what the call site actually holds, not a
+        placeholder. `grants[refusal.required]` in the two-grant path and
+        `delegation.delegation_id` in the two single-grant paths are both
+        acceptable; an empty or constant lookup is not."""
+        for module in self.PATHS:
+            with self.subTest(module=module):
+                call = self._calls(module)[0]
+                keywords = {k.arg: ast.unparse(k.value) for k in call.keywords}
+                self.assertIn("delegation_for", keywords)
+                self.assertIn("delegation_id", keywords["delegation_for"])
+
     def test_no_run_path_constructs_its_own_register(self):
         """`§13` — one wiring, reused. Two copies is how W1 came to have none."""
         for module in self.PATHS:
@@ -405,6 +427,19 @@ class E2_BothCanonicalPathsAreWired(unittest.TestCase):
                          if isinstance(n, ast.Call)
                          and isinstance(n.func, ast.Name)}
                 self.assertNotIn("EscalationRegister", names)
+
+    def test_no_run_path_bypasses_the_join_by_calling_record_refusals_directly(self):
+        """`ACT-CC-P12-005` — a call site that still called `record_refusals`
+        directly would produce an escalation with no grant join, silently
+        reopening `W4-GAP-008` at that one site while this suite kept
+        passing on the other two."""
+        for module in self.PATHS:
+            with self.subTest(module=module):
+                tree = ast.parse((REPO_ROOT / module).read_text(encoding="utf-8"))
+                names = {n.func.id for n in ast.walk(tree)
+                         if isinstance(n, ast.Call)
+                         and isinstance(n.func, ast.Name)}
+                self.assertNotIn("record_refusals", names)
 
     def test_the_w1_evidence_shape_carries_escalations(self):
         """The field a reader needs in order to find them at all."""
@@ -486,12 +521,13 @@ class MutationControls(TempRegister):
         a copy with the call removed must fail the same check."""
         source = (REPO_ROOT / "tools/w1_coordination_run.py").read_text(
             encoding="utf-8")
-        mutated = source.replace("record_refusals(", "_suppressed_wiring(")
+        mutated = source.replace("join_refusals_to_grants(",
+                                 "_suppressed_wiring(")
         self.assertNotEqual(source, mutated, "anchor did not match")
         tree = ast.parse(mutated)
         calls = [n for n in ast.walk(tree)
                  if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
-                 and n.func.id == "record_refusals"]
+                 and n.func.id == "join_refusals_to_grants"]
         self.assertEqual([], calls)
 
 

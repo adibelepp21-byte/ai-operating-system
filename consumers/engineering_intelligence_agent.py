@@ -57,8 +57,10 @@ is untouched by this work. This is an `ExecutionConsumer` realization resident i
 consumer.
 
 Dependencies: the `Agent` contract, and the standard library. Nothing from
-Knowledge, Governance, Memory, Trace or `tools/`; no Runtime type is imported
-and the hosting Runtime is never named.
+Knowledge, Governance, Memory or `tools/`; no Runtime type is imported
+and the hosting Runtime is never named. Trace is reached only through the R2-A
+observation wire (`consumers/observation.py`, an optional `TraceWriter`); this
+line listed Trace among the absent until `GOAL-V2-005` found it stale.
 """
 
 from __future__ import annotations

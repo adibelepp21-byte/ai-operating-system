@@ -60,9 +60,11 @@ Nothing here names or implies a model, provider, API or product; the
 decomposition is a deterministic reading of stated structure.
 
 Dependencies: the `Agent` contract, and the standard library. No Knowledge, no
-Governance, no Memory, no Trace, no Runtime type — the hosting Runtime is
+Governance, no Memory, no Runtime type — the hosting Runtime is
 reached only through the `Execution` this consumer is handed, and is never
-named.
+named. Trace is reached only through the R2-A observation wire
+(`consumers/observation.py`, an optional `TraceWriter`); this line said *"no
+Trace"* until `GOAL-V2-005` found it stale against the imports below.
 """
 
 from __future__ import annotations

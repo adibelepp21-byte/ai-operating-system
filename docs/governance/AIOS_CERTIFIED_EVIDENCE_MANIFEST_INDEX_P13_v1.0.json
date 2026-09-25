@@ -1,0 +1,21 @@
+{
+  "index": "AIOS Certified Evidence Manifest Index — P13 Supplement",
+  "version": "1.0",
+  "generated_under": "FDR-7 FDQ-7.4 / FDQ-7.5",
+  "supplements": "docs/governance/AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json (unchanged; sha256 34f9673a7a2fcd0ed6bd075d67b3dc5059f739085496886f6a5913a9ea44eb8e)",
+  "authority": "Detection record. It confers, changes and revokes no certification; certification is read from the instruments and the Decision Register.",
+  "verified_by": "tools/certified_evidence_integrity.py verify()",
+  "phases": {
+    "P13": {
+      "manifest": "docs/governance/AIOS_P13_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json",
+      "manifest_sha256": "cab8b7b3333db806df4006f0435c3d646a300fb2183264cb99a3330798851c6f",
+      "evidence_root": "docs/architecture/p13",
+      "certified_commit": "6ada59bdbfdd19db92f21f286fb4b68e743adf8c",
+      "certified_commit_basis": "FDR-7 names no evidence commit. This manifest is anchored at the commit that persisted FDR-7 (the GOAL-V2-004 anchor choice used for P10 and P11). docs/architecture/p13 is unchanged from c76e420, the prepared manifest's commit, to the anchor, so both yield these same bytes.",
+      "certifying_instrument": "docs/governance/acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md",
+      "certifying_instrument_sha256": "a2241bb3400fe940b2e6cf6117b43722911e402c4da018618738b46705dffcdd",
+      "file_count": 1,
+      "declared_additions": {}
+    }
+  }
+}

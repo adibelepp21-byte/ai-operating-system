@@ -149,3 +149,122 @@ direct dependency proven by this increment. `F-9` open, non-blocking, untouched.
 P12 AUTHORIZED = TRUE    P12 CONSTRUCTED = FALSE    P12 COMPLETE = FALSE
 E12 NOT RATIFIED         P13 NOT AUTHORIZED         GOVERNANCE CLOSED = NO
 ```
+
+## 8. `ACT-CC-P12-007` — the phase authorization state enters the authority surface
+
+[E] `ACT-CC-P12-006` measured `tools/p12_system_negative_controls.py`'s `§49`
+control `unauthorized P13 authorization` as **`ACCEPTED`**, with the live
+detail: *"no resident surface states P13's authorization status, so nothing
+would contradict a claim that it is authorized."*
+
+[D] The diagnosis, and the reason this is a `W5` increment rather than a `W3`
+one: `authority()` listed `"phase authorization"` in `founder_reserved` — it
+named **who holds** the authority and said nothing about **what was decided**
+under it. Those are different facts, and only the second contradicts a false
+claim.
+
+### 8.1 The source is the decision body, not a constant
+
+[A] `ACT-CC-P12-007 §3` forbids relying on a filename, identifier, registry
+row or prior package, and fixes the chain:
+
+```text
+ACTUAL FOUNDER DECISION BODY → ACTUAL P13 AUTHORIZATION STATE → SELF-MODEL
+```
+
+[C] `tools/p12_phase_authorization.py` reads
+`P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md §37 FINAL STATE TRANSITION`,
+which states, as a structured block:
+
+```text
+P11            P12                        P13
+CERTIFIED =    AUTHORIZED = TRUE          AUTHORIZED = FALSE
+TRUE           CONSTRUCTED = FALSE
+               OPERATIONAL = FALSE
+               VERIFIED = FALSE
+               EXHAUSTED = FALSE
+               COMPLETE = FALSE
+               CERTIFIED = FALSE
+```
+
+[E] The instrument is **discovered by its body**, not named by path: the
+curated `docs/governance/acts/` root is scanned, and an instrument counts only
+if it carries a `FINAL FOUNDER DECISION` section whose own body reads
+`Status: ISSUED` **and** a `FINAL STATE TRANSITION` section. Exactly one
+resident file qualifies. The superseded
+`P12-AUTHORIZATION-FOUNDER-DECISION-PACKAGE-PENDING.md` carries **no**
+state-transition section at all, so the determination rests on body content,
+not on the word `ISSUED` in a filename.
+
+[E] Issuance is read from inside the decision section because the instrument
+**contradicts itself**: line 97 carries stale template text
+`Status: PENDING FOUNDER DECISION`, and `§35`'s own body carries
+`Status: ISSUED`. `issuance_contradiction()` reports the stale header rather
+than quietly winning the argument, so a reader who disagrees with the
+persisted determination can see exactly what was overruled.
+
+### 8.2 Unstated is not `FALSE`
+
+[D] The Founder states seven dimensions for P12 and **one** for P13. The six
+P13 does not carry are reported as `unstated_dimensions`, never as `False`.
+An unauthorized phase is very probably not constructed; *probably* is not a
+state a self-model may report. `§9` forbids inferring authorization state, and
+the prohibition runs in both directions. For the same reason `P11`, which
+states only `CERTIFIED = TRUE`, reports `authorized: None` — **undeterminable,
+which is not unauthorized**.
+
+### 8.3 The control now tests a property rather than a spelling
+
+[E] What `§49`'s control was:
+
+```python
+if "NOT AUTHORIZED" in value.upper() or "P13" in value:
+    return True, True, ...
+```
+
+[D] The second clause makes the first dead code: **any** appearance of three
+characters reported the system as refusing. The Founder instrument defeats it
+twice over — `§38` writes `P12 ≠ P13` as three consecutive lines, and the token
+appears in prose throughout. A control a mention satisfies measures spelling.
+
+[C] The control now refuses only when *all* of: a **structured** entry exists
+for the entity; its `authorized` is an explicit boolean (`None` is
+undeterminable and is **not** read as `False`); that boolean is `False`;
+provenance resolves to a real file; and
+`tools/p12_phase_authorization_verifier.py` — which imports nothing from the
+module that produced the value — independently agrees on all six of `§14`'s
+checks. Any failure yields `ACCEPTED`, and
+`tools/tests/test_p12_phase_authorization.py` drives it there **six ways** so
+the outcome stays measured rather than asserted.
+
+### 8.4 Independent verification
+
+[E] `§14` forbids `writer → same writer helper → self-confirming verifier`.
+The verifier derives the Founder-stated state **from the instrument by its own
+parse** — locating the block by heading boundaries rather than by splitting the
+file into sections — and compares that against what the self-model reports.
+Independence is AST-enforced, the discipline
+`tools/p12_governance_join_reader.py` already carries.
+
+[E] Its fourth check is the one `AuthorityProvenance` deliberately declines to
+make. That type's docstring: *"a resolved citation proves the pointer is real,
+not that the cited source supports the claim made about it."*
+`provenance supports the claim` reads the cited section of the cited file and
+confirms the claimed state is written there. A forged report citing a record
+that exists but does not state it fails three of six checks — demonstrated, not
+asserted, by `p12_negative_control_verification._phase_authorization_verifier`.
+
+### 8.5 What this does not do
+
+[D] `P13 AUTHORIZED = FALSE` is now **reported**. It was already **true**. No
+authority was created, widened, or resolved:
+
+```text
+SELF-MODEL REPRESENTATION ≠ AUTHORIZATION
+P13 STATUS ≠ P13 AUTHORIZATION ≠ P13 CONSTRUCTION
+```
+
+The `false certification` control is **untouched and Founder-reserved**; it
+remains `ACCEPTED`, and `§49` is not closed by this increment moving one
+control. `F-16`, `F-17`, `F-18`, the `W3` broader-chain authority gap and the
+`W6` consumer-measurement finding are all unchanged.

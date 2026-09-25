@@ -33,7 +33,7 @@ import ast
 import importlib
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Tuple
+from typing import Optional, Tuple
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -62,13 +62,147 @@ def _surface():
     return importlib.import_module(SURFACE)
 
 
-def consumers_of(module_name: str) -> Tuple[str, ...]:
-    """Non-test modules that import `module_name`.
+#: `§16 State Consumers` of the Roadmap PRD & Construction Blueprint enumerates
+#: the kinds a consumer may be, verbatim and in its order. `ACT-CC-P12-008 §3`
+#: required this to be read from the instrument body rather than inferred from
+#: this module's own prior wording — and reading it settled a question two prior
+#: Acts had recorded as open. `verification`, `self-model`, `observability` and
+#: `evidence` are **named consumer kinds**. A verifier that reads the projection
+#: is not disqualified for being a verifier.
+CONSUMER_KINDS: Tuple[str, ...] = (
+    "runtime", "workflow", "organization", "governance", "verification",
+    "self-model", "observability", "evidence", "reconciliation",
+)
 
-    A conformance suite is excluded deliberately. A test that imports a surface
-    proves the surface can be imported, which is not the same as the system
-    reading it — and counting tests as consumers is how a surface nothing uses
-    comes to look integrated.
+#: The surface's projection API. `§16`'s closing sentence — *"Each claimed
+#: consumer requires evidence that it actually consumes the state"* — is what
+#: separates these from the rest of the module. Calling one of them reads the
+#: system's state; constructing a `StateSource`, or patching `SOURCES`, uses the
+#: module without consuming anything the system holds.
+PROJECTION_READS: Tuple[str, ...] = ("project", "conflicts", "declares",
+                                     "summary")
+
+
+@dataclass(frozen=True)
+class ConsumerEvidence:
+    """One importer, and what `§16` evidence it carries."""
+
+    module: str
+    #: Projection entry points reached outside any substitution of the surface.
+    reads: Tuple[str, ...]
+    #: Projection entry points reached only over a substituted source set.
+    fixture_reads: Tuple[str, ...]
+
+    @property
+    def consumes(self) -> bool:
+        return bool(self.reads)
+
+
+def _bound_names(tree: ast.AST, module_name: str) -> Tuple[set, set]:
+    """Local names bound to `module_name`, and to members imported from it.
+
+    Resolution is by **module identity**, never by substring. The superseded
+    implementation asked ``stem in module``, which matched
+    ``tools.p12_operational_state_verifier`` for a target of
+    ``tools.p12_operational_state`` — so a module importing only the verifier
+    counted as a consumer of the surface. That false positive and the
+    false negative below were the same mistake spelled two ways: a name is not
+    a prefix match.
+    """
+    stem = module_name.rsplit(".", 1)[-1]
+    modules, members = set(), set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom):
+            if not node.module:
+                continue
+            if node.module == module_name or node.module == stem:
+                # ``from tools.p12_operational_state import project``
+                members.update(alias.asname or alias.name
+                               for alias in node.names)
+                continue
+            for alias in node.names:
+                # ``from tools import p12_operational_state [as state]`` —
+                # the one the superseded implementation could not see, because
+                # `node.module` is ``tools`` and the surface's name is in
+                # `alias.name`.
+                if f"{node.module}.{alias.name}" == module_name \
+                        or alias.name == stem:
+                    modules.add(alias.asname or alias.name)
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.name != module_name and alias.name != stem:
+                    continue
+                if alias.asname:
+                    modules.add(alias.asname)          # ``import x.y as z``
+                else:
+                    # ``import tools.p12_operational_state`` binds the root
+                    # package; the surface is reached by attribute access.
+                    modules.add(alias.name.split(".", 1)[0])
+    return modules, members
+
+
+def _substituted_blocks(tree: ast.AST, aliases: set) -> Tuple[Tuple[int, int], ...]:
+    """Line ranges of `with` blocks that substitute the surface.
+
+    `ACT-CC-P12-008 §11`: ``TEST ≠ REAL SYSTEM WORK``. A module that replaces
+    the surface's sources and then calls its projection is reading its own
+    fixture. That is a legitimate thing for a negative control to do, and it is
+    not evidence that the module consumes the system's state — so reads inside
+    such a block are recorded separately rather than dropped or counted.
+    """
+    ranges = []
+    for node in ast.walk(tree):
+        if not isinstance(node, (ast.With, ast.AsyncWith)):
+            continue
+        for item in node.items:
+            call = item.context_expr
+            if not isinstance(call, ast.Call):
+                continue
+            target = call.args[0] if call.args else None
+            if isinstance(target, ast.Name) and target.id in aliases:
+                ranges.append((node.lineno, getattr(node, "end_lineno",
+                                                    node.lineno)))
+                break
+    return tuple(ranges)
+
+
+def _evidence_in(tree: ast.AST, module_name: str) -> Optional[ConsumerEvidence]:
+    aliases, members = _bound_names(tree, module_name)
+    if not aliases and not members:
+        return None
+    substituted = _substituted_blocks(tree, aliases)
+
+    def inside_fixture(node) -> bool:
+        return any(start <= node.lineno <= end for start, end in substituted)
+
+    reads, fixture_reads = set(), set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Call):
+            continue
+        name = None
+        if isinstance(node.func, ast.Attribute) and node.func.attr in PROJECTION_READS:
+            base = node.func.value
+            # ``state.project()`` and ``tools.p12_operational_state.project()``
+            if isinstance(base, ast.Name) and base.id in aliases:
+                name = node.func.attr
+            elif isinstance(base, ast.Attribute) and base.attr == \
+                    module_name.rsplit(".", 1)[-1]:
+                name = node.func.attr
+        elif isinstance(node.func, ast.Name) and node.func.id in members \
+                and node.func.id in PROJECTION_READS:
+            name = node.func.id
+        if name is None:
+            continue
+        (fixture_reads if inside_fixture(node) else reads).add(name)
+    return ConsumerEvidence("", tuple(sorted(reads)), tuple(sorted(fixture_reads)))
+
+
+def consumption_evidence(module_name: str) -> Tuple[ConsumerEvidence, ...]:
+    """`§16` evidence for every non-test module that imports `module_name`.
+
+    Returns every importer, carrying what it was found to do with the surface —
+    so a caller can see both the import relation and the consumption relation
+    rather than being handed a single number that conflates them.
     """
     stem = module_name.rsplit(".", 1)[-1]
     found = []
@@ -81,16 +215,53 @@ def consumers_of(module_name: str) -> Tuple[str, ...]:
             tree = ast.parse(path.read_text(encoding="utf-8"))
         except (SyntaxError, OSError):
             continue
-        for node in ast.walk(tree):
-            modules = []
-            if isinstance(node, ast.ImportFrom) and node.module:
-                modules = [node.module]
-            elif isinstance(node, ast.Import):
-                modules = [alias.name for alias in node.names]
-            if any(stem in module for module in modules):
-                found.append(path.relative_to(REPO_ROOT).as_posix())
-                break
+        evidence = _evidence_in(tree, module_name)
+        if evidence is None:
+            continue
+        found.append(ConsumerEvidence(
+            path.relative_to(REPO_ROOT).as_posix(),
+            evidence.reads, evidence.fixture_reads))
     return tuple(found)
+
+
+def importers_of(module_name: str) -> Tuple[str, ...]:
+    """Non-test modules that import `module_name`. **Importers, not consumers.**
+
+    Kept separate and named for what it is. `ACT-CC-P12-008 §18`:
+    ``AST MATCH ≠ SEMANTIC CONSUMER``. This answers *"who binds this name"*,
+    which is a real question and not the one `§16` asks.
+    """
+    return tuple(e.module for e in consumption_evidence(module_name))
+
+
+def consumers_of(module_name: str) -> Tuple[str, ...]:
+    """Non-test modules for which `§16` evidence of actual consumption exists.
+
+    A conformance suite is excluded deliberately. A test that imports a surface
+    proves the surface can be imported, which is not the same as the system
+    reading it — and counting tests as consumers is how a surface nothing uses
+    comes to look integrated. `§16` does not list `test` among the kinds a
+    consumer may be; it does list `verification`, and the two are not the same
+    thing.
+
+    **`ACT-CC-P12-008` corrected two defects here.** The superseded
+    implementation collected, for an `ast.ImportFrom`, only `[node.module]` and
+    then asked ``stem in module``. That was blind to
+    ``from tools import p12_operational_state as state`` — the form every
+    resident importer actually uses, where `node.module` is ``tools`` — and, in
+    the same expression, counted ``tools.p12_operational_state_verifier`` as the
+    surface because one name is a prefix of the other. It reported zero
+    consumers for a surface that has real ones, and would have reported a
+    consumer that does not exist.
+
+    **Import alone is no longer sufficient**, because `§16` says it is not:
+    *"Each claimed consumer requires evidence that it actually consumes the
+    state."* Correcting only the import shape would have moved this link to
+    SATISFIED on three matches, one of which never reads the system's state at
+    all. `importers_of()` answers the narrower question separately.
+    """
+    return tuple(e.module for e in consumption_evidence(module_name)
+                 if e.consumes)
 
 
 def _link_state() -> LinkResult:
@@ -143,15 +314,31 @@ def _link_projection() -> LinkResult:
 
 
 def _link_consumer() -> LinkResult:
-    """`§16` — a claimed consumer needs evidence that it consumes."""
-    found = consumers_of(SURFACE)
-    if not found:
+    """`§16` — a claimed consumer needs evidence that it consumes.
+
+    The detail reports importers and evidenced consumers separately, because
+    the two numbers were conflated for as long as this link was measured by
+    import alone, and a reader handed only the second cannot tell whether the
+    first is larger.
+    """
+    evidence = consumption_evidence(SURFACE)
+    consuming = [e for e in evidence if e.consumes]
+    if not consuming:
+        importing = [e.module for e in evidence]
         return LinkResult(
             "CONSUMER", UNSATISFIED,
             "no non-test module reads the projection; a projection nothing "
-            "reads is a projection, not operational state")
-    return LinkResult("CONSUMER", SATISFIED,
-                      f"{len(found)} consumer(s): {list(found)}")
+            "reads is a projection, not operational state"
+            + (f" — {len(importing)} module(s) import it without reading it: "
+               f"{importing}" if importing else ""))
+    detail = ", ".join(f"{e.module} reads {list(e.reads)}" for e in consuming)
+    unread = [e.module for e in evidence if not e.consumes]
+    return LinkResult(
+        "CONSUMER", SATISFIED,
+        f"{len(consuming)} evidenced consumer(s) of {len(evidence)} "
+        f"importer(s): {detail}"
+        + (f"; not counted: {unread} (reads the projection only over a "
+           "substituted source set)" if unread else ""))
 
 
 _LINKS = {
@@ -212,4 +399,9 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":
+    # GOAL-V2-004: install the certified-write barrier before anything runs,
+    # even when this file is run by path and has not imported `tools`.
+    import os, sys  # noqa: E401
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import tools  # noqa: E402,F401
     raise SystemExit(main())

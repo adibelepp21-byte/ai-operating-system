@@ -138,10 +138,67 @@ def ownership(root: Path = REPO_ROOT) -> Answer:
 def authority(root: Path = REPO_ROOT) -> Answer:
     """What authority do I have? — reported, never exercised.
 
-    Returns the *holders* of authority and the matters that remain reserved.
-    Representing a reserved matter here does not resolve it, and representing a
-    delegation does not widen it.
+    Returns the *holders* of authority, the matters that remain reserved, and —
+    `ACT-CC-P12-007` — the **phase authorization state** the Founder has already
+    decided, read from the decision body on every call.
+
+    `phase_authorization` is the one part of this answer that is not a declared
+    constant. It exists because `ACT-CC-P12-006` found that this surface named
+    ``phase authorization`` as a Founder-reserved *matter* while saying nothing
+    about what had been *decided* under it — so nothing resident contradicted a
+    claim that P13 was authorized, and the `§49` control for exactly that
+    reported `ACCEPTED`. Naming who holds an authority is not the same as
+    reporting what they did with it.
+
+    **This does not authorize anything.** `ACT-CC-P12-007 §37`:
+    ``SELF-MODEL REPRESENTATION ≠ AUTHORIZATION``. The value is whatever
+    `tools.p12_phase_authorization` reads out of the Founder instrument; when
+    that instrument cannot be resolved the field says so and names the reason,
+    because *"authorization state undeterminable"* and *"not authorized"* are
+    different answers and a caller must not read the second for the first.
     """
+    from tools import p12_phase_authorization as phases
+    try:
+        # `GOAL-V2-002` (`H-1`). The states are the `§37` snapshot with what a
+        # later certification supersedes set aside, and certification is
+        # reported beside them, from its own instruments. Before this, the
+        # answer said `P12 CERTIFIED = False` after `FD-P12-006` certified P12.
+        # `FDR-6` (`CR-3`): a later Founder phase authorization supersedes the
+        # snapshot's `AUTHORIZED = FALSE` the same way, and is reported beside
+        # the states from its own instrument.
+        states = {state["entity"]: state
+                  for state in phases.current_states(root)}
+        contradiction = phases.issuance_contradiction(root)
+        phase_authorization = {
+            "resolved": True,
+            "states": states,
+            "certification": phases.certifications(root),
+            "authorization": phases.authorizations(root),
+            "issuance_contradiction": contradiction,
+        }
+    except phases.PhaseAuthorizationUnresolved as unresolved:
+        phase_authorization = {
+            "resolved": False,
+            "states": {},
+            "detail": str(unresolved),
+        }
+    # `delegated_to_co_founder` below is the `DP-01 §8` list, written into this
+    # module under P11. It is kept as that instrument's statement. The delegation
+    # actually in force is read from the Delegation Register, with its appended
+    # supersession marks applied (`ACT-CC-GOV-V2-RESUME-001` baseline).
+    from tools import governance_delegation_register as register
+    try:
+        delegations = register.read_register(
+            _under(root, register.REGISTER, register.REPO_ROOT))
+        operative_delegation = {
+            "resolved": True,
+            "in_force": [d.as_reported() for d in delegations if d.in_force],
+            "superseded": [d.as_reported() for d in delegations
+                           if d.effective_status == "SUPERSEDED"],
+        }
+    except register.DelegationRegisterUnreadable as unreadable:
+        operative_delegation = {"resolved": False, "in_force": [],
+                                "superseded": [], "detail": str(unreadable)}
     return Answer(
         "What authority do I have?",
         {
@@ -158,10 +215,15 @@ def authority(root: Path = REPO_ROOT) -> Answer:
                 "discover", "design within issued architecture", "implement",
                 "integrate", "test", "verify", "persist", "reconcile", "document",
             ),
+            "phase_authorization": phase_authorization,
+            "operative_delegation": operative_delegation,
             "self_model_authority": None,
         },
         VERIFIED,
-        "DP-01 §8; FD-P11-001 §12; FD-P10-005 §4; P12 Authorization §13",
+        "DP-01 §8; FD-P11-001 §12; FD-P10-005 §4; P12 Authorization §13; "
+        "phase state read from the Founder decision body by "
+        "tools.p12_phase_authorization; operative delegation read from "
+        "AIOS_DELEGATION_REGISTER_v1.0.md by tools.governance_delegation_register",
     )
 
 
@@ -285,15 +347,33 @@ def incomplete(root: Path = REPO_ROOT) -> Answer:
     collapsing the two would manufacture certainty `§23` forbids.
     """
     unbridged = views.unbridged_gates(root)
-    escalations = tuple(sorted(
-        p.stem.replace(".escalation", "")
-        for p in (root / "docs/architecture/p11").rglob("*.escalation.json")
-    ))
+    # Every resident escalation record, read with the register's own meaning
+    # of OPEN (no human response recorded). The first version globbed
+    # `docs/architecture/p11` only and ignored responses. When P12's W3/W4
+    # proofs raised three real escalations under `docs/architecture/p12`, it
+    # went on reporting one open escalation where the register holds four
+    # (`GOAL-V2-005`). The contract's declared source was already "resident
+    # escalation records"; the code had drifted from it.
+    from tools.escalation_register import EscalationRegister
+
+    by_root = {}
+    for base in (root / "docs/architecture", root / "docs/operations"):
+        for directory in sorted({p.parent for p in base.rglob("*.escalation.json")}):
+            register = EscalationRegister(directory)
+            opened = register.open_escalations()
+            by_root[directory.relative_to(root).as_posix()] = {
+                "open": opened,
+                "answered": tuple(e for e in register.all_escalations()
+                                  if e not in opened),
+            }
+    escalations = tuple(sorted(e for r in by_root.values() for e in r["open"]))
     return Answer(
         "What is incomplete?",
-        {"unbridged_gates": len(unbridged), "open_escalations": escalations},
+        {"unbridged_gates": len(unbridged), "open_escalations": escalations,
+         "escalations_by_root": by_root},
         INFERRED,
-        "Register headings; escalation records under docs/architecture/p11",
+        "Register headings; every resident escalation record, OPEN by the "
+        "escalation register's own rule (no recorded human response)",
     )
 
 
