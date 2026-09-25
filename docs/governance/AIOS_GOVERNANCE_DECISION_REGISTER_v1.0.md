@@ -8443,3 +8443,51 @@ every plain date, because raw text sorts after digits.
 - authority (`P13-ENV-02` retired; state-changing NONE);
 - `FDR-1` → `FDR-7`, `FDR-G1` and every earlier Register entry;
 - no subsequent phase.
+
+---
+
+## 35. ACT-CC-POST-P13-GOV-002 Append — Unified Post-FDR-G1 Resolution & Closure Readiness Gate (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Act** | `ACT-CC-POST-P13-GOV-002` · `acts/ACT-CC-POST-P13-GOV-002-UNIFIED-POST-FDR-G1-RESOLUTION-AND-CLOSURE-READINESS-GATE.md` · content sha256 `4c8d143d99a683f56aeb039c995a21c898159836be2d81144dc1da836caccd18` |
+| **Received** | from the Founder, 2026-09-25. The instrument names no issuer or date. It is not a Founder Decision, and it changes none |
+| **Scope** | the post-`FDR-G1` governance frontier, and whether P13 is ready for a Founder closure decision. It closes, certifies and authorizes nothing (`§2`, `§21`) |
+
+---
+
+## 36. P13-018 D-1 Reconciliation — A17 Exhaustion Determination (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Under** | `ACT-CC-POST-P13-GOV-002` `§5` (`§35`) |
+| **Authority** | V2 Charter F04 `§22`, Matrix F06 A17: *"AUTHORIZED WITH BOUNDARY"*, escalation E1, a bounded CEO decision. It is not a Founder Decision |
+| **A17 determination** | P13-018 D-1: AUTHORIZED ACTIONABLE CONSTRUCTION SURFACE EXHAUSTED |
+| **Scope examined** | `P13-018` `D-1`: the Blueprint `§10` IN list. Each item is built, tested and verified. Each was part of the P13 that `FDR-5` found exit-satisfied and `FDR-7` certified |
+
+**Inventory (Blueprint `§10` IN):**
+- `tools/p13/`, the eight components: built, verified, certified;
+- one cycle entry point (`tools/p13/cycle.py`): built, verified, certified;
+- `docs/operations/p13/` (live records, Trace store): built, verified, certified;
+- tests: built, verified, certified;
+- the Memory → P13 read path: built, verified, certified;
+- a static no-scheduler test: built, verified, certified.
+
+No item is remaining, blocked or actionable.
+
+**Meaning.** No actionable construction remains within `D-1`'s scope. It does
+**not** mean:
+- that `P13-018` is revoked, retired, superseded or spent. The authorization
+  record stays in force, and its disposition is the Founder's;
+- that P13 is complete beyond its certified contract, or closed;
+- that AIOS is finished (F04 `§22.1`).
+
+A defect found later in that scope would be new work, taken up under the
+authority then applicable.
+
+**Not changed:**
+- `P13-018`;
+- every envelope and delegation;
+- the P13 authority projection, which still reports the record as authorized;
+- certification and closure;
+- every earlier Register entry.

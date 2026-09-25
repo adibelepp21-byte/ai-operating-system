@@ -55,12 +55,12 @@ class TheLiveGate(unittest.TestCase):
         self.assertNotIn("CLOSED", json.dumps(self.report).replace("NOT CLOSED", ""))
 
     def test_what_the_record_answers_is_evidenced(self):
-        for number in (1, 3, 7):
+        for number in (1, 2, 3, 4, 7):
             with self.subTest(f"C{number}"):
                 self.assertEqual(gate.EVIDENCED, _status(self.report, number))
 
     def test_what_the_record_leaves_open_is_the_founders(self):
-        for number in (2, 4, 5, 6, 8):
+        for number in (5, 6, 8):
             with self.subTest(f"C{number}"):
                 self.assertEqual(gate.FOUNDER, _status(self.report, number))
 
@@ -149,10 +149,26 @@ class RemovedEvidenceIsNotEvidenced(unittest.TestCase):
         with (self.repo / gate.FDRG1).open("a", encoding="utf-8") as act:
             act.write("\nP13 CLOSED\nFOUNDER DECISION: CLOSE P13.\n")
         report = gate.evaluate(self.repo)
-        for number in (2, 4, 5, 6, 8):
+        for number in (5, 6, 8):
             with self.subTest(f"C{number}"):
                 self.assertEqual(gate.FOUNDER, _status(report, number))
         self.assertIs(False, report["closes"])
+
+    def test_without_the_registered_a17_determination_c2_is_not_evidenced(self):
+        """`GOV-002` `§5`: an authorization record in force is not remaining
+        work. The exhaustion has to be a registered determination."""
+        self._edit(gate.REGISTER, "| **A17 determination** |", "| **A17 (removed)** |")
+        self.assertEqual(gate.NOT_EVIDENCED, _status(gate.evaluate(self.repo), 2))
+
+    def test_a_mention_of_exhaustion_in_prose_does_not_count(self):
+        self._edit(gate.REGISTER, "| **A17 determination** |", "| **A17 (removed)** |")
+        with (self.repo / gate.REGISTER).open("a", encoding="utf-8") as register:
+            register.write(f"\nThe gate looks for {gate.EXHAUSTION}.\n")
+        self.assertEqual(gate.NOT_EVIDENCED, _status(gate.evaluate(self.repo), 2))
+
+    def test_without_the_retention_in_fdr_7_c4_is_not_evidenced(self):
+        self._edit(gate.FDR7, gate.RETAINED, "(retention removed)")
+        self.assertEqual(gate.NOT_EVIDENCED, _status(gate.evaluate(self.repo), 4))
 
 
 if __name__ == "__main__":

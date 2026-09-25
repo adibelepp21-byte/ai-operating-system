@@ -38,6 +38,7 @@ Nothing here authorizes anything, and nothing here writes.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -47,6 +48,19 @@ REGISTER = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
 FDR5 = f"{ACTS}/FDR-5-P13-EXIT-CONTRACT-SATISFACTION.md"
 FDR7 = f"{ACTS}/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md"
 FDRG1 = f"{ACTS}/FDR-G1-POST-P13-GOVERNANCE-FOUNDATION.md"
+DELEGATIONS = "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md"
+#: `ACT-CC-POST-P13-GOV-002` `§5`: the CEO's bounded A17 determination
+#: (F04 `§22`, F06 A17, E1) that `P13-018` `D-1`'s authorized scope has no
+#: actionable construction left. It is read from the Decision Register, the
+#: only place it counts. It is not a revocation: the authorization record
+#: stays in force, and its disposition is the Founder's.
+EXHAUSTION = "P13-018 D-1: AUTHORIZED ACTIONABLE CONSTRUCTION SURFACE EXHAUSTED"
+#: Only a Register field row declaring it counts. A mention in prose does not.
+_EXHAUSTION_ROW = re.compile(r"^\| \*\*A17 determination\*\* \| " + re.escape(EXHAUSTION),
+                             re.MULTILINE)
+#: `FDR-7` `§8` (`FDQ-7.6` CONFIRM): the operating model retained through
+#: certification.
+RETAINED = "The existing bounded delegated autonomy model remains in force"
 
 EVIDENCED = "EVIDENCED"
 NOT_EVIDENCED = "NOT EVIDENCED"
@@ -117,9 +131,11 @@ def evaluate(root: Path = REPO_ROOT) -> Dict[str, object]:
                            evidence, "No record lists P13 obligations beyond the exit "
                            "contract and certification."))
 
-    # C2: the frontier is stated as NONE, but a construction authorization is
-    # still projected, and nothing records whether it is spent.
+    # C2: an authorization record in force is not remaining work. The
+    # frontier is stated as NONE, and the CEO's A17 exhaustion determination
+    # for `P13-018` `D-1` must be registered.
     frontier_none = g1 is not None and "P13 CONSTRUCTION FRONTIER\nNONE" in g1
+    exhausted = _EXHAUSTION_ROW.search(register_text) is not None
     try:
         from tools.p13 import authority
         from tools.p13.paths import Paths
@@ -128,12 +144,13 @@ def evaluate(root: Path = REPO_ROOT) -> Dict[str, object]:
     except Exception as error:  # an unreadable projection is not an answer
         construction = f"UNDETERMINABLE: {error}"
     evidence = ([f"{FDRG1} §39: P13 CONSTRUCTION FRONTIER NONE"] if frontier_none else [])
+    if exhausted:
+        evidence.append(f"Decision Register: {EXHAUSTION} (A17)")
     evidence.append(f"P13 authority projection: construction_authorization = "
-                    f"{construction}")
-    items.append(_item(2, FOUNDER if frontier_none else NOT_EVIDENCED, evidence,
-                       "No construction remains, but the P13-018 construction "
-                       "authorization is still projected as authorized. Whether "
-                       "it is spent is not recorded."))
+                    f"{construction} (the record, not remaining work)")
+    items.append(_item(2, EVIDENCED if frontier_none and exhausted else NOT_EVIDENCED,
+                       evidence, "The P13-018 authorization record stays in force. "
+                       "Its disposition at closure is the Founder's (C8)."))
 
     # C3: every frontier row cites evidence that still verifies, and the
     # Founder accepted the frontier as classified (`FDQ-7.7`).
@@ -154,7 +171,20 @@ def evaluate(root: Path = REPO_ROOT) -> Dict[str, object]:
                            "Accepted as classified at certification. The frontier "
                            "is not solved."))
 
-    # C4: no record transfers or retains P13's operational surface.
+    # C4: responsibility is retained, not transferred. `FDR-7` `§8` keeps the
+    # bounded delegated model in force after certification. The in-force
+    # delegation holds operational execution, and `P13-ENV-01`'s holder is P13
+    # when a human or the CEO invokes it (Delegation Register `§14`).
+    from tools import governance_delegation_register as delegation
+    try:
+        in_force = [d.identifier for d in delegation.read_register(root / DELEGATIONS)
+                    if d.in_force]
+    except Exception as error:  # an unreadable register is not an answer
+        in_force = []
+        retention_note = f"Delegation Register unreadable: {error}"
+    else:
+        retention_note = ""
+    retained = fdr7 is not None and RETAINED in fdr7
     try:
         from tools.p13 import authority
         from tools.p13.paths import Paths
@@ -164,8 +194,15 @@ def evaluate(root: Path = REPO_ROOT) -> Dict[str, object]:
                     for r in authority.retired_envelopes(Paths(root))]
     except Exception as error:
         surface = [f"envelopes undeterminable: {error}"]
-    items.append(_item(4, FOUNDER, surface + ["live record root docs/operations/p13"],
-                       "No record transfers or explicitly retains these."))
+    evidence = surface + ["live record root docs/operations/p13",
+                          f"delegations in force: {in_force}"]
+    if retained:
+        evidence.append(f"{FDR7} §8: {RETAINED}")
+    items.append(_item(4, EVIDENCED if retained and "DEL-CFV2-CEO-001" in in_force
+                       else NOT_EVIDENCED, evidence,
+                       retention_note or "Explicitly retained through certification, "
+                       "not transferred. Retention after closure is part of the "
+                       "post-closure model (C8)."))
 
     # C5: what remains open is listed; whether it is acceptable is a judgement.
     from tools.escalation_register import EscalationRegister
