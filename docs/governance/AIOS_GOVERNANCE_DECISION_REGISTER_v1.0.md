@@ -8339,3 +8339,25 @@ the Founder Certification Decision.
 - P13 closure (NOT GRANTED);
 - authority (`P13-ENV-02` retired; state-changing NONE);
 - no subsequent phase.
+
+---
+
+## 31. ACT-CC-POST-P13-001 and ACT-CC-POST-P13-GOV-001 Append — Post-P13 Governance Discovery and Reconciliation (2026-09-25)
+
+| Field | Value |
+|---|---|
+| **Act** | `ACT-CC-POST-P13-001` · `acts/ACT-CC-POST-P13-001-GOVERNED-POST-P13-OPERATION-AND-GOVERNANCE-EVOLUTION.md` · content sha256 `f8b98900322d10176f52c43845155e6e692ce7fc96fef7395b527282138224a0` |
+| **Act** | `ACT-CC-POST-P13-GOV-001` · `acts/ACT-CC-POST-P13-GOV-001-GOVERNANCE-EVOLUTION-AND-OPERATING-BASELINE-RECONCILIATION.md` · content sha256 `b2c1d18d5df41f9d98ba74b702d98707bc0b9be4004e32553ca50c81ad6b7930` |
+| **Received** | both from the Founder, 2026-09-25. Neither names an issuer or date. Neither is a Founder Decision, and neither changes one. `ACT-CC-POST-P13-001` was executed on receipt as read-only discovery, and its report was given in the session. It is persisted now, unchanged, under `ACT-CC-POST-P13-GOV-001` `§10` |
+| **Record** | `AIOS_POST_P13_GOVERNANCE_EVOLUTION_AND_OPERATING_BASELINE_REPORT_v1.0.md` · sha256 `ed912842bf75a2ee2b83e9ff4ec0aaa9e1a6f7dfed04169b90bece0f44fe742a` |
+| **Result** | FQ-1 (certified architecture evolution): no change mechanism for certified bytes or status. **Founder decision required.** Certified architecture stays FROZEN. FQ-2 (P13 closure): the structure is an explicit closure gate (`FDR-5` §5), with its content undefined. **Founder decision required.** FQ-3 (certification baseline): the distribution is documented, and the P1–P6 governance-closed baseline declaration (`FD-P5-001` §6) is not recorded. **Founder decision required only for a change.** Maintenance authority is Goal/Target-bound (F03 `§25.3`; F05 `INV-CEO-02`; F06 `IAM-04`). None of these blocks operation |
+| **Constructed** | none of the `§16` governance artifacts. Only this entry, the two persisted Acts and the record |
+
+**Not changed:**
+- any certified root, manifest, index or certifying instrument;
+- the certified phases {10, 11, 12, 13};
+- `FDR-1` → `FDR-7` and every earlier Register entry;
+- P13 closure (NOT GRANTED);
+- authority (`P13-ENV-02` retired; state-changing NONE);
+- the four open escalations;
+- no subsequent phase.
