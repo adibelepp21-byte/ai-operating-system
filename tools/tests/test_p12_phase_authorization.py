@@ -366,6 +366,21 @@ class LaterFounderAuthorization(_TemporaryWorld):
                          "no state is inferred for a phase the snapshot "
                          "does not carry")
 
+    def test_a_later_certification_keeps_the_later_authorization(self):
+        """The defect found at `FDR-7` execution: certification rebuilt the
+        dimensions from the snapshot and put `AUTHORIZED = FALSE` back."""
+        _instrument(self.root, self.SNAPSHOT)
+        _authorization(self.root, "FDR-70-AUTHORIZATION.md")
+        _authorization(self.root, "FDR-71-CERTIFICATION.md",
+                       "FOUNDER DECISION: " + "CERTIFY P13.\n")
+        _register(self.root, "FDR-70-AUTHORIZATION.md", "FDR-71-CERTIFICATION.md")
+        self.assertIn("P13", phases.certifications(self.root)["phases"])
+        p13 = self._current()["P13"]
+        self.assertIs(True, p13["authorized"])
+        self.assertEqual({"AUTHORIZED": True}, p13["dimensions"])
+        self.assertEqual([], [c.name for c in verifier.verify("P13", self.root)
+                              if c.status != verifier.SATISFIED])
+
     def test_the_verifier_reaches_the_same_state_its_own_way(self):
         _instrument(self.root, self.SNAPSHOT)
         _authorization(self.root, "FDR-68-AUTHORIZATION.md")
@@ -405,10 +420,14 @@ class TheLiveCorpusAfterFDR6(unittest.TestCase):
         self.assertEqual(self.FDR6, p13["authority_record"])
         self.assertEqual({"AUTHORIZED": True}, p13["dimensions"])
 
-    def test_p13_is_not_certified(self):
+    def test_p13_is_certified_only_by_fdr_7(self):
+        """Not by `FDR-6`, which authorized it. `FDR-7` certified it."""
         from tools import p12_certified_evidence_guard as sentinel
-        self.assertNotIn("P13", phases.certifications()["phases"])
-        self.assertEqual(frozenset({10, 11, 12}), sentinel.certified_phases())
+        self.assertTrue(phases.certifications()["phases"]["P13"]["instrument"]
+                        .endswith("FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md"))
+        self.assertEqual(frozenset({10, 11, 12, 13}), sentinel.certified_phases())
+        self.assertEqual(self.FDR6, {s["entity"]: s for s in phases.current_states()}
+                         ["P13"]["authority_record"])
 
     def test_no_instrument_closes_p13(self):
         """No closure dimension is reported, and none is inferred."""

@@ -126,7 +126,8 @@ class FE2TheAuthorityDimensionsAreKeptApart(unittest.TestCase):
             "construction_authorization": "AUTHORIZED — bounded to Blueprint §10 IN",
             "operational_envelope": "EVIDENCE-ONLY",
             "state_changing_authority": "NONE",
-            "certification_authority": "NOT GRANTED",
+            # FDR-7 certified P13 (Decision Register §29).
+            "certification_authority": "CERTIFIED",
         })
         # FDR-3's S-OPS grant (P13-ENV-02) is spent: retired under FDR-4 FD-B
         # (Delegation Register §16). It is reported, and grants nothing.

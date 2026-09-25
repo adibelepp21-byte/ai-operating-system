@@ -8316,3 +8316,26 @@ the Founder Certification Decision.
 - P13 state-changing authority stays NONE;
 - no subsequent phase is established;
 - no historical Founder Decision is modified.
+
+---
+
+## 30. FDR-7 Append — P13 Certification Mechanics: Manifest Promotion and Guard Resolution (2026-09-25)
+
+### Status note — P13 certified-evidence protection and detection
+
+| Surface | State from 2026-09-25 |
+|---|---|
+| Authority | `FDR-7` (`§29`) `§16`: the bounded certification mechanics only |
+| Guard resolution | `tools/p12_certified_evidence_guard.py` now recognises a fourth statement form, the decision line `FDR-7` states (a line that is exactly *"FOUNDER DECISION: CERTIFY P<n>."*). It is still resolved against this Register. The certified phase set is **{10, 11, 12, 13}** |
+| Certifying instrument | `acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md` · file sha256 `a2241bb3400fe940b2e6cf6117b43722911e402c4da018618738b46705dffcdd` |
+| P13 certified manifest | `AIOS_P13_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json` · sha256 `cab8b7b3333db806df4006f0435c3d646a300fb2183264cb99a3330798851c6f`. It promotes the prepared manifest (`6265477f…`, `§28`): 1 file under `docs/architecture/p13`, anchored at `6ada59b`, the commit persisting `FDR-7`. The root is unchanged since `c76e420` |
+| Index supplement | `AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_P13_v1.0.json` · sha256 `6c3401ed9f731b52340a4001c0dfecb6b66d58d96ecc44d98997d398e38bb882`. Detection requires this sha256 here. The registered index `AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json` (`34f9673a…`) is **unchanged** |
+| Protection | the barrier now refuses writes to `docs/architecture/p13/`, the `FDR-7` act, the certified manifest and the supplement |
+
+**Not changed:**
+- `FDR-1` → `FDR-6`;
+- the P10–P12 manifests and the registered index;
+- the P13 root's content;
+- P13 closure (NOT GRANTED);
+- authority (`P13-ENV-02` retired; state-changing NONE);
+- no subsequent phase.

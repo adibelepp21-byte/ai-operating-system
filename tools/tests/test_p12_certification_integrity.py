@@ -205,15 +205,18 @@ class ThePhaseStateNoLongerContradictsTheCertification(unittest.TestCase):
         written."""
         self.assertIs(False, phases.state_of("P12").dimensions["CERTIFIED"])
 
-    def test_p13_is_not_touched(self):
-        """Certification never touches P13. `FDR-6` `FDQ-1` authorized the
-        phase, which is reported as authorization, and P13 remains
-        uncertified."""
+    def test_p13_is_certified_and_its_authorization_is_kept(self):
+        """`FDR-6` authorized P13 and `FDR-7` certified it. Certification
+        supersedes no P13 dimension, because the snapshot states none besides
+        `AUTHORIZED`, and it must not put the snapshot's `AUTHORIZED = FALSE`
+        back. It did, until the defect found at `FDR-7` execution was fixed."""
         p13 = {s["entity"]: s for s in phases.current_states()}["P13"]
         self.assertIs(True, p13["authorized"])
+        self.assertEqual({"AUTHORIZED": True}, p13["dimensions"])
         self.assertIn("superseded_by_authorization", p13)
         self.assertNotIn("superseded_by_certification", p13)
-        self.assertNotIn("P13", phases.certifications()["phases"])
+        self.assertTrue(phases.certifications()["phases"]["P13"]["instrument"]
+                        .endswith("FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md"))
 
     def test_the_self_model_carries_both(self):
         from tools import p12_self_model as model

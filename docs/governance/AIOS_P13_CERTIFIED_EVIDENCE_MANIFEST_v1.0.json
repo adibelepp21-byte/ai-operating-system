@@ -1,0 +1,21 @@
+{
+  "manifest": "AIOS P13 Certified Evidence Manifest",
+  "version": "1.0",
+  "phase": 13,
+  "certifying_instrument": "docs/governance/acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md",
+  "registered_at": "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md §29 — FDR-7",
+  "certified_commit": "6ada59bdbfdd19db92f21f286fb4b68e743adf8c",
+  "certified_commit_basis": "FDR-7 names no evidence commit. This manifest is anchored at the commit that persisted FDR-7 (the GOAL-V2-004 anchor choice used for P10 and P11). docs/architecture/p13 is unchanged from c76e420, the prepared manifest's commit, to the anchor, so both yield these same bytes.",
+  "evidence_root": "docs/architecture/p13",
+  "generated_under": "FDR-7 FDQ-7.4 (manifest promotion)",
+  "generated_by": "tools/p12_certified_evidence_manifest.py from_commit(); reproducible from git history",
+  "promoted_from": {
+    "manifest": "docs/governance/AIOS_P13_CERTIFICATION_MANIFEST_v1.0.json",
+    "manifest_sha256": "6265477fce788de0dc940b0e1d5b35bf247374b746ca829279bae8a67893e72a",
+    "prepared_commit": "c76e420a9402579ba7a014be345f0ebf989ec3ca",
+    "registered_at": "Decision Register §28"
+  },
+  "files": {
+    "docs/architecture/p13/AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md": "aaa87315e2d4690636faa07cbd0fe50b459fff8270576b78d56c3be8a9c6abe4"
+  }
+}

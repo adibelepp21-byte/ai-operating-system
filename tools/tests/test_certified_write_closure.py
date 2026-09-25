@@ -34,17 +34,21 @@ from tools import p12_certified_evidence_guard as sentinel
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 ROOTS = ("docs/architecture/platform-organization", "docs/architecture/p11",
-         "docs/architecture/p12")
+         "docs/architecture/p12", "docs/architecture/p13")
 INSTRUMENTS = (
     "docs/governance/acts/FD-P10-005-CERTIFICATION-OF-PHASE-10-DEPARTMENT-ECOSYSTEM.md",
     "docs/governance/acts/FD-P11-002-P11-CERTIFICATION.md",
     "docs/governance/acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md",
+    "docs/governance/acts/FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md",
 )
 REFERENCES = (
     "docs/governance/AIOS_P10_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json",
     "docs/governance/AIOS_P11_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json",
     "docs/governance/AIOS_P12_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json",
     "docs/governance/AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json",
+    # FDR-7: P13's certified manifest and the index supplement that promotes it.
+    "docs/governance/AIOS_P13_CERTIFIED_EVIDENCE_MANIFEST_v1.0.json",
+    "docs/governance/AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_P13_v1.0.json",
 )
 P11_FILE = "docs/architecture/p11/w4-operations/engineering-intelligence-instance-001.instance.json"
 HANDOFF = ("docs/architecture/p12/AIOS-P12-FINAL-CERTIFICATION-AND-P13-"
@@ -415,6 +419,15 @@ class EveryEntryPointInstallsTheBarrierBeforeItCanWrite(unittest.TestCase):
                          [])
 
 
+def _indexed() -> dict:
+    """Every indexed phase: the registered index and its supplements
+    (`FDR-7` promoted P13 by a supplement)."""
+    entries = {}
+    for path in sorted((REPO_ROOT / "docs/governance").glob(integrity.INDEX_GLOB)):
+        entries.update(json.loads(path.read_text(encoding="utf-8"))["phases"])
+    return entries
+
+
 def _copy_reference(tmp: Path) -> Path:
     """A disposable copy of everything detection reads."""
     repo = tmp / "repo"
@@ -435,17 +448,16 @@ class CertifiedEvidenceIsDetectedByContentForEveryPhase(unittest.TestCase):
         report = integrity.verify()
         self.assertTrue(report.holds, json.dumps(report.as_reported(), indent=1))
         counts = {k: len(v.intact) for k, v in report.phases.items()}
-        self.assertEqual(counts, {"P10": 36, "P11": 58, "P12": 121})
+        self.assertEqual(counts, {"P10": 36, "P11": 58, "P12": 121, "P13": 1})
         self.assertEqual(report.phases["P12"].declared_additions, (HANDOFF,))
 
     def test_every_certified_phase_has_a_manifest_and_nothing_else_does(self):
-        index = integrity.load_index()
         certified = {f"P{n}" for n in sentinel.certified_phases()}
-        self.assertEqual(set(index["phases"]), certified)
+        self.assertEqual(set(_indexed()), certified)
 
     def test_each_manifest_is_its_commit_not_a_claim(self):
         from tools import p12_certified_evidence_manifest as rebuild
-        for phase, entry in integrity.load_index()["phases"].items():
+        for phase, entry in _indexed().items():
             record = json.loads((REPO_ROOT / entry["manifest"]).read_text(
                 encoding="utf-8"))
             rebuilt = rebuild.from_commit(entry["certified_commit"],

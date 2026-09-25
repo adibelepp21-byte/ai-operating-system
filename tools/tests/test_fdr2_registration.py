@@ -71,8 +71,14 @@ class TheSystemCanSeeTheFounderDecisions(unittest.TestCase):
 class FDR2ConferredNothingItWithheld(unittest.TestCase):
 
     def test_no_certification_is_read_from_the_fdr_acts(self):
-        self.assertEqual(sentinel.certified_phases(), frozenset({10, 11, 12}))
+        """`FDR-1` → `FDR-6` certify nothing. `FDR-7` is the Founder's
+        certification of P13, and it is the only `FDR` act the guard reads a
+        certification from."""
+        self.assertEqual(sentinel.certified_phases(), frozenset({10, 11, 12, 13}))
         self.assertEqual(sentinel.certification_anomalies(), ())
+        from_fdr = {(phase, name) for phase, name in sentinel.certification_provenance()
+                    if name.startswith("FDR-")}
+        self.assertEqual({(13, "FDR-7-P13-FOUNDER-CERTIFICATION-AND-FINAL-SYSTEM-ACCEPTANCE.md")}, from_fdr)
 
     def test_the_phase_snapshot_is_not_rewritten_by_later_decisions(self):
         """P12 `§37`'s snapshot still says P13 AUTHORIZED: FALSE. `P13-018`
@@ -105,8 +111,9 @@ class FDR2ConferredNothingItWithheld(unittest.TestCase):
                          r"### P13-018 — Founder Decision · P13 Construction Authority Gate")
         self.assertFalse((REPO_ROOT / "native_core/core/p13").exists())
 
-    def test_the_p13_document_root_is_not_protected_as_certified(self):
-        self.assertFalse(barrier.refuses(
+    def test_the_p13_document_root_is_protected_once_certified(self):
+        """Unprotected until `FDR-7` certified P13; protected from then on."""
+        self.assertTrue(barrier.refuses(
             REPO_ROOT / "docs/architecture/p13/AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md"))
 
     def test_the_blueprint_and_gate_keep_their_text_and_record_the_decision(self):

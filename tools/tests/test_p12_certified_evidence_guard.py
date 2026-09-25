@@ -21,13 +21,28 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 
 class CertificationComesFromInstrumentBodies(unittest.TestCase):
-    def test_the_resident_certified_phases_are_ten_eleven_and_twelve(self):
+    def test_the_resident_certified_phases_are_ten_to_thirteen(self):
         """Was `{10, 11}`. Updated under `GOAL-V2-002`: `FD-P12-006` certified
         P12 on 18 September 2026 and resolves against its Register entry. The
         old oracle pinned the pre-certification state, and it held while the
-        guard could not read the decision-field form that instrument uses."""
+        guard could not read the decision-field form that instrument uses.
+
+        Updated under `FDR-7`, which certified P13 on 25 September 2026 in a
+        decision line the guard could not read either, until its fourth form
+        was added under `FDR-7` `§16`."""
         self.assertEqual(sentinel.certified_phases(),
-                         frozenset({10, 11, 12}))
+                         frozenset({10, 11, 12, 13}))
+
+    def test_the_fdr_7_decision_line_is_read_and_its_look_alikes_are_not(self):
+        form = "FOUNDER DECISION: " + "CERTIFY P13."
+        self.assertEqual(["13"], [g for m in sentinel._CERTIFIES.finditer(form)
+                                  for g in m.groups() if g])
+        for text in (form.replace(".", " only if the evidence holds."),
+                     "FOUNDER DECISION: DO NOT " + "CERTIFY P13.",
+                     "  " + form, "FDQ-7.2 = CERTIFY", "[ ] CERTIFY",
+                     "Do not:\n* certify P13;"):
+            with self.subTest(text):
+                self.assertEqual([], list(sentinel._CERTIFIES.finditer(text)))
 
     def test_a_filename_alone_certifies_nothing(self):
         """IDENTIFIER ≠ DECISION BODY."""
@@ -228,10 +243,11 @@ class AttributionAndAnomalyDetection(unittest.TestCase):
 
     def test_each_certified_phase_is_attributed_to_its_instrument(self):
         provenance = dict(sentinel.certification_provenance())
-        self.assertEqual(set(provenance), {10, 11, 12})
+        self.assertEqual(set(provenance), {10, 11, 12, 13})
         self.assertTrue(provenance[10].startswith("FD-P10-005"))
         self.assertTrue(provenance[11].startswith("FD-P11-002"))
         self.assertTrue(provenance[12].startswith("FD-P12-006"))
+        self.assertTrue(provenance[13].startswith("FDR-7-"))
 
     def test_the_resident_corpus_raises_no_anomaly(self):
         """A detector that fires on the real corpus is noise, not a control."""

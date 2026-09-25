@@ -64,10 +64,24 @@ REGISTER = REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.m
 #: deliberate. `FD-P12-006 §21` also contains *"P12 CERTIFIED = YES"*, inside
 #: a conditional (*"Certification may be marked … only if"*), and a pattern
 #: that matched the bare equation would read a condition as a decision.
+#:
+#: A fourth form was added under `FDR-7` `§16` (*"update certification guard
+#: resolution"*). `FDR-7` certifies P13 in its closing decision line:
+#:
+#:     FOUNDER DECISION: CERTIFY P13.
+#:
+#: None of the first three forms can see that. The form is anchored to the
+#: whole line, from the decision-field label to the end. Several nearby texts
+#: are therefore not decisions:
+#:
+#: * the *"[ ] CERTIFY"* check-boxes of the record's template;
+#: * *"FDQ-7.2 = CERTIFY"*, which names no phase;
+#: * *"certify P13"* inside lists of what may **not** be done.
 _CERTIFIES = re.compile(
     r"PHASE\s+(\d+)[^\n]{0,60}\bIS\s+CERTIFIED\b"
     r"|Phase\s+(\d+)[^\n]{0,80}\bis hereby certified\b"
-    r"|^FOUNDER DECISION:[ \t]*\n[ \t]*P(\d+)[ \t]+CERTIFICATION[ \t]*=[ \t]*CERTIFY\b",
+    r"|^FOUNDER DECISION:[ \t]*\n[ \t]*P(\d+)[ \t]+CERTIFICATION[ \t]*=[ \t]*CERTIFY\b"
+    r"|^FOUNDER DECISION:[ \t]*CERTIFY[ \t]+P(\d+)\.?[ \t]*$",
     re.MULTILINE,
 )
 

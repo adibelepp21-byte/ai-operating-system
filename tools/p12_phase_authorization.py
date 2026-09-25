@@ -501,7 +501,12 @@ def current_states(root: Path = REPO_ROOT) -> Tuple[dict, ...]:
         certification = by_phase.get(state.entity)
         if certification is not None:
             kept, superseded = {}, {}
-            for name, value in state.dimensions.items():
+            # The dimensions as already reported, with any later
+            # authorization applied. Reading `state.dimensions` (the §37
+            # snapshot) here put `AUTHORIZED = FALSE` back under a
+            # certified phase that a later decision had authorized, which
+            # surfaced when `FDR-7` certified P13 after `FDR-6` authorized it.
+            for name, value in reported["dimensions"].items():
                 if value is False and name != "AUTHORIZED":
                     superseded[name] = value
                 else:
