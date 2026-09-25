@@ -8251,3 +8251,20 @@ S-OPS authority.
 
 The next gate is the P13 Certification Readiness Package, then a separate
 Founder Certification Decision.
+
+---
+
+## 27. FDR-6 CR-1 Append — P13 Certification Manifest, Prepared (2026-09-25)
+
+### Status note — P13 manifest prepared, not certified
+
+| Surface | State from 2026-09-25 |
+|---|---|
+| Authority | `FDR-6` (`§26`) `CR-1` and `FDQ-5`. No certification is granted |
+| P13 manifest | `AIOS_P13_CERTIFICATION_MANIFEST_v1.0.json` · sha256 `127b97fd9dcd8aaa14f2f94039a86655fe5b8f21a77b2c1e349a4701a27d259d`. **Status: PREPARED — NOT CERTIFIED.** It enumerates `docs/architecture/p13/` at `8114f9b`, the commit that appended Blueprint `§16`: 1 file, `AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md`, sha256 `0b13e3009c1c583c…` |
+| Protection | none. The name does not match the certified-write barrier's manifest pattern, so `docs/architecture/p13/` stays writable until a Founder Certification Decision certifies P13 |
+| Detection | `tools/certified_evidence_integrity.py` verifies the prepared manifest: its sha256 here, the guard's root for P13, no claim of certification, P13 phase-authorized, and the root byte for byte |
+| Certified manifest index | `AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json` is **unchanged** (sha256 `34f9673a…`, above). Promotion at certification adds an index file beside it, whose sha256 must also be recorded here. It does not rewrite the registered index |
+
+If P13 is certified before its manifest is promoted, detection reports a
+fault.

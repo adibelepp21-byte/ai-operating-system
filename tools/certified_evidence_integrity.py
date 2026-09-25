@@ -39,6 +39,27 @@ commit since has changed either root, so the choice of anchor does not change a
 single byte. `from_commit` rebuilds any manifest from git history, so the
 manifests never have to be taken on trust.
 
+**Prepared manifests (`FDR-6` `CR-1`).** A phase that is phase-authorized
+but not certified can have a manifest *prepared* for its eventual
+certification. It is named `AIOS_P<n>_CERTIFICATION_MANIFEST_v*.json`. That
+name does not match the barrier's `MANIFEST_GLOB`, so preparing it protects
+nothing. It is verified here like a certified manifest:
+
+* its sha256 must be in the Decision Register;
+* its evidence root must be the guard's root for the phase;
+* it must claim no certification;
+* the phase must be phase-authorized;
+* the root must still match it byte for byte.
+
+Any fault is reported. A certified phase whose manifest is only prepared is a
+fault until the manifest is promoted.
+
+**Promotion never rewrites the registered index.** Further index files
+(`AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX*.json`) are read beside it. Each
+must have its sha256 in the Decision Register, and a phase may be indexed only
+once. Promoting a prepared manifest at certification therefore creates files,
+and the barrier then protects them. It changes no certified reference.
+
 Nothing here authorizes anything, and nothing here writes.
 """
 
@@ -54,6 +75,11 @@ from typing import Dict, List, Optional, Tuple
 REPO_ROOT = Path(__file__).resolve().parents[1]
 INDEX = REPO_ROOT / "docs/governance/AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX_v1.0.json"
 REGISTER = REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
+#: `FDR-6` `CR-1`. Neither matches only what it should: a prepared manifest's
+#: name must never match the barrier's `MANIFEST_GLOB`, and a test holds that.
+PREPARED_GLOB = "AIOS_P*_CERTIFICATION_MANIFEST_v*.json"
+INDEX_GLOB = "AIOS_CERTIFIED_EVIDENCE_MANIFEST_INDEX*.json"
+PREPARED = "PREPARED"
 
 INTACT = "INTACT"
 MODIFIED = "MODIFIED"
@@ -110,16 +136,20 @@ class PhaseResult:
 class Report:
     phases: Dict[str, PhaseResult]
     faults: Tuple[str, ...] = field(default_factory=tuple)
+    #: `FDR-6` `CR-1`: manifests prepared for phases not yet certified.
+    prepared: Dict[str, PhaseResult] = field(default_factory=dict)
 
     @property
     def holds(self) -> bool:
-        return not self.faults and all(p.holds for p in self.phases.values())
+        return (not self.faults and all(p.holds for p in self.phases.values())
+                and all(p.holds for p in self.prepared.values()))
 
     def as_reported(self) -> dict:
         return {
             "holds": self.holds,
             "faults": list(self.faults),
             "phases": {k: v.as_reported() for k, v in sorted(self.phases.items())},
+            "prepared": {k: v.as_reported() for k, v in sorted(self.prepared.items())},
         }
 
 
@@ -163,8 +193,15 @@ def verify_phase(phase: str, entry: dict, repo_root: Path = REPO_ROOT) -> PhaseR
     if instrument != entry["certifying_instrument_sha256"]:
         faults.append(f"certifying instrument altered or unreadable: "
                       f"{entry['certifying_instrument']}")
+    return _compare(phase, record.get("files", {}), entry["evidence_root"],
+                    tuple(sorted(entry.get("declared_additions", {}))),
+                    repo_root, faults)
 
-    files: Dict[str, str] = record.get("files", {})
+
+def _compare(phase: str, files: Dict[str, str], evidence_root: str,
+             declared: Tuple[str, ...], repo_root: Path,
+             faults: List[str]) -> PhaseResult:
+    """Compare a manifest's files with the tree under its evidence root."""
     intact, modified, missing, unreadable = [], [], [], []
     for relative, expected in sorted(files.items()):
         path = repo_root / relative
@@ -179,15 +216,58 @@ def verify_phase(phase: str, entry: dict, repo_root: Path = REPO_ROOT) -> PhaseR
         else:
             intact.append(relative)
 
-    root = repo_root / entry["evidence_root"]
+    root = repo_root / evidence_root
     present, unlisted = _present(root, repo_root) if root.is_dir() else (set(), [])
     if not root.is_dir():
-        faults.append(f"evidence root absent: {entry['evidence_root']}")
+        faults.append(f"evidence root absent: {evidence_root}")
     unreadable.extend(sorted(unlisted))
-    declared = tuple(sorted(entry.get("declared_additions", {})))
     unexpected = tuple(sorted(present - set(files) - set(declared)))
     return PhaseResult(phase, tuple(intact), tuple(modified), tuple(missing),
                        tuple(unreadable), unexpected, declared, tuple(faults))
+
+
+def verify_prepared(manifest: Path, repo_root: Path = REPO_ROOT,
+                    register_text: str = "") -> Tuple[str, PhaseResult]:
+    """A manifest prepared under `FDR-6` `CR-1`, checked as strictly as a
+    certified one, plus the conditions that make it *prepared*: it claims no
+    certification, and its phase is phase-authorized."""
+    from tools import p12_certified_evidence_guard as sentinel
+    name = manifest.name
+    try:
+        raw = manifest.read_bytes()
+        record = json.loads(raw)
+        number = int(record["phase"])
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        return name, PhaseResult(name, (), (), (), (), (), (), (
+            f"prepared manifest unreadable: {name}: {error}",))
+    phase = f"P{number}"
+    faults: List[str] = []
+    if sha256_bytes(raw) not in register_text:
+        faults.append(f"prepared manifest sha256 is not recorded in the "
+                      f"Decision Register: {name}")
+    if (not str(record.get("status", "")).startswith(PREPARED)
+            or record.get("certifying_instrument") is not None
+            or record.get("certified_commit") is not None):
+        faults.append(f"a prepared manifest claims a certification: {name}")
+    root = sentinel.PHASE_EVIDENCE_ROOTS.get(number, f"docs/architecture/p{number}")
+    if record.get("evidence_root") != root:
+        faults.append(f"prepared evidence root {record.get('evidence_root')!r} "
+                      f"is not {phase}'s root {root!r}")
+    instrument = record.get("authorizing_instrument")
+    if not isinstance(instrument, str) or sha256_file(repo_root / instrument) != \
+            record.get("authorizing_instrument_sha256"):
+        faults.append(f"authorizing instrument altered or unreadable: {instrument}")
+    try:
+        from tools import p12_phase_authorization as phases
+        authorized = {s["entity"]: s["authorized"]
+                      for s in phases.current_states(repo_root)}.get(phase)
+    except Exception as error:  # undeterminable is not authorized
+        authorized = f"undeterminable: {error}"
+    if authorized is not True:
+        faults.append(f"{phase} has a prepared manifest but is not "
+                      f"phase-authorized ({authorized!r})")
+    return phase, _compare(phase, record.get("files", {}), root, (),
+                           repo_root, faults)
 
 
 def verify(repo_root: Path = REPO_ROOT, index: Optional[Path] = None,
@@ -214,20 +294,55 @@ def verify(repo_root: Path = REPO_ROOT, index: Optional[Path] = None,
     if sha256_bytes(raw) not in register_text:
         faults.append("index sha256 is not recorded in the Decision Register")
 
+    # `FDR-6` `CR-1`: index files beside the registered one. Each is held to
+    # the same Register rule, and no phase may be indexed twice.
+    entries = dict(record.get("phases", {}))
+    for supplement in sorted(index.parent.glob(INDEX_GLOB)):
+        if supplement.resolve() == index.resolve():
+            continue
+        try:
+            extra_raw = supplement.read_bytes()
+            extra = json.loads(extra_raw)
+        except (OSError, ValueError) as error:
+            faults.append(f"index supplement unreadable: {supplement.name}: {error}")
+            continue
+        if sha256_bytes(extra_raw) not in register_text:
+            faults.append(f"index supplement sha256 is not recorded in the "
+                          f"Decision Register: {supplement.name}")
+        for phase, entry in extra.get("phases", {}).items():
+            if phase in entries:
+                faults.append(f"{phase} is indexed more than once ({supplement.name})")
+                continue
+            entries[phase] = entry
+
     try:
         certified = {f"P{n}" for n in sentinel.certified_phases(acts_root, register)}
     except Exception as error:
         certified = set()
         faults.append(f"certification undeterminable: {error}")
-    indexed = set(record.get("phases", {}))
+    indexed = set(entries)
+    prepared: Dict[str, PhaseResult] = {}
+    for path in sorted((repo_root / "docs/governance").glob(PREPARED_GLOB)):
+        phase, result = verify_prepared(path, repo_root, register_text)
+        if phase in indexed:
+            continue  # promoted: the certified manifest governs
+        if phase in prepared:
+            faults.append(f"{phase} has more than one prepared manifest")
+            continue
+        prepared[phase] = result
     for phase in sorted(certified - indexed):
-        faults.append(f"{phase} is certified but has no manifest")
+        if phase in prepared:
+            faults.append(f"{phase} is certified but its manifest is only "
+                          "prepared; it must be promoted into an index under "
+                          "the certification decision")
+        else:
+            faults.append(f"{phase} is certified but has no manifest")
     for phase in sorted(indexed - certified):
         faults.append(f"{phase} has a manifest but is not certified")
 
     phases = {phase: verify_phase(phase, entry, repo_root)
-              for phase, entry in sorted(record.get("phases", {}).items())}
-    return Report(phases, tuple(faults))
+              for phase, entry in sorted(entries.items())}
+    return Report(phases, tuple(faults), prepared)
 
 
 def main() -> int:

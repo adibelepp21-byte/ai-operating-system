@@ -424,6 +424,21 @@ class TheLiveCorpusAfterFDR6(unittest.TestCase):
         for entity in ("P11", "P12"):
             self.assertNotIn("superseded_by_authorization", current[entity])
 
+    def test_a_claim_reading_more_than_the_decision_states_is_refused(self):
+        """`FDR-6` authorizes the phase and states nothing else. A claim citing
+        it for a certification is not supported by it."""
+        forged = {"resolved": True, "states": {"P13": {
+            "entity": "P13", "authorized": True,
+            "dimensions": {"AUTHORIZED": True, "CERTIFIED": True},
+            "authority_record": self.FDR6}}}
+        answer = model.Answer("What authority do I have?",
+                              {"phase_authorization": forged}, "VERIFIED", "forged")
+        with mock.patch.object(model, "authority", return_value=answer):
+            failed = {c.name for c in verifier.verify("P13")
+                      if c.status != verifier.SATISFIED}
+        self.assertIn("provenance supports the claim", failed)
+        self.assertIn("no inferred dimension", failed)
+
     def test_the_verifier_confirms_it_independently(self):
         self.assertIs(True, verifier.current_state("P13")["dimensions"]["AUTHORIZED"])
         self.assertEqual(self.FDR6, verifier.current_state("P13")["instrument"])
