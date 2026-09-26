@@ -8809,3 +8809,13 @@ states its date in its heading only, as `§34`, `§37` and `§39` do.
 - PD-01 and PD-02 bodies, the certified P10 root, `docs/program`,
   `native_core` and `tools/p13` untouched;
 - P13 CLOSED; no phase created.
+
+---
+
+## 52. FD-PO-004 Instrument Append — Platform Organization Canonicalization Disposition, as received (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `FD-PO-004` · `acts/FD-PO-004-PLATFORM-ORGANIZATION-CANONICALIZATION-DISPOSITION.md` · content sha256 `166d6a25cc9ce55c4ac652d06c64eca23d0a865adf5420b6d8fa66e5a3e30332` |
+| **Received** | from the Founder, 2026-09-26. **Its stated status is *"PROPOSED FOR FOUNDER DECISION"*.** D1, D2, D3, D4 and Founder Authorization are all blank |
+| **In force** | **No.** Its `§15`: *"No blank field may be interpreted as approval."* It decides nothing as received. The Founder's selections, when made, are registered as the decision in their own entry |
