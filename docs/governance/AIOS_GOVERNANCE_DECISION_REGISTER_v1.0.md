@@ -8967,3 +8967,34 @@ measurement as history; no decision taken.
 | **Matters** | D1 authorization of the Act (`§5.3`) · D2 Freeze `§10` deferred architecture needed by FS-04, FS-06 and FS-08 (Architect-reserved; `FD-2` open) · D3 cloud accounts and spending (`§7.1`) · D4 production release authority (not named by the existing governance model) · D5 the two absent sources (`§3` items 4 and 6) |
 | **In force** | **No.** It decides nothing. The Founder's selections, when made, are registered as the decision in their own entry |
 | **Unchanged** | The Act is not in force; FS-00 has not begun; no cloud connector has been called. A19 stays Founder-reserved. No open item is closed |
+
+---
+
+## 62. FD-FS-001 Append — Founder Decision: D1-A · D2-A · D3-A · D4-A · D5-A; Full Stack Act Operative (2026-09-26)
+
+### FD-FS-001 — Founder Decision · Full Stack Act Authorized; Architect-Reserved Areas by ADR; Vercel + Supabase, No Spending; Separate Release Decision; Sources Supplied
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-FS-001` |
+| **Date** | 2026-09-26 |
+| **Decided by** | Founder |
+| **Record** | `acts/ACT-CC-POST-P13-AIOS-FULL-STACK-001-D1-D5-EXECUTION.md` · content sha256 `cc515b09b9537052ebf70cd2210444c327ce9c1a3cc285e83c4952fd243c5571` (equal to the attached file) |
+| **Instrument** | `acts/FD-FS-001-FULL-STACK-ACT-AUTHORIZATION-AND-BOUNDARIES.md` (`§61`), prepared by Claude with every selection blank. The selections are the Founder's, stated in the record's `§1` |
+| **Decision** | *"D1-A — AUTHORIZE ACT-CC-POST-P13-AIOS-FULL-STACK-001."* · *"D2-A — For Architect-reserved areas, Claude Code shall prepare ADR/decision packages for Architect ratification; Claude Code shall not treat preparation as ratification."* · *"D3-A — Named deployment providers: Vercel for hosting and Supabase for database; no spending authorization is granted."* · *"D4-A — Production release requires a separate Founder decision at the FS-09 release gate."* · *"D5-A — Supply the AIOS Transition Manifest and the Full Stack Development Roadmap as exact source documents."* |
+| **Effect** | **`ACT-CC-POST-P13-AIOS-FULL-STACK-001` (`§60`) is operative from this entry**, and FS-00 begins. Database, Identity and Authentication, Networking, Deployment, Scaling and Observability stay Architect-reserved: Claude prepares ADRs and does not ratify them. Vercel (hosting) and Supabase (database) are the named providers; read-only discovery and configuration inspection are permitted, any monetary commitment stops and escalates. Production release waits for a separate Founder decision after FS-09 |
+| **Not granted** | Architect authority · spending authority · production-release authority · expanded Founder delegation · unrestricted autonomy (record `§8`) |
+| **Not decided** | `FD-2` (Founder ≡ Architect) · A19 Final System Acceptance (Founder-reserved) · FN-1 · P7-I99 · RG-1 · FDP-P10-003 · G-02 · G-06 · G-07 · G-10 · C6-A1 · ADP-P10-001 |
+
+---
+
+## 63. FD-FS-001 D5-A Intake — Full Stack Source S-02 Received; S-01 Pending (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Under** | `FD-FS-001` D5-A (`§62`); intake control `D5-SOURCE-SUPPLY-RECEIPT.md` (Founder, *"READY FOR REPOSITORY INTAKE — ONE SOURCE RECEIVED, ONE SOURCE PENDING PHYSICAL SUPPLY"*) |
+| **Location** | `docs/governance/source-supply/full-stack/`, the receipt's suggested namespace; a new path, nothing overwritten. `RECEIPT-MANIFEST.json` pins each body |
+| **S-02** | *Memikirkan Deployment AIOS.txt* → `AIOS_FULL_STACK_DEVELOPMENT_ROADMAP__Memikirkan_Deployment_AIOS.txt`. **RECEIVED, VERIFIED**: 11,837 bytes, 473 lines, sha256 `75b0d95ac404dc941f63c4c5d2faae06001b46b0bda5dc5d185b7b42248890cd`, both equal to the receipt. Declares no version or status of its own. It calls its decomposition *"candidate"*, not final architecture, and cites four sources by conversation-citation markers (`fileciteturn…`) that resolve to nothing in the repository |
+| **S-01** | *AIOS PROJECT TRANSITION MANIFEST*. **PENDING PHYSICAL SOURCE SUPPLY.** Not in the package, the session uploads or the repository. Not reconstructed |
+| **D5-A** | **PARTIALLY FULFILLED / SOURCE INTAKE OPEN** (receipt `§5`) |
+| **Intake control** | `D5-SOURCE-SUPPLY-RECEIPT.md`, stored as received · sha256 `dec131c66c105fe75ca55b942104a7c815f7bb889804a8060f4db21fca247121` |
