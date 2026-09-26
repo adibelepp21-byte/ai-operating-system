@@ -1,0 +1,58 @@
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --text: #1b1f24; --muted: #5d6673;
+  --border: #d9dee5; --accent: #2f5bd3; --good: #1d7a46; --bad: #b3261e;
+  --active: #b26a00; --neutral: #5d6673;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111418; --surface: #1a1e24; --text: #e6e9ee; --muted: #9aa3ae;
+          --border: #2c323b; --accent: #7aa2ff; --good: #5cc98b; --bad: #ff8a80;
+          --active: #f0b35a; --neutral: #9aa3ae; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); }
+.topbar { display: flex; justify-content: space-between; align-items: center;
+          padding: 12px 20px; background: var(--surface); border-bottom: 1px solid var(--border); }
+.brand { font-weight: 700; font-size: 18px; }
+.muted { color: var(--muted); font-weight: 400; }
+.health { display: flex; gap: 8px; align-items: center; font-size: 14px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--neutral); }
+.health[data-state="ok"] .dot { background: var(--good); }
+.health[data-state="unavailable"] .dot, .health[data-state="offline"] .dot { background: var(--bad); }
+.layout { display: flex; min-height: calc(100vh - 50px); }
+.sidebar { display: flex; flex-direction: column; gap: 4px; padding: 16px 12px; width: 200px;
+           border-right: 1px solid var(--border); background: var(--surface); }
+.sidebar button { text-align: left; background: none; border: 0; padding: 8px 12px;
+                  border-radius: 6px; color: var(--text); cursor: pointer; font: inherit; }
+.sidebar button.active { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+main { flex: 1; padding: 20px 28px; max-width: 1200px; }
+h1 { font-size: 22px; margin: 0 0 16px; }
+h2 { font-size: 16px; margin: 24px 0 10px; }
+.banner { padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; border: 1px solid var(--bad);
+          background: color-mix(in srgb, var(--bad) 10%, transparent); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.card, .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+.card .k { color: var(--muted); font-size: 13px; }
+.card .v { font-size: 20px; font-weight: 600; margin-top: 4px; word-break: break-all; }
+.panel { display: grid; gap: 10px; max-width: 640px; margin: 12px 0; }
+label { display: grid; gap: 4px; font-size: 14px; }
+input, select, textarea { font: inherit; padding: 8px; border: 1px solid var(--border); border-radius: 6px;
+                          background: var(--bg); color: var(--text); }
+button[type="submit"], .pager button, form button { font: inherit; padding: 8px 14px; border-radius: 6px;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; justify-self: start; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+.errors { color: var(--bad); margin: 0; padding-left: 18px; }
+.grid { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border);
+        border-radius: 8px; overflow: hidden; font-size: 14px; }
+.grid th, .grid td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.grid tbody tr.clickable { cursor: pointer; }
+.grid tbody tr.clickable:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 600;
+         border: 1px solid currentColor; }
+.tone-good { color: var(--good); } .tone-bad { color: var(--bad); }
+.tone-active { color: var(--active); } .tone-neutral { color: var(--neutral); }
+.steps { list-style: none; padding: 0; display: grid; gap: 8px; }
+.steps > li { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px; }
+.pager { display: flex; gap: 12px; align-items: center; margin-top: 10px; }
+code { font-size: 13px; }

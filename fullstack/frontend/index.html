@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIOS Console</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">AIOS <span class="muted">Console</span></div>
+    <div class="health" data-testid="health"><span class="dot"></span><span class="label">checking…</span></div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" aria-label="Sections">
+      <button data-view="overview" class="active">Overview</button>
+      <button data-view="workflows">Workflows &amp; runs</button>
+      <button data-view="tools">Tools</button>
+      <button data-view="traces">Traces</button>
+      <button data-view="audit">Audit</button>
+      <button data-view="session">Session</button>
+    </nav>
+
+    <main>
+      <div class="banner" data-testid="banner" hidden></div>
+
+      <section id="view-overview" data-testid="view-overview">
+        <h1>System overview</h1>
+        <div class="cards" data-testid="overview-cards"></div>
+        <h2>Latest run</h2>
+        <div data-testid="overview-last-run" class="muted">No runs yet.</div>
+      </section>
+
+      <section id="view-workflows" data-testid="view-workflows" hidden>
+        <h1>Workflows</h1>
+        <div data-testid="catalog"></div>
+        <form data-testid="run-form" class="panel" novalidate>
+          <h2>Start a run</h2>
+          <label>Workflow <select name="workflow" data-testid="run-workflow"></select></label>
+          <label>Document <input name="document" data-testid="run-document" placeholder="docs/architecture/AIOS_ARCHITECTURE_FREEZE_v1.0.md" autocomplete="off"></label>
+          <label>Criteria, one per line <textarea name="criteria" rows="4" data-testid="run-criteria" placeholder="INV-4"></textarea></label>
+          <ul class="errors" data-testid="run-errors"></ul>
+          <button type="submit" data-testid="run-submit">Start run</button>
+        </form>
+        <div data-testid="run-result"></div>
+        <h2>Runs</h2>
+        <table class="grid" data-testid="runs-table">
+          <thead><tr><th>Run</th><th>Workflow</th><th>State</th><th>Outcome</th><th>Requested by</th><th>Completed</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div data-testid="run-detail"></div>
+      </section>
+
+      <section id="view-tools" data-testid="view-tools" hidden>
+        <h1>Tools</h1>
+        <table class="grid" data-testid="tools-table">
+          <thead><tr><th>Tool</th><th>Version</th><th>State</th><th>Actions</th><th>Effect</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <h2>Invocation ledger</h2>
+        <table class="grid" data-testid="invocations-table">
+          <thead><tr><th>Tool</th><th>Caller</th><th>Admitted</th><th>Executed</th><th>Disposition</th><th>Reason</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section id="view-traces" data-testid="view-traces" hidden>
+        <h1>Traces</h1>
+        <p class="muted">Every Agent-Instance action writes exactly one Trace record, in append order.</p>
+        <table class="grid" data-testid="traces-table">
+          <thead><tr><th>#</th><th>Agent Instance</th><th>Status</th><th>Tools</th><th>Skills</th><th>Runtime</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="pager"><button data-testid="traces-prev">Previous</button><span data-testid="traces-range"></span><button data-testid="traces-next">Next</button></div>
+      </section>
+
+      <section id="view-audit" data-testid="view-audit" hidden>
+        <h1>Audit</h1>
+        <p class="muted">Every access decision the backend made, allowed or refused.</p>
+        <table class="grid" data-testid="audit-table">
+          <thead><tr><th>#</th><th>At</th><th>Subject</th><th>Method</th><th>Path</th><th>Scope</th><th>Decision</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section id="view-session" data-testid="view-session" hidden>
+        <h1>Session</h1>
+        <form data-testid="credential-form" class="panel" novalidate>
+          <p class="muted">The sign-in mechanism is not yet decided (FS-DP-02). Until it is, the backend authenticates nobody unless it was started with an authenticator.</p>
+          <label>Credential <input type="password" name="credential" data-testid="credential" autocomplete="off"></label>
+          <button type="submit" data-testid="credential-save">Use credential</button>
+          <button type="button" data-testid="credential-clear">Clear</button>
+        </form>
+        <div data-testid="session-info"></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
