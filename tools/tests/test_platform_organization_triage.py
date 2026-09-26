@@ -60,9 +60,13 @@ class TheTriage(unittest.TestCase):
     def test_every_open_gate_item_is_triaged_or_classed_as_non_decision(self):
         triaged = {g for i in self.triage["items"] for g in i["gate_items"]}
         non_decision = " ".join(n["statement"] for n in self.triage["non_decisions"])
+        # Items first recorded after the triage (the P7-I99 result, Register
+        # `§50`) are traced to that later record instead.
+        later = {po.P7_I99_RESULT}
         for item in po.open_items():
             if item["status"] == "OPEN":
-                self.assertTrue(item["id"] in triaged or item["id"] in non_decision, item["id"])
+                self.assertTrue(item["id"] in triaged or item["id"] in non_decision
+                                or item["source"] in later, item["id"])
 
     def test_triage_agrees_with_the_gate_on_blocking(self):
         blocking = {i["id"]: i["blocking"] for i in po.open_items()}
@@ -72,11 +76,16 @@ class TheTriage(unittest.TestCase):
         self.assertTrue(blocking["ESC-C7-01"])
         self.assertTrue(blocking["G-01"])
 
-    def test_the_dormant_delegation_is_still_dormant(self):
-        """DP-03 rests on it. If it has been invoked, the triage is stale."""
+    def test_dp03_was_answered_by_a_per_volume_invocation(self):
+        """DP-03 rests on the delegation. It stays dormant except where invoked:
+        `FD-PO-003-01` invoked it for Volume 1 only, so the triage is historical
+        for DP-03 and current for nothing else it records."""
         text = (REPO_ROOT / "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md").read_text(encoding="utf-8")
         self.assertIn("### DEL-F03-015-P7I99-001 — Bounded P7-I99 Execution Delegation", text)
         self.assertIn("**ACTIVE — DORMANT UNTIL INVOKED**", text)
+        register = (REPO_ROOT / po.REGISTER).read_text(encoding="utf-8")
+        self.assertIn("### FD-PO-003-01 — Founder Decision", register)
+        self.assertIn("*\"Invoke for Volume 1\"*", register)
 
     def test_the_dependency_graph_refers_only_to_known_nodes(self):
         known = set(self.items) | {"FD-2"}

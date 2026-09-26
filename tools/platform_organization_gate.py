@@ -60,6 +60,7 @@ POST_P10 = f"{PO_ROOT}/POST-P10-TRANSITION-REGISTER.md"
 ACTIVATION_MODEL = "docs/governance/AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md"
 REGISTER = "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md"
 LINEAGE = "docs/governance/platform-organization/PD-01-VOLUME-1-BODY-LINEAGE.json"
+P7_I99_RESULT = "docs/governance/AIOS_PD01_P7_I99_REVIEW_RESULT_v1.0.md"
 VOLUME_1 = "docs/architecture/volume-1/pd-01-executive-office"
 VOLUME_2 = "docs/architecture/volume-2/pd-02-architecture-office"
 VOLUME_2_MANIFEST = f"{VOLUME_2}/RESIDENCY-MANIFEST.md"
@@ -179,10 +180,16 @@ OPEN_ITEMS: Tuple[OpenItem, ...] = (
              "classification; held as blocking for PD-01, the reference pattern, as the "
              "conservative reading"),
     OpenItem("P7-I99", FOUNDER, ("PD-01",),
-             "PD-01's integrated review under the adopted R1–R11 contract has not run; "
-             "the appointment excludes executing it", ACTIVATION_MODEL,
-             "review NOT RUN under the adopted contract", True,
-             "Appointment Register §3.2 item 22"),
+             "PD-01's integrated review under the adopted R1–R11 contract ran: RESULT B — "
+             "NOT ELIGIBLE (R11 NOT APPROVED; G-10, FN-1). A re-run needs a new Founder "
+             "invocation", P7_I99_RESULT, "P7-I99 VOLUME 1 / PD-01 RESULT B — NOT ELIGIBLE",
+             True, "DEL-F03-015-P7I99-001 invoked by FD-PO-003-01; exclusion 8 (no "
+             "self-invocation). Evidence only: no freeze, no activation"),
+    OpenItem("FN-1", FOUNDER, ("PD-01",),
+             "PD-01 exercises Enterprise Governance Authority; PD-03's Governance Authority "
+             "is not resident and unbound: the boundary cannot be assessed (P7-I99 R5)",
+             P7_I99_RESULT, "**FN-1:**", True,
+             "P7-I99 R5 BLOCKED. Assessable once ESC-C7-01 or FDP-P10-003 is decided"),
     OpenItem("RG-1", FOUNDER, ("PD-01",),
              "PD-01 activation: the conditions beyond Freeze and the activation "
              "authorization are Founder-reserved (AG-08, AG-10)", ACTIVATION_MODEL,

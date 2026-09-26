@@ -8770,3 +8770,21 @@ states its date in its heading only, as `§34`, `§37` and `§39` do.
 | **Decision** | F-0: *"Authorize ACT-003 v1.1"*. F-2: *"Invoke for Volume 1"* |
 | **Effect** | `ACT-CC-POST-P13-PLATFORM-ORG-003` v1.1 = AUTHORIZED FOR EXECUTION, construction *"AUTHORIZED WITH BOUNDARY"*. `DEL-F03-015-P7I99-001` invoked for Volume 1 only; its exclusions stand: evidence only, no freeze, no activation |
 | **Not decided** | FDP-P10-001/002/003 · ESC-C7-01 · G-02 · ADR-0029 · C6-A1 · G-10 · RG-1 · FD-2 |
+
+---
+
+## 50. DEL-F03-015-P7I99-001 Execution — P7-I99 Integrated Architecture Review, Volume 1 / PD-01 (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Under** | `DEL-F03-015-P7I99-001`, invoked for Volume 1 by `FD-PO-003-01` (`§49`); contract `ACT-CC-F03-007` R1–R11 |
+| **Record** | `AIOS_PD01_P7_I99_REVIEW_RESULT_v1.0.md` · sha256 `9a43c0df97930872137e0ff096156b24c97125989a2682c55e10c4726cc7394e` |
+| **Result** | **RESULT B — NOT ELIGIBLE; R11 NOT APPROVED.** R4, R6, R9: REQUIRES ARCHITECT DECISION (`G-10`). R5: BLOCKED (`FN-1`, governance-authority boundary against non-resident PD-03). R1, R10 COMPLETE; R2, R3, R7, R8 NON-MATERIAL GAP |
+| **Gate** | `P7-I99` restated from the result record; `FN-1` added (Founder; assessable once `ESC-C7-01` or `FDP-P10-003` is decided) |
+
+**Not changed:**
+- evidence only: no freeze, no activation, no conversion of the result into
+  either; Volume 1 stays FROZEN (`GDR-0017`); PD-01 not activated;
+- no Volume 1 body modified (45/45 verify after review);
+- the invocation is spent: a re-run needs a new Founder invocation
+  (exclusion 8).
