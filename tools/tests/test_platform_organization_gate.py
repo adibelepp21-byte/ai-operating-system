@@ -57,6 +57,18 @@ class TheLiveState(unittest.TestCase):
         self.assertIn(po.ARCHITECT_DECISION, self.report["divisions"]["PD-01"]["also"])
         self.assertIn(po.CONFLICTED, self.report["divisions"]["PD-10"]["also"])
 
+    def test_non_blocking_items_follow_their_sources(self):
+        """`G-02` and `G-03` are "Blocking: NO" in the Systemic Gap Map, and the
+        Founder ruled the bindings conditional-blocking in P12. They are open,
+        and they are residual, not blockers."""
+        blocking = {i["id"]: i["blocking"] for i in self.report["open_items"]}
+        for identifier in ("G-02", "FDP-P10-001", "FDP-P10-002", "FDP-P10-003"):
+            self.assertFalse(blocking[identifier], identifier)
+        self.assertTrue(blocking["G-01"])
+        self.assertTrue(blocking["ESC-C7-01"])
+        self.assertIn("FDP-P10-001", self.report["divisions"]["PD-08"]["residual"])
+        self.assertEqual((), self.report["divisions"]["PD-08"]["also"])
+
     def test_pd_02_is_complete_only_through_its_registered_contract(self):
         pd02 = self.report["divisions"]["PD-02"]
         self.assertIn("GDR-0026", pd02["reasons"][0])
@@ -313,7 +325,7 @@ class ReservedMattersCloseOnlyByTheirHolder(_Copy):
         self._decision("FDR-83", "Founder", ["FDP-P10-001"])
         report = self._eval()
         self.assertEqual("CLOSED by FDR-83", self._item(report, "FDP-P10-001"))
-        self.assertNotIn(po.FOUNDER_DECISION, report["divisions"]["PD-08"]["also"])
+        self.assertNotIn("FDP-P10-001", report["divisions"]["PD-08"]["residual"])
 
     def test_nc13_a_ceo_record_does_not_close_an_architect_matter(self):
         self._decision("FDR-82", "Claude Code", ["C6-A1", "G-10"])

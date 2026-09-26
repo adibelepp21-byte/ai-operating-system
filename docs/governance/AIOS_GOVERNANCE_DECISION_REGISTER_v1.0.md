@@ -8664,3 +8664,14 @@ authority then applicable.
 - P13 (CLOSED) and certification;
 - authority: state-changing NONE; no reserved matter decided;
 - no phase created: Phase 14 is not established.
+
+---
+
+## 44. ACT-CC-POST-P13-PLATFORM-ORG-002 Append — 7-Point Decision Triage / Governance Resolution Gate (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Act** | `ACT-CC-POST-P13-PLATFORM-ORG-002` · `acts/ACT-CC-POST-P13-PLATFORM-ORG-002-SEVEN-POINT-DECISION-TRIAGE-GATE.md` · content sha256 `5de35fd1dd67f06f6ff434fdc2b77bcf0d994ccca7c40dcc684b19d4ab625086` |
+| **Date** | 2026-09-26 |
+| **Received** | from the Founder, 2026-09-26. The instrument names no issuer or date. **Its stated status is *"PROPOSED FOR FOUNDER AUTHORIZATION"*.** It is recorded as proposed; no approval is inferred from its arrival. It is not a Founder Decision, and it changes none |
+| **Scope** | triage of seven Platform Organization decision points, and decision preparation only. It grants no construction authority for PD-01 … PD-10 (`§21`). The evidence work it asks for falls within existing delegation, and was done under that delegation |

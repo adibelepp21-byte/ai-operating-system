@@ -142,18 +142,25 @@ OPEN_ITEMS: Tuple[OpenItem, ...] = (
              "Founder supply (SYSTEMIC-GAP-MAP, Summary)"),
     OpenItem("G-02", FOUNDER_OR_ARCHITECT, ("PD-10",),
              "PD-10 carries two names in resident sources: Developer Experience and "
-             "Developer Enablement", GAP_MAP, "## G-02 —", True,
-             "SYSTEMIC-GAP-MAP Summary: Founder and Architect authority required"),
+             "Developer Enablement", GAP_MAP, "## G-02 —", False,
+             "SYSTEMIC-GAP-MAP G-02: Blocking NO. Holder: the gap map says Founder "
+             "(which source governs naming); DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL says "
+             "renaming a division is architect approval (Domain Model §6)"),
     OpenItem("FDP-P10-001", FOUNDER, ("PD-08",),
              "bind the Security Owner role to PD-08, or record non-binding (G-03)",
-             POST_P10, "**`FDP-P10-001`**", True,
-             "FD-P10-005 §4: open after certification"),
+             POST_P10, "**`FDP-P10-001`**", False,
+             "FD-P10-005 §4: open after certification. Not blocking: SYSTEMIC-GAP-MAP "
+             "G-03 Blocking NO; the Founder's P12 policy D2 = CONDITIONAL-BLOCKING "
+             "(only work with a proven direct dependency stops)"),
     OpenItem("FDP-P10-002", FOUNDER, ("PD-09",),
              "bind the Quality Authority to PD-09, or record non-binding", POST_P10,
-             "**`FDP-P10-002`**", True, "FD-P10-005 §4"),
+             "**`FDP-P10-002`**", False,
+             "FD-P10-005 §4. Not blocking: G-03 extends to PD-09, Blocking NO"),
     OpenItem("FDP-P10-003", FOUNDER, ("PD-03",),
              "Governance Authority binding; activation reserved", POST_P10,
-             "**`FDP-P10-003`**", True, "FD-P10-005 §4"),
+             "**`FDP-P10-003`**", False,
+             "FD-P10-005 §4. Not blocking: POST-P10 Gate D, P10 relevance NONE; the "
+             "Founder's P12 policy D3 = CONDITIONAL-BLOCKING"),
     OpenItem("ADP-P10-001", ARCHITECT, ALL,
              "ADR-0029 (Proposed): Department ≠ PD as entity type or population; until it "
              "is decided, INV-10 exposure of the declared edges cannot be evaluated",
@@ -168,7 +175,9 @@ OPEN_ITEMS: Tuple[OpenItem, ...] = (
     OpenItem("G-10", ARCHITECT, ("PD-01",),
              "PD-01 assigns Capability ownership to Sub Divisions: internal structure, "
              "or a fourth Spine level", GAP_MAP, "## G-10 —", True,
-             "Domain Model §8: REG-CFV2-001 C-2"),
+             "Domain Model §8: REG-CFV2-001 C-2. The source states no blocking "
+             "classification; held as blocking for PD-01, the reference pattern, as the "
+             "conservative reading"),
     OpenItem("P7-I99", FOUNDER, ("PD-01",),
              "PD-01's integrated review under the adopted R1–R11 contract has not run; "
              "the appointment excludes executing it", ACTIVATION_MODEL,

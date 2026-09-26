@@ -1,0 +1,690 @@
+{
+  "record": "AIOS Platform Organization — 7-point decision triage",
+  "under": "ACT-CC-POST-P13-PLATFORM-ORG-002 (status as stated: PROPOSED FOR FOUNDER AUTHORIZATION)",
+  "status": "EVIDENCE. Decides nothing. Every item's decision_taken is null.",
+  "date": "2026-09-26",
+  "readiness_fields": [
+    "question",
+    "established_facts",
+    "evidence",
+    "provenance",
+    "current_state",
+    "unknowns",
+    "conflicts",
+    "authority_owner",
+    "options",
+    "consequences",
+    "non_decision_consequence",
+    "recommended_evidence_path"
+  ],
+  "cross_cutting": {
+    "id": "FD-2",
+    "matter": "Founder ≡ Architect: IMPLIED — open",
+    "why_it_matters": "Every item routed to the Architect lands on Moriarty acting in the Architect capacity. Approved ADRs record the Decision Owner as 'Architect (Founder)', and GDR-0028 records 'Founder / Architect: Moriarty'. The equivalence is implied, not ratified. So the Founder/Architect split in this triage is a split of capacity and instrument (a Founder Decision versus an ADR approved under Constitution §3.4), not of persons. If FD-2 were ever ratified as non-equivalence, the routing target of every Architect item would be unresolved (ACT-CC-T4.2).",
+    "sources": [
+      "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md",
+      "docs/governance/AIOS_APPOINTMENT_REGISTER_v1.0.md",
+      "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md",
+      "docs/architecture/adr/decisions/ADR-0010.md",
+      "docs/architecture/adr/decisions/ADR-0012.md",
+      "docs/governance/acts/ACT-CC-T4.2.md"
+    ],
+    "non_delegable_to_claude": "Constitution §3.2: no delegation may extend to Domain Model semantic changes or cross-Department structural changes. REG-CFV2-001 C-2 and C-3 exclude them from the CEO's bounded Architecture Authority (A05). The Appointment Register §3.2 excludes P7-I99 execution (item 22) and Volume 1 modification (item 25)."
+  },
+  "items": [
+    {
+      "id": "DP-01",
+      "matter": "PD-03 / PD-04 source residency",
+      "act_routing": {
+        "evidence_first": "YES",
+        "founder": "Conditional",
+        "architect": "Conditional"
+      },
+      "question": "May the canonical PD-03 Volume 3 and PD-04 Volume 4 become resident, and by what act?",
+      "established_facts": [
+        "Both volumes exist and were verified by direct read in a P10-era session path. Volume 3: 8 Part files, A1–H10, 80/80 section identities, 3,704,607 bytes. Volume 4: 3 Part files, A1–C10, 30/30 identities, 1,508,896 bytes, matching ACT-CC-P6-071 §2 to the byte.",
+        "They were never committed. On 2026-09-26, over the full (unshallowed) history of every branch, `git rev-list --objects --all` finds no volume-3 or volume-4 object.",
+        "They are not in this container: the filesystem and upload paths were searched on 2026-09-26, and /mnt/user-data/working is empty.",
+        "ACT-CC-P12-023 attempted supply on 2026-09-18 and found the volumes unreachable from any execution environment. The session path did not survive its session.",
+        "Residency is conferred only by Founder supply under a named Act (E-29). The PD-02 precedent needed three things: a Founder transmission, a named authorizing Act, and a namespace decision (ADR-0012).",
+        "Volume 3's own closure record approves terminality (Successor Architecture: NOT FOUND). No successor artifact supersedes either volume."
+      ],
+      "evidence": [
+        "docs/governance/AIOS_P10_AUTONOMOUS_EXECUTION_VERIFICATION_v1.0.md §21.3",
+        "docs/architecture/p12/P12-023-SUPPLY-ATTEMPT-RECORD.md",
+        "docs/architecture/platform-organization/VOLUME-SECTION-STATUS-MATRIX.md",
+        "docs/architecture/platform-organization/EVIDENCE-LEDGER.md E-29",
+        "docs/architecture/volume-2/pd-02-architecture-office/RESIDENCY-MANIFEST.md",
+        "docs/architecture/adr/decisions/ADR-0012.md"
+      ],
+      "provenance": "Canonical Platform Encyclopedia volumes (CANONICAL, verified to exist). Their residency is NOT RESIDENT. What the repository holds about them is DERIVED evidence and HISTORICAL records.",
+      "current_state": "PD-03, PD-04 = REQUIRES FOUNDER DECISION (gate).",
+      "result": [
+        "SOURCE FOUND",
+        "SOURCE UNRECOVERABLE (by Claude)",
+        "SOURCE RESIDENCY AUTHORIZATION REQUIRED"
+      ],
+      "unknowns": [
+        "Where the bodies are held now. Presumed to be the Founder's project source corpus; not verified.",
+        "Per-file hashes: only totals and identity counts were ever recorded.",
+        "Whether the four PD-03 control artifacts seen beside them should be supplied too."
+      ],
+      "conflicts": [
+        "Routing: the Act marks Founder and Architect as 'Conditional'. The evidence makes both certain. The transmission and the named Act are Founder requirements. The namespace is an ADR, Decision Owner Architect (Founder), on the ADR-0012 precedent."
+      ],
+      "authority_owner": {
+        "founder": "transmission of the bodies and the named authorizing Act",
+        "architect": "the namespace decision (an ADR-0012 equivalent)",
+        "claude": "programmatic ingestion under the named Act, with a residency manifest, verified against the ESC-C7-01 totals"
+      },
+      "options": [
+        {
+          "id": "A",
+          "option": "Authorize residency from a supplied path, with the namespace decided by ADR (ESC-C7-01 §G(a))"
+        },
+        {
+          "id": "B",
+          "option": "Transmit the bodies as SOURCE TRANSFER BATCH messages under a named Act, as PD-02 was (ESC-C7-01 §G(b))"
+        },
+        {
+          "id": "C",
+          "option": "Direct that the volumes remain non-resident; the corpus continues on inventory evidence (ESC-C7-01 §G(c))"
+        }
+      ],
+      "consequences": {
+        "A": "110 section bodies become readable canon. The gate reports PD-03 and PD-04 as UNKNOWN (resident, not assessed), never COMPLETE. PD-03's own source gaps (Part B not frozen; D5, G4 and G6 not located) become questions with an owner. Construction still needs a separate authorization.",
+        "B": "Same as A.",
+        "C": "PD-03 and PD-04 stay REQUIRES FOUNDER DECISION, and the organization cannot pass outcome D."
+      },
+      "non_decision_consequence": "Identical to C in effect, but unrecorded: every re-run of the gate raises the same item again.",
+      "recommended_evidence_path": "When the bodies arrive, verify 80/80 and 30/30 identities and the byte totals 3,704,607 and 1,508,896 before any commit. Record per-file hashes in a residency manifest. Do not construct.",
+      "gate_items": [
+        "ESC-C7-01"
+      ],
+      "decision_taken": null
+    },
+    {
+      "id": "DP-02",
+      "matter": "PD-05 … PD-10 source existence / derived-only status",
+      "act_routing": {
+        "evidence_first": "YES",
+        "founder": "Conditional",
+        "architect": "Conditional"
+      },
+      "question": "Must PD-05 … PD-10 each have a source volume, or may they be completed as derived-only divisions? If derived-only, what is their completion contract?",
+      "established_facts": [
+        "No Volume 5, 6, 7, 8, 9 or 10 exists in the full git history, on either branch, or on the filesystem. No resident document even references such a volume: zero hits.",
+        "Volume 0 and Volumes 0.1–0.3, which might define derived construction, are not resident (G-06). Whether Volume 0 does so is UNKNOWN.",
+        "PD-01 is a reference pattern, not a content source. 'PD-02–PD-10 follow by domain adaptation, not content copy' (MASTER_ROADMAP §5). Adaptation needs domain source; the Kernel supplies pattern only.",
+        "Derived construction was authorized by FDE-P10-FRONTIER-02, Decision A (Founder, ISSUED), and was exercised: all ten division records are CONSTRUCTED (derived). Standing construction continues through FDE-P10-AUTONOMOUS-EXECUTION-01, retained under V2 (RD-12, A02/A06/A09).",
+        "The derived records left 5 Part slots unfilled where evidence was absent: PD-08 D and E, PD-09 E, PD-10 D and E. No new evidence has arrived since, so nothing further is derivable.",
+        "G-01 is recorded as 'Blocking: YES for a canonical baseline · NO for the derived baseline'.",
+        "Hard boundaries under V2 (SD-2): canonicalization, freeze and DERIVED ≠ ADOPTED ≠ CANONICAL ≠ FROZEN are Founder-reserved."
+      ],
+      "per_division": {
+        "PD-05": [
+          "SOURCE VOLUME NOT FOUND",
+          "DERIVED CONSTRUCTION PERMITTED (exercised)",
+          "ADDITIONAL AUTHORITY REQUIRED (canonical construction; derived-only completion contract)"
+        ],
+        "PD-06": [
+          "SOURCE VOLUME NOT FOUND",
+          "DERIVED CONSTRUCTION PERMITTED (exercised)",
+          "ADDITIONAL AUTHORITY REQUIRED (canonical construction; derived-only completion contract)"
+        ],
+        "PD-07": [
+          "SOURCE VOLUME NOT FOUND",
+          "DERIVED CONSTRUCTION PERMITTED (exercised)",
+          "ADDITIONAL AUTHORITY REQUIRED (canonical construction; derived-only completion contract)"
+        ],
+        "PD-08": [
+          "SOURCE VOLUME NOT FOUND",
+          "DERIVED CONSTRUCTION PERMITTED (exercised)",
+          "ADDITIONAL AUTHORITY REQUIRED (canonical construction; derived-only completion contract)"
+        ],
+        "PD-09": [
+          "SOURCE VOLUME NOT FOUND",
+          "DERIVED CONSTRUCTION PERMITTED (exercised)",
+          "ADDITIONAL AUTHORITY REQUIRED (canonical construction; derived-only completion contract)"
+        ],
+        "PD-10": [
+          "SOURCE VOLUME NOT FOUND",
+          "DERIVED CONSTRUCTION PERMITTED (exercised)",
+          "ADDITIONAL AUTHORITY REQUIRED (canonical construction; derived-only completion contract)",
+          "CONFLICT (name, DP-05)"
+        ]
+      },
+      "evidence": [
+        "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md G-01, G-06",
+        "docs/architecture/platform-organization/FRONTIER-RESOLUTION-MATRIX.md §6.1",
+        "docs/architecture/platform-organization/divisions/README.md",
+        "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md GDR-0037",
+        "docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md RD-12, SD-2",
+        "docs/governance/AIOS_P10_AUTONOMOUS_EXECUTION_FOUNDER_EVENT_PROPOSAL_v1.0.md"
+      ],
+      "provenance": "The division records are DERIVED and certified as P10 evidence. The frozen PD-02 statements about the other divisions (E-06 … E-10) are CANONICAL within PD-02's corpus. The implementation is correspondence, not authority.",
+      "current_state": "PD-05 … PD-10 = BLOCKED (gate), on G-01.",
+      "gate_rule_disclosure": "The gate's requirement that a division has a resident corpus, frozen and activated by registered Founder decisions, before COMPLETE is a gate implementation rule. It is derived from the PD-01/PD-02 lifecycle (Volume Activation Model T1–T9; GDR-0026, GDR-0036). No canonical source states that a division without a volume can never be complete. What is canonical is: residency by Founder supply (E-29); G-01 blocking a canonical baseline; and the SD-2 reservations.",
+      "unknowns": [
+        "Whether Volumes 5–10 exist anywhere outside the repository. Only the Founder can say.",
+        "Whether Volume 0 defines a derived-construction path.",
+        "What a derived-only division's completion contract would be: no source defines one."
+      ],
+      "conflicts": [
+        "The Act asks whether 'source volume required' is a canonical rule. Answer: for a canonical baseline, yes (G-01). For COMPLETE in the gate, it is the gate's rule (gate_rule_disclosure)."
+      ],
+      "authority_owner": {
+        "founder": "supply of volumes; whether derived-only divisions may be completed, and on what contract (canonicalization is SD-2)",
+        "architect": "whether derived records may be adopted as architecture (ADR), and their structure (DP-06)",
+        "claude": "none further: no derivable content remains without new evidence"
+      },
+      "options": [
+        {
+          "id": "A",
+          "option": "Supply Volumes 5–10, if they exist"
+        },
+        {
+          "id": "B",
+          "option": "Declare PD-05 … PD-10 derived-only and define their completion contract: what evidence suffices, and who adopts it"
+        },
+        {
+          "id": "C",
+          "option": "Commission canonical volumes, authored by the Founder or Architect"
+        },
+        {
+          "id": "D",
+          "option": "Defer: the divisions stay BLOCKED"
+        }
+      ],
+      "consequences": {
+        "A": "Divisions become UNKNOWN (resident, not assessed), then constructible under a separate authorization.",
+        "B": "The gate needs its COMPLETE rule extended to the defined contract. DP-06 (structure, capability ownership) and DP-07 (entity semantics) then bear directly on what a derived division may contain. PD-10 also needs DP-05.",
+        "C": "Canon is created by its authority, not by Claude. Then as A.",
+        "D": "The organization cannot pass outcome D."
+      },
+      "non_decision_consequence": "As D.",
+      "recommended_evidence_path": "Founder statement on whether Volumes 5–10 exist; if not, a decision under B or C.",
+      "gate_items": [
+        "G-01"
+      ],
+      "decision_taken": null
+    },
+    {
+      "id": "DP-03",
+      "matter": "PD-01 P7-I99 + activation",
+      "act_routing": {
+        "evidence_first": "Required",
+        "founder": "YES",
+        "architect": "Required"
+      },
+      "question": "Will the Founder invoke the dormant P7-I99 delegation for Volume 1? Separately and later, will the Founder define PD-01's activation conditions and authorize activation?",
+      "established_facts": [
+        "PD-01 is FROZEN by direct Founder determination (GDR-0017, route R-B). P7-I99 did not produce that freeze.",
+        "P7-I99 ran twice before remediation, both NOT APPROVED FOR FREEZE. It has never run under the adopted contract.",
+        "The adopted contract (FD-015-02): the resident R1–R11 set in ACT-CC-F03-007 applies to both volumes, with volume-specific evidence. Evidence, findings and results are never shared between volumes.",
+        "The Appointment Register §3.2 item 22 excludes P7-I99 execution from the appointment. That is a non-conferral clause, not a prohibition.",
+        "DEL-F03-015-P7I99-001: the Founder, acting in the Architect capacity, delegated bounded P7-I99 execution to Claude Code. It applies per Volume, only when a separate Founder-authorized Act invokes it. Status: ACTIVE — DORMANT UNTIL INVOKED.",
+        "That delegation excludes activation, freeze, converting a result into either, and redefining R1–R11. A P7-I99 result is evidence only.",
+        "PD-02 precedent: P7-I99 executed under ACT-CC-F03-016 (result GDR-0025) → frozen (GDR-0026) → activation gate R15 PASS (GDR-0035) → activated (GDR-0036; authorizing ACT-CC-R15A, executing ACT-CC-R15B).",
+        "For PD-01: AE-05 is NOT SATISFIED, because no resident source enumerates what the Activation Gate tests. The AG-08 conditions beyond freeze are Founder-reserved (RG-1), and AG-10 is Founder activation authorization.",
+        "The PD-01 body lineage verifies 45/45 bodies against authorized changes."
+      ],
+      "evidence": [
+        "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md DEL-F03-015-P7I99-001",
+        "docs/governance/AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md §4, §5, §6, §7.1",
+        "docs/governance/acts/ACT-CC-F03-007.md",
+        "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md GDR-0017, GDR-0025, GDR-0026, GDR-0035, GDR-0036",
+        "docs/governance/platform-organization/PD-01-VOLUME-1-BODY-LINEAGE.json"
+      ],
+      "provenance": "AUTHORITATIVE: the delegation record and the Register decisions. CANONICAL: the R1–R11 contract adopted by FD-015-02.",
+      "current_state": "PD-01 = REQUIRES FOUNDER DECISION (gate). P7-I99 not run; not activation-eligible.",
+      "semantic_separation": [
+        "PD-01 READINESS",
+        "P7-I99 REVIEW RESULT",
+        "FOUNDER AUTHORIZATION",
+        "ACTIVATION OPERATION",
+        "POST-ACTIVATION VERIFICATION"
+      ],
+      "unknowns": [
+        "The activation criteria beyond freeze (RG-1): no resident source enumerates them.",
+        "Whether a review under R1–R11 would raise G-10 (Capability ownership in B3) as a material finding."
+      ],
+      "conflicts": [
+        "Routing: the Act's §8.4 routes P7-I99 through 'ARCHITECT / AUTHORIZED REVIEW'. The evidence names the authorized reviewer already: Claude Code under DEL-F03-015-P7I99-001, a delegation the Founder issued in the Architect capacity. The route is Founder invocation, not a separate Architect review."
+      ],
+      "authority_owner": {
+        "founder": "the invoking Act for Volume 1; the activation criteria (RG-1); activation authorization (AG-10)",
+        "architect": "any material finding the review raises that needs an architectural decision, such as G-10",
+        "claude": "execution of R1–R11 once invoked; the result is evidence"
+      },
+      "options": [
+        {
+          "id": "A",
+          "option": "Invoke the delegation for Volume 1: P7-I99 only"
+        },
+        {
+          "id": "B",
+          "option": "Invoke it, and define the activation criteria (RG-1) toward an eventual activation decision"
+        },
+        {
+          "id": "C",
+          "option": "Defer both"
+        },
+        {
+          "id": "D",
+          "option": "Decide that PD-01 remains a frozen reference implementation, not to be activated"
+        }
+      ],
+      "consequences": {
+        "A": "A result, APPROVED or NOT APPROVED, is recorded as evidence. PD-01's state does not change without an activation decision.",
+        "B": "This opens the PD-02-style path: review → activation gate → Founder activation → verification.",
+        "C": "PD-01 stays REQUIRES FOUNDER DECISION.",
+        "D": "PD-01 is final as frozen, and its REQUIRES FOUNDER DECISION state resolves. The gate would need that disposition recorded as PD-01's contract."
+      },
+      "non_decision_consequence": "As C.",
+      "post_activation_verification": "The PD-02 precedent: the GDR-0036 mechanism, with verification after activation.",
+      "recommended_evidence_path": "None further before invocation. The contract, the delegation and the corpus integrity are all resident and verified.",
+      "gate_items": [
+        "P7-I99",
+        "RG-1"
+      ],
+      "decision_taken": null
+    },
+    {
+      "id": "DP-04",
+      "matter": "Formal authority bindings",
+      "act_routing": {
+        "evidence_first": "Required",
+        "founder": "YES",
+        "architect": "Supporting"
+      },
+      "question": "Three separate decisions: bind Security Owner → PD-08? Quality Authority → PD-09? Governance Authority → PD-03? Or record each as deliberately unbound?",
+      "established_facts": [
+        "Security: the role is defined in the frozen PD-02 corpus. A5:330 'Security Execution │ NONE │ Security owner'; A5 §12 bars PD-02 from taking security authority; A6:452 and A6:671 name the Security Owner as an architectural interface; C8:570 says the 'Security owner tetap memiliki security domain responsibility'. PD-08 appears only as a diagram label (A4:286, A6:299).",
+        "Quality: 'Quality authority remains applicable' (A5:331). PD-09 has only a role fragment, 'Evaluate Quality' (E-10).",
+        "Governance: PD-03's own A1 declares 'Platform Authority: Governance Authority', but that body is not resident (E-30). Governance activation is reserved (FZ-04; Volume VII §4.1).",
+        "No binding Founder decision body exists for FDP-P10-001, -002 or -003 (ACT-CC-P12-001; FD-P10-005 §4; FD-P12-001 §16).",
+        "The Founder set a P12 policy: D2 (Security) = CONDITIONAL-BLOCKING, D3 (Governance) = CONDITIONAL-BLOCKING. Only work with a proven direct dependency stops.",
+        "Authority-role creation and binding is an SD-2 hard boundary, reserved to the Founder.",
+        "SYSTEMIC-GAP-MAP G-03: 'Blocking: NO'. It extends to PD-09."
+      ],
+      "binding_chain": {
+        "Security Owner → PD-08": {
+          "authority": "Security Owner / Security Authority (frozen PD-02 corpus)",
+          "decision_right": "UNKNOWN",
+          "owner": "UNBOUND",
+          "responsibility": "security domain responsibility (C8:570)",
+          "boundary": "PD-02 holds NONE of security execution (A5:330)",
+          "escalation": "UNKNOWN",
+          "evidence": "E-series; G-03"
+        },
+        "Quality Authority → PD-09": {
+          "authority": "Quality authority (A5:331)",
+          "decision_right": "UNKNOWN",
+          "owner": "UNBOUND",
+          "responsibility": "'Evaluate Quality' (E-10)",
+          "boundary": "Evaluation authority ≠ ownership authority",
+          "escalation": "UNKNOWN",
+          "evidence": "E-10; G-03"
+        },
+        "Governance Authority → PD-03": {
+          "authority": "Governance Authority (PD-03 A1, NOT RESIDENT)",
+          "decision_right": "UNKNOWN",
+          "owner": "UNBOUND",
+          "responsibility": "Policy / Control / Certification (E-30, NOT RESIDENT)",
+          "boundary": "Technical Design NOT OWNED (E-33)",
+          "escalation": "UNKNOWN",
+          "evidence": "E-30, E-33; FZ-04"
+        }
+      },
+      "evidence": [
+        "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md G-03",
+        "docs/architecture/platform-organization/POST-P10-TRANSITION-REGISTER.md Gate D",
+        "docs/governance/acts/P12-AUTHORIZATION-FOUNDER-DECISION-ISSUED.md",
+        "docs/governance/acts/FD-P12-001-E12-RATIFICATION-AND-ACCEPTANCE-BOUNDARY.md",
+        "docs/architecture/platform-organization/EVIDENCE-LEDGER.md"
+      ],
+      "provenance": "The roles are CANONICAL in the frozen PD-02 corpus. PD-03's self-declaration is CANONICAL but NOT RESIDENT. The bindings themselves are ABSENT.",
+      "current_state": "Open, non-blocking residual in the gate for PD-08, PD-09 and PD-03.",
+      "unknowns": [
+        "The decision rights and escalation paths of each role: not stated in any resident source.",
+        "Whether PD-03's resident Volume 3 (DP-01) would itself settle the Governance Authority question."
+      ],
+      "conflicts": [
+        "The Act lists DP-04 beside blockers, and ACT-001's gate marked the bindings blocking. The sources say otherwise: G-03 is 'Blocking: NO', and the Founder's P12 policy is conditional-blocking. The gate is corrected (see the package)."
+      ],
+      "authority_owner": {
+        "founder": "each binding, or its deliberate non-binding (SD-2)",
+        "architect": "supporting: whether a binding changes architecture (for example the frozen PD-02 texts)",
+        "claude": "none"
+      },
+      "options": [
+        {
+          "id": "A",
+          "option": "Bind the role to the division"
+        },
+        {
+          "id": "B",
+          "option": "Record the role as deliberately not bound to the division"
+        },
+        {
+          "id": "C",
+          "option": "Defer, under the existing conditional-blocking policy"
+        }
+      ],
+      "consequences": {
+        "A": "The authority dimension (G3) and governance (G12) improve for that division. Its content stays blocked on source (DP-01, DP-02).",
+        "B": "The frontier closes with the role outside the division, and ownership of the role remains to be placed.",
+        "C": "Work with a proven direct dependency on the role stops; other work continues."
+      },
+      "non_decision_consequence": "As C.",
+      "recommended_evidence_path": "Take the Governance Authority binding (FDP-P10-003) after DP-01. Volume 3's own text is the best evidence for it.",
+      "gate_items": [
+        "FDP-P10-001",
+        "FDP-P10-002",
+        "FDP-P10-003"
+      ],
+      "decision_taken": null
+    },
+    {
+      "id": "DP-05",
+      "matter": "PD-10 semantic identity",
+      "act_routing": {
+        "evidence_first": "Supporting",
+        "founder": "No",
+        "architect": "YES"
+      },
+      "question": "What is PD-10: Developer Enablement or Developer Experience? With what definition, boundary and relationship to PD-06?",
+      "established_facts": [
+        "The frozen PD-02 A4:288 reads 'PD-10 Developer Enablement' (Volume 2, FROZEN by GDR-0026).",
+        "MASTER_ROADMAP §5 reads 'PD-10 Developer Experience'.",
+        "FDE-P10-FRONTIER-02 §20 permits construction under 'Developer Experience' as a construction name. It is not a determination.",
+        "The two are not synonyms. 'Enablement' suggests capability provision; 'Experience' suggests interface quality.",
+        "No resident source defines PD-10's boundary, its capabilities, or its relationship to PD-06. The PD-10 record's Parts D and E are unfilled for this reason."
+      ],
+      "evidence": [
+        "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md G-02",
+        "docs/architecture/platform-organization/divisions/PD-10-developer-experience.md",
+        "docs/architecture/platform-organization/DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md",
+        "docs/architecture/volume-2/pd-02-architecture-office/A4.md"
+      ],
+      "provenance": "Enablement: CANONICAL (frozen corpus). Experience: AUTHORITATIVE registry text in a protected program document. The PD-10 record is DERIVED.",
+      "current_state": "PD-10 = BLOCKED, also CONFLICTED (gate). G-02 is 'Blocking: NO'.",
+      "unknowns": [
+        "The semantic definition, boundary and PD-06 relationship under either name: no source supplies them."
+      ],
+      "conflicts": [
+        "Routing: the Act's §10.2 says 'Ini bukan Founder governance decision'. G-02 names the Founder as owner, because the question is which source governs naming, the frozen corpus or the program registry. DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL makes renaming a division 'architectural decision, architect approval' (Domain Model §6). SD-2 reserves 'Platform identity' to the Founder.",
+        "Migration: choosing 'Experience' leaves frozen Volume 2 text saying 'Enablement'. Changing frozen volume content is architectural-tier (GDR-0032) and needs an ADR. Choosing 'Enablement' departs from the program registry."
+      ],
+      "authority_owner": {
+        "founder": "the precedence rule between frozen corpus and program registry, and Platform identity (SD-2)",
+        "architect": "the name and its semantic definition, by ADR (Domain Model §6)",
+        "claude": "none"
+      },
+      "architect_output_required": [
+        "SELECTED CANONICAL TERM",
+        "SEMANTIC DEFINITION",
+        "BOUNDARY",
+        "RELATIONSHIP TO PD-06",
+        "MIGRATION / COMPATIBILITY REQUIREMENT"
+      ],
+      "options": [
+        {
+          "id": "A",
+          "option": "Developer Enablement: the frozen corpus governs"
+        },
+        {
+          "id": "B",
+          "option": "Developer Experience: the program registry governs"
+        },
+        {
+          "id": "C",
+          "option": "Distinct concepts: one names the division, the other a capability within it"
+        }
+      ],
+      "consequences": {
+        "A": "The MASTER_ROADMAP enumeration diverges. That is a protected program document, never edited here.",
+        "B": "The frozen A4:288 diverges. An ADR decides whether it is amended through a successor or left as history.",
+        "C": "Both names stand, and each needs its own definition and boundary."
+      },
+      "non_decision_consequence": "PD-10 stays CONFLICTED, and PD-10's Parts D and E stay underivable.",
+      "recommended_evidence_path": "None available from resident sources. A PD-10 corpus (DP-02) would be the evidence.",
+      "gate_items": [
+        "G-02"
+      ],
+      "decision_taken": null
+    },
+    {
+      "id": "DP-06",
+      "matter": "PD-01 structural pattern",
+      "act_routing": {
+        "evidence_first": "Supporting",
+        "founder": "No*",
+        "architect": "YES"
+      },
+      "question": "(A) Are PD-01's Sub Divisions internal structure, or a fourth Spine level? (B) Which Part structure is canonical for division volumes?",
+      "subquestions": {
+        "A": {
+          "gate_item": "G-10",
+          "facts": [
+            "volume-1 B3 §4 assigns ten Capabilities to Sub Divisions ESD-01 … ESD-10; B4 and B5 add Team and Role Group.",
+            "Domain Model §7 invariant 1: every Capability is owned by exactly one Platform Division. Domain Model §8: the Spine is three levels, not to be deepened without an architectural decision.",
+            "Two readings exist, and neither was adopted: (1) internal stewardship, which satisfies invariant 1; (2) a fourth Spine level."
+          ],
+          "authority": "Architect, by ADR. Domain Model semantics are non-delegable (Constitution §3.2)."
+        },
+        "B": {
+          "gate_item": "C6-A1",
+          "facts": [
+            "The resident and verified structures differ: PD-01 A–E (45); PD-02 A–E (50); PD-03 A–H (80, terminal, 'Part I NOT ESTABLISHED'); PD-04 A–C (30).",
+            "The Kernel keeps only the A–E spine as pattern, and excludes section counts on evidence (platform-organization README §3)."
+          ],
+          "authority": "Architect, by ADR. Cross-Department structure is non-delegable (Constitution §3.2)."
+        }
+      },
+      "established_facts": [
+        "Both subquestions are recorded and open (G-10, C6-A1). They are independent: A concerns ownership semantics, B concerns document structure."
+      ],
+      "evidence": [
+        "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md G-10",
+        "docs/architecture/platform-organization/VOLUME-SECTION-STATUS-MATRIX.md",
+        "docs/architecture/platform-organization/README.md §3",
+        "docs/architecture/volume-1/pd-01-executive-office/B3.md",
+        "docs/constitution/engineering-constitution-v1.md"
+      ],
+      "provenance": "CANONICAL: the PD-01 volume, the Domain Model and the frozen volumes. DERIVED: the Kernel.",
+      "current_state": "G-10 open (PD-01 also REQUIRES ARCHITECT DECISION). C6-A1 open, non-blocking residual.",
+      "unknowns": [
+        "Whether PD-01's Sub Divisions were intended as entities: its source does not say."
+      ],
+      "conflicts": [
+        "The Act frames B as 'A–E vs A–H'. The resident volumes show a third shape, A–C (PD-04). A real option is therefore per-volume structure, with the Kernel as pattern only."
+      ],
+      "authority_owner": {
+        "founder": "only if the Architect identifies a Founder-reserved consequence",
+        "architect": "A and B, each by ADR",
+        "claude": "none"
+      },
+      "options": {
+        "A": [
+          {
+            "id": "A1",
+            "option": "Internal structure: PD-01 owns all ten Capabilities, and the Owner column is stewardship"
+          },
+          {
+            "id": "A2",
+            "option": "A fourth Spine level, by ADR amending Domain Model §8"
+          }
+        ],
+        "B": [
+          {
+            "id": "B1",
+            "option": "A–E canonical"
+          },
+          {
+            "id": "B2",
+            "option": "A–H canonical"
+          },
+          {
+            "id": "B3",
+            "option": "Per-volume structure; the Kernel is pattern only"
+          }
+        ]
+      },
+      "consequences": {
+        "A1": "Invariant 1 holds, and G-10 closes with no model change.",
+        "A2": "A Domain Model amendment, inherited by every division built on the pattern.",
+        "B1": "PD-03's A–H and PD-04's A–C, already frozen at source, diverge from the canonical pattern.",
+        "B2": "PD-01, PD-02 and PD-04 lack Parts. Every frozen volume diverges except PD-03.",
+        "B3": "All frozen volumes conform as they are. New volumes follow their own source."
+      },
+      "non_decision_consequence": "PD-01 keeps REQUIRES ARCHITECT DECISION (G-10). C6-A1 stays a residual. Derived records keep the A–E spine.",
+      "recommended_evidence_path": "None further for A. For B, DP-01 residency would let PD-03's A–H be read as canon.",
+      "gate_items": [
+        "G-10",
+        "C6-A1"
+      ],
+      "decision_taken": null
+    },
+    {
+      "id": "DP-07",
+      "matter": "Department ≠ Platform Division / ADR-0029",
+      "act_routing": {
+        "evidence_first": "Supporting",
+        "founder": "No*",
+        "architect": "YES"
+      },
+      "question": "What does the canonical organizational-unit entity enumerate? And is 'Department ≠ PD' an entity-type distinction (Option B) or a population/scope statement (Options A, C)?",
+      "established_facts": [
+        "Canonical Domain Model §2: Platform Division, 'Historical alias: Department'. ADR-0010 (Approved; FD-6, GDR-0020) holds one entity under two names.",
+        "ADE-P10-G04 (ISSUED, under APT-CD1.1-AA-001): 'not two constructs … one entity under two names'.",
+        "FD-P10-003 (Founder): 'CANONICAL DEPARTMENT = EXPLICITLY ESTABLISHED ORGANIZATIONAL UNIT ≠ PD = DEPARTMENT'. It settles P10's population, and P10 only.",
+        "Two resident Departments are established by Approved ADRs: Platform (ADR-0003) and Engineering (ADR-0008). Neither is among PD-01 … PD-10.",
+        "Master Program Volume VII §3 calls its six Departments 'contoh konseptual' (conceptual examples). It is a Draft source.",
+        "Two Founder-issued instruments of 2026-09-09 assert Department ≠ PD, one with a many-to-many relation.",
+        "ADR-0029 is Proposed. Its Decision Owner is 'Architect / Founder — not delegable'. It carries options A, B and C, with its proposer's recommendation recorded ('RECOMMENDED ≠ DECIDED')."
+      ],
+      "evidence": [
+        "docs/architecture/adr/decisions/ADR-0029.md",
+        "docs/architecture/adr/decisions/ADR-0010.md",
+        "docs/architecture/platform-organization/ADE-P10-G04-DECISION.md",
+        "docs/governance/acts/FD-P10-003-DEPARTMENT-POPULATION-AND-OWNERSHIP-AUTHORITY.md",
+        "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md G-09"
+      ],
+      "provenance": "CANONICAL: the Domain Model and ADR-0010. AUTHORITATIVE: FD-P10-003 and ADE-P10-G04. PROPOSED: ADR-0029. DRAFT source: Volume VII.",
+      "current_state": "ADP-P10-001 open. It holds cross-division interface evaluation (INV-10) and G14 coherence, not any division's construction.",
+      "unknowns": [
+        "What 'Department ≠ PD' meant in the two 2026-09-09 instruments. Only their issuer can say."
+      ],
+      "conflicts": [
+        "The Act's §12.1 premise: 'Existing architecture contains the distinction Department ≠ Platform Division'. Canonical architecture (Domain Model, ADR-0010, ADE-P10-G04) holds one entity. The distinction exists in FD-P10-003, as a population rule, and in the two 2026-09-09 instruments.",
+        "Routing: the Act marks the Founder 'No*'. ADR-0029's live question depends on what the Founder's own instruments meant, so a Founder input is needed even though the decision is an ADR."
+      ],
+      "authority_owner": {
+        "founder": "the meaning of the two 2026-09-09 instruments (input)",
+        "architect": "ADR-0029: A, B or C, by approval under Constitution §3.4, non-delegable",
+        "claude": "none"
+      },
+      "options": [
+        {
+          "id": "A",
+          "option": "One entity; the Phase 10 list is historical"
+        },
+        {
+          "id": "B",
+          "option": "Two entity types with a many-to-many relation: amends the frozen twelve entities"
+        },
+        {
+          "id": "C",
+          "option": "One entity; the Phase 10 list is a functional grouping, not an organizational unit"
+        }
+      ],
+      "consequences": {
+        "A": "G-09 closes. If the ten are also the exhaustive population, Platform and Engineering need reconciling (ADR-0029 addendum 2).",
+        "B": "A Domain Model amendment. The gate's model (division = Platform Division) must be revisited. INV-10 becomes evaluable under a new model.",
+        "C": "G-09 closes. Every existing instrument stays consistent (ADR-0029's own analysis)."
+      },
+      "non_decision_consequence": "G-09 stays open; INV-10 exposure of the five declared edges stays unevaluable; G14 cannot pass.",
+      "recommended_evidence_path": "The Founder's statement of intent for the two 2026-09-09 instruments.",
+      "gate_items": [
+        "ADP-P10-001"
+      ],
+      "decision_taken": null
+    }
+  ],
+  "non_decisions": [
+    {
+      "statement": "PD-05 / PD-06 / PD-07 = BLOCKED",
+      "kind": "gate state",
+      "underlying_matter": "DP-02 (G-01)"
+    },
+    {
+      "statement": "PD-02 = COMPLETE WITH CLASSIFIED RESIDUAL",
+      "kind": "gate state",
+      "underlying_matter": "none: set by GDR-0026, GDR-0035 and GDR-0036"
+    },
+    {
+      "statement": "CROSS-PD COHERENCE = NOT PASS",
+      "kind": "gate result",
+      "underlying_matter": "DP-05, DP-07; declared interfaces undefined, which is itself downstream of DP-01 and DP-02"
+    },
+    {
+      "statement": "CERTIFIED ROOT MODIFICATIONS = 0",
+      "kind": "verification result",
+      "underlying_matter": "none"
+    },
+    {
+      "statement": "G-06, G-07 (Volumes 0–0.3; canonical Master Map and Encyclopedia not resident)",
+      "kind": "non-blocking supply residual",
+      "underlying_matter": "Founder supply. It feeds DP-02 (does Volume 0 define derived construction?)"
+    }
+  ],
+  "dependencies": [
+    {
+      "from": "DP-01",
+      "to": "DP-06",
+      "nature": "evidence: Volume 3's A–H becomes readable canon for C6-A1"
+    },
+    {
+      "from": "DP-01",
+      "to": "DP-04",
+      "nature": "evidence: PD-03's own A1 is the best source for the Governance Authority binding"
+    },
+    {
+      "from": "DP-06",
+      "to": "DP-02",
+      "nature": "a derived-only completion contract (DP-02 option B) needs the structure and the Capability-ownership vocabulary"
+    },
+    {
+      "from": "DP-07",
+      "to": "DP-02",
+      "nature": "what a division is, as an entity, bounds what a derived division may contain"
+    },
+    {
+      "from": "DP-05",
+      "to": "DP-02",
+      "nature": "PD-10's contract needs its identity"
+    },
+    {
+      "from": "DP-02",
+      "to": "DP-05",
+      "nature": "evidence: a PD-10 corpus would supply its semantic definition"
+    },
+    {
+      "from": "DP-06",
+      "to": "DP-03",
+      "nature": "soft: a review under R1–R11 may raise G-10 as a material finding"
+    },
+    {
+      "from": "FD-2",
+      "to": "DP-05, DP-06, DP-07",
+      "nature": "precondition: who the Architect is"
+    }
+  ],
+  "independent_now": [
+    "DP-01",
+    "DP-03",
+    "DP-04 (Security, Quality)"
+  ]
+}
