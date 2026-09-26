@@ -8788,3 +8788,24 @@ states its date in its heading only, as `§34`, `§37` and `§39` do.
 - no Volume 1 body modified (45/45 verify after review);
 - the invocation is spent: a re-run needs a new Founder invocation
   (exclusion 8).
+
+---
+
+## 51. ACT-CC-POST-P13-PLATFORM-ORG-003 v1.1 Execution — PD-05 … PD-10 Construction and Closure Record (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Under** | `ACT-CC-POST-P13-PLATFORM-ORG-003` v1.1, authorized by `FD-PO-003-01` (`§49`) |
+| **Construction** | `docs/architecture/platform-division-construction/`, commit `5eb0eec` · manifest sha256 `c6a8ca2341fc4c9c8654536467021d1ce2af9215235fda245389602822075d49` |
+| **Record** | `AIOS_PLATFORM_ORGANIZATION_CONSTRUCTION_CLOSURE_RECORD_v1.0.md` · sha256 `2b5089a41d514d032ec452a3fe2c1f08209c0ed665d2e379e3e55918ff0ee561` |
+| **Evidence** | `platform-organization/PO-GATE-5eb0eec.json` · `platform-organization/PD-CONSTRUCTION-VERIFICATION-5eb0eec.json` |
+| **Result** | **PARTIALLY COMPLETE.** PD-05 … PD-10 CONSTRUCTED — VERIFIED (90 sections, each with a visible epistemic class); cross-PD reconciliation passes; NC-01 … NC-20 pass; gate outcome D, unchanged |
+| **Verification** | suites at `5eb0eec`: tools 1871, native_core 801, consumers 276, bounded_exception 29, all OK · probe: 0 certified writes · P10–P13 integrity holds · verifier mutants 20/20 caught |
+| **Remaining (Founder)** | canonicalization (`G-01`), `ESC-C7-01`, `FDP-P10-001`, `FDP-P10-002`; routed to the Architect: `C6-A1`, `G-10`, `ADR-0029` |
+
+**Not changed:**
+- nothing canonicalized, certified, frozen or activated; no decision taken;
+  no binding made; PD-10's name held open;
+- PD-01 and PD-02 bodies, the certified P10 root, `docs/program`,
+  `native_core` and `tools/p13` untouched;
+- P13 CLOSED; no phase created.

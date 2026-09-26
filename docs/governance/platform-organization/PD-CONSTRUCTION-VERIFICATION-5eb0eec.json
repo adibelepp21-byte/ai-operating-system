@@ -1,0 +1,334 @@
+{
+  "commit": "5eb0eec",
+  "volumes": {
+    "PD-05": {
+      "cpid": "PD-05",
+      "path": "docs/architecture/platform-division-construction/pd-05-runtime-and-execution/VOLUME.md",
+      "present": true,
+      "sha256": "998ac95750fcda5b2c3f3825c1a1caf49a1fa9c6cb8d80ab5a4a3e88a1e2cb97",
+      "sections": 15,
+      "classes": {
+        "SOURCE-DERIVED": 5,
+        "INHERITED-PATTERN": 1,
+        "DOMAIN-ADAPTATION": 4,
+        "BOUNDED-RECONSTRUCTION": 2,
+        "UNKNOWN": 0,
+        "RESERVED-DECISION": 3
+      },
+      "dimensions": [
+        "Identity",
+        "Boundary",
+        "Authority",
+        "Ownership",
+        "Capability",
+        "Architecture",
+        "Operation",
+        "Performance",
+        "Lifecycle",
+        "Integration",
+        "Evolution"
+      ],
+      "reserved": [
+        "ADP-P10-001",
+        "C6-A1",
+        "DM-6",
+        "DM-8",
+        "FRZ-10",
+        "FRZ-2",
+        "G-01",
+        "G-10"
+      ],
+      "errors": [],
+      "passes": true
+    },
+    "PD-06": {
+      "cpid": "PD-06",
+      "path": "docs/architecture/platform-division-construction/pd-06-ai-engineering/VOLUME.md",
+      "present": true,
+      "sha256": "af90f316f2a072a96bf063b2f06f660909f33a11a9e6a25e0b16069eb7c17e29",
+      "sections": 15,
+      "classes": {
+        "SOURCE-DERIVED": 4,
+        "INHERITED-PATTERN": 1,
+        "DOMAIN-ADAPTATION": 4,
+        "BOUNDED-RECONSTRUCTION": 3,
+        "UNKNOWN": 1,
+        "RESERVED-DECISION": 2
+      },
+      "dimensions": [
+        "Identity",
+        "Boundary",
+        "Authority",
+        "Ownership",
+        "Capability",
+        "Architecture",
+        "Operation",
+        "Performance",
+        "Lifecycle",
+        "Integration",
+        "Evolution"
+      ],
+      "reserved": [
+        "ADP-P10-001",
+        "C6-A1",
+        "DM-6",
+        "DM-8",
+        "FDP-P10-002",
+        "FRZ-10",
+        "G-01",
+        "G-10"
+      ],
+      "errors": [],
+      "passes": true
+    },
+    "PD-07": {
+      "cpid": "PD-07",
+      "path": "docs/architecture/platform-division-construction/pd-07-infrastructure-and-platform/VOLUME.md",
+      "present": true,
+      "sha256": "4836b160e30ca5e8113e12895dc2eb896954595a69ade80ef3ea1fd1cf1521ec",
+      "sections": 15,
+      "classes": {
+        "SOURCE-DERIVED": 8,
+        "INHERITED-PATTERN": 1,
+        "DOMAIN-ADAPTATION": 1,
+        "BOUNDED-RECONSTRUCTION": 2,
+        "UNKNOWN": 0,
+        "RESERVED-DECISION": 3
+      },
+      "dimensions": [
+        "Identity",
+        "Boundary",
+        "Authority",
+        "Ownership",
+        "Capability",
+        "Architecture",
+        "Operation",
+        "Performance",
+        "Lifecycle",
+        "Integration",
+        "Evolution"
+      ],
+      "reserved": [
+        "C6-A1",
+        "DM-6",
+        "DM-8",
+        "FRZ-10",
+        "FRZ-2",
+        "G-01",
+        "G-10"
+      ],
+      "errors": [],
+      "passes": true
+    },
+    "PD-08": {
+      "cpid": "PD-08",
+      "path": "docs/architecture/platform-division-construction/pd-08-security/VOLUME.md",
+      "present": true,
+      "sha256": "d9b677c226af665bc804b8116de912b13988f1d410e110fa18bca4c7b0a766de",
+      "sections": 15,
+      "classes": {
+        "SOURCE-DERIVED": 4,
+        "INHERITED-PATTERN": 1,
+        "DOMAIN-ADAPTATION": 1,
+        "BOUNDED-RECONSTRUCTION": 1,
+        "UNKNOWN": 2,
+        "RESERVED-DECISION": 6
+      },
+      "dimensions": [
+        "Identity",
+        "Boundary",
+        "Authority",
+        "Ownership",
+        "Capability",
+        "Architecture",
+        "Operation",
+        "Performance",
+        "Lifecycle",
+        "Integration",
+        "Evolution"
+      ],
+      "reserved": [
+        "ADP-P10-001",
+        "C6-A1",
+        "DM-6",
+        "DM-8",
+        "ESC-C7-01",
+        "FDP-P10-001",
+        "FDP-P10-003",
+        "FRZ-10",
+        "FRZ-2",
+        "G-01",
+        "G-10"
+      ],
+      "errors": [],
+      "passes": true
+    },
+    "PD-09": {
+      "cpid": "PD-09",
+      "path": "docs/architecture/platform-division-construction/pd-09-quality-and-evaluation/VOLUME.md",
+      "present": true,
+      "sha256": "500442a44ed3ace9c4f9546bb7cf36604b6de2f0e12295470db60f431d83eb9b",
+      "sections": 15,
+      "classes": {
+        "SOURCE-DERIVED": 4,
+        "INHERITED-PATTERN": 1,
+        "DOMAIN-ADAPTATION": 3,
+        "BOUNDED-RECONSTRUCTION": 2,
+        "UNKNOWN": 1,
+        "RESERVED-DECISION": 4
+      },
+      "dimensions": [
+        "Identity",
+        "Boundary",
+        "Authority",
+        "Ownership",
+        "Capability",
+        "Architecture",
+        "Operation",
+        "Performance",
+        "Lifecycle",
+        "Integration",
+        "Evolution"
+      ],
+      "reserved": [
+        "ADP-P10-001",
+        "C6-A1",
+        "DM-6",
+        "DM-8",
+        "ESC-C7-01",
+        "FDP-P10-002",
+        "FDP-P10-003",
+        "G-01",
+        "G-10"
+      ],
+      "errors": [],
+      "passes": true
+    },
+    "PD-10": {
+      "cpid": "PD-10",
+      "path": "docs/architecture/platform-division-construction/pd-10/VOLUME.md",
+      "present": true,
+      "sha256": "952b5e5c3ab4e1de15430faa543f01efd8b5b0b12a4ad02e5b777626abb468af",
+      "sections": 15,
+      "classes": {
+        "SOURCE-DERIVED": 4,
+        "INHERITED-PATTERN": 1,
+        "DOMAIN-ADAPTATION": 1,
+        "BOUNDED-RECONSTRUCTION": 1,
+        "UNKNOWN": 3,
+        "RESERVED-DECISION": 5
+      },
+      "dimensions": [
+        "Identity",
+        "Boundary",
+        "Authority",
+        "Ownership",
+        "Capability",
+        "Architecture",
+        "Operation",
+        "Performance",
+        "Lifecycle",
+        "Integration",
+        "Evolution"
+      ],
+      "reserved": [
+        "C6-A1",
+        "DM-6",
+        "DM-8",
+        "G-01",
+        "G-02",
+        "G-10"
+      ],
+      "errors": [],
+      "passes": true
+    }
+  },
+  "reconciliation": {
+    "checks": [
+      {
+        "check": "reserved binding kept reserved",
+        "passes": true,
+        "detail": "PD-08 A3 ↔ FDP-P10-001"
+      },
+      {
+        "check": "reserved binding kept reserved",
+        "passes": true,
+        "detail": "PD-08 A4 ↔ FDP-P10-001"
+      },
+      {
+        "check": "reserved binding kept reserved",
+        "passes": true,
+        "detail": "PD-09 A3 ↔ FDP-P10-002"
+      },
+      {
+        "check": "reserved binding kept reserved",
+        "passes": true,
+        "detail": "PD-09 A4 ↔ FDP-P10-002"
+      },
+      {
+        "check": "reserved binding kept reserved",
+        "passes": true,
+        "detail": "PD-10 A1 ↔ G-02"
+      },
+      {
+        "check": "declared edge carried as undefined",
+        "passes": true,
+        "detail": "X-02 in PD-08"
+      },
+      {
+        "check": "declared edge carried as undefined",
+        "passes": true,
+        "detail": "X-03 in PD-09"
+      },
+      {
+        "check": "declared edge carried as undefined",
+        "passes": true,
+        "detail": "X-04 in PD-06"
+      },
+      {
+        "check": "declared edge carried as undefined",
+        "passes": true,
+        "detail": "X-05 in PD-05"
+      },
+      {
+        "check": "ownership sourced to its own statement",
+        "passes": true,
+        "detail": "PD-05 A4"
+      },
+      {
+        "check": "ownership sourced to its own statement",
+        "passes": true,
+        "detail": "PD-06 A4"
+      },
+      {
+        "check": "ownership sourced to its own statement",
+        "passes": true,
+        "detail": "PD-07 A4"
+      },
+      {
+        "check": "ownership sourced to its own statement",
+        "passes": true,
+        "detail": "PD-10 A4"
+      },
+      {
+        "check": "every prose ownership statement carried by its own volume",
+        "passes": true,
+        "detail": "3 of 3"
+      }
+    ],
+    "passes": true
+  },
+  "passes": true,
+  "errors": [],
+  "state": {
+    "PD-05": "CONSTRUCTED — VERIFIED",
+    "PD-06": "CONSTRUCTED — VERIFIED",
+    "PD-07": "CONSTRUCTED — VERIFIED",
+    "PD-08": "CONSTRUCTED — VERIFIED",
+    "PD-09": "CONSTRUCTED — VERIFIED",
+    "PD-10": "CONSTRUCTED — VERIFIED"
+  },
+  "certifies": false,
+  "canonical": false,
+  "grants_authority": false
+}
