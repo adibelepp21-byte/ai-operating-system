@@ -64,7 +64,7 @@ What an application layer can expose today without inventing semantics.
 |---|---|---|
 | AIOS contract adapter: one module holding the Runtime and calling contracts | every surface | FS-03 `fullstack/backend/aios.py` |
 | HTTP API with a published contract | Frontend, external clients | FS-03 `fullstack/backend/api.py` |
-| Authenticator port + scope authorization | every non-health route (NC-11) | FS-03 / FS-06 `security.py`; mechanism ADR-0031 |
+| Authenticator port + scope authorization | every non-health route (NC-11) | FS-03 / FS-06 `security.py`; mechanism FS-DP-02 |
 | Durable run and audit records | runs after restart; audit evidence | FS-04, over the certified `StorageFacility` |
 | One concrete Tool | a Workflow that reaches a Tool (Act FS-07 Scenario B) | FS-03 `docs_tool.py` |
 
@@ -76,10 +76,10 @@ What an application layer can expose today without inventing semantics.
 | No frontend | Buildable | FS-05 |
 | No concrete Tool | Buildable: a read-only Tool confined to `docs/`, registered by the application's composition as operator configuration, invoked only through governance | FS-03 |
 | No persistent application records | Buildable over the existing append-only `StorageFacility`; **no database** is introduced | FS-04 |
-| Authentication mechanism | **Architect-reserved** | ADR-0031; the backend ships a port that refuses every request |
-| Database for production | **Architect-reserved** | ADR-0030 |
-| Networking, deployment, scaling, observability | **Architect-reserved** | ADR-0032 … ADR-0035 |
-| Agent creation from the application | **Architect-reserved** | ADR-0036 |
+| Authentication mechanism | **Architect-reserved** | FS-DP-02; the backend ships a port that refuses every request |
+| Database for production | **Architect-reserved** | FS-DP-01 |
+| Networking, deployment, scaling, observability | **Architect-reserved** | FS-DP-03 … FS-DP-06 |
+| Agent creation from the application | **Architect-reserved** | FS-DP-07 |
 
 ## 6. Findings on the roadmap source (S-02)
 
