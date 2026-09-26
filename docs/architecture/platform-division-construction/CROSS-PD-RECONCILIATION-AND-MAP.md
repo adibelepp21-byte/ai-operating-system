@@ -101,3 +101,19 @@ canonicalization**.
 
 **So the Platform Organization is PARTIALLY COMPLETE:** constructed and
 verified, not canonicalized. That is `READINESS ≠ COMPLETION` (`§18`).
+
+### Update after `FD-PO-004` (2026-09-26)
+
+**Canonicalization has been performed**, for PD-05 … PD-10 as a
+construction baseline (D1-A):
+- Security Owner → PD-08 and Quality authority → PD-09 are bound (D3-A,
+  D4-A).
+- Supply of Volumes 3 and 4 is authorized (D2-A), but they have not been
+  received.
+
+The Final Closure Gate (`tools/platform_organization_closure_gate.py`)
+returns **PLATFORM ORGANIZATION NOT CLOSED**. Its one blocker is D2: until
+the volumes arrive and are verified, `ESC-C7-01` and `FN-1` stay open.
+
+The table above records the state at construction. It is kept, not
+rewritten.

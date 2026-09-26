@@ -8819,3 +8819,21 @@ states its date in its heading only, as `§34`, `§37` and `§39` do.
 | **Instrument** | `FD-PO-004` · `acts/FD-PO-004-PLATFORM-ORGANIZATION-CANONICALIZATION-DISPOSITION.md` · content sha256 `166d6a25cc9ce55c4ac652d06c64eca23d0a865adf5420b6d8fa66e5a3e30332` |
 | **Received** | from the Founder, 2026-09-26. **Its stated status is *"PROPOSED FOR FOUNDER DECISION"*.** D1, D2, D3, D4 and Founder Authorization are all blank |
 | **In force** | **No.** Its `§15`: *"No blank field may be interpreted as approval."* It decides nothing as received. The Founder's selections, when made, are registered as the decision in their own entry |
+
+---
+
+## 53. FD-PO-004 Append — Founder Canonicalization Disposition: D1-A · D2-A · D3-A · D4-A (2026-09-26)
+
+### FD-PO-004 — Founder Decision · Platform Organization Canonicalization Disposition
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-PO-004` |
+| **Date** | 2026-09-26 |
+| **Decided by** | Founder |
+| **Instrument** | `acts/FD-PO-004-PLATFORM-ORGANIZATION-CANONICALIZATION-DISPOSITION.md` (`§52`) |
+| **Record** | `acts/FD-PO-004-FOUNDER-SELECTIONS.md` · sha256 `490d725e6459c28e1878cb845e6e6e5b3bbf1a0b9b60c361926533afd7975683` |
+| **Decision** | D1: *"D1-A Certify w/ residual"*. D2: *"D2-A Supply volumes"*. D3: *"D3-A Bind"*. D4: *"D4-A Bind"* |
+| **Closes** | `G-01` · `FDP-P10-001` · `FDP-P10-002` |
+| **Effect** | PD-05 … PD-10 certified as the canonical construction baseline, with every classification preserved; not frozen, not activated. Security Owner → PD-08 and Quality authority → PD-09 bound within their established boundaries. Supply of Volumes 3 and 4 authorized; `ESC-C7-01` stays open until they are received and verified |
+| **Not decided** | G-10 · G-02 · C6-A1 · ADR-0029 · FRZ-10 · FRZ-2 · FDP-P10-003 · RG-1 · every UNKNOWN section · P13 · P14 · Constitution · Founder authority · Delegation Charter |

@@ -609,7 +609,7 @@ def coherence(root: Path, matrix: Dict[str, Dict[str, dict]], items: Tuple[dict,
 def division_state(cpid: str, cells: Dict[str, dict], items: Tuple[dict, ...],
                    decisions: Dict[str, dict], integrity: Dict[str, dict],
                    resident: Dict[str, Path], copies: Dict[str, tuple],
-                   conflicts: dict) -> dict:
+                   conflicts: dict, baseline: Optional[str] = None) -> dict:
     """The `§33` state of one division.
 
     COMPLETE needs the authoritative contract: a resident corpus that
@@ -663,6 +663,11 @@ def division_state(cpid: str, cells: Dict[str, dict], items: Tuple[dict, ...],
             also.append(FOUNDER_DECISION)
         if state != ARCHITECT_DECISION and architect:
             also.append(ARCHITECT_DECISION)
+    if state == INCOMPLETE and baseline:
+        # FD-PO-004 D1-A: certified as a construction baseline, neither frozen
+        # nor activated. The contract above needs both, so the state stays.
+        reasons = [f"canonical construction baseline ({baseline}); not frozen and not "
+                   "activated, which the COMPLETE contract requires"]
     residual = [i["id"] for i in mine if state in (COMPLETE_RESIDUAL,) or not i["blocking"]]
     return {"state": state, "also": tuple(dict.fromkeys(also)), "reasons": tuple(reasons),
             "residual": tuple(residual),
@@ -690,15 +695,18 @@ def _governance(root: Path) -> dict:
 
 
 def _construction(root: Path) -> dict:
-    """The PD-05 … PD-10 construction volumes (ACT-003 v1.1), reported beside the
-    `§33` states and never feeding them. A volume constructed and verified is
-    not a supplied canonical corpus: `G-01` stays open until its holder closes
-    it, so the states above do not move."""
+    """The PD-05 … PD-10 construction volumes (ACT-003 v1.1). A verified
+    volume never raises a `§33` state. Once `FD-PO-004` D1-A certified them as
+    the canonical construction baseline (closing `G-01`), the certification
+    is reported as the reason for their state. The state itself still follows
+    the frozen-and-activated contract."""
     from tools import platform_division_construction as construction
     report = construction.verify(root)
+    certified_by = report["closing_decisions"].get(construction.CANONICALIZING_ITEM)
     return {"state": report["state"], "passes": report["passes"],
             "reconciliation_passes": report["reconciliation"]["passes"],
-            "errors": report["errors"], "canonical": False}
+            "errors": report["errors"], "canonical": report["canonical"] and report["passes"],
+            "certified_by": certified_by if report["passes"] else None}
 
 
 def evaluate(root: Path = REPO_ROOT) -> dict:
@@ -711,8 +719,11 @@ def evaluate(root: Path = REPO_ROOT) -> dict:
     resident = resident_corpora(root)
     copies = blind_copies(root)
     owners = ownership_map(root)
+    construction = _construction(root)
+    baselines = {c: construction["certified_by"] for c, st in construction["state"].items()
+                 if construction["certified_by"] and st.startswith("CANONICAL BASELINE")}
     states = {cpid: division_state(cpid, matrix[cpid], items, decisions, integrity,
-                                   resident, copies, owners["conflicts"])
+                                   resident, copies, owners["conflicts"], baselines.get(cpid))
               for cpid in CPIDS}
     cross = coherence(root, matrix, items)
     governance = _governance(root)
@@ -791,7 +802,7 @@ def evaluate(root: Path = REPO_ROOT) -> dict:
                       for g in gate),
         "gate_passes": gate_passes,
         "outcome": outcome,
-        "construction": _construction(root),
+        "construction": construction,
         "certifies": False,
         "grants_authority": False,
         "canonical": False,

@@ -98,6 +98,22 @@ RESERVATIONS: Dict[str, Tuple[str, str, str]] = {
 #: Preparation is not authorization (v1.1 `§18`): a volume must cite it.
 AUTHORIZATION = "FD-PO-003-01"
 
+#: `FD-PO-004` D1-A: the canonical construction baseline. The sections
+#: certified are those verified at `5eb0eec`; this manifest records their bytes
+#: and per-section classes. Certification preserves both (FD-PO-004 `§2`, `§9`).
+CANONICAL_MANIFEST = f"{CONSTRUCTION_ROOT}/CANONICAL-BASELINE-MANIFEST.json"
+CANONICAL_HEADER = {
+    "Construction status": "CANONICAL CONSTRUCTION BASELINE — CERTIFIED WITH CLASSIFIED RESIDUAL",
+    "Canonical": "YES — construction baseline",
+    "Frozen": "NO",
+    "Activated": "NO",
+}
+#: The open item whose closure by a registered Founder decision makes a volume
+#: canonical, and the bindings a header may declare only once their item is
+#: closed the same way.
+CANONICALIZING_ITEM = "G-01"
+BINDING_ITEMS = {"PD-08": "FDP-P10-001", "PD-09": "FDP-P10-002"}
+
 REQUIRED_HEADER = {
     "Construction status": "CONSTRUCTED — NOT CANONICAL",
     "Canonical": "NO",
@@ -210,8 +226,28 @@ def _pd01_lines(root: Path) -> set:
     return lines
 
 
+def closing_decisions(root: Path = REPO_ROOT) -> Dict[str, Optional[str]]:
+    """The registered Founder decision, if any, that closes each item this
+    verifier acts on. Only the gate's own rule decides: a `### <id> —` entry
+    decided by the item's holder that names it under **Closes**."""
+    register = _read(root, po.REGISTER) or ""
+    items = {i.identifier: i for i in po.OPEN_ITEMS}
+    wanted = [CANONICALIZING_ITEM, *BINDING_ITEMS.values()]
+    return {w: po._closing_decision(register, items[w]) for w in wanted}
+
+
+def section_text(text: str) -> str:
+    """Everything from the first section on: what certification covers. The
+    header above it records status and may change with a decision."""
+    index = text.find("\n## ")
+    return text[index + 1:] if index >= 0 else ""
+
+
 def verify_volume(root: Path, cpid: str, known: Dict[str, dict],
-                  pd01: set, manifest: dict) -> dict:
+                  pd01: set, manifest: dict, closed: Optional[Dict[str, Optional[str]]] = None,
+                  canonical_manifest: Optional[dict] = None) -> dict:
+    closed = closed or {}
+    canonical_manifest = canonical_manifest or {}
     relative = VOLUMES[cpid]
     text = _read(root, relative)
     errors: List[str] = []
@@ -224,9 +260,31 @@ def verify_volume(root: Path, cpid: str, known: Dict[str, dict],
         errors.append(f"header CPID {fields.get('CPID')!r} ≠ {cpid}")
     if AUTHORIZATION not in fields.get("Authority", ""):
         errors.append(f"header Authority does not cite the authorizing decision {AUTHORIZATION}")
-    for field, value in REQUIRED_HEADER.items():
+    certified_by = closed.get(CANONICALIZING_ITEM)
+    expected = CANONICAL_HEADER if certified_by else REQUIRED_HEADER
+    for field, value in expected.items():
         if fields.get(field) != value:
             errors.append(f"header {field} must be {value!r}, is {fields.get(field)!r}")
+    if certified_by:
+        if certified_by not in fields.get("Certified by", ""):
+            errors.append(f"header Certified by does not cite {certified_by}")
+        pinned = canonical_manifest.get("volumes", {}).get(cpid, {})
+        body = section_text(text)
+        if pinned.get("sections_sha256") != hashlib.sha256(body.encode("utf-8")).hexdigest():
+            errors.append("certified sections changed after certification")
+        classes_now = [[x["id"], x["class"]] for x in sections(text)]
+        if pinned.get("classes") != classes_now:
+            errors.append("a section's class differs from its certified class")
+    elif "Certified by" in fields:
+        errors.append("header claims certification without a registered Founder decision")
+    if cpid in BINDING_ITEMS:
+        item = BINDING_ITEMS[cpid]
+        binding = fields.get("Binding", "")
+        if closed.get(item):
+            if "BOUND" not in binding or closed[item] not in binding:
+                errors.append(f"header Binding does not record {item} as bound by {closed[item]}")
+        elif "BOUND" in binding:
+            errors.append(f"header Binding declares {item} bound without a registered Founder decision")
     if cpid == "PD-10":
         name = fields.get("Name", "")
         title = text.splitlines()[0] if text else ""
@@ -300,7 +358,14 @@ def verify(root: Path = REPO_ROOT) -> dict:
         manifest = json.loads(_read(root, MANIFEST) or "{}")
     except ValueError:
         manifest = {}
-    volumes = {cpid: verify_volume(root, cpid, known, pd01, manifest) for cpid in VOLUMES}
+    try:
+        canonical_manifest = json.loads(_read(root, CANONICAL_MANIFEST) or "{}")
+    except ValueError:
+        canonical_manifest = {}
+    closed = closing_decisions(root)
+    canonical = bool(closed.get(CANONICALIZING_ITEM))
+    volumes = {cpid: verify_volume(root, cpid, known, pd01, manifest, closed, canonical_manifest)
+               for cpid in VOLUMES}
     resident = [str(p.relative_to(root)) for p in sorted(root.glob("docs/architecture/volume-*/pd-*"))
                 if re.search(r"pd-(0[5-9]|10)", p.name)]
     errors = [f"{c}: {e}" for c, v in volumes.items() for e in v["errors"]]
@@ -314,11 +379,12 @@ def verify(root: Path = REPO_ROOT) -> dict:
         "reconciliation": reconciliation,
         "passes": not errors,
         "errors": errors,
-        "state": {c: ("CONSTRUCTED — VERIFIED" if v["passes"] else
+        "state": {c: ((CANONICAL_STATE if canonical else "CONSTRUCTED — VERIFIED") if v["passes"] else
                       "CONSTRUCTED — FAILS VERIFICATION" if v["present"] else "NOT CONSTRUCTED")
                   for c, v in volumes.items()},
+        "closing_decisions": closed,
         "certifies": False,
-        "canonical": False,
+        "canonical": canonical,
         "grants_authority": False,
     }
 
@@ -363,6 +429,31 @@ def reconcile(root: Path = REPO_ROOT) -> dict:
     return {"checks": checks, "passes": all(c["passes"] for c in checks)}
 
 
+CANONICAL_STATE = "CANONICAL BASELINE — VERIFIED"
+
+
+def write_canonical_manifest(commit: str, root: Path = REPO_ROOT) -> dict:
+    """Record the certified sections. Used once, when `FD-PO-004` D1-A is
+    applied; never by `verify`."""
+    data = {
+        "nature": "canonical construction baseline: CERTIFIED WITH CLASSIFIED RESIDUAL; "
+                  "NOT FROZEN, NOT ACTIVATED",
+        "decision": "FD-PO-004 D1-A",
+        "sections_verified_at": commit,
+        "volumes": {},
+    }
+    for cpid, path in VOLUMES.items():
+        text = _read(root, path) or ""
+        data["volumes"][cpid] = {
+            "path": path,
+            "sections_sha256": hashlib.sha256(section_text(text).encode("utf-8")).hexdigest(),
+            "classes": [[x["id"], x["class"]] for x in sections(text)],
+        }
+    (root / CANONICAL_MANIFEST).write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n",
+                                           encoding="utf-8")
+    return data
+
+
 def write_manifest(root: Path = REPO_ROOT) -> dict:
     """Record the volumes' bytes. Used by the constructor, never by `verify`."""
     data = {
@@ -378,6 +469,9 @@ def write_manifest(root: Path = REPO_ROOT) -> dict:
 
 def main() -> int:
     import sys
+    if sys.argv[1:2] == ["--write-canonical-manifest"] and len(sys.argv) == 3:
+        print(json.dumps(write_canonical_manifest(sys.argv[2]), indent=2, ensure_ascii=False))
+        return 0
     if sys.argv[1:] == ["--write-manifest"]:
         print(json.dumps(write_manifest(), indent=2, ensure_ascii=False))
         return 0

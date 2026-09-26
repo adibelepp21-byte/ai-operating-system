@@ -4,8 +4,9 @@
 |---|---|
 | **CPID** | `PD-07` |
 | **Name** | Infrastructure & Platform |
-| **Construction status** | CONSTRUCTED — NOT CANONICAL |
-| **Canonical** | NO |
+| **Construction status** | CANONICAL CONSTRUCTION BASELINE — CERTIFIED WITH CLASSIFIED RESIDUAL |
+| **Canonical** | YES — construction baseline |
+| **Certified by** | `FD-PO-004` D1-A (Founder, 2026-09-26; Register `§53`). The sections below are those verified at `5eb0eec`, unchanged; every section keeps its class (`CANONICAL-BASELINE-MANIFEST.json`) |
 | **Frozen** | NO |
 | **Activated** | NO |
 | **Authority** | `ACT-CC-POST-P13-PLATFORM-ORG-003` as amended by v1.1, authorized for execution by `FD-PO-003-01` (construction *"AUTHORIZED WITH BOUNDARY"*) |
@@ -18,7 +19,10 @@
 - ACT-003's Part C list is a candidate. Section C2 measures it and finds that
   several of its sections fall inside architecture the Freeze reserves to the
   Architect.
-- Nothing here is canonical, frozen or activated.
+- Certified as the canonical construction baseline by `FD-PO-004` D1-A.
+  Certification preserves every class. It resolves no UNKNOWN or
+  RESERVED-DECISION section, and freezes and activates nothing.
+  Statements of status inside sections describe the state at construction.
 
 ---
 

@@ -43,17 +43,22 @@ class TheLiveState(unittest.TestCase):
     def _state(self, cpid):
         return self.report["divisions"][cpid]["state"]
 
-    def test_the_outcome_is_founder_or_architect_decision_required(self):
-        self.assertEqual(po.OUTCOME_D, self.report["outcome"])
+    def test_the_outcome_is_not_complete_with_explicit_blockers(self):
+        """After `FD-PO-004`: `G-01` is closed, so PD-05 … PD-10 are INCOMPLETE
+        (certified construction baseline, not frozen or activated). Outcome C."""
+        self.assertEqual(po.OUTCOME_C, self.report["outcome"])
         self.assertFalse(self.report["gate_passes"])
 
     def test_each_division_state(self):
         expected = {
             "PD-01": po.FOUNDER_DECISION, "PD-02": po.COMPLETE_RESIDUAL,
             "PD-03": po.FOUNDER_DECISION, "PD-04": po.FOUNDER_DECISION,
-            **{f"PD-{n:02d}": po.BLOCKED for n in range(5, 11)},
+            **{f"PD-{n:02d}": po.INCOMPLETE for n in range(5, 11)},
         }
         self.assertEqual(expected, {c: self._state(c) for c in po.CPIDS})
+        for n in range(5, 11):
+            self.assertIn("canonical construction baseline (FD-PO-004)",
+                          self.report["divisions"][f"PD-{n:02d}"]["reasons"][0])
         self.assertIn(po.ARCHITECT_DECISION, self.report["divisions"]["PD-01"]["also"])
         self.assertIn(po.CONFLICTED, self.report["divisions"]["PD-10"]["also"])
 
@@ -66,8 +71,13 @@ class TheLiveState(unittest.TestCase):
             self.assertFalse(blocking[identifier], identifier)
         self.assertTrue(blocking["G-01"])
         self.assertTrue(blocking["ESC-C7-01"])
-        self.assertIn("FDP-P10-001", self.report["divisions"]["PD-08"]["residual"])
         self.assertEqual((), self.report["divisions"]["PD-08"]["also"])
+
+    def test_fd_po_004_closes_exactly_its_three_items(self):
+        closed = {i["id"]: i["status"] for i in self.report["open_items"]
+                  if i["status"] != "OPEN"}
+        self.assertEqual({i: "CLOSED by FD-PO-004" for i in ("G-01", "FDP-P10-001", "FDP-P10-002")},
+                         closed)
 
     def test_pd_02_is_complete_only_through_its_registered_contract(self):
         pd02 = self.report["divisions"]["PD-02"]
@@ -88,7 +98,7 @@ class TheLiveState(unittest.TestCase):
         items = self.report["open_items"]
         self.assertEqual(len(po.OPEN_ITEMS), len(items))
         self.assertTrue(all(i["recorded"] for i in items), [i for i in items if not i["recorded"]])
-        self.assertTrue(all(i["status"] == "OPEN" for i in items))
+        self.assertEqual(3, sum(i["status"] != "OPEN" for i in items))
 
     def test_both_resident_volumes_verify(self):
         volumes = self.report["volume_integrity"]
@@ -150,6 +160,14 @@ class _Copy(unittest.TestCase):
     def _eval(self):
         return po.evaluate(self.repo)
 
+    def _pre_fd_po_004(self):
+        """The fixture as it stood before `FD-PO-004` closed anything, for the
+        controls that test pre-decision logic."""
+        row = "| **Closes** | `G-01` · `FDP-P10-001` · `FDP-P10-002` |\n"
+        text = self._text(po.REGISTER)
+        self.assertIn(row, text)
+        self._write(po.REGISTER, text.replace(row, ""))
+
     def _item(self, report, identifier):
         (item,) = [i for i in report["open_items"] if i["id"] == identifier]
         return item["status"]
@@ -158,7 +176,11 @@ class _Copy(unittest.TestCase):
 class GovernanceInvariants(_Copy):
     """NC-01 … NC-04 and NC-15: this Act cannot disturb them."""
 
-    def test_the_copy_is_outcome_d(self):
+    def test_the_copy_is_outcome_c(self):
+        self.assertEqual(po.OUTCOME_C, self._eval()["outcome"])
+
+    def test_the_copy_before_fd_po_004_is_outcome_d(self):
+        self._pre_fd_po_004()
         self.assertEqual(po.OUTCOME_D, self._eval()["outcome"])
 
     def test_nc01_creating_phase_14_fails(self):
@@ -228,7 +250,7 @@ class NoFalseCompletion(_Copy):
         self._write(po.LEDGER, ledger.replace("| ○ | ○ | ○ | ○ | ○ | ○ | ○ | ○ |",
                                               "| ◆ | ◆ | ◆ | ◆ | ◆ | ◆ | ◆ | ◆ |"))
         report = self._eval()
-        self.assertEqual(po.BLOCKED, report["divisions"]["PD-06"]["state"])
+        self.assertEqual(po.INCOMPLETE, report["divisions"]["PD-06"]["state"])
         self.assertNotIn(report["outcome"], (po.OUTCOME_A, po.OUTCOME_B))
 
     def test_nc07_a_record_claiming_canonical_status_fails_governance(self):
@@ -249,6 +271,7 @@ class NoFalseCompletion(_Copy):
         self.assertEqual(po.OUTCOME_C, report["outcome"])
 
     def test_nc08_closing_all_but_the_source_gap_leaves_it_blocked(self):
+        self._pre_fd_po_004()
         self._decision("FDR-86", "Founder", [i.identifier for i in po.OPEN_ITEMS if i.identifier != "G-01"])
         report = self._eval()
         self.assertEqual(po.BLOCKED, report["divisions"]["PD-08"]["state"])
@@ -273,6 +296,7 @@ class NoFalseCompletion(_Copy):
         self.assertIn("PD-11", g1["evidence"])
 
     def test_nc14_deleting_a_gap_record_does_not_close_it(self):
+        self._pre_fd_po_004()
         text = self._text(po.GAP_MAP)
         start = text.index("## G-01 —")
         self._write(po.GAP_MAP, text[:start] + text[text.index("## G-02 —"):])
@@ -318,10 +342,12 @@ class ReservedMattersCloseOnlyByTheirHolder(_Copy):
         self.assertEqual("OPEN", self._item(self._eval(), "ESC-C7-01"))
 
     def test_nc12_a_ceo_record_does_not_close_a_founder_matter(self):
+        self._pre_fd_po_004()
         self._decision("FDR-84", "Claude Code", ["FDP-P10-001"])
         self.assertEqual("OPEN", self._item(self._eval(), "FDP-P10-001"))
 
     def test_nc12_positive_the_founder_closes_it(self):
+        self._pre_fd_po_004()
         self._decision("FDR-83", "Founder", ["FDP-P10-001"])
         report = self._eval()
         self.assertEqual("CLOSED by FDR-83", self._item(report, "FDP-P10-001"))

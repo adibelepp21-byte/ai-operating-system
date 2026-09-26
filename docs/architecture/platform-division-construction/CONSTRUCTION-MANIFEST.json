@@ -4,27 +4,27 @@
   "volumes": {
     "PD-05": {
       "path": "docs/architecture/platform-division-construction/pd-05-runtime-and-execution/VOLUME.md",
-      "sha256": "998ac95750fcda5b2c3f3825c1a1caf49a1fa9c6cb8d80ab5a4a3e88a1e2cb97"
+      "sha256": "2fbe4602d3861e39dda8a73b7780e4a4d6cf4377849ce243b7257ab9513b5bbc"
     },
     "PD-06": {
       "path": "docs/architecture/platform-division-construction/pd-06-ai-engineering/VOLUME.md",
-      "sha256": "af90f316f2a072a96bf063b2f06f660909f33a11a9e6a25e0b16069eb7c17e29"
+      "sha256": "14af8d4cd9629f9b8d9ec49fb931f45f39c95885b8efb7a149250576632a3a58"
     },
     "PD-07": {
       "path": "docs/architecture/platform-division-construction/pd-07-infrastructure-and-platform/VOLUME.md",
-      "sha256": "4836b160e30ca5e8113e12895dc2eb896954595a69ade80ef3ea1fd1cf1521ec"
+      "sha256": "0bf2012f17d09688cc3ddc3a28b4d7baff69b559c004c5d8743adde11b2bc9f0"
     },
     "PD-08": {
       "path": "docs/architecture/platform-division-construction/pd-08-security/VOLUME.md",
-      "sha256": "d9b677c226af665bc804b8116de912b13988f1d410e110fa18bca4c7b0a766de"
+      "sha256": "c81faab241294323d14b85c4ef95d578f9009e317f79b16c0d815c680c4fcc52"
     },
     "PD-09": {
       "path": "docs/architecture/platform-division-construction/pd-09-quality-and-evaluation/VOLUME.md",
-      "sha256": "500442a44ed3ace9c4f9546bb7cf36604b6de2f0e12295470db60f431d83eb9b"
+      "sha256": "30ed79241d7effa5e4d9790d7124a16b76d5498f7b2e7f5d008317821d572cf0"
     },
     "PD-10": {
       "path": "docs/architecture/platform-division-construction/pd-10/VOLUME.md",
-      "sha256": "952b5e5c3ab4e1de15430faa543f01efd8b5b0b12a4ad02e5b777626abb468af"
+      "sha256": "7716b40bb52d1084fc71e935ba2a412be73c20b29701eb9039dec89a1ab34b3c"
     }
   }
 }

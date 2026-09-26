@@ -20,6 +20,9 @@ from tools import platform_division_construction as pc
 from tools import platform_organization_gate as po
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+#: The certification record of FD-PO-004 D1-A: sections and classes as
+#: certified. A change needs its own Founder instrument, which updates this pin.
+CANONICAL_MANIFEST_SHA = "49f203785f895899418b2a81796bac00150e75da7041703cc10870cf12174e5d"
 ACT_003 = ("docs/governance/acts/ACT-CC-POST-P13-PLATFORM-ORG-003-PLATFORM-ORGANIZATION-"
            "CONSTRUCTION-AND-CANONICALIZATION.md")
 
@@ -57,7 +60,18 @@ class TheLiveState(unittest.TestCase):
     def test_every_volume_verifies(self):
         self.assertEqual([], self.report["errors"])
         self.assertTrue(self.report["passes"])
-        self.assertEqual({c: "CONSTRUCTED — VERIFIED" for c in pc.VOLUMES}, self.report["state"])
+        self.assertEqual({c: pc.CANONICAL_STATE for c in pc.VOLUMES}, self.report["state"])
+
+    def test_the_certified_classification_is_the_founders(self):
+        """FD-PO-004 §2 states the counts it certifies; §9 requires them kept."""
+        manifest = json.loads((REPO_ROOT / pc.CANONICAL_MANIFEST).read_text(encoding="utf-8"))
+        counts = {}
+        for volume in manifest["volumes"].values():
+            for _, cls in volume["classes"]:
+                counts[cls] = counts.get(cls, 0) + 1
+        self.assertEqual({pc.SOURCE_DERIVED: 29, pc.INHERITED: 6, pc.ADAPTATION: 14,
+                          pc.RECONSTRUCTION: 11, pc.UNKNOWN: 7, pc.RESERVED: 23}, counts)
+        self.assertEqual(CANONICAL_MANIFEST_SHA, _sha(REPO_ROOT / pc.CANONICAL_MANIFEST))
 
     def test_every_volume_carries_all_eleven_dimensions(self):
         for cpid, volume in self.report["volumes"].items():
@@ -75,10 +89,11 @@ class TheLiveState(unittest.TestCase):
         missing = [r for r, v in pc.reservations().items() if not v["recorded"]]
         self.assertEqual([], missing)
 
-    def test_the_gate_reports_construction_and_its_outcome_does_not_move(self):
+    def test_the_gate_reports_the_certified_baseline(self):
         self.assertTrue(self.gate["construction"]["passes"])
-        self.assertFalse(self.gate["construction"]["canonical"])
-        self.assertEqual(po.OUTCOME_D, self.gate["outcome"])
+        self.assertTrue(self.gate["construction"]["canonical"])
+        self.assertEqual("FD-PO-004", self.gate["construction"]["certified_by"])
+        self.assertEqual(po.OUTCOME_C, self.gate["outcome"])
 
     # NC-01, NC-02
     def test_nc01_nc02_constitutional_and_frozen_texts_unchanged(self):
@@ -86,9 +101,11 @@ class TheLiveState(unittest.TestCase):
             self.assertEqual(sha, _sha(REPO_ROOT / path), path)
 
     # NC-03
-    def test_nc03_reserved_governance_items_remain_open(self):
+    def test_nc03_reserved_items_open_unless_the_founder_closed_them(self):
+        decided = {"G-01", "FDP-P10-001", "FDP-P10-002"}
         for item in po.open_items():
-            self.assertEqual("OPEN", item["status"], item["id"])
+            expected = "CLOSED by FD-PO-004" if item["id"] in decided else "OPEN"
+            self.assertEqual(expected, item["status"], item["id"])
             self.assertTrue(item["recorded"], item["id"])
 
     # NC-04, NC-18
@@ -130,14 +147,15 @@ class TheLiveState(unittest.TestCase):
             self.assertFalse((REPO_ROOT / f"docs/architecture/volume-{n}").exists())
 
     # NC-16, NC-17, NC-19
-    def test_nc16_nc17_nc19_readiness_is_not_authorization_or_canonicalization(self):
-        self.assertFalse(self.report["canonical"])
+    def test_nc16_nc17_nc19_canonical_only_by_the_founder_and_not_frozen_or_active(self):
+        self.assertTrue(self.report["canonical"])
+        self.assertEqual("FD-PO-004", self.report["closing_decisions"]["G-01"])
         self.assertFalse(self.report["certifies"])
         self.assertFalse(self.report["grants_authority"])
         for cpid in pc.VOLUMES:
-            self.assertEqual(po.BLOCKED, self.gate["divisions"][cpid]["state"], cpid)
-        g01 = [i for i in self.gate["open_items"] if i["id"] == "G-01"][0]
-        self.assertEqual("OPEN", g01["status"])
+            self.assertEqual(po.INCOMPLETE, self.gate["divisions"][cpid]["state"], cpid)
+            header = pc.header((REPO_ROOT / pc.VOLUMES[cpid]).read_text(encoding="utf-8"))
+            self.assertEqual(("NO", "NO"), (header["Frozen"], header["Activated"]), cpid)
 
     # NC-20
     def test_nc20_no_phase_14_and_p13_closure_holds(self):
@@ -211,9 +229,43 @@ class NegativeControls(unittest.TestCase):
         self._fails("UNKNOWN states nothing unknown")
 
     # NC-08: proposal → canonical truth
-    def test_nc08_canonical_header_claimed(self):
-        self._edit(pc.VOLUMES["PD-05"], "| **Canonical** | NO |", "| **Canonical** | YES |")
-        self._fails("header Canonical")
+    def _without_fd_po_004_closes(self):
+        self._edit(po.REGISTER, "| **Closes** | `G-01` · `FDP-P10-001` · `FDP-P10-002` |\n", "")
+
+    def test_nc08_canonical_header_without_the_founder_decision(self):
+        self._without_fd_po_004_closes()
+        self._fails("header Canonical must be 'NO'")
+        self._fails("claims certification without a registered Founder decision")
+
+    def test_nc08_positive_the_decision_makes_the_header_valid(self):
+        report = pc.verify(self.tmp)
+        self.assertTrue(report["passes"])
+        self.assertEqual({c: pc.CANONICAL_STATE for c in pc.VOLUMES}, report["state"])
+
+    def test_certified_sections_changed_after_certification(self):
+        self._edit(pc.VOLUMES["PD-06"], "AI Engineering evolves by implementing",
+                   "AI Engineering evolves quickly by implementing")
+        self._fails("certified sections changed after certification")
+
+    def test_certified_class_changed(self):
+        self._edit(pc.VOLUMES["PD-07"], "**Dimension:** Capability · **Class:** BOUNDED-RECONSTRUCTION",
+                   "**Dimension:** Capability · **Class:** DOMAIN-ADAPTATION")
+        self._fails("differs from its certified class")
+
+    def test_certified_by_row_removed(self):
+        text = (self.tmp / pc.VOLUMES["PD-09"]).read_text(encoding="utf-8")
+        row = next(l for l in text.splitlines() if l.startswith("| **Certified by** |"))
+        self._edit(pc.VOLUMES["PD-09"], row + "\n", "")
+        self._fails("Certified by does not cite FD-PO-004")
+
+    def test_binding_declared_without_the_founder_decision(self):
+        self._without_fd_po_004_closes()
+        self._fails("declares FDP-P10-001 bound without a registered Founder decision")
+
+    def test_binding_decided_but_not_recorded(self):
+        self._edit(pc.VOLUMES["PD-09"], "Quality authority → PD-09: **BOUND** by `FD-PO-004` D4-A",
+                   "Quality authority → PD-09: pending")
+        self._fails("does not record FDP-P10-002 as bound by FD-PO-004")
 
     def test_nc08_canonical_status_asserted_in_text(self):
         self._edit(pc.VOLUMES["PD-06"], "# Part A — Identity & Mandate",

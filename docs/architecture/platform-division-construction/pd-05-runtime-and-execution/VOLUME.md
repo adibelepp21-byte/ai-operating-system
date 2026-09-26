@@ -4,8 +4,9 @@
 |---|---|
 | **CPID** | `PD-05` |
 | **Name** | Runtime & Execution |
-| **Construction status** | CONSTRUCTED — NOT CANONICAL |
-| **Canonical** | NO |
+| **Construction status** | CANONICAL CONSTRUCTION BASELINE — CERTIFIED WITH CLASSIFIED RESIDUAL |
+| **Canonical** | YES — construction baseline |
+| **Certified by** | `FD-PO-004` D1-A (Founder, 2026-09-26; Register `§53`). The sections below are those verified at `5eb0eec`, unchanged; every section keeps its class (`CANONICAL-BASELINE-MANIFEST.json`) |
 | **Frozen** | NO |
 | **Activated** | NO |
 | **Authority** | `ACT-CC-POST-P13-PLATFORM-ORG-003` as amended by v1.1, authorized for execution by `FD-PO-003-01` (construction *"AUTHORIZED WITH BOUNDARY"*) |
@@ -19,8 +20,10 @@
 - A `Reference:` informs a section but is not its source. That covers ACT-003's
   section lists, which are candidates (`§11`), and the P10 division record,
   which is derived (`§18`).
-- Nothing here is canonical, frozen or activated. Nothing here binds this
-  division to any implementation boundary.
+- Certified as the canonical construction baseline by `FD-PO-004` D1-A.
+  Certification preserves every class. It resolves no UNKNOWN or
+  RESERVED-DECISION section, and freezes and activates nothing.
+  Statements of status inside sections describe the state at construction.
 
 ---
 

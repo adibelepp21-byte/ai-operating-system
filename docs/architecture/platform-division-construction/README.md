@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | **Authority** | `ACT-CC-POST-P13-PLATFORM-ORG-003` as amended by v1.1 (Register `§47`, `§48`), authorized for execution by `FD-PO-003-01` (`§49`) |
-| **Status** | CONSTRUCTED — NOT CANONICAL · NOT FROZEN · NOT ACTIVATED |
+| **Status** | CANONICAL CONSTRUCTION BASELINE, certified with classified residual by `FD-PO-004` D1-A (Register `§53`) · NOT FROZEN · NOT ACTIVATED |
 | **Verifier** | `tools/platform_division_construction.py` (read-only). The gate reports its result under `construction` |
 | **Tests** | `tools/tests/test_platform_division_construction.py` |
 
@@ -61,14 +61,27 @@ The other documents here:
    volume.
 7. **Cross-PD reconciliation passes** (`reconcile()`).
 
-## What the volumes are not
+## What certification did, and did not do (`FD-PO-004`)
 
-- **Not canonical.** Canonicalization, certification and freeze are
-  Founder-reserved (v1.1 `§24`). The volumes are prepared for that step, and
-  nothing here takes it.
-- **Not a closure of `G-01`.** `G-01` records that no *definitional corpus*
-  was supplied. These volumes are constructed, not supplied, so `G-01` closes
-  only by its holder's decision. The gate's `§33` states for PD-05 … PD-10
-  therefore do not move.
+- **Canonical, as a construction baseline.** `FD-PO-004` D1-A certified the
+  six volumes *"with classified residual"*.
+  - The certified sections are those verified at `5eb0eec`, byte for byte.
+  - `CANONICAL-BASELINE-MANIFEST.json` records those sections and every
+    section's class.
+  - The verifier refuses:
+    - any change to certified sections or classes;
+    - a canonical header without the registered decision.
+- **Classes preserved.** No UNKNOWN or RESERVED-DECISION section was
+  resolved by certification (`FD-PO-004 §2`, `§9`).
+- **Two bindings made, beside the sections.**
+  - D3-A binds Security Owner → PD-08, and D4-A binds Quality authority →
+    PD-09, each within its established boundary.
+  - The volume headers record the bindings.
+  - The A3 and A4 sections keep their certified class and describe the state
+    at construction.
+- **`G-01` closed** by `FD-PO-004`.
+- **Not frozen, not activated.** The gate's `§33` states for PD-05 … PD-10
+  are therefore INCOMPLETE under ACT-001's frozen-and-activated contract, with
+  the certification as their stated reason.
 - **Not an assignment.** No Capability, Agent Definition, internal unit or
   implementation boundary is assigned to any division.

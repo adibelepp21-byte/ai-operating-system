@@ -4,12 +4,13 @@
 |---|---|
 | **CPID** | `PD-08` |
 | **Name** | Security |
-| **Construction status** | CONSTRUCTED — NOT CANONICAL |
-| **Canonical** | NO |
+| **Construction status** | CANONICAL CONSTRUCTION BASELINE — CERTIFIED WITH CLASSIFIED RESIDUAL |
+| **Canonical** | YES — construction baseline |
+| **Certified by** | `FD-PO-004` D1-A (Founder, 2026-09-26; Register `§53`). The sections below are those verified at `5eb0eec`, unchanged; every section keeps its class (`CANONICAL-BASELINE-MANIFEST.json`) |
 | **Frozen** | NO |
 | **Activated** | NO |
 | **Authority** | `ACT-CC-POST-P13-PLATFORM-ORG-003` as amended by v1.1, authorized for execution by `FD-PO-003-01` (construction *"AUTHORIZED WITH BOUNDARY"*) |
-| **Binding** | Security Owner → PD-08 is **not made**: `FDP-P10-001`, Founder-reserved and open |
+| **Binding** | Security Owner → PD-08: **BOUND** by `FD-PO-004` D3-A, within the established Security Owner boundary (frozen PD-02 A5, C8 §35). Sections A3, A4 and E2 keep their certified class; they record the state at construction |
 | **Verifier** | `tools/platform_division_construction.py` |
 
 **How to read this volume.**
@@ -21,7 +22,10 @@
 - The binding is the Founder's (`FDP-P10-001`). Under the Founder's P12
   policy D2 it is conditional-blocking: only work that depends on the binding
   waits. That is A3 and A4. The rest proceeds (v1.1 `§16` F-3).
-- Nothing here is canonical, frozen or activated.
+- Certified as the canonical construction baseline by `FD-PO-004` D1-A.
+  Certification preserves every class. It resolves no UNKNOWN or
+  RESERVED-DECISION section, and freezes and activates nothing.
+  Statements of status inside sections describe the state at construction.
 
 ---
 
