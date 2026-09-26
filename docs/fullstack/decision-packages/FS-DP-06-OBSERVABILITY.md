@@ -44,8 +44,9 @@ Three streams, three purposes:
 
 ## Until decided
 
-Health, audit, Trace and run records exist; request logs, metrics and
-alerting do not.
+Health, audit, Trace and run records exist. The local server prints the
+standard library's plain access line to stderr; there are no structured
+logs, metrics or alerting.
 
 ## Exact decision required
 

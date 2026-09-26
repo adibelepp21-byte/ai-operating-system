@@ -66,6 +66,17 @@ database size, pause-on-inactivity behaviour, backup availability, and
 connection limits. Each could make the free plan unsuitable. Upgrading is a
 spending decision, not the Architect's (D3-A).
 
+## Facts found in FS-08 discovery (2026-09-26)
+
+- A Supabase project exists (`baacpvssvvxtezspclgj`). Three read-only queries
+  through the connector **timed out**; the cause is not determined (EXT-01).
+- Supabase's documentation: Free-plan projects **pause after 7 days of low
+  activity** (restorable within 90 days), and *"database backups are not
+  available for download for Free Plan projects."*
+- So on the Free plan (D3-A), point 6 above can only be met by an
+  operator-run logical export, and availability depends on regular activity.
+  Choosing a paid plan instead is a spending decision for the Founder.
+
 ## Until decided
 
 The backend persists through `LocalAppendOnlyStorage` under an explicit data

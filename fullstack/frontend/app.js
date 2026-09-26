@@ -192,6 +192,17 @@ async function renderAudit() {
     el("td", {}, e.path), el("td", {}, e.scope), el("td", { class: e.decision === "allowed" ? "tone-good" : "tone-bad" }, e.decision))));
 }
 
+// Content a view rendered belongs to the principal it was rendered for. It is
+// cleared before every render and whenever the credential changes, so a
+// refusal never leaves an earlier principal's data on screen.
+const DYNAMIC = ["overview-cards", "overview-last-run", "catalog", "run-result", "run-detail",
+                 "traces-range", "session-info"];
+
+function clearViews() {
+  for (const body of document.querySelectorAll("main table tbody")) body.replaceChildren();
+  for (const id of DYNAMIC) $(`[data-testid=${id}]`).replaceChildren();
+}
+
 const VIEWS = { overview: renderOverview, workflows: renderWorkflows, tools: renderTools,
                 traces: renderTraces, audit: renderAudit, session: refreshSession };
 
@@ -201,6 +212,7 @@ async function show(view) {
   }
   for (const name of Object.keys(VIEWS)) $(`#view-${name}`).hidden = name !== view;
   showBanner(null);
+  clearViews();
   await VIEWS[view]();
 }
 
@@ -213,11 +225,13 @@ function wire() {
     event.preventDefault();
     client.setCredential(event.currentTarget.credential.value.trim());
     event.currentTarget.credential.value = "";
+    clearViews();
     await refreshSession();
     await show("overview");
   });
   $("[data-testid=credential-clear]").addEventListener("click", async () => {
     client.setCredential("");
+    clearViews();
     await refreshSession();
   });
   $("[data-testid=traces-prev]").addEventListener("click", () => {

@@ -127,7 +127,8 @@ try {
   await page.click('.sidebar button[data-view="audit"]');
   await page.waitForSelector(`${tid("banner")}:not([hidden])`);
   assert.match(await page.textContent(tid("banner")), /scope aios\.audit is required/);
-  report("the audit view is refused to an observer, and says why");
+  assert.equal(await page.locator(`${tid("audit-table")} tbody tr`).count(), 0);
+  report("the audit view is refused to an observer, says why, and shows no earlier data");
   await shot(page, "05-observer-refused");
 
   // Only the deliberate refusals may appear as console errors (failed fetches log nothing in Chromium,

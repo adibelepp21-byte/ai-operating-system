@@ -47,6 +47,19 @@ console reads history from durable records.
    (the free plan's permitted use), function duration and size limits, and
    whether the Python runtime serves this WSGI application unchanged.
 
+## Facts found in FS-08 discovery (2026-09-26)
+
+- One Vercel team exists, with one unrelated project. No AIOS project exists.
+  The connector did not report the plan tier.
+- Vercel's documentation shows WSGI entrypoints for its Python runtime
+  (Django and Flask guides; `[tool.vercel] entrypoint = "module:app"`).
+  Whether a framework-free WSGI callable like the backend's `Application` is
+  served unchanged is **inferred, not confirmed**; a preview deployment would
+  confirm it.
+- Rolling back to a *specific* older deployment is documented as a Pro or
+  Enterprise feature. What the team's plan allows must be confirmed before
+  point 4 above is relied on.
+
 ## Until decided
 
 Nothing is deployed. The backend runs locally
