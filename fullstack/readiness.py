@@ -62,7 +62,9 @@ EXTERNAL_DEPENDENCIES = (
 def ratified(register_text: str) -> Dict[str, str]:
     """Package id → the Register entry that ratifies it."""
     found = {}
-    for block in re.split(r"(?m)^(?=### )", register_text):
+    # Split at every section heading, so an entry's rows are its own: a `##`
+    # section never borrows the `Decided by` row of the `###` entry before it.
+    for block in re.split(r"(?m)^(?=#{2,3} )", register_text):
         if not block.startswith("### ") or not re.search(r"(?m)^\| \*\*Decided by\*\* \|", block):
             continue
         row = re.search(r"(?m)^\| \*\*Ratifies\*\* \|([^\n]*)\|\s*$", block)

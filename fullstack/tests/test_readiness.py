@@ -19,6 +19,11 @@ class Ratification(unittest.TestCase):
         self.assertEqual({}, ratified("| **Decided by** | Architect |\n| **Ratifies** | FS-DP-01 |\n"))
         self.assertEqual(set(PACKAGES), set(ratified(RATIFY_ALL)))
 
+    def test_a_section_does_not_borrow_the_previous_entrys_decider(self):
+        text = ("### FD-X — Founder Decision\n\n| **Decided by** | Founder |\n\n"
+                "## 99. Later section\n\n| **Ratifies** | FS-DP-01 |\n")
+        self.assertEqual({}, ratified(text))
+
     def test_nothing_is_ratified_today(self):
         self.assertEqual({}, ratified(readiness.REGISTER.read_text(encoding="utf-8")))
 

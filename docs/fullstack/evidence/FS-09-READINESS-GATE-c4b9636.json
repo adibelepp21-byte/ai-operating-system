@@ -1,0 +1,185 @@
+{
+  "gate": "FS-09 Production Readiness",
+  "commit": "c4b96366c875328bdf7825acf5d84b561804c4a5",
+  "result": "NOT PRODUCTION READY",
+  "criteria": [
+    {
+      "area": "Functionality",
+      "criterion": "core functions work (Scenario B)",
+      "status": "PASS",
+      "evidence": "20 live runs succeeded: True",
+      "blocked_by": []
+    },
+    {
+      "area": "Functionality",
+      "criterion": "failure is a meaningful state (Scenario C)",
+      "status": "PASS",
+      "evidence": "state 'failed': docs.read execution_failure: 'docs/absent.md' is not a document in the repository",
+      "blocked_by": []
+    },
+    {
+      "area": "Functionality",
+      "criterion": "agent creation (Scenario A)",
+      "status": "BLOCKED",
+      "evidence": "awaits ratification of FS-DP-07",
+      "blocked_by": [
+        "FS-DP-07"
+      ]
+    },
+    {
+      "area": "Security",
+      "criterion": "authentication",
+      "status": "BLOCKED",
+      "evidence": "awaits ratification of FS-DP-02",
+      "blocked_by": [
+        "FS-DP-02"
+      ]
+    },
+    {
+      "area": "Security",
+      "criterion": "authorization and least privilege",
+      "status": "PASS",
+      "evidence": "observer POST → 403; anonymous GET → 401",
+      "blocked_by": []
+    },
+    {
+      "area": "Security",
+      "criterion": "secrets not exposed",
+      "status": "PASS",
+      "evidence": "the shipped composition uses NoAuthenticator, which accepts no credential; the security suite scans records and responses for credentials",
+      "blocked_by": []
+    },
+    {
+      "area": "Security",
+      "criterion": "attack-surface controls",
+      "status": "PASS",
+      "evidence": "security headers present; 64 KiB body limit; Tool confined to docs/",
+      "blocked_by": []
+    },
+    {
+      "area": "Security",
+      "criterion": "audit",
+      "status": "PASS",
+      "evidence": "25 decisions recorded",
+      "blocked_by": []
+    },
+    {
+      "area": "Reliability",
+      "criterion": "failure handling",
+      "status": "PASS",
+      "evidence": "a failed Tool drives the Workflow to FAILED; nothing is left RUNNING",
+      "blocked_by": []
+    },
+    {
+      "area": "Reliability",
+      "criterion": "recovery (local store)",
+      "status": "PASS",
+      "evidence": "21 of 21 runs present after restart",
+      "blocked_by": []
+    },
+    {
+      "area": "Reliability",
+      "criterion": "recovery and rollback of a deployment",
+      "status": "BLOCKED",
+      "evidence": "awaits ratification of FS-DP-01, FS-DP-04",
+      "blocked_by": [
+        "FS-DP-01",
+        "FS-DP-04"
+      ]
+    },
+    {
+      "area": "Performance",
+      "criterion": "latency of Scenario B (local, in-process)",
+      "status": "OBSERVED",
+      "evidence": "p50 0.76 ms, max 1.78 ms over 20 runs; no workload requirement is stated",
+      "blocked_by": []
+    },
+    {
+      "area": "Observability",
+      "criterion": "tracing (Trace)",
+      "status": "PASS",
+      "evidence": "62 Trace records for 20 successful and 1 failed run",
+      "blocked_by": []
+    },
+    {
+      "area": "Observability",
+      "criterion": "logging, metrics, alerting",
+      "status": "BLOCKED",
+      "evidence": "awaits ratification of FS-DP-06",
+      "blocked_by": [
+        "FS-DP-06"
+      ]
+    },
+    {
+      "area": "Data",
+      "criterion": "integrity (append-only)",
+      "status": "PASS",
+      "evidence": "every partition's bytes after the first run are a prefix of its final bytes: True",
+      "blocked_by": []
+    },
+    {
+      "area": "Data",
+      "criterion": "production persistence, backup, migration",
+      "status": "BLOCKED",
+      "evidence": "awaits ratification of FS-DP-01",
+      "blocked_by": [
+        "FS-DP-01"
+      ]
+    },
+    {
+      "area": "Reproducibility",
+      "criterion": "known artifact",
+      "status": "PASS",
+      "evidence": "commit c4b96366c875328bdf7825acf5d84b561804c4a5; no build step",
+      "blocked_by": []
+    },
+    {
+      "area": "Reproducibility",
+      "criterion": "reproducible deployment",
+      "status": "BLOCKED",
+      "evidence": "awaits ratification of FS-DP-03, FS-DP-04",
+      "blocked_by": [
+        "FS-DP-03",
+        "FS-DP-04"
+      ]
+    }
+  ],
+  "blocking": [
+    "Functionality: agent creation (Scenario A)",
+    "Security: authentication",
+    "Reliability: recovery and rollback of a deployment",
+    "Observability: logging, metrics, alerting",
+    "Data: production persistence, backup, migration",
+    "Reproducibility: reproducible deployment"
+  ],
+  "decision_packages": {
+    "FS-DP-01": "PROPOSED — NOT RATIFIED",
+    "FS-DP-02": "PROPOSED — NOT RATIFIED",
+    "FS-DP-03": "PROPOSED — NOT RATIFIED",
+    "FS-DP-04": "PROPOSED — NOT RATIFIED",
+    "FS-DP-05": "PROPOSED — NOT RATIFIED",
+    "FS-DP-06": "PROPOSED — NOT RATIFIED",
+    "FS-DP-07": "PROPOSED — NOT RATIFIED"
+  },
+  "awaiting": [
+    "FS-DP-01",
+    "FS-DP-02",
+    "FS-DP-03",
+    "FS-DP-04",
+    "FS-DP-06",
+    "FS-DP-07"
+  ],
+  "external_dependencies": [
+    {
+      "id": "EXT-01",
+      "what": "Supabase database unreachable through the connector: three read-only queries ended in a connection timeout (2026-09-26); cause not determined",
+      "needs": "the project owner to confirm the project is active (restore it if paused)"
+    },
+    {
+      "id": "EXT-02",
+      "what": "S-01 AIOS Transition Manifest not supplied (FD-FS-001 D5-A)",
+      "needs": "the Founder to supply the exact document"
+    }
+  ],
+  "release": "not due: the Founder release decision follows a PASS of this gate (FD-FS-001 D4-A); this gate never releases"
+}
