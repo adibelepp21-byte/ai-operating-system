@@ -1,0 +1,1233 @@
+{
+  "act": "ACT-CC-POST-P13-PLATFORM-ORG-001",
+  "divisions": {
+    "PD-01": {
+      "name": "Executive Office",
+      "record": "docs/architecture/platform-organization/divisions/PD-01-executive-office.md",
+      "declared_maturity": "**REVIEWED** — not advanced by this record",
+      "state": "REQUIRES FOUNDER DECISION",
+      "also": [
+        "REQUIRES ARCHITECT DECISION"
+      ],
+      "reasons": [
+        "G-10 (ARCHITECT): PD-01 assigns Capability ownership to Sub Divisions: internal structure, or a fourth Spine level",
+        "P7-I99 (FOUNDER): PD-01's integrated review under the adopted R1–R11 contract has not run; the appointment excludes executing it",
+        "RG-1 (FOUNDER): PD-01 activation: the conditions beyond Freeze and the activation authorization are Founder-reserved (AG-08, AG-10)"
+      ],
+      "residual": [
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · A1",
+          "note": ""
+        },
+        "Authority": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · A5, Part C",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · Part B",
+          "note": ""
+        },
+        "Capability": {
+          "status": "PARTIAL",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · B3",
+          "note": "Capability ownership assigned to Sub Divisions (G-10)"
+        },
+        "Architecture": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · Parts A–E",
+          "note": ""
+        },
+        "Operation": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · Part D",
+          "note": ""
+        },
+        "Performance": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · Part E",
+          "note": ""
+        },
+        "Lifecycle": {
+          "status": "PARTIAL",
+          "source": "GDR-0017 FROZEN; docs/governance/AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md §7.1",
+          "note": "frozen; not activation-eligible"
+        },
+        "Integration": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · C8",
+          "note": ""
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/volume-1/pd-01-executive-office, frozen by GDR-0017 · no Evolution Part",
+          "note": "Parts A–E carry no Evolution Part; the structure question is C6-A1"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/governance/platform-organization/PD-01-VOLUME-1-BODY-LINEAGE.json",
+          "note": "45/45 bodies verified"
+        }
+      }
+    },
+    "PD-02": {
+      "name": "Architecture Office",
+      "record": "docs/architecture/platform-organization/divisions/PD-02-architecture-office.md",
+      "declared_maturity": "**VERIFIED** — not advanced by this record",
+      "state": "COMPLETE WITH CLASSIFIED RESIDUAL",
+      "also": [],
+      "reasons": [
+        "frozen GDR-0026 · gate GDR-0035 · active GDR-0036; 50 bodies verify"
+      ],
+      "residual": [
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · A1",
+          "note": ""
+        },
+        "Authority": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · A5, Part C",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · Part B",
+          "note": ""
+        },
+        "Capability": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · Part B",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · Parts A–E",
+          "note": ""
+        },
+        "Operation": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · Part D",
+          "note": ""
+        },
+        "Performance": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · Part E",
+          "note": ""
+        },
+        "Lifecycle": {
+          "status": "EVIDENCED",
+          "source": "GDR-0026 FROZEN · GDR-0035 gate PASS · GDR-0036 ACTIVE",
+          "note": ""
+        },
+        "Integration": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · C8",
+          "note": ""
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office, frozen by GDR-0026 · no Evolution Part",
+          "note": "Parts A–E carry no Evolution Part; the structure question is C6-A1"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/volume-2/pd-02-architecture-office/RESIDENCY-MANIFEST.md",
+          "note": "50/50 bodies verified"
+        }
+      }
+    },
+    "PD-03": {
+      "name": "Governance & Compliance",
+      "record": "docs/architecture/platform-organization/divisions/PD-03-governance-and-compliance.md",
+      "declared_maturity": "EVIDENCE-READY → **CONSTRUCTED (derived)**",
+      "state": "REQUIRES FOUNDER DECISION",
+      "also": [],
+      "reasons": [
+        "ESC-C7-01 (FOUNDER): the PD-03 and PD-04 canonical volumes exist and are verified, and are not resident: authorize their residency"
+      ],
+      "residual": [
+        "FDP-P10-003",
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [
+        "Capability",
+        "Architecture"
+      ],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Identity)",
+          "note": ""
+        },
+        "Authority": {
+          "status": "PARTIAL",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Authority)",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "PARTIAL",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Ownership)",
+          "note": ""
+        },
+        "Capability": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Capability)",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Organization + Boundary)",
+          "note": ""
+        },
+        "Operation": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Performance": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Lifecycle": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md",
+          "note": "a division's lifecycle is architect-approved; assigns nothing"
+        },
+        "Integration": {
+          "status": "DECLARED — interface undefined",
+          "source": "docs/architecture/platform-organization/CROSS-PD-INTERFACE-REGISTRY.md",
+          "note": "X-01, X-02, X-03"
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/platform-organization/DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md",
+          "note": "no division-level change control; held by the source gap"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2",
+          "note": "every cell traces to the certified ledger"
+        }
+      }
+    },
+    "PD-04": {
+      "name": "Knowledge & Intelligence",
+      "record": "docs/architecture/platform-organization/divisions/PD-04-knowledge-and-intelligence.md",
+      "declared_maturity": "EVIDENCE-READY → **CONSTRUCTED (derived)**",
+      "state": "REQUIRES FOUNDER DECISION",
+      "also": [],
+      "reasons": [
+        "ESC-C7-01 (FOUNDER): the PD-03 and PD-04 canonical volumes exist and are verified, and are not resident: authorize their residency"
+      ],
+      "residual": [
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [
+        "Capability",
+        "Architecture"
+      ],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Identity)",
+          "note": ""
+        },
+        "Authority": {
+          "status": "PARTIAL",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Authority)",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "PARTIAL",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Ownership)",
+          "note": ""
+        },
+        "Capability": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Capability)",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Organization + Boundary)",
+          "note": ""
+        },
+        "Operation": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Performance": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Lifecycle": {
+          "status": "PARTIAL",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Lifecycle)",
+          "note": ""
+        },
+        "Integration": {
+          "status": "PARTIAL",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Interface + Dependency)",
+          "note": ""
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/platform-organization/DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md",
+          "note": "no division-level change control; held by the source gap"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2",
+          "note": "every cell traces to the certified ledger"
+        }
+      }
+    },
+    "PD-05": {
+      "name": "Runtime & Execution",
+      "record": "docs/architecture/platform-organization/divisions/PD-05-runtime-and-execution.md",
+      "declared_maturity": "EVIDENCE-READY → **CONSTRUCTED (derived)**",
+      "state": "BLOCKED",
+      "also": [],
+      "reasons": [
+        "G-01 (FOUNDER): no definitional corpus exists for PD-05 … PD-10: supply it"
+      ],
+      "residual": [
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [
+        "Authority",
+        "Capability",
+        "Architecture"
+      ],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Identity)",
+          "note": ""
+        },
+        "Authority": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Authority)",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Ownership)",
+          "note": ""
+        },
+        "Capability": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Capability)",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Organization + Boundary)",
+          "note": ""
+        },
+        "Operation": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Performance": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Lifecycle": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md",
+          "note": "a division's lifecycle is architect-approved; assigns nothing"
+        },
+        "Integration": {
+          "status": "DECLARED — interface undefined",
+          "source": "docs/architecture/platform-organization/CROSS-PD-INTERFACE-REGISTRY.md",
+          "note": "X-05"
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/platform-organization/DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md",
+          "note": "no division-level change control; held by the source gap"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2",
+          "note": "every cell traces to the certified ledger"
+        }
+      }
+    },
+    "PD-06": {
+      "name": "AI Engineering",
+      "record": "docs/architecture/platform-organization/divisions/PD-06-ai-engineering.md",
+      "declared_maturity": "EVIDENCE-READY → **CONSTRUCTED (derived)**",
+      "state": "BLOCKED",
+      "also": [],
+      "reasons": [
+        "G-01 (FOUNDER): no definitional corpus exists for PD-05 … PD-10: supply it"
+      ],
+      "residual": [
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [
+        "Authority",
+        "Capability",
+        "Architecture"
+      ],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Identity)",
+          "note": ""
+        },
+        "Authority": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Authority)",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Ownership)",
+          "note": ""
+        },
+        "Capability": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Capability)",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Organization + Boundary)",
+          "note": ""
+        },
+        "Operation": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Performance": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Lifecycle": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md",
+          "note": "a division's lifecycle is architect-approved; assigns nothing"
+        },
+        "Integration": {
+          "status": "DECLARED — interface undefined",
+          "source": "docs/architecture/platform-organization/CROSS-PD-INTERFACE-REGISTRY.md",
+          "note": "X-04"
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/platform-organization/DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md",
+          "note": "no division-level change control; held by the source gap"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2",
+          "note": "every cell traces to the certified ledger"
+        }
+      }
+    },
+    "PD-07": {
+      "name": "Infrastructure & Platform",
+      "record": "docs/architecture/platform-organization/divisions/PD-07-infrastructure-and-platform.md",
+      "declared_maturity": "EVIDENCE-READY → **CONSTRUCTED (derived)**",
+      "state": "BLOCKED",
+      "also": [],
+      "reasons": [
+        "G-01 (FOUNDER): no definitional corpus exists for PD-05 … PD-10: supply it"
+      ],
+      "residual": [
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [
+        "Authority",
+        "Capability",
+        "Architecture",
+        "Integration"
+      ],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Identity)",
+          "note": ""
+        },
+        "Authority": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Authority)",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Ownership)",
+          "note": ""
+        },
+        "Capability": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Capability)",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Organization + Boundary)",
+          "note": ""
+        },
+        "Operation": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Performance": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Lifecycle": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md",
+          "note": "a division's lifecycle is architect-approved; assigns nothing"
+        },
+        "Integration": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Interface + Dependency)",
+          "note": ""
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/platform-organization/DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md",
+          "note": "no division-level change control; held by the source gap"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2",
+          "note": "every cell traces to the certified ledger"
+        }
+      }
+    },
+    "PD-08": {
+      "name": "Security",
+      "record": "docs/architecture/platform-organization/divisions/PD-08-security.md",
+      "declared_maturity": "DISCOVERED → **CONSTRUCTED (derived, binding-open)**",
+      "state": "BLOCKED",
+      "also": [],
+      "reasons": [
+        "G-01 (FOUNDER): no definitional corpus exists for PD-05 … PD-10: supply it"
+      ],
+      "residual": [
+        "FDP-P10-001",
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [
+        "Authority",
+        "Ownership",
+        "Capability",
+        "Architecture"
+      ],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Identity)",
+          "note": ""
+        },
+        "Authority": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Authority)",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Ownership)",
+          "note": ""
+        },
+        "Capability": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Capability)",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Organization + Boundary)",
+          "note": ""
+        },
+        "Operation": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Performance": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Lifecycle": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md",
+          "note": "a division's lifecycle is architect-approved; assigns nothing"
+        },
+        "Integration": {
+          "status": "DECLARED — interface undefined",
+          "source": "docs/architecture/platform-organization/CROSS-PD-INTERFACE-REGISTRY.md",
+          "note": "X-02"
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/platform-organization/DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md",
+          "note": "no division-level change control; held by the source gap"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2",
+          "note": "every cell traces to the certified ledger"
+        }
+      }
+    },
+    "PD-09": {
+      "name": "Quality & Evaluation",
+      "record": "docs/architecture/platform-organization/divisions/PD-09-quality-and-evaluation.md",
+      "declared_maturity": "DISCOVERED → **CONSTRUCTED (derived, binding-open)**",
+      "state": "BLOCKED",
+      "also": [],
+      "reasons": [
+        "G-01 (FOUNDER): no definitional corpus exists for PD-05 … PD-10: supply it"
+      ],
+      "residual": [
+        "FDP-P10-002",
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [
+        "Authority",
+        "Capability",
+        "Architecture"
+      ],
+      "dimensions": {
+        "Identity": {
+          "status": "EVIDENCED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Identity)",
+          "note": ""
+        },
+        "Authority": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Authority)",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "PARTIAL",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Ownership)",
+          "note": ""
+        },
+        "Capability": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Capability)",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Organization + Boundary)",
+          "note": ""
+        },
+        "Operation": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Performance": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Lifecycle": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md",
+          "note": "a division's lifecycle is architect-approved; assigns nothing"
+        },
+        "Integration": {
+          "status": "DECLARED — interface undefined",
+          "source": "docs/architecture/platform-organization/CROSS-PD-INTERFACE-REGISTRY.md",
+          "note": "X-03"
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/platform-organization/DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md",
+          "note": "no division-level change control; held by the source gap"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2",
+          "note": "every cell traces to the certified ledger"
+        }
+      }
+    },
+    "PD-10": {
+      "name": null,
+      "record": "docs/architecture/platform-organization/divisions/PD-10-developer-experience.md",
+      "declared_maturity": "DISCOVERED → **CONSTRUCTED (derived, name-contested)**",
+      "state": "BLOCKED",
+      "also": [
+        "CONFLICTED"
+      ],
+      "reasons": [
+        "G-01 (FOUNDER): no definitional corpus exists for PD-05 … PD-10: supply it"
+      ],
+      "residual": [
+        "G-02",
+        "ADP-P10-001",
+        "C6-A1",
+        "G-06",
+        "G-07"
+      ],
+      "absent_dimensions": [
+        "Authority",
+        "Ownership",
+        "Capability",
+        "Architecture",
+        "Integration"
+      ],
+      "dimensions": {
+        "Identity": {
+          "status": "CONTESTED",
+          "source": "docs/architecture/platform-organization/divisions/PD-10-developer-experience.md",
+          "note": "CPID stable; the name is contested (G-02)"
+        },
+        "Authority": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Authority)",
+          "note": ""
+        },
+        "Ownership": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Ownership)",
+          "note": ""
+        },
+        "Capability": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Capability)",
+          "note": ""
+        },
+        "Architecture": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Organization + Boundary)",
+          "note": ""
+        },
+        "Operation": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Performance": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-OPERATION-AND-PERFORMANCE-MODEL.md",
+          "note": "answered for every division; assigns nothing to this one"
+        },
+        "Lifecycle": {
+          "status": "MODEL-LEVEL ONLY",
+          "source": "docs/architecture/platform-organization/DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL.md",
+          "note": "a division's lifecycle is architect-approved; assigns nothing"
+        },
+        "Integration": {
+          "status": "ABSENT",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2 (Interface + Dependency)",
+          "note": ""
+        },
+        "Evolution": {
+          "status": "CLASSIFIED UNRESOLVED",
+          "source": "docs/architecture/platform-organization/DIVISION-CAPABILITY-ARCHITECTURE-EVOLUTION-MODEL.md",
+          "note": "no division-level change control; held by the source gap"
+        },
+        "Evidence": {
+          "status": "TRACED",
+          "source": "docs/architecture/platform-organization/EVIDENCE-LEDGER.md §2",
+          "note": "every cell traces to the certified ledger"
+        }
+      }
+    }
+  },
+  "open_items": [
+    {
+      "id": "ESC-C7-01",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-03",
+        "PD-04"
+      ],
+      "matter": "the PD-03 and PD-04 canonical volumes exist and are verified, and are not resident: authorize their residency",
+      "blocking": true,
+      "basis": "Founder supply (VOLUME-SECTION-STATUS-MATRIX §5)",
+      "source": "docs/architecture/platform-organization/VOLUME-SECTION-STATUS-MATRIX.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "G-01",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-05",
+        "PD-06",
+        "PD-07",
+        "PD-08",
+        "PD-09",
+        "PD-10"
+      ],
+      "matter": "no definitional corpus exists for PD-05 … PD-10: supply it",
+      "blocking": true,
+      "basis": "Founder supply (SYSTEMIC-GAP-MAP, Summary)",
+      "source": "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "G-02",
+      "holder": "FOUNDER / ARCHITECT",
+      "divisions": [
+        "PD-10"
+      ],
+      "matter": "PD-10 carries two names in resident sources: Developer Experience and Developer Enablement",
+      "blocking": false,
+      "basis": "SYSTEMIC-GAP-MAP G-02: Blocking NO. Holder: the gap map says Founder (which source governs naming); DIVISION-LIFECYCLE-AND-AUTHORITY-MODEL says renaming a division is architect approval (Domain Model §6)",
+      "source": "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "FDP-P10-001",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-08"
+      ],
+      "matter": "bind the Security Owner role to PD-08, or record non-binding (G-03)",
+      "blocking": false,
+      "basis": "FD-P10-005 §4: open after certification. Not blocking: SYSTEMIC-GAP-MAP G-03 Blocking NO; the Founder's P12 policy D2 = CONDITIONAL-BLOCKING (only work with a proven direct dependency stops)",
+      "source": "docs/architecture/platform-organization/POST-P10-TRANSITION-REGISTER.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "FDP-P10-002",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-09"
+      ],
+      "matter": "bind the Quality Authority to PD-09, or record non-binding",
+      "blocking": false,
+      "basis": "FD-P10-005 §4. Not blocking: G-03 extends to PD-09, Blocking NO",
+      "source": "docs/architecture/platform-organization/POST-P10-TRANSITION-REGISTER.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "FDP-P10-003",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-03"
+      ],
+      "matter": "Governance Authority binding; activation reserved",
+      "blocking": false,
+      "basis": "FD-P10-005 §4. Not blocking: POST-P10 Gate D, P10 relevance NONE; the Founder's P12 policy D3 = CONDITIONAL-BLOCKING",
+      "source": "docs/architecture/platform-organization/POST-P10-TRANSITION-REGISTER.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "ADP-P10-001",
+      "holder": "ARCHITECT",
+      "divisions": [
+        "PD-01",
+        "PD-02",
+        "PD-03",
+        "PD-04",
+        "PD-05",
+        "PD-06",
+        "PD-07",
+        "PD-08",
+        "PD-09",
+        "PD-10"
+      ],
+      "matter": "ADR-0029 (Proposed): Department ≠ PD as entity type or population; until it is decided, INV-10 exposure of the declared edges cannot be evaluated",
+      "blocking": false,
+      "basis": "Domain Model semantics: REG-CFV2-001 C-2 excludes it from the CEO's A05. It holds cross-division interface evaluation (G14), not a division's own construction (POST-P10-TRANSITION-REGISTER Gate D: P10 relevance NONE)",
+      "source": "docs/architecture/platform-organization/POST-P10-TRANSITION-REGISTER.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "C6-A1",
+      "holder": "ARCHITECT",
+      "divisions": [
+        "PD-01",
+        "PD-02",
+        "PD-03",
+        "PD-04",
+        "PD-05",
+        "PD-06",
+        "PD-07",
+        "PD-08",
+        "PD-09",
+        "PD-10"
+      ],
+      "matter": "division volume structure: the A–E spine or Parts A–H",
+      "blocking": false,
+      "basis": "cross-division structure: REG-CFV2-001 C-3 excludes it from the CEO's A05",
+      "source": "docs/architecture/platform-organization/VOLUME-SECTION-STATUS-MATRIX.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "G-10",
+      "holder": "ARCHITECT",
+      "divisions": [
+        "PD-01"
+      ],
+      "matter": "PD-01 assigns Capability ownership to Sub Divisions: internal structure, or a fourth Spine level",
+      "blocking": true,
+      "basis": "Domain Model §8: REG-CFV2-001 C-2. The source states no blocking classification; held as blocking for PD-01, the reference pattern, as the conservative reading",
+      "source": "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "P7-I99",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-01"
+      ],
+      "matter": "PD-01's integrated review under the adopted R1–R11 contract has not run; the appointment excludes executing it",
+      "blocking": true,
+      "basis": "Appointment Register §3.2 item 22",
+      "source": "docs/governance/AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "RG-1",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-01"
+      ],
+      "matter": "PD-01 activation: the conditions beyond Freeze and the activation authorization are Founder-reserved (AG-08, AG-10)",
+      "blocking": true,
+      "basis": "ACT-CC-F03-014 §3",
+      "source": "docs/governance/AIOS_VOLUME_ACTIVATION_MODEL_v1.0.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "G-06",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-01",
+        "PD-02",
+        "PD-03",
+        "PD-04",
+        "PD-05",
+        "PD-06",
+        "PD-07",
+        "PD-08",
+        "PD-09",
+        "PD-10"
+      ],
+      "matter": "Volumes 0, 0.1, 0.2 and 0.3 are referenced and not resident",
+      "blocking": false,
+      "basis": "Founder supply; not blocking (SYSTEMIC-GAP-MAP Summary)",
+      "source": "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md",
+      "recorded": true,
+      "status": "OPEN"
+    },
+    {
+      "id": "G-07",
+      "holder": "FOUNDER",
+      "divisions": [
+        "PD-01",
+        "PD-02",
+        "PD-03",
+        "PD-04",
+        "PD-05",
+        "PD-06",
+        "PD-07",
+        "PD-08",
+        "PD-09",
+        "PD-10"
+      ],
+      "matter": "the canonical Master Map, Platform Encyclopedia and gap inventory are referenced and not resident",
+      "blocking": false,
+      "basis": "Founder supply; not blocking (SYSTEMIC-GAP-MAP Summary)",
+      "source": "docs/architecture/platform-organization/SYSTEMIC-GAP-MAP.md",
+      "recorded": true,
+      "status": "OPEN"
+    }
+  ],
+  "ownership": {
+    "claims": {
+      "governance": [
+        "PD-03"
+      ],
+      "implementation": [
+        "PD-06"
+      ],
+      "infrastructure": [
+        "PD-07"
+      ],
+      "knowledge": [
+        "PD-04"
+      ],
+      "runtime": [
+        "PD-05"
+      ]
+    },
+    "conflicts": {},
+    "scope_unknown": [
+      "implementation"
+    ],
+    "stated_in": {
+      "PD-03 → governance": [
+        "docs/architecture/platform-organization/divisions/PD-04-knowledge-and-intelligence.md"
+      ],
+      "PD-04 → knowledge": [
+        "docs/architecture/platform-organization/divisions/PD-04-knowledge-and-intelligence.md"
+      ],
+      "PD-05 → runtime": [
+        "docs/architecture/platform-organization/divisions/PD-05-runtime-and-execution.md"
+      ],
+      "PD-06 → implementation": [
+        "docs/architecture/platform-organization/divisions/PD-06-ai-engineering.md"
+      ],
+      "PD-07 → infrastructure": [
+        "docs/architecture/platform-organization/divisions/PD-07-infrastructure-and-platform.md"
+      ]
+    }
+  },
+  "authority": [
+    {
+      "division": "PD-02",
+      "authority": "Architecture Authority",
+      "source": "docs/architecture/volume-2/pd-02-architecture-office/A1.md",
+      "residency": "RESIDENT (frozen)",
+      "recorded": true
+    },
+    {
+      "division": "PD-03",
+      "authority": "Governance Authority",
+      "source": "docs/architecture/platform-organization/VOLUME-SECTION-STATUS-MATRIX.md",
+      "residency": "NOT RESIDENT (ESC-C7-01)",
+      "recorded": true
+    },
+    {
+      "division": "PD-04",
+      "authority": "Knowledge Authority",
+      "source": "docs/architecture/platform-organization/VOLUME-SECTION-STATUS-MATRIX.md",
+      "residency": "NOT RESIDENT (ESC-C7-01)",
+      "recorded": true
+    }
+  ],
+  "coherence": {
+    "result": "NOT PASS",
+    "reasons": [
+      "5 of 5 declared edges have no defined interface; none is verified",
+      "G-02 open: PD-10 carries two names in resident sources: Developer Experience and Developer Enablement",
+      "ADP-P10-001 open: ADR-0029 (Proposed): Department ≠ PD as entity type or population; until it is decided, INV-10 exposure of the declared edges cannot be evaluated",
+      "divisions in no declared edge: PD-01, PD-07, PD-10"
+    ],
+    "edges": [
+      {
+        "id": "X-01",
+        "from": "PD-03",
+        "to": "PD-02",
+        "subject": "Architecture",
+        "interface": "not declared",
+        "verification": "DECLARED — interface undefined"
+      },
+      {
+        "id": "X-02",
+        "from": "PD-03",
+        "to": "PD-08",
+        "subject": "Security",
+        "interface": "not declared",
+        "verification": "DECLARED — interface undefined"
+      },
+      {
+        "id": "X-03",
+        "from": "PD-03",
+        "to": "PD-09",
+        "subject": "Quality",
+        "interface": "not declared",
+        "verification": "DECLARED — interface undefined"
+      },
+      {
+        "id": "X-04",
+        "from": "PD-04",
+        "to": "PD-06",
+        "subject": "AI Engineering",
+        "interface": "not declared",
+        "verification": "DECLARED — interface undefined"
+      },
+      {
+        "id": "X-05",
+        "from": "PD-04",
+        "to": "PD-05",
+        "subject": "Runtime",
+        "interface": "not declared",
+        "verification": "DECLARED — interface undefined"
+      }
+    ],
+    "interfaces_defined": 0,
+    "interfaces_verified": 0
+  },
+  "volume_integrity": {
+    "PD-02": {
+      "bodies": 50,
+      "recorded": 50,
+      "verified": 50,
+      "faults": [],
+      "holds": true,
+      "against": "docs/architecture/volume-2/pd-02-architecture-office/RESIDENCY-MANIFEST.md"
+    },
+    "PD-01": {
+      "bodies": 45,
+      "recorded": 45,
+      "verified": 45,
+      "faults": [],
+      "holds": true,
+      "against": "docs/governance/platform-organization/PD-01-VOLUME-1-BODY-LINEAGE.json"
+    }
+  },
+  "governance": {
+    "holds": true,
+    "failing": [],
+    "certified_root_holds": true
+  },
+  "gate": [
+    {
+      "id": "G1",
+      "dimension": "Scope",
+      "status": "PASS",
+      "evidence": "divisions: ['PD-01', 'PD-02', 'PD-03', 'PD-04', 'PD-05', 'PD-06', 'PD-07', 'PD-08', 'PD-09', 'PD-10']"
+    },
+    {
+      "id": "G2",
+      "dimension": "Identity",
+      "status": "PARTIAL",
+      "evidence": "every CPID stable; PD-10 name contested (G-02)"
+    },
+    {
+      "id": "G3",
+      "dimension": "Authority",
+      "status": "PARTIAL",
+      "evidence": "not evidenced for PD-03, PD-04, PD-05, PD-06, PD-07, PD-08, PD-09, PD-10"
+    },
+    {
+      "id": "G4",
+      "dimension": "Ownership",
+      "status": "PARTIAL",
+      "evidence": "not evidenced for PD-03, PD-04, PD-08, PD-09, PD-10"
+    },
+    {
+      "id": "G5",
+      "dimension": "Capability",
+      "status": "PARTIAL",
+      "evidence": "not evidenced for PD-01, PD-03, PD-04, PD-05, PD-06, PD-07, PD-08, PD-09, PD-10"
+    },
+    {
+      "id": "G6",
+      "dimension": "Architecture",
+      "status": "PARTIAL",
+      "evidence": "not evidenced for PD-03, PD-04, PD-05, PD-06, PD-07, PD-08, PD-09, PD-10"
+    },
+    {
+      "id": "G7",
+      "dimension": "Operation",
+      "status": "PARTIAL",
+      "evidence": "not evidenced for PD-03, PD-04, PD-05, PD-06, PD-07, PD-08, PD-09, PD-10"
+    },
+    {
+      "id": "G8",
+      "dimension": "Performance",
+      "status": "PARTIAL",
+      "evidence": "not evidenced for PD-03, PD-04, PD-05, PD-06, PD-07, PD-08, PD-09, PD-10"
+    },
+    {
+      "id": "G9",
+      "dimension": "Lifecycle",
+      "status": "PARTIAL",
+      "evidence": "not evidenced for PD-01, PD-03, PD-04, PD-05, PD-06, PD-07, PD-08, PD-09, PD-10"
+    },
+    {
+      "id": "G10",
+      "dimension": "Integration",
+      "status": "FAIL",
+      "evidence": "5 declared edges; 0 with a defined interface; 0 verified"
+    },
+    {
+      "id": "G11",
+      "dimension": "Evolution",
+      "status": "PASS",
+      "evidence": "each division has an evolution model or a classified unresolved area"
+    },
+    {
+      "id": "G12",
+      "dimension": "Governance",
+      "status": "PARTIAL",
+      "evidence": "consistent; authority bindings open: FDP-P10-001, FDP-P10-002, FDP-P10-003"
+    },
+    {
+      "id": "G13",
+      "dimension": "Evidence",
+      "status": "PASS",
+      "evidence": "every cell cites a resident source"
+    },
+    {
+      "id": "G14",
+      "dimension": "Cross-PD coherence",
+      "status": "FAIL",
+      "evidence": "5 of 5 declared edges have no defined interface; none is verified; G-02 open: PD-10 carries two names in resident sources: Developer Experience and Developer Enablement; ADP-P10-001 open: ADR-0029 (Proposed): Department ≠ PD as entity type or population; until it is decided, INV-10 exposure of the declared edges cannot be evaluated; divisions in no declared edge: PD-01, PD-07, PD-10"
+    }
+  ],
+  "gate_passes": false,
+  "outcome": "D. FOUNDER / ARCHITECT DECISION REQUIRED",
+  "certifies": false,
+  "grants_authority": false,
+  "canonical": false,
+  "statement": "Evaluation only. It certifies, closes, canonicalizes and authorizes nothing. A state here is computed from resident evidence; it is not a decision."
+}
