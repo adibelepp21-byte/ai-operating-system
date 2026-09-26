@@ -8954,3 +8954,16 @@ measurement as history; no decision taken.
 | **Received** | from the Founder, 2026-09-26. **Stated status: *"PROPOSED FOR FOUNDER AUTHORIZATION"*.** It is recorded as proposed |
 | **In force** | **No.** `§5.3`: FS-00 requires the Act to be Founder-authorized |
 | **Pre-authorization findings** | Two of its seven named sources (`§3` items 4 and 6: *AIOS Transition Manifest*; *Full Stack Development Roadmap … Memikirkan Deployment AIOS*) are not in the repository. FS-04, FS-06 and FS-08 intersect architecture the Freeze reserves to the Architect (`§10`: Identity, Authentication, Networking, Deployment, Scaling, Database and Observability implementation). Final System Acceptance is Founder-reserved (A19) |
+
+---
+
+## 61. FD-FS-001 Instrument Append — Authorization of the Full Stack Act and Its Boundaries, proposed (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `FD-FS-001` · `acts/FD-FS-001-FULL-STACK-ACT-AUTHORIZATION-AND-BOUNDARIES.md` · sha256 `af408f65c77abe4b92b7b4fa888367c81b4c7969a80f53326e2b09af1cc10669` |
+| **Prepared by** | Claude Code (Co-Founder / CEO), 2026-09-26, for `ACT-CC-POST-P13-AIOS-FULL-STACK-001` (`§60`) |
+| **Status** | **PROPOSED FOR FOUNDER DECISION.** All selections blank. No blank field may be read as approval; the recommendations it states are not selections |
+| **Matters** | D1 authorization of the Act (`§5.3`) · D2 Freeze `§10` deferred architecture needed by FS-04, FS-06 and FS-08 (Architect-reserved; `FD-2` open) · D3 cloud accounts and spending (`§7.1`) · D4 production release authority (not named by the existing governance model) · D5 the two absent sources (`§3` items 4 and 6) |
+| **In force** | **No.** It decides nothing. The Founder's selections, when made, are registered as the decision in their own entry |
+| **Unchanged** | The Act is not in force; FS-00 has not begun; no cloud connector has been called. A19 stays Founder-reserved. No open item is closed |
