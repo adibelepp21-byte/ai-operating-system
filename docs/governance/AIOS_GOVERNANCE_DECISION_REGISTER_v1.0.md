@@ -8675,3 +8675,41 @@ authority then applicable.
 | **Date** | 2026-09-26 |
 | **Received** | from the Founder, 2026-09-26. The instrument names no issuer or date. **Its stated status is *"PROPOSED FOR FOUNDER AUTHORIZATION"*.** It is recorded as proposed; no approval is inferred from its arrival. It is not a Founder Decision, and it changes none |
 | **Scope** | triage of seven Platform Organization decision points, and decision preparation only. It grants no construction authority for PD-01 … PD-10 (`§21`). The evidence work it asks for falls within existing delegation, and was done under that delegation |
+
+---
+
+## 45. Correction of record — §41–§44 Registration Metadata (2026-09-26)
+
+### ACT-CC-POST-P13-PLATFORM-ORG-002 — Registration metadata, of record
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-CC-POST-P13-PLATFORM-ORG-002` |
+| **Date** | 2026-09-26 |
+| **Corrects** | `§41`, `§42`, `§43`, `§44` |
+
+Each of the four entries carries a `| **Date** |` row and no `| **Identifier** |`
+row. The Register's other non-decision entries carry neither; its decision
+entries carry both. So the governance index read the four as entries without
+an identifier, and did not count them.
+
+| Entry | Of record |
+|---|---|
+| `§41` | the execution record of `FDR-G3` (registered at `§40`). It has no identifier of its own |
+| `§42` | registers `ACT-CC-POST-P13-PLATFORM-ORG-001`, received and recorded 2026-09-25 |
+| `§43` | the execution record of `ACT-CC-POST-P13-PLATFORM-ORG-001`. It has no identifier of its own |
+| `§44` | registers `ACT-CC-POST-P13-PLATFORM-ORG-002`, received and recorded 2026-09-26. **This entry's Identifier and Date rows restate `§44`'s, of record** |
+
+**The four entries are not altered.** `§2.3`: *"Append-only. Entries are
+added, never rewritten."* On the `GDR-0036` and `§33` precedent, this entry
+is the mark. Their content, content hashes and registered effects stand as
+written.
+
+**Found by the governance-index suite.** Its check that the index dates the
+Register as the Register states it failed once `§44` stated a date later than
+any indexed entry. The index builds its records from `### <identifier> —`
+headings, so everything after `§40`'s heading fell into `FDR-G3`'s record,
+which keeps its first date. The heading above gives this entry its own record. I committed `§44` before that failure was read: my command
+tested the exit status of the output filter, not of the suite. The defect is
+mine, and it is disclosed here. From this entry on, an execution record
+states its date in its heading only, as `§34`, `§37` and `§39` do.
