@@ -1,6 +1,6 @@
 # `ACT-CC-POST-P13-AIOS-FULL-STACK-001` — D1–D5 Founder Decision Execution Act (as received)
 
-**Received:** from the Founder, 2026-09-26, attached as `8f9eeeae-ACT-CC-POST-P13-AIOS-FULL-STACK-001-D1-D5-EXECUTION.md`, with the same text in the message body.
+**Received:** from the Founder, 2026-09-26, attached as an uploaded file (upload prefix `8f9eeeae`), with the same text in the message body.
 **Stated status:** *"FOUNDER AUTHORIZED — EXECUTION DIRECTIVE"*. **Decision instrument:** `FD-FS-001`.
 
 The attached file is reproduced byte for byte below; the content sha256 is computed over the fenced text and equals the sha256 of the attached file. The message body states the same five decisions word for word (its `§1`). It differs only in layout and in two phrasings: `§3` *"the entire program"* for *"the whole program"*, and `§5`, whose last step reads *"Operational AIOS"* where the file reads *"Operational AIOS claim only after evidence satisfies the Full Stack Act."*
