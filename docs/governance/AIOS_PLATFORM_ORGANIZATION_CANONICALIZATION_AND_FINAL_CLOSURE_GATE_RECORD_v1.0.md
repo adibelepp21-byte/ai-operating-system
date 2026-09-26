@@ -109,15 +109,43 @@ canonical status. Each is stated with its source, and none is decided.
 ACT-003 closure record (`§51`). They were open and non-blocking throughout,
 and they are now classified here.
 
-## Verification
+## Verification (at `f353329`)
 
-- **Tests:**
-  - construction: 50;
-  - closure gate: 22, including a positive control that closes the gate once
-    D2 is applied in a copy;
-  - gate, triage and index: 123.
-- **Mutation:** results are recorded in the Register `§54` entry.
-- **Suites and write probe at the recorded commit:** see Register `§54`.
+**Tests:**
+- construction: 51;
+- closure gate: 22, including the positive control that closes the gate once
+  D2 is applied in a copy;
+- gate, triage and index: 123.
+
+**Mutation, all caught by assertion:**
+- closure gate: 12 of 12 mutants;
+- construction verifier: 27 of 27 mutants, 7 of them on the new
+  canonicalization rules.
+
+**Suites, all OK:**
+
+| Suite | Tests |
+|---|---|
+| tools | 1902 (1 skipped) |
+| native_core | 801 (1 expected failure) |
+| consumers | 276 |
+| bounded_exception | 29 |
+
+**Write probe: 0 certified writes; holds.**
+- Entry points: GUARDED 12, SAFE 4, RETIRED/HISTORICAL 13, NON-WRITING 125.
+- The 2 new entry points are both read-only.
+
+**Protected roots.**
+- 0 files changed since `999ef1f` under `docs/program`,
+  `docs/architecture/platform-organization`, `volume-1`, `volume-2`,
+  `docs/constitution`, `native_core`, `tools/p13` or `consumers`.
+- The Register diff has 0 removed lines.
+- Certified P10 … P13 roots hold.
+
+**Evidence files** (`platform-organization/`):
+- `PO-GATE-f353329.json`;
+- `PD-CONSTRUCTION-VERIFICATION-f353329.json`;
+- `PO-FINAL-CLOSURE-GATE-f353329.json`.
 
 **Disclosed defects, all self-introduced and corrected before commit:**
 - **15 tests pinned the pre-decision state.**
