@@ -100,6 +100,14 @@ class TheLiveState(unittest.TestCase):
         self.assertTrue(all(i["recorded"] for i in items), [i for i in items if not i["recorded"]])
         self.assertEqual(3, sum(i["status"] != "OPEN" for i in items))
 
+    def test_the_received_volumes_verify(self):
+        volumes = self.report["volume_integrity"]
+        self.assertEqual((8, 8, True), (volumes["PD-03"]["verified"], volumes["PD-03"]["bodies"],
+                                         volumes["PD-03"]["holds"]))
+        self.assertEqual((3, 3, True), (volumes["PD-04"]["verified"], volumes["PD-04"]["bodies"],
+                                         volumes["PD-04"]["holds"]))
+        self.assertIn("received under FD-PO-004 D2-A", self.report["divisions"]["PD-03"]["reasons"][0])
+
     def test_both_resident_volumes_verify(self):
         volumes = self.report["volume_integrity"]
         self.assertEqual((45, 45, True), (volumes["PD-01"]["verified"],
@@ -323,6 +331,18 @@ class NoFalseCompletion(_Copy):
         self.assertEqual(po.CONFLICTED, report["divisions"]["PD-01"]["state"])
         self.assertIn("A1.md: changed with no recorded authorized change",
                       report["volume_integrity"]["PD-01"]["faults"])
+
+    def test_nc14_editing_a_received_body_is_detected(self):
+        path = f"{po.RECEIVED_VOLUMES['PD-04']}/Volume_4_Part_C.md"
+        self._write(path, self._text(path) + "\nedited\n")
+        report = self._eval()
+        self.assertEqual(po.CONFLICTED, report["divisions"]["PD-04"]["state"])
+        self.assertFalse(report["volume_integrity"]["PD-04"]["holds"])
+
+    def test_nc14_a_received_volume_without_its_receipt_is_conflicted(self):
+        (self.repo / po.RECEIVED_VOLUMES["PD-03"] / "RECEIPT-MANIFEST.json").unlink()
+        report = self._eval()
+        self.assertEqual(po.CONFLICTED, report["divisions"]["PD-03"]["state"])
 
     def test_nc14_editing_a_pd_01_body_is_detected(self):
         path = f"{po.VOLUME_1}/B3.md"

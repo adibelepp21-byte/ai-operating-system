@@ -64,6 +64,12 @@ P7_I99_RESULT = "docs/governance/AIOS_PD01_P7_I99_REVIEW_RESULT_v1.0.md"
 VOLUME_1 = "docs/architecture/volume-1/pd-01-executive-office"
 VOLUME_2 = "docs/architecture/volume-2/pd-02-architecture-office"
 VOLUME_2_MANIFEST = f"{VOLUME_2}/RESIDENCY-MANIFEST.md"
+#: Volumes received under `FD-PO-004` D2-A, each with the receipt manifest that
+#: records its bytes as transmitted and the certified total it must equal.
+RECEIVED_VOLUMES = {
+    "PD-03": "docs/architecture/volume-3/pd-03-governance-and-compliance",
+    "PD-04": "docs/architecture/volume-4/pd-04-knowledge-and-intelligence",
+}
 
 CPIDS = tuple(f"PD-{n:02d}" for n in range(1, 11))
 DIMENSIONS = ("Identity", "Authority", "Ownership", "Capability", "Architecture",
@@ -351,6 +357,29 @@ def volume_integrity(root: Path = REPO_ROOT) -> Dict[str, dict]:
                     "verified": len(bodies) - len(faults), "faults": tuple(faults),
                     "holds": bool(bodies) and len(entries) == len(bodies) and not faults,
                     "against": LINEAGE}
+
+    for cpid, directory in RECEIVED_VOLUMES.items():
+        if not (root / directory).is_dir():
+            continue
+        receipt = f"{directory}/RECEIPT-MANIFEST.json"
+        try:
+            data = json.loads(_read(root, receipt) or "")
+        except ValueError:
+            data = {}
+        recorded = {f["file"]: f["sha256"] for f in data.get("files", ())}
+        bodies = sorted((root / directory).glob("*.md"))
+        faults = [f"{p.name}: bytes differ from the receipt" for p in bodies
+                  if recorded.get(p.name) != _sha(p)]
+        faults += [f"{name}: recorded and absent" for name in recorded
+                   if not (root / directory / name).exists()]
+        total = sum(p.stat().st_size for p in bodies)
+        if total != data.get("certified_total_bytes"):
+            faults.append(f"total {total} bytes ≠ certified {data.get('certified_total_bytes')}")
+        out[cpid] = {"bodies": len(bodies), "recorded": len(recorded),
+                     "verified": len(bodies) - len([f for f in faults if "receipt" in f]),
+                     "faults": tuple(faults),
+                     "holds": bool(bodies) and len(recorded) == len(bodies) and not faults,
+                     "against": receipt}
     return out
 
 
@@ -379,8 +408,11 @@ def blind_copies(root: Path = REPO_ROOT) -> Dict[str, Tuple[str, ...]]:
         for path in sorted(corpus.glob("*.md")):
             text = _normalised(path.read_text(encoding="utf-8"))
             for name, body in reference.items():
-                if text == body or difflib.SequenceMatcher(None, text, body).quick_ratio() > 0.97 \
-                        and difflib.SequenceMatcher(None, text, body).ratio() > 0.95:
+                matcher = difflib.SequenceMatcher(None, text, body)
+                # real_quick_ratio() bounds quick_ratio() from above using lengths
+                # alone: bodies too different in size cannot be near-identical.
+                if text == body or matcher.real_quick_ratio() > 0.97 \
+                        and matcher.quick_ratio() > 0.97 and matcher.ratio() > 0.95:
                     copies.append(f"{path.name} ≈ PD-01 {name}")
                     break
         if copies:
@@ -637,7 +669,7 @@ def division_state(cpid: str, cells: Dict[str, dict], items: Tuple[dict, ...],
         state = COMPLETE_RESIDUAL if mine else COMPLETE
         reasons = [f"frozen {lifecycle['frozen']} · gate {lifecycle.get('gate')} · active "
                    f"{lifecycle.get('active')}; {integrity[cpid]['verified']} bodies verify"]
-    elif cpid in resident:
+    elif cpid in resident and not integrity.get(cpid, {}).get("holds"):
         state = UNKNOWN
         reasons = [f"a resident corpus is present ({resident[cpid].as_posix()}) and has not "
                    "been assessed; residency is not completion"]
@@ -668,6 +700,9 @@ def division_state(cpid: str, cells: Dict[str, dict], items: Tuple[dict, ...],
         # nor activated. The contract above needs both, so the state stays.
         reasons = [f"canonical construction baseline ({baseline}); not frozen and not "
                    "activated, which the COMPLETE contract requires"]
+    if cpid in resident and integrity.get(cpid, {}).get("holds") and state != CONFLICTED:
+        reasons = [f"received under FD-PO-004 D2-A; {integrity[cpid]['verified']} bodies verify "
+                   "against the receipt and the certified total", *reasons]
     residual = [i["id"] for i in mine if state in (COMPLETE_RESIDUAL,) or not i["blocking"]]
     return {"state": state, "also": tuple(dict.fromkeys(also)), "reasons": tuple(reasons),
             "residual": tuple(residual),

@@ -118,9 +118,15 @@ def evaluate(root: Path = REPO_ROOT) -> dict:
     resident = po.resident_corpora(root)
     if chosen["D2"] == "D2-A":
         missing = [c for c in ("PD-03", "PD-04") if c not in resident]
-        if missing or items.get("ESC-C7-01", {}).get("status") == "OPEN":
-            blockers.append(f"D2-A (supply) not yet applied: {', '.join(missing) or 'residency'} "
-                            "not received and verified")
+        unverified = [c for c in ("PD-03", "PD-04") if c in resident and not vi.get(c, {}).get("holds")]
+        if missing:
+            blockers.append(f"D2-A (supply) not yet applied: {', '.join(missing)} not received")
+        elif unverified:
+            blockers.append(f"D2-A: {', '.join(unverified)} received but bytes do not verify")
+        elif items.get("ESC-C7-01", {}).get("status") == "OPEN":
+            blockers.append("D2-A: Volumes 3 and 4 received and verified; ESC-C7-01 awaits "
+                            "the Founder's closing decision")
+        evidence.append(f"received: {[c for c in ('PD-03', 'PD-04') if c in resident]}")
     elif chosen["D2"] == "D2-B":
         if items.get("ESC-C7-01", {}).get("status") == "OPEN":
             blockers.append("D2-B recorded but ESC-C7-01 not closed by it")

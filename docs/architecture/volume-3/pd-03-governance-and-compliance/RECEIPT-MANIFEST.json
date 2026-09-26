@@ -1,0 +1,77 @@
+{
+  "volume": "Volume 3",
+  "division": "PD-03",
+  "nature": "SOURCE TRANSFER \u2014 bodies received verbatim from the Founder under FD-PO-004 D2-A; not modified",
+  "authority": "FD-PO-004 D2-A (Register \u00a753)",
+  "files": [
+    {
+      "file": "Volume_3_Part_A.md",
+      "uploaded_as": "277da3e5-Volume_3_Part_A.md",
+      "received_at": "2026-09-26T16:20:28.341939Z",
+      "bytes": 215718,
+      "lines": 13754,
+      "sha256": "eaf427085b07d3b05379907442c16104889b7c781bfa386a6f8e90fba667621d"
+    },
+    {
+      "file": "Volume_3_Part_B.md",
+      "uploaded_as": "13d31c19-Volume_3_Part_B.md",
+      "received_at": "2026-09-26T16:20:28.273457Z",
+      "bytes": 173924,
+      "lines": 12312,
+      "sha256": "01ac281f81e3ad8bd134e28377d43e82f49cadce3e0e778f2d2e941016a72300"
+    },
+    {
+      "file": "Volume_3_Part_C.md",
+      "uploaded_as": "aa0f8c4b-Volume_3_Part_C.md",
+      "received_at": "2026-09-26T16:20:28.338333Z",
+      "bytes": 495423,
+      "lines": 32444,
+      "sha256": "96261760d4d8d769db0675f6422e72e3b89643d03c10c8ce52ad3c06923d865f"
+    },
+    {
+      "file": "Volume_3_Part_D.md",
+      "uploaded_as": "902a71d8-Volume_3_Part_D.md",
+      "received_at": "2026-09-26T16:20:28.273457Z",
+      "bytes": 511534,
+      "lines": 32126,
+      "sha256": "b8b8ac1f3ddc85b4ba89d81e244fe9c8bb9a4a8de5d5cda4143a3a23df6282f1"
+    },
+    {
+      "file": "Volume_3_Part_E.md",
+      "uploaded_as": "919e4955-Volume_3_Part_E.md",
+      "received_at": "2026-09-26T16:20:28.333484Z",
+      "bytes": 696493,
+      "lines": 46935,
+      "sha256": "233149fcbaf74857884036dd58655014915b34e9b5b1f42405b74daac99442a5"
+    },
+    {
+      "file": "Volume_3_Part_F.md",
+      "uploaded_as": "13f56e86-Volume_3_Part_F.md",
+      "received_at": "2026-09-26T16:21:02.585486Z",
+      "bytes": 605815,
+      "lines": 39534,
+      "sha256": "5123dc83376f5062e257e43a80b620acb59aac704b8edf2c5af44cf9b7cdd7a2"
+    },
+    {
+      "file": "Volume_3_Part_G.md",
+      "uploaded_as": "70dbcee0-Volume_3_Part_G.md",
+      "received_at": "2026-09-26T16:21:02.489486Z",
+      "bytes": 437584,
+      "lines": 31612,
+      "sha256": "ff7d84cc763401ed1eefc4c4b310e70f28bdd125299f68ee4220d183604c132a"
+    },
+    {
+      "file": "Volume_3_Part_H.md",
+      "uploaded_as": "77c49297-Volume_3_Part_H.md",
+      "received_at": "2026-09-26T16:21:02.525486Z",
+      "bytes": 568116,
+      "lines": 44548,
+      "sha256": "51a45dfb77545478f88607eb65b6a88f164a99d733a33d7abc1dfd70f8e0c7d1"
+    }
+  ],
+  "total_bytes": 3704607,
+  "certified_total_bytes": 3704607,
+  "certified_section_identities": 80,
+  "certified_record": "EVIDENCE-LEDGER E-20",
+  "matches_certified_total": true
+}

@@ -136,10 +136,16 @@ class TheLiveState(unittest.TestCase):
 
     # NC-14
     def test_nc14_no_pd03_or_pd04_source_invented(self):
-        for n in (3, 4):
-            self.assertFalse((REPO_ROOT / f"docs/architecture/volume-{n}").exists())
-        self.assertNotIn("PD-03", po.resident_corpora())
-        self.assertNotIn("PD-04", po.resident_corpora())
+        """Volumes 3 and 4 are resident only as received (FD-PO-004 D2-A): every
+        byte is the transmitted one, and the totals are the certified ones."""
+        integrity = po.volume_integrity()
+        for cpid, total in (("PD-03", 3704607), ("PD-04", 1508896)):
+            self.assertTrue(integrity[cpid]["holds"], cpid)
+            receipt = json.loads((REPO_ROOT / po.RECEIVED_VOLUMES[cpid] /
+                                  "RECEIPT-MANIFEST.json").read_text(encoding="utf-8"))
+            self.assertEqual(total, receipt["total_bytes"])
+            self.assertEqual(total, receipt["certified_total_bytes"])
+        self.assertEqual({"PD-03", "PD-04"}, set(po.resident_corpora()))
 
     # NC-15
     def test_nc15_no_constructed_volume_in_the_resident_namespace(self):

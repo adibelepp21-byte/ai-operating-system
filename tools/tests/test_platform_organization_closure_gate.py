@@ -40,7 +40,8 @@ class TheLiveState(unittest.TestCase):
         self.assertEqual(cg.NOT_CLOSED, self.report["state"])
         self.assertEqual(["ESC-C7-01", "FN-1"], self.report["open_blocking_items"])
         self.assertEqual(1, len(self.report["blockers"]))
-        self.assertIn("D2-A (supply) not yet applied", self.report["blockers"][0])
+        self.assertIn("received and verified; ESC-C7-01 awaits the Founder's closing decision",
+                      self.report["blockers"][0])
 
     def test_every_other_criterion_passes(self):
         failing = [c["criterion"] for c in self.report["criteria"] if not c["passes"]]
@@ -94,14 +95,8 @@ class Controls(unittest.TestCase):
         path.write_text(path.read_text(encoding="utf-8") + "\n" + text + "\n", encoding="utf-8")
 
     def _apply_d2(self):
-        """Stand-in for Volumes 3 and 4 received, and the Founder closing the
-        residency item and FN-1. Evidence of what closing requires, not a
-        simulation of the real bodies."""
-        for n, slug in ((3, "pd-03-governance-and-compliance"), (4, "pd-04-knowledge-and-intelligence")):
-            base = self.tmp / f"docs/architecture/volume-{n}"
-            self.created.append(base)
-            (base / slug).mkdir(parents=True)
-            (base / slug / "A1.md").write_text("# A1 — test body\n", encoding="utf-8")
+        """Volumes 3 and 4 are resident and verify; what remains of D2 is the
+        Founder closing the residency item and FN-1. Stand-in for that decision."""
         self._append_register("### FDR-TEST-D2 — Founder Decision · test\n\n| Field | Value |\n"
                               "|---|---|\n| **Identifier** | `FDR-TEST-D2` |\n"
                               "| **Decided by** | Founder |\n| **Closes** | `ESC-C7-01` · `FN-1` |")
@@ -261,16 +256,20 @@ class Controls(unittest.TestCase):
         self.assertTrue(any(b.startswith("coherence: G-02 open") for b in blockers), blockers)
 
     def test_a_ceo_record_cannot_apply_d2(self):
-        for n, slug in ((3, "pd-03-x"), (4, "pd-04-x")):
-            base = self.tmp / f"docs/architecture/volume-{n}"
-            self.created.append(base)
-            (base / slug).mkdir(parents=True)
-            (base / slug / "A1.md").write_text("# test\n", encoding="utf-8")
         self._append_register("### FDR-TEST-CEO — CEO Record · test\n\n| **Decided by** | Claude Code |\n"
                               "| **Closes** | `ESC-C7-01` · `FN-1` |")
         report = self._state()
         self.assertEqual(cg.NOT_CLOSED, report["state"])
         self.assertIn("ESC-C7-01", report["open_blocking_items"])
+
+    def test_a_tampered_received_body_fails_construction(self):
+        self._apply_d2()
+        path = f"{po.RECEIVED_VOLUMES['PD-03']}/Volume_3_Part_A.md"
+        self._edit(path, "Governance Authority", "Supreme Governance Authority")
+        report = self._state()
+        blockers = self._criterion(report, "§12.1")["blockers"]
+        self.assertTrue(any("received but bytes do not verify" in b for b in blockers), blockers)
+        self.assertEqual(cg.NOT_CLOSED, report["state"])
 
 
 if __name__ == "__main__":
