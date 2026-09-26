@@ -245,4 +245,9 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":
+    # GOAL-V2-004: install the certified-write barrier before anything runs,
+    # even when this file is run by path and has not imported `tools`.
+    import sys
+    sys.path.insert(0, str(REPO_ROOT))
+    import tools  # noqa: E402,F401
     raise SystemExit(main())

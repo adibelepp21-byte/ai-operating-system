@@ -168,6 +168,30 @@ class Secrets(unittest.TestCase):
         self.assertIn("frame-ancestors 'none'", headers["Content-Security-Policy"])
 
 
+class CertifiedEvidenceIsOutOfReach(unittest.TestCase):
+    """The served entry point installs the certified-write barrier first
+    (`GOAL-V2-004`), so a data directory inside certified evidence is refused
+    before anything is written."""
+
+    def test_serving_into_a_certified_root_is_refused(self):
+        import shutil
+        import subprocess
+        import sys
+        from fullstack.tests.support import REPO_ROOT
+        target = REPO_ROOT / "docs/architecture/p13/fullstack-refusal-probe"
+        try:
+            done = subprocess.run(
+                [sys.executable, "-m", "fullstack.backend", "serve", "--data-dir",
+                 str(target.relative_to(REPO_ROOT)), "--port", "0"],
+                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=60)
+            self.assertNotEqual(0, done.returncode)
+            self.assertIn("CertifiedWriteRefused", done.stderr)
+            self.assertFalse(target.exists())
+        finally:
+            if target.exists():
+                shutil.rmtree(target)
+
+
 class ToolConfinement(unittest.TestCase):
     """The only external access is `docs.read`, and it reads only `docs/`."""
 

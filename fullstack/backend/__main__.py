@@ -51,4 +51,7 @@ def main(argv=None) -> int:
 
 
 if __name__ == "__main__":
+    # GOAL-V2-004: install the certified-write barrier before the server can
+    # write, so a data directory inside certified evidence is refused.
+    import tools  # noqa: F401
     raise SystemExit(main())

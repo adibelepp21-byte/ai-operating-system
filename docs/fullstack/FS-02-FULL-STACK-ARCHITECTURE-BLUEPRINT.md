@@ -23,7 +23,10 @@ Runtime / Execution / Workflow / Tools / Trace / Knowledge / Memory
   every access (NC-12).
 - The Backend reaches AIOS only through `aios.py`, and `aios.py` only through
   public exports (`native_core.core.<boundary>` `__all__`, `consumers.*`
-  agents). It imports nothing from `tools/`.
+  agents). Its modules import nothing from `tools/`. The two entry points
+  (`python -m fullstack.backend`, `python -m fullstack.readiness`) import
+  `tools` as their first act, which installs the certified-write barrier: the
+  repository's rule for every entry point (`GOAL-V2-004`).
 - Nothing in `native_core/`, `consumers/` or `tools/` imports `fullstack/`.
   AIOS does not know the application exists.
 
