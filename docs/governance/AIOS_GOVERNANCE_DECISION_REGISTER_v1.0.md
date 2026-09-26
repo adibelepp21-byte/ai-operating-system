@@ -9019,3 +9019,17 @@ measurement as history; no decision taken.
 | **Structural finding** | Engineering Constitution `§3.4` forbids an ADR from introducing a technology or infrastructure decision, so each package separates an ADR-eligible Part A from a Part B under Freeze `§10`. No ADR number taken |
 | **External dependencies** | EXT-01 Supabase unreachable · EXT-02 S-01 Transition Manifest not supplied |
 | **Unchanged** | `native_core/`, `consumers/`, `tools/`, every certified root; P13 CLOSED; Platform Organization CLOSED; no Phase 14; no spending; nothing deployed; A19 and release stay with the Founder |
+
+---
+
+## 65. Verification of §64 — Full Regression, Write Probe, and Two Repairs (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Commit verified** | `e525891` |
+| **Suites** | `tools/tests` 1,920 OK (1 skipped) · `native_core` 801 OK (1 expected failure) · `consumers/tests` 276 OK · `tools/bounded_exception/tests` 29 OK · `fullstack/tests` 79 OK |
+| **Certified-write probe** | 158 runs, **0 certified writes, every guarantee holds**; `fullstack/backend/__main__.py` and `fullstack/readiness.py` NON-WRITING |
+| **Repair 1** | The `§62` record's header named the uploaded file in code format; the corpus citation audit read it as a missing path (1 ERROR, 5 tests). Reworded outside the fenced text; content sha256 unchanged (`cc515b09…`) |
+| **Repair 2** | `fullstack/readiness.py`, an entry point that writes, did not install the certified-write barrier (`test_certified_write_closure`). Both Full Stack entry points now import `tools` first (`GOAL-V2-004`); the served backend is refused before its first write into certified evidence (`test_serving_into_a_certified_root_is_refused`) |
+| **Protected roots** | `native_core/`, `consumers/`, `tools/` and every certified root unchanged by the program; the Register diff is additions only |
+| **State** | As `§64`: authorized work exhausted; FS-09 NOT PRODUCTION READY; FS-10 not started; decision packages FS-DP-01 … 07 PROPOSED |

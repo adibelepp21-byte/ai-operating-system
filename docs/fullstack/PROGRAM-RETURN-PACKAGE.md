@@ -13,7 +13,7 @@ Operational AIOS is made.**
 | Repository | `adibelepp21-byte/ai-operating-system` |
 | Branch | `claude/aios-activation-authority-discovery-enq7bk` |
 | Execution period | 2026-09-26 |
-| Final commit | recorded in Register `§65` |
+| Final verified commit | `e525891` (Register `§65`) |
 
 ## B–L. Stages
 
@@ -108,9 +108,26 @@ number was taken: the ADR README assigns numbers on entering Under Review.
 
 ## R. Test results
 
-Recorded in Register `§65` with the commit they ran on. The Full Stack
-suite alone: 77 Python tests (which run the 13 frontend unit tests and the
-12-check browser test inside them), all OK.
+On commit `e525891` (Register `§65`):
+
+| Suite | Tests | Result |
+|---|---|---|
+| `tools/tests` | 1,920 | OK (1 skipped) |
+| `native_core` | 801 | OK (1 expected failure) |
+| `consumers/tests` | 276 | OK |
+| `tools/bounded_exception/tests` | 29 | OK |
+| `fullstack/tests` | 79 | OK; runs the 13 frontend unit tests and the 12-check browser test |
+| Certified-write probe (158 runs) | — | **0 certified writes; every guarantee holds.** Both new entry points: NON-WRITING |
+
+**Two defects found by the existing suites and repaired** (Act `§9`):
+
+1. The execution act's header named the uploaded file in code format; the
+   corpus citation audit read it as a missing repository path (5 tests).
+   Reworded outside the byte-exact text.
+2. `fullstack/readiness.py` was an entry point that writes without first
+   installing the certified-write barrier. Both entry points now install it,
+   and a new test shows the served backend refused before its first write
+   into certified evidence.
 
 ## S. Build / artifact evidence
 
