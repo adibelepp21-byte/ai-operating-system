@@ -1,0 +1,987 @@
+{
+  "commit": "429d06d",
+  "PD-03": {
+    "resident": true,
+    "identity": {
+      "Platform ID": "PD-03",
+      "Platform Name": "Governance & Compliance",
+      "Platform Authority": "Governance Authority",
+      "Volume": "3",
+      "Document Type": "Platform Encyclopedia Volume",
+      "Version": "1.0",
+      "Status": "FROZEN"
+    },
+    "parts": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H"
+    ],
+    "section_identities": 80,
+    "missing": [],
+    "inventory": {
+      "A": {
+        "file": "Volume_3_Part_A.md",
+        "sections_present": [
+          "A1",
+          "A2",
+          "A3",
+          "A4",
+          "A5",
+          "A6",
+          "A7",
+          "A8",
+          "A9",
+          "A10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "A1": {
+            "present": true,
+            "title": "Platform Identity",
+            "title_variants": 1,
+            "heading_openings": 1
+          },
+          "A2": {
+            "present": true,
+            "title": "Strategic Purpose",
+            "title_variants": 1,
+            "heading_openings": 1
+          },
+          "A3": {
+            "present": true,
+            "title": "Mission, Vision & Core Values",
+            "title_variants": 2,
+            "heading_openings": 1
+          },
+          "A4": {
+            "present": true,
+            "title": "Governance Charter",
+            "title_variants": 1,
+            "heading_openings": 1
+          },
+          "A5": {
+            "present": true,
+            "title": "Authority & Mandate",
+            "title_variants": 2,
+            "heading_openings": 0
+          },
+          "A6": {
+            "present": true,
+            "title": "Organizational Boundary",
+            "title_variants": 1,
+            "heading_openings": 0
+          },
+          "A7": {
+            "present": true,
+            "title": "Core Principles",
+            "title_variants": 3,
+            "heading_openings": 1
+          },
+          "A8": {
+            "present": true,
+            "title": "Strategic Objectives",
+            "title_variants": 3,
+            "heading_openings": 1
+          },
+          "A9": {
+            "present": true,
+            "title": "Success Criteria",
+            "title_variants": 1,
+            "heading_openings": 1
+          },
+          "A10": {
+            "present": true,
+            "title": "Relationship to AIOS Architecture Baseline",
+            "title_variants": 1,
+            "heading_openings": 1
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 10,
+          "**FROZEN**": 3
+        },
+        "source_fidelity_modes": {
+          "Bounded Canonical Synthesis": 6,
+          "Canonical Synthesis": 2
+        }
+      },
+      "B": {
+        "file": "Volume_3_Part_B.md",
+        "sections_present": [
+          "B1",
+          "B2",
+          "B3",
+          "B4",
+          "B5",
+          "B6",
+          "B7",
+          "B8",
+          "B9",
+          "B10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "B1": {
+            "present": true,
+            "title": "Organizational Model",
+            "title_variants": 2,
+            "heading_openings": 1
+          },
+          "B2": {
+            "present": true,
+            "title": "Organizational Sub Division Architecture",
+            "title_variants": 5,
+            "heading_openings": 1
+          },
+          "B3": {
+            "present": true,
+            "title": "Capability Architecture",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "B4": {
+            "present": true,
+            "title": "Team Architecture",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "B5": {
+            "present": true,
+            "title": "Role Group Architecture",
+            "title_variants": 5,
+            "heading_openings": 1
+          },
+          "B6": {
+            "present": true,
+            "title": "Reporting Hierarchy",
+            "title_variants": 5,
+            "heading_openings": 2
+          },
+          "B7": {
+            "present": true,
+            "title": "SOURCE-GATE BLOCKED",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "B8": {
+            "present": true,
+            "title": "SOURCE-GATE BLOCKED",
+            "title_variants": 5,
+            "heading_openings": 1
+          },
+          "B9": {
+            "present": true,
+            "title": "Canonical Section Identity Pending Source Resolution",
+            "title_variants": 4,
+            "heading_openings": 1
+          },
+          "B10": {
+            "present": true,
+            "title": "Canonical Section Identity Pending Source Resolution",
+            "title_variants": 2,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "NOT FROZEN — SOURCE GATE BLOCKED": 14,
+          "FROZEN": 1
+        },
+        "source_fidelity_modes": {
+          "Bounded Canonical Record": 8,
+          "Strict Source-Grounded Construction": 6,
+          "Bounded Canonical Synthesis": 1
+        }
+      },
+      "C": {
+        "file": "Volume_3_Part_C.md",
+        "sections_present": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5",
+          "C6",
+          "C7",
+          "C8",
+          "C9",
+          "C10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "C1": {
+            "present": true,
+            "title": "Governance Constitution",
+            "title_variants": 3,
+            "heading_openings": 1
+          },
+          "C2": {
+            "present": true,
+            "title": "Architecture Decision Governance",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "C3": {
+            "present": true,
+            "title": "Architecture Delegation Governance",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "C4": {
+            "present": true,
+            "title": "Architecture Accountability Governance",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "C5": {
+            "present": true,
+            "title": "Architecture Authority Governance",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "C6": {
+            "present": true,
+            "title": "Architecture Review Governance",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "C7": {
+            "present": true,
+            "title": "Architecture Escalation Governance",
+            "title_variants": 4,
+            "heading_openings": 0
+          },
+          "C8": {
+            "present": true,
+            "title": "Cross-Platform Architecture Governance",
+            "title_variants": 5,
+            "heading_openings": 0
+          },
+          "C9": {
+            "present": true,
+            "title": "Governance Compliance",
+            "title_variants": 4,
+            "heading_openings": 0
+          },
+          "C10": {
+            "present": true,
+            "title": "Governance Success",
+            "title_variants": 4,
+            "heading_openings": 0
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 9,
+          "FROZEN — SOURCE-BOUNDED": 2
+        },
+        "source_fidelity_modes": {
+          "Bounded Domain Adaptation": 5,
+          "Reference Implementation Adapted to PD-03 Domain": 2
+        }
+      },
+      "D": {
+        "file": "Volume_3_Part_D.md",
+        "sections_present": [
+          "D1",
+          "D2",
+          "D3",
+          "D4",
+          "D5",
+          "D6",
+          "D7",
+          "D8",
+          "D9",
+          "D10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "D1": {
+            "present": true,
+            "title": "Governance Operating Model",
+            "title_variants": 3,
+            "heading_openings": 0
+          },
+          "D2": {
+            "present": true,
+            "title": "Executive Governance Interface",
+            "title_variants": 2,
+            "heading_openings": 0
+          },
+          "D3": {
+            "present": true,
+            "title": "Platform Governance Coordination",
+            "title_variants": 2,
+            "heading_openings": 0
+          },
+          "D4": {
+            "present": true,
+            "title": "Governance Decision Operations",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "D5": {
+            "present": true,
+            "title": "Governance Decision Review",
+            "title_variants": 3,
+            "heading_openings": 0
+          },
+          "D6": {
+            "present": true,
+            "title": "Governance Review & Operating Rhythm",
+            "title_variants": 3,
+            "heading_openings": 0
+          },
+          "D7": {
+            "present": true,
+            "title": "Collaboration Constitution",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "D8": {
+            "present": true,
+            "title": "Governance Operational Control",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "D9": {
+            "present": true,
+            "title": "Governance Operating Improvement",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "D10": {
+            "present": true,
+            "title": "Governance Operating Success",
+            "title_variants": 2,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 10,
+          "FROZEN — SOURCE-BOUNDED": 1
+        },
+        "source_fidelity_modes": {
+          "Bounded Canonical Synthesis": 9,
+          "Canonical / Bounded by PD-03 Governance & Compliance domain": 2
+        }
+      },
+      "E": {
+        "file": "Volume_3_Part_E.md",
+        "sections_present": [
+          "E1",
+          "E2",
+          "E3",
+          "E4",
+          "E5",
+          "E6",
+          "E7",
+          "E8",
+          "E9",
+          "E10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "E1": {
+            "present": true,
+            "title": "Performance Constitution",
+            "title_variants": 2,
+            "heading_openings": 1
+          },
+          "E2": {
+            "present": true,
+            "title": "Performance Model",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "E3": {
+            "present": true,
+            "title": "Performance Measurement",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "E4": {
+            "present": true,
+            "title": "KPI & Success Metrics",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "E5": {
+            "present": true,
+            "title": "Performance Review",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "E6": {
+            "present": true,
+            "title": "Performance Governance",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "E7": {
+            "present": true,
+            "title": "Performance Reporting",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "E8": {
+            "present": true,
+            "title": "Performance Improvement",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "E9": {
+            "present": true,
+            "title": "Performance Maturity",
+            "title_variants": 5,
+            "heading_openings": 0
+          },
+          "E10": {
+            "present": true,
+            "title": "Performance Success Constitution",
+            "title_variants": 4,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 16
+        },
+        "source_fidelity_modes": {
+          "Bounded Canonical Synthesis": 8
+        }
+      },
+      "F": {
+        "file": "Volume_3_Part_F.md",
+        "sections_present": [
+          "F1",
+          "F2",
+          "F3",
+          "F4",
+          "F5",
+          "F6",
+          "F7",
+          "F8",
+          "F9",
+          "F10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "F1": {
+            "present": true,
+            "title": "Lifecycle Constitution",
+            "title_variants": 2,
+            "heading_openings": 1
+          },
+          "F2": {
+            "present": true,
+            "title": "Lifecycle Model",
+            "title_variants": 2,
+            "heading_openings": 4
+          },
+          "F3": {
+            "present": true,
+            "title": "Lifecycle States",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "F4": {
+            "present": true,
+            "title": "Lifecycle Transition",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "F5": {
+            "present": true,
+            "title": "Lifecycle Change Governance",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "F6": {
+            "present": true,
+            "title": "Lifecycle Review",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "F7": {
+            "present": true,
+            "title": "Lifecycle Control",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "F8": {
+            "present": true,
+            "title": "Lifecycle Implementation",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "F9": {
+            "present": true,
+            "title": "Lifecycle Improvement & Maturity",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "F10": {
+            "present": true,
+            "title": "Lifecycle Success",
+            "title_variants": 1,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 21
+        },
+        "source_fidelity_modes": {
+          "Bounded Canonical Synthesis": 21
+        }
+      },
+      "G": {
+        "file": "Volume_3_Part_G.md",
+        "sections_present": [
+          "G1",
+          "G2",
+          "G3",
+          "G4",
+          "G5",
+          "G6",
+          "G7",
+          "G8",
+          "G9",
+          "G10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "G1": {
+            "present": true,
+            "title": "Platform Integration Constitution",
+            "title_variants": 1,
+            "heading_openings": 1
+          },
+          "G2": {
+            "present": true,
+            "title": "Platform Interface Architecture",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "G3": {
+            "present": true,
+            "title": "Cross-Platform Dependency Architecture",
+            "title_variants": 1,
+            "heading_openings": 0
+          },
+          "G4": {
+            "present": true,
+            "title": "Platform Integration [Source-Defined Title Required]",
+            "title_variants": 2,
+            "heading_openings": 0
+          },
+          "G5": {
+            "present": true,
+            "title": "[Source-Defined Title Required]",
+            "title_variants": 3,
+            "heading_openings": 0
+          },
+          "G6": {
+            "present": true,
+            "title": "Certification Integration Model",
+            "title_variants": 3,
+            "heading_openings": 0
+          },
+          "G7": {
+            "present": true,
+            "title": "Shared Governance Services",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "G8": {
+            "present": true,
+            "title": "Integration Contracts",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "G9": {
+            "present": true,
+            "title": "Platform Integration Governance",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "G10": {
+            "present": true,
+            "title": "Platform Integration Success",
+            "title_variants": 1,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 15,
+          "FROZEN WITH SOURCE QUALIFICATION": 4
+        },
+        "source_fidelity_modes": {
+          "Bounded Canonical Synthesis": 13,
+          "Bounded Canonical Synthesis — Source Supported": 6
+        }
+      },
+      "H": {
+        "file": "Volume_3_Part_H.md",
+        "sections_present": [
+          "H1",
+          "H2",
+          "H3",
+          "H4",
+          "H5",
+          "H6",
+          "H7",
+          "H8",
+          "H9",
+          "H10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "H1": {
+            "present": true,
+            "title": "Evolution Constitution",
+            "title_variants": 4,
+            "heading_openings": 1
+          },
+          "H2": {
+            "present": true,
+            "title": "Evolution Model",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "H3": {
+            "present": true,
+            "title": "Evolution Drivers",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "H4": {
+            "present": true,
+            "title": "Evolution Change Architecture",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "H5": {
+            "present": true,
+            "title": "Evolution Decision Governance",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "H6": {
+            "present": true,
+            "title": "Evolution Review",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "H7": {
+            "present": true,
+            "title": "Evolution Control",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "H8": {
+            "present": true,
+            "title": "Evolution Implementation",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "H9": {
+            "present": true,
+            "title": "Evolution Improvement & Expansion",
+            "title_variants": 4,
+            "heading_openings": 2
+          },
+          "H10": {
+            "present": true,
+            "title": "Evolution Success",
+            "title_variants": 4,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 19
+        },
+        "source_fidelity_modes": {
+          "Bounded Domain Reconstruction": 17,
+          "Source-Supported Bounded Canonical Synthesis": 2
+        }
+      }
+    }
+  },
+  "PD-04": {
+    "resident": true,
+    "identity": {
+      "Platform ID": "PD-04",
+      "Official Name": "Knowledge & Intelligence",
+      "Platform Authority": "Knowledge Authority",
+      "Volume": "Volume 4",
+      "Status": "FROZEN"
+    },
+    "parts": [
+      "A",
+      "B",
+      "C"
+    ],
+    "section_identities": 30,
+    "missing": [],
+    "inventory": {
+      "A": {
+        "file": "Volume_4_Part_A.md",
+        "sections_present": [
+          "A1",
+          "A2",
+          "A3",
+          "A4",
+          "A5",
+          "A6",
+          "A7",
+          "A8",
+          "A9",
+          "A10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "A1": {
+            "present": true,
+            "title": "Platform Identity",
+            "title_variants": 4,
+            "heading_openings": 1
+          },
+          "A2": {
+            "present": true,
+            "title": "Strategic Purpose",
+            "title_variants": 3,
+            "heading_openings": 1
+          },
+          "A3": {
+            "present": true,
+            "title": "Mission, Vision & Core Values",
+            "title_variants": 11,
+            "heading_openings": 2
+          },
+          "A4": {
+            "present": true,
+            "title": "Knowledge & Intelligence Charter",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "A5": {
+            "present": true,
+            "title": "Knowledge Authority & Mandate",
+            "title_variants": 3,
+            "heading_openings": 2
+          },
+          "A6": {
+            "present": true,
+            "title": "Organizational Boundary",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "A7": {
+            "present": true,
+            "title": "Core Principles",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "A8": {
+            "present": true,
+            "title": "Strategic Objectives",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "A9": {
+            "present": true,
+            "title": "Success Criteria",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "A10": {
+            "present": true,
+            "title": "Relationship to AIOS Architecture Baseline",
+            "title_variants": 2,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 18
+        },
+        "source_fidelity_modes": {
+          "Bounded Canonical Synthesis": 10,
+          "Bounded Canonical Reconstruction": 8
+        }
+      },
+      "B": {
+        "file": "Volume_4_Part_B.md",
+        "sections_present": [
+          "B1",
+          "B2",
+          "B3",
+          "B4",
+          "B5",
+          "B6",
+          "B7",
+          "B8",
+          "B9",
+          "B10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "B1": {
+            "present": true,
+            "title": "Knowledge & Intelligence Organizational Model",
+            "title_variants": 2,
+            "heading_openings": 0
+          },
+          "B2": {
+            "present": true,
+            "title": "Knowledge & Intelligence Sub Division Architecture",
+            "title_variants": 3,
+            "heading_openings": 0
+          },
+          "B3": {
+            "present": true,
+            "title": "Knowledge & Intelligence Capability Architecture",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "B4": {
+            "present": true,
+            "title": "Knowledge & Intelligence Team Architecture",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "B5": {
+            "present": true,
+            "title": "Knowledge & Intelligence Role Group Architecture",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "B6": {
+            "present": true,
+            "title": "Knowledge & Intelligence Reporting Hierarchy",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "B7": {
+            "present": true,
+            "title": "Knowledge & Intelligence Organizational Interface Architecture",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "B8": {
+            "present": true,
+            "title": "Knowledge & Intelligence Organizational Coordination Architecture",
+            "title_variants": 2,
+            "heading_openings": 2
+          },
+          "B9": {
+            "present": true,
+            "title": "Knowledge & Intelligence Organizational Governance Architecture",
+            "title_variants": 1,
+            "heading_openings": 2
+          },
+          "B10": {
+            "present": true,
+            "title": "Knowledge & Intelligence Organizational Success",
+            "title_variants": 1,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 8,
+          "FROZEN — Bounded Canonical Synthesis": 4,
+          "FROZEN — Bounded Canonical Reconstruction": 4
+        },
+        "source_fidelity_modes": {
+          "Bounded Reconstruction with Explicit Source Qualification": 8,
+          "Bounded Canonical Reconstruction": 8
+        }
+      },
+      "C": {
+        "file": "Volume_4_Part_C.md",
+        "sections_present": [
+          "C1",
+          "C2",
+          "C3",
+          "C4",
+          "C5",
+          "C6",
+          "C7",
+          "C8",
+          "C9",
+          "C10"
+        ],
+        "sections_missing": [],
+        "sections": {
+          "C1": {
+            "present": true,
+            "title": "Knowledge Architecture Constitution",
+            "title_variants": 3,
+            "heading_openings": 1
+          },
+          "C2": {
+            "present": true,
+            "title": "Knowledge Model Architecture",
+            "title_variants": 6,
+            "heading_openings": 2
+          },
+          "C3": {
+            "present": true,
+            "title": "Knowledge Asset Architecture",
+            "title_variants": 7,
+            "heading_openings": 2
+          },
+          "C4": {
+            "present": true,
+            "title": "Knowledge Repository Architecture",
+            "title_variants": 6,
+            "heading_openings": 2
+          },
+          "C5": {
+            "present": true,
+            "title": "Knowledge Semantic Architecture",
+            "title_variants": 6,
+            "heading_openings": 2
+          },
+          "C6": {
+            "present": true,
+            "title": "Knowledge Graph Architecture",
+            "title_variants": 7,
+            "heading_openings": 2
+          },
+          "C7": {
+            "present": true,
+            "title": "Context Knowledge Architecture",
+            "title_variants": 5,
+            "heading_openings": 2
+          },
+          "C8": {
+            "present": true,
+            "title": "Knowledge Integrity & Governance Interface",
+            "title_variants": 5,
+            "heading_openings": 2
+          },
+          "C9": {
+            "present": true,
+            "title": "Knowledge Evolution & Improvement Architecture",
+            "title_variants": 6,
+            "heading_openings": 2
+          },
+          "C10": {
+            "present": true,
+            "title": "Knowledge Architecture Success",
+            "title_variants": 5,
+            "heading_openings": 2
+          }
+        },
+        "declared_statuses": {
+          "FROZEN": 18,
+          "FROZEN WITH QUALIFICATION": 1
+        },
+        "source_fidelity_modes": {}
+      }
+    }
+  }
+}
