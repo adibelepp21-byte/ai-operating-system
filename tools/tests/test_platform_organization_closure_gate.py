@@ -36,16 +36,32 @@ class TheLiveState(unittest.TestCase):
         self.assertEqual({"D1": "D1-A", "D2": "D2-A", "D3": "D3-A", "D4": "D4-A"},
                          self.report["selections"])
 
-    def test_not_closed_with_exactly_the_d2_blocker(self):
-        self.assertEqual(cg.NOT_CLOSED, self.report["state"])
-        self.assertEqual(["ESC-C7-01", "FN-1"], self.report["open_blocking_items"])
-        self.assertEqual(1, len(self.report["blockers"]))
-        self.assertIn("received and verified; ESC-C7-01 awaits the Founder's closing decision",
-                      self.report["blockers"][0])
+    def test_closed(self):
+        """After FD-PO-005 closed ESC-C7-01 (Register §58)."""
+        self.assertEqual(cg.CLOSED, self.report["state"])
+        self.assertEqual([], self.report["blockers"])
+        self.assertEqual([], self.report["open_blocking_items"])
 
-    def test_every_other_criterion_passes(self):
-        failing = [c["criterion"] for c in self.report["criteria"] if not c["passes"]]
-        self.assertEqual(["§12.1 Construction"], failing)
+    def test_every_criterion_passes(self):
+        self.assertEqual([], [c["criterion"] for c in self.report["criteria"] if not c["passes"]])
+
+    def test_fn1_is_determined_by_the_gate_not_closed(self):
+        """ACT-004 §21, NC-17: classified from the sources, still OPEN as an item."""
+        fn1 = self.report["fn1"]
+        self.assertEqual(cg.FN1_NON_BLOCKING, fn1["classification"])
+        self.assertEqual(len(cg.FN1_EVIDENCE), sum(e["found"] for e in fn1["evidence"]))
+        self.assertEqual("OPEN", fn1["fdp_p10_003"])
+        self.assertEqual(cg.CLASSIFIED, self.report["residuals"]["FN-1"][0])
+        items = {i["id"]: i["status"] for i in po.open_items()}
+        self.assertEqual("OPEN", items["FN-1"])
+
+    def test_nothing_else_was_resolved(self):
+        """ACT-004 NC-09 … NC-11, §19."""
+        items = {i["id"]: i["status"] for i in po.open_items()}
+        for identifier in ("P7-I99", "RG-1", "FDP-P10-003", "G-02", "G-06", "G-07", "G-10",
+                           "ADP-P10-001", "C6-A1"):
+            self.assertEqual("OPEN", items[identifier], identifier)
+        self.assertEqual("CLOSED by FD-PO-005", items["ESC-C7-01"])
 
     def test_every_residual_is_classified(self):
         for identifier, (kind, cls, basis) in self.report["residuals"].items():
@@ -101,6 +117,9 @@ class Controls(unittest.TestCase):
                               "|---|---|\n| **Identifier** | `FDR-TEST-D2` |\n"
                               "| **Decided by** | Founder |\n| **Closes** | `ESC-C7-01` · `FN-1` |")
 
+    def _pre_fd_po_005(self):
+        self._edit(po.REGISTER, "| **Closes** | `ESC-C7-01` |\n", "")
+
     def _state(self):
         return cg.evaluate(self.tmp)
 
@@ -108,7 +127,14 @@ class Controls(unittest.TestCase):
         return next(c for c in report["criteria"] if c["criterion"].startswith(name))
 
     def test_the_copy_matches_the_live_state(self):
-        self.assertEqual(cg.NOT_CLOSED, self._state()["state"])
+        self.assertEqual(cg.CLOSED, self._state()["state"])
+
+    def test_before_fd_po_005_residency_is_the_one_blocker(self):
+        self._pre_fd_po_005()
+        report = self._state()
+        self.assertEqual(cg.NOT_CLOSED, report["state"])
+        self.assertEqual(["ESC-C7-01"], report["open_blocking_items"])
+        self.assertIn("ESC-C7-01 awaits the Founder's closing decision", report["blockers"][0])
 
     def test_positive_applying_d2_closes_the_platform_organization(self):
         self._apply_d2()
@@ -228,13 +254,19 @@ class Controls(unittest.TestCase):
         blockers = self._criterion(self._state(), "§12.5")["blockers"]
         self.assertTrue(any(b.startswith("ownership conflicts") for b in blockers), blockers)
 
-    def test_an_open_d2_item_keeps_it_not_closed_even_when_residency_is_closed(self):
-        self._apply_d2()
-        self._edit(po.REGISTER, "| **Closes** | `ESC-C7-01` · `FN-1` |", "| **Closes** | `ESC-C7-01` |")
+    def test_fn1_falls_back_to_a_blocker_when_its_evidence_is_gone(self):
+        path = "docs/architecture/volume-1/pd-01-executive-office/A10.md"
+        self._edit(path, "PD-01 menjalankan enterprise governance", "PD-01 menjalankan governance")
         report = self._state()
-        self.assertTrue(self._criterion(report, "§12.1")["passes"])
-        self.assertEqual(["FN-1"], report["open_blocking_items"])
+        self.assertEqual(cg.FN1_OPEN, report["fn1"]["classification"])
+        self.assertIn("FN-1", report["open_blocking_items"])
         self.assertEqual(cg.NOT_CLOSED, report["state"])
+
+    def test_fn1_needs_volume_3_to_verify(self):
+        self._edit(f"{po.RECEIVED_VOLUMES['PD-03']}/Volume_3_Part_H.md", "Evolution", "Evolusi")
+        report = self._state()
+        self.assertEqual(cg.FN1_OPEN, report["fn1"]["classification"])
+        self.assertIn("Volume 3 is not resident with verifying bytes", report["fn1"]["missing"])
 
     def test_selections_count_only_when_decided_by_the_founder(self):
         text = (self.tmp / po.REGISTER).read_text(encoding="utf-8")
@@ -256,6 +288,7 @@ class Controls(unittest.TestCase):
         self.assertTrue(any(b.startswith("coherence: G-02 open") for b in blockers), blockers)
 
     def test_a_ceo_record_cannot_apply_d2(self):
+        self._pre_fd_po_005()
         self._append_register("### FDR-TEST-CEO — CEO Record · test\n\n| **Decided by** | Claude Code |\n"
                               "| **Closes** | `ESC-C7-01` · `FN-1` |")
         report = self._state()

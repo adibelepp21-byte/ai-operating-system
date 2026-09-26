@@ -54,7 +54,8 @@ CLOSURE_CLASSIFICATION: Dict[str, tuple] = {
     "ESC-C7-01": (BLOCKER, "D2", "FD-PO-004 D2 selected supply of Volumes 3 and 4 (D2-A); "
                   "until they are received and verified, D2 is not applied"),
     "FN-1": (BLOCKER, "D2", "the PD-01 / PD-03 governance-authority boundary is assessable only "
-             "once Volume 3 is resident (D2)"),
+             "once Volume 3 is resident (D2); see fn1(): the gate reclassifies it from the "
+             "resident bodies"),
     "G-10": (ACCEPTED, "ARCHITECT-RESERVED", "FD-PO-004 §8: G-10 not decided; classification preserved"),
     "G-02": (ACCEPTED, "FOUNDER / ARCHITECT-RESERVED", "FD-PO-004 §8: G-02 not decided"),
     "C6-A1": (ACCEPTED, "ARCHITECT-RESERVED", "FD-PO-004 §8: Architectural Part Structure not decided"),
@@ -68,6 +69,67 @@ CLOSURE_CLASSIFICATION: Dict[str, tuple] = {
     "G-06": (CLASSIFIED, "SOURCE GAP", "non-blocking by the certified SYSTEMIC-GAP-MAP"),
     "G-07": (CLASSIFIED, "SOURCE GAP", "non-blocking by the certified SYSTEMIC-GAP-MAP"),
 }
+
+#: `ACT-CC-POST-P13-PLATFORM-ORG-004 §12`, `§21`: FN-1 is determined by the gate
+#: from the resident bodies. Each question is answered by quotations that must
+#: be found in them. If any quotation is gone, or Volume 3 does not verify, the
+#: determination falls back to REMAINS OPEN.
+_V1 = "docs/architecture/volume-1/pd-01-executive-office"
+_V3A = "docs/architecture/volume-3/pd-03-governance-and-compliance/Volume_3_Part_A.md"
+FN1_EVIDENCE = (
+    ("1 · PD-03 claims Governance Authority", _V3A,
+     "PD-03 Governance & Compliance is the AIOS Platform Division holding Governance "
+     "Authority for Policy, Control, and Certification within the Governance & Compliance domain"),
+    ("2 · its scope: its own domain", _V3A,
+     "PD-03 tidak menggunakan Governance Authority untuk mengambil alih domain ownership Platform lain."),
+    ("3 · PD-01's claim", f"{_V1}/A10.md",
+     "PD-01 menjalankan enterprise governance untuk menjaga strategic coherence, accountability, "
+     "dan cross-platform alignment."),
+    ("3 · PD-03 places PD-01 at enterprise level", _V3A,
+     "PD-01 Executive Office merupakan enterprise-level executive domain."),
+    ("3 · PD-03 disclaims enterprise strategy (A5 canonical statement)", _V3A,
+     "shall not use Governance Authority to assume enterprise strategy, technical design, domain "
+     "execution, or ownership belonging to other AIOS Platform Divisions."),
+    ("4 · precedence by concern: strategic → Executive", _V3A,
+     "Strategic Concern ↓ Executive Authority Architecture Concern ↓ Architecture Authority "
+     "Governance Concern ↓ Governance Authority"),
+    ("4 · PD-03 may not change enterprise strategy", _V3A,
+     "mengubah enterprise strategy tanpa Executive Authority."),
+    ("6 · conflicts are routed, never presumed", _V3A, '"Governance selalu superior."'),
+)
+FN1_NON_BLOCKING = "NON-BLOCKING"
+FN1_OPEN = "REMAINS OPEN"
+
+
+def fn1(root: Path = REPO_ROOT) -> dict:
+    """FN-1, determined from the resident sources (Act-004 §12 questions 1–6)."""
+    vi = po.volume_integrity(root)
+    found = [(q, path, quote, po._contains(po._read(root, path), quote))
+             for q, path, quote in FN1_EVIDENCE]
+    missing = [f"{q}: not found in {path}" for q, path, quote, ok in found if not ok]
+    items = {i["id"]: i for i in po.open_items(root)}
+    binding = items.get("FDP-P10-003", {}).get("status", "OPEN")
+    if not vi.get("PD-03", {}).get("holds"):
+        missing.insert(0, "Volume 3 is not resident with verifying bytes")
+    return {
+        "classification": FN1_NON_BLOCKING if not missing else FN1_OPEN,
+        "answers": {
+            "1": "yes: PD-03 declares Governance Authority for Policy, Control and Certification",
+            "2": "its own Governance & Compliance domain; it may not take other domains' ownership",
+            "3": "no overlap of held authority: PD-01 holds enterprise-level governance (strategic "
+                 "coherence, cross-platform alignment); PD-03 places PD-01 at enterprise level",
+            "4": "bounded and layered: precedence by concern, strategic concerns to Executive "
+                 "Authority; no delegation from PD-01 is stated",
+            "5": f"no: FDP-P10-003 is {binding}; the relationship is assessable without the binding, "
+                 "which stays Founder-reserved and is not activated",
+            "6": "no genuine conflict; one non-material gap: 'enterprise policy' (PD-01 A5 §3) vs "
+                 "'governance policy' (PD-03 A5 §6), routed by PD-03 A5 §28–§29",
+        },
+        "evidence": [{"question": q, "source": path, "found": ok} for q, path, _, ok in found],
+        "missing": missing,
+        "fdp_p10_003": binding,
+    }
+
 
 #: `§12.5`: the gate's coherence reasons that are accepted residuals, not
 #: collisions, contradictions or bypasses.
@@ -99,6 +161,12 @@ def _criterion(name: str, passes: bool, evidence: List[str], blockers: List[str]
 def evaluate(root: Path = REPO_ROOT) -> dict:
     root = Path(root)
     chosen = selections(root)
+    fn1_report = fn1(root)
+    classification = dict(CLOSURE_CLASSIFICATION)
+    if fn1_report["classification"] == FN1_NON_BLOCKING:
+        classification["FN-1"] = (CLASSIFIED, "EVIDENCE-ASSESSED · NON-BLOCKING",
+                                  "Act-004 §12: assessed from the resident PD-01 and PD-03 bodies; "
+                                  "no genuine conflict; one non-material gap; FDP-P10-003 not activated")
     gate = po.evaluate(root)
     construction = pc.verify(root)
     items = {i["id"]: i for i in gate["open_items"]}
@@ -190,7 +258,7 @@ def evaluate(root: Path = REPO_ROOT) -> dict:
         accepted = next((r for pattern, r in _ACCEPTED_COHERENCE if re.search(pattern, reason)), None)
         isolated = _ISOLATION.search(reason)
         if accepted and items.get(accepted, {}).get("status") == "OPEN" \
-                and CLOSURE_CLASSIFICATION.get(accepted, (None,))[0] == ACCEPTED:
+                and classification.get(accepted, (None,))[0] == ACCEPTED:
             evidence.append(f"accepted residual {accepted}: {reason}")
         elif isolated:
             for cpid in [c.strip() for c in isolated.group(1).split(",")]:
@@ -204,14 +272,14 @@ def evaluate(root: Path = REPO_ROOT) -> dict:
     # §12.6 Residual integrity
     blockers, evidence = [], []
     for identifier in open_ids:
-        if identifier not in CLOSURE_CLASSIFICATION:
+        if identifier not in classification:
             blockers.append(f"{identifier} open and not classified for closure")
         elif not items[identifier]["recorded"]:
             blockers.append(f"{identifier} no longer recorded in its source")
         else:
-            kind, cls, _ = CLOSURE_CLASSIFICATION.get(identifier, (BLOCKER, "UNCLASSIFIED", ""))
+            kind, cls, _ = classification.get(identifier, (BLOCKER, "UNCLASSIFIED", ""))
             evidence.append(f"{identifier}: {kind} · {cls}")
-    stale = [i for i in CLOSURE_CLASSIFICATION if i not in open_ids]
+    stale = [i for i in classification if i not in open_ids]
     if stale:
         evidence.append(f"classified but no longer open: {stale}")
     reservations = pc.reservations(root)
@@ -237,7 +305,7 @@ def evaluate(root: Path = REPO_ROOT) -> dict:
                                [] if ok else [f"P14 references: {p14}"]))
 
     blockers = [f"{c['criterion']}: {b}" for c in criteria for b in c["blockers"]]
-    open_blockers = [i for i in open_ids if CLOSURE_CLASSIFICATION.get(i, (BLOCKER,))[0] == BLOCKER]
+    open_blockers = [i for i in open_ids if classification.get(i, (BLOCKER,))[0] == BLOCKER]
     state = CLOSED if not blockers and not open_blockers else NOT_CLOSED
     return {
         "decision": DECISION,
@@ -246,7 +314,8 @@ def evaluate(root: Path = REPO_ROOT) -> dict:
         "criteria": criteria,
         "blockers": blockers,
         "open_blocking_items": open_blockers,
-        "residuals": {i: CLOSURE_CLASSIFICATION[i] for i in open_ids if i in CLOSURE_CLASSIFICATION},
+        "residuals": {i: classification[i] for i in open_ids if i in classification},
+        "fn1": fn1_report,
         "certifies": False,
         "grants_authority": False,
         "decides": False,

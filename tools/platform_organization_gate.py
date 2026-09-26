@@ -192,8 +192,10 @@ OPEN_ITEMS: Tuple[OpenItem, ...] = (
              True, "DEL-F03-015-P7I99-001 invoked by FD-PO-003-01; exclusion 8 (no "
              "self-invocation). Evidence only: no freeze, no activation"),
     OpenItem("FN-1", FOUNDER, ("PD-01",),
-             "PD-01 exercises Enterprise Governance Authority; PD-03's Governance Authority "
-             "is not resident and unbound: the boundary cannot be assessed (P7-I99 R5)",
+             "PD-01 exercises Enterprise Governance Authority; PD-03's Governance Authority was "
+             "not resident at the review, so the boundary could not be assessed (P7-I99 R5). "
+             "Volume 3 is resident since Register §55; the Final Closure Gate determines FN-1 "
+             "from it (ACT-004 §21)",
              P7_I99_RESULT, "**FN-1:**", True,
              "P7-I99 R5 BLOCKED. Assessable once ESC-C7-01 or FDP-P10-003 is decided"),
     OpenItem("RG-1", FOUNDER, ("PD-01",),
@@ -703,6 +705,9 @@ def division_state(cpid: str, cells: Dict[str, dict], items: Tuple[dict, ...],
     if cpid in resident and integrity.get(cpid, {}).get("holds") and state != CONFLICTED:
         reasons = [f"received under FD-PO-004 D2-A; {integrity[cpid]['verified']} bodies verify "
                    "against the receipt and the certified total", *reasons]
+        if state == INCOMPLETE:
+            reasons.append("resident (ESC-C7-01 closed); no AIOS freeze or activation is "
+                           "registered, which the COMPLETE contract requires")
     residual = [i["id"] for i in mine if state in (COMPLETE_RESIDUAL,) or not i["blocking"]]
     return {"state": state, "also": tuple(dict.fromkeys(also)), "reasons": tuple(reasons),
             "residual": tuple(residual),

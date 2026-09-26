@@ -52,7 +52,7 @@ class TheLiveState(unittest.TestCase):
     def test_each_division_state(self):
         expected = {
             "PD-01": po.FOUNDER_DECISION, "PD-02": po.COMPLETE_RESIDUAL,
-            "PD-03": po.FOUNDER_DECISION, "PD-04": po.FOUNDER_DECISION,
+            "PD-03": po.INCOMPLETE, "PD-04": po.INCOMPLETE,
             **{f"PD-{n:02d}": po.INCOMPLETE for n in range(5, 11)},
         }
         self.assertEqual(expected, {c: self._state(c) for c in po.CPIDS})
@@ -73,11 +73,11 @@ class TheLiveState(unittest.TestCase):
         self.assertTrue(blocking["ESC-C7-01"])
         self.assertEqual((), self.report["divisions"]["PD-08"]["also"])
 
-    def test_fd_po_004_closes_exactly_its_three_items(self):
+    def test_the_founder_decisions_close_exactly_their_items(self):
         closed = {i["id"]: i["status"] for i in self.report["open_items"]
                   if i["status"] != "OPEN"}
-        self.assertEqual({i: "CLOSED by FD-PO-004" for i in ("G-01", "FDP-P10-001", "FDP-P10-002")},
-                         closed)
+        self.assertEqual({**{i: "CLOSED by FD-PO-004" for i in ("G-01", "FDP-P10-001", "FDP-P10-002")},
+                          "ESC-C7-01": "CLOSED by FD-PO-005"}, closed)
 
     def test_pd_02_is_complete_only_through_its_registered_contract(self):
         pd02 = self.report["divisions"]["PD-02"]
@@ -98,7 +98,7 @@ class TheLiveState(unittest.TestCase):
         items = self.report["open_items"]
         self.assertEqual(len(po.OPEN_ITEMS), len(items))
         self.assertTrue(all(i["recorded"] for i in items), [i for i in items if not i["recorded"]])
-        self.assertEqual(3, sum(i["status"] != "OPEN" for i in items))
+        self.assertEqual(4, sum(i["status"] != "OPEN" for i in items))
 
     def test_the_received_volumes_verify(self):
         volumes = self.report["volume_integrity"]
@@ -171,10 +171,13 @@ class _Copy(unittest.TestCase):
     def _pre_fd_po_004(self):
         """The fixture as it stood before `FD-PO-004` closed anything, for the
         controls that test pre-decision logic."""
-        row = "| **Closes** | `G-01` · `FDP-P10-001` · `FDP-P10-002` |\n"
         text = self._text(po.REGISTER)
-        self.assertIn(row, text)
-        self._write(po.REGISTER, text.replace(row, ""))
+        # FD-PO-005 follows FD-PO-004 and rests on it, so it goes too.
+        for row in ("| **Closes** | `G-01` · `FDP-P10-001` · `FDP-P10-002` |\n",
+                    "| **Closes** | `ESC-C7-01` |\n"):
+            self.assertIn(row, text)
+            text = text.replace(row, "")
+        self._write(po.REGISTER, text)
 
     def _item(self, report, identifier):
         (item,) = [i for i in report["open_items"] if i["id"] == identifier]
@@ -356,6 +359,7 @@ class ReservedMattersCloseOnlyByTheirHolder(_Copy):
     """NC-11 … NC-13."""
 
     def test_nc11_an_unregistered_decision_closes_nothing(self):
+        self._pre_fd_po_004()
         self._write(f"{ACTS}/FDR-85-TEST.md",
                     "### FDR-85 — Founder Decision · test\n\n| **Decided by** | Founder |\n"
                     "| **Closes** | `ESC-C7-01` |\n")
@@ -386,6 +390,7 @@ class ReservedMattersCloseOnlyByTheirHolder(_Copy):
         self.assertNotIn(po.ARCHITECT_DECISION, report["divisions"]["PD-01"]["also"])
 
     def test_nc13_an_architect_cannot_close_a_founder_matter(self):
+        self._pre_fd_po_004()
         self._decision("FDR-80", "Architect", ["ESC-C7-01"])
         self.assertEqual("OPEN", self._item(self._eval(), "ESC-C7-01"))
 

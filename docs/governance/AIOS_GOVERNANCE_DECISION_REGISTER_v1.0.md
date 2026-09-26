@@ -8895,3 +8895,30 @@ states its date in its heading only, as `§34`, `§37` and `§39` do.
 
 **Not changed:** no certified evidence; the P12 records keep their two-corpus
 measurement as history; no decision taken.
+
+---
+
+## 57. ACT-CC-POST-P13-PLATFORM-ORG-004 Append — PD-03 / PD-04 Source Transfer, Residency & Final Reconciliation Act (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Act** | `ACT-CC-POST-P13-PLATFORM-ORG-004` · `acts/ACT-CC-POST-P13-PLATFORM-ORG-004-PD03-PD04-SOURCE-TRANSFER-RESIDENCY-AND-FINAL-RECONCILIATION.md` · content sha256 `7fbd6f365933dfe5468d03f0d9fdd53db594fd74b9fcaace85c55f898be3e2bd` |
+| **Received** | from the Founder, 2026-09-26, with Volume 3 F–H and Volume 4 A–C attached again (byte-identical to `§55`). **Stated status: *"PROPOSED FOR FOUNDER AUTHORIZATION / SOURCE TRANSFER"*.** It is recorded as proposed |
+| **In force** | from `FD-PO-005` (`§58`) |
+
+---
+
+## 58. FD-PO-005 Append — Founder Authorization of ACT-004; Residency of Volumes 3 and 4 (2026-09-26)
+
+### FD-PO-005 — Founder Decision · ACT-004 Authorized; Residency of Volumes 3 and 4
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-PO-005` |
+| **Date** | 2026-09-26 |
+| **Decided by** | Founder |
+| **Record** | `acts/FD-PO-005-ACT-004-AUTHORIZATION-AND-VOLUME-3-4-RESIDENCY.md` · sha256 `b6eca3984b2b1b312f13c7b14b1193e3ce5ff30443b0fcbb1a1d15a3b42a4632` |
+| **Decision** | *"Authorize; close ESC-C7-01"* |
+| **Closes** | `ESC-C7-01` |
+| **Effect** | ACT-004 authorized; residency of the verified Volumes 3 and 4 authorized, as pinned by their receipt manifests. The volumes are not canonicalized (ACT-004 `§16`) |
+| **Not decided** | FN-1 (determined by the gate, ACT-004 `§21`) · FDP-P10-003 · P7-I99 · RG-1 · G-02 · G-06 · G-07 · G-10 · ADR-0029 · C6-A1 |
