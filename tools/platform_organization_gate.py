@@ -689,6 +689,18 @@ def _governance(root: Path) -> dict:
             "certified_root_holds": root_holds}
 
 
+def _construction(root: Path) -> dict:
+    """The PD-05 … PD-10 construction volumes (ACT-003 v1.1), reported beside the
+    `§33` states and never feeding them. A volume constructed and verified is
+    not a supplied canonical corpus: `G-01` stays open until its holder closes
+    it, so the states above do not move."""
+    from tools import platform_division_construction as construction
+    report = construction.verify(root)
+    return {"state": report["state"], "passes": report["passes"],
+            "reconciliation_passes": report["reconciliation"]["passes"],
+            "errors": report["errors"], "canonical": False}
+
+
 def evaluate(root: Path = REPO_ROOT) -> dict:
     root = Path(root)
     records = divisions(root)
@@ -779,6 +791,7 @@ def evaluate(root: Path = REPO_ROOT) -> dict:
                       for g in gate),
         "gate_passes": gate_passes,
         "outcome": outcome,
+        "construction": _construction(root),
         "certifies": False,
         "grants_authority": False,
         "canonical": False,

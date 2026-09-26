@@ -1,0 +1,30 @@
+{
+  "nature": "construction manifest: NOT CANONICAL, NOT FROZEN, NOT ACTIVATED",
+  "authority": "ACT-CC-POST-P13-PLATFORM-ORG-003 v1.1, authorized by FD-PO-003-01",
+  "volumes": {
+    "PD-05": {
+      "path": "docs/architecture/platform-division-construction/pd-05-runtime-and-execution/VOLUME.md",
+      "sha256": "998ac95750fcda5b2c3f3825c1a1caf49a1fa9c6cb8d80ab5a4a3e88a1e2cb97"
+    },
+    "PD-06": {
+      "path": "docs/architecture/platform-division-construction/pd-06-ai-engineering/VOLUME.md",
+      "sha256": "af90f316f2a072a96bf063b2f06f660909f33a11a9e6a25e0b16069eb7c17e29"
+    },
+    "PD-07": {
+      "path": "docs/architecture/platform-division-construction/pd-07-infrastructure-and-platform/VOLUME.md",
+      "sha256": "4836b160e30ca5e8113e12895dc2eb896954595a69ade80ef3ea1fd1cf1521ec"
+    },
+    "PD-08": {
+      "path": "docs/architecture/platform-division-construction/pd-08-security/VOLUME.md",
+      "sha256": "d9b677c226af665bc804b8116de912b13988f1d410e110fa18bca4c7b0a766de"
+    },
+    "PD-09": {
+      "path": "docs/architecture/platform-division-construction/pd-09-quality-and-evaluation/VOLUME.md",
+      "sha256": "500442a44ed3ace9c4f9546bb7cf36604b6de2f0e12295470db60f431d83eb9b"
+    },
+    "PD-10": {
+      "path": "docs/architecture/platform-division-construction/pd-10/VOLUME.md",
+      "sha256": "952b5e5c3ab4e1de15430faa543f01efd8b5b0b12a4ad02e5b777626abb468af"
+    }
+  }
+}
