@@ -8744,3 +8744,13 @@ states its date in its heading only, as `§34`, `§37` and `§39` do.
 | **Received** | from the Founder, 2026-09-26. **Its stated status is *"PROPOSED FOR FOUNDER AUTHORIZATION"*.** It is recorded as proposed. It is not a Founder Decision, and it changes none |
 | **In force** | **No.** `§6` grants construction authority only on Founder authorization of the Act *and* resolution of blockers `§5.1`–`§5.5`; neither has occurred. No PD-05 … PD-10 artifact was constructed |
 | **Activation record** | `AIOS_PLATFORM_ORGANIZATION_ACT_003_ACTIVATION_RECORD_v1.0.md` · sha256 `f9d7bf9a34f4a1d78940ba3254b09c0a970857f3bd3c59f05678f265b21e9c4c`: the single Founder instrument (F-0 … F-5, blank) and four text conflicts (K-1 … K-4) |
+
+---
+
+## 48. ACT-CC-POST-P13-PLATFORM-ORG-003 Amendment v1.1 Append — Construction & Canonicalization Correction (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Act** | `ACT-CC-POST-P13-PLATFORM-ORG-003` Amendment v1.1 · `acts/ACT-CC-POST-P13-PLATFORM-ORG-003-AMENDMENT-v1.1-CONSTRUCTION-AND-CANONICALIZATION-CORRECTION.md` · content sha256 `09bf8563cee19167c223a687a3df1d082ad9c6500f471e348f8199c8d09821ba` |
+| **Received** | from the Founder, 2026-09-26. **Its stated status is *"PROPOSED FOR FOUNDER AUTHORIZATION"*.** It is recorded as proposed. It is not a Founder Decision, and it changes none |
+| **In force** | **No.** `§34`: operative *"only upon explicit Founder authorization"*. `§16` F-0 is its only unconditional precondition. Nothing constructed |
