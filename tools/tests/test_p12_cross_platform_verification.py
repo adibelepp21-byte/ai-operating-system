@@ -118,20 +118,51 @@ class TheMeasurementActuallyReadsTheBodies(unittest.TestCase):
 
 
 class TheResidentReading(unittest.TestCase):
-    def test_exactly_the_two_resident_volumes_are_found(self):
-        self.assertEqual(xpl.summary()["resident_corpora"], ("PD-01", "PD-02"))
+    """Four corpora are resident since Volumes 3 and 4 were received
+    (FD-PO-004 D2-A, Register `§55`). At P12 there were two: `PD-01` and
+    `PD-02`. The finding is unchanged: the gap is residency, not missing
+    evidence."""
+
+    def test_exactly_the_four_resident_volumes_are_found(self):
+        self.assertEqual(xpl.summary()["resident_corpora"], ("PD-01", "PD-02", "PD-03", "PD-04"))
 
     def test_every_readable_pair_is_evidenced(self):
         """The finding: the gap is residency, not missing evidence."""
         summary = xpl.summary()
-        readable = 2 * (len(xpl.DIVISIONS) - 1)
+        readable = len(summary["resident_corpora"]) * (len(xpl.DIVISIONS) - 1)
         self.assertEqual(summary["evidenced_pairs"], readable)
         self.assertEqual(summary["MENTIONED"], 0)
 
-    def test_the_unreadable_pairs_are_exactly_the_eight_absent_divisions(self):
+    def test_the_unreadable_pairs_are_exactly_the_six_absent_divisions(self):
         summary = xpl.summary()
-        self.assertEqual(len(summary["source_absent_divisions"]), 8)
-        self.assertEqual(summary[xpl.SOURCE_ABSENT], 8 * 9)
+        self.assertEqual(len(summary["source_absent_divisions"]), 6)
+        self.assertEqual(summary[xpl.SOURCE_ABSENT], 6 * 9)
+
+
+class MultiSectionFiles(unittest.TestCase):
+    """A Part file holds several sections; each is judged by its own heading."""
+
+    PART = ("# Part G — Platform Integration\n\n"
+            "# G1 — Platform Integration Constitution\n\nPD-03 integrates with PD-08.\n\n"
+            "Next sections:\n\nA10 — Relationship to AIOS Architecture Baseline\n\n"
+            "# G3 — Performance Records\n\nPD-09 supplies records.\n")
+
+    def test_each_section_has_its_own_heading(self):
+        found = xpl._sections("Volume_3_Part_G", self.PART)
+        self.assertEqual(["Volume_3_Part_G", "G1", "G3"], [s for s, _, _ in found])
+
+    def test_a_table_of_contents_line_is_not_a_relationship_section(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            corpus = Path(tmp) / "volume-3" / "pd-03-test"
+            corpus.mkdir(parents=True)
+            (corpus / "Volume_3_Part_G.md").write_text(self.PART, encoding="utf-8")
+            said = {(s.source, s.target): s.relationship_bearing
+                    for s in xpl.statements(Path(tmp))}
+        self.assertTrue(said[("PD-03", "PD-08")])   # under "Platform Integration"
+        self.assertFalse(said[("PD-03", "PD-09")])  # under "Performance Records"
+
+    def test_a_section_named_file_is_one_section(self):
+        self.assertEqual(1, len(xpl._sections("A1", "# A1 — Identity\n\n# A2 — x\n")))
 
 
 if __name__ == "__main__":

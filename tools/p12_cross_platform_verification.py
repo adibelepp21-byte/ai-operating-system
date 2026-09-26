@@ -108,6 +108,41 @@ def _section_heading(stem: str, text: str) -> str:
     return lines[0] if lines else ""
 
 
+#: A section's own title line in a multi-section file: a markdown heading that
+#: starts with a section identifier, e.g. ``# C8 — Cross-Platform Governance``.
+#: Only a heading line qualifies. A table-of-contents line such as
+#: ``A10 — Relationship to …`` is not a section, so treating it as one would
+#: invent a relationship-bearing heading.
+_SECTION_TITLE = re.compile(r"^\\?#+\s*([A-H]\d{1,2})\s*[—–-]\s*\S.*$", re.M)
+
+
+def _sections(stem: str, text: str) -> Tuple[Tuple[str, str, str], ...]:
+    """``(section, heading, body)`` for each section in a file.
+
+    **Added 2026-09-26, with Volumes 3 and 4 resident (FD-PO-004 D2-A).** Those
+    volumes arrive as one file per Part, ten sections each. Read as one section
+    under its first line, every mention in a Part came back MENTIONED, even
+    inside Part G *Platform Integration*. That is weaker than the evidence, the
+    same `UNKNOWN ≠ FALSE` failure `_section_heading` records.
+
+    A file whose name is a section identifier (``A1.md``) is one section, as
+    before. Any other file is split at section title headings. A section with
+    no markdown heading stays inside the one before it. The error is to the
+    weaker side: such a section is never promoted to relationship-bearing on
+    its own.
+    """
+    if re.fullmatch(r"[A-H]\d{1,2}", stem):
+        return ((stem, _section_heading(stem, text), text),)
+    marks = list(_SECTION_TITLE.finditer(text))
+    if not marks:
+        return ((stem, _section_heading(stem, text), text),)
+    out = [(stem, _section_heading(stem, text[:marks[0].start()]), text[:marks[0].start()])]
+    for index, mark in enumerate(marks):
+        end = marks[index + 1].start() if index + 1 < len(marks) else len(text)
+        out.append((mark.group(1), mark.group(0).strip(" #\\"), text[mark.start():end]))
+    return tuple(out)
+
+
 class CorpusUnavailable(RuntimeError):
     """No resident division corpus could be read (`PR-4`, fail closed)."""
 
@@ -147,12 +182,12 @@ def statements(root: Path = ARCHITECTURE) -> Tuple[Statement, ...]:
             if path.stem.endswith("MANIFEST"):
                 continue
             text = path.read_text(encoding="utf-8", errors="replace")
-            heading = _section_heading(path.stem, text)
-            bearing = bool(_RELATIONSHIP_HEADING.search(heading))
-            for target in sorted({f"PD-{m.group(1)}" for m in _PD.finditer(text)}):
-                if target != source:
-                    collected.append(Statement(source, target, path.stem,
-                                               heading[:72], bearing))
+            for section, heading, body in _sections(path.stem, text):
+                bearing = bool(_RELATIONSHIP_HEADING.search(heading))
+                for target in sorted({f"PD-{m.group(1)}" for m in _PD.finditer(body)}):
+                    if target != source:
+                        collected.append(Statement(source, target, section,
+                                                   heading[:72], bearing))
     return tuple(collected)
 
 

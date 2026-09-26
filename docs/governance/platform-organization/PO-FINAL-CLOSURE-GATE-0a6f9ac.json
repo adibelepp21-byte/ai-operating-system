@@ -1,0 +1,167 @@
+{
+  "commit": "0a6f9ac",
+  "decision": "FD-PO-004",
+  "selections": {
+    "D1": "D1-A",
+    "D2": "D2-A",
+    "D3": "D3-A",
+    "D4": "D4-A"
+  },
+  "state": "PLATFORM ORGANIZATION NOT CLOSED",
+  "criteria": [
+    {
+      "criterion": "§12.1 Construction",
+      "passes": false,
+      "evidence": [
+        "PD-01 FROZEN; PD-02 FROZEN · ACTIVE; bodies verify",
+        "received: ['PD-03', 'PD-04']",
+        "PD-05 … PD-10: ['CANONICAL BASELINE — VERIFIED']"
+      ],
+      "blockers": [
+        "D2-A: Volumes 3 and 4 received and verified; ESC-C7-01 awaits the Founder's closing decision"
+      ]
+    },
+    {
+      "criterion": "§12.2 Evidence",
+      "passes": true,
+      "evidence": [
+        "every quotation in the construction volumes found in its source",
+        "G13 PASS"
+      ],
+      "blockers": []
+    },
+    {
+      "criterion": "§12.3 Epistemic integrity",
+      "passes": true,
+      "evidence": [
+        "classes {'SOURCE-DERIVED': 29, 'INHERITED-PATTERN': 6, 'DOMAIN-ADAPTATION': 14, 'BOUNDED-RECONSTRUCTION': 11, 'UNKNOWN': 7, 'RESERVED-DECISION': 23}",
+        "no UNKNOWN → FACT, REFERENCE → SOURCE, PROPOSAL → CANON (verifier)"
+      ],
+      "blockers": []
+    },
+    {
+      "criterion": "§12.4 Authority integrity",
+      "passes": true,
+      "evidence": [
+        "bindings exactly those decided (D3, D4); FDP-P10-003 open and not asserted",
+        "governance invariants hold"
+      ],
+      "blockers": []
+    },
+    {
+      "criterion": "§12.5 Cross-PD coherence",
+      "passes": true,
+      "evidence": [
+        "accepted residual ADP-P10-001: 5 of 5 declared edges have no defined interface; none is verified",
+        "accepted residual G-02: G-02 open: PD-10 carries two names in resident sources: Developer Experience and Developer Enablement",
+        "accepted residual ADP-P10-001: ADP-P10-001 open: ADR-0029 (Proposed): Department ≠ PD as entity type or population; until it is decided, INV-10 exposure of the declared edges cannot be evaluated",
+        "PD-01 in no certified registry edge; its frozen corpus defines cross-platform governance (volume-1 C8)",
+        "PD-07 in no certified registry edge; its baseline's Integration section (C3) is SOURCE-DERIVED",
+        "PD-10 in no certified registry edge; its baseline's Integration section (C3) is SOURCE-DERIVED"
+      ],
+      "blockers": []
+    },
+    {
+      "criterion": "§12.6 Residual integrity",
+      "passes": true,
+      "evidence": [
+        "ESC-C7-01: BLOCKER · D2",
+        "G-02: ACCEPTED RESIDUAL · FOUNDER / ARCHITECT-RESERVED",
+        "FDP-P10-003: CLASSIFIED RESIDUAL · FOUNDER-RESERVED",
+        "ADP-P10-001: ACCEPTED RESIDUAL · ARCHITECT-RESERVED",
+        "C6-A1: ACCEPTED RESIDUAL · ARCHITECT-RESERVED",
+        "G-10: ACCEPTED RESIDUAL · ARCHITECT-RESERVED",
+        "P7-I99: CLASSIFIED RESIDUAL · EVIDENCE",
+        "FN-1: BLOCKER · D2",
+        "RG-1: CLASSIFIED RESIDUAL · FOUNDER-RESERVED · ACTIVATION",
+        "G-06: CLASSIFIED RESIDUAL · SOURCE GAP",
+        "G-07: CLASSIFIED RESIDUAL · SOURCE GAP"
+      ],
+      "blockers": []
+    },
+    {
+      "criterion": "§12.7 Protected-root integrity",
+      "passes": true,
+      "evidence": [
+        "certified phases ['P10', 'P11', 'P12', 'P13'] hold",
+        "PD-01, PD-02 verify"
+      ],
+      "blockers": []
+    },
+    {
+      "criterion": "§14 P13 closed · no P14",
+      "passes": true,
+      "evidence": [
+        "P13 closure holds"
+      ],
+      "blockers": []
+    }
+  ],
+  "blockers": [
+    "§12.1 Construction: D2-A: Volumes 3 and 4 received and verified; ESC-C7-01 awaits the Founder's closing decision"
+  ],
+  "open_blocking_items": [
+    "ESC-C7-01",
+    "FN-1"
+  ],
+  "residuals": {
+    "ESC-C7-01": [
+      "BLOCKER",
+      "D2",
+      "FD-PO-004 D2 selected supply of Volumes 3 and 4 (D2-A); until they are received and verified, D2 is not applied"
+    ],
+    "G-02": [
+      "ACCEPTED RESIDUAL",
+      "FOUNDER / ARCHITECT-RESERVED",
+      "FD-PO-004 §8: G-02 not decided"
+    ],
+    "FDP-P10-003": [
+      "CLASSIFIED RESIDUAL",
+      "FOUNDER-RESERVED",
+      "non-blocking by its source (P12 policy D3 CONDITIONAL-BLOCKING); its target PD-03 awaits D2"
+    ],
+    "ADP-P10-001": [
+      "ACCEPTED RESIDUAL",
+      "ARCHITECT-RESERVED",
+      "FD-PO-004 §8: ADR-0029 not decided"
+    ],
+    "C6-A1": [
+      "ACCEPTED RESIDUAL",
+      "ARCHITECT-RESERVED",
+      "FD-PO-004 §8: Architectural Part Structure not decided"
+    ],
+    "G-10": [
+      "ACCEPTED RESIDUAL",
+      "ARCHITECT-RESERVED",
+      "FD-PO-004 §8: G-10 not decided; classification preserved"
+    ],
+    "P7-I99": [
+      "CLASSIFIED RESIDUAL",
+      "EVIDENCE",
+      "RESULT B is freeze-readiness evidence for a volume already FROZEN (GDR-0017); rooted in G-10 (§8) and FN-1 (D2); a re-run needs a new invocation"
+    ],
+    "FN-1": [
+      "BLOCKER",
+      "D2",
+      "the PD-01 / PD-03 governance-authority boundary is assessable only once Volume 3 is resident (D2)"
+    ],
+    "RG-1": [
+      "CLASSIFIED RESIDUAL",
+      "FOUNDER-RESERVED · ACTIVATION",
+      "PD-01 activation (ACT-CC-F03-014 §3); activation is outside construction and canonical status"
+    ],
+    "G-06": [
+      "CLASSIFIED RESIDUAL",
+      "SOURCE GAP",
+      "non-blocking by the certified SYSTEMIC-GAP-MAP"
+    ],
+    "G-07": [
+      "CLASSIFIED RESIDUAL",
+      "SOURCE GAP",
+      "non-blocking by the certified SYSTEMIC-GAP-MAP"
+    ]
+  },
+  "certifies": false,
+  "grants_authority": false,
+  "decides": false
+}
