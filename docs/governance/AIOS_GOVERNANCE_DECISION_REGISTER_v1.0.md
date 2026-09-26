@@ -8880,3 +8880,18 @@ states its date in its heading only, as `§34`, `§37` and `§39` do.
 - no decision taken; `ESC-C7-01` and `FN-1` open;
 - certified roots, PD-01, PD-02 and the canonical PD-05 … PD-10 baselines
   untouched; P13 CLOSED; no phase created.
+
+---
+
+## 56. Verification of §55 — Regression, Write Probe, and a Measurement Defect Corrected (2026-09-26)
+
+| Field | Value |
+|---|---|
+| **Concerns** | `§55` (Volumes 3 and 4 received) |
+| **Regression** | at `0a6f9ac`: 3 failures in `test_p12_cross_platform_verification`; at `76db7b0`, after the correction below: tools 1909, native_core 801, consumers 276, bounded_exception 29, all OK |
+| **Write probe** | at `0a6f9ac`: 0 certified writes; holds |
+| **Defect found by the regression** | `tools/p12_cross_platform_verification.py` read each file as one section. With Volumes 3 and 4 resident as one file per Part, every PD-03/PD-04 mention came back MENTIONED, even inside Part G *Platform Integration*: weaker than the evidence. It now splits a file at markdown section headings, never at a table-of-contents line. Result with four resident corpora: 36/36 readable pairs evidenced, 0 MENTIONED, 12 reciprocated; the P12 finding (the gap is residency, not missing evidence) stands |
+| **Evidence** | `platform-organization/PO-GATE-0a6f9ac.json` · `PO-FINAL-CLOSURE-GATE-0a6f9ac.json`: NOT CLOSED; one blocker, the Founder's closing decision for `ESC-C7-01` |
+
+**Not changed:** no certified evidence; the P12 records keep their two-corpus
+measurement as history; no decision taken.
