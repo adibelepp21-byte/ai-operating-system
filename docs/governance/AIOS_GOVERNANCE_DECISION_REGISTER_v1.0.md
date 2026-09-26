@@ -8754,3 +8754,19 @@ states its date in its heading only, as `§34`, `§37` and `§39` do.
 | **Act** | `ACT-CC-POST-P13-PLATFORM-ORG-003` Amendment v1.1 · `acts/ACT-CC-POST-P13-PLATFORM-ORG-003-AMENDMENT-v1.1-CONSTRUCTION-AND-CANONICALIZATION-CORRECTION.md` · content sha256 `09bf8563cee19167c223a687a3df1d082ad9c6500f471e348f8199c8d09821ba` |
 | **Received** | from the Founder, 2026-09-26. **Its stated status is *"PROPOSED FOR FOUNDER AUTHORIZATION"*.** It is recorded as proposed. It is not a Founder Decision, and it changes none |
 | **In force** | **No.** `§34`: operative *"only upon explicit Founder authorization"*. `§16` F-0 is its only unconditional precondition. Nothing constructed |
+
+---
+
+## 49. FD-PO-003-01 Append — Founder Authorization of ACT-003 v1.1 and P7-I99 Invocation for Volume 1 (2026-09-26)
+
+### FD-PO-003-01 — Founder Decision · ACT-003 v1.1 Authorized; DEL-F03-015-P7I99-001 Invoked for Volume 1
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-PO-003-01` |
+| **Date** | 2026-09-26 |
+| **Decided by** | Founder |
+| **Record** | `acts/FD-PO-003-01-ACT-003-V1.1-AUTHORIZATION-AND-P7-I99-INVOCATION.md` · sha256 `ad6a23e56c57551a8cf826d339b7dc6e58d1c62410ac1d5f97cb438e35c50f1c` |
+| **Decision** | F-0: *"Authorize ACT-003 v1.1"*. F-2: *"Invoke for Volume 1"* |
+| **Effect** | `ACT-CC-POST-P13-PLATFORM-ORG-003` v1.1 = AUTHORIZED FOR EXECUTION, construction *"AUTHORIZED WITH BOUNDARY"*. `DEL-F03-015-P7I99-001` invoked for Volume 1 only; its exclusions stand: evidence only, no freeze, no activation |
+| **Not decided** | FDP-P10-001/002/003 · ESC-C7-01 · G-02 · ADR-0029 · C6-A1 · G-10 · RG-1 · FD-2 |
