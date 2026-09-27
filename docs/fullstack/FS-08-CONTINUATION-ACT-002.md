@@ -204,3 +204,36 @@ Founder acts moved a P12-W6 corpus measurement over its limit. It is
 recorded, frozen and escalated in Register `§71`. Until the Founder decides,
 the FS-08 gate criterion *"Full regression passes"* is **not met**; this is
 one more reason FS-08 is BLOCKED, not a new failure of the application.
+
+## O. `FD-P12-007`: the P12 population guard as a classified exception
+
+`FD-P12-007` (Register `§73`) classifies the one `tools` failure,
+`test_the_narrower_population_is_not_better` [status], as an **expected,
+classified governance signal**, not a code defect. It lets FS-08 treat it as
+a **CLASSIFIED EXCEPTION** (D4 R2) under twelve conditions. The FS-08 gate
+therefore now has four outcomes: **PASS · FAIL · BLOCKED · CLASSIFIED
+EXCEPTION**.
+
+| D4 condition | Status | Evidence |
+|---|---|---|
+| 1 · the guard still runs | met | unchanged file; collected in every `tools` run |
+| 2 · the failure stays visible | met | `tools` reports FAILED (failures=1) |
+| 3 · not skipped · 4 · not suppressed · 5 · not turned into a pass | met | the successor checks the predecessor carries no skip or expected-failure marker, and pins its bytes |
+| 6 · the test implementation works correctly | met | its arithmetic passes on the certified W6 figures and fails only on the inversion (`P12-POPULATION-GUARD-SUCCESSOR.md` `§4` items 8–9); its 16 sibling controls pass |
+| 7 · historical P12 evidence immutable | met | manifest `verify()` holds; 0 files changed under `docs/architecture/p12/` |
+| 8 · successor lifecycle recorded | met | `P12-POPULATION-GUARD-SUCCESSOR.md`; Register `§73` |
+| 9 · exception recorded in FS-08 evidence | met | this section |
+| 10 · every other required suite passes | met | Register `§73` regression row |
+| 11 · no unrelated regression hidden | met | the exception names one test id and one subtest; any other failure is outside it |
+| 12 · the FS-08 gate records the exception explicitly | met | the row below |
+
+**Gate row, replacing *"20.6 Full regression passes"* in `§M`:**
+
+| Item | Status | Class |
+|---|---|---|
+| 20.6 Full regression | **CLASSIFIED EXCEPTION**: every suite passes except the P12 population guard, classified by `FD-P12-007` | Verified · Classified |
+
+**FS-08 remains BLOCKED** by EXT-03, EXT-05, FS-DP-02 and FS-DP-05. The
+exception does not close FS-08 on its own (`FD-P12-007` `§20`). The best
+FS-08 can now reach is **PASS WITH CLASSIFIED EXCEPTION**, once every other
+condition is met.

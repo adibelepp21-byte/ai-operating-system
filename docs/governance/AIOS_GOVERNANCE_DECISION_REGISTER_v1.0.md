@@ -9197,3 +9197,39 @@ Production Ready, Production Released or Operational AIOS.
 | **Effect of this entry's own instrument** | tracking the verbatim Act adds one Founder act carrying a status label: 46/91 becomes **47/92** (0.511 against a limit of 0.499). The guard still fails, and is reported so |
 | **Regression** | on the committed tree, no test modified: \`tools\` **1919 / 1920** (the one failure is this guard), native_core 801, consumers 276, bounded_exception 29, fullstack 109; citation audit 0 errors |
 | **State** | **INTENT DETERMINED WITH RESIDUAL**. FS-08 unchanged: **BLOCKED** |
+
+---
+
+## 73. FD-P12-007 Append — P12 Population Guard Lifecycle & Disposition; Versioned Successor Constructed (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `acts/FD-P12-007-P12-POPULATION-GUARD-LIFECYCLE-AND-DISPOSITION.md` · content sha256 `df23905a6944ade74f0bf99dedfc9b7c2ee5214fcc03baea6b03c51ff0ed3e32` |
+| **Received** | from the Founder, 2026-09-27, in the message body |
+| **Basis** | the discovery of `§72` (`docs/fullstack/P12-POPULATION-GUARD-INTENT-DISCOVERY.md`) |
+
+### FD-P12-007 — Founder Decision · P12 Population Guard: Historical Record Immutable; Living Guard; Versioned Successor; Classified Exception; Limited tools/ Authority
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-007` |
+| **Date** | 2026-09-27 |
+| **Decided by** | Founder (Moriarty) |
+| **Decision** | *"CERTIFY / AUTHORIZE FD-P12-007"*: D1 historical P12 evidence **IMMUTABLE** · D2 population guard **LIVING GOVERNANCE-CORPUS CHECK** · D3 lifecycle **L2 VERSIONED SUCCESSOR** · D4 FS-08 treatment **R2 CLASSIFIED EXCEPTION** · D5 **EXPLICIT LIMITED MODIFICATION AUTHORIZATION** for the successor and directly related support only |
+| **Current failure** | *"EXPECTED / CLASSIFIED GOVERNANCE SIGNAL"*, not a code defect |
+| **Not granted** | blanket `tools/` authority; modification of P12 historical evidence or the P12 manifest; reopening P12 certification; production; FS-DP-02, FS-DP-05, EXT-03, EXT-05 unchanged. It certifies this decision, not a phase: the certification guard still reads P12's certifying instrument as `FD-P12-006` |
+
+**Execution under D3 and D5**
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/P12-POPULATION-GUARD-SUCCESSOR.md` (specification, `§12` pre-modification identification, verification) |
+| **Changed in `tools/`** | **one new file**, `tools/tests/test_p12_population_guard_successor.py`: P12 POPULATION GUARD SUCCESSOR, version 2. No existing `tools/` file changed |
+| **Successor semantics** | same populations, classifier, five elements, label rule and 0.2 margin as the predecessor; **direction reversed** (Founder-act ratio ≥ corpus ratio − 0.2), as observed on all five elements since `ddc6fe3`. Classifier preserved and fingerprinted (`§15` option 1) |
+| **Predecessor** | *P12 HISTORICAL POPULATION GUARD*, version 1: byte-identical, pinned by sha256, still running, **still failing visibly**, neither skipped nor marked |
+| **Boundary kept** | the two registries that enumerate top-level `tools/*.py` (citation audit, P12 negative controls) were **not** modified: the successor is a test module outside both |
+| **Verification** | successor 13 tests OK; mutation checks 5 of 5 caught; P12 manifest `verify()` holds; 0 changes under `docs/architecture/p12/` |
+| **FS-08 evidence** | `FS-08-CONTINUATION-ACT-002.md` `§O`: the twelve D4 conditions met; gate row *"20.6 Full regression"* = **CLASSIFIED EXCEPTION** |
+| **Regression** | `tools` **1933** (1920 + 13): one failure, the predecessor [status], the classified exception; native_core 801, consumers 276, bounded_exception 29, fullstack 109 all OK; citation audit 0 errors |
+| **Certification of the successor** | **NOT CERTIFIED**; awaits the applicable acceptance authority (`FD-P12-007` `§19` item 8) |
+| **State** | FS-08 **BLOCKED** (EXT-03, EXT-05, FS-DP-02, FS-DP-05); best reachable: PASS WITH CLASSIFIED EXCEPTION. FS-09 not started. Production untouched |
