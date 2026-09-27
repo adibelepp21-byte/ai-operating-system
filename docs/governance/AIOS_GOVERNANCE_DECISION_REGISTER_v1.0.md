@@ -9505,3 +9505,19 @@ Production Ready, Production Released or Operational AIOS.
 | **Gate** | **FS-08 = PASS** |
 | **Residual** | 403 (missing-scope refusal) evidenced locally only; one principal in Preview |
 | **Not** | FS-09 readiness; production deployment or verification; Founder Release Authorization; Operational AIOS. Production untouched (`dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj`). FS-09 may begin (Act `§4.7`) |
+
+---
+
+## 87. FS-09 Production Readiness Begun — Discovery and Classification; FS-09 NOT PASSED (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Direction** | Founder, 2026-09-27: FS-08 accepted as PASS; *"BEGIN FS-09 PRODUCTION READINESS"* under `ACT-CC-POST-P13-AIOS-FULL-STACK-003`; a readiness program, not a release |
+| **Record** | `docs/fullstack/FS-09-READINESS-PROGRAM.md` |
+| **Canonical requirements** | `ACT-CC-POST-P13-AIOS-FULL-STACK-001` `§20` (gate and exit criteria, including a verified rollback procedure) and `§18` (Scenarios A, B, C mandatory); `ACT-CC-POST-P13-AIOS-FULL-STACK-003` `§19`, `§32`; `FD-FS-001` D4-A; `FS-DP-01` point 6 (logical-export backup and restore drill) |
+| **State** | PASS: Scenarios B and C, security (403 residual), failure handling, data integrity, migration (1 = 1), tracing. Partial: reliability, reproducibility, access control. Not verified: backup/restore, rollback procedure. Blocked on decisions: Scenario A, logging/metrics/alerting. Absent: runbook. **Material gap:** Preview and a future Production would share one Supabase table |
+| **Verified during discovery** | rollback data compatibility: pre-C1 code reads `fullstack.run/2` records and appends distinct `/1` records; current code reads the mixed store |
+| **Architect-reserved** | FS-DP-03 networking; FS-DP-06 observability; FS-DP-07 agent creation; environment separation of production data (no package yet) |
+| **Founder-reserved** | Scenario A classification if FS-DP-07 = A1; a performance requirement; spending (alerting, paid Supabase plan); a temporary Preview access authorization for FS-09 live checks; a second Preview principal, production token custody, operational ownership |
+| **Next** | authorized construction A1–A5: readiness gate v2 on recorded live evidence; backup/restore drill; runbook; rollback procedure and Preview drill; runtime pin |
+| **Not** | FS-09 PASS; production deployment; Founder Release Authorization; Operational AIOS. Nothing deployed to Production |
