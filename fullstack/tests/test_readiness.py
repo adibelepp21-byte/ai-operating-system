@@ -24,8 +24,11 @@ class Ratification(unittest.TestCase):
                 "## 99. Later section\n\n| **Ratifies** | FS-DP-01 |\n")
         self.assertEqual({}, ratified(text))
 
-    def test_nothing_is_ratified_today(self):
-        self.assertEqual({}, ratified(readiness.REGISTER.read_text(encoding="utf-8")))
+    def test_only_fs_dp_01_and_04_are_ratified_today(self):
+        """By FS-ARCH-RAT-001 (Register `§68`); the other packages stay proposed."""
+        today = ratified(readiness.REGISTER.read_text(encoding="utf-8"))
+        self.assertEqual(["FS-DP-01", "FS-DP-04"], sorted(today))
+        self.assertEqual({"FS-ARCH-RAT-001"}, {h.split(" ")[0] for h in today.values()})
 
     def test_a_decision_package_cannot_ratify_itself(self):
         for path in (readiness.REPO_ROOT / "docs/fullstack/decision-packages").glob("*.md"):
@@ -40,12 +43,17 @@ class TheGate(unittest.TestCase):
 
     def test_it_is_not_ready_and_says_exactly_why(self):
         self.assertEqual(NOT_READY, self.live["result"])
-        self.assertEqual(["FS-DP-01", "FS-DP-02", "FS-DP-03", "FS-DP-04", "FS-DP-06",
-                          "FS-DP-07"], self.live["awaiting"])
-        self.assertEqual([], [c for c in self.live["criteria"] if c["status"] == FAIL])
+        self.assertEqual(["FS-DP-02", "FS-DP-03", "FS-DP-06", "FS-DP-07"],
+                         self.live["awaiting"])
+        # Ratified is not done: each criterion the two ratified packages
+        # unblocked fails until a live deployment evidences it.
+        self.assertEqual(["Reliability: recovery and rollback of a deployment",
+                          "Data: production persistence, backup, migration"],
+                         [f"{c['area']}: {c['criterion']}" for c in self.live["criteria"]
+                          if c["status"] == FAIL])
 
     def test_every_measurable_criterion_passes(self):
-        measured = [c for c in self.live["criteria"] if c["status"] != BLOCKED]
+        measured = [c for c in self.live["criteria"] if c["status"] not in (BLOCKED, FAIL)]
         self.assertEqual({"PASS", "OBSERVED"}, {c["status"] for c in measured})
 
     def test_ratification_alone_does_not_make_it_ready(self):
@@ -60,7 +68,7 @@ class TheGate(unittest.TestCase):
         self.assertIn("D4-A", self.live["release"])
 
     def test_external_dependencies_are_named(self):
-        self.assertEqual(["EXT-02", "EXT-03", "EXT-04"],
+        self.assertEqual(["EXT-02", "EXT-03", "EXT-04", "EXT-05"],
                          [d["id"] for d in self.live["external_dependencies"]])
 
 

@@ -63,6 +63,10 @@ EXTERNAL_DEPENDENCIES = (
      "was bound to a ref not in the account (2026-09-27); the account connector reaches the "
      "AIOS project scfymftfzkpilqbgmfwv, which is healthy",
      "needs": "the project-scoped connector re-bound to scfymftfzkpilqbgmfwv (non-blocking)"},
+    {"id": "EXT-05", "what": "the Vercel project aios-platform has no server-side Supabase key "
+     "(2026-09-27); without it the deployed API answers 503 on every route, by design",
+     "needs": "the Founder to set SUPABASE_SECRET_KEY (a secret key of project "
+     "scfymftfzkpilqbgmfwv) for the Preview environment; Claude may not read or create it"},
 )
 
 
@@ -202,7 +206,9 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None) -> dict:
                    PASS if m["runs_after_restart"] == m["runs_made"] else FAIL,
                    f"{m['runs_after_restart']} of {m['runs_made']} runs present after restart"),
         _blocked_unless("Reliability", "recovery and rollback of a deployment",
-                        ["FS-DP-01", "FS-DP-04"], decided, "ratified but not deployed"),
+                        ["FS-DP-01", "FS-DP-04"], decided,
+                        "ratified (FS-ARCH-RAT-001) and implemented; no verified deployment "
+                        "exists yet to recover or roll back"),
         _criterion("Performance", "latency of Scenario B (local, in-process)", OBSERVED,
                    f"p50 {m['latency_ms']['p50']} ms, max {m['latency_ms']['max']} ms over "
                    f"{runs} runs; no workload requirement is stated"),
@@ -215,7 +221,9 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None) -> dict:
                    "every partition's bytes after the first run are a prefix of its final "
                    f"bytes: {m['appended_only']}"),
         _blocked_unless("Data", "production persistence, backup, migration", ["FS-DP-01"],
-                        decided, "ratified but not implemented"),
+                        decided, "ratified (FS-ARCH-RAT-001); SupabaseStorage and migration "
+                        "20260927062422 implemented and applied; persistence through a live "
+                        "deployment and a backup/restore drill not yet evidenced"),
         _criterion("Reproducibility", "known artifact", PASS if head else FAIL,
                    f"commit {head}; no build step"),
         _blocked_unless("Reproducibility", "reproducible deployment",

@@ -9058,3 +9058,31 @@ measurement as history; no decision taken.
 | **New dependencies** | EXT-03: Vercel connector scope (logs, previews, share links denied) · EXT-04: project-scoped Supabase connector denied (non-blocking) |
 | **Escalated** | FS-DP-01 and FS-DP-04 sharpened with evidence (Architect); release control: every merge to the default branch deploys to public production (Founder) |
 | **FS-08** | **BLOCKED.** No claim of Production Ready, Production Released or Operational AIOS |
+
+---
+
+## 68. FS-ARCH-RAT-001 Append — Architect Ratification: FS-DP-01 Option A (Supabase); FS-DP-04 A1 Per Request + B1 Static Frontend + Python API (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `FS-ARCH-RAT-001`, the Architect Ratification Decision Package for FS-DP-01 and FS-DP-04 · `acts/FS-ARCH-RAT-001-ARCHITECT-RATIFICATION-FS-DP-01-FS-DP-04.md` · content sha256 `4c24a56a4ef3c561a6e9db5e63924a8891703c39cc3ad4a79f93b0e9f447074c` |
+| **Received** | 2026-09-27, in the message body. It was the third form that day; the first two were interrupted before any action |
+| **Status discrepancy, noted** | The header reads *"Status: PROPOSED FOR ARCHITECT RATIFICATION"*. Every ratification record in the body (`§3.4`, `§4.5`, `§11.1`, `§11.2`, `§17`) reads *"Status: RATIFIED"*, *"Architect: Moriarty"*, *"Date: 27 September 2026"*, *"Authority: ARCHITECT"*. This entry records the decision on the signed body records. Claude prepared FS-DP-01 and FS-DP-04 and did not ratify them |
+
+### FS-ARCH-RAT-001 — Architect Decision · FS-DP-01 Option A (Supabase `scfymftfzkpilqbgmfwv` behind `StorageFacility`); FS-DP-04 A1 Per Request, B1 Static Frontend + Python API Function
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FS-ARCH-RAT-001` |
+| **Date** | 2026-09-27 |
+| **Decided by** | Architect (Moriarty), as signed in the instrument's `§11`. `FD-2` (Founder ≡ Architect) is not decided by this entry |
+| **Ratifies** | FS-DP-01, FS-DP-04 |
+| **Decision · FS-DP-01** | *"RATIFY OPTION A — SUPABASE"*: the existing AIOS Supabase project `scfymftfzkpilqbgmfwv` (*"ai operating system"*) *"provides persistence behind the existing AIOS state/storage interface"*. This is FS-DP-01 Part A option A1 (the database is a backend beneath `StorageFacility`) realized on Supabase |
+| **Decision · FS-DP-04** | Runtime lifecycle *"RATIFY A1 — PER REQUEST"*; deployment shape *"RATIFY B1 — STATIC FRONTEND + PYTHON API FUNCTION"* |
+| **Conditions · FS-DP-01** | (`§11.1`) Supabase is an infrastructure implementation only and does not define AIOS state architecture; existing AIOS state/storage contracts stay authoritative; persistent state must not depend on Vercel function filesystem durability; schema derived from established AIOS requirements, no generic schema without evidence; no spending, paid-plan upgrade or billing commitment |
+| **Conditions · FS-DP-04** | (`§11.2`) the adapter exposes existing AIOS contracts and does not redefine Runtime architecture; function-local memory is ephemeral and never durable AIOS state; persistent state uses FS-DP-01; AIOS Runtime and Execution stay authoritative; Vercel is not the source of AIOS architecture; no spending or plan upgrade; production release stays subject to FS-09 and a separate Founder decision |
+| **Rationale** | (`§11.1`) the AIOS Supabase project is healthy, is the named provider under D3-A, and gives hosted deployment a persistence boundary while keeping architecture and infrastructure apart. (`§11.2`) per-request execution separates ephemeral execution from durable state; a static frontend plus a Python API keeps the Full Stack boundary, with AIOS Runtime and Execution authoritative |
+| **Affected implementation** | (`§7`) a Supabase adapter behind `StorageFacility` with only the schema AIOS contracts require; a Vercel Python function serving the Full Stack backend per request; the existing console as static assets; local verification; commit; Vercel preview; Supabase verification; live smoke test; FS-08 re-discovery; FS-09 only if the FS-08 exit criteria (`§15`) are evidenced |
+| **Implementation boundary** | (`§13`) ordinary implementation, testing, repair, integration, verification and redeployment within `ACT-CC-POST-P13-AIOS-FULL-STACK-001` + `FD-FS-001` + `FS-ARCH-RAT-001`; no further Micro-Act for that work. Negative controls `§9` (1–20) apply |
+| **Not authorized** | (`§6`) production release · Founder Final System Acceptance · Vercel or Supabase plan upgrades · spending or billing commitments · authentication or identity architecture (FS-DP-02) · networking beyond what the ratified deployment requires (FS-DP-03) · scaling (FS-DP-05) · observability (FS-DP-06) · Agent Factory (FS-DP-07) · redesign of AIOS Runtime · modification of certified P13 roots · reopening Platform Organization closure · Phase 14 or any new Phase |
+| **Effect** | FS-DP-01 and FS-DP-04 are **RATIFIED**. Implementation is authorized. FS-08 continues. The readiness gate moves their criteria from BLOCKED to *"ratified but not deployed"* until evidence is recorded. **No claim of Production Ready, Production Released or Operational AIOS** |

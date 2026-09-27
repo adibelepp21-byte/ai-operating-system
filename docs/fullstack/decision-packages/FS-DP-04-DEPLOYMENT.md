@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-DP-04` (provisional) |
 | **Area** | Deployment — Freeze `§10`, Architect-reserved |
-| **Status** | **PROPOSED — NOT RATIFIED** |
+| **Status** | **RATIFIED**: Part A **A1 — per request**; Part B **B1 — static frontend + Python API function**, by `FS-ARCH-RAT-001`, Architect (Moriarty), 2026-09-27; Register `§68` |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A) |
 | **Founder constraints** | Vercel hosting; no spending (D3-A); production release only by a separate Founder decision (D4-A) |
 | **Prepared by** | Claude Code, 2026-09-26 |
@@ -88,10 +88,18 @@ them:
 4. **Release control (Founder, D4-A).** A dedicated production branch, so
    merging to the default branch stops releasing?
 
-## Until decided
+## Decision (2026-09-27)
 
-Nothing is deployed. The backend runs locally
-(`python -m fullstack.backend serve`).
+Ratified by `FS-ARCH-RAT-001` (Register `§68`): a Runtime per request (A1);
+the console as static assets and the API as one Python function (B1). The
+release-control question (point 4 above) is the Founder's and is not decided:
+production is still the default branch, so nothing is merged to it.
+
+**Implemented** (`docs/fullstack/FS-08-DEPLOYMENT-EVIDENCE.md`):
+`api/index.py` → `fullstack/deploy/vercel.py` (one Runtime per request over
+`SupabaseStorage`, no filesystem fallback) and `vercel.json` (static console
+from `fullstack/frontend`, `/api/v1/*` to the function, the backend's page
+headers on static responses, function region `icn1` beside the database).
 
 ## Exact decision required
 

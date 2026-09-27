@@ -78,6 +78,14 @@ controlled investigation. Its record is `FS-08-VERCEL-SUPABASE-EXECUTION.md`:
 - the AIOS Supabase project is **reachable, healthy and empty** (EXT-01
   re-established).
 
+## 4b. Continuation after ratification (2026-09-27)
+
+`FS-ARCH-RAT-001` (Register `§68`) ratified FS-DP-01 Option A and FS-DP-04
+A1 + B1. The store, the schema, the per-request function and the static
+console were implemented, the migration was applied, and a preview was
+deployed. Record: `FS-08-DEPLOYMENT-EVIDENCE.md`. The table in `§5` below is
+the determination of 2026-09-26; the current one is in that record.
+
 ## 5. Exit determination (`§19`)
 
 | Criterion | Result |

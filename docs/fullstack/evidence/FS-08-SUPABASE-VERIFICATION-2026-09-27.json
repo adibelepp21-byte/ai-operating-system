@@ -1,0 +1,46 @@
+{
+  "record": "FS-08 Supabase verification, FS-ARCH-RAT-001 implementation",
+  "date": "2026-09-27",
+  "project": {"ref": "scfymftfzkpilqbgmfwv", "name": "ai operating system",
+              "region": "ap-northeast-2", "plan": "free", "status_before": "ACTIVE_HEALTHY"},
+  "connector": "Supabase account connector (read, apply_migration, execute_sql, get_advisors)",
+  "state_before": {"public_tables": [], "migrations": []},
+  "migration": {"version": "20260927062422", "name": "aios_records",
+                "repository_file": "fullstack/deploy/supabase/migrations/20260927062422_aios_records.sql",
+                "result": "success"},
+  "verification_transaction": {
+    "method": "one DO block run as the database owner, switching roles with SET LOCAL ROLE; it ends by raising an exception, so every probe row is rolled back",
+    "observed": [
+      "service_role insert+read: 7b2261223a317d,32 (bytes returned unchanged, in append order)",
+      "service_role partitions(): probe-a,probe-b",
+      "service_role UPDATE refused: 42501 permission denied for table aios_records",
+      "service_role DELETE refused: 42501 permission denied for table aios_records",
+      "service_role TRUNCATE refused: 42501 permission denied for table aios_records",
+      "owner UPDATE refused: 42501 aios_records is append-only: UPDATE refused",
+      "owner DELETE refused: 42501 aios_records is append-only: DELETE refused",
+      "owner TRUNCATE refused: 42501 aios_records is append-only: TRUNCATE refused",
+      "anon SELECT refused: 42501 permission denied for table aios_records",
+      "anon INSERT refused: 42501 permission denied for table aios_records",
+      "anon partitions() refused: 42501 permission denied for function aios_partitions",
+      "authenticated SELECT refused: 42501 permission denied for table aios_records",
+      "authenticated INSERT refused: 42501 permission denied for table aios_records",
+      "newline record refused: 23514",
+      "partition ../x refused: 23514",
+      "explicit seq refused: 428C9",
+      "rows before rollback: 3"
+    ]
+  },
+  "state_after": {"rows": 0, "row_level_security": true, "policies": 0,
+                  "table_grants_to_api_roles": ["service_role:INSERT", "service_role:SELECT"]},
+  "advisors": {
+    "security": [{"name": "rls_enabled_no_policy", "level": "INFO",
+                  "detail": "Table public.aios_records has RLS enabled, but no policies exist",
+                  "assessment": "intended: no browser role may reach the table (FS-DP-01 Part B point 3)"}],
+    "performance": []
+  },
+  "not_verified_here": [
+    "a read or append over HTTPS with the server-side key: the key is not available to Claude and was not created (EXT-05)",
+    "a backup/restore drill: the free plan has no downloadable backups"
+  ],
+  "secrets": "none read, created or recorded"
+}

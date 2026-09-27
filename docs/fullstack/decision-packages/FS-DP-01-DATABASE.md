@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-DP-01` (provisional; no ADR number is taken) |
 | **Area** | Database implementation — Freeze `§10`, Architect-reserved |
-| **Status** | **PROPOSED — NOT RATIFIED** |
+| **Status** | **RATIFIED**: Option A (Supabase `scfymftfzkpilqbgmfwv` behind `StorageFacility`), by `FS-ARCH-RAT-001`, Architect (Moriarty), 2026-09-27; Register `§68` |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A; `FD-2` open) |
 | **Founder constraints** | Supabase is the named database provider; no spending (D3-A). *"Provider selection is not permission to redesign AIOS architecture around a provider-specific feature."* |
 | **Prepared by** | Claude Code, 2026-09-26 |
@@ -95,11 +95,33 @@ beneath `StorageFacility`, as Part B proposes? If Part B is ratified, the
 first migration is the single append-only table, created in this empty
 project, with no browser-reachable policy.
 
-## Until decided
+## Decision (2026-09-27)
 
-The backend persists through `LocalAppendOnlyStorage` under an explicit data
-directory. It runs locally and in tests. **It is not deployable to a
-serverless host** until this package is decided.
+Ratified by `FS-ARCH-RAT-001` (Register `§68`): Part A option A1 on Supabase,
+project `scfymftfzkpilqbgmfwv`, behind the existing `StorageFacility`.
+
+**Implemented** (`docs/fullstack/FS-08-DEPLOYMENT-EVIDENCE.md`):
+`fullstack/backend/supabase_storage.py` and migration
+`fullstack/deploy/supabase/migrations/20260927062422_aios_records.sql`, applied
+to the project.
+
+**One change from the Part B sketch above, made to follow the contract.** Part
+B point 1 sketched `record jsonb` and an `appended_at` column. The migration
+has `record bytea` and no timestamp:
+
+- the contract appends and returns **bytes**. `jsonb` would re-serialize a
+  record (key order, whitespace), so a read would not return what was
+  appended, and Trace integrity checks compare bytes;
+- the contract has no timestamp, and Trace's order is the append order
+  (`trace/record.py`); `seq` carries it. The ratification allows only schema
+  the contract requires (`FS-ARCH-RAT-001` `§3.2`).
+
+Points 2–4 are implemented as written. Point 5: the migration was applied to
+the one ratified project (no branch; branching is not on the free plan's
+path). Point 6 remains open: a backup/restore drill is an FS-09 criterion.
+
+**Before the decision**, the backend persisted only through
+`LocalAppendOnlyStorage`. It still does locally and in tests.
 
 ## Exact decision required
 

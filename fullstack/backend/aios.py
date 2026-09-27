@@ -19,8 +19,10 @@ It imports public surfaces only: `native_core.core.<boundary>` exports and the
 `consumers` agents. It imports nothing from `tools/`.
 
 **Persistence** goes through the certified `StorageFacility` (FS-04): Trace in
-its own partition, run records in `fullstack-runs`. No database is introduced
-(`FS-DP-01`).
+its own partition, run records in `fullstack-runs`. The backend is chosen by
+the composition: `LocalAppendOnlyStorage` under a data directory, or any other
+`StorageFacility` handed in, such as `SupabaseStorage` when deployed (FS-DP-01,
+ratified `FS-ARCH-RAT-001`). This module never knows which.
 """
 
 from __future__ import annotations
@@ -147,9 +149,13 @@ def validate_inputs(inputs: Any) -> Tuple[str, Tuple[str, ...]]:
 class AIOSApplication:
     """One Runtime, hosted for the life of this object, and the runs made on it."""
 
-    def __init__(self, data_dir: Path, repo_root: Path,
-                 clock: Callable[[], str] = _utc, boot_id: Optional[str] = None):
-        self._data_dir = Path(data_dir)
+    def __init__(self, data_dir: Optional[Path], repo_root: Path,
+                 clock: Callable[[], str] = _utc, boot_id: Optional[str] = None,
+                 storage: Optional[StorageFacility] = None):
+        if (data_dir is None) == (storage is None):
+            raise ValueError("give either a data directory or a storage facility")
+        self._data_dir = Path(data_dir) if data_dir is not None else None
+        self._given_storage = storage
         self._repo_root = Path(repo_root)
         self._clock = clock
         self._boot_id = boot_id or (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -174,7 +180,8 @@ class AIOSApplication:
 
     def start(self) -> None:
         with self._lock:
-            storage = LocalAppendOnlyStorage(self._data_dir / "storage")
+            storage = (self._given_storage if self._given_storage is not None
+                       else LocalAppendOnlyStorage(self._data_dir / "storage"))
             storage.provision()
             substrate = LocalExecutionSubstrate()
             substrate.provision()
