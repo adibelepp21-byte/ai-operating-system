@@ -9476,3 +9476,16 @@ Production Ready, Production Released or Operational AIOS.
 | **Plaintext token** | held only in a mode-600 file in this session's scratch directory, outside the repository; scanned absent from the working tree, the index and all git history; not sent in chat |
 | **Production** | untouched: no Production variable exists; no Production deployment, alias or credential changed |
 | **State** | FS-08 **not passed**; live verification follows in the record |
+
+---
+
+## 85. Live Preview — Runtime Starts on Supabase; Authenticated Checks Blocked at Vercel SSO (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/FS-08-LIVE-PREVIEW-VERIFICATION.md` `§3` |
+| **Preview** | `dpl_FzYqCpTFmEEQZe8BH8e8ZpbUfruL` (commit `819cb3a`), READY, with `SUPABASE_SECRET_KEY` (re-entered) and `AIOS_OPERATOR_TOKENS` |
+| **Evidenced live** | the function is reached; health 200 with the Runtime **running on the Supabase store** (EXT-05 connection resolved); Production untouched |
+| **Not evidenced live** | rejection of missing or invalid tokens; B3 acceptance; run creation and persistence writes (`aios_records` still 0 rows); Trace and audit; concurrency. The connector cannot send headers or POSTs, and direct HTTP meets Vercel SSO |
+| **Boundary** | the remaining checks need a share link, a Protection Bypass for Automation secret, or Preview protection turned off. Each touches deployment protection, which the Founder's instruction forbids bypassing. **Founder choice required**; none was used |
+| **State** | FS-08 **BLOCKED**; FS-09, FS-10 NOT_STARTED |
