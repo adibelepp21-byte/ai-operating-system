@@ -33,6 +33,16 @@ class _Case(unittest.TestCase):
     def call(self, *args, **kwargs):
         return self.h.call(*args, **kwargs)
 
+    def run_trace(self, run):
+        """The run's own Trace (FS-DP-05 C1: selected by its Runtime), and the
+        same records as the API serves them."""
+        own = self.h.aios.run_trace(run["run_id"])
+        served = self.call("GET", "/api/v1/traces?limit=200", OBSERVER_TOKEN)[2]["records"]
+        served = [{k: v for k, v in r.items() if k != "position"} for r in served
+                  if r["runtime"] == run["trace"]["runtime"]]
+        self.assertEqual(own, served[run["trace"]["runtime_from"]:run["trace"]["runtime_to"]])
+        return own
+
 
 class Health(_Case):
     def test_health_is_public_and_says_nothing_else(self):
@@ -74,8 +84,8 @@ class Runs(_Case):
     def test_a_conformant_run(self):
         status, _, run = self.call("POST", RUN, OPERATOR_TOKEN, run_body())
         self.assertEqual(201, status)
-        self.assertEqual(("run-00001", "succeeded", True),
-                         (run["run_id"], run["state"], run["succeeded"]))
+        self.assertEqual(("succeeded", True), (run["state"], run["succeeded"]))
+        self.assertRegex(run["run_id"], r"^run-\d{8}T\d{6}Z-[0-9a-f]{16}-0$")
         self.assertEqual(["defined", "ready", "running", "succeeded"], run["states"])
         self.assertEqual(["completed", "completed"], [s["status"] for s in run["steps"]])
         self.assertEqual({"conformant": True, "satisfied": 2, "total": 2}, run["outcome"])
@@ -84,8 +94,7 @@ class Runs(_Case):
     def test_every_acting_agent_wrote_exactly_one_trace(self):
         run = self.call("POST", RUN, OPERATOR_TOKEN, run_body())[2]
         self.assertEqual(3, run["trace"]["count"])
-        page = self.call("GET", f"/api/v1/traces?offset={run['trace']['from']}&limit=3",
-                         OBSERVER_TOKEN)[2]
+        page = {"records": self.run_trace(run)}
         self.assertEqual(["tool-proposing-agent", "engineering-intelligence-agent",
                           "workflow-participating-agent"],
                          [r["agent_instance"] for r in page["records"]])
@@ -95,10 +104,9 @@ class Runs(_Case):
     def test_the_step_actors_are_the_trace_authors(self):
         """The Workflow names who acts; Trace shows the same Agent Instances."""
         run = self.call("POST", RUN, OPERATOR_TOKEN, run_body())[2]
-        page = self.call("GET", f"/api/v1/traces?offset={run['trace']['from']}&limit=2",
-                         OBSERVER_TOKEN)[2]
+        page = {"records": self.run_trace(run)}
         self.assertEqual([s["actor"] for s in run["steps"]],
-                         [r["agent_instance"] for r in page["records"]])
+                         [r["agent_instance"] for r in page["records"][:2]])
 
     def test_a_document_that_misses_a_criterion_is_a_successful_run(self):
         run = self.call("POST", RUN, OPERATOR_TOKEN,
@@ -114,8 +122,7 @@ class Runs(_Case):
         self.assertIn("docs.read execution_failure", run["failure_reason"])
         self.assertEqual(["failed", "not_run"], [s["status"] for s in run["steps"]])
         self.assertIsNone(run["outcome"])
-        page = self.call("GET", f"/api/v1/traces?offset={run['trace']['from']}&limit=5",
-                         OBSERVER_TOKEN)[2]
+        page = {"records": self.run_trace(run)}
         self.assertEqual([("tool-proposing-agent", "failure"),
                           ("workflow-participating-agent", "failure")],
                          [(r["agent_instance"], r["status"]) for r in page["records"]])

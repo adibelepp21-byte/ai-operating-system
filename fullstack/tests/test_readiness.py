@@ -24,11 +24,14 @@ class Ratification(unittest.TestCase):
                 "## 99. Later section\n\n| **Ratifies** | FS-DP-01 |\n")
         self.assertEqual({}, ratified(text))
 
-    def test_only_fs_dp_01_and_04_are_ratified_today(self):
-        """By FS-ARCH-RAT-001 (Register `§68`); the other packages stay proposed."""
+    def test_the_ratified_packages_today(self):
+        """FS-DP-01 and FS-DP-04 by FS-ARCH-RAT-001 (Register `§68`); FS-DP-05 by
+        its Architect decision (`§79`). The other packages stay proposed."""
         today = ratified(readiness.REGISTER.read_text(encoding="utf-8"))
-        self.assertEqual(["FS-DP-01", "FS-DP-04"], sorted(today))
-        self.assertEqual({"FS-ARCH-RAT-001"}, {h.split(" ")[0] for h in today.values()})
+        self.assertEqual(["FS-DP-01", "FS-DP-04", "FS-DP-05"], sorted(today))
+        self.assertEqual({"FS-DP-01": "FS-ARCH-RAT-001", "FS-DP-04": "FS-ARCH-RAT-001",
+                          "FS-DP-05": "FS-DP-05-ARCHITECT-DECISION"},
+                         {p: h.split(" ")[0] for p, h in today.items()})
 
     def test_a_decision_package_cannot_ratify_itself(self):
         for path in (readiness.REPO_ROOT / "docs/fullstack/decision-packages").glob("*.md"):

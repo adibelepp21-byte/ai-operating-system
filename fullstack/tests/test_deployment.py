@@ -13,13 +13,15 @@ import io
 import json
 import re
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlsplit
 from wsgiref.util import setup_testing_defaults
 
 from fullstack.backend import api as api_module
-from fullstack.backend.aios import AIOSApplication
+from fullstack.backend.aios import (
+    AIOSApplication, LEGACY_RUN_FORMAT, RUN_FORMAT, RUNS_PARTITION, run_id_for)
 from fullstack.backend import supabase_storage
 from fullstack.backend.supabase_storage import SupabaseStorage, StorageUnavailable
 from fullstack.deploy import vercel
@@ -220,10 +222,17 @@ class ThePerRequestFunction(unittest.TestCase):
         self.assertEqual({"trace", "fullstack-runs", "fullstack-audit"},
                          {r["partition"] for r in self.fake.rows})
 
-    def test_run_numbering_continues_across_requests(self):
-        ids = [call(self.app, "POST", "/api/v1/runs", OPERATOR_TOKEN, RUN)[2]["run_id"]
-               for _ in range(3)]
-        self.assertEqual(["run-00001", "run-00002", "run-00003"], ids)
+    def test_sequential_requests_get_distinct_runtime_derived_ids(self):
+        """FS-DP-05 V1: each request is its own Runtime, so its own run id."""
+        runs = [call(self.app, "POST", "/api/v1/runs", OPERATOR_TOKEN, RUN)[2]
+                for _ in range(3)]
+        self.assertEqual(3, len({r["run_id"] for r in runs}))
+        for run in runs:
+            with self.subTest(run=run["run_id"]):
+                self.assertEqual(run_id_for(run["runtime_id"].split("/", 1)[1],
+                                            run["execution_sequence"]), run["run_id"])
+                self.assertEqual(run, call(self.app, "GET", f"/api/v1/runs/{run['run_id']}",
+                                           OBSERVER_TOKEN)[2])
 
     def test_a_failed_run_is_durable_too(self):
         body = dict(RUN, inputs=dict(RUN["inputs"], document="docs/absent.md"))
@@ -287,36 +296,194 @@ class ThePerRequestFunction(unittest.TestCase):
         self.assertIsNone(vercel.storage_from_environment({"SUPABASE_SECRET_KEY": "  "}))
 
 
-class TheConcurrencyFinding(unittest.TestCase):
-    """FS-DP-05 (not ratified): the finding, reproduced, not fixed.
+class _SerializedDatabase:
+    """The fake table behind a lock, as a database serializes its own INSERTs.
 
-    Per request, a run number is the count of durable run records plus one.
-    Two requests that start before either appends a run take the same number.
-    The fix changes run identity, which is Architect-reserved (Act
-    `ACT-CC-POST-P13-AIOS-FULL-STACK-002` NC-07), so the test is an expected
-    failure: it turns into an unexpected success when a ratified fix lands."""
+    Only the stand-in for Postgres is locked. The application under test is
+    not: each Runtime runs in its own thread with nothing shared but the store."""
+
+    def __init__(self):
+        self.fake, self._lock = FakePostgREST(), threading.Lock()
+
+    def __call__(self, *args):
+        with self._lock:
+            return self.fake(*args)
+
+
+class TheConcurrencyResolution(unittest.TestCase):
+    """FS-DP-05, C1 ratified (Register `§79`): run identity comes from the Runtime.
+
+    Before C1 a run's number was a count of run records read at Runtime start,
+    and two Runtimes that started together both minted `run-00001`. That
+    finding is kept below as the case that now resolves."""
+
+    def per_request_apps(self, n, transport):
+        apps = [AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(URL, KEY, transport=transport))
+                for _ in range(n)]
+        for app in apps:
+            app.start()
+        return apps
 
     def two_concurrent_runs(self):
-        fake = FakePostgREST()
-        first, second = (AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(
-            URL, KEY, transport=fake)) for _ in range(2))
-        first.start()
-        second.start()  # both Runtimes have read the run count
+        first, second = self.per_request_apps(2, FakePostgREST())
+        # Both Runtimes are started before either runs: the interleaving that
+        # used to collide.
         runs = [app.start_run(RUN["workflow"], RUN["inputs"], who)
                 for app, who in ((first, "p1"), (second, "p2"))]
         return runs, first
 
-    def test_the_finding_reproduces(self):
+    def test_the_former_finding_now_resolves(self):
         runs, reader = self.two_concurrent_runs()
-        self.assertEqual(["run-00001", "run-00001"], [r["run_id"] for r in runs])
         self.assertNotEqual(runs[0]["runtime_id"], runs[1]["runtime_id"])
-        # The first run can no longer be addressed by its id.
-        self.assertEqual("p2", reader.run("run-00001")["requested_by"])
+        # Each run is addressable by its own id and is the run that was made.
+        self.assertEqual("p1", reader.run(runs[0]["run_id"])["requested_by"])
+        self.assertEqual("p2", reader.run(runs[1]["run_id"])["requested_by"])
 
-    @unittest.expectedFailure
     def test_concurrent_requests_mint_distinct_run_ids(self):
         runs, _ = self.two_concurrent_runs()
         self.assertNotEqual(runs[0]["run_id"], runs[1]["run_id"])
+
+    def test_n_parallel_requests_give_n_distinct_runs_with_their_own_trace(self):
+        """V2, V3, V5: N Runtimes in N threads over one store."""
+        n = 12
+        db = _SerializedDatabase()
+        apps = self.per_request_apps(n, db)
+        barrier, results, errors = threading.Barrier(n), [None] * n, []
+
+        def request(i):
+            try:
+                barrier.wait()
+                results[i] = apps[i].start_run(RUN["workflow"], RUN["inputs"], f"p{i}")
+            except Exception as error:  # reported below, never swallowed
+                errors.append(error)
+
+        threads = [threading.Thread(target=request, args=(i,)) for i in range(n)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(60)
+        self.assertEqual([], errors)
+        ids = [r["run_id"] for r in results]
+        self.assertEqual(n, len(set(ids)), "duplicate run identity")
+        reader = AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(URL, KEY, transport=db))
+        reader.start()
+        self.assertEqual(sorted(ids), sorted(r["run_id"] for r in reader.runs()))
+        for i, run in enumerate(results):
+            with self.subTest(run=run["run_id"]):
+                self.assertEqual(f"p{i}", reader.run(run["run_id"])["requested_by"])
+                trace = reader.run_trace(run["run_id"])
+                self.assertEqual(run["trace"]["count"], len(trace))
+                self.assertEqual(3, len(trace))
+                self.assertEqual({run["runtime_id"]}, {t["runtime"] for t in trace})
+                # The Workflow's own Trace names this run, and no other.
+                self.assertEqual([[f"{RUN['workflow']}/{run['run_id']}"]],
+                                 [t["skills_used"] for t in trace
+                                  if t["agent_instance"] == "workflow-participating-agent"])
+
+    def test_parallel_runs_in_one_runtime_are_distinct(self):
+        """V2 for a long-lived Runtime (the local server): its ordinals never repeat."""
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        app = AIOSApplication(Path(tmp.name), REPO_ROOT)
+        app.start()
+        self.addCleanup(app.stop)
+        results = []
+        threads = [threading.Thread(target=lambda: results.append(
+            app.start_run(RUN["workflow"], RUN["inputs"], "p"))) for _ in range(8)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(60)
+        self.assertEqual(8, len({r["run_id"] for r in results}))
+        self.assertEqual(list(range(8)), sorted(r["execution_sequence"] for r in results))
+        for run in results:
+            trace = app.run_trace(run["run_id"])
+            self.assertEqual([[f"{RUN['workflow']}/{run['run_id']}"]],
+                             [t["skills_used"] for t in trace
+                              if t["agent_instance"] == "workflow-participating-agent"])
+
+    def test_lookup_does_not_depend_on_position(self):
+        """V4: a run is found by its id wherever its record sits in the store."""
+        db = FakePostgREST()
+        runs = [app.start_run(RUN["workflow"], RUN["inputs"], f"p{i}")
+                for i, app in enumerate(self.per_request_apps(3, db))]
+        # Another writer's records and a Trace record of another Runtime land
+        # between and after the runs.
+        store, _ = supabase(db)
+        store.append("trace", db.rows[0]["record"])
+        db.rows.reverse()                     # the same records, in a new order
+        for i, row in enumerate(db.rows, 1):
+            row["seq"] = i
+        reader = AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(URL, KEY, transport=db))
+        reader.start()
+        for i, run in enumerate(runs):
+            with self.subTest(run=run["run_id"]):
+                self.assertEqual(f"p{i}", reader.run(run["run_id"])["requested_by"])
+
+    def test_a_failed_or_partial_run_never_lends_its_identity(self):
+        """V7: a failed run keeps its own id; a run whose record was never
+        written leaves Trace no other run can claim."""
+        db = FakePostgREST()
+        failing = [AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(URL, KEY, transport=db))]
+        failing[0].start()
+        failed = failing[0].start_run(RUN["workflow"], dict(RUN["inputs"], document="docs/absent.md"), "p")
+        self.assertEqual("failed", failed["state"])
+
+        # A partial run: its Trace is appended, then the run record is lost.
+        partial_app = AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(URL, KEY, transport=db))
+        partial_app.start()
+        real_append = partial_app.storage.append
+
+        def lose_the_run_record(partition, record):
+            if partition == RUNS_PARTITION:
+                raise StorageUnavailable("response lost")
+            real_append(partition, record)
+
+        partial_app.storage.append = lose_the_run_record
+        with self.assertRaises(StorageUnavailable):
+            partial_app.start_run(RUN["workflow"], RUN["inputs"], "p")
+        partial_app.storage.append = real_append
+        # The same Runtime runs again: a new ordinal, and its Trace excludes the orphan.
+        after = partial_app.start_run(RUN["workflow"], RUN["inputs"], "p")
+        self.assertTrue(after["run_id"].endswith("-1"))
+        self.assertEqual({"runtime_from": 3, "runtime_to": 6},
+                         {k: after["trace"][k] for k in ("runtime_from", "runtime_to")})
+
+        reader = AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(URL, KEY, transport=db))
+        reader.start()
+        ids = [r["run_id"] for r in reader.runs()]
+        self.assertEqual(2, len(set(ids)))
+        self.assertNotIn(run_id_for(partial_app._boot_id, 0), ids)
+        for run_id in ids:
+            trace = reader.run_trace(run_id)
+            self.assertEqual(reader.run(run_id)["trace"]["count"], len(trace))
+            self.assertEqual([[f"{RUN['workflow']}/{run_id}"]],
+                             [t["skills_used"] for t in trace
+                              if t["agent_instance"] == "workflow-participating-agent"])
+
+    def test_records_written_before_c1_are_still_read(self):
+        """`fullstack.run/1` records stay as appended and stay addressable."""
+        db = FakePostgREST()
+        store, _ = supabase(db)
+        legacy = {"format": LEGACY_RUN_FORMAT, "run_id": "run-00001", "requested_by": "old",
+                  "runtime_id": "aios-fullstack/legacy", "trace": {"from": 0, "to": 0, "count": 0}}
+        store.append(RUNS_PARTITION, json.dumps(legacy).encode())
+        app = AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(URL, KEY, transport=db))
+        app.start()
+        new = app.start_run(RUN["workflow"], RUN["inputs"], "p")
+        self.assertEqual(RUN_FORMAT, new["format"])
+        self.assertEqual("old", app.run("run-00001")["requested_by"])
+        self.assertEqual([], app.run_trace("run-00001"))
+        self.assertEqual([new["run_id"], "run-00001"], [r["run_id"] for r in app.runs()])
+
+    def test_run_ids_fit_the_api_pattern_and_bad_boot_ids_are_refused(self):
+        app = AIOSApplication(None, REPO_ROOT, storage=supabase()[0])
+        app.start()
+        run = app.start_run(RUN["workflow"], RUN["inputs"], "p")
+        self.assertRegex(run["run_id"], r"^run-\d{8}T\d{6}Z-[0-9a-f]{16}-0$")
+        for bad in ("has/slash", "under_score", "x" * 41):
+            with self.subTest(boot_id=bad), self.assertRaises(ValueError):
+                AIOSApplication(None, REPO_ROOT, storage=supabase()[0], boot_id=bad)
 
 
 class TheVercelConfiguration(unittest.TestCase):

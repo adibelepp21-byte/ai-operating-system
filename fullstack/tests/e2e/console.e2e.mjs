@@ -69,7 +69,8 @@ try {
   const ok = await startRun(page, DOC, ["INV-4", "Architect Reserved"]);
   assert.equal(await ok.locator(tid("run-states")).textContent(), "defined → ready → running → succeeded");
   assert.match(await ok.locator(tid("run-outcome")).textContent(), /Conformant \(2\/2\)/);
-  report("scenario B: a workflow run succeeds end to end", { run: await ok.getAttribute("data-run") });
+  const firstRun = await ok.getAttribute("data-run");
+  report("scenario B: a workflow run succeeds end to end", { run: firstRun });
   await shot(page, "02-run-succeeded");
 
   // Scenario C — Execution failure → Runtime → Trace → Backend → Frontend → meaningful state
@@ -87,8 +88,8 @@ try {
   report("user-supplied text is rendered inertly");
 
   await page.waitForFunction((sel) => document.querySelectorAll(sel).length === 3, `${tid("runs-table")} tbody tr`);
-  await page.click(`${tid("runs-table")} tbody tr[data-run="run-00001"]`);
-  await page.waitForSelector(`${tid("run-detail")} ${tid("run-view")}[data-run="run-00001"]`);
+  await page.click(`${tid("runs-table")} tbody tr[data-run="${firstRun}"]`);
+  await page.waitForSelector(`${tid("run-detail")} ${tid("run-view")}[data-run="${firstRun}"]`);
   report("runs are listed and open in detail");
 
   await page.click('.sidebar button[data-view="tools"]');

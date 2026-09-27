@@ -129,7 +129,16 @@ function runView(run) {
       el("span", { class: `badge tone-${step.status === "completed" ? "good" : step.status === "failed" ? "bad" : "neutral"}` }, step.status),
       step.reason ? el("div", { class: "muted" }, step.reason) : null,
       step.criteria ? el("ul", {}, step.criteria.map((c) => el("li", {}, `${c.satisfied ? "✓" : "✗"} ${c.required_text}`))) : null))),
-    el("p", { class: "muted" }, `Trace records ${run.trace.from}–${run.trace.to - 1} (${run.trace.count}) · runtime ${run.runtime_id}`));
+    el("p", { class: "muted" }, traceLabel(run)));
+}
+
+// FS-DP-05 C1: a `fullstack.run/2` run names its Trace by its Runtime, as
+// ordinals among that Runtime's own records; a `/1` run kept global positions.
+function traceLabel(run) {
+  const t = run.trace;
+  return run.format === "fullstack.run/1"
+    ? `Trace records ${t.from}–${t.to - 1} (${t.count}) · runtime ${run.runtime_id}`
+    : `Trace: ${t.count} record(s) of runtime ${t.runtime}`;
 }
 
 async function renderRunDetail(runId) {

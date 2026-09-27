@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-DP-05` (provisional) |
 | **Area** | Scaling — Freeze `§10`, Architect-reserved |
-| **Status** | **PROPOSED — ROUTED TO THE ARCHITECT** (Register `§71`, 2026-09-27); **AWAITING ARCHITECT DECISION**. Not ratified |
+| **Status** | **RATIFIED — C1 Runtime-derived run identity**, by the Architect (Moriarty), 2026-09-27: `acts/FS-DP-05-ARCHITECT-DECISION-RATIFY-C1-RUNTIME-DERIVED-RUN-IDENTITY.md`, Register `§79`. Routed at `§71`. Idempotency, partial runs and Part B not separately decided (`§R2.14`) |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A) |
 | **Founder constraints** | No spending (D3-A) |
 | **Prepared by** | Claude Code, 2026-09-26; **Revision 2** 2026-09-27 (below), under `ACT-CC-POST-P13-AIOS-FULL-STACK-002` `§12` |
@@ -212,3 +212,17 @@ any certified root.
 | Status | **AWAITING ARCHITECT DECISION** |
 
 A decision takes effect when recorded in the Register, not in this file.
+
+### R2.14 Decision recorded (2026-09-27)
+
+The Architect decided in a separate instrument, not in the block above, which
+is left as it was: `docs/governance/acts/FS-DP-05-ARCHITECT-DECISION-RATIFY-C1-RUNTIME-DERIVED-RUN-IDENTITY.md`
+(Register `§79`). *"ARCHITECT DECISION: RATIFY … C1 — Runtime-derived Run
+Identity"*.
+
+| Sub-decision | In the instrument | Effect on implementation |
+|---|---|---|
+| C1 | **RATIFY** | implemented (`docs/fullstack/FS-DP-05-C1-IMPLEMENTATION-RECORD.md`) |
+| Idempotency I1 / I2 | not named | no idempotency key added; `POST /api/v1/runs` stays non-idempotent, as before. Nothing implemented under I1 or I2 |
+| Partial runs | not named; V7 requires a failed execution never lend its identity | no atomicity added; a run whose record is lost keeps a unique identity and Trace no other run claims (V7 test) |
+| Part B (host concurrency, rate limit) | not named | nothing implemented |

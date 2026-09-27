@@ -47,7 +47,8 @@ class Durability(_Store):
             traces = second.call("GET", "/api/v1/traces", OBSERVER_TOKEN)[2]
             self.assertEqual(3, traces["total"])
             later = second.call("POST", RUN, OPERATOR_TOKEN, run_body())[2]
-            self.assertEqual("run-00002", later["run_id"])
+            # FS-DP-05 C1: a new Runtime, so a new identity, never a reused one.
+            self.assertNotEqual(run["run_id"], later["run_id"])
             self.assertNotEqual(run["runtime_id"], later["runtime_id"])
             audit = second.call("GET", "/api/v1/audit", OPERATOR_TOKEN)[2]["entries"]
             self.assertGreaterEqual(len(audit), 4)
@@ -76,12 +77,13 @@ class Durability(_Store):
             h.close()
         h = self.boot()
         try:
-            records = h.call("GET", "/api/v1/traces?limit=200", OBSERVER_TOKEN)[2]["records"]
             for run in h.aios.runs():
                 with self.subTest(run=run["run_id"]):
-                    span = records[run["trace"]["from"]:run["trace"]["to"]]
+                    span = h.aios.run_trace(run["run_id"])
                     self.assertEqual(run["trace"]["count"], len(span))
                     self.assertEqual({run["runtime_id"]}, {r["runtime"] for r in span})
+                    self.assertIn([f"document-conformance-review/{run['run_id']}"],
+                                  [r["skills_used"] for r in span])
         finally:
             h.close()
 
@@ -138,8 +140,8 @@ class BackupAndRecovery(_Store):
         try:
             self.assertEqual(runs, restored.aios.runs())
             self.assertEqual(3 + 2, restored.call("GET", "/api/v1/traces", OBSERVER_TOKEN)[2]["total"])
-            self.assertEqual("run-00003", restored.call("POST", RUN, OPERATOR_TOKEN,
-                                                        run_body())[2]["run_id"])
+            new_id = restored.call("POST", RUN, OPERATOR_TOKEN, run_body())[2]["run_id"]
+            self.assertNotIn(new_id, [r["run_id"] for r in runs])
         finally:
             restored.close()
 

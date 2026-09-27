@@ -28,6 +28,7 @@ ratified `FS-ARCH-RAT-001`). This module never knows which.
 from __future__ import annotations
 
 import json
+import re
 import secrets
 import threading
 from dataclasses import dataclass
@@ -54,7 +55,17 @@ from . import docs_tool
 RUNS_PARTITION = "fullstack-runs"
 #: The run record format. A later format is a successor version read beside
 #: this one, never a rewrite of records already appended (FS-04 `§4`).
-RUN_FORMAT = "fullstack.run/1"
+#:
+#: `/2` (FS-DP-05, C1 ratified): the run's identity comes from its Runtime,
+#: and its Trace is selected by that Runtime's id. `/1` records, whose number
+#: was a count of run records and whose Trace was a range of global
+#: positions, stay as appended and are still read.
+RUN_FORMAT = "fullstack.run/2"
+LEGACY_RUN_FORMAT = "fullstack.run/1"
+#: What a run id may contain: the API's `{run_id}` pattern.
+RUN_ID_PATTERN = re.compile(r"[A-Za-z0-9-]{1,64}")
+#: A boot id names one Runtime. It must fit inside a run id.
+BOOT_ID_PATTERN = re.compile(r"[A-Za-z0-9-]{1,40}")
 MAX_CRITERIA = 20
 MAX_CRITERION_CHARS = 200
 MAX_PATH_CHARS = 300
@@ -78,6 +89,28 @@ class NotRunning(ApplicationError):
 
 def _utc() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds")
+
+
+def new_boot_id() -> str:
+    """A Runtime's identity: its boot time and 64 random bits.
+
+    FS-DP-05 C1: unique by construction, with no read of the store and no
+    coordination between requests."""
+    return (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+            + "-" + secrets.token_hex(8))
+
+
+def run_id_for(boot_id: str, execution_sequence: int) -> str:
+    """FS-DP-05 C1: a run is named by the Runtime execution that owns it.
+
+    The Runtime's identity, then the execution ordinal that Runtime issued
+    for the run. Two Runtimes never share a boot id, and one Runtime never
+    issues the same ordinal twice, so no two runs share an id: nothing here
+    counts records, reads positions or depends on request order."""
+    run_id = f"run-{boot_id}-{execution_sequence}"
+    if not RUN_ID_PATTERN.fullmatch(run_id):
+        raise ValueError(f"run id {run_id!r} does not fit the API's run id pattern")
+    return run_id
 
 
 @dataclass(frozen=True)
@@ -158,13 +191,13 @@ class AIOSApplication:
         self._given_storage = storage
         self._repo_root = Path(repo_root)
         self._clock = clock
-        self._boot_id = boot_id or (datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-                                    + "-" + secrets.token_hex(3))
+        self._boot_id = boot_id or new_boot_id()
+        if not BOOT_ID_PATTERN.fullmatch(self._boot_id):
+            raise ValueError("a boot id is 1 to 40 letters, digits or hyphens")
         self._lock = threading.RLock()
         self._runtime = None
         self._storage: Optional[StorageFacility] = None
         self._booted_at: Optional[str] = None
-        self._run_count = 0
 
     # -- lifecycle ----------------------------------------------------------
 
@@ -199,7 +232,6 @@ class AIOSApplication:
             self._storage, self._runtime = storage, runtime
             self._trace_writer = TraceWriter(storage)
             self._trace_reader = TraceReader(storage)
-            self._run_count = sum(1 for _ in storage.read(RUNS_PARTITION))
             self._booted_at = self._clock()
 
     def stop(self) -> None:
@@ -277,8 +309,27 @@ class AIOSApplication:
                 records.append(mapping)
         return {"total": total, "offset": offset, "limit": limit, "records": records}
 
-    def _trace_count(self) -> int:
-        return sum(1 for _ in self._storage.read("trace"))
+    def run_trace(self, run_id: str) -> Optional[List[dict]]:
+        """The Trace records a run's own execution appended, or None if no such run.
+
+        A `/2` run is found by its Runtime's id, then by its ordinal range
+        among **that Runtime's** records. Records of other Runtimes, whenever
+        they were appended, never enter it. A `/1` run keeps the global range
+        it recorded."""
+        run = self.run(run_id)
+        if run is None:
+            return None
+        span = run["trace"]
+        if run.get("format") == LEGACY_RUN_FORMAT:
+            records = [r.to_mapping() for r in self._trace_reader.read()]
+            return records[span["from"]:span["to"]]
+        own = [r.to_mapping() for r in self._trace_reader.read()
+               if r.runtime == span["runtime"]]
+        return own[span["runtime_from"]:span["runtime_to"]]
+
+    def _own_trace_count(self, runtime_id: str) -> int:
+        """How many Trace records this Runtime has appended so far."""
+        return sum(1 for r in self._trace_reader.read() if r.runtime == runtime_id)
 
     # -- the one act: a Workflow run ----------------------------------------
 
@@ -289,11 +340,18 @@ class AIOSApplication:
         document, criteria = validate_inputs(inputs)
         with self._lock:
             runtime = self._require_running()
-            run_id = f"run-{self._run_count + 1:05d}"
+            # FS-DP-05 C1: the Runtime issues the execution; the run takes its
+            # identity from that Runtime and that execution, and from nothing
+            # shared with any other request.
+            execution = create_execution_layer(runtime)
+            run_id = run_id_for(self._boot_id, execution.context.execution_sequence)
             identity = WorkflowIdentity(f"{entry.key}/{run_id}", entry.version)
             requested_at = self._clock()
-            trace_from = self._trace_count()
-            execution = create_execution_layer(runtime)
+            # Ordinals among this Runtime's own Trace records. This Runtime
+            # performs one run at a time (the lock above), so its records
+            # between these two counts are this run's, whatever other
+            # Runtimes append to the store meanwhile.
+            trace_from = self._own_trace_count(runtime.runtime_id)
             steps: Dict[str, dict] = {}
             carried: Dict[str, Any] = {}
 
@@ -321,7 +379,7 @@ class AIOSApplication:
                 performer=perform, trace_writer=self._trace_writer)
             agent.participate(execution)
             terminal = runtime.workflows.monitor.state_of(identity)
-            trace_to = self._trace_count()
+            trace_to = self._own_trace_count(runtime.runtime_id)
             record = {
                 "format": RUN_FORMAT,
                 "run_id": run_id,
@@ -344,12 +402,11 @@ class AIOSApplication:
                                **steps.get(s.step_key, {"status": "not_run"}))
                           for s in entry.composition.ordered()],
                 "outcome": carried.get("outcome"),
-                "trace": {"from": trace_from, "to": trace_to,
-                          "count": trace_to - trace_from},
+                "trace": {"runtime": runtime.runtime_id, "runtime_from": trace_from,
+                          "runtime_to": trace_to, "count": trace_to - trace_from},
             }
             self._storage.append(RUNS_PARTITION, json.dumps(
                 record, sort_keys=True, separators=(",", ":")).encode("utf-8"))
-            self._run_count += 1
             return record
 
     def _read(self, step, execution, document, steps, carried) -> None:

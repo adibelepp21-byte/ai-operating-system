@@ -81,6 +81,14 @@ So each accepted run is defined as its own Workflow,
 `WorkflowIdentity("<catalog key>/<run id>", <catalog version>)`. The run id is
 an application identifier; no AIOS entity is added.
 
+**Run id value** (FS-DP-05, C1 ratified; Register `§79`):
+`run-<boot id>-<execution ordinal>`. That is the identity of the Runtime that
+performs the run (boot time plus 64 random bits), then the execution ordinal
+that Runtime issued for it. Nothing is counted from the store. A run's Trace is
+selected by that Runtime's id (`fullstack.run/2`). Runs recorded before the
+change keep their `run-NNNNN` ids and global Trace ranges (`fullstack.run/1`)
+and are still read.
+
 ## 5. Workflow catalog
 
 | Key | Version | Steps (actor · Skill) | Inputs |

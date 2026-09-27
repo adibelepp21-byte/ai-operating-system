@@ -9373,3 +9373,30 @@ Production Ready, Production Released or Operational AIOS.
 | Supabase | `aios_records` 0 rows, RLS on; unchanged |
 | State | **EXECUTION BLOCKED — AUTHORITY / DEPENDENCY BOUNDARY**: FS-08 BLOCKED; FS-09, FS-10 NOT_STARTED; Founder Release NOT AUTHORIZED; production untouched; P13 certified and closed; Successor V2 unchanged |
 | Changed | the Act (verbatim), the record, this entry. No certification statement: certified phases stay `{10, 11, 12, 13}` |
+
+---
+
+## 79. FS-DP-05 Architect Decision — RATIFY C1 Runtime-derived Run Identity; Implemented and Verified Locally (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `acts/FS-DP-05-ARCHITECT-DECISION-RATIFY-C1-RUNTIME-DERIVED-RUN-IDENTITY.md` · content sha256 `d1dd5e3846801e79984b1ffde4b32eecc7529b5700aa63e60945052b9a777eb0` |
+| **Received** | from the Architect (Moriarty), 2026-09-27, in the message body, under `ACT-CC-POST-P13-AIOS-FULL-STACK-003` (`§78`) |
+| **Record** | `docs/fullstack/FS-DP-05-C1-IMPLEMENTATION-RECORD.md` |
+
+### FS-DP-05-ARCHITECT-DECISION — Architect Decision · RATIFY C1 Runtime-derived Run Identity
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FS-DP-05-ARCHITECT-DECISION` (the instrument's *"Decision ID: FS-DP-05"*; the package already holds the identifier `FS-DP-05`) |
+| **Date** | 2026-09-27 |
+| **Decided by** | Architect (Moriarty), as signed in the instrument's `§16`, under `ACT-CC-POST-P13-AIOS-FULL-STACK-003` |
+| **Ratifies** | FS-DP-05 |
+| **Decision** | *"ARCHITECT DECISION: RATIFY"* · *"C1 — Runtime-derived Run Identity"* (`§5`) |
+| **Rationale** | (`§6`) the run-number allocation can duplicate identity under concurrent execution; C1 sets identity at the Runtime execution boundary, keeping Runtime → Execution → Run Identity → Trace, independent of request order or shared positional allocation |
+| **Boundary** | (`§7`) Runtime-derived run identity; concurrency-safe run identification; run-to-Runtime and run-to-Trace association. Not authorized: authentication or authorization redesign, multi-user identity, unrelated persistence schema, new Planner, Scheduler, Execution Orchestrator, Agent or Trace architecture, new governance authority |
+| **Requirements** | (`§8`) uniqueness; Runtime ownership; Trace association; concurrency safety without reliance on request serialization, global positional allocation or order-dependent shared state |
+| **Implementation authority** | (`§9`) run-identity implementation, execution/Trace association, concurrency and regression tests, necessary adapter changes, documentation and evidence |
+| **Verification required** | (`§10`) V1 sequential identity · V2 concurrent identity · V3 Trace association · V4 no positional dependency · V5 no duplicates over N concurrent executions · V6 regression · V7 failure safety |
+| **Not decided** | FS-DP-02 (`§13`); FS-08 closure (`§14`). The package's idempotency (I1/I2), partial-run and Part B sub-options are not named in the instrument: nothing is implemented under them |
+| **Effect** | FS-DP-05 is **RATIFIED (C1)** and implementation is authorized within `§7`. FS-08 stays **BLOCKED** (FS-DP-02, EXT-03, EXT-05) |
