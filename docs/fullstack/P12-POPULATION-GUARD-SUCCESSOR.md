@@ -7,7 +7,7 @@
 | **Predecessor** | P12 HISTORICAL POPULATION GUARD, version 1 |
 | **Authority** | `FD-P12-007` (Register `§73`): D3 *"L2 — VERSIONED SUCCESSOR"*; D5 *"EXPLICIT LIMITED MODIFICATION AUTHORIZATION"* |
 | **Implementation** | `tools/tests/test_p12_population_guard_successor.py` (one new file) |
-| **Certification** | **NOT CERTIFIED.** Constructed and verified; acceptance by the applicable authority is still required (`FD-P12-007` `§19` item 8) |
+| **Certification** | **CERTIFIED** by the Founder in `FD-P12-008` (Register `§76`), with Founder acceptance, 2026-09-27: this artifact only. Certified state: sha256 `7774e0f31711b21ebb247b70d0eb3044ad100a3e592ddb62aba5a4cff613e132`, introduced at `8bb7ba2`. Not to be silently rewritten; a material change needs a Successor V3 (`FD-P12-008` `§19`) |
 
 ## 1. Pre-modification identification (`FD-P12-007` `§12`)
 
@@ -124,5 +124,31 @@ On this commit, no existing test modified:
 - **Acceptance.** v2 is not certified until the applicable authority accepts
   it (`FD-P12-007` `§19` item 8). Until then the predecessor's failure is the
   classified exception in FS-08's evidence.
+  *Superseded by `§8`: the Founder accepted and certified v2 in `FD-P12-008`.
+  The predecessor's failure stays the classified exception.*
 - **The predecessor keeps failing** while Founder acts label status more than
   the corpus. That is the signal, and it stays visible by design.
+
+## 8. Founder acceptance and certification (`FD-P12-008`)
+
+The Founder accepted and certified this successor in `FD-P12-008`
+(2026-09-27; Register `§76`), after the authority verification of
+`ACT-CC-P12-030` (Outcome D, Register `§75`). Recorded as decided; nothing
+here adds to it. Section numbers in the table are `FD-P12-008`'s.
+
+| Item | State |
+|---|---|
+| Acceptance (D1) | **GRANTED** by the Founder |
+| Certification (D2) | **GRANTED** by the Founder: *"the certified successor verification mechanism for the living governance-corpus Population Guard"* |
+| Certified artifact | `tools/tests/test_p12_population_guard_successor.py`, sha256 `7774e0f31711b21ebb247b70d0eb3044ad100a3e592ddb62aba5a4cff613e132`, introduced at `8bb7ba2`; the file was not modified to record the certification |
+| Scope (`§9`) | this artifact only: not `tools/`, not other tests, not FS-08, not production, not P13 |
+| Predecessor | historical evidence, byte-identical, still running and still failing on [status]: the classified signal (`§14`, D6) |
+| Historical P12 evidence | immutable (D3); manifest `verify()` holds |
+| `tools/` authority | unchanged: `FD-P12-007` D5 stays bounded (`§17`, D5) |
+| Change control (`§19`) | no silent rewrite; a material semantic change goes to a Successor V3, then verification, Founder acceptance and Founder certification |
+| Not affected | FS-08 **NOT CLOSED** · FS-09 **NOT STARTED** · production **UNTOUCHED** · P13 **CERTIFIED / CLOSED / UNCHANGED** |
+
+**Correction to `§6`, not to its evidence.** The `tools` row reads *"1933
+run … 1932 pass, 1 skipped; 1 failure"*. Those parts sum to 1934. The run's
+log reads *"Ran 1933 tests … FAILED (failures=1, skipped=1)"*, so 1931
+passed. Only the row's arithmetic was wrong; the run and its result stand.

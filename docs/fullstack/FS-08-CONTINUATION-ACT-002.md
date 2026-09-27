@@ -237,3 +237,20 @@ EXCEPTION**.
 exception does not close FS-08 on its own (`FD-P12-007` `§20`). The best
 FS-08 can now reach is **PASS WITH CLASSIFIED EXCEPTION**, once every other
 condition is met.
+
+## P. Addendum: `FD-P12-008` certifies the successor; FS-08 unchanged (2026-09-27)
+
+The Founder accepted and certified **P12 Population Guard Successor V2** in
+`FD-P12-008` (Register `§76`). For FS-08 this changes one fact and nothing
+else:
+
+| Item | Before | After `FD-P12-008` |
+|---|---|---|
+| Successor V2 | constructed, verified, not certified | **accepted and certified** (artifact only) |
+| Predecessor failure [status] | classified exception (`FD-P12-007` D4 R2) | **unchanged**: still classified, still visible (`FD-P12-008` `§14`, D6) |
+| Gate row 20.6 (`§O`) | CLASSIFIED EXCEPTION | **unchanged** |
+| EXT-03 · EXT-05 | open, external | open, external |
+| FS-DP-02 · FS-DP-05 | Architect decision pending | Architect decision pending |
+
+**FS-08 remains NOT CLOSED** (BLOCKED on the four items above). FS-09 is not
+started. Production is untouched. `FD-P12-008` `§21`–`§23`.

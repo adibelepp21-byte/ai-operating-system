@@ -9265,3 +9265,62 @@ Production Ready, Production Released or Operational AIOS.
 | **Falsification** | the only contrary text, `DEL-T4.4-CF-001` §3.1 C *"perform certification"*, is **SUPERSEDED** (2026-09-23) by `DEL-CFV2-CEO-001`; the P10 Founder event cites it without granting it and reserves certification lifecycle to the Founder. Neither Charter V2 nor Matrix V2 mentions certification. No conflict; authority not unknown |
 | **Final classification** | **OUTCOME D — SUCCESSOR V2 ACCEPTANCE AND CERTIFICATION REQUIRE FOUNDER DECISION** |
 | **Not done** | P13 not modified; Successor V2 not accepted and not certified; predecessor not replaced; FS-08 not changed (BLOCKED, classified P12 exception); no authority created |
+
+---
+
+## 76. FD-P12-008 Append — P12 Population Guard Successor V2: Founder Acceptance & Certification (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `acts/FD-P12-008-P12-POPULATION-GUARD-SUCCESSOR-V2-ACCEPTANCE-AND-CERTIFICATION.md` · content sha256 `17d400aab23169bb0b9ab4df4c8f740812ab663b2de03f0e25881e8e2d697a86` |
+| **Received** | from the Founder, 2026-09-27, in the message body |
+| **Basis** | `§75` (Outcome D: acceptance and certification require Founder decision), record `docs/fullstack/P12-SUCCESSOR-V2-AUTHORITY-VERIFICATION-2-RECORD.md` at `60bb5ad`; lifecycle of `FD-P12-007` (`§73`) |
+
+### FD-P12-008 — Founder Decision · P12 Population Guard Successor V2 Accepted and Certified (Artifact Only)
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-P12-008` |
+| **Date** | 2026-09-27 |
+| **Decided by** | Founder (Moriarty) |
+| **Type** | Founder Decision |
+| **Subject** | P12 Population Guard Successor V2 — Founder Acceptance & Certification |
+| **Decision** | **ACCEPT + CERTIFY**: D1 *"FOUNDER ACCEPTANCE = GRANTED"* · D2 *"FOUNDER CERTIFICATION = GRANTED"* · D3 historical P12 evidence immutable · D4 *"Versioned Successor + Immutable Historical Baseline + Founder Re-certification"* · D5 `FD-P12-007` D5 authority stays bounded · D6 predecessor failure stays a classified governance signal under `FD-P12-007` · D7 P13 not reopened |
+| **Acceptance** | GRANTED |
+| **Certification** | GRANTED |
+| **Acceptance authority** | FOUNDER |
+| **Certification authority** | FOUNDER |
+| **Successor** | P12 Population Guard Successor V2 |
+| **Predecessor** | P12 Historical Population Guard |
+| **Historical P12 evidence** | IMMUTABLE |
+| **Successor lifecycle** | VERSIONED SUCCESSOR |
+| **Successor status** | CERTIFIED |
+| **Predecessor current failure** | EXPECTED / CLASSIFIED GOVERNANCE SIGNAL |
+| **FS-08** | NOT CLOSED |
+| **FS-09** | NOT STARTED |
+| **Production** | UNTOUCHED |
+| **P13** | CERTIFIED / CLOSED / UNCHANGED |
+| **EXT-03** | OPEN / EXTERNAL |
+| **EXT-05** | OPEN / EXTERNAL |
+| **FS-DP-02** | ARCHITECT DECISION PENDING |
+| **FS-DP-05** | ARCHITECT DECISION PENDING |
+| **Boundary** (`§9`, `§26`) | certifies this one artifact: not `tools/`, not unrelated tests, not the Full Stack, not FS-08, not production readiness or deployment; no P13 change, no Phase 14, no reopening of P12, no retroactive certification (`§18`) |
+| **Change control** (`§19`) | the certified artifact is not to be silently rewritten; a material semantic change goes through a versioned Successor V3, verification, Founder acceptance and Founder certification |
+
+**Certified artifact identity** (the verified state `§18` certifies from)
+
+| Field | Value |
+|---|---|
+| **Path** | `tools/tests/test_p12_population_guard_successor.py` |
+| **sha256** | `7774e0f31711b21ebb247b70d0eb3044ad100a3e592ddb62aba5a4cff613e132` |
+| **Introduced** | commit `8bb7ba2`, its only commit; byte-identical at `60bb5ad` and at this append |
+| **Declares** | identity *P12 POPULATION GUARD SUCCESSOR*, version 2; classifier fingerprint `a89ac04e3c286254fe431c56aebcf579369beeb58251e49f354c880a195d421a`; predecessor files pinned by sha256 (`5d778b32…`, `b9ec2c92…`), both unchanged |
+| **Specification** | `docs/fullstack/P12-POPULATION-GUARD-SUCCESSOR.md` `§2` |
+
+**Recorded on receipt**
+
+| Field | Value |
+|---|---|
+| **Certification readers** | the act states no phase certification: `_CERTIFIES` finds no match; `certified_phases()` = `{10, 11, 12, 13}`, provenance unchanged (12 ← `FD-P12-006`, 13 ← `FDR-7`); no anomalies |
+| **Living check with this act tracked** | successor 13 tests OK, all five elements hold; predecessor fails on [status] only (Founder acts 49/96 = 0.510, corpus 178/597 = 0.298), the classified signal, visible and unsuppressed |
+| **Changed** | nothing in `tools/`, the P12 manifest, P12 or P13 evidence, or any reader. Added: the act (verbatim), this record; the successor record's certification row updated to cite this decision |
