@@ -53,7 +53,7 @@ formats (`fullstack.run/1`, Trace mappings, `fullstack.audit/1`).
 | `native_core` | 801 OK (1 expected failure, unchanged) |
 | `consumers` | 276 OK |
 | `tools/bounded_exception` | 29 OK |
-| `tools` | see `§6` |
+| `tools` | 1920 OK (1 skipped), before the commit and again on `8d088fb` |
 
 `fullstack/tests/test_deployment.py` holds:
 
@@ -100,7 +100,41 @@ missing secrets merely to make deployment pass."*). This is EXT-05.
 
 ## 4. Preview deployment
 
-Recorded in `§4a` after the push.
+Pushing `8d088fb` to this branch deployed a preview through the project's Git
+integration. Nothing was promoted, and nothing was merged to the default
+branch.
+
+| Fact | Value | Source |
+|---|---|---|
+| Deployment | `dpl_drGHDofUQdk1SgNhTzDSEwSTDunU` | `list_deployments`, `get_deployment` |
+| Commit · branch | `8d088fb` · `claude/aios-activation-authority-discovery-enq7bk` | same |
+| Target | **preview** (`target: null`) | same |
+| State | **READY**; the build took about 15 s | same |
+| Type · region | `LAMBDAS` · **`icn1`**, as `vercel.json` sets | same |
+| Production | unchanged: `dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj` from `22c0b49` | `list_deployments` |
+| Environment variables | **none** on the project, so no server-side key (EXT-05) | `filter_project_envs` (names only) |
+| Protection | SSO on every deployment URL except custom domains | `get_project` |
+
+**Live verification of the preview: NOT PERFORMED.**
+
+| Attempt | Result |
+|---|---|
+| `GET /`, `GET /api/v1/health` from this environment | `302` to `vercel.com/sso-api`: Vercel Authentication, before the deployment |
+| `GET /assets/app.js` from this environment | timed out after 20 s, no response |
+| Connector `web_fetch_vercel_url` (with and without team) | *"Vercel denied access to this deployment"* |
+| Connector `get_access_to_vercel_url` (share link) | denied |
+| Connector build logs (`list_deployment_events`) | `403`: *"You must re-authenticate to this scope"* |
+
+So there is **no evidence** that the static console is served, that the
+Python function starts on Vercel's runtime, that the rewrites route, or that
+the page headers are applied. A READY state shows only that the build
+finished. The Python runtime serving this framework-free WSGI callable
+remains **inferred, not confirmed**.
+
+Even with access, the API would answer `503 unavailable` on every route:
+there is no key (EXT-05), and the function has no fallback, by design. A
+successful workflow cannot be run live until FS-DP-02 gives an authenticator,
+because the shipped function authenticates nobody.
 
 ## 5. Observations for the Architect
 
@@ -126,6 +160,40 @@ Recorded in `§4a` after the push.
    `fullstack/frontend`, so its `tests/` files are publicly readable. They hold
    no secret; a build step would remove them, and none is used.
 
-## 6. Exit determination
+## 6. FS-08 re-discovery and exit determination
 
-Recorded in `§6a` after the preview.
+Against `FS-ARCH-RAT-001` `§15`:
+
+| Criterion | Status | Evidence |
+|---|---|---|
+| Vercel deployment surface exists | **MET** | preview `dpl_drGHDofUQdk1SgNhTzDSEwSTDunU` READY |
+| Static frontend reachable | **NOT EVIDENCED** | SSO; connector denied (EXT-03) |
+| Python API function reachable | **NOT EVIDENCED** | same |
+| API invokes existing Full Stack contracts | **MET locally** | `ThePerRequestFunction` tests; unchanged `Application` |
+| AIOS public contracts remain the integration boundary | **MET** | the adapter imports `fullstack.backend` only; `native_core`, `consumers` unchanged |
+| Supabase persistence adapter operational | **MET locally; live schema verified** | contract tests on both backends; `§3`. Not over HTTPS with the key (EXT-05) |
+| Evidence-backed schema exists | **MET** | migration `20260927062422`; `§1` table |
+| Persistent state survives restart / request boundaries | **MET locally** | `test_state_crosses_request_boundaries_only_through_the_database`. Not live |
+| Function-local memory is not durable state | **MET** | no local store in the adapter; `test_the_adapter_never_names_a_local_store`; 503 with no fallback |
+| Security behaviour preserved | **MET locally** | 401, 403, audit, headers in the function tests |
+| Trace / audit preserved | **MET locally** | Trace and audit partitions in the store after a run |
+| Failure handling verified | **MET locally** | failed run durable; no key → 503; database down → 503 |
+| Certified-write protection preserved | **MET** | `api/index.py` imports `tools` first; `tools` suite (1920) OK |
+| Preview / live verification completed | **NOT MET** | `§4` |
+| No unauthorized certified-root modifications | **MET** | diff touches no certified root |
+| Full regression suites pass | **MET** | `§2` |
+| FS-08 re-discovery completed | **MET** | `§3`, `§4` |
+| No unresolved blocker within FS-08 scope | **NOT MET** | EXT-03, EXT-05 |
+
+**FS-08: NOT CLOSED.** The implementation and the database are in place;
+the live half of the evidence is missing. Per `§14`, a FAIL leads to
+self-repair, but nothing left is repairable by Claude:
+
+| Blocker | Why Claude cannot clear it | Who clears it |
+|---|---|---|
+| EXT-05: no server-side key in Vercel | the Act forbids creating a secret to make deployment pass; the connector does not expose secret keys | the Founder: set `SUPABASE_SECRET_KEY` (a secret key of `scfymftfzkpilqbgmfwv`) for **Preview**, then redeploy |
+| EXT-03: preview unreachable | SSO protects every deployment URL; the connector is denied the team's scope for previews, logs and share links | the Founder: re-authorize the Vercel connection for team `adibelepp21-bytes-projects`, or open the preview themselves |
+| Successful workflow live | no authenticator exists (FS-DP-02 not ratified) | the Architect |
+
+**FS-09 is not entered.** No claim of Production Ready, Production Released
+or Operational AIOS.

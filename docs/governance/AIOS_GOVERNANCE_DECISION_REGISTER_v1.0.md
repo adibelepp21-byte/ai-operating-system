@@ -9086,3 +9086,21 @@ measurement as history; no decision taken.
 | **Implementation boundary** | (`§13`) ordinary implementation, testing, repair, integration, verification and redeployment within `ACT-CC-POST-P13-AIOS-FULL-STACK-001` + `FD-FS-001` + `FS-ARCH-RAT-001`; no further Micro-Act for that work. Negative controls `§9` (1–20) apply |
 | **Not authorized** | (`§6`) production release · Founder Final System Acceptance · Vercel or Supabase plan upgrades · spending or billing commitments · authentication or identity architecture (FS-DP-02) · networking beyond what the ratified deployment requires (FS-DP-03) · scaling (FS-DP-05) · observability (FS-DP-06) · Agent Factory (FS-DP-07) · redesign of AIOS Runtime · modification of certified P13 roots · reopening Platform Organization closure · Phase 14 or any new Phase |
 | **Effect** | FS-DP-01 and FS-DP-04 are **RATIFIED**. Implementation is authorized. FS-08 continues. The readiness gate moves their criteria from BLOCKED to *"ratified but not deployed"* until evidence is recorded. **No claim of Production Ready, Production Released or Operational AIOS** |
+
+---
+
+## 69. FS-ARCH-RAT-001 Implementation — Supabase Store, Per-Request Function, Preview READY; FS-08 NOT CLOSED (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Authority** | `§68` (`FS-ARCH-RAT-001` `§13`) within `ACT-CC-POST-P13-AIOS-FULL-STACK-001` and `FD-FS-001`. No Micro-Act was created |
+| **Record** | `docs/fullstack/FS-08-DEPLOYMENT-EVIDENCE.md`; `docs/fullstack/evidence/FS-08-SUPABASE-VERIFICATION-2026-09-27.json` |
+| **Built** | `SupabaseStorage(StorageFacility)` (`fullstack/backend/supabase_storage.py`); migration `20260927062422_aios_records` (one table `seq, partition, record bytea`; RLS on, no policy; `service_role` SELECT/INSERT only; trigger refusing UPDATE/DELETE/TRUNCATE); per-request function `api/index.py` → `fullstack/deploy/vercel.py`; `vercel.json` (static console, `/api/v1/*` to the function, page headers, region `icn1`) |
+| **Deviation from the FS-DP-01 Part B sketch** | `record bytea` and no `appended_at`, instead of `record jsonb` + `appended_at`: the contract appends and returns bytes and has no timestamp. Recorded in FS-DP-01 |
+| **Supabase (live)** | migration applied; a rolled-back verification transaction showed ordered byte-exact append and read for `service_role`, every mutation refused for `service_role` and for the owner, and `anon`/`authenticated` refused everything; 0 rows after; advisors: one intended INFO |
+| **Vercel (live)** | preview `dpl_drGHDofUQdk1SgNhTzDSEwSTDunU` from `8d088fb`, **READY**, region `icn1`. Production unchanged (`22c0b49`). **Not reachable for verification**: SSO on deployment URLs and the connector denied (EXT-03). No environment variable exists, so the API would answer 503 by design (EXT-05) |
+| **Local verification** | fullstack 107 (+28), tools 1920, native_core 801, consumers 276, bounded_exception 29: all OK. `native_core`, `consumers`, `tools` and certified roots unchanged |
+| **Readiness gate** | FS-DP-01 and FS-DP-04 read as ratified; their two criteria moved from BLOCKED to FAIL (not yet evidenced live); still awaiting FS-DP-02, 03, 06, 07; EXT-05 added |
+| **Observations for the Architect** | INV-12 reading of a vendor store beneath `StorageFacility` (implemented as ratified, removable without format change); concurrent run numbering per request (FS-DP-05) must be settled before FS-DP-02 opens run creation |
+| **Needed from the Founder** | EXT-05: set `SUPABASE_SECRET_KEY` for Preview in project `aios-platform`; EXT-03: re-authorize the Vercel connection for team `adibelepp21-bytes-projects` (or open the preview). Claude did not read, create or record any secret |
+| **FS-08** | **NOT CLOSED**: the live half of the `FS-ARCH-RAT-001` `§15` evidence is missing. FS-09 not entered. No claim of Production Ready, Production Released or Operational AIOS |

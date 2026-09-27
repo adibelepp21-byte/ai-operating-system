@@ -166,3 +166,22 @@ Classes are the Act's six (`§29`): RESOLVED · NON-BLOCKING · FOUNDER-RESERVED
 | U-14 | Trace status `escalation` has no producer | **NON-BLOCKING**; pre-existing, unchanged | — | — |
 | U-15 | Production release | **FOUNDER-RESERVED** (D4-A) | Founder | FS-10 |
 | U-16 | Final System Acceptance | **FOUNDER-RESERVED** (A19) | Founder | Operational AIOS |
+
+## V. Update of 2026-09-27: FS-ARCH-RAT-001 implemented
+
+FS-DP-01 and FS-DP-04 were ratified (`FS-ARCH-RAT-001`, Register `§68`) and
+implemented. Record: `FS-08-DEPLOYMENT-EVIDENCE.md`. The table in `§U` above
+stands as of 2026-09-26; these rows supersede it:
+
+| # | Residual | Now |
+|---|---|---|
+| U-01 | Production database | **RATIFIED and IMPLEMENTED**: `SupabaseStorage`, migration `20260927062422` applied and verified. Live use waits on EXT-05 |
+| U-03 | Networking, deployment, observability | Deployment **RATIFIED and IMPLEMENTED** (preview READY). Networking (FS-DP-03) and observability (FS-DP-06) still **BLOCKING** |
+| U-06 | Supabase database unreachable | **RESOLVED** (EXT-01 cleared on 2026-09-27) |
+| U-10 | Framework-free WSGI callable on Vercel's Python runtime | **UNKNOWN** still: the preview built READY, but no request could reach it |
+| U-17 | No server-side Supabase key in Vercel (EXT-05) | **EXTERNAL DEPENDENCY**, Founder; blocks FS-08 live evidence |
+| U-18 | Preview unreachable: SSO + connector scope (EXT-03) | **EXTERNAL DEPENDENCY**, Founder; blocks FS-08 live evidence |
+| U-19 | INV-12 reading of a vendor store beneath `StorageFacility` | **ARCHITECT OBSERVATION** (`FS-08-DEPLOYMENT-EVIDENCE.md` `§5`); implemented as ratified |
+| U-20 | Concurrent run numbering and Trace ranges per request | **BLOCKING before FS-DP-02 opens run creation**; Architect (FS-DP-05) |
+
+**State:** FS-08 NOT CLOSED; FS-09 not entered; no release.
