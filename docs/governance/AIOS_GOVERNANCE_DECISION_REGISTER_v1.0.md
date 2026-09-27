@@ -9439,3 +9439,16 @@ Production Ready, Production Released or Operational AIOS.
 | **Verification required** | (`§9`) V1–V14; security properties S1–S10 (`§8`); negative controls NC-01–NC-16 (`§10`) |
 | **Not decided** | the package's Part A (A1 / A2), initial principals and grants, token lifetime and rotation, and whether Preview and Production share principals are not named in the instrument. The implementation adds no identity to the AIOS Domain Model and leaves principals and grants to the operator's configuration |
 | **Effect** | FS-DP-02 is **RATIFIED (B3)**; implementation is authorized within `§3`–`§7`. FS-08 stays **BLOCKED** on EXT-03 (authorized Preview access) and on operator-token hashes for Preview |
+
+---
+
+## 82. ACT-CC-POST-P13-AIOS-FULL-STACK-003 — Preview Reachable; Supabase Key Malformed in Preview; Adapter Now Names the Fault (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/FS-DP-02-B3-IMPLEMENTATION-RECORD.md` `§8` |
+| **EXT-03** | the Preview of `215248f` answered **through the connector from the function itself** (no SSO redirect): Preview access is **available**. Not changed by Claude Code |
+| **EXT-05** | the key is present, but the Runtime cannot start: `StorageUnavailable: database call failed (ValueError)`. Reproduction shows only a key with an **embedded line break** fails this way. **The Founder should re-enter `SUPABASE_SECRET_KEY` as a single line.** The value was not read |
+| **Repair** | the Vercel adapter now refuses a malformed key with an explicit 503 reason and no database call (`ACT-003` `§12`); fullstack 135 OK |
+| **Still required** | a clean `SUPABASE_SECRET_KEY`; `AIOS_OPERATOR_TOKENS` for Preview (FS-DP-02 B3); then live Preview verification (V14; FS-DP-05 `§R2.8` item 5) |
+| **State** | FS-08 **BLOCKED** on these two Founder-side configurations. FS-09, FS-10 NOT_STARTED. Production unchanged |

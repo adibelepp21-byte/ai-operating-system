@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import secrets
 import sys
 import traceback
@@ -56,11 +57,28 @@ SUPABASE_PROJECT_URL = "https://scfymftfzkpilqbgmfwv.supabase.co"
 KEY_VARIABLES = ("SUPABASE_SECRET_KEY", "SUPABASE_SERVICE_ROLE_KEY")
 
 
+#: What a Supabase server-side key is made of (a secret API key or a JWT).
+#: A value with anything else (a line break, space, quote, non-ASCII) cannot be
+#: sent as a header and is refused before any database call.
+_KEY_SHAPE = re.compile(r"[A-Za-z0-9._~+/=-]+")
+
+
+class MalformedKey(ValueError):
+    """The configured key cannot be sent. The message never quotes it."""
+
+
 def storage_from_environment(environment: Mapping[str, str] = os.environ,
                              **options) -> Optional[SupabaseStorage]:
     key = next((environment[v] for v in KEY_VARIABLES if environment.get(v, "").strip()),
                None)
-    return SupabaseStorage(SUPABASE_PROJECT_URL, key.strip(), **options) if key else None
+    if key is None:
+        return None
+    key = key.strip()
+    if not _KEY_SHAPE.fullmatch(key):
+        raise MalformedKey("the server-side database key contains a character that cannot "
+                           "be sent (a line break, space, quote or non-ASCII character); "
+                           "enter it again as one line")
+    return SupabaseStorage(SUPABASE_PROJECT_URL, key, **options)
 
 
 def _refusal(start_response, status: int, error: str, detail: str):
@@ -94,7 +112,11 @@ def make_app(storage_factory: Callable[[], Optional[object]] = storage_from_envi
         if not (environ.get("PATH_INFO") or "").startswith("/api/"):
             return _refusal(start_response, 404, "not_found",
                             "this function serves /api/ only; the console is static")
-        storage = storage_factory()
+        try:
+            storage = storage_factory()
+        except MalformedKey as error:
+            print(f"storage not configured: {error}", file=sys.stderr)
+            return _refusal(start_response, 503, "unavailable", str(error))
         if storage is None:
             return _refusal(start_response, 503, "unavailable",
                             "persistence is not configured: the operator has not set "

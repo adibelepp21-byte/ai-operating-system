@@ -149,3 +149,22 @@ tree: **1160 run, 1 failure**. The failure is
 `ACT-CC-POST-P13-AIOS-FULL-STACK-003` `§17`. It appears only when a subset is
 run, and it passed in the full `tools` run above (`§4`). It is not caused by
 this change and was not modified.
+
+## 8. Preview observations after `215248f` (2026-09-27)
+
+| Observation | Evidence | Meaning |
+|---|---|---|
+| The Preview of `215248f` (`dpl_BcWaYPR7rAvWDkwkJbY3aGa14hc9`) is READY in `icn1` | Vercel deployment record | the B3 code builds and deploys from the commit |
+| Through the connector, `GET /api/v1/health` reached **the function itself**: 503 JSON with the adapter's own headers (CSP, `X-Request-Id`), not the Vercel SSO redirect seen before | `web_fetch_vercel_url`, 17:38:47 UTC | **EXT-03: the Preview is now reachable** by the authorized connector. No protection setting was changed by Claude Code |
+| The 503 is *"the AIOS Runtime could not start on its store"*; the function log reads `StorageUnavailable: database call failed (ValueError)` | runtime log of that deployment | the database call failed **before** reaching Supabase |
+| Locally, with fake keys, only a key with a **line break inside it** makes the transport raise a bare `ValueError`. Non-ASCII, spaces, tabs and quotes fail differently | reproduction with `urllib_transport` | the configured `SUPABASE_SECRET_KEY` value most likely has a line break in the middle. The value was not read |
+| `AIOS_OPERATOR_TOKENS` is not configured for Preview | project env list | even with a working store, no request would authenticate yet |
+
+**Adapter repair** (`ACT-CC-POST-P13-AIOS-FULL-STACK-003` `§12`, configuration
+and deployment-adapter errors): `storage_from_environment` now refuses a key
+containing anything but the characters a Supabase key is made of. The function
+answers 503 with *"the server-side database key contains a character that
+cannot be sent … enter it again as one line"*, never quoting the value, and
+makes no database call. Test:
+`test_a_malformed_key_is_named_as_such_and_never_quoted`. Persistence semantics
+are unchanged (FS-DP-01).

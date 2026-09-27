@@ -270,6 +270,23 @@ class ThePerRequestFunction(unittest.TestCase):
         self.assertEqual(200, call(configured, "GET", "/api/v1/runs", OPERATOR_TOKEN)[0])
         self.assertEqual(401, call(configured, "GET", "/api/v1/runs", OBSERVER_TOKEN)[0])
 
+    def test_a_malformed_key_is_named_as_such_and_never_quoted(self):
+        """A key broken by a line break used to reach urllib and fail as a bare
+        `ValueError`. It is refused first, with a reason and without the value."""
+        for bad in ("sb_secret_abc\ndef", "sb_secret_abc\r\ndef", "sb_secret abc",
+                    '"sb_secret_abc"', "sb_secret_abcé"):
+            with self.subTest(key=repr(bad)):
+                app = vercel.make_app(storage_factory=lambda b=bad: vercel.storage_from_environment(
+                    {"SUPABASE_SECRET_KEY": b}, transport=self.fake))
+                status, _, body = call(app, "GET", "/api/v1/health")
+                self.assertEqual(503, status)
+                self.assertIn("cannot be sent", body["detail"])
+                self.assertNotIn("sb_secret", json.dumps(body))
+        self.assertEqual([], self.fake.calls)
+        good = vercel.storage_from_environment({"SUPABASE_SECRET_KEY": f"  {KEY}\n"},
+                                               transport=self.fake)
+        self.assertIsInstance(good, SupabaseStorage)
+
     def test_no_key_means_503_and_nothing_else(self):
         app = vercel.make_app(storage_factory=lambda: vercel.storage_from_environment({}))
         for path in ("/api/v1/health", "/api/v1/runs"):
