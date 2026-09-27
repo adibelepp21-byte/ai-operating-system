@@ -9233,3 +9233,17 @@ Production Ready, Production Released or Operational AIOS.
 | **Regression** | `tools` **1933** (1920 + 13): one failure, the predecessor [status], the classified exception; native_core 801, consumers 276, bounded_exception 29, fullstack 109 all OK; citation audit 0 errors |
 | **Certification of the successor** | **NOT CERTIFIED**; awaits the applicable acceptance authority (`FD-P12-007` `§19` item 8) |
 | **State** | FS-08 **BLOCKED** (EXT-03, EXT-05, FS-DP-02, FS-DP-05); best reachable: PASS WITH CLASSIFIED EXCEPTION. FS-09 not started. Production untouched |
+
+---
+
+## 74. ACT-CC-P12-029 — P12 Successor V2 Governance State & Authority Verification Gate: P13 Certified Without Contradiction; Gate Instruction Conflict (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Act** | `acts/ACT-CC-P12-029-P12-SUCCESSOR-V2-GOVERNANCE-STATE-AND-AUTHORITY-VERIFICATION-GATE.md` · content sha256 `e66d28abf1a33a93f1af0e15362e82dd44dd8b5eb2695529ae1e467ca2d8e7cd` · stated *"AUTHORIZED FOR EXECUTION"*, authority Founder |
+| **Record** | `docs/fullstack/P12-SUCCESSOR-V2-AUTHORITY-GATE-RECORD.md` |
+| **Verification 1** | `{10, 11, 12, 13}` is **actual phase certification state**, from `certified_phases()` (`tools/p12_certified_evidence_guard.py`): certification statements in the acts, each resolving in this Register. 13 comes from `FDR-7` alone (`§29`: decided by Founder — Moriarty; certification Founder-reserved; its §19 states *"Certified Phase Set: {10, 11, 12, 13}"*). Independent reader `p12_phase_authorization.certifications()` agrees; P13 manifest intact. **Canonical P13: CERTIFIED (`FDR-7`) and CLOSED (`FDR-G3`).** Falsification: without `FDR-7`, or without its registration, 13 disappears; an unregistered planted claim is rejected; `FD-P12-007` and this Act claim nothing. No source states P13 uncertified |
+| **Reconciliation finding** | no conflict between the observed state and canonical authority; the state is current, correctly derived and authorized |
+| **Verification 2** | **not executed**: the Act's §1 (stop when P13 = CERTIFIED) and its §2/§10 (proceed unless there is a contradiction) both apply to a certified-without-contradiction state; Case D forbids choosing by convenience, so execution stopped at the restrictive branch |
+| **Final gate** | **AUTHORITY CONFLICT — FOUNDER RECONCILIATION REQUIRED**: the Founder to state whether `FDR-7`'s certification counts as a contradiction for this Act. If not, Verification 2 (`FD-P12-007` §19) runs under the Act's §2 |
+| **Not done** | no certification or decertification of P13; no acceptance or certification of Successor V2; predecessor check unchanged; FS-08 unchanged (BLOCKED, with the classified P12 exception); no authority expanded; no `tools/`, manifest or reader change |
