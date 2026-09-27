@@ -62,3 +62,34 @@ choice is required.
 **The plaintext token** exists only in this session's scratch directory
 (mode 600, outside the repository). It is lost when the session ends. If it
 is needed later, a new token is issued and its entry replaces the current one.
+
+## 4. Live suite with Founder-authorized automation access (2026-09-27)
+
+The Founder authorized a **Vercel Protection Bypass for Automation**, for
+the Preview only and only for this suite. It was created through the
+authorized connector, used only against the Preview
+`dpl_Gi3MbQkzo14aW4TriGwQ9TYMudgL` (commit `6469269`), and **revoked**
+afterwards. Its value and the operator token were read from private files
+outside the repository and never printed.
+
+| # | Check | Result |
+|---|---|---|
+| 0 | protection active without the bypass | **PASS** (401) |
+| 1 | missing Authorization rejected | **PASS**: 401 on `runs`, `runtime`, `traces`, `audit`, `session`, and on POST `runs` |
+| 2 | invalid Authorization rejected | **PASS**: 401 for an unknown token, a hash as token, a truncated token, the Basic scheme, no scheme, an empty bearer |
+| 3 | valid B3 bearer | **PASS**: 200; subject `founder`; scopes `aios.audit`, `aios.observe`, `aios.workflow.run` |
+| 4 | protected GET | **PASS**: `runtime` 200, state `running` |
+| 5 | authenticated POST, run creation | **PASS**: 201 `succeeded`, `requested_by` `founder`, format `fullstack.run/2` |
+| 6 | Supabase persistence | **PASS**: the run read back identically by a later request's Runtime; in the database afterwards: 10 run, 29 Trace, 41 audit rows; UPDATE refused (append-only) |
+| 7 | Trace association | **PASS**: the run's 3 records selected by its Runtime; the Workflow record names the run |
+| 8 | audit association | **PASS**: founder's POST allowed and recorded by subject; 21 anonymous refusals; no credential in any entry |
+| 9 | concurrent run creation | **PASS**: 8 parallel POSTs, 8 × 201 |
+| 10 | distinct Runtime-derived identities | **PASS**: 8 ids, all `run-<boot id>-0`, from 8 distinct Runtimes |
+| 11 | no duplicate identity | **PASS**: 9 runs listed, 9 distinct |
+| 12 | failure paths | **PASS**: missing document → run `failed` with its reason; invalid input 400; unknown workflow 400; unknown run 404 |
+| 13 | Production untouched | **PASS**: production deployment `dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj` unchanged; no Production variables |
+
+After the suite: the bypass revoked (`protectionBypass: {}`), SSO protection
+enabled, direct requests answered 302. Evidence:
+`docs/fullstack/evidence/FS-08-LIVE-PREVIEW-2026-09-27.json`. Gate:
+`docs/fullstack/FS-08-FINAL-RECONCILIATION-GATE.md`.

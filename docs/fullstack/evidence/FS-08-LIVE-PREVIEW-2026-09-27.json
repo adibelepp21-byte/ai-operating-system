@@ -1,0 +1,326 @@
+{
+ "base": "https://aios-platform-hhgxr6ja3-adibelepp21-bytes-projects.vercel.app",
+ "results": [
+  {
+   "n": 0,
+   "check": "protection still active without the bypass",
+   "result": "PASS",
+   "evidence": "GET health without bypass → 401"
+  },
+  {
+   "n": 0,
+   "check": "health through the bypass",
+   "result": "PASS",
+   "evidence": "→ 200 {'status': 'ok', 'runtime_state': 'running'}"
+  },
+  {
+   "n": 1,
+   "check": "missing Authorization rejected",
+   "result": "PASS",
+   "evidence": "{'/api/v1/runs': 401, '/api/v1/runtime': 401, '/api/v1/traces': 401, '/api/v1/audit': 401, '/api/v1/session': 401}; POST runs → 401"
+  },
+  {
+   "n": 2,
+   "check": "invalid and malformed Authorization rejected",
+   "result": "PASS",
+   "evidence": "{'unknown token': 401, 'hash as token': 401, 'truncated': 401, 'wrong scheme': 401, 'no scheme': 401, 'empty bearer': 401}"
+  },
+  {
+   "n": 3,
+   "check": "valid B3 bearer authenticates",
+   "result": "PASS",
+   "evidence": "→ 200 {'subject': 'founder', 'scopes': ['aios.audit', 'aios.observe', 'aios.workflow.run']}"
+  },
+  {
+   "n": 4,
+   "check": "protected GET",
+   "result": "PASS",
+   "evidence": "runtime → 200, state running, runtime_id aios-fullstack/20260927T180345Z-b0fdc9939ee167d4"
+  },
+  {
+   "n": 5,
+   "check": "authenticated POST creates a run",
+   "result": "PASS",
+   "evidence": "→ 201 run_id run-20260927T180346Z-89447694ab176e37-0 state succeeded requested_by founder format fullstack.run/2"
+  },
+  {
+   "n": 6,
+   "check": "persisted in Supabase, read by a later Runtime",
+   "result": "PASS",
+   "evidence": "GET run → 200 identical=True; later runtime aios-fullstack/20260927T180347Z-1fad937f9e309bf9 ≠ run runtime aios-fullstack/20260927T180346Z-89447694ab176e37"
+  },
+  {
+   "n": 7,
+   "check": "Trace associated with the run",
+   "result": "PASS",
+   "evidence": "traces total 3; this run's 3 of 3; workflow record names [['document-conformance-review/run-20260927T180346Z-89447694ab176e37-0']]"
+  },
+  {
+   "n": 8,
+   "check": "audit records subjects and decisions, no credential",
+   "result": "PASS",
+   "evidence": "entries 28; founder POST allowed 1; anonymous 401 refused 21; credential in audit: False"
+  },
+  {
+   "n": 9,
+   "check": "8 concurrent POSTs",
+   "result": "PASS",
+   "evidence": "statuses [201, 201, 201, 201, 201, 201, 201, 201]"
+  },
+  {
+   "n": 10,
+   "check": "distinct runtime-derived identities",
+   "result": "PASS",
+   "evidence": "8 ids, all match run-<boot>-0: True; distinct runtimes 8"
+  },
+  {
+   "n": 11,
+   "check": "no duplicate identity in the store",
+   "result": "PASS",
+   "evidence": "9 runs listed, 9 distinct; all concurrent ids present: True"
+  },
+  {
+   "n": 12,
+   "check": "failure paths are meaningful states",
+   "result": "PASS",
+   "evidence": "missing doc → 201 state failed (docs.read execution_failure: 'docs/absent.md' is not a document in the repository); invalid input → 400; unknown workflow → 400; unknown run → 404"
+  }
+ ],
+ "requests": [
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 401,
+   "request_id": null
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "a794afba5c139cdc"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs",
+   "status": 401,
+   "request_id": "43a54ec0e888c8de"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "802b7ffae1ee4ce2"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/traces",
+   "status": 401,
+   "request_id": "f24337e68a62f491"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/audit",
+   "status": 401,
+   "request_id": "42073bb143dff73d"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/session",
+   "status": 401,
+   "request_id": "525d592dd8f5eee3"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 401,
+   "request_id": "4414c3712234380b"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "d746b9635e427775"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "e0b250acaf2e3058"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "835e4447f9fea86a"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "bdd9a944ed5702be"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "b3f3c6f85bee0135"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "0e0a222ba7c45330"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/session",
+   "status": 200,
+   "request_id": "b170b1bcfea30704"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 200,
+   "request_id": "5b6890c1676d026a"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "9129a96bef4d9ea9"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs/run-20260927T180346Z-89447694ab176e37-0",
+   "status": 200,
+   "request_id": "346c4fc3d1e2b98a"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 200,
+   "request_id": "407c62f23352049a"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/traces?limit=200",
+   "status": 200,
+   "request_id": "4909383984d3d477"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/audit?limit=200",
+   "status": 200,
+   "request_id": "9a6a1cce160f50f1"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "f2802d4431b33e98"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "be8ef202bbe06bab"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "f6e289ada2d5ee0b"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "dbb0857ea6685e4b"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "82f5aad38d8ee879"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "2e61f058d3f24298"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "40c2e4121027fad2"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "5457deeefdc883bd"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs",
+   "status": 200,
+   "request_id": "f8c67542ef41abae"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "087afd6914e51114"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 400,
+   "request_id": "df3e5a8150db7e2a"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 400,
+   "request_id": "4103635f99bce8a1"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs/run-does-not-exist",
+   "status": 404,
+   "request_id": "86db59c64825b1ac"
+  }
+ ],
+ "run_ids": {
+  "single": "run-20260927T180346Z-89447694ab176e37-0",
+  "concurrent": [
+   "run-20260927T180349Z-acde89e6f4a54c0b-0",
+   "run-20260927T180349Z-572fbcda66edba0c-0",
+   "run-20260927T180349Z-6dfaa6e23d3c1d4b-0",
+   "run-20260927T180350Z-b070f8bb25dda20c-0",
+   "run-20260927T180349Z-7945763c6de6d85c-0",
+   "run-20260927T180349Z-8ac108f12b0949f7-0",
+   "run-20260927T180349Z-b1b20480257065ab-0",
+   "run-20260927T180349Z-492be4d74efe7035-0"
+  ],
+  "failed": "run-20260927T180351Z-e4419461247dcba5-0"
+ },
+ "deployment": "dpl_Gi3MbQkzo14aW4TriGwQ9TYMudgL",
+ "commit": "6469269",
+ "date": "2026-09-27",
+ "access": "Vercel Protection Bypass for Automation, Founder-authorized, temporary; revoked after the suite",
+ "credentials": "operator token and bypass secret read from private files outside the repository; neither recorded here",
+ "database_after": {
+  "fullstack-audit": 41,
+  "fullstack-runs": 10,
+  "trace": 29,
+  "update_attempt": "refused: aios_records is append-only: UPDATE refused"
+ },
+ "console_assets": {
+  "/": "200 text/html",
+  "/app.js": "200 application/javascript",
+  "/api.js": "200 application/javascript"
+ },
+ "after_revocation": "direct requests without bypass: 302 (SSO) on /api/v1/health, /api/v1/runs, / (3 tries each); project ssoProtection enabled, all_except_custom_domains; protectionBypass empty"
+}
