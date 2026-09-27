@@ -60,7 +60,7 @@ class TheGate(unittest.TestCase):
         self.assertIn("D4-A", self.live["release"])
 
     def test_external_dependencies_are_named(self):
-        self.assertEqual(["EXT-01", "EXT-02"],
+        self.assertEqual(["EXT-02", "EXT-03", "EXT-04"],
                          [d["id"] for d in self.live["external_dependencies"]])
 
 

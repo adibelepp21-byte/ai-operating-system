@@ -9033,3 +9033,28 @@ measurement as history; no decision taken.
 | **Repair 2** | `fullstack/readiness.py`, an entry point that writes, did not install the certified-write barrier (`test_certified_write_closure`). Both Full Stack entry points now import `tools` first (`GOAL-V2-004`); the served backend is refused before its first write into certified evidence (`test_serving_into_a_certified_root_is_refused`) |
 | **Protected roots** | `native_core/`, `consumers/`, `tools/` and every certified root unchanged by the program; the Register diff is additions only |
 | **State** | As `§64`: authorized work exhausted; FS-09 NOT PRODUCTION READY; FS-10 not started; decision packages FS-DP-01 … 07 PROPOSED |
+
+---
+
+## 66. FS-08 Vercel & Supabase Infrastructure Discovery, Verification & Repair Act — Append (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Act** | FS-08 continuation under `ACT-CC-POST-P13-AIOS-FULL-STACK-001` · `acts/ACT-CC-POST-P13-AIOS-FULL-STACK-001-FS-08-VERCEL-SUPABASE-DISCOVERY.md` · content sha256 `a014cdcf0b6ce7dc7ba992ed379b317a477238e6eb0e8395a213109b434a859a` |
+| **Received** | from the Founder, 2026-09-27, in the message body. **Stated status: *"AUTHORIZED FOR EXECUTION UNDER EXISTING FULL STACK ACT"*** |
+| **In force** | yes, within the operative Full Stack Act (`§62`). It adds no authority: the D2 areas stay Architect-reserved, spending stays unauthorized, and release stays with the Founder (its `§3`, `§17`, `§21`) |
+
+---
+
+## 67. FS-08 Vercel & Supabase Execution — 404 Explained; FS-08 BLOCKED (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/FS-08-VERCEL-SUPABASE-EXECUTION.md` (return package A–N) |
+| **404 cause** | **Deployment-level, not application.** Vercel project `aios-platform`; production deployment `dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj` READY from commit `22c0b49` (PR #1). That commit contains no `fullstack/` and no entrypoint Vercel recognizes; every path answers the platform's `x-vercel-error: NOT_FOUND` (Observed). The current branch has no Vercel entrypoint either |
+| **Required change** | a Vercel adapter whose store and Runtime lifetime are **FS-DP-01** and **FS-DP-04 Part A** (CLASS-C); putting it on the default branch, which is Vercel's production, is a **release** (`FD-FS-001` D4-A) |
+| **Authority** | **OUTSIDE AUTHORITY.** Nothing was deployed, configured or created on either provider |
+| **Supabase** | AIOS project `scfymftfzkpilqbgmfwv` **ACTIVE_HEALTHY**, reachable, empty (no tables, migrations, branches or functions), free plan. **EXT-01 re-established**: the 2026-09-26 timeouts were against another ref. Read-only only |
+| **New dependencies** | EXT-03: Vercel connector scope (logs, previews, share links denied) · EXT-04: project-scoped Supabase connector denied (non-blocking) |
+| **Escalated** | FS-DP-01 and FS-DP-04 sharpened with evidence (Architect); release control: every merge to the default branch deploys to public production (Founder) |
+| **FS-08** | **BLOCKED.** No claim of Production Ready, Production Released or Operational AIOS |

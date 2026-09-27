@@ -77,6 +77,24 @@ spending decision, not the Architect's (D3-A).
   operator-run logical export, and availability depends on regular activity.
   Choosing a paid plan instead is a spending decision for the Founder.
 
+## Facts found in the FS-08 Vercel & Supabase execution (2026-09-27)
+
+- The AIOS project is **`scfymftfzkpilqbgmfwv`** (`ai operating system`,
+  `ap-northeast-2`, Postgres 17), **ACTIVE_HEALTHY**, in an organization on the
+  **free plan**. It is reachable, and **empty**: no tables in `public`, no
+  migrations, no branches, no edge functions, no security advisories.
+- The ref recorded above (`baacpvssvvxtezspclgj`) is not among the account's
+  projects. The earlier timeouts were not the AIOS project.
+- Vercel functions have an ephemeral filesystem. So on Vercel the local
+  append-only store is **not** a persistence model: it would lose every run,
+  Trace and audit entry between instances. **Deploying the backend therefore
+  needs this package decided**; there is no neutral default.
+
+**The question, sharpened.** Is the deployed store Supabase (this project),
+beneath `StorageFacility`, as Part B proposes? If Part B is ratified, the
+first migration is the single append-only table, created in this empty
+project, with no browser-reachable policy.
+
 ## Until decided
 
 The backend persists through `LocalAppendOnlyStorage` under an explicit data

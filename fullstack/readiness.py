@@ -49,13 +49,20 @@ PASS, FAIL, BLOCKED, OBSERVED = "PASS", "FAIL", "BLOCKED", "OBSERVED"
 READY, NOT_READY = "PRODUCTION READY", "NOT PRODUCTION READY"
 
 #: Supplied by the operator's own inspection; each stays until it is resolved
-#: and this list is edited with the evidence of resolution.
+#: and this list is edited with the evidence of resolution. EXT-01 (Supabase
+#: unreachable, 2026-09-26) was resolved on 2026-09-27: the AIOS project is
+#: reachable and healthy (docs/fullstack/FS-08-VERCEL-SUPABASE-EXECUTION.md §J).
 EXTERNAL_DEPENDENCIES = (
-    {"id": "EXT-01", "what": "Supabase database unreachable through the connector: three "
-     "read-only queries ended in a connection timeout (2026-09-26); cause not determined",
-     "needs": "the project owner to confirm the project is active (restore it if paused)"},
     {"id": "EXT-02", "what": "S-01 AIOS Transition Manifest not supplied (FD-FS-001 D5-A)",
      "needs": "the Founder to supply the exact document"},
+    {"id": "EXT-03", "what": "the Vercel connector cannot read build or runtime logs, open "
+     "previews, or create share links for team adibelepp21-bytes-projects (2026-09-27)",
+     "needs": "the Vercel connection re-authorized with that team's scope; blocks live "
+     "verification of any preview deployment"},
+    {"id": "EXT-04", "what": "the project-scoped Supabase connector is denied permission and "
+     "was bound to a ref not in the account (2026-09-27); the account connector reaches the "
+     "AIOS project scfymftfzkpilqbgmfwv, which is healthy",
+     "needs": "the project-scoped connector re-bound to scfymftfzkpilqbgmfwv (non-blocking)"},
 )
 
 

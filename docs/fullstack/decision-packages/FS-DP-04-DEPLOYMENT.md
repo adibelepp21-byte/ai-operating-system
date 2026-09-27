@@ -60,6 +60,34 @@ console reads history from durable records.
   Enterprise feature. What the team's plan allows must be confirmed before
   point 4 above is relied on.
 
+## Facts found in the FS-08 Vercel & Supabase execution (2026-09-27)
+
+- A Vercel project exists: `aios-platform` (`prj_exqF51HASzlwn5kiO4kAGJ9mHe0N`),
+  bound to this repository, no framework preset, no environment variables,
+  SSO on deployment URLs.
+- Its production deployment (`dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj`, commit
+  `22c0b49`) answers **Vercel's platform 404** on every path. That source holds
+  no `fullstack/` and no entrypoint Vercel recognizes. Even the current branch
+  has no Vercel entrypoint (`FS-08-VERCEL-SUPABASE-EXECUTION.md` `§C`).
+- **Production is the repository's default branch.** Every merge into it
+  deploys to the public production alias, so merging *is* releasing unless the
+  production branch is changed.
+
+**The questions, sharpened.** The adapter cannot be written without answering
+them:
+
+1. **Runtime lifetime (Part A).** Per request (A1), or per warm function
+   instance? A1 stays recommended. A per-instance Runtime would share
+   in-process state between unrelated requests for an unknown period, which
+   Part A is meant to decide, not the adapter.
+2. **Shape (Part B).** One Python function serving the API and the console,
+   or the static console served by Vercel plus a function for `/api/v1/*`?
+   Recommended: static console plus one function, which keeps the frontend off
+   the function path.
+3. **Store.** It depends on FS-DP-01: nothing deployable persists without it.
+4. **Release control (Founder, D4-A).** A dedicated production branch, so
+   merging to the default branch stops releasing?
+
 ## Until decided
 
 Nothing is deployed. The backend runs locally

@@ -65,6 +65,19 @@ Supabase Free; the Founder may choose to spend. Neither is Claude's decision.
 | Vercel project, the WSGI entrypoint, static assets, environment variables, preview environment | FS-DP-03, FS-DP-04 |
 | Structured request logs; readiness beside liveness | FS-DP-06 |
 
+## 4a. Continuation on 2026-09-27
+
+A Vercel project (`aios-platform`) was created, and its production deployment
+answers 404. The FS-08 Vercel & Supabase Act (Register `§66`) directed a
+controlled investigation. Its record is `FS-08-VERCEL-SUPABASE-EXECUTION.md`:
+
+- the 404 is a **deployment-level** 404: the deployed commit contains no
+  application, and the repository has no Vercel entrypoint;
+- the repair needs FS-DP-01 and FS-DP-04 (Architect) and a release decision
+  (Founder, D4-A);
+- the AIOS Supabase project is **reachable, healthy and empty** (EXT-01
+  re-established).
+
 ## 5. Exit determination (`§19`)
 
 | Criterion | Result |
