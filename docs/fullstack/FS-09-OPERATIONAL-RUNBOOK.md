@@ -29,8 +29,12 @@ therefore means *a request can start a Runtime*.
 | Console | `GET /` | `200 text/html`; `app.js`, `api.js` load |
 | Readiness gate (local) | `python -m fullstack.readiness evaluate` | JSON; see `docs/fullstack/FS-09-READINESS-PROGRAM.md` |
 
-Preview URLs are behind Vercel SSO. An unauthenticated request gets `302` or
-`401` **from Vercel**, before AIOS runs: that is protection working, not a fault.
+Edge protection is a project setting held by the Founder. At FS-08 it was on:
+an unauthenticated request got `302` or `401` **from Vercel** before AIOS ran.
+**Observed 2026-09-27 19:57Z: it is off** (`EXT-06`), so anonymous requests reach
+AIOS, which refuses them (`401`) and records each refusal in the audit. Which
+state is required is `FS-DP-03`'s decision. Check the setting before trusting
+either behaviour.
 
 ## 2. Authentication failure
 
@@ -138,7 +142,7 @@ exactly this, on every regression run).
 
 **Boundary.** Restoring into a *live* Supabase project other than
 `scfymftfzkpilqbgmfwv` means creating or choosing a second environment. That
-waits on the Architect's `ENVIRONMENT-SEPARATION` decision. Restoring *into*
+waits on the Architect's `FS-09-ENV` decision. Restoring *into*
 `scfymftfzkpilqbgmfwv` is refused by design while it holds the partitions, and
 nothing may delete them.
 
@@ -226,5 +230,5 @@ Unassigned until the Founder decides `OPERATIONAL-OWNERSHIP`. The duties are:
 | operational ownership, backup cadence, incident owner | **Founder** | — |
 | a performance requirement | **Founder** | treating any latency as a pass/fail requirement |
 | networking (`FS-DP-03`), observability (`FS-DP-06`), Agent creation (`FS-DP-07`) | **Architect** | implementing them |
-| environment separation; the Python runtime version | **Architect** | a second project or table; pinning a version |
+| environment separation (`FS-09-ENV`); the Python runtime version (`FS-09-RUNTIME`) | **Architect** | a second project or table; pinning a version |
 | changes to certified roots P10–P13, Phase 14 | not open | — |

@@ -9539,3 +9539,20 @@ Production Ready, Production Released or Operational AIOS.
 | **Performance** | OBSERVED; no canonical requirement exists and none was invented |
 | **Scenario A** | BLOCKED pending FS-DP-07; no Agent Factory built |
 | **State** | **FS-09 OPEN — NOT PASSED. FS-10 NOT STARTED.** No Production deployment, alias, variable or credential changed; no project, database or table created; no secret in any file |
+
+---
+
+## 89. FS-09 Decision Package Preparation — Five Packages for Architect Review; FS-09 OPEN (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Direction** | Founder, 2026-09-27: *"FS-09 — DECISION PACKAGE PREPARATION"*. *"Do NOT declare FS-09 PASS. Do NOT start FS-10. Do NOT implement unresolved architectural choices"* |
+| **Packages** (all **PROPOSED — NOT RATIFIED**) | `FS-DP-03` Networking, revision 2 · `FS-DP-06` Observability, revision 2 · `FS-DP-07` Agent Creation, revision 2 · `FS-09-ENV` Environment Separation (new) · `FS-09-RUNTIME` Python Runtime Reproducibility (new). Each gives decision ID, question, sources, current state, authority, options, architectural / data / security / operational consequences, verification, rollback, non-scope, dependencies and whether it blocks FS-09. Each analytical recommendation is marked **UNRATIFIED** |
+| **Preserved** | FS-DP-07 A1/A2/A3 verbatim; no Agent Factory. FS-DP-06: Trace, Audit, Logging, Metrics and Alerting kept as five separate mechanisms. FS-09-ENV: E1–E6 only; the Preview test records are append-only and are not deleted. FS-09-RUNTIME: FS-02's *"Python 3.11"* stated as written; local and certified evidence on 3.11; Preview evidence on 3.12; Vercel 3.11 support not established. FS-DP-03: the current network path and boundary documented before any option |
+| **Corrected** | `FS-09-DECISION-REGISTER.md` `§1.4`: the `§88` sentence on where the test records end up was wrong for E2 and E5; corrected with the original quoted |
+| **Found** | Vercel deployment protection **disabled** (`ssoProtection enabled: false`, observed 19:57Z; enabled at FS-08, `§86`). Not changed by Claude Code (its only Vercel changes this session: the Preview `AIOS_OPERATOR_TOKENS` variable; the FS-08 bypass, created and revoked). Anonymous requests reach AIOS, which refuses them (401). The read-only observation appended one refused audit record (`seq` 86). Recorded as `EXT-06`; Founder confirmation requested. Nothing was changed back |
+| **Gate** | `fullstack/readiness.py`: FS-09-ENV and FS-09-RUNTIME are packages the Register can ratify by their exact IDs; `EXT-06` added; EXT-03 restated. Result unchanged: NOT PRODUCTION READY; 18 PASS, 1 OBSERVED, 1 FAIL, 6 BLOCKED |
+| **Awaiting Architect ratification** | FS-DP-03 · FS-DP-06 · FS-DP-07 · FS-09-ENV · FS-09-RUNTIME |
+| **Awaiting Founder** | Scenario A residual (if A1) · performance requirement · operational ownership · Preview access for live checks · operator identities · spending · confirmation of the deployment-protection state · release (not due) |
+| **Not done** | no pin; no project, table or branch created; no principal created; no bypass; no Production change; certified P10–P13 roots untouched |
+| **State** | **FS-09 OPEN — NOT PASSED. FS-10 NOT STARTED** |

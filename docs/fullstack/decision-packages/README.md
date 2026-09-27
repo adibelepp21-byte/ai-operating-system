@@ -37,6 +37,13 @@ ADR number is taken here.
 | [`FS-DP-05`](FS-DP-05-SCALING.md) | Scaling | FS-08; FS-09 performance |
 | [`FS-DP-06`](FS-DP-06-OBSERVABILITY.md) | Observability implementation | FS-08; FS-09 observability |
 | [`FS-DP-07`](FS-DP-07-AGENT-CREATION.md) | Agent creation through the application (Agent Factory boundary) | FS-07 Scenario A |
+| [`FS-09-ENV`](FS-09-ENV-ENVIRONMENT-SEPARATION.md) | Environment separation (Production data apart from Preview data) | FS-09 environment separation |
+| [`FS-09-RUNTIME`](FS-09-RUNTIME-PYTHON-RUNTIME-REPRODUCIBILITY.md) | Python runtime reproducibility | FS-09 runtime pin; reproducible deployment |
+
+`FS-DP-03`, `FS-DP-06` and `FS-DP-07` carry a **Revision 2** (FS-09 Architect
+review, Register `§89`); `FS-09-ENV` and `FS-09-RUNTIME` were prepared at `§89`.
+Each package's analytical recommendation is **UNRATIFIED** until the Architect
+decides.
 
 ## Minimum decision set
 

@@ -25,6 +25,13 @@ class Ratification(unittest.TestCase):
                 "## 99. Later section\n\n| **Ratifies** | FS-DP-01 |\n")
         self.assertEqual({}, ratified(text))
 
+    def test_the_fs09_packages_are_ratifiable_by_their_exact_ids(self):
+        entry = ("### X-R — Architect Decision · fixture\n\n| **Decided by** | Architect |\n"
+                 "| **Ratifies** | {} |\n")
+        self.assertEqual({"FS-09-ENV", "FS-09-RUNTIME"},
+                         set(ratified(entry.format("FS-09-ENV, FS-09-RUNTIME"))))
+        self.assertEqual({}, ratified(entry.format("FS-09-ENVX, FS-09-RUNTIMES")))
+
     def test_the_ratified_packages_today(self):
         """FS-DP-01 and FS-DP-04 by FS-ARCH-RAT-001 (Register `§68`); FS-DP-05 and
         FS-DP-02 by their Architect decisions (`§79`, `§81`). The other packages
@@ -50,8 +57,8 @@ class TheGate(unittest.TestCase):
 
     def test_it_is_not_ready_and_says_exactly_why(self):
         self.assertEqual(NOT_READY, self.live["result"])
-        self.assertEqual(["ENVIRONMENT-SEPARATION", "FS-DP-03", "FS-DP-06", "FS-DP-07",
-                          "OPERATIONAL-OWNERSHIP", "PYTHON-RUNTIME-VERSION"],
+        self.assertEqual(["FS-09-ENV", "FS-09-RUNTIME", "FS-DP-03", "FS-DP-06", "FS-DP-07",
+                          "OPERATIONAL-OWNERSHIP"],
                          self.live["awaiting"])
         # Not a decision but a gap: no deployment rollback has been exercised.
         self.assertEqual(["Reliability: rollback of a deployment"],
@@ -123,7 +130,7 @@ class TheGate(unittest.TestCase):
         drill = self.by_name["Data: backup and restore"]
         self.assertEqual(PASS, drill["status"])
         self.assertEqual([readiness.OPERATOR, readiness.LOCAL], drill["evidence_class"])
-        self.assertIn("ENVIRONMENT-SEPARATION", drill["residual"])
+        self.assertIn("FS-09-ENV", drill["residual"])
 
     def test_performance_is_observed_without_an_invented_requirement(self):
         perf = self.by_name["Performance: latency of Scenario B (local, in-process)"]
@@ -139,8 +146,9 @@ class TheGate(unittest.TestCase):
         self.assertEqual(set(readiness.OTHER_DECISIONS), set(self.live["other_decisions"]))
         self.assertTrue(self.live["other_decisions"]["OPERATIONAL-OWNERSHIP"]
                         .startswith("Founder"))
-        for d in ("ENVIRONMENT-SEPARATION", "PYTHON-RUNTIME-VERSION"):
-            self.assertTrue(self.live["other_decisions"][d].startswith("Architect"))
+        for package in ("FS-09-ENV", "FS-09-RUNTIME"):
+            self.assertEqual("PROPOSED — NOT RATIFIED",
+                             self.live["decision_packages"][package])
 
     def test_ratification_alone_does_not_make_it_ready(self):
         """Every decision taken still leaves unimplemented work: BLOCKED becomes FAIL."""
@@ -196,7 +204,7 @@ class TheGate(unittest.TestCase):
         self.assertIn("D4-A", self.live["release"])
 
     def test_external_dependencies_are_named(self):
-        self.assertEqual(["EXT-02", "EXT-03", "EXT-04"],
+        self.assertEqual(["EXT-02", "EXT-03", "EXT-04", "EXT-06"],
                          [d["id"] for d in self.live["external_dependencies"]])
 
 

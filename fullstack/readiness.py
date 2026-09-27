@@ -64,18 +64,17 @@ PACKAGES = {
     "FS-DP-05": "Scaling",
     "FS-DP-06": "Observability implementation",
     "FS-DP-07": "Agent creation (Agent Factory boundary)",
+    "FS-09-ENV": "Environment separation",
+    "FS-09-RUNTIME": "Python runtime reproducibility",
 }
 PASS, FAIL, BLOCKED, OBSERVED = "PASS", "FAIL", "BLOCKED", "OBSERVED"
 READY, NOT_READY = "PRODUCTION READY", "NOT PRODUCTION READY"
 
-#: Decisions a criterion can wait on that are not FS-DP packages. None has a
-#: package yet; each is recorded in `docs/fullstack/FS-09-DECISION-REGISTER.md`.
+#: Decisions a criterion can wait on that have no decision package: Founder
+#: decisions, recorded in `docs/fullstack/FS-09-DECISION-REGISTER.md`. The two
+#: Architect decisions first recorded here (`§88`: ENVIRONMENT-SEPARATION,
+#: PYTHON-RUNTIME-VERSION) have packages since `§89`: FS-09-ENV, FS-09-RUNTIME.
 OTHER_DECISIONS = {
-    "ENVIRONMENT-SEPARATION": "Architect: how Production data is kept apart from Preview "
-                              "data in the ratified Supabase arrangement (ACT-003 §19)",
-    "PYTHON-RUNTIME-VERSION": "Architect: which Python the host must run. FS-02 names 3.11 "
-                              "(every local and certified run); the FS-08 Preview ran 3.12, "
-                              "the host default, because nothing pins it",
     "OPERATIONAL-OWNERSHIP": "Founder: who operates AIOS, holds the production operator "
                              "token, runs backups and answers incidents (ACT-003 §19)",
 }
@@ -112,15 +111,22 @@ RUNBOOK_SECTIONS = ("Startup and health", "Authentication failure", "Dependency 
 EXTERNAL_DEPENDENCIES = (
     {"id": "EXT-02", "what": "S-01 AIOS Transition Manifest not supplied (FD-FS-001 D5-A)",
      "needs": "the Founder to supply the exact document"},
-    {"id": "EXT-03", "what": "Vercel SSO protects every Preview and the connector cannot pass "
-     "it; FS-08 reached the Preview through a Founder-authorized, temporary automation bypass, "
-     "revoked after the suite (Register §86). The connector reads build logs (2026-09-27)",
+    {"id": "EXT-03", "what": "authenticated live checks need access the connector cannot "
+     "give: FS-08 used a Founder-authorized, temporary automation bypass, revoked after the "
+     "suite (Register §86). The connector reads build logs (2026-09-27)",
      "needs": "a new, equally temporary Founder authorization for any further live Preview "
-     "check (FS-09: performance, a live 403, a rollback drill)"},
+     "check (FS-09: performance, a live 403, a rollback drill); the operator token stays "
+     "outside the repository"},
     {"id": "EXT-04", "what": "the project-scoped Supabase connector is denied permission and "
      "was bound to a ref not in the account (2026-09-27); the account connector reaches the "
      "AIOS project scfymftfzkpilqbgmfwv, which is healthy",
      "needs": "the project-scoped connector re-bound to scfymftfzkpilqbgmfwv (non-blocking)"},
+    {"id": "EXT-06", "what": "Vercel deployment protection observed DISABLED on 2026-09-27 at "
+     "19:57Z (ssoProtection enabled: false); it was enabled at FS-08 (Register §86). Claude "
+     "Code did not change it. Previews and aios-platform-eight.vercel.app answer anonymous "
+     "requests; AIOS still refuses them (401), and each refusal appends an audit record",
+     "needs": "the Founder to confirm whether this is intended; the required edge access is "
+     "the Architect's FS-DP-03 decision (revision 2, R2.6 X1-X3)"},
 )
 
 
@@ -135,7 +141,7 @@ def ratified(register_text: str) -> Dict[str, str]:
         row = re.search(r"(?m)^\| \*\*Ratifies\*\* \|([^\n]*)\|\s*$", block)
         if row:
             heading = block.splitlines()[0][4:].strip()
-            for package in re.findall(r"FS-DP-0\d", row.group(1)):
+            for package in re.findall(r"FS-DP-0\d|FS-09-(?:ENV|RUNTIME)\b", row.group(1)):
                 found[package] = heading
     return found
 
@@ -443,12 +449,12 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
             residual="backups exist only when the operator runs one (free plan: no "
                      "downloadable backup); cadence and owner are unset "
                      "(OPERATIONAL-OWNERSHIP); restore into a second live project waits "
-                     "on ENVIRONMENT-SEPARATION"),
+                     "on FS-09-ENV"),
         _criterion("Data", "migration", PASS if in_repo == list(APPLIED_MIGRATIONS) else FAIL,
                    f"in the repository: {in_repo}; applied on the live store (operator "
                    f"inspection): {list(APPLIED_MIGRATIONS)}", classes=[LOCAL, OPERATOR],
                    residual="never replayed on a second environment"),
-        _blocked("Data", "environment separation", ["ENVIRONMENT-SEPARATION"], decided,
+        _blocked("Data", "environment separation", ["FS-09-ENV"], decided,
                  "Preview and a future Production would share one table") or _criterion(
             "Data", "environment separation", FAIL, "decided; not implemented"),
         _criterion("Operations", "runbook", FAIL if missing_sections else PASS,
@@ -461,7 +467,7 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
         or _criterion("Operations", "operational ownership", FAIL, "decided; not recorded"),
         _criterion("Reproducibility", "known artifact", PASS if head else FAIL,
                    f"commit {head}; no build step", classes=[LOCAL]),
-        _blocked("Reproducibility", "runtime version pinned", ["PYTHON-RUNTIME-VERSION"],
+        _blocked("Reproducibility", "runtime version pinned", ["FS-09-RUNTIME"],
                  decided, "nothing pins it; the host chose 3.12 for the FS-08 Preview "
                  "(build log bld_8ubuwdj02) while every local run is 3.11")
         or _criterion("Reproducibility", "runtime version pinned", FAIL,
