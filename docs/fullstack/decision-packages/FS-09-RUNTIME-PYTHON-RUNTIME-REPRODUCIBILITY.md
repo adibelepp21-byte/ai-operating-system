@@ -46,7 +46,7 @@ Additional evidence gathered for this package (it decides nothing):
 | Interpreter | native_core | consumers | bounded_exception | fullstack | tools |
 |---|---|---|---|---|---|
 | 3.11.15 | 801 OK | 276 OK | 29 OK | 172 OK | 1933 OK (`§88`) |
-| 3.12.3 (local) | 801 OK | 276 OK | 29 OK | 172 OK | see `§89` record |
+| 3.12.3 (local) | 801 OK | 276 OK | 29 OK | 172 OK | 1933 OK (1 skipped) |
 | 3.13.12 (local) | 801 OK | 276 OK | 29 OK | 172 OK | not run |
 
 **The conflict, stated plainly:** the canonical text (F1) and all certified
@@ -98,7 +98,7 @@ store's bytes do not depend on the choice.
 | Option | Consequence |
 |---|---|
 | P1 | if the host refuses 3.11, the Preview build fails (Production unaffected), and the decision must be revisited. Upgrading before October 2027 becomes a planned change |
-| P2 | local development and the regression move to 3.12 as the reference, so the certified-evidence runs must be repeated on 3.12. The fast suites already pass there; the `tools` suite result is in `§89` |
+| P2 | local development and the regression move to 3.12 as the reference, so the certified-evidence runs must be repeated on 3.12. All five suites already pass there locally (`§4`) |
 | P3 | nothing to maintain, and nothing guaranteed |
 
 ## 11. Verification requirements
@@ -138,8 +138,8 @@ repository (ACT-001 `§20`).
 ## 16. Analytical recommendation (**UNRATIFIED**)
 
 > *Not a decision. Stands only as analysis until the Architect decides.*
-> **P2** (pin 3.12, with FS-02 amended explicitly), on condition that the full
-> `tools` suite passes on 3.12. It is the only version on which live evidence
+> **P2** (pin 3.12, with FS-02 amended explicitly). Its stated condition, a
+> full `tools` pass on 3.12, is met locally (1933 OK, `§4`). It is the only version on which live evidence
 > exists (F3), it needs no unverified host capability (F4), and it has the
 > longer security support. **P1** stays fully valid if the Architect prefers
 > the blueprint as written; it then needs a Preview build proving 3.11 is

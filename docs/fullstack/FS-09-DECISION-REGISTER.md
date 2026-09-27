@@ -110,7 +110,7 @@
 | `FS-DP-06` rev. 2 | logging, metrics, alerting, kept apart from Trace and Audit | L1–L3; M1–M3; H1–H3; R1 · R2 | L1, M1, R2; alerting with `FS-DP-03` and ownership |
 | `FS-DP-07` rev. 2 | may the application create Agents | A1 · A2 · A3 | A1 now; A2 when a use needs it |
 | `FS-09-ENV` | Production data apart from Preview data | E1–E6 | E1 with the new project for Production, else E2 with the new table for Production |
-| `FS-09-RUNTIME` | the Python version, pinned | P1 · P2 · P3 | P2 (3.12, FS-02 amended), on a full `tools` pass on 3.12; P1 remains valid |
+| `FS-09-RUNTIME` | the Python version, pinned | P1 · P2 · P3 | P2 (3.12, FS-02 amended); its condition, a full `tools` pass on 3.12, is met locally (all five suites OK on 3.12.3); P1 remains valid |
 
 A recommendation is analysis only. None is adopted, implemented or treated as
 decided until the Architect's decision is recorded in the Decision Register.
