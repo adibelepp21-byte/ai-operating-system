@@ -1,0 +1,230 @@
+# FS-09 — AIOS Full Stack Operational Runbook
+
+| Field | Value |
+|---|---|
+| **Authority** | `ACT-CC-POST-P13-AIOS-FULL-STACK-003` `§18`, `§19`; the Founder's FS-09 continuation (Workstream C) |
+| **Register** | `§88` |
+| **Scope** | the deployed AIOS Full Stack: Vercel project `aios-platform` (static console and `/api/v1/*` Python function) over Supabase project `scfymftfzkpilqbgmfwv`, table `aios_records` |
+| **Status** | **written and checked against the code; not yet exercised in a real incident.** Monitoring and alerting (`§12`) are placeholders until `FS-DP-06` is ratified. Who performs each step (`§13`) waits on the Founder's operational-ownership decision |
+| **Is not** | a release, a Production procedure the operator may run on their own, or a readiness PASS |
+
+**Rules for every step.** No secret value goes into chat, a commit, a document,
+a log line, a screenshot or an evidence file. Production (deployment, alias,
+variables, credentials) changes only on a Founder decision (`FD-FS-001` D4-A).
+Vercel SSO protection is never bypassed except by a Founder-authorized,
+temporary mechanism that is revoked afterwards. The store is append-only: no
+step edits or deletes a record.
+
+## 1. Startup and health
+
+The function has no long-running process. Every request starts its own AIOS
+Runtime on the store and stops it before answering (`FS-DP-04` A1). "Startup"
+therefore means *a request can start a Runtime*.
+
+| Check | How | Healthy |
+|---|---|---|
+| Deployment built | Vercel deployment status | `READY`; build log names the commit |
+| Function and store | `GET /api/v1/health` (public route) | `200 {"status":"ok","runtime_state":"running"}` |
+| Authenticated read | `GET /api/v1/runtime` with `Authorization: Bearer <operator token>` | `200`, `state: running`, a new `runtime_id` on every call |
+| Console | `GET /` | `200 text/html`; `app.js`, `api.js` load |
+| Readiness gate (local) | `python -m fullstack.readiness evaluate` | JSON; see `docs/fullstack/FS-09-READINESS-PROGRAM.md` |
+
+Preview URLs are behind Vercel SSO. An unauthenticated request gets `302` or
+`401` **from Vercel**, before AIOS runs: that is protection working, not a fault.
+
+## 2. Authentication failure
+
+Mechanism: `FS-DP-02` B3 operator bearer tokens. The host holds only SHA-256
+hashes, in `AIOS_OPERATOR_TOKENS`.
+
+| Symptom | Meaning | Action |
+|---|---|---|
+| every protected route `401`, `/health` `200` | the token is wrong, or `AIOS_OPERATOR_TOKENS` is absent or refused | check the function log for `AIOS_OPERATOR_TOKENS <reason>; nobody is authenticated`. The reason names the fault (not JSON, an unknown key, a bad hash), never a value |
+| one principal `401`, others `200` | that token's hash is not in the configuration | issue a new token (`python -m fullstack.backend operator-token …`, on the operator's own machine) and replace that entry |
+| `403` | authenticated, but the scope is missing | intended least privilege; grant the scope only if the principal's role needs it |
+| token suspected exposed | — | **incident** (`§11`): remove its entry, redeploy so the function reads the new value, issue a replacement, and check the audit (`§6`) for its subject |
+
+Rotation: add the new entry, redeploy, confirm the new token works, remove the
+old entry, redeploy. The plaintext token is shown once and stored nowhere by AIOS.
+
+## 3. Dependency failure
+
+The function has two dependencies: the Supabase REST endpoint and the
+server-side key. It fails closed. There is no filesystem fallback.
+
+| Response (`503 unavailable`) detail | Log line (function) | Cause | Action |
+|---|---|---|---|
+| *persistence is not configured: the operator has not set the server-side database key* | — | no `SUPABASE_SECRET_KEY` / `SUPABASE_SERVICE_ROLE_KEY` in this environment | the operator sets it (sensitive) and redeploys. Claude never reads or creates it |
+| *…contains a character that cannot be sent…; enter it again as one line* | `storage not configured: …` | the key was pasted with a line break, space, quote or non-ASCII character | re-enter it as one line; redeploy |
+| *the AIOS Runtime could not start on its store* | `runtime start failed: StorageUnavailable: …` | Supabase unreachable, key rejected, or project paused (free plan pauses after 7 days of low activity) | check Supabase project status; restore a paused project from the Supabase dashboard; check the key is the project's current secret key |
+
+Verified in-process by the readiness gate (*dependency failure fails closed*);
+not induced on the live store.
+
+## 4. Persistence failure
+
+| Symptom | Check | Action |
+|---|---|---|
+| a run was created (`201`) but is missing later | `select count(*) from aios_records where partition = 'fullstack-runs'` via operator SQL | compare with the audit entry of that request (`§6`). A missing record after a `201` is a data-loss incident (`§11`) |
+| `503` after start | function log `request failed after start` with a traceback | the append or read failed mid-request. Nothing is partially updated: records are appended whole or not at all |
+| an attempt to change a record | the database refuses: *aios_records is append-only: UPDATE refused* | intended (triggers refuse UPDATE, DELETE and TRUNCATE). Never disable them |
+| schema drift | `list_migrations` on the project against `fullstack/deploy/supabase/migrations/` | they must match (today: `20260927062422_aios_records`) |
+
+## 5. Failed execution
+
+A Workflow run that fails is a **state, not an error**: `201` with
+`state: "failed"` and a `failure_reason` naming the Tool's reason (for example,
+a missing document). Nothing is left `running`.
+
+| Response | Meaning |
+|---|---|
+| `201`, `state: failed` | the run executed and failed; read `failure_reason` and `steps` |
+| `400` | the request was invalid (unknown workflow, bad inputs); no run was created |
+| `404` on `/runs/{id}` | no such run |
+| `503` | not an execution failure: see `§3` or `§4` |
+
+## 6. Trace and audit investigation
+
+| Question | Where |
+|---|---|
+| what did a run do | `GET /api/v1/runs/{run_id}`: `steps`, `states`, `outcome`, `failure_reason` |
+| which Trace records are the run's | the run's `trace` = `{runtime, runtime_from, runtime_to, count}`: its Runtime's own records, by ordinal (`FS-DP-05` C1). In code, `AIOSApplication.run_trace(run_id)`. Legacy `fullstack.run/1` runs keep a global range |
+| who did what, allowed or refused | `GET /api/v1/audit` (scope `aios.audit`): `subject`, `method`, `path`, `scope`, `decision`, `status`, `request_id`. Anonymous refusals have `subject: null` |
+| correlate a response with the audit | the `X-Request-Id` response header = the audit entry's `request_id` |
+| raw store | operator SQL: `select seq, partition, convert_from(record, 'UTF8') from aios_records order by seq` |
+
+No credential is ever written to Trace or audit. If one is found, that is an incident (`§11`).
+
+## 7. Backup
+
+The free Supabase plan offers no downloadable backup (`FS-DP-01` point 6). The
+backup is an **operator-run logical export** in the `fullstack.backup/1` format
+(`fullstack/deploy/backup.py`).
+
+1. Record the live digests (read-only):
+   ```sql
+   select partition, count(*), sum(octet_length(record)), min(seq), max(seq),
+          encode(sha256(string_agg(record, '\x0a'::bytea order by seq)), 'hex')
+   from aios_records group by partition;
+   ```
+2. Export every row in `seq` order (`select seq, partition, record from aios_records order by seq`)
+   and write one `fullstack.backup/1` line per row (`backup.line_for`), with
+   `position` counted per partition.
+3. Check the export: `backup.summary(backup.read_file(<file>))` must give the
+   same count, bytes and joined digest per partition as step 1.
+4. Scan the file for credentials (the operator token, the Supabase secret-key prefix, a JWT prefix,
+   `Bearer`); there must be none. Keep it with a manifest (source, time, digests,
+   the file's own SHA-256), as in `docs/fullstack/evidence/FS-09-BACKUP-MANIFEST-2026-09-27.json`.
+
+Drilled on 2026-09-27: 80 records, every partition and the whole table equal to
+the database's digests. **Unset:** cadence, retention and who runs it
+(`OPERATIONAL-OWNERSHIP`, Founder).
+
+## 8. Restore
+
+A restore makes a **fresh** store; it never merges into one that already holds
+the exported partitions (the tool refuses).
+
+```bash
+python -m fullstack.backend backup-restore --export <file.jsonl> --data-dir <new empty dir>
+python -m fullstack.backend backup-verify  --export <file.jsonl> --data-dir <that dir>
+python -m fullstack.backend serve --data-dir <that dir>        # read it through the API
+```
+
+`backup-restore` exits `0` and prints `"identical": true` with the per-partition
+digests, which must equal the manifest's. Then check that the runs, each run's
+Trace and the audit read back (`fullstack/tests/test_backup_restore.py` does
+exactly this, on every regression run).
+
+**Boundary.** Restoring into a *live* Supabase project other than
+`scfymftfzkpilqbgmfwv` means creating or choosing a second environment. That
+waits on the Architect's `ENVIRONMENT-SEPARATION` decision. Restoring *into*
+`scfymftfzkpilqbgmfwv` is refused by design while it holds the partitions, and
+nothing may delete them.
+
+## 9. Rollback
+
+What rollback means here: serving an **earlier deployment's code** over the
+**same** store. The store itself is never rolled back (append-only; no step deletes).
+
+| Environment | Procedure | Who |
+|---|---|---|
+| Preview | redeploy the earlier commit's build (Vercel: redeploy that deployment, or push a revert to the branch), then run `§1` and a Scenario B and C run | operator; any live check needs Preview access (`EXT-03`) |
+| Production | Vercel Instant Rollback / promote an earlier deployment | **Founder only** (`FD-FS-001` D4-A). Never used to gain evidence |
+
+After any rollback: `§1` health, one Scenario B run and one Scenario C run,
+then compare `GET /runs` before and after. Every earlier record must still read.
+
+**Status: NOT VERIFIED.** No deployment rollback has been exercised on any
+environment. Only data compatibility is verified (`§10`).
+
+## 10. Rollback compatibility boundaries
+
+Data compatibility, verified at FS-09 discovery: the pre-C1 code (`6e31092`)
+lists and reads `fullstack.run/2` records and appends its own
+`fullstack.run/1`; the current code reads the mixed store and resolves every
+run's Trace. **Data compatibility does not make a rollback target safe.**
+
+| Rolling back below | Consequence | Production-safe? |
+|---|---|---|
+| `0706446` (`FS-DP-05` C1) | **reintroduces the historical concurrency risk**: two Runtimes can give runs the same id, and a run's Trace range can include another run's records | **No** |
+| `215248f` (`FS-DP-02` B3) | **changes the authentication posture**: the function builds no authenticator from `AIOS_OPERATOR_TOKENS`, so the API authenticates nobody (every protected route `401`) | **No** |
+| `207ee77` | a malformed key is no longer named; the function fails with a generic 503 | degraded diagnosis |
+| `8d088fb` (`FS-DP-01` store, `FS-DP-04` function) | no API function and no Supabase store: `/api/v1/*` does not exist, only static files are served | **No** |
+
+**The rollback floor for any release is the release candidate itself.** A
+target below a floor is not a rollback option, whatever its data compatibility.
+Production today serves `22c0b49` (before this program); it is not a candidate
+and is not changed by this runbook.
+
+## 11. Incident handling
+
+1. **Detect**: a failed `§1` check, a user report, or (after `FS-DP-06`) an alert.
+2. **Classify**: availability (`§3`), authentication (`§2`), data (`§4`),
+   execution (`§5`), or security (credential exposure, unexpected audit subject,
+   protection disabled).
+3. **Contain**, without deleting anything:
+   * credential exposure: remove the entry or rotate the key, redeploy;
+   * suspected bad release: stop promoting; a Production rollback is the Founder's call (`§9`, `§10`);
+   * data: take a backup now (`§7`) before any other action.
+4. **Investigate** with `§6`, and record the `request_id`s, run ids and times.
+5. **Recover**: redeploy, rotate, restore into a fresh store for analysis (`§8`).
+6. **Record**: an incident note under `docs/fullstack/` with the timeline, the
+   evidence (no secret) and the decision taken; a Register entry when a decision
+   was needed.
+
+## 12. Monitoring and alerting
+
+**Placeholder: waits on `FS-DP-06` (Architect, not ratified).** Nothing here is
+implemented or decided.
+
+| Signal | Today | After FS-DP-06 |
+|---|---|---|
+| request log | the host's function log captures stderr: configuration refusals, start failures and tracebacks (no request line) | *to be decided*: one structured line per request, separate from Trace and audit |
+| availability | manual `§1` checks | *to be decided*: readiness signal and an uptime check |
+| alerting | none | *to be decided*: host alerts or an external check. A paid alerting product is a Founder spending decision (D3-A) |
+| backup freshness | none | *to be decided* with the backup cadence (`§7`) |
+
+## 13. Operator responsibilities
+
+Unassigned until the Founder decides `OPERATIONAL-OWNERSHIP`. The duties are:
+
+* hold operator tokens off the repository and issue, rotate and revoke them (`§2`);
+* hold the Supabase server-side key and set it on the host (`§3`);
+* run `§1` after every deployment and before any release decision;
+* take backups (`§7`) at the cadence the Founder sets, and keep them without credentials;
+* keep the Supabase project from pausing, or restore it;
+* handle incidents (`§11`) and escalate (`§14`).
+
+## 14. Escalation boundaries
+
+| Matter | Decided by | Never done without that decision |
+|---|---|---|
+| Production deploy, promote, rollback, alias, variables, credentials | **Founder** (`FD-FS-001` D4-A; ACT-003) | any Production change |
+| spending: paid plans, alerting, backups | **Founder** (D3-A) | any purchase or upgrade |
+| temporary access past Vercel SSO | **Founder**, per occasion | any bypass; it is revoked after use |
+| operational ownership, backup cadence, incident owner | **Founder** | — |
+| a performance requirement | **Founder** | treating any latency as a pass/fail requirement |
+| networking (`FS-DP-03`), observability (`FS-DP-06`), Agent creation (`FS-DP-07`) | **Architect** | implementing them |
+| environment separation; the Python runtime version | **Architect** | a second project or table; pinning a version |
+| changes to certified roots P10–P13, Phase 14 | not open | — |

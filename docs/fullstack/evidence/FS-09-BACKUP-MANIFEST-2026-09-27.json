@@ -1,0 +1,49 @@
+{
+  "format": "fullstack.backup-manifest/1",
+  "purpose": "FS-09 backup/restore drill (FS-DP-01 point 6; FS-ARCH-RAT-001 §3.3): operator-run logical export of the AIOS store",
+  "source": {
+    "system": "Supabase project scfymftfzkpilqbgmfwv (the ratified store; Preview is its only writer so far)",
+    "table": "public.aios_records",
+    "state_as_of": "after the FS-08 live suite; latest record 2026-09-27T18:03:53.289Z",
+    "re_verified_unchanged_at": "2026-09-27T19:01Z"
+  },
+  "method": "read-only SQL through the operator's Supabase connection; each record's bytes materialized from its canonical JSON form and accepted only when sha256(record) equals the value the database computed for that row. No write, no Production change, no application credential used",
+  "export": {
+    "file": "FS-09-BACKUP-EXPORT-2026-09-27.jsonl",
+    "sha256": "6e535b5e8da200c33656db5a369439c8547d7fb04f52e65f5df9f0042492e251",
+    "bytes": 48882,
+    "lines": 80,
+    "line_format": "fullstack.backup/1 (fullstack/deploy/backup.py)"
+  },
+  "server_digest_query": "select partition, count(*), sum(octet_length(record)), min(seq), max(seq), encode(sha256(string_agg(record, '\\x0a'::bytea order by seq)),'hex') from aios_records group by partition",
+  "partitions": {
+    "fullstack-audit": {
+      "records": 41,
+      "bytes": 8825,
+      "seq_first": 6,
+      "seq_last": 85,
+      "sha256_joined_server": "a21d5dac8a356aac82d8bb8e1c71d9fc23a6f4a61fc3ea0a4a9619eb351f59b8"
+    },
+    "fullstack-runs": {
+      "records": 10,
+      "bytes": 12859,
+      "seq_first": 33,
+      "seq_last": 82,
+      "sha256_joined_server": "94635f4bf48b54a86d8acde7995a4daedeba652eb216a594849ee9636d7b3613"
+    },
+    "trace": {
+      "records": 29,
+      "bytes": 9870,
+      "seq_first": 30,
+      "seq_last": 81,
+      "sha256_joined_server": "099fa8cee2aa8673720c0089a490bea1c7c90b26c1c8090626f287a80bbbe088"
+    }
+  },
+  "table": {
+    "records": 80,
+    "bytes": 31554,
+    "sha256_joined_server": "46e8fa3f668b6acda740af6486b08d5a3ddf2b602f22011a0f28e7458fb7dec2",
+    "note": "seq 1-5 absent in the source (identity gaps are allowed)"
+  },
+  "credentials": "none. Scanned absent: the operator token, the revoked bypass secret, the Supabase secret-key prefix, a JWT prefix, Bearer, apikey, service_role, AIOS_OPERATOR_TOKENS. Audit subjects are 'founder' or null"
+}

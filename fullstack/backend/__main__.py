@@ -15,6 +15,13 @@ environment; without it every protected route answers 401.
 `operator-token` is for the operator, on their own machine: it prints a new
 random token once, for the console, and the configuration entry holding only
 its hash, for the host. Nothing is written to disk.
+
+    python -m fullstack.backend backup-restore --export <file.jsonl> --data-dir <new dir>
+    python -m fullstack.backend backup-verify --export <file.jsonl> --data-dir <dir>
+
+The FS-09 restore drill (`FS-DP-01` point 6): restore a logical export
+(`fullstack/deploy/backup.py`) into a **fresh** local store, never into one
+that already holds the exported partitions, then compare it record by record.
 """
 
 from __future__ import annotations
@@ -46,7 +53,14 @@ def main(argv=None) -> int:
     issue.add_argument("--subject", required=True)
     issue.add_argument("--scope", action="append", choices=SCOPES,
                        help=f"repeat for each scope; default {OBSERVE} only")
+    for name, text in (("backup-restore", "restore an export into a fresh local store"),
+                       ("backup-verify", "compare a local store with an export")):
+        command = commands.add_parser(name, help=text)
+        command.add_argument("--export", required=True, type=Path)
+        command.add_argument("--data-dir", required=True, type=Path)
     args = parser.parse_args(argv)
+    if args.command in ("backup-restore", "backup-verify"):
+        return _backup(args)
     if args.command == "operator-token":
         token = secrets.token_urlsafe(32)
         entry = {"subject": args.subject, "sha256": token_sha256(token),
@@ -73,6 +87,30 @@ def main(argv=None) -> int:
         finally:
             aios.stop()
     return 0
+
+
+def _backup(args) -> int:
+    from native_core.core.infrastructure import LocalAppendOnlyStorage
+    from fullstack.deploy import backup
+    try:
+        entries = backup.read_file(args.export)
+    except (OSError, backup.ExportError) as error:
+        print(f"export refused: {error}", file=sys.stderr)
+        return 2
+    store = LocalAppendOnlyStorage(args.data_dir / "storage")
+    store.provision()
+    if args.command == "backup-restore":
+        try:
+            backup.restore(entries, store)
+        except backup.RestoreRefused as error:
+            print(f"restore refused: {error}", file=sys.stderr)
+            return 2
+    found = backup.differences(entries, store)
+    for line in found:
+        print(f"differs: {line}", file=sys.stderr)
+    print(json.dumps({"identical": not found, "partitions": backup.summary(entries)},
+                     indent=2))
+    return 1 if found else 0
 
 
 if __name__ == "__main__":

@@ -9521,3 +9521,21 @@ Production Ready, Production Released or Operational AIOS.
 | **Founder-reserved** | Scenario A classification if FS-DP-07 = A1; a performance requirement; spending (alerting, paid Supabase plan); a temporary Preview access authorization for FS-09 live checks; a second Preview principal, production token custody, operational ownership |
 | **Next** | authorized construction A1–A5: readiness gate v2 on recorded live evidence; backup/restore drill; runbook; rollback procedure and Preview drill; runtime pin |
 | **Not** | FS-09 PASS; production deployment; Founder Release Authorization; Operational AIOS. Nothing deployed to Production |
+
+---
+
+## 88. FS-09 Continuation — Authorized Readiness Construction; FS-09 OPEN (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Direction** | Founder, 2026-09-27: *"FS-09 CONTINUATION — AUTHORIZED READINESS CONSTRUCTION"*, Workstreams A–E, under `ACT-CC-POST-P13-AIOS-FULL-STACK-003`. *"Do NOT start FS-10. Do NOT declare FS-09 PASS"* |
+| **Records** | `docs/fullstack/FS-09-READINESS-PROGRAM.md` (matrix updated, `§8`, `§9`); `FS-09-BACKUP-RESTORE-DRILL.md`; `FS-09-OPERATIONAL-RUNBOOK.md`; `FS-09-DECISION-REGISTER.md` |
+| **A — gate v2** | `fullstack/readiness.py` labels every criterion `local-current`, `preview-recorded`, `operator-recorded` or `local-recorded`. The FS-08 live evidence (commit `6469269`) is read, not altered, and counts only while the served code is unchanged since that commit (unchanged). A local result never passes a live criterion. Result: **NOT PRODUCTION READY**; 18 PASS, 1 OBSERVED, 1 FAIL, 6 BLOCKED |
+| **B — backup/restore** | operator logical export of all 80 live records through read-only SQL, each record and every partition equal to the database's own SHA-256; persisted without credentials (`docs/fullstack/evidence/FS-09-BACKUP-EXPORT-2026-09-27.jsonl`, manifest beside it). Restored into fresh stores (local backend; `SupabaseStorage` over the in-memory PostgREST): byte-identical; the application and API read 10 runs, every run's Trace, 41 audit entries in order. Target is local because a second live project waits on `ENVIRONMENT-SEPARATION`. Production untouched |
+| **C — runbook** | 14 sections. Rollback below `0706446` (C1) reintroduces the historical concurrency risk; below `215248f` (B3) changes the authentication posture; neither is production-safe because its data reads. Monitoring and alerting are placeholders pending FS-DP-06 |
+| **D — runtime pin** | **STOPPED at an ambiguity; nothing pinned.** FS-02 names Python 3.11 (all local and certified runs); the FS-08 Preview ran **3.12**, the host default (build log `bld_8ubuwdj02`); 3.11 availability on the host is not established |
+| **E — decisions recorded, none chosen** | Architect: FS-DP-03, FS-DP-06, FS-DP-07, ENVIRONMENT-SEPARATION (options E1–E6), PYTHON-RUNTIME-VERSION (P1–P3). Founder: Scenario A residual (if A1), performance requirement, operational ownership and backup cadence, temporary Preview access for FS-09 live checks, operator identities, spending, release (not due) |
+| **Not verified** | rollback of a deployment (needs Preview access) |
+| **Performance** | OBSERVED; no canonical requirement exists and none was invented |
+| **Scenario A** | BLOCKED pending FS-DP-07; no Agent Factory built |
+| **State** | **FS-09 OPEN — NOT PASSED. FS-10 NOT STARTED.** No Production deployment, alias, variable or credential changed; no project, database or table created; no secret in any file |

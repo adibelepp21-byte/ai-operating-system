@@ -13,7 +13,12 @@ Frontend (fullstack/frontend) → API v1 (fullstack/backend/api.py)
 ```bash
 python -m fullstack.backend serve --data-dir /path/outside/the/repo   # http://127.0.0.1:8765/
 python -m fullstack.readiness evaluate                               # the FS-09 gate, as JSON
+python -m fullstack.backend backup-restore --export <file.jsonl> --data-dir <new dir>  # restore drill
+python -m fullstack.backend backup-verify --export <file.jsonl> --data-dir <dir>
 ```
+
+Operating it (health, failures, backup, restore, rollback and its floors,
+incidents, escalation): `docs/fullstack/FS-09-OPERATIONAL-RUNBOOK.md`.
 
 ## Deploy (Vercel + Supabase; FS-DP-01, FS-DP-04, ratified `FS-ARCH-RAT-001`)
 

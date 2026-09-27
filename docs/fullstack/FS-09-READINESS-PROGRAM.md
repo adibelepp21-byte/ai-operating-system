@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | **Direction** | Founder, 2026-09-27: *"BEGIN FS-09 PRODUCTION READINESS"*, under `ACT-CC-POST-P13-AIOS-FULL-STACK-003`, after the FS-08 PASS (Register `§86`) |
-| **Register** | `§87` |
+| **Register** | `§87` (discovery); `§88` (authorized construction: this matrix updated, `§8`) |
 | **Nature** | a readiness program. **Not** production release, not Founder Release Authorization, not Operational AIOS |
-| **Result so far** | **FS-09 NOT PASSED.** Discovery and classification complete; construction not started |
+| **Result so far** | **FS-09 OPEN — NOT PASSED.** Authorized construction done (`§8`): gate v2, backup/restore drill, runbook, decision register. Six decisions and one verification gap remain (`§9`). FS-10 NOT STARTED |
 | **Earlier record** | `FS-09-PRODUCTION-READINESS.md` (gate on `c4b9636`, before FS-08) stays as the historical first evaluation |
 
 ## 1. Canonical sources
@@ -21,34 +21,44 @@
 
 ## 2. Requirements matrix (the Founder's 12 items, mapped to the canonical rows)
 
-Evidence classes: **L** local · **P** Preview (live) · **—** none yet.
+Evidence classes: **L** local, measured now · **P** Preview live, recorded at FS-08 (commit `6469269`, historical; still covers the served code) · **O** operator-recorded on the live store · **LR** local, recorded once · **—** none yet. Updated at `§88`; the gate's own row names are in `§3`.
 
 | # | Item · canonical rows | Current evidence | State | Gap | Authority to close it |
 |---|---|---|---|---|---|
 | 1 | **Functionality**: core functions (B), failure (C), **agent creation (A)** | B and C: L + P (FS-08 live: run `succeeded`, missing document → `failed` with reason). A: no route creates an Agent | B, C **PASS** · A **BLOCKED** | Scenario A needs a decision | **Architect: FS-DP-07.** If A1 (keep reserved) is chosen, Scenario A stays impossible while the Act calls it mandatory: **Founder** then decides whether it is a classified non-blocking residual |
-| 2 | **Security**: authentication, authorization, secrets, attack surface, audit | L + P (FS-08: 401s, B3 token, headers, audit with no credential, append-only store) | **PASS** except the 403 residual | 403 evidenced locally only; one principal in Preview | authorized to verify. A second, narrower Preview principal is operator configuration: **Founder** to allow |
-| 3 | **Reliability**: failure handling, recovery, **rollback**, dependency failure | failure: L + P. Recovery: L (restart) and P (a later Runtime reads the run). Dependency failure: L (no key or unreachable store → 503). Rollback: **data-compatibility tested now (L, `§4`)** | partial | a **verified rollback procedure** on a deployment (exit criterion) | authorized: procedure plus a Preview redeploy drill (`§5` A4) |
-| 4 | **Performance**: required workload, latency/resources, bottlenecks | L: ~1 ms per run in-process. P: none measured | OBSERVED | **no workload requirement exists** anywhere in the canonical sources | authorized to measure on Preview. **Founder** to state a requirement, or accept OBSERVED as non-blocking |
-| 5 | **Observability**: logging, metrics, tracing, alerting | tracing: L + P. Logging: the host's runtime log captures stderr (used in FS-08 diagnosis). Metrics and alerting: none | tracing **PASS** · rest **BLOCKED** | structured request log, readiness signal, alerting | **Architect: FS-DP-06** (unratified). Paid alerting is a spending decision (**Founder**, D3-A) |
-| 6 | **Data integrity**: integrity, persistence | L (append-only bytes); P (Supabase writes and reads; UPDATE refused by trigger) | **PASS** | — | — |
-| 7 | **Backup / recovery**: backup, recovery | none on the live store | **NOT VERIFIED** | a logical-export backup and restore drill | **authorized** (`FS-DP-01` point 6; `FS-ARCH-RAT-001` `§3.3`). The free plan has no downloadable backups and pauses after 7 days of low activity: a paid plan is a **Founder** spending decision |
-| 8 | **Rollback** (exit criterion) | data compatibility L (`§4`) | **NOT VERIFIED** | procedure plus a drill | authorized (`§5` A4) |
-| 9 | **Deployment reproducibility**: clean build, reproducible deployment, known artifact | P: every push builds a READY Preview from its commit (`0706446` … `25b70a5`). No build step | partial | Python runtime not pinned; networking rules unratified | **Architect: FS-DP-03** (the readiness gate blocks this row on it). Pinning the runtime version is configuration (ACT-003 `§12`) |
+| 2 | **Security**: authentication, authorization, secrets, attack surface, audit | L + P (FS-08: 401s, B3 token, headers, audit with no credential, append-only store) | **PASS**; 403 residual stated | 403 evidenced locally only; one principal in Preview | a live 403 needs a second, narrower Preview principal and Preview access: **Founder** (register `§2.4`, `§2.5`) |
+| 3 | **Reliability**: failure handling, recovery, **rollback**, dependency failure | failure: L + P. Recovery: L + P. Concurrency (C1): P. Dependency failure: L (gate: no key → 503, unreachable store → 503). Rollback: data compatibility LR only | failure, recovery, dependency **PASS** · rollback **NOT VERIFIED (FAIL)** | a rollback drill on a deployment; floors documented (runbook `§10`) | authorized; the Preview drill needs Preview access: **Founder** (`§2.4`) |
+| 4 | **Performance**: required workload, latency/resources, bottlenecks | L: ~1 ms per run in-process. P: none measured | **OBSERVED** | **no canonical workload or latency requirement exists**; none is invented | **Founder**: state a requirement, or accept OBSERVED as non-blocking (register `§2.2`). Live measurement needs Preview access |
+| 5 | **Observability**: logging, metrics, tracing, alerting | tracing: L + P. Logging: the host's function log (stderr). Metrics and alerting: none | tracing **PASS** · rest **BLOCKED** | structured request log, readiness signal, alerting | **Architect: FS-DP-06** (register `§1.2`); runbook `§12` is a placeholder. Paid alerting: **Founder** |
+| 6 | **Data integrity**: integrity, persistence | L (append-only bytes) + P (Supabase writes and reads; UPDATE refused) | **PASS** | — | — |
+| 7 | **Backup / recovery**: backup, recovery | **O**: logical export of all 80 live records, equal to the database's digests; **L**: restored into fresh stores, byte-identical, read by the application and the API (`FS-09-BACKUP-RESTORE-DRILL.md`) | **PASS** (drill) | cadence and owner unset; no restore into a second live project | cadence/owner: **Founder** (`§2.3`). A live restore target: **Architect** (`ENVIRONMENT-SEPARATION`) |
+| 8 | **Rollback** (exit criterion) | data compatibility LR (`§4`); procedure written (runbook `§9`, `§10`) | **NOT VERIFIED** | a rollback exercised on a deployment | authorized; needs Preview access (**Founder**, `§2.4`). Production rollback is Founder-only |
+| 9 | **Deployment reproducibility**: clean build, reproducible deployment, known artifact | P: every push builds a READY Preview. The FS-08 Preview ran **Python 3.12** (host default, unpinned); every local run is 3.11 | known artifact **PASS** · runtime pin **BLOCKED** · reproducible deployment **BLOCKED** | the runtime version is ambiguous (FS-02 says 3.11; the host ran 3.12; 3.11 availability not established). **Not pinned** | **Architect**: `PYTHON-RUNTIME-VERSION` (register `§1.5`) and **FS-DP-03** (`§1.1`) |
 | 10 | **Failure handling** | L + P (FS-08 check 12; 503 fail-closed paths; malformed key named) | **PASS** | — | — |
-| 11 | **Access control** | P: 401s; one principal with all scopes. L: 403 by scope | partial | live 403; who holds operator tokens in production; rotation | a second Preview principal: **Founder**. Custody of the production operator token (who holds it, how it is delivered without chat): **Founder** |
-| 12 | **Operational runbook**: runbook, incident handling, recovery, monitoring, alerting, ownership | fragments only (`fullstack/README.md`) | **ABSENT** | a runbook | authorized to write. Its monitoring and alerting sections wait on FS-DP-06. **Operational ownership** (who is on call) is a **Founder** matter |
-| — | **Environment separation** (ACT-003 `§19`) | Preview and a future Production would share **one** Supabase project and **one** `aios_records` table. The FS-08 test runs are already in it | **GAP (material)** | production data would mix with Preview test data | **Architect**: separation changes the ratified persistence arrangement (FS-DP-01: *"the existing AIOS Supabase project provides persistence"*). A second project costs nothing on the free plan, but adding one is still a decision. Not decided here |
-| — | **Migration** | 1 migration in the repository = 1 applied (`20260927062422_aios_records`) | **PASS** for the current schema | no second environment to replay it on | follows environment separation |
+| 11 | **Access control** | P: 401s; one principal with all scopes. L: 403 by scope | **PASS** with the 403 residual | live 403; production operator token custody; rotation (runbook `§2`) | **Founder** (`§2.5`) |
+| 12 | **Operational runbook**: runbook, incident handling, recovery, monitoring, alerting, ownership | `FS-09-OPERATIONAL-RUNBOOK.md`: all 14 required sections; checked by the gate | runbook **PASS** (written; not yet exercised in an incident) · ownership **BLOCKED** | monitoring and alerting wait on FS-DP-06; owner unset | **Founder**: `OPERATIONAL-OWNERSHIP` (`§2.3`) |
+| — | **Environment separation** (ACT-003 `§19`) | Preview and a future Production would share **one** Supabase project and **one** `aios_records` table; 80 FS-08 records are already in it and can never be removed | **BLOCKED** | production data would mix with Preview test data | **Architect**: `ENVIRONMENT-SEPARATION` (register `§1.4`, options E1–E6). Nothing created |
+| — | **Migration** | L: 1 migration in the repository; O: the same 1 applied on the live store (re-checked 2026-09-27) | **PASS** for the current schema | never replayed on a second environment | follows environment separation |
 | — | **Release artifact identified** (exit) | commits are known; no candidate chosen yet | pending | fixed when the gate passes | — |
 
 ## 3. The executable gate, as it reads today
 
-`readiness.evaluate` on the current tree: **NOT PRODUCTION READY**. It awaits
-FS-DP-03, FS-DP-06 and FS-DP-07. It shows FAIL for authentication, deployment
-rollback, and production persistence/backup/migration, because it measures
-only in-process and cannot see the FS-08 live evidence. Correcting that
-(`§5` A1) is construction, not a change of standard: a row may pass only on
-recorded live evidence, labelled as such.
+*At discovery (`§87`)* the gate measured only in-process and showed FAIL for
+authentication, deployment rollback and production persistence/backup/migration,
+because it could not see the FS-08 live evidence.
+
+*Gate v2 (`§88`)*: `python -m fullstack.readiness evaluate` → **NOT PRODUCTION
+READY**. Each criterion names its evidence class. A criterion that needs the
+deployment passes only on the recorded Preview checks it names, and only while
+the code the Preview serves is unchanged since commit `6469269` (checked with
+`git diff` on every run; unchanged today). The recording is never re-labelled as local.
+
+| Status | Criteria |
+|---|---|
+| **PASS** (18) | Scenario B · Scenario C · authentication · authorization (403 residual) · secrets · attack surface · audit · failure handling · dependency failure · recovery · concurrent identities (C1) · tracing · integrity · persistence · backup and restore · migration · runbook · known artifact |
+| **OBSERVED** (1) | performance (local latency; no requirement) |
+| **FAIL** (1) | rollback of a deployment: NOT VERIFIED |
+| **BLOCKED** (6) | Scenario A (FS-DP-07) · logging/metrics/alerting (FS-DP-06) · environment separation (ENVIRONMENT-SEPARATION) · operational ownership (OPERATIONAL-OWNERSHIP) · runtime version pinned (PYTHON-RUNTIME-VERSION) · reproducible deployment (FS-DP-03) |
 
 ## 4. Rollback data compatibility (verified in this discovery)
 
@@ -66,33 +76,28 @@ duplicate run ids under concurrency. One below `215248f` (B3) brings back an
 API that authenticates nobody. The rollback floor for any release is the
 release candidate itself.
 
-## 5. Authorized construction, in order (the next actions)
+## 5. Authorized construction, in order (status at `§88`)
 
-| # | Action | Authority |
-|---|---|---|
-| A1 | Readiness gate v2: map its criteria to `§2`. Let a criterion pass on **recorded live evidence** (with its class) where it cannot be measured in-process. Keep BLOCKED where a decision is missing | ACT-003 `§4.4` |
-| A2 | Backup and restore drill: logical export of `aios_records` through operator tooling; restore into a fresh store; the application reads identical runs, Trace and audit; the procedure recorded | `FS-DP-01` point 6; `FS-ARCH-RAT-001` `§3.3` |
-| A3 | Operational runbook: deploy, verify, roll back, backup and restore, key and token rotation, incident steps, health checks. Monitoring and alerting marked pending FS-DP-06 | ACT-003 `§18` |
-| A4 | Rollback procedure and a **Preview** drill (redeploy an earlier build and verify, then return) | ACT-003 `§18`, `§25` |
-| A5 | Pin the Python runtime version for reproducible builds | ACT-003 `§12` (configuration) |
-| A6 | Live Preview performance observation (latency, cold start) | needs Preview access: **Founder** (`§6`) |
+| # | Action | Authority | Status |
+|---|---|---|---|
+| A1 | Readiness gate v2: evidence classes; recorded live evidence recognized, never relabelled | ACT-003 `§4.4` | **done** (`§3`) |
+| A2 | Backup and restore drill | `FS-DP-01` point 6; `FS-ARCH-RAT-001` `§3.3` | **done**: `FS-09-BACKUP-RESTORE-DRILL.md` |
+| A3 | Operational runbook | ACT-003 `§18` | **done**: `FS-09-OPERATIONAL-RUNBOOK.md` (monitoring and alerting are placeholders pending FS-DP-06) |
+| A4 | Rollback procedure and a **Preview** drill | ACT-003 `§18`, `§25` | procedure **done** (runbook `§9`, `§10`); drill **not run**: needs Preview access (**Founder**) |
+| A5 | Pin the Python runtime version | ACT-003 `§12` | **stopped at the ambiguity**: FS-02 says 3.11, the host ran 3.12, 3.11 availability not established. Nothing pinned (`FS-09-DECISION-REGISTER.md` `§1.5`) |
+| A6 | Live Preview performance observation | needs Preview access: **Founder** | not run |
 
 ## 6. Decisions surfaced
 
-**Architect-reserved** (stop at the boundary; packages exist):
+Recorded in full, with question, source, authority, options, impact and
+blocker status, in **`FS-09-DECISION-REGISTER.md`**. No option is chosen there.
 
-1. **FS-DP-03 Networking**: one origin, AIOS never addressable, the browser never reaches the database, backend egress only to the database; TLS/HSTS by the host; default domain first. This matches what is deployed, but is unratified.
-2. **FS-DP-06 Observability**: telemetry separate from Trace and audit; one structured JSON log line per request; a readiness signal; alerting through the host or an external uptime check.
-3. **FS-DP-07 Agent creation**: A1 keep reserved (Scenario A stays blocked) · A2 instance registration only · A3 full Agent Factory.
-4. **Environment separation** (new, no package yet): how Production's data is kept apart from Preview's in the ratified Supabase arrangement.
+**Architect:** FS-DP-03 Networking · FS-DP-06 Observability · FS-DP-07 Agent
+creation · ENVIRONMENT-SEPARATION · PYTHON-RUNTIME-VERSION.
 
-**Founder-reserved:**
-
-1. **Scenario A**: if FS-DP-07 = A1, whether a mandatory scenario may stand as a classified non-blocking residual.
-2. **Performance requirement**: state one, or accept OBSERVED as non-blocking.
-3. **Spending** (D3-A): paid alerting; a paid Supabase plan for downloadable backups and no pause-on-inactivity.
-4. **Live access for FS-09 Preview checks**: the FS-08 bypass was scoped to that suite and revoked. FS-09 live checks (performance, 403, rollback drill) need a new, equally temporary authorization.
-5. **Operator identity**: a second, narrower Preview principal for a live 403; custody and delivery of the production operator token; operational ownership (who responds to incidents).
+**Founder:** Scenario A as a residual (if FS-DP-07 = A1) · a performance
+requirement · operational ownership (including backup cadence) · live access
+for FS-09 checks · operator identities · spending · release (not due).
 
 ## 7. Evidence already available from FS-08
 
@@ -101,3 +106,29 @@ and `FS-08-FINAL-RECONCILIATION-GATE.md`. They cover authentication,
 authorization (grant and anonymous refusal), secrets, headers, audit, Trace,
 persistence and read-back, concurrency, failure paths, append-only
 enforcement, and reproducible Preview builds.
+
+## 8. Authorized construction (`§88`)
+
+| Workstream | Delivered | Evidence |
+|---|---|---|
+| A — gate v2 | `fullstack/readiness.py`: evidence classes `local-current`, `preview-recorded`, `operator-recorded`, `local-recorded`; the FS-08 file read, never written; a stale recording or a missing check fails the criterion; the drill re-run on each evaluation; the runbook's sections checked | `fullstack/tests/test_readiness.py` (23 tests; mutation-checked) |
+| B — backup/restore | `fullstack/deploy/backup.py` (format `fullstack.backup/1`); `backup-restore` and `backup-verify` in `python -m fullstack.backend`; the live export and manifest | `FS-09-BACKUP-RESTORE-DRILL.md`; `docs/fullstack/evidence/FS-09-BACKUP-*.json*`; `fullstack/tests/test_backup_restore.py` (23 tests; mutation-checked) |
+| C — runbook | `FS-09-OPERATIONAL-RUNBOOK.md`, 14 sections, both rollback floors stated as not production-safe | the gate's runbook row |
+| D — runtime pin | not pinned; the ambiguity recorded | decision register `§1.5` |
+| E — decisions | `FS-09-DECISION-REGISTER.md` | — |
+
+Production untouched. No project, database or table created. No secret in any file.
+
+## 9. Exact blockers to FS-09 PASS
+
+1. **FS-DP-03** ratified (Architect), then verified on the Preview.
+2. **FS-DP-06** ratified (Architect), then implemented and verified.
+3. **FS-DP-07** decided (Architect); if A1, the Founder classifies Scenario A as a residual.
+4. **ENVIRONMENT-SEPARATION** decided (Architect), then implemented, with the migration replayed and a restore drill on the new target if one is created.
+5. **PYTHON-RUNTIME-VERSION** decided (Architect), then pinned and the Preview re-verified on it.
+6. **OPERATIONAL-OWNERSHIP** decided (Founder), including backup cadence.
+7. **Rollback verified** on a deployment: a Preview drill, which needs a Founder-authorized temporary Preview access.
+8. The performance position (Founder): a requirement to measure, or OBSERVED accepted as non-blocking.
+9. The residuals classified as non-blocking at the gate: the live 403, dependency failure exercised in-process only, and the runbook not yet exercised in an incident.
+
+FS-09 remains **OPEN**. FS-10 remains **NOT STARTED**.
