@@ -9324,3 +9324,18 @@ Production Ready, Production Released or Operational AIOS.
 | **Certification readers** | the act states no phase certification: `_CERTIFIES` finds no match; `certified_phases()` = `{10, 11, 12, 13}`, provenance unchanged (12 ← `FD-P12-006`, 13 ← `FDR-7`); no anomalies |
 | **Living check with this act tracked** | successor 13 tests OK, all five elements hold; predecessor fails on [status] only (Founder acts 49/96 = 0.510, corpus 178/597 = 0.298), the classified signal, visible and unsuppressed |
 | **Changed** | nothing in `tools/`, the P12 manifest, P12 or P13 evidence, or any reader. Added: the act (verbatim), this record; the successor record's certification row updated to cite this decision |
+
+---
+
+## 77. ACT-CC-POST-P13-AIOS-FULL-STACK-003 — Received as Proposed; FS-08 Re-discovered: Still BLOCKED, Vercel Connector Scope Lost (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Act** | `acts/ACT-CC-POST-P13-AIOS-FULL-STACK-003-FULL-STACK-COMPLETION-TO-OPERATIONAL-AIOS.md` · content sha256 `d118a96669434900fc403d05b4406a2b3fba3840bdaf214fd519dc4a06aeafa3` · stated *"PROPOSED FOR FOUNDER AUTHORIZATION"*; its `§39` is a *"Proposed Founder Decision"* |
+| **Record** | `docs/fullstack/FS-08-ACT-003-REDISCOVERY-RECORD.md` |
+| **Authority reading** | not operative until the Founder authorizes it; its new grants (auto-advance, FS-09, FS-10 preparation) not exercised. Steps 1–5 of its `§42` ran under `ACT-CC-POST-P13-AIOS-FULL-STACK-002` (`§71`) |
+| **FS-DP-05 · FS-DP-02** | routed (`§71`); `§R2.13` blocks still empty; no Architect decision recorded: **ESCALATED**, implementation NOT_STARTED |
+| **EXT-03** | **worse**: the Vercel connector returns 403 for scope `adibelepp21-bytes-projects` and lists 0 teams; deployment, env and log reads now unavailable. Production alias still 404 (as `§67`) |
+| **EXT-05** | presence of `SUPABASE_SECRET_KEY` in Preview **UNKNOWN** (unreadable); last observed absent (`§70`). Supabase `aios_records`: 0 rows, RLS on, unchanged |
+| **State** | FS-08 **BLOCKED**; FS-09, FS-10 NOT_STARTED; production not released and untouched; P13 certified, closed, unchanged; Successor V2 byte-identical |
+| **Changed** | nothing but the Act (verbatim), the record and this entry. No certification statement: certified phases stay `{10, 11, 12, 13}` |
