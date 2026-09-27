@@ -168,3 +168,11 @@ cannot be sent … enter it again as one line"*, never quoting the value, and
 makes no database call. Test:
 `test_a_malformed_key_is_named_as_such_and_never_quoted`. Persistence semantics
 are unchanged (FS-DP-01).
+
+**Confirmed live** (Preview of `207ee77`, `dpl_5tUReDRpvgSiM3zP51cPi7K8Vj7x`,
+17:41:47 UTC, request `81fdc97b47ace635`): `GET /api/v1/health` → 503
+*"the server-side database key contains a character that cannot be sent …
+enter it again as one line"*. The configured `SUPABASE_SECRET_KEY` is
+malformed, and no database call was made. The connector reached this fresh
+deployment after two SSO redirects a few seconds apart. The earlier Preview
+answered consistently.

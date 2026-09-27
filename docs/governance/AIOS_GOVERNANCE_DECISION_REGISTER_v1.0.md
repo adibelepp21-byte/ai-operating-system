@@ -9452,3 +9452,14 @@ Production Ready, Production Released or Operational AIOS.
 | **Repair** | the Vercel adapter now refuses a malformed key with an explicit 503 reason and no database call (`ACT-003` `§12`); fullstack 135 OK |
 | **Still required** | a clean `SUPABASE_SECRET_KEY`; `AIOS_OPERATOR_TOKENS` for Preview (FS-DP-02 B3); then live Preview verification (V14; FS-DP-05 `§R2.8` item 5) |
 | **State** | FS-08 **BLOCKED** on these two Founder-side configurations. FS-09, FS-10 NOT_STARTED. Production unchanged |
+
+---
+
+## 83. Live Confirmation — Preview `SUPABASE_SECRET_KEY` Malformed (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Evidence** | Preview of `207ee77` (`dpl_5tUReDRpvgSiM3zP51cPi7K8Vj7x`), request `81fdc97b47ace635`: 503 *"the server-side database key contains a character that cannot be sent … enter it again as one line"* |
+| **Meaning** | `§82`'s diagnosis is confirmed. The key is present but malformed, most likely by a line break. The value was not read |
+| **Founder action** | re-enter `SUPABASE_SECRET_KEY` (Preview, Sensitive) as one line, then redeploy the Preview; add `AIOS_OPERATOR_TOKENS` for Preview |
+| **State** | FS-08 **BLOCKED** on those two configurations; EXT-03 access available through the connector |
