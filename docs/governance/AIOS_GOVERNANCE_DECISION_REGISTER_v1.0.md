@@ -9463,3 +9463,16 @@ Production Ready, Production Released or Operational AIOS.
 | **Meaning** | `§82`'s diagnosis is confirmed. The key is present but malformed, most likely by a line break. The value was not read |
 | **Founder action** | re-enter `SUPABASE_SECRET_KEY` (Preview, Sensitive) as one line, then redeploy the Preview; add `AIOS_OPERATOR_TOKENS` for Preview |
 | **State** | FS-08 **BLOCKED** on those two configurations; EXT-03 access available through the connector |
+
+---
+
+## 84. FS-DP-02 B3 Operational Dependency — AIOS_OPERATOR_TOKENS Configured for Preview (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Instruction** | Founder, 2026-09-27: *"EXECUTE STEP 2: AIOS_OPERATOR_TOKENS"*. The Founder has no terminal; Claude Code generates the token and configures the Preview |
+| **Record** | `docs/fullstack/FS-08-LIVE-PREVIEW-VERIFICATION.md` |
+| **Done** | token generated with the canonical command (subject `founder`; scopes `aios.observe`, `aios.workflow.run`, `aios.audit`); hash entry configured as `AIOS_OPERATOR_TOKENS` (sensitive, **preview only**, env id `NHJxyX58g2U92d0U`) through the authorized Vercel connector |
+| **Plaintext token** | held only in a mode-600 file in this session's scratch directory, outside the repository; scanned absent from the working tree, the index and all git history; not sent in chat |
+| **Production** | untouched: no Production variable exists; no Production deployment, alias or credential changed |
+| **State** | FS-08 **not passed**; live verification follows in the record |
