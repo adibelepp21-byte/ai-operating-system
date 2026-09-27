@@ -7,7 +7,7 @@
 | **Status** | **PROPOSED — NOT RATIFIED** |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A; `FD-2` open) |
 | **Founder constraints** | No spending (D3-A). Supabase is named for the **database** only; using its authentication service is a further choice this package asks for |
-| **Prepared by** | Claude Code, 2026-09-26 |
+| **Prepared by** | Claude Code, 2026-09-26; **Revision 2** 2026-09-27 (below), under `ACT-CC-POST-P13-AIOS-FULL-STACK-002` `§11` |
 
 ## Context
 
@@ -64,4 +64,106 @@ authenticator; the production composition has none.
 - [ ] Part A: A1 · A2
 - [ ] Part B: B1 · B2 (with a Founder naming) · B3 · other
 - [ ] Initial grants for the Founder's own principal
+- [ ] Decided as: Architect · Founder as Architect
+
+---
+
+## Revision 2 (2026-09-27): after the deployment was ratified and built
+
+FS-DP-01 and FS-DP-04 are now ratified and implemented (Register `§68`,
+`§69`). That fixes facts the first revision could only assume. This revision
+is **proposed; Claude does not ratify it** (Act NC-01, NC-06).
+
+### R2.1 Evidence
+
+| Fact | Class | Source |
+|---|---|---|
+| The backend has an authenticator **port**; the shipped one refuses everyone (`NoAuthenticator`). Every route but health answers 401, locally and in the deployed function | Observed | `fullstack/backend/security.py`; `fullstack/deploy/vercel.py`; `test_the_shipped_function_authenticates_nobody` |
+| Authorization is by three scopes, one per route, decided in the backend only | Observed | `security.authorize`; `fullstack/backend/contract.py` |
+| Every allowed or refused decision is audited with the subject, never the credential | Observed | `AuditLedger` |
+| The console sends `Authorization: Bearer <credential>`, keeping the credential in `sessionStorage` | Observed | `fullstack/frontend/api.js` |
+| The console's CSP allows network calls to its own origin only (`connect-src 'self'`) | Observed | `fullstack/backend/api.py` `PAGE_CSP`; `vercel.json` |
+| Deployed, each request has its own Runtime and nothing survives in memory (FS-DP-04 A1). A server-side session would need durable storage | Observed | `fullstack/deploy/vercel.py` |
+| The Supabase project's Auth signs tokens with **ES256** (EC P-256), from its public key set | Observed, 2026-09-27 | `https://scfymftfzkpilqbgmfwv.supabase.co/auth/v1/.well-known/jwks.json` |
+| Python's standard library has no ECDSA verification. The backend so far has **no third-party dependency** | Observed | stdlib; repository |
+| Vercel Authentication (SSO) protects every preview URL for team members. It does not hand the member's identity to the function, and it does not cover custom domains | Observed (protection); **Inferred** (no identity passed) | `get_project`; `FS-08-DEPLOYMENT-EVIDENCE.md` `§4` |
+| A WorkOS connector exists in this environment | Observed | session tools; not a Founder-named provider |
+
+### R2.2 Requirements
+
+From the Act's FS-06 flows and the backend as built:
+
+1. The backend alone decides; the frontend never holds authority.
+2. Least privilege: `aios.observe` by default, the other scopes explicitly.
+3. Every decision audited with a stable subject; no credential recorded.
+4. Stateless per request (A1): the credential is verified on each request,
+   without in-memory sessions.
+5. No secret in the repository, the frontend bundle, logs, Trace, audit or
+   responses.
+6. Fail closed: a verifier error authenticates nobody.
+7. No spending (D3-A).
+
+### R2.3 Part A: unchanged
+
+A1 recommended: a signed-in person is a principal of the application layer,
+not an AIOS entity. Nothing in the deployment changes this.
+
+### R2.4 Part B: options, revised with the evidence
+
+| # | Mechanism | Backend | Frontend | New dependency or secret | Fit |
+|---|---|---|---|---|---|
+| **B3** | **Operator bearer tokens.** The Founder generates each token offline; the host stores only its SHA-256 hash with a subject and scopes (`AIOS_OPERATOR_TOKENS`); the backend hashes the presented token and compares in constant time | a drop-in `Authenticator`, stdlib | **none**: the console already sends a bearer credential | a host environment variable set by the Founder; Claude never sees a token | operator-only; revocation by editing the variable and redeploying; no self-service |
+| B1a | Supabase Auth, token verified locally (ES256 against the public key set) | an `Authenticator` plus a JWT/ECDSA library | a sign-in flow; CSP `connect-src` widened to the Supabase origin, or sign-in proxied through the backend | the **first third-party dependency** in the backend | multi-user; scopes in `app_metadata`, set by the operator |
+| B1b | Supabase Auth, token verified by calling Supabase's user endpoint on each request | stdlib; one extra HTTPS call per request | as B1a | none new | multi-user; adds latency and a runtime dependency on Supabase Auth |
+| B2 | WorkOS AuthKit | an SDK or JWT library | a hosted sign-in | a provider **not named by the Founder** | needs a Founder naming first |
+| B4 | Vercel Authentication as the only gate | none | none | none | **Rejected**: the function learns no identity, so there is no subject for audit and no scopes; it does not cover custom domains |
+
+**Recommendation: B3 first**, for the operator-only surface FS-08 and FS-09
+need, with B1a or B1b as the step to multiple users when that becomes a
+requirement. B3 changes one class and nothing else; its tokens never pass
+through Claude. The recommendation is not a decision.
+
+### R2.5 Implications
+
+| | B3 | B1a / B1b |
+|---|---|---|
+| Security | tokens are bearer secrets: the console holds one in `sessionStorage`, as today's tests do. Only hashes are on the host. HTTPS only | standard JWTs, expiring; a sign-in surface to secure; B1b trusts Supabase Auth on every request |
+| State | none (stateless) | none in the backend; sessions live in Supabase Auth |
+| Deployment | one environment variable per environment; Preview and Production may hold different principals | Auth settings in the Supabase project; redirect URLs per deployment URL |
+| Compatibility | the `Authenticator` port, scopes, audit and console unchanged | port, scopes and audit unchanged; console gains sign-in; CSP changes |
+| Concurrency | opens run creation: **FS-DP-05 must be decided before or with it** | same |
+
+### R2.6 Unresolved decisions (for the Architect, or the Founder where marked)
+
+- Initial principals and grants, e.g. the Founder's own principal with all three scopes.
+- Token lifetime and rotation (B3), or token expiry and sign-in methods (B1).
+- Whether Preview and Production share principals.
+- Naming WorkOS as a provider (**Founder**, only if B2 is wanted).
+
+### R2.7 Negative controls for implementation, whichever is chosen
+
+- No credential accepted by any code path before ratification (today's
+  `NoAuthenticator` stays the shipped default until then).
+- No token, key or hash in the repository, tests' fixtures excepted as
+  obviously fake values.
+- No credential in audit, Trace, logs or responses.
+- A verifier error authenticates nobody.
+- The frontend never decides a scope.
+- No Supabase or WorkOS feature becomes an AIOS entity (Part A1).
+
+### R2.8 After ratification
+
+Implementation is one `Authenticator` and its tests, then the composition in
+`fullstack/deploy/vercel.py`. For B3 the Founder then sets
+`AIOS_OPERATOR_TOKENS` for Preview (a new external dependency, like EXT-05)
+and gives the console a token. The live success path of FS-08 becomes
+testable.
+
+### R2.9 Exact decision required
+
+- [ ] Part A: A1 · A2
+- [ ] Part B: B3 · B1a · B1b · B2 (with a Founder naming) · other
+- [ ] Initial principals and grants
+- [ ] Token lifetime / rotation
+- [ ] Preview and Production principals: shared · separate
 - [ ] Decided as: Architect · Founder as Architect

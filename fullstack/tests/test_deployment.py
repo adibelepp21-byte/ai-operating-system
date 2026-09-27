@@ -19,6 +19,7 @@ from urllib.parse import parse_qs, unquote, urlsplit
 from wsgiref.util import setup_testing_defaults
 
 from fullstack.backend import api as api_module
+from fullstack.backend.aios import AIOSApplication
 from fullstack.backend import supabase_storage
 from fullstack.backend.supabase_storage import SupabaseStorage, StorageUnavailable
 from fullstack.deploy import vercel
@@ -284,6 +285,38 @@ class ThePerRequestFunction(unittest.TestCase):
         self.assertEqual("SupabaseStorage('https://scfymftfzkpilqbgmfwv.supabase.co/rest/v1')",
                          repr(store))
         self.assertIsNone(vercel.storage_from_environment({"SUPABASE_SECRET_KEY": "  "}))
+
+
+class TheConcurrencyFinding(unittest.TestCase):
+    """FS-DP-05 (not ratified): the finding, reproduced, not fixed.
+
+    Per request, a run number is the count of durable run records plus one.
+    Two requests that start before either appends a run take the same number.
+    The fix changes run identity, which is Architect-reserved (Act
+    `ACT-CC-POST-P13-AIOS-FULL-STACK-002` NC-07), so the test is an expected
+    failure: it turns into an unexpected success when a ratified fix lands."""
+
+    def two_concurrent_runs(self):
+        fake = FakePostgREST()
+        first, second = (AIOSApplication(None, REPO_ROOT, storage=SupabaseStorage(
+            URL, KEY, transport=fake)) for _ in range(2))
+        first.start()
+        second.start()  # both Runtimes have read the run count
+        runs = [app.start_run(RUN["workflow"], RUN["inputs"], who)
+                for app, who in ((first, "p1"), (second, "p2"))]
+        return runs, first
+
+    def test_the_finding_reproduces(self):
+        runs, reader = self.two_concurrent_runs()
+        self.assertEqual(["run-00001", "run-00001"], [r["run_id"] for r in runs])
+        self.assertNotEqual(runs[0]["runtime_id"], runs[1]["runtime_id"])
+        # The first run can no longer be addressed by its id.
+        self.assertEqual("p2", reader.run("run-00001")["requested_by"])
+
+    @unittest.expectedFailure
+    def test_concurrent_requests_mint_distinct_run_ids(self):
+        runs, _ = self.two_concurrent_runs()
+        self.assertNotEqual(runs[0]["run_id"], runs[1]["run_id"])
 
 
 class TheVercelConfiguration(unittest.TestCase):

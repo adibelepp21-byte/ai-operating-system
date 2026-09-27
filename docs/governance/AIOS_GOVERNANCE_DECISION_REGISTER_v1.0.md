@@ -9104,3 +9104,20 @@ measurement as history; no decision taken.
 | **Observations for the Architect** | INV-12 reading of a vendor store beneath `StorageFacility` (implemented as ratified, removable without format change); concurrent run numbering per request (FS-DP-05) must be settled before FS-DP-02 opens run creation |
 | **Needed from the Founder** | EXT-05: set `SUPABASE_SECRET_KEY` for Preview in project `aios-platform`; EXT-03: re-authorize the Vercel connection for team `adibelepp21-bytes-projects` (or open the preview). Claude did not read, create or record any secret |
 | **FS-08** | **NOT CLOSED**: the live half of the `FS-ARCH-RAT-001` `§15` evidence is missing. FS-09 not entered. No claim of Production Ready, Production Released or Operational AIOS |
+
+---
+
+## 70. ACT-CC-POST-P13-AIOS-FULL-STACK-002 — FS-08 Continuation Act Received and Executed; FS-DP-02, FS-DP-05 Revision 2 Proposed; FS-08 BLOCKED (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `acts/ACT-CC-POST-P13-AIOS-FULL-STACK-002-FS-08-CONTINUATION.md` · content sha256 `6e527747bf92f1112b84c466385be7cb0ea854427fed5862a2efe814e9154836` |
+| **Received** | from the Founder, 2026-09-27, in the message body |
+| **Stated status, noted** | Header: *"Status: PROPOSED FOR FOUNDER AUTHORIZATION"*. `§34`: *"Proposed Decision: AUTHORIZE ACT-CC-POST-P13-AIOS-FULL-STACK-002"*, with no completed authorization record. This entry does **not** record the Act as authorized |
+| **Treatment** | Executed only where authority already existed: re-discovery and verification (`FS-ARCH-RAT-001` `§7`, `§13`) and preparation of decision packages (`FD-FS-001` D2-A). The Act's own negative controls were observed throughout. Auto-advance to FS-09 on a verified PASS is already granted by `FS-ARCH-RAT-001` `§14` |
+| **Record** | `docs/fullstack/FS-08-CONTINUATION-ACT-002.md` (return package A–M) |
+| **Workstream A** | EXT-05 **blocked** (no environment variable on `aios-platform`); EXT-03 **blocked** (preview access denied). Supabase `aios_records`: 0 rows. Production unchanged (`22c0b49`) |
+| **Workstream B** | FS-DP-02 revision 2 **proposed**: A1; B3 operator tokens first, B1a/B1b Supabase Auth later; evidence includes ES256 tokens the standard library cannot verify. FS-DP-05 revision 2 **proposed**: the duplicate run-id finding reproduced by `TheConcurrencyFinding`; C1 (identity from the Runtime, Trace selected by `runtime`), I1, partial runs accepted. Neither is ratified; FS-DP-05 must be decided before or with FS-DP-02's implementation |
+| **Changed** | the Act (verbatim), this entry, the two packages, the return package, one test class. No application behaviour, schema, configuration or provider setting changed |
+| **Verification** | fullstack 109 (1 expected failure: the concurrency property), native_core 801, consumers 276, bounded_exception 29, tools 1920; citation audit 0 errors |
+| **Final FS-08 gate** | **BLOCKED**: EXT-03, EXT-05 (Founder); FS-DP-02, FS-DP-05 (Architect). Act state **EXHAUSTED_WITH_CLASSIFIED_REMAINDER**. No claim of FS-08 PASS, Production Ready, Production Released or Operational AIOS |
