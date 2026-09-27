@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-DP-05` (provisional) |
 | **Area** | Scaling — Freeze `§10`, Architect-reserved |
-| **Status** | **PROPOSED — NOT RATIFIED** |
+| **Status** | **PROPOSED — ROUTED TO THE ARCHITECT** (Register `§71`, 2026-09-27); **AWAITING ARCHITECT DECISION**. Not ratified |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A) |
 | **Founder constraints** | No spending (D3-A) |
 | **Prepared by** | Claude Code, 2026-09-26; **Revision 2** 2026-09-27 (below), under `ACT-CC-POST-P13-AIOS-FULL-STACK-002` `§12` |
@@ -157,3 +157,58 @@ from a count read from the store. Order is the store's append order.*
 - [ ] Partial runs: accepted as described · other
 - [ ] Part B: as in revision 1 · amended
 - [ ] Decided as: Architect · Founder as Architect
+
+### R2.10 Routing record (2026-09-27)
+
+Routed to the Architect by the Founder's authorization of
+`ACT-CC-POST-P13-AIOS-FULL-STACK-002` (Register `§71`). That authorization
+**does not ratify** this package. The elements its `§9` requires, and where
+they are:
+
+| Element | Where |
+|---|---|
+| Current evidence | `§R2.1`, `§R2.2` |
+| Architectural question | *How does a Runtime created per request obtain an identity for what it creates, when many Runtimes share one append-only store?* (`§R2.5` proposes the answer) |
+| Current implementation | `§R2.1`, `§R2.2`: run number = durable run count + 1; positional Trace range |
+| Options | `§R2.4` |
+| Implications | `§R2.7` |
+| Proposed recommendation | `§R2.5`: C1 + I1 + partial runs accepted |
+| Negative controls | `§R2.11` |
+| Implementation boundary | `§R2.12` |
+| Verification requirements | `§R2.8` |
+| Architect decision block | `§R2.13` |
+
+### R2.11 Negative controls
+
+- No change to run identity or Trace attribution before a decision.
+- No change to `StorageFacility`, the Runtime contract, Trace records or the
+  schema under any option recommended here.
+- No provider lock, sequence or host setting as the source of identity or
+  order (Act NC-08).
+- Records already written are never rewritten; a new format is read beside
+  the old one.
+- The expected-failure test is un-marked only by the change that makes it
+  pass.
+
+### R2.12 Implementation boundary (if C1 is ratified)
+
+In: `fullstack/backend/aios.py` (identity, Trace selection by `runtime`, run
+format `fullstack.run/2` read beside `/1`), the console's display of run ids,
+the FS-02 blueprint text for the run-id value, tests.
+Out: `native_core/`, `consumers/`, `tools/`, the migration, `vercel.json`,
+any certified root.
+
+### R2.13 Architect decision
+
+| Field | Value |
+|---|---|
+| Architect | *(to complete)* |
+| Date | *(to complete)* |
+| Decision | [ ] RATIFY C1 — Runtime-derived run identity · [ ] SELECT ANOTHER DOCUMENTED OPTION: ______ · [ ] REQUEST REVISION · [ ] DEFER · [ ] REJECT |
+| Idempotency | [ ] I1 · [ ] I2 |
+| Partial runs | [ ] accepted as described · [ ] other |
+| Conditions | *(Architect to complete)* |
+| Rationale | *(Architect to complete)* |
+| Status | **AWAITING ARCHITECT DECISION** |
+
+A decision takes effect when recorded in the Register, not in this file.

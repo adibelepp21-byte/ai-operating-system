@@ -9121,3 +9121,63 @@ measurement as history; no decision taken.
 | **Changed** | the Act (verbatim), this entry, the two packages, the return package, one test class. No application behaviour, schema, configuration or provider setting changed |
 | **Verification** | fullstack 109 (1 expected failure: the concurrency property), native_core 801, consumers 276, bounded_exception 29, tools 1920; citation audit 0 errors |
 | **Final FS-08 gate** | **BLOCKED**: EXT-03, EXT-05 (Founder); FS-DP-02, FS-DP-05 (Architect). Act state **EXHAUSTED_WITH_CLASSIFIED_REMAINDER**. No claim of FS-08 PASS, Production Ready, Production Released or Operational AIOS |
+
+---
+
+## 71. ACT-CC-POST-P13-AIOS-FULL-STACK-002 Founder Authorization; FS-DP-02 and FS-DP-05 Routed to the Architect (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `acts/ACT-CC-POST-P13-AIOS-FULL-STACK-002-FOUNDER-AUTHORIZATION.md` · content sha256 `2f839ccef4d387d4a08ac5f87b21ca5cd5049a2926ad5b37a0ad99930721177d` |
+| **Received** | from the Founder, 2026-09-27, in the message body. Stated status *"FOUNDER AUTHORIZED"* |
+| **Supersedes** | the note in `§70` that the Act was not recorded as authorized. `§70` and its evidence stand unchanged |
+
+### ACT-CC-POST-P13-AIOS-FULL-STACK-002 — Founder Decision · Act Authorized (Act Authorization Only; No Architecture Ratification)
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-CC-POST-P13-AIOS-FULL-STACK-002` |
+| **Date** | 2026-09-27 |
+| **Decided by** | Founder (Moriarty) |
+| **Decision** | *"AUTHORIZE ACT-CC-POST-P13-AIOS-FULL-STACK-002"* (`§2.1`), status *"AUTHORIZED"* |
+| **Scope** | FS-08 continuation. Workstream A: EXT-03 + EXT-05. Workstream B: FS-DP-02 + FS-DP-05 (discovery, packages, routing; implementation and verification **after** Architect ratification) |
+| **Kind** | **ACT AUTHORIZATION.** It is not **ARCHITECTURE RATIFICATION**: *"This authorization does NOT constitute Architect ratification of either package"* (`§5`); *"Architect Ratification: NOT INCLUDED IN THIS FOUNDER AUTHORIZATION"* (`§20`). This entry ratifies no decision package |
+| **Not authorized** | production release; Final System Acceptance; promotion of Preview to Production; plan upgrades or billing (`§17`) |
+| **Negative controls** | `§19` NC-01 … NC-14, including *"Founder authorization ≠ Architect ratification"* |
+
+**Architect decision routing** (`§21`, `§22`)
+
+| Package | Proposal | Status |
+|---|---|---|
+| `docs/fullstack/decision-packages/FS-DP-02-IDENTITY-AND-AUTHENTICATION.md` revision 2 | A1 + **B3** operator bearer tokens | **PROPOSED · AWAITING ARCHITECT DECISION** |
+| `docs/fullstack/decision-packages/FS-DP-05-SCALING.md` revision 2 | **C1** Runtime-derived run identity + I1 | **PROPOSED · AWAITING ARCHITECT DECISION** |
+
+The decision blocks in the instrument's `§22` are unmarked and their conditions
+read *"[ARCHITECT TO COMPLETE]"*. Each package now carries the elements `§9`
+requires (its `§R2.10` maps them) and an empty Architect decision block
+(`§R2.13`). Implementation order when decided: FS-DP-05, then FS-DP-02, or both
+as one change set with the decisions recorded separately (`§10`).
+
+**Workstream A re-check on receipt**
+
+| Dependency | Status | Evidence |
+|---|---|---|
+| EXT-05 | **Blocked** | `filter_project_envs` on `aios-platform`: no environment variables |
+| EXT-03 | **Blocked** | `web_fetch_vercel_url` on `dpl_drGHDofUQdk1SgNhTzDSEwSTDunU`: access denied |
+| Production | **Untouched** | `dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj` from `22c0b49` |
+
+**FS-08: BLOCKED / NOT CLOSED.** FS-09 not started. No claim of FS-08 PASS,
+Production Ready, Production Released or Operational AIOS.
+
+**Correction to `§70` and escalation: one regression failure outside Claude's repair authority**
+
+| Field | Value |
+|---|---|
+| **Failure** | `tools.tests.test_p12_governance_evidence_verification` · `test_the_narrower_population_is_not_better` [status] |
+| **What it measures** | the P12-W6 claim that Founder acts (`docs/governance/acts/`) do not state labelled governance elements much more often than the corpus: acts' ratio ≤ corpus ratio + 0.2, counting a `Status:` label in the first 80 lines of each tracked instrument |
+| **Why it fails now** | committing the verbatim `ACT-CC-POST-P13-AIOS-FULL-STACK-002` Act in `20742f5` made it a tracked instrument whose text carries *"Status: PROPOSED FOR FOUNDER AUTHORIZATION"*. Founder acts with a status label went from 44/89 (0.494) to 45/90 (0.500), over the limit of 0.496 (corpus 174/587 = 0.296, + 0.2). Committing this entry's instrument adds one more (46/91) |
+| **Correction** | `§70` reported `tools` 1920 OK. That run was on a working tree where the Act file was still **untracked**, so it was not counted. On a fresh checkout of `20742f5` this test **fails**. The other `§70` results stand |
+| **Class** | outside Claude's repair authority. The test and its measurement are P12-W6 machinery in `tools/`, which the Full Stack Act lets Claude modify only *"unless strictly necessary and independently authorized"*. The only other ways to make it pass (not persisting Founder instruments verbatim in `acts/`, or pushing their status line below line 80) would alter the evidence to suit the measurement. **Frozen; not worked around** |
+| **Finding** | the claim the test encodes, *"Founder acts state fewer labelled elements than the corpus average, because they state them in prose"* (`tools/p12_governance_evidence_verification.py`, `by_population`), is no longer true of the corpus: recent Founder instruments state their status as a label. The corpus changed, not the code |
+| **Decision required (Founder)** | authorize one of: (a) re-baseline the claim on the current corpus and restate it; (b) pin the measurement to the corpus at its P12 certification commit; (c) change the tolerance; or another disposition. Until then the full regression has **one known failure**, and the FS-08 gate criterion *"Full regression passes"* is **not met** |
+| **Also fixed here** | two `test_governance_index` failures caused by this entry's own first draft (its `Identifier` row did not match its heading). Corrected before commit |

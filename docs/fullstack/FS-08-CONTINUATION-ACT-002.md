@@ -180,3 +180,27 @@ Ready, Production Released or Operational AIOS.
 | 20.6 Repository clean and reproducible | yes, after the commit that carries this record | Verified |
 
 **Result: B. BLOCKED.** Named blockers in `§I`.
+
+## N. Addendum: Founder authorization and Architect routing (2026-09-27)
+
+The Founder authorized the Act (`acts/ACT-CC-POST-P13-AIOS-FULL-STACK-002-FOUNDER-AUTHORIZATION.md`,
+Register `§71`). That settles `§K` item 1. It is an **Act authorization**,
+not an architecture ratification.
+
+| Item | Now |
+|---|---|
+| Act | **FOUNDER AUTHORIZED** |
+| FS-DP-02 revision 2 | **routed**; awaiting Architect decision (package `§R2.13`) |
+| FS-DP-05 revision 2 | **routed**; awaiting Architect decision (package `§R2.13`) |
+| EXT-05, EXT-03 | re-checked on receipt: still **blocked** |
+| Readiness gate | still reads only FS-DP-01 and FS-DP-04 as ratified |
+| FS-08 | **BLOCKED** |
+| Act state | **EXHAUSTED_WITH_CLASSIFIED_REMAINDER**: it continues when an Architect decision is registered or when EXT-03 or EXT-05 is cleared |
+
+**Correction to `§E`.** The `tools` result there (1920 OK) was measured while
+the Act file was untracked. On the committed tree one test fails:
+`test_the_narrower_population_is_not_better` [status]. Committing verbatim
+Founder acts moved a P12-W6 corpus measurement over its limit. It is
+recorded, frozen and escalated in Register `§71`. Until the Founder decides,
+the FS-08 gate criterion *"Full regression passes"* is **not met**; this is
+one more reason FS-08 is BLOCKED, not a new failure of the application.

@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-DP-02` (provisional) |
 | **Area** | Identity (as a general/auth concept), Authentication — Freeze `§10`, Architect-reserved (*"no ratified entity"*) |
-| **Status** | **PROPOSED — NOT RATIFIED** |
+| **Status** | **PROPOSED — ROUTED TO THE ARCHITECT** (Register `§71`, 2026-09-27); **AWAITING ARCHITECT DECISION**. Not ratified |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A; `FD-2` open) |
 | **Founder constraints** | No spending (D3-A). Supabase is named for the **database** only; using its authentication service is a further choice this package asks for |
 | **Prepared by** | Claude Code, 2026-09-26; **Revision 2** 2026-09-27 (below), under `ACT-CC-POST-P13-AIOS-FULL-STACK-002` `§11` |
@@ -167,3 +167,66 @@ testable.
 - [ ] Token lifetime / rotation
 - [ ] Preview and Production principals: shared · separate
 - [ ] Decided as: Architect · Founder as Architect
+
+### R2.10 Routing record (2026-09-27)
+
+Routed to the Architect by the Founder's authorization of
+`ACT-CC-POST-P13-AIOS-FULL-STACK-002` (Register `§71`). That authorization
+**does not ratify** this package. The elements its `§9` requires, and where
+they are:
+
+| Element | Where |
+|---|---|
+| Current evidence | `§R2.1` |
+| Architectural question | Part A: *does human identity enter the AIOS Domain Model?* Part B: *by what mechanism does the backend learn who is calling?* |
+| Current implementation | `§R2.1`: the port with `NoAuthenticator`; scopes; audit; the console's bearer header |
+| Options | `§R2.4` |
+| Implications | `§R2.5` |
+| Proposed recommendation | `§R2.4`: A1 + B3 first |
+| Negative controls | `§R2.7` |
+| Implementation boundary | `§R2.11` |
+| Verification requirements | `§R2.12` |
+| Architect decision block | `§R2.13` |
+
+**Order** (authorization `§10`): FS-DP-05 is implemented before, or together
+with, whatever is ratified here, because an authenticator admits run
+requests.
+
+### R2.11 Implementation boundary (if B3 is ratified)
+
+In: one `Authenticator` in `fullstack/backend/security.py` reading token
+hashes from the host environment; its composition in
+`fullstack/deploy/vercel.py` and `fullstack/backend/__main__.py`; tests.
+Out: the scopes, `authorize`, the audit format, the console, the CSP,
+`native_core/`, `consumers/`, `tools/`, any certified root. Tokens are
+generated and set by the Founder; Claude never generates, sees or stores one.
+
+### R2.12 Verification requirements
+
+1. Unit: a valid token maps to its subject and scopes; unknown, malformed,
+   empty and near-miss tokens authenticate nobody; comparison is constant
+   time; a malformed configuration authenticates nobody.
+2. No token or hash in responses, audit, Trace or logs (scan, as the
+   security suite does today).
+3. Integration: 401 without a token, 403 without the scope, 201 with it;
+   audit subject recorded.
+4. Live, once EXT-03, EXT-05 and the token configuration exist: the success
+   path, the failure path, a refusal, Trace and audit on the preview.
+5. Full regression.
+
+### R2.13 Architect decision
+
+| Field | Value |
+|---|---|
+| Architect | *(to complete)* |
+| Date | *(to complete)* |
+| Part A | [ ] A1 · [ ] A2 |
+| Decision (Part B) | [ ] RATIFY B3 — operator bearer tokens · [ ] SELECT ANOTHER DOCUMENTED OPTION: ______ · [ ] REQUEST REVISION · [ ] DEFER · [ ] REJECT |
+| Initial principals and grants | *(to complete)* |
+| Token lifetime / rotation | *(to complete)* |
+| Preview and Production principals | [ ] shared · [ ] separate |
+| Conditions | *(Architect to complete)* |
+| Rationale | *(Architect to complete)* |
+| Status | **AWAITING ARCHITECT DECISION** |
+
+A decision takes effect when recorded in the Register, not in this file.
