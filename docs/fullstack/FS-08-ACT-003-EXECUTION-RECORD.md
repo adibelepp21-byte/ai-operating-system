@@ -146,3 +146,19 @@ depend on one of these.
 No code, test, `tools/`, manifest, reader, certified root, Vercel setting or
 Supabase state changed. P12 and P13 are protected; the certified Successor V2
 is byte-identical. Added: the Act (verbatim), this record, Register `§78`.
+
+## G. Update after FS-DP-05 (2026-09-27)
+
+| Item | Observed | Status |
+|---|---|---|
+| FS-DP-05 | Architect RATIFY C1 (Register `§79`); implemented and verified locally at `0706446` (`FS-DP-05-C1-IMPLEMENTATION-RECORD.md`) | RATIFIED · IMPLEMENTED · VERIFIED (local) |
+| FS-DP-02 | no Architect decision | awaiting Architect |
+| EXT-05 | `SUPABASE_SECRET_KEY` **present**: type sensitive, target **preview** only, created by `adibelepp21-byte` (env id `TO6WjDNM0Upqvh1z`). Value not read or decrypted | **PRESENCE VERIFIED**. Operational behaviour (persistence from the Preview) not yet verifiable: the surface is behind SSO |
+| Preview of `0706446` | `dpl_BcQ8mCFAEYuEE2hnbEkwTG5kfzcC`, READY, `icn1`, built after the key was set | deployment reproducible from the commit |
+| EXT-03 | the connector's fetch of `/api/v1/health` on that Preview: **302 to Vercel SSO** | **BLOCKED** |
+| Domain `aios-platform-eight.vercel.app` | now assigned to git branch `claude/aios-activation-authority-discovery-enq7bk` (updated by the account, not by Claude Code), so it serves this branch's Preview behind SSO (302). Earlier it served the production deployment's 404 | observed; a Founder-side change |
+| Deployment `dpl_HQQbYhBrSufyqJ7mJ59enRcAyrai` | a new **Preview** (target null) of production-branch commit `22c0b49`, created by the account | observed; not triggered by Claude Code |
+| Production | `dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj`, target production, commit `22c0b49`, unchanged | untouched by Claude Code |
+
+**Still needed for FS-08:** the FS-DP-02 decision, and an authorized route
+past SSO to the Preview (`§E` items 2, 4, 5).

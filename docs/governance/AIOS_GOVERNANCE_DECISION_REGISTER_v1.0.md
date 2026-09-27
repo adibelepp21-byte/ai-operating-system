@@ -9400,3 +9400,16 @@ Production Ready, Production Released or Operational AIOS.
 | **Verification required** | (`§10`) V1 sequential identity · V2 concurrent identity · V3 Trace association · V4 no positional dependency · V5 no duplicates over N concurrent executions · V6 regression · V7 failure safety |
 | **Not decided** | FS-DP-02 (`§13`); FS-08 closure (`§14`). The package's idempotency (I1/I2), partial-run and Part B sub-options are not named in the instrument: nothing is implemented under them |
 | **Effect** | FS-DP-05 is **RATIFIED (C1)** and implementation is authorized within `§7`. FS-08 stays **BLOCKED** (FS-DP-02, EXT-03, EXT-05) |
+
+---
+
+## 80. ACT-CC-POST-P13-AIOS-FULL-STACK-003 External Dependencies — EXT-05 Secret Present in Preview; EXT-03 Still Behind SSO (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/FS-08-ACT-003-EXECUTION-RECORD.md` `§G` |
+| **EXT-05** | `SUPABASE_SECRET_KEY` present in Vercel project `aios-platform`: sensitive, target preview only, set by the account holder. Value neither read nor decrypted. **Presence verified**; persistence from the Preview not yet verifiable |
+| **EXT-03** | the Preview of `0706446` (`dpl_BcQ8mCFAEYuEE2hnbEkwTG5kfzcC`, READY) still answers 302 to Vercel SSO through the connector: **BLOCKED** |
+| **Observed Founder-side changes** | domain `aios-platform-eight.vercel.app` reassigned to this branch (it now serves the protected Preview); a Preview redeploy of `22c0b49`. Neither was made by Claude Code |
+| **Production** | `dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj` unchanged |
+| **State** | FS-08 **BLOCKED**: FS-DP-02 (Architect), EXT-03 (authorized Preview access). FS-09, FS-10 NOT_STARTED |
