@@ -9247,3 +9247,21 @@ Production Ready, Production Released or Operational AIOS.
 | **Verification 2** | **not executed**: the Act's §1 (stop when P13 = CERTIFIED) and its §2/§10 (proceed unless there is a contradiction) both apply to a certified-without-contradiction state; Case D forbids choosing by convenience, so execution stopped at the restrictive branch |
 | **Final gate** | **AUTHORITY CONFLICT — FOUNDER RECONCILIATION REQUIRED**: the Founder to state whether `FDR-7`'s certification counts as a contradiction for this Act. If not, Verification 2 (`FD-P12-007` §19) runs under the Act's §2 |
 | **Not done** | no certification or decertification of P13; no acceptance or certification of Successor V2; predecessor check unchanged; FS-08 unchanged (BLOCKED, with the classified P12 exception); no authority expanded; no `tools/`, manifest or reader change |
+
+---
+
+## 75. ACT-CC-P12-030 — FD-P12-007 §19 Successor V2 Authority Verification: Acceptance and Certification Require Founder Decision (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Act** | `acts/ACT-CC-P12-030-CONTINUE-FD-P12-007-S19-SUCCESSOR-V2-AUTHORITY-VERIFICATION.md` · content sha256 `c09e5b6aef03a3d9124f4df83f3ab8bedbb40ac76529563e34616053b7852206` · stated *"AUTHORIZED FOR EXECUTION"*, authority Founder |
+| **Record** | `docs/fullstack/P12-SUCCESSOR-V2-AUTHORITY-VERIFICATION-2-RECORD.md` |
+| **Verification 1** | resolved by the Founder (Act §1–§2): P13 certified under `FDR-7`, **no contradiction**; evidence by reference to `§74` |
+| **§19** | conditions precedent only: the successor *"must not be treated as certified until"* eight items hold, the eighth being *"appropriate certification/acceptance authority is satisfied"*. It grants, delegates and names no holder |
+| **Acceptance authority** | **Founder**: Charter V2 §25 (*"Founder retains final acceptance authority"*), Matrix A18 (*"Founder decides"*) and A19, operative delegation `DEL-CFV2-CEO-001` review condition. Not delegated; Claude Code may not accept |
+| **Certification authority** | **Founder**: `FDR-G1` §7 (Claude may not *"declare a successor certified"*), `FDR-G2` §10 (*"FOUNDER CERTIFICATION"*), adopted for this lifecycle by `FD-P12-007` §18. No narrower mechanism delegated; Claude Code may not certify. Whether certification requires prior acceptance: not established by any source |
+| **§19 scope test** | construction: not by §19 (authorized by D3/D5, done) · testing/verification: not by §19 (authorized by §23 and Matrix A11, done) · acceptance: **requires Founder decision** · certification: **requires Founder decision** |
+| **§19 conditions** | items 1–7 met (item 6 at `8bb7ba2`; only documents changed since); item 8 not met: it is the Founder decision |
+| **Falsification** | the only contrary text, `DEL-T4.4-CF-001` §3.1 C *"perform certification"*, is **SUPERSEDED** (2026-09-23) by `DEL-CFV2-CEO-001`; the P10 Founder event cites it without granting it and reserves certification lifecycle to the Founder. Neither Charter V2 nor Matrix V2 mentions certification. No conflict; authority not unknown |
+| **Final classification** | **OUTCOME D — SUCCESSOR V2 ACCEPTANCE AND CERTIFICATION REQUIRE FOUNDER DECISION** |
+| **Not done** | P13 not modified; Successor V2 not accepted and not certified; predecessor not replaced; FS-08 not changed (BLOCKED, classified P12 exception); no authority created |
