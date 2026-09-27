@@ -1,0 +1,770 @@
+{
+ "record": "P12 population guard: read-only measurement series",
+ "act": "ACT-CC-POST-P13-AIOS-FULL-STACK-P12-001",
+ "date": "2026-09-27",
+ "classification": "DERIVED MEASUREMENT",
+ "method": "For each commit, a disposable git worktree was checked out at that commit and the module tools/p12_governance_evidence_verification.py AS IT STOOD AT THAT COMMIT was run unchanged (by_population()). Nothing was reconstructed: each row is the recorded code on the recorded tree. The worktree was removed afterwards; the repository was not modified.",
+ "guard": "tools/tests/test_p12_governance_evidence_verification.py::TheResultDoesNotDependOnMyChoiceOfPopulation::test_the_narrower_population_is_not_better",
+ "assertion": "for each of decision body, authority, scope, status, current state: founder_acts ratio <= corpus ratio + 0.2",
+ "commits": "14afe69 (guard created), 0e2badd (record §8 added), 6968c6e (P12 certified commit), then every later commit that added a file under docs/governance/acts/, up to 96bab67",
+ "series": [
+  {
+   "commit": "14afe69",
+   "status_founder_acts": "6/33",
+   "status_corpus": "127/389",
+   "founder_ratio": 0.1818,
+   "limit": 0.5265,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority"
+   ]
+  },
+  {
+   "commit": "0e2badd",
+   "status_founder_acts": "6/33",
+   "status_corpus": "128/390",
+   "founder_ratio": 0.1818,
+   "limit": 0.5282,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority"
+   ]
+  },
+  {
+   "commit": "6968c6e",
+   "status_founder_acts": "10/40",
+   "status_corpus": "137/444",
+   "founder_ratio": 0.25,
+   "limit": 0.5086,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope"
+   ]
+  },
+  {
+   "commit": "7928439",
+   "status_founder_acts": "11/41",
+   "status_corpus": "138/451",
+   "founder_ratio": 0.2683,
+   "limit": 0.506,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope"
+   ]
+  },
+  {
+   "commit": "b1b887a",
+   "status_founder_acts": "12/42",
+   "status_corpus": "139/453",
+   "founder_ratio": 0.2857,
+   "limit": 0.5068,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope",
+    "current state"
+   ]
+  },
+  {
+   "commit": "1c921e9",
+   "status_founder_acts": "14/44",
+   "status_corpus": "141/455",
+   "founder_ratio": 0.3182,
+   "limit": 0.5099,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "f760f84",
+   "status_founder_acts": "14/45",
+   "status_corpus": "141/458",
+   "founder_ratio": 0.3111,
+   "limit": 0.5079,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "a2c5600",
+   "status_founder_acts": "15/46",
+   "status_corpus": "142/461",
+   "founder_ratio": 0.3261,
+   "limit": 0.508,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "6338014",
+   "status_founder_acts": "16/47",
+   "status_corpus": "143/463",
+   "founder_ratio": 0.3404,
+   "limit": 0.5089,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "df6d229",
+   "status_founder_acts": "17/48",
+   "status_corpus": "144/466",
+   "founder_ratio": 0.3542,
+   "limit": 0.509,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "c222125",
+   "status_founder_acts": "18/49",
+   "status_corpus": "145/468",
+   "founder_ratio": 0.3673,
+   "limit": 0.5098,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "d1e2c45",
+   "status_founder_acts": "19/50",
+   "status_corpus": "146/470",
+   "founder_ratio": 0.38,
+   "limit": 0.5106,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "8e2d82b",
+   "status_founder_acts": "20/51",
+   "status_corpus": "147/473",
+   "founder_ratio": 0.3922,
+   "limit": 0.5108,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "6400a5c",
+   "status_founder_acts": "21/52",
+   "status_corpus": "148/475",
+   "founder_ratio": 0.4038,
+   "limit": 0.5116,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "0e5f8e5",
+   "status_founder_acts": "21/53",
+   "status_corpus": "148/480",
+   "founder_ratio": 0.3962,
+   "limit": 0.5083,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "ee8f7f0",
+   "status_founder_acts": "22/54",
+   "status_corpus": "149/482",
+   "founder_ratio": 0.4074,
+   "limit": 0.5091,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "f3a46c9",
+   "status_founder_acts": "23/55",
+   "status_corpus": "150/485",
+   "founder_ratio": 0.4182,
+   "limit": 0.5093,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "ef89545",
+   "status_founder_acts": "24/56",
+   "status_corpus": "151/487",
+   "founder_ratio": 0.4286,
+   "limit": 0.5101,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "67b405b",
+   "status_founder_acts": "25/57",
+   "status_corpus": "152/488",
+   "founder_ratio": 0.4386,
+   "limit": 0.5115,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "843c0ca",
+   "status_founder_acts": "25/58",
+   "status_corpus": "152/491",
+   "founder_ratio": 0.431,
+   "limit": 0.5096,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "a667851",
+   "status_founder_acts": "26/59",
+   "status_corpus": "153/493",
+   "founder_ratio": 0.4407,
+   "limit": 0.5103,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "scope",
+    "status"
+   ]
+  },
+  {
+   "commit": "76366be",
+   "status_founder_acts": "26/60",
+   "status_corpus": "153/497",
+   "founder_ratio": 0.4333,
+   "limit": 0.5078,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "ae1f38a",
+   "status_founder_acts": "27/61",
+   "status_corpus": "154/499",
+   "founder_ratio": 0.4426,
+   "limit": 0.5086,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "7b85562",
+   "status_founder_acts": "27/62",
+   "status_corpus": "154/501",
+   "founder_ratio": 0.4355,
+   "limit": 0.5074,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "f295a27",
+   "status_founder_acts": "28/63",
+   "status_corpus": "155/503",
+   "founder_ratio": 0.4444,
+   "limit": 0.5082,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "ddc6fe3",
+   "status_founder_acts": "29/63",
+   "status_corpus": "156/504",
+   "founder_ratio": 0.4603,
+   "limit": 0.5095,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "a25e609",
+   "status_founder_acts": "29/63",
+   "status_corpus": "156/506",
+   "founder_ratio": 0.4603,
+   "limit": 0.5083,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "ee5014d",
+   "status_founder_acts": "29/64",
+   "status_corpus": "156/507",
+   "founder_ratio": 0.4531,
+   "limit": 0.5077,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "73f01fc",
+   "status_founder_acts": "29/65",
+   "status_corpus": "156/510",
+   "founder_ratio": 0.4462,
+   "limit": 0.5059,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "3e9b9f9",
+   "status_founder_acts": "29/66",
+   "status_corpus": "156/512",
+   "founder_ratio": 0.4394,
+   "limit": 0.5047,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "4d12c4c",
+   "status_founder_acts": "29/67",
+   "status_corpus": "156/514",
+   "founder_ratio": 0.4328,
+   "limit": 0.5035,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "c76e420",
+   "status_founder_acts": "29/68",
+   "status_corpus": "156/516",
+   "founder_ratio": 0.4265,
+   "limit": 0.5023,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "6ada59b",
+   "status_founder_acts": "30/69",
+   "status_corpus": "157/518",
+   "founder_ratio": 0.4348,
+   "limit": 0.5031,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "f05bfed",
+   "status_founder_acts": "30/71",
+   "status_corpus": "157/522",
+   "founder_ratio": 0.4225,
+   "limit": 0.5008,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "27eabdd",
+   "status_founder_acts": "31/72",
+   "status_corpus": "158/523",
+   "founder_ratio": 0.4306,
+   "limit": 0.5021,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "711984c",
+   "status_founder_acts": "31/73",
+   "status_corpus": "158/525",
+   "founder_ratio": 0.4247,
+   "limit": 0.501,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "f9e7652",
+   "status_founder_acts": "32/74",
+   "status_corpus": "159/527",
+   "founder_ratio": 0.4324,
+   "limit": 0.5017,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "af23a02",
+   "status_founder_acts": "33/75",
+   "status_corpus": "160/529",
+   "founder_ratio": 0.44,
+   "limit": 0.5025,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "1626eea",
+   "status_founder_acts": "34/76",
+   "status_corpus": "161/531",
+   "founder_ratio": 0.4474,
+   "limit": 0.5032,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "24fdd29",
+   "status_founder_acts": "35/77",
+   "status_corpus": "162/533",
+   "founder_ratio": 0.4545,
+   "limit": 0.5039,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "0ebb16a",
+   "status_founder_acts": "36/78",
+   "status_corpus": "163/536",
+   "founder_ratio": 0.4615,
+   "limit": 0.5041,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "7848705",
+   "status_founder_acts": "37/79",
+   "status_corpus": "164/537",
+   "founder_ratio": 0.4684,
+   "limit": 0.5054,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "3221acb",
+   "status_founder_acts": "37/80",
+   "status_corpus": "164/538",
+   "founder_ratio": 0.4625,
+   "limit": 0.5048,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "999ef1f",
+   "status_founder_acts": "38/81",
+   "status_corpus": "165/550",
+   "founder_ratio": 0.4691,
+   "limit": 0.5,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "f353329",
+   "status_founder_acts": "38/82",
+   "status_corpus": "165/552",
+   "founder_ratio": 0.4634,
+   "limit": 0.4989,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "429d06d",
+   "status_founder_acts": "39/84",
+   "status_corpus": "167/557",
+   "founder_ratio": 0.4643,
+   "limit": 0.4998,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "98f0991",
+   "status_founder_acts": "40/85",
+   "status_corpus": "168/558",
+   "founder_ratio": 0.4706,
+   "limit": 0.5011,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "78d67e5",
+   "status_founder_acts": "41/86",
+   "status_corpus": "169/559",
+   "founder_ratio": 0.4767,
+   "limit": 0.5023,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "5bfa33b",
+   "status_founder_acts": "42/87",
+   "status_corpus": "171/561",
+   "founder_ratio": 0.4828,
+   "limit": 0.5048,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "3483d53",
+   "status_founder_acts": "43/88",
+   "status_corpus": "172/583",
+   "founder_ratio": 0.4886,
+   "limit": 0.495,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "8d088fb",
+   "status_founder_acts": "44/89",
+   "status_corpus": "173/585",
+   "founder_ratio": 0.4944,
+   "limit": 0.4957,
+   "guard": "PASS",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "20742f5",
+   "status_founder_acts": "45/90",
+   "status_corpus": "174/587",
+   "founder_ratio": 0.5,
+   "limit": 0.4964,
+   "guard": "FAIL",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  },
+  {
+   "commit": "96bab67",
+   "status_founder_acts": "46/91",
+   "status_corpus": "175/588",
+   "founder_ratio": 0.5055,
+   "limit": 0.4976,
+   "guard": "FAIL",
+   "elements_where_founder_acts_score_better": [
+    "decision body",
+    "authority",
+    "scope",
+    "status",
+    "current state"
+   ]
+  }
+ ],
+ "notes": [
+  "At 14afe69 the unchanged module counts 389 instruments; the P12-W6 record states 385, measured before its own records were committed (record §8).",
+  "76366be (2026-09-24) added FDR and GOAL to the governance identifier classes, which can change population membership. Its separate effect is not isolated here: that would require running one commit's classifier on another commit's corpus."
+ ]
+}
