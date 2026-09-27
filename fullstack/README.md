@@ -29,9 +29,22 @@ committed); without it every API route answers 503. There is no filesystem
 fallback. A preview is not a release: production is the Founder's decision
 (`FD-FS-001` D4-A).
 
-The shipped server authenticates **nobody** (`NoAuthenticator`): the
-authentication mechanism is Architect-reserved (`FS-DP-02`). Every route except
-`/api/v1/health` answers 401 until it is decided.
+Authentication is **operator bearer tokens** (`FS-DP-02` B3, Architect decision,
+Register `§81`). The server reads `AIOS_OPERATOR_TOKENS` from the environment:
+a JSON array of `{"subject", "sha256", "scopes"}`, holding the SHA-256 of each
+token, never the token. `scopes` defaults to `aios.observe`. Without that
+variable, or if it does not parse exactly, nobody is authenticated and every
+route except `/api/v1/health` answers 401.
+
+To issue a token, on your own machine:
+
+    python -m fullstack.backend operator-token --subject founder \
+        --scope aios.observe --scope aios.workflow.run --scope aios.audit
+
+It prints the token once, for the console's credential field, and the entry
+for `AIOS_OPERATOR_TOKENS`. Put the entry (only the entry) in the host's
+environment as a sensitive variable. Rotate by issuing a new token and
+replacing its entry.
 
 ## Test
 

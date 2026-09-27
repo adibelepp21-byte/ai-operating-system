@@ -1,11 +1,12 @@
 """Principals, the authenticator port, scope authorization and audit (FS-06).
 
-**Authentication is a port, and the shipped implementation refuses everyone.**
-How a person proves who they are is Architect-reserved (Freeze `§10`;
-`FD-FS-001` D2-A; decision package `FS-DP-02`). Until that is ratified,
-`NoAuthenticator` is the production default: it authenticates nobody, so every
-route but health answers 401. Tests inject their own authenticator; nothing in
-this package ships one that accepts a credential.
+**Authentication is a port.** The ratified mechanism is `FS-DP-02` B3,
+operator bearer tokens (Architect decision, Register `§81`):
+`OperatorTokenAuthenticator`. The host holds only SHA-256 hashes of the
+tokens, each with a subject and scopes, in `AIOS_OPERATOR_TOKENS`; the
+operator holds the tokens. With no configuration, or a configuration that does
+not parse exactly, it authenticates nobody, so every route but health answers
+401 (fail closed). `NoAuthenticator` remains the explicit refuse-everyone port.
 
 **Authorization is by scope**, one per route, decided here and only here. The
 frontend may ask which scopes it holds (`/api/v1/session`) in order to render,
@@ -19,10 +20,13 @@ scope, the outcome. It never records a header, a credential or a request body
 from __future__ import annotations
 
 import abc
+import hashlib
+import hmac
 import json
+import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Callable, FrozenSet, Iterator, List, Mapping, Optional
+from typing import Callable, FrozenSet, Iterator, List, Mapping, Optional, Tuple
 
 from native_core.core.infrastructure import StorageFacility
 
@@ -71,12 +75,128 @@ class Authenticator(abc.ABC):
 
 
 class NoAuthenticator(Authenticator):
-    """The default until `FS-DP-02` is ratified: nobody is authenticated."""
+    """Nobody is authenticated."""
 
-    mechanism = "none — FS-DP-02 not ratified; every protected route answers 401"
+    mechanism = "none — no authenticator configured; every protected route answers 401"
 
     def authenticate(self, headers: Mapping[str, str]) -> Optional[Principal]:
         return None
+
+
+#: Where the host keeps the operator-token configuration (FS-DP-02 B3).
+OPERATOR_TOKENS_VARIABLE = "AIOS_OPERATOR_TOKENS"
+#: The one scheme accepted, and the token grammar of RFC 6750 `b64token`.
+_BEARER = re.compile(r"Bearer ([A-Za-z0-9\-._~+/]+=*)", re.IGNORECASE)
+MAX_TOKEN_CHARS = 512
+_SHA256_HEX = re.compile(r"[0-9a-f]{64}")
+_ENTRY_KEYS = {"subject", "sha256", "scopes"}
+
+
+class OperatorTokenConfigurationError(ValueError):
+    """The operator-token configuration does not parse exactly. Its message
+    never quotes the configuration."""
+
+
+def token_sha256(token: str) -> str:
+    """The server-side representation of a token: its SHA-256, in lower-case hex."""
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def parse_operator_tokens(text: str) -> Tuple[Tuple[str, Principal], ...]:
+    """`AIOS_OPERATOR_TOKENS` → ((sha256, principal), ...), or refuse it whole.
+
+    The value is a JSON array of objects, one per principal::
+
+        [{"subject": "founder", "sha256": "<64 hex>",
+          "scopes": ["aios.observe", "aios.workflow.run", "aios.audit"]}]
+
+    `sha256` is the hash of the token, never the token: an entry with any key
+    but `subject`, `sha256` and `scopes` is refused, so a plaintext token cannot
+    be configured by mistake. `scopes` defaults to `aios.observe` alone (least
+    privilege, package `FS-DP-02`); the others are granted explicitly. Two
+    entries may not share a hash or a subject."""
+    try:
+        entries = json.loads(text)
+    except ValueError:
+        raise OperatorTokenConfigurationError("not JSON") from None
+    if not isinstance(entries, list):
+        raise OperatorTokenConfigurationError("not a JSON array")
+    parsed, hashes, subjects = [], set(), set()
+    for number, entry in enumerate(entries, 1):
+        if not isinstance(entry, dict):
+            raise OperatorTokenConfigurationError(f"entry {number} is not an object")
+        unknown = set(entry) - _ENTRY_KEYS
+        if unknown:
+            raise OperatorTokenConfigurationError(
+                f"entry {number} has unknown key(s) {sorted(unknown)}")
+        digest, subject = entry.get("sha256"), entry.get("subject")
+        scopes = entry.get("scopes", [OBSERVE])
+        if not isinstance(digest, str) or not _SHA256_HEX.fullmatch(digest):
+            raise OperatorTokenConfigurationError(
+                f"entry {number}: sha256 must be 64 lower-case hex digits")
+        if not isinstance(scopes, list) or not all(isinstance(x, str) for x in scopes):
+            raise OperatorTokenConfigurationError(f"entry {number}: scopes must be a list")
+        try:
+            principal = Principal(subject, frozenset(scopes))
+        except (ValueError, TypeError, AttributeError):
+            raise OperatorTokenConfigurationError(
+                f"entry {number}: a subject and known scopes are required") from None
+        if digest in hashes or principal.subject in subjects:
+            raise OperatorTokenConfigurationError(
+                f"entry {number} repeats a hash or a subject")
+        hashes.add(digest)
+        subjects.add(principal.subject)
+        parsed.append((digest, principal))
+    return tuple(parsed)
+
+
+class OperatorTokenAuthenticator(Authenticator):
+    """`FS-DP-02` B3: operator bearer tokens, verified against hashes.
+
+    The presented token is hashed and compared with every configured hash in
+    constant time; the token itself is neither kept nor returned. Anything but
+    `Authorization: Bearer <b64token>` authenticates nobody."""
+
+    mechanism = "operator bearer tokens (FS-DP-02 B3)"
+    #: Why the configuration authenticates nobody, if it does; never its value.
+    configuration_error: Optional[str] = None
+
+    def __init__(self, entries: Tuple[Tuple[str, Principal], ...] = ()):
+        self._entries = tuple(entries)
+
+    @classmethod
+    def from_configuration(cls, text: Optional[str]) -> "OperatorTokenAuthenticator":
+        """Empty or absent: nobody. Unparseable: nobody, and the reason is kept
+        (never the value) for the operator to read in `configuration_error`."""
+        if text is None or not text.strip():
+            authenticator = cls(())
+            authenticator.configuration_error = "not configured"
+            return authenticator
+        try:
+            authenticator = cls(parse_operator_tokens(text))
+            authenticator.configuration_error = None
+        except OperatorTokenConfigurationError as error:
+            authenticator = cls(())
+            authenticator.configuration_error = f"refused: {error}"
+        return authenticator
+
+    @classmethod
+    def from_environment(cls, environment: Mapping[str, str]) -> "OperatorTokenAuthenticator":
+        return cls.from_configuration(environment.get(OPERATOR_TOKENS_VARIABLE))
+
+    def authenticate(self, headers: Mapping[str, str]) -> Optional[Principal]:
+        value = headers.get("authorization")
+        if not isinstance(value, str) or len(value) > MAX_TOKEN_CHARS + len("Bearer "):
+            return None
+        match = _BEARER.fullmatch(value)
+        if match is None:
+            return None
+        presented = token_sha256(match.group(1))
+        found = None
+        for digest, principal in self._entries:  # no early exit: constant work
+            if hmac.compare_digest(presented, digest):
+                found = principal
+        return found
 
 
 @dataclass(frozen=True)

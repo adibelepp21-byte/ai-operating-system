@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-DP-02` (provisional) |
 | **Area** | Identity (as a general/auth concept), Authentication — Freeze `§10`, Architect-reserved (*"no ratified entity"*) |
-| **Status** | **PROPOSED — ROUTED TO THE ARCHITECT** (Register `§71`, 2026-09-27); **AWAITING ARCHITECT DECISION**. Not ratified |
+| **Status** | **RATIFIED — B3 Operator Bearer Tokens**, by the Architect (Moriarty), 2026-09-27: `acts/FS-DP-02-ARCHITECT-DECISION-RATIFY-B3-OPERATOR-BEARER-TOKENS.md`, Register `§81`. Routed at `§71`. Part A, initial grants, rotation and Preview/Production principals not named (`§R2.14`) |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A; `FD-2` open) |
 | **Founder constraints** | No spending (D3-A). Supabase is named for the **database** only; using its authentication service is a further choice this package asks for |
 | **Prepared by** | Claude Code, 2026-09-26; **Revision 2** 2026-09-27 (below), under `ACT-CC-POST-P13-AIOS-FULL-STACK-002` `§11` |
@@ -230,3 +230,17 @@ generated and set by the Founder; Claude never generates, sees or stores one.
 | Status | **AWAITING ARCHITECT DECISION** |
 
 A decision takes effect when recorded in the Register, not in this file.
+
+### R2.14 Decision recorded (2026-09-27)
+
+The Architect decided in a separate instrument, not in the block above, which
+is left as it was: `docs/governance/acts/FS-DP-02-ARCHITECT-DECISION-RATIFY-B3-OPERATOR-BEARER-TOKENS.md`
+(Register `§81`). *"RATIFY … B3 — Operator Bearer Tokens"*.
+
+| Sub-decision | In the instrument | Effect on implementation |
+|---|---|---|
+| Part B: B3 | **RATIFY** | implemented (`docs/fullstack/FS-DP-02-B3-IMPLEMENTATION-RECORD.md`) |
+| Part A: A1 / A2 | not named | no identity enters the AIOS Domain Model: a principal stays an application-layer principal, as the code already was. A2 would be a Domain Model change and is outside the decision (`§6`) |
+| Initial principals and grants | not named | none shipped. The operator sets them in `AIOS_OPERATOR_TOKENS`; an entry without scopes gets `aios.observe` only (package least-privilege rule) |
+| Token lifetime and rotation | not named | no expiry mechanism added. Rotation is replacing an entry and redeploying |
+| Preview and Production principals | not named | one variable per Vercel environment; whether they share entries is the operator's configuration |

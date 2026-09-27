@@ -25,7 +25,8 @@ from fullstack.backend.aios import (
 from fullstack.backend import supabase_storage
 from fullstack.backend.supabase_storage import SupabaseStorage, StorageUnavailable
 from fullstack.deploy import vercel
-from fullstack.tests.support import OBSERVER_TOKEN, OPERATOR_TOKEN, default_authenticator
+from fullstack.tests.support import (
+    OBSERVER_TOKEN, OPERATOR_TOKEN, default_authenticator, operator_configuration)
 from native_core.core.infrastructure import LocalAppendOnlyStorage
 from native_core.core.infrastructure.facility import FacilityState
 
@@ -251,12 +252,23 @@ class ThePerRequestFunction(unittest.TestCase):
         self.assertEqual({"refused"}, {e["decision"] for e in audit
                                        if e["path"] == "/api/v1/runs" and e["method"] == "POST"})
 
-    def test_the_shipped_function_authenticates_nobody(self):
-        shipped = vercel.make_app(
-            storage_factory=lambda: SupabaseStorage(URL, KEY, transport=self.fake))
-        self.assertEqual(200, call(shipped, "GET", "/api/v1/health")[0])
-        self.assertEqual(401, call(shipped, "GET", "/api/v1/runs", OPERATOR_TOKEN)[0])
-        self.assertIs(vercel.NoAuthenticator, type(vercel.NoAuthenticator()))
+    def test_the_shipped_function_authenticates_nobody_until_configured(self):
+        """FS-DP-02 B3: the function reads `AIOS_OPERATOR_TOKENS`; without it,
+        or with a refused value, nobody is authenticated."""
+        store = lambda: SupabaseStorage(URL, KEY, transport=self.fake)
+        for environment in ({}, {"AIOS_OPERATOR_TOKENS": "not json"}):
+            with self.subTest(environment=environment):
+                shipped = vercel.make_app(
+                    storage_factory=store,
+                    authenticator=vercel.authenticator_from_environment(environment))
+                self.assertEqual(200, call(shipped, "GET", "/api/v1/health")[0])
+                self.assertEqual(401, call(shipped, "GET", "/api/v1/runs", OPERATOR_TOKEN)[0])
+        configured = vercel.make_app(
+            storage_factory=store, authenticator=vercel.authenticator_from_environment(
+                {"AIOS_OPERATOR_TOKENS": operator_configuration(
+                    {OPERATOR_TOKEN: ("operator@test", {"aios.observe"})})}))
+        self.assertEqual(200, call(configured, "GET", "/api/v1/runs", OPERATOR_TOKEN)[0])
+        self.assertEqual(401, call(configured, "GET", "/api/v1/runs", OBSERVER_TOKEN)[0])
 
     def test_no_key_means_503_and_nothing_else(self):
         app = vercel.make_app(storage_factory=lambda: vercel.storage_from_environment({}))

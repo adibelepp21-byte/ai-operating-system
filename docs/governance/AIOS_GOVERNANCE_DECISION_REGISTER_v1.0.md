@@ -9413,3 +9413,29 @@ Production Ready, Production Released or Operational AIOS.
 | **Observed Founder-side changes** | domain `aios-platform-eight.vercel.app` reassigned to this branch (it now serves the protected Preview); a Preview redeploy of `22c0b49`. Neither was made by Claude Code |
 | **Production** | `dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj` unchanged |
 | **State** | FS-08 **BLOCKED**: FS-DP-02 (Architect), EXT-03 (authorized Preview access). FS-09, FS-10 NOT_STARTED |
+
+---
+
+## 81. FS-DP-02 Architect Decision — RATIFY B3 Operator Bearer Tokens; Implemented and Verified Locally (2026-09-27)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `acts/FS-DP-02-ARCHITECT-DECISION-RATIFY-B3-OPERATOR-BEARER-TOKENS.md` · content sha256 `a68cfd999bdf8b664121d62167570d30ddccbece3476d4a84c13ab33ca45adf2` |
+| **Received** | from the Architect (Moriarty), 2026-09-27, in the message body, under `ACT-CC-POST-P13-AIOS-FULL-STACK-003` (`§78`) |
+| **Record** | `docs/fullstack/FS-DP-02-B3-IMPLEMENTATION-RECORD.md` |
+
+### FS-DP-02-ARCHITECT-DECISION — Architect Decision · RATIFY B3 Operator Bearer Tokens
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FS-DP-02-ARCHITECT-DECISION` |
+| **Date** | 2026-09-27 |
+| **Decided by** | Architect (Moriarty), under `ACT-CC-POST-P13-AIOS-FULL-STACK-003` |
+| **Ratifies** | FS-DP-02 |
+| **Decision** | *"RATIFY"* · *"B3 — Operator Bearer Tokens"* (`§1`) |
+| **Authorized** | (`§3`) operator bearer-token authentication; backend verification before protected access; server-side credential as token hashes, never plaintext; the existing console bearer model kept; protected routes enforce authentication; fail closed; Preview verification as FS-08 evidence |
+| **Authorization boundary** | (`§5`) authentication only; the existing authorization boundary stays intact; no new role or permission model |
+| **Not authorized** | (`§6`) multi-user identity; Supabase Auth; identity-provider integration; role, permission or authorization redesign; Agent or Founder identity; capability expansion; new Native Core component; Runtime redesign outside the authentication boundary; persistence or schema redesign; production release; Founder Release Authorization; certified-root modification; P13 reopening; Phase 14; Platform Organization reopening |
+| **Verification required** | (`§9`) V1–V14; security properties S1–S10 (`§8`); negative controls NC-01–NC-16 (`§10`) |
+| **Not decided** | the package's Part A (A1 / A2), initial principals and grants, token lifetime and rotation, and whether Preview and Production share principals are not named in the instrument. The implementation adds no identity to the AIOS Domain Model and leaves principals and grants to the operator's configuration |
+| **Effect** | FS-DP-02 is **RATIFIED (B3)**; implementation is authorized within `§3`–`§7`. FS-08 stays **BLOCKED** on EXT-03 (authorized Preview access) and on operator-token hashes for Preview |

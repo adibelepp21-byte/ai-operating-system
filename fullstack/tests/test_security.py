@@ -1,9 +1,10 @@
 """FS-06 — security and authority: what is refused, what is recorded, what never leaks.
 
-Authentication itself is Architect-reserved (`FS-DP-02`). What is tested here
-is everything that does not depend on that decision: the production posture
-(nobody is authenticated), scope authorization, least privilege, fail-closed
-behaviour, audit, secret handling, and the Tool's confinement.
+Authentication is `FS-DP-02` B3, operator bearer tokens (Register `§81`); its
+own verification is `test_fs_dp_02_b3.py`. What is tested here: the posture
+with nothing configured (nobody is authenticated), scope authorization, least
+privilege, fail-closed behaviour, audit, secret handling, and the Tool's
+confinement.
 """
 
 from __future__ import annotations
@@ -16,9 +17,9 @@ from pathlib import Path
 from fullstack.backend import contract, docs_tool
 from fullstack.backend.security import (
     AUDIT, OBSERVE, PUBLIC, RUN_WORKFLOW, AuditLedger, Authenticator,
-    NoAuthenticator, Principal, authorize)
+    NoAuthenticator, OperatorTokenAuthenticator, Principal, authorize)
 from fullstack.tests.support import (
-    OBSERVER_TOKEN, OPERATOR_TOKEN, Harness, TokenAuthenticator)
+    OBSERVER_TOKEN, OPERATOR_TOKEN, Harness, operator_authenticator)
 from fullstack.tests.test_backend_api import RUN, run_body
 from native_core.shared import Failure, Success
 
@@ -34,20 +35,24 @@ def _each_route(harness, token):
 
 
 class ProductionPosture(unittest.TestCase):
-    """The shipped composition: `NoAuthenticator`."""
+    """Nothing configured: the shipped B3 authenticator with no
+    `AIOS_OPERATOR_TOKENS`, and the refuse-everyone `NoAuthenticator`."""
 
     def test_every_protected_route_answers_401(self):
-        h = Harness(authenticator=NoAuthenticator())
-        try:
-            for route, status in _each_route(h, OPERATOR_TOKEN):
-                with self.subTest(route=f"{route.method} {route.template}"):
-                    self.assertEqual(200 if route.scope == PUBLIC else 401, status)
-            self.assertEqual([], h.aios.runs())
-        finally:
-            h.close()
+        for authenticator in (OperatorTokenAuthenticator.from_environment({}), NoAuthenticator()):
+            h = Harness(authenticator=authenticator)
+            try:
+                for route, status in _each_route(h, OPERATOR_TOKEN):
+                    with self.subTest(authenticator=type(authenticator).__name__,
+                                      route=f"{route.method} {route.template}"):
+                        self.assertEqual(200 if route.scope == PUBLIC else 401, status)
+                self.assertEqual([], h.aios.runs())
+            finally:
+                h.close()
 
-    def test_the_runtime_reports_that_no_mechanism_is_ratified(self):
-        self.assertIn("FS-DP-02 not ratified", NoAuthenticator.mechanism)
+    def test_the_runtime_names_its_mechanism(self):
+        self.assertIn("FS-DP-02 B3", OperatorTokenAuthenticator.mechanism)
+        self.assertIn("no authenticator configured", NoAuthenticator.mechanism)
 
 
 class Authorization(unittest.TestCase):
@@ -73,8 +78,8 @@ class Authorization(unittest.TestCase):
         self.assertEqual([], self.h.aios.runs())
 
     def test_least_privilege_a_run_only_principal_cannot_read(self):
-        h = Harness(authenticator=TokenAuthenticator(
-            {"runner": Principal("runner@test", {RUN_WORKFLOW})}))
+        h = Harness(authenticator=operator_authenticator(
+            {"runner": ("runner@test", {RUN_WORKFLOW})}))
         try:
             self.assertEqual(201, h.call("POST", RUN, "runner", run_body())[0])
             self.assertEqual(403, h.call("GET", RUN, "runner")[0])

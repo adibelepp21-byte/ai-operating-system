@@ -1,8 +1,8 @@
-"""Test support: a test-only authenticator, in-process calls, a live server.
+"""Test support: the ratified authenticator on fake tokens, in-process calls, a live server.
 
-`TokenAuthenticator` lives here, under `tests/`, on purpose. The production
-composition ships `NoAuthenticator` until `FS-DP-02` is ratified; no
-credential-accepting authenticator exists outside the tests.
+Every test authenticates through the production mechanism, `FS-DP-02` B3
+`OperatorTokenAuthenticator`, configured with the SHA-256 hashes of the two
+obviously fake tokens below. No real token exists anywhere in the repository.
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ from wsgiref.util import setup_testing_defaults
 
 from fullstack.backend.api import create_app
 from fullstack.backend.security import (
-    AUDIT, OBSERVE, RUN_WORKFLOW, Authenticator, Principal)
+    AUDIT, OBSERVE, RUN_WORKFLOW, Authenticator, OperatorTokenAuthenticator, token_sha256)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -28,25 +28,23 @@ OPERATOR_TOKEN = "test-operator-token-1f4c"
 OBSERVER_TOKEN = "test-observer-token-9a2e"
 
 
-class TokenAuthenticator(Authenticator):
-    """Bearer tokens mapped to principals. **Test only.**"""
-
-    mechanism = "test bearer tokens (tests only)"
-
-    def __init__(self, tokens: Mapping[str, Principal]):
-        self._tokens = dict(tokens)
-
-    def authenticate(self, headers):
-        value = headers.get("authorization", "")
-        if not value.startswith("Bearer "):
-            return None
-        return self._tokens.get(value[len("Bearer "):])
+def operator_configuration(tokens: Mapping[str, tuple]) -> str:
+    """An `AIOS_OPERATOR_TOKENS` value for fake tokens: {token: (subject, scopes)}."""
+    return json.dumps([{"subject": subject, "sha256": token_sha256(token),
+                        "scopes": sorted(scopes)}
+                       for token, (subject, scopes) in tokens.items()])
 
 
-def default_authenticator() -> TokenAuthenticator:
-    return TokenAuthenticator({
-        OPERATOR_TOKEN: Principal("operator@test", {OBSERVE, RUN_WORKFLOW, AUDIT}),
-        OBSERVER_TOKEN: Principal("observer@test", {OBSERVE}),
+def operator_authenticator(tokens: Mapping[str, tuple]) -> OperatorTokenAuthenticator:
+    authenticator = OperatorTokenAuthenticator.from_configuration(operator_configuration(tokens))
+    assert authenticator.configuration_error is None, authenticator.configuration_error
+    return authenticator
+
+
+def default_authenticator() -> OperatorTokenAuthenticator:
+    return operator_authenticator({
+        OPERATOR_TOKEN: ("operator@test", {OBSERVE, RUN_WORKFLOW, AUDIT}),
+        OBSERVER_TOKEN: ("observer@test", {OBSERVE}),
     })
 
 
@@ -70,8 +68,10 @@ class Harness:
             self._tmp.cleanup()
 
     def call(self, method: str, path: str, token: Optional[str] = None, body=None,
-             content_type="application/json", raw: Optional[bytes] = None):
-        """Call the WSGI application in-process. Returns (status, headers, payload)."""
+             content_type="application/json", raw: Optional[bytes] = None,
+             authorization: Optional[str] = None):
+        """Call the WSGI application in-process. Returns (status, headers, payload).
+        `authorization` sends that exact header instead of `Bearer <token>`."""
         query = ""
         if "?" in path:
             path, query = path.split("?", 1)
@@ -81,7 +81,9 @@ class Harness:
                    "CONTENT_LENGTH": str(len(data)), "wsgi.input": io.BytesIO(data)}
         if content_type and data:
             environ["CONTENT_TYPE"] = content_type
-        if token is not None:
+        if authorization is not None:
+            environ["HTTP_AUTHORIZATION"] = authorization
+        elif token is not None:
             environ["HTTP_AUTHORIZATION"] = f"Bearer {token}"
         setup_testing_defaults(environ)
         captured = {}

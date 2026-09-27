@@ -24,8 +24,11 @@ database unreachable, every API route answers 503 (Fail Closed).
 The static console is served by Vercel from `fullstack/frontend` (`vercel.json`);
 this function answers only `/api/`.
 
-Authentication is `NoAuthenticator` until FS-DP-02 is ratified, so every
-protected route answers 401, as locally.
+Authentication is FS-DP-02 B3 (Architect decision, Register `§81`): operator
+bearer tokens verified against the hashes in `AIOS_OPERATOR_TOKENS`, read from
+the environment when the function loads. Without that variable, or with one
+that does not parse, nobody is authenticated and every protected route answers
+401, as locally.
 """
 
 from __future__ import annotations
@@ -40,7 +43,8 @@ from typing import Callable, Iterable, Mapping, Optional
 
 from fullstack.backend.aios import AIOSApplication
 from fullstack.backend.api import API_CSP, BASE_HEADERS, Application, _reason
-from fullstack.backend.security import AuditLedger, Authenticator, NoAuthenticator
+from fullstack.backend.security import (
+    AuditLedger, Authenticator, NoAuthenticator, OperatorTokenAuthenticator)
 from fullstack.backend.supabase_storage import SupabaseStorage, StorageUnavailable
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -69,11 +73,22 @@ def _refusal(start_response, status: int, error: str, detail: str):
     return [body]
 
 
+def authenticator_from_environment(
+        environment: Mapping[str, str] = os.environ) -> OperatorTokenAuthenticator:
+    """FS-DP-02 B3. The configuration holds hashes only; a refused one is
+    reported by its reason, never by its value."""
+    authenticator = OperatorTokenAuthenticator.from_environment(environment)
+    if authenticator.configuration_error not in (None, "not configured"):
+        print(f"AIOS_OPERATOR_TOKENS {authenticator.configuration_error}; "
+              "nobody is authenticated", file=sys.stderr)
+    return authenticator
+
+
 def make_app(storage_factory: Callable[[], Optional[object]] = storage_from_environment,
              authenticator: Optional[Authenticator] = None,
              repo_root: Path = REPO_ROOT, **aios_options):
     """The WSGI callable Vercel invokes. Each call is one request, one Runtime."""
-    authenticator = authenticator or NoAuthenticator()
+    authenticator = authenticator or authenticator_from_environment()
 
     def app(environ, start_response) -> Iterable[bytes]:
         if not (environ.get("PATH_INFO") or "").startswith("/api/"):

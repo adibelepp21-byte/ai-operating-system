@@ -25,12 +25,14 @@ class Ratification(unittest.TestCase):
         self.assertEqual({}, ratified(text))
 
     def test_the_ratified_packages_today(self):
-        """FS-DP-01 and FS-DP-04 by FS-ARCH-RAT-001 (Register `§68`); FS-DP-05 by
-        its Architect decision (`§79`). The other packages stay proposed."""
+        """FS-DP-01 and FS-DP-04 by FS-ARCH-RAT-001 (Register `§68`); FS-DP-05 and
+        FS-DP-02 by their Architect decisions (`§79`, `§81`). The other packages
+        stay proposed."""
         today = ratified(readiness.REGISTER.read_text(encoding="utf-8"))
-        self.assertEqual(["FS-DP-01", "FS-DP-04", "FS-DP-05"], sorted(today))
+        self.assertEqual(["FS-DP-01", "FS-DP-02", "FS-DP-04", "FS-DP-05"], sorted(today))
         self.assertEqual({"FS-DP-01": "FS-ARCH-RAT-001", "FS-DP-04": "FS-ARCH-RAT-001",
-                          "FS-DP-05": "FS-DP-05-ARCHITECT-DECISION"},
+                          "FS-DP-05": "FS-DP-05-ARCHITECT-DECISION",
+                          "FS-DP-02": "FS-DP-02-ARCHITECT-DECISION"},
                          {p: h.split(" ")[0] for p, h in today.items()})
 
     def test_a_decision_package_cannot_ratify_itself(self):
@@ -46,11 +48,11 @@ class TheGate(unittest.TestCase):
 
     def test_it_is_not_ready_and_says_exactly_why(self):
         self.assertEqual(NOT_READY, self.live["result"])
-        self.assertEqual(["FS-DP-02", "FS-DP-03", "FS-DP-06", "FS-DP-07"],
-                         self.live["awaiting"])
-        # Ratified is not done: each criterion the two ratified packages
-        # unblocked fails until a live deployment evidences it.
-        self.assertEqual(["Reliability: recovery and rollback of a deployment",
+        self.assertEqual(["FS-DP-03", "FS-DP-06", "FS-DP-07"], self.live["awaiting"])
+        # Ratified is not done: each criterion a ratified package unblocked
+        # fails until a live deployment evidences it.
+        self.assertEqual(["Security: authentication",
+                          "Reliability: recovery and rollback of a deployment",
                           "Data: production persistence, backup, migration"],
                          [f"{c['area']}: {c['criterion']}" for c in self.live["criteria"]
                           if c["status"] == FAIL])

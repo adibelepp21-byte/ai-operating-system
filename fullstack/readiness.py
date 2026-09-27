@@ -165,10 +165,19 @@ def _measure(runs: int) -> dict:
 
 
 def _no_shipped_credential() -> bool:
-    from fullstack.backend.security import NoAuthenticator
+    """FS-DP-02 B3: both compositions build the authenticator from the
+    environment, which holds hashes only. Unconfigured, it accepts nobody, and
+    a configuration carrying anything but a hash is refused whole."""
+    from fullstack.backend.security import OperatorTokenAuthenticator
     served = (REPO_ROOT / "fullstack/backend/__main__.py").read_text(encoding="utf-8")
-    return ("NoAuthenticator()" in served
-            and NoAuthenticator().authenticate({"authorization": "Bearer any"}) is None)
+    function = (REPO_ROOT / "fullstack/deploy/vercel.py").read_text(encoding="utf-8")
+    unconfigured = OperatorTokenAuthenticator.from_environment({})
+    plaintext = OperatorTokenAuthenticator.from_configuration(
+        '[{"subject": "x", "token": "plaintext"}]')
+    return ("OperatorTokenAuthenticator.from_environment(os.environ)" in served
+            and "OperatorTokenAuthenticator.from_environment(environment)" in function
+            and unconfigured.authenticate({"authorization": "Bearer any"}) is None
+            and plaintext.configuration_error is not None)
 
 
 def evaluate(runs: int = 20, register_text: Optional[str] = None) -> dict:
@@ -189,13 +198,15 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None) -> dict:
         _blocked_unless("Functionality", "agent creation (Scenario A)", ["FS-DP-07"], decided,
                         "ratified but not implemented"),
         _blocked_unless("Security", "authentication", ["FS-DP-02"], decided,
-                        "ratified but no authenticator is implemented"),
+                        "B3 operator bearer tokens implemented and verified locally; not yet "
+                        "verified on a live deployment (EXT-03, and token hashes for Preview)"),
         _criterion("Security", "authorization and least privilege",
                    PASS if (m["observer_post"], m["anonymous_get"]) == (403, 401) else FAIL,
                    f"observer POST → {m['observer_post']}; anonymous GET → {m['anonymous_get']}"),
         _criterion("Security", "secrets not exposed", PASS if _no_shipped_credential() else FAIL,
-                   "the shipped composition uses NoAuthenticator, which accepts no credential; "
-                   "the security suite scans records and responses for credentials"),
+                   "the shipped compositions hold token hashes only (AIOS_OPERATOR_TOKENS) and "
+                   "accept nobody until configured; the security suite scans records and "
+                   "responses for credentials and hashes"),
         _criterion("Security", "attack-surface controls", PASS if security_headers else FAIL,
                    "security headers present; 64 KiB body limit; Tool confined to docs/"),
         _criterion("Security", "audit", PASS if m["audit_entries"] > 0 else FAIL,

@@ -18,6 +18,9 @@ User → Role → Permission → Policy → Action → Audit
 
 - **Identity and Authentication** stop at a port. The shipped
   implementation, `NoAuthenticator`, authenticates nobody.
+  *Since FS-DP-02 B3 (Register `§81`):* the shipped implementation is
+  `OperatorTokenAuthenticator` (hashes only; nobody until configured).
+  Verification: `docs/fullstack/FS-DP-02-B3-IMPLEMENTATION-RECORD.md`.
 - **Authorization** is one rule, `authorize(principal, scope)`, applied to
   every route. Unknown scope names fail closed.
 - **Capability** stays in AIOS. A Tool is reached only by a Workflow step,

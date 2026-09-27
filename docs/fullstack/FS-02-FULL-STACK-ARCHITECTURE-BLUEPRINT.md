@@ -108,6 +108,10 @@ refusal or failure raises `StepFailed`, which drives the Workflow to `FAILED`
   so every non-health route answers 401. The mechanism is FS-DP-02. Tests
   inject their own authenticator; production has none until FS-DP-02 is
   ratified.
+  *Since FS-DP-02 B3 (Register `§81`):* both compositions use
+  `OperatorTokenAuthenticator`, which verifies `Authorization: Bearer <token>`
+  against the SHA-256 hashes in `AIOS_OPERATOR_TOKENS`. Unconfigured, it still
+  authenticates nobody. Tests use the same authenticator on fake tokens.
 - **Authorization** is by scope: each route of `§4` names one; a principal
   without it gets 403. Scopes are application vocabulary; *who holds which* is
   the authenticator's answer, and so FS-DP-02's.
