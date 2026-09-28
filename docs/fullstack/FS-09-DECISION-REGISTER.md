@@ -80,7 +80,7 @@
 | 2.4 | **Live access for FS-09 checks**: a new, temporary Preview access (the FS-08 bypass was scoped to that suite and revoked) | NC-04; ACT-003 (no bypass without authorization); `EXT-03` | authorize a scoped, revocable mechanism for named checks · decline | a live 403, live latency, a Preview rollback drill, re-verification after any runtime pin |
 | 2.5 | **Operator identities**: a second, narrower Preview principal for a live 403; custody and delivery of the production operator token (never through chat) | FS-08 residual; ACT-003 access control | configure one (the hash only, by the operator) · keep the local 403 evidence as the residual | the authorization residual |
 | 2.6 | **Spending** (D3-A): paid alerting; a paid Supabase plan (downloadable backups, no pause, branching) | `FD-FS-001` D3-A; `FS-DP-01` point 6 | spend · do not spend | only the options that cost money (FS-DP-06 alerting; E4) |
-| 2.7 | **Deployment protection observed disabled** (`EXT-06`): was the change of Vercel `ssoProtection` (enabled at FS-08, `enabled: false` at 2026-09-27 19:57Z; not made by Claude Code) intended? | ACT-003 NC-04; `FS-DP-03` revision 2 `R2.4` | confirm as intended · restore it (a Founder-held setting). The required edge access is decided by the Architect in `FS-DP-03` (X1–X3) | the Preview's exposure until `FS-DP-03` is decided |
+| 2.7 | ~~open~~ **RESOLVED 2026-09-28** (`§6`). **Deployment protection observed disabled** (`EXT-06`), as recorded at `§89`: was the change of Vercel `ssoProtection` (enabled at FS-08, `enabled: false` at 2026-09-27 19:57Z; not made by Claude Code) intended? | ACT-003 NC-04; `FS-DP-03` revision 2 `R2.4` | confirm as intended · restore it (a Founder-held setting). The required edge access is decided by the Architect in `FS-DP-03` (X1–X3) | the Preview's exposure until `FS-DP-03` is decided |
 | 2.8 | **Release** (`FD-FS-001` D4-A): after a FS-09 PASS, whether and what to release | `FD-FS-001` D4-A; ACT-003 | — | not due: FS-09 has not passed; FS-10 is NOT STARTED |
 
 ## 3. What is not a decision but a gap (authorized, not yet done)
@@ -114,4 +114,31 @@
 
 A recommendation is analysis only. None is adopted, implemented or treated as
 decided until the Architect's decision is recorded in the Decision Register.
+
+## 6. EXT-06 — resolved (configuration incident, not an architectural decision)
+
+The history above (`§2.7`, and `FS-DP-03` revision 2 `R2.4`) is kept as
+recorded: deployment protection **was observed OFF** on 2026-09-27 at 19:57Z.
+
+| Field | Value |
+|---|---|
+| **Status** | **RESOLVED** |
+| **Cause** | accidental Founder configuration change (Founder, 2026-09-28) |
+| **Resolution** | the Founder re-enabled Vercel Deployment Protection |
+| **Architectural impact** | none established. EXT-06 is a configuration incident, not an architectural decision. `FS-DP-03` is unchanged; its edge-access options (X1–X3) remain the Architect's to decide |
+| **FS-09 blocker** | removed, subject to verification; verified below |
+| **Exposure window** | from some time after FS-08 (protection confirmed on, `§86`) until the Founder's re-enable (before 2026-09-28 read-only verification). During it, the store gained exactly one record: `seq` 86, the refused anonymous request made by the `§89` observation. No other request reached AIOS |
+
+**Read-only verification, 2026-09-28** (no setting changed, no bypass created,
+no request to the AIOS API, no audit record created):
+
+| # | Check | Result |
+|---|---|---|
+| 1 | Deployment protection | `ssoProtection` **enabled**, `all_except_custom_domains` (as at FS-08). Password protection and trusted IPs off, as before |
+| 2 | Edge protection in effect | static path `/` on the latest Preview (`dpl_2kN7diDqifVADyq6QnQu5nHYAWbW`, commit `edc781b`), on `aios-platform-eight.vercel.app` and on the Production deployment URL: **302 to Vercel login** before any AIOS code runs |
+| 3 | Protection Bypass for Automation | **not directly readable**: the authorized connector has no read operation for bypass secrets, only generate/revoke/update, which were not used. Indirect evidence: the FS-08 bypass was revoked on 2026-09-27 at 18:04Z (`protectionBypass: {}`); Claude Code created none since; all three URLs above refuse unauthenticated access. Confirmation that the list is empty needs the Founder's dashboard (Settings → Deployment Protection) |
+| 4 | `AIOS_OPERATOR_TOKENS` | target `preview` only; sensitive; unchanged since creation (2026-09-27 17:55Z) |
+| 5 | Production | one Production deployment, `dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj`, commit `22c0b49`, unchanged |
+| 6 | Production variables | none: the project holds two variables (`AIOS_OPERATOR_TOKENS`, `SUPABASE_SECRET_KEY`), both `preview` only; `hiddenProductionEnvCount: 0` |
+| 7 | Repository | no AIOS source, certified root or architecture package changed by this verification; only this register and the Decision Register record it |
 

@@ -9556,3 +9556,17 @@ Production Ready, Production Released or Operational AIOS.
 | **Awaiting Founder** | Scenario A residual (if A1) · performance requirement · operational ownership · Preview access for live checks · operator identities · spending · confirmation of the deployment-protection state · release (not due) |
 | **Not done** | no pin; no project, table or branch created; no principal created; no bypass; no Production change; certified P10–P13 roots untouched |
 | **State** | **FS-09 OPEN — NOT PASSED. FS-10 NOT STARTED** |
+
+---
+
+## 90. EXT-06 Resolved — Deployment Protection Re-enabled by the Founder; Read-Only Verification (2026-09-28)
+
+| Field | Value |
+|---|---|
+| **Founder update** | the change of Vercel Deployment Protection was **not intentional**; the Founder re-enabled it. *"Treat EXT-06 as a configuration incident that has been corrected, not as an architectural decision"* |
+| **Record** | `docs/fullstack/FS-09-DECISION-REGISTER.md` `§6`; the OFF observation of `§89` is preserved |
+| **EXT-06** | Status RESOLVED · Cause: accidental Founder configuration change · Resolution: Founder re-enabled Vercel Deployment Protection · Architectural impact: none established · FS-09 blocker: removed, verified |
+| **Verified (read-only)** | `ssoProtection` enabled (`all_except_custom_domains`); latest Preview, `aios-platform-eight.vercel.app` and the Production URL answer 302 to Vercel login on a static path; `AIOS_OPERATOR_TOKENS` Preview-only and unchanged; no Production variables; Production deployment unchanged (`22c0b49`); no store records after `seq` 86 |
+| **Not directly verifiable** | the list of Protection Bypass for Automation secrets: no read operation in the authorized connector. Last known state empty (revoked `§86`); none created since by Claude Code; Founder dashboard confirmation requested |
+| **Unchanged** | `FS-DP-03` and the other packages; AIOS source; certified roots; Production |
+| **State** | FS-09 **OPEN — NOT PASSED**; FS-10 **NOT STARTED**; the five Architect packages await ratification and are not implemented |
