@@ -9570,3 +9570,32 @@ Production Ready, Production Released or Operational AIOS.
 | **Not directly verifiable** | the list of Protection Bypass for Automation secrets: no read operation in the authorized connector. Last known state empty (revoked `§86`); none created since by Claude Code; Founder dashboard confirmation requested |
 | **Unchanged** | `FS-DP-03` and the other packages; AIOS source; certified roots; Production |
 | **State** | FS-09 **OPEN — NOT PASSED**; FS-10 **NOT STARTED**; the five Architect packages await ratification and are not implemented |
+
+---
+
+## 91. ACT-CC-POST-P13-AIOS-FULL-STACK-004 Received — FS-09 Master Act, Founder-Issued and Operative (2026-09-28)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `docs/governance/acts/ACT-CC-POST-P13-AIOS-FULL-STACK-004-FS-09-PRODUCTION-READINESS-MASTER-ACT.md` (verbatim, with the execution-authorization block) |
+| **Status as issued** | FINAL — ISSUED; Founder Authorization GRANTED; operative for FS-09; parent ACT-003 |
+| **Authority verified** | full execution authority within FS-09 (`§4`, `§6`); bounded Architect decision authority for the five packages (`§7`); FS-09 PASS/FAIL/BLOCKED and closure authority (`§41`, `§42`, `§65`). **Not granted:** Production release, Founder Release Authorization, Operational AIOS, Constitution, Founder authority, governance model, Phase 14, P12 reopening, P13 certified-root change, Native Core #12 (`§6`, `§67`–`§69`, `§79`) |
+| **Decisions ratified by the Act** (`§18`) | `FS-DP-03` = **N1** (edge-access form delegated, `§8`) · `FS-DP-06` = **L1 / M1 / R2** · `FS-DP-07` = **A1** · `FS-09-ENV` = **E1**, bounded fallback E2 · `FS-09-RUNTIME` = **P2** (Python 3.12; FS-02 reconciliation authorized) |
+| **Discrepancy classified** (NC-08) | `§10` writes *"Alerting = R2"*. In the ratified package (`FS-DP-06` revision 2 `R2.6`) **R2 is a readiness-signal option**; alerting options are H1–H3. Resolution taken: R2 is implemented **as the package defines it** (the identifier ratified). **Alerting is not decided by the Act** and is not silently substituted; it is evaluated under `§20`, and escalated if no option is within authority and cost |
+| **Next** | execution of W1–W12 under this Act; no micro-Acts (`§72`) |
+
+---
+
+## 92. ACT-CC-POST-P13-AIOS-FULL-STACK-005 Received — FS-09 Continuation, Reconciliation & Execution Resumption (2026-09-28)
+
+| Field | Value |
+|---|---|
+| **ACT ID** | `ACT-CC-POST-P13-AIOS-FULL-STACK-005`; instrument `docs/governance/acts/ACT-CC-POST-P13-AIOS-FULL-STACK-005-FS-09-CONTINUATION-RECONCILIATION-RESUMPTION.md` (verbatim) |
+| **Founder authority** | FOUNDER-ISSUED — FINAL — OPERATIVE; Founder Authorization GRANTED (Moriarty) |
+| **Parent Act** | `ACT-CC-POST-P13-AIOS-FULL-STACK-003`; immediate predecessor `ACT-CC-POST-P13-AIOS-FULL-STACK-004` (not revoked, not modified; preserved as received, `§91`) |
+| **Purpose** | continue FS-09 under ACT-004 authority; reconcile the ACT-004 `§10` R2 wording; resume authorized work without bypassing execution-environment permissions; determine the evidence-based FS-09 exit state |
+| **Scope** | FS-09 only. Not: FS-10 execution, Production release or activation, Founder Release Authorization, Phase 14, P13 reopening, certified-root change, alerting selection (`§28`) |
+| **Known discrepancy** | ACT-004 `§10` *"Alerting = R2"*. Source recovered (`§6`): `FS-DP-06` revision 2 (committed `5941d72`, unchanged since) defines L1–L3 logging, M1–M3 metrics, **H1–H3 alerting**, **R1/R2 readiness**. R2 = readiness. **Alerting: no canonical selection exists; UNRESOLVED** |
+| **Technical permission blockers at receipt** | at ACT-004 execution: reading the migration for the Production project, a read-only search, and git commit/push were denied by the session's permission classifier ("Modify Shared Resources"). Re-verified under this Act in the execution record |
+| **Execution record** | `docs/fullstack/FS-09-ACT-005-EXECUTION-RECORD.md` |
+| **Final execution state** | recorded in the execution record and in a closing Register entry |
