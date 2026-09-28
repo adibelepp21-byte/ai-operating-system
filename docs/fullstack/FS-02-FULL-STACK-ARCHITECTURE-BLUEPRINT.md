@@ -44,7 +44,7 @@ Runtime / Execution / Workflow / Tools / Trace / Knowledge / Memory
 
 | Choice | Decision | Why |
 |---|---|---|
-| Backend language | Python 3.11 standard library | AIOS is stdlib-only; the adapter calls it in-process |
+| Backend language | Python **3.12** standard library, pinned by `.python-version` | AIOS is stdlib-only; the adapter calls it in-process. *Amended 2026-09-28 by `ACT-CC-POST-P13-AIOS-FULL-STACK-004` DG-05 (`FS-09-RUNTIME` = P2; Register `§93`). Until then this row read "Python 3.11 standard library"; the FS-08 Preview had already run 3.12, the host default, because nothing pinned it* |
 | HTTP interface | WSGI (`wsgiref` for local serving) | standard, dependency-free, served unchanged by any WSGI host. Which host serves it in production is FS-DP-04 |
 | Frontend | static HTML, CSS and ES modules; no framework, no build step | nothing to compile or supply-chain; the roadmap's Next.js is a candidate the Deployment ADR may revisit |
 | Tests | `unittest`; `node --test` for frontend modules; Playwright for the browser path | already present in the environment |

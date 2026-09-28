@@ -38,12 +38,15 @@ import os
 import re
 import secrets
 import sys
+import time
 import traceback
 from pathlib import Path
 from typing import Callable, Iterable, Mapping, Optional
 
 from fullstack.backend.aios import AIOSApplication
+from fullstack.backend import telemetry
 from fullstack.backend.api import API_CSP, BASE_HEADERS, Application, _reason
+from fullstack.backend.contract import match
 from fullstack.backend.security import (
     AuditLedger, Authenticator, NoAuthenticator, OperatorTokenAuthenticator)
 from fullstack.backend.supabase_storage import SupabaseStorage, StorageUnavailable
@@ -81,13 +84,15 @@ def storage_from_environment(environment: Mapping[str, str] = os.environ,
     return SupabaseStorage(SUPABASE_PROJECT_URL, key, **options)
 
 
-def _refusal(start_response, status: int, error: str, detail: str):
+def _refusal(start_response, status: int, error: str, detail: str,
+             request_id: Optional[str] = None):
     body = json.dumps({"error": error, "detail": detail},
                       separators=(",", ":")).encode("utf-8")
     start_response(f"{status} {_reason(status)}", [
         ("Content-Type", "application/json; charset=utf-8"), ("Cache-Control", "no-store"),
         ("Content-Security-Policy", API_CSP), *BASE_HEADERS,
-        ("X-Request-Id", secrets.token_hex(8)), ("Content-Length", str(len(body)))])
+        ("X-Request-Id", request_id or secrets.token_hex(8)),
+        ("Content-Length", str(len(body)))])
     return [body]
 
 
@@ -104,38 +109,63 @@ def authenticator_from_environment(
 
 def make_app(storage_factory: Callable[[], Optional[object]] = storage_from_environment,
              authenticator: Optional[Authenticator] = None,
-             repo_root: Path = REPO_ROOT, **aios_options):
-    """The WSGI callable Vercel invokes. Each call is one request, one Runtime."""
+             repo_root: Path = REPO_ROOT,
+             telemetry_sink: Optional[telemetry.Sink] = telemetry.stdout_sink,
+             **aios_options):
+    """The WSGI callable Vercel invokes. Each call is one request, one Runtime.
+
+    FS-DP-06 L1: every request yields one line. A request refused before the
+    Application runs (the 503 fail-closed paths) gets its line here, with no
+    Runtime; every other request gets it from the Application."""
     authenticator = authenticator or authenticator_from_environment()
 
     def app(environ, start_response) -> Iterable[bytes]:
-        if not (environ.get("PATH_INFO") or "").startswith("/api/"):
-            return _refusal(start_response, 404, "not_found",
-                            "this function serves /api/ only; the console is static")
+        started = time.perf_counter()
+        path = environ.get("PATH_INFO") or ""
+        method = environ.get("REQUEST_METHOD", "GET")
+
+        def refuse(status, error, detail):
+            request_id = secrets.token_hex(8)
+            body = _refusal(start_response, status, error, detail, request_id)
+            if telemetry_sink is not None:
+                route = match(method, path)[0] if path.startswith("/api/") else None
+                try:
+                    telemetry_sink(telemetry.line(
+                        request_id=request_id, method=method,
+                        route=route.template if route is not None else "(unmatched)",
+                        status=status, latency_ms=(time.perf_counter() - started) * 1000,
+                        runtime_id=None))
+                except Exception:
+                    pass  # telemetry never changes a response
+            return body
+
+        if not path.startswith("/api/"):
+            return refuse(404, "not_found",
+                          "this function serves /api/ only; the console is static")
         try:
             storage = storage_factory()
         except MalformedKey as error:
             print(f"storage not configured: {error}", file=sys.stderr)
-            return _refusal(start_response, 503, "unavailable", str(error))
+            return refuse(503, "unavailable", str(error))
         if storage is None:
-            return _refusal(start_response, 503, "unavailable",
-                            "persistence is not configured: the operator has not set "
-                            "the server-side database key")
+            return refuse(503, "unavailable",
+                          "persistence is not configured: the operator has not set "
+                          "the server-side database key")
         aios = AIOSApplication(None, repo_root, storage=storage, **aios_options)
         try:
             aios.start()
         except Exception as error:
             print(f"runtime start failed: {type(error).__name__}: "
                   f"{error if isinstance(error, StorageUnavailable) else ''}", file=sys.stderr)
-            return _refusal(start_response, 503, "unavailable",
-                            "the AIOS Runtime could not start on its store")
+            return refuse(503, "unavailable", "the AIOS Runtime could not start on its store")
         try:
-            api = Application(aios, authenticator, AuditLedger(aios.storage))
+            api = Application(aios, authenticator, AuditLedger(aios.storage),
+                              telemetry_sink=telemetry_sink)
             # Materialize the body while the Runtime is running.
             return [b"".join(api(environ, start_response))]
         except Exception:
             print("request failed after start\n" + traceback.format_exc(), file=sys.stderr)
-            return _refusal(start_response, 503, "unavailable", "the request could not complete")
+            return refuse(503, "unavailable", "the request could not complete")
         finally:
             aios.stop()
 

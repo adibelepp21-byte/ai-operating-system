@@ -17,12 +17,13 @@ import json
 import mimetypes
 import secrets
 import sys
+import time
 import traceback
 from pathlib import Path
 from typing import Callable, Iterable, List, Optional, Tuple
 from urllib.parse import parse_qs
 
-from . import contract
+from . import contract, telemetry
 from .aios import AIOSApplication, InvalidRunRequest, NotRunning, UnknownWorkflow
 from .security import PUBLIC, AuditLedger, Authenticator, authorize
 
@@ -52,14 +53,17 @@ class Application:
 
     def __init__(self, aios: AIOSApplication, authenticator: Authenticator,
                  audit: AuditLedger, frontend_dir: Path = FRONTEND_DIR,
-                 request_id: Callable[[], str] = lambda: secrets.token_hex(8)):
+                 request_id: Callable[[], str] = lambda: secrets.token_hex(8),
+                 telemetry_sink: Optional[telemetry.Sink] = telemetry.stdout_sink):
         self._aios = aios
+        self._telemetry = telemetry_sink
         self._authenticator = authenticator
         self._audit = audit
         self._frontend = Path(frontend_dir).resolve()
         self._request_id = request_id
 
     def __call__(self, environ, start_response) -> Iterable[bytes]:
+        started = time.perf_counter()
         request_id = self._request_id()
         path = environ.get("PATH_INFO") or "/"
         if path.startswith("/api/"):
@@ -69,7 +73,29 @@ class Application:
         headers = list(headers) + list(BASE_HEADERS) + [("X-Request-Id", request_id),
                                                         ("Content-Length", str(len(body)))]
         start_response(f"{status} {_reason(status)}", headers)
+        self._log(environ, path, request_id, status, started)
         return [body] if environ.get("REQUEST_METHOD") != "HEAD" else [b""]
+
+    def _log(self, environ, path, request_id, status, started):
+        """FS-DP-06 L1: one line per request, with the route template only."""
+        if self._telemetry is None:
+            return
+        method = environ.get("REQUEST_METHOD", "GET")
+        if path.startswith("/api/"):
+            route = contract.match(method, path)[0]
+            template = route.template if route is not None else "(unmatched)"
+        else:
+            template = "(static)"
+        try:
+            runtime_id = self._aios.runtime_id
+        except Exception:
+            runtime_id = None
+        try:
+            self._telemetry(telemetry.line(
+                request_id=request_id, method=method, route=template, status=status,
+                latency_ms=(time.perf_counter() - started) * 1000, runtime_id=runtime_id))
+        except Exception:
+            pass  # telemetry never changes a response
 
     # -- API ------------------------------------------------------------------
 
@@ -241,8 +267,10 @@ def _reason(status: int) -> str:
 
 
 def create_app(data_dir: Path, repo_root: Path, authenticator: Authenticator,
+               telemetry_sink: Optional[telemetry.Sink] = telemetry.stdout_sink,
                **aios_options) -> Tuple[Application, AIOSApplication]:
     """Build and start the application: one AIOS Runtime, the API over it."""
     aios = AIOSApplication(data_dir=data_dir, repo_root=repo_root, **aios_options)
     aios.start()
-    return Application(aios, authenticator, AuditLedger(aios.storage)), aios
+    return Application(aios, authenticator, AuditLedger(aios.storage),
+                       telemetry_sink=telemetry_sink), aios

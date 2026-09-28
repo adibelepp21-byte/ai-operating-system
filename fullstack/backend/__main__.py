@@ -22,6 +22,11 @@ its hash, for the host. Nothing is written to disk.
 The FS-09 restore drill (`FS-DP-01` point 6): restore a logical export
 (`fullstack/deploy/backup.py`) into a **fresh** local store, never into one
 that already holds the exported partitions, then compare it record by record.
+
+    python -m fullstack.backend metrics --log <file>
+
+FS-DP-06 M1: request volume, status classes and latency, derived from the L1
+request lines in a captured or exported log (`fullstack/deploy/metrics.py`).
 """
 
 from __future__ import annotations
@@ -58,7 +63,14 @@ def main(argv=None) -> int:
         command = commands.add_parser(name, help=text)
         command.add_argument("--export", required=True, type=Path)
         command.add_argument("--data-dir", required=True, type=Path)
+    metrics = commands.add_parser("metrics", help="derive metrics from L1 request lines")
+    metrics.add_argument("--log", required=True, type=Path)
     args = parser.parse_args(argv)
+    if args.command == "metrics":
+        from fullstack.deploy.metrics import derive
+        with open(args.log, encoding="utf-8") as handle:
+            print(json.dumps(derive(handle), indent=2, sort_keys=True))
+        return 0
     if args.command in ("backup-restore", "backup-verify"):
         return _backup(args)
     if args.command == "operator-token":

@@ -19,6 +19,7 @@ from wsgiref.simple_server import WSGIRequestHandler, make_server
 from wsgiref.util import setup_testing_defaults
 
 from fullstack.backend.api import create_app
+from fullstack.backend.telemetry import Collector
 from fullstack.backend.security import (
     AUDIT, OBSERVE, RUN_WORKFLOW, Authenticator, OperatorTokenAuthenticator, token_sha256)
 
@@ -58,9 +59,11 @@ class Harness:
             self._tmp = tempfile.TemporaryDirectory()
             data_dir = Path(self._tmp.name)
         self.data_dir = Path(data_dir)
+        #: FS-DP-06 L1 lines of this harness's requests (never printed).
+        self.telemetry = options.pop("telemetry_sink", None) or Collector()
         self.app, self.aios = create_app(self.data_dir, REPO_ROOT,
                                          authenticator or default_authenticator(),
-                                         **options)
+                                         telemetry_sink=self.telemetry, **options)
 
     def close(self):
         self.aios.stop()

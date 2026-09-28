@@ -262,7 +262,7 @@ def _dependency_failure() -> Dict[str, int]:
         setup_testing_defaults(env)
         seen = {}
         with contextlib.redirect_stderr(io.StringIO()):   # the expected refusal's log line
-            make_app(factory, NoAuthenticator())(
+            make_app(factory, NoAuthenticator(), telemetry_sink=None)(
                 env, lambda s, h: seen.update(s=int(s.split()[0])))
         return seen["s"]
 
@@ -274,6 +274,7 @@ def _dependency_failure() -> Dict[str, int]:
 def _measure(runs: int) -> dict:
     """Exercise the real application in a throwaway directory."""
     from fullstack.backend.api import create_app
+    from fullstack.backend.telemetry import Collector
     from fullstack.backend.security import (AUDIT, OBSERVE, RUN_WORKFLOW, Authenticator,
                                             Principal)
     from wsgiref.util import setup_testing_defaults
@@ -303,7 +304,8 @@ def _measure(runs: int) -> dict:
     body = lambda doc: {"workflow": "document-conformance-review",  # noqa: E731
                         "inputs": {"document": doc, "criteria": ["INV-4"]}}
     with tempfile.TemporaryDirectory() as tmp:
-        app, aios = create_app(Path(tmp), REPO_ROOT, _Gate())
+        log = Collector()
+        app, aios = create_app(Path(tmp), REPO_ROOT, _Gate(), telemetry_sink=log)
         latencies, first = [], None
         store = Path(tmp) / "storage"
         for _ in range(runs):
@@ -322,7 +324,7 @@ def _measure(runs: int) -> dict:
         aios.stop()
         final = {p.name: p.read_bytes() for p in store.iterdir()}
         appended_only = all(final[name].startswith(data) for name, data in first.items())
-        _, restarted = create_app(Path(tmp), REPO_ROOT, _Gate())
+        _, restarted = create_app(Path(tmp), REPO_ROOT, _Gate(), telemetry_sink=None)
         survived = len(restarted.runs())
         restarted.stop()
     return {"success": ok.get("state") == "succeeded" and status == 201,
