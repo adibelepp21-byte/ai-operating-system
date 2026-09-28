@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-09-RUNTIME` (provisional) |
 | **Area** | The Python version the deployed function runs, pinned in the repository; Architect-reserved (part of the deployment arrangement, `FS-DP-04`, and a conflict with the FS-02 blueprint) |
-| **Status** | **PROPOSED — NOT RATIFIED.** Prepared for Architect review, Register `§89` |
+| **Status** | **RATIFIED — P2** (Python 3.12), by the Founder as Architect in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§16` (Register `§93`, `ACT-004-DG-05`). Implemented: `.python-version` = 3.12; FS-02 amended; the Preview build reads *"Using Python 3.12 from .python-version"*. The analysis below is the package as reviewed (`§89`) |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A) |
 | **Founder constraints** | Vercel; no spending (D3-A); live re-verification needs Founder-authorized Preview access |
 | **Prepared by** | Claude Code, 2026-09-27, on the Founder's *"FS-09 — DECISION PACKAGE PREPARATION"*. Options P1–P3 as recorded in `FS-09-DECISION-REGISTER.md` `§1.5` |

@@ -147,3 +147,14 @@ time after FS-08 (observed 19:57Z; `EXT-06`, Founder `§2.7`).
 
 FS-09 remains **OPEN**. FS-10 remains **NOT STARTED**.
 
+
+## 11. Under ACT-004 / ACT-005 (`§91`–`§94`)
+
+The matrix above records FS-09 as it stood at `§88`/`§89`. Its current state is
+the readiness gate v3 (`python -m fullstack.readiness evaluate`) and the ACT-005
+execution record: 26 PASS, 1 OBSERVED, 0 FAIL, 3 BLOCKED (Scenario A residual,
+alerting selection, E1 deployment wiring).
+
+```text
+FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER      FS-10 = NOT STARTED
+```

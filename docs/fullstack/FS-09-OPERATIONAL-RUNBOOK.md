@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | **Authority** | `ACT-CC-POST-P13-AIOS-FULL-STACK-003` `§18`, `§19`; the Founder's FS-09 continuation (Workstream C) |
-| **Register** | `§88` |
+| **Register** | `§88` (written); `§93` (updated to the ACT-004 decisions and FS-09 live state) |
 | **Scope** | the deployed AIOS Full Stack: Vercel project `aios-platform` (static console and `/api/v1/*` Python function) over Supabase project `scfymftfzkpilqbgmfwv`, table `aios_records` |
-| **Status** | **written and checked against the code; not yet exercised in a real incident.** Monitoring and alerting (`§12`) are placeholders until `FS-DP-06` is ratified. Who performs each step (`§13`) waits on the Founder's operational-ownership decision |
+| **Status** | **current as of 2026-09-28 (ACT-004/005).** Checked against the code and the FS-09 live verification; not yet exercised in a real incident. Logging, metrics and readiness (`§12`) are implemented; **alerting is unresolved**. Duties (`§13`) follow `FS-09-OPERATIONAL-OWNERSHIP.md`. *History: until `§93` this row said monitoring and alerting were placeholders and ownership was unassigned* |
 | **Is not** | a release, a Production procedure the operator may run on their own, or a readiness PASS |
 
 **Rules for every step.** No secret value goes into chat, a commit, a document,
@@ -28,13 +28,16 @@ therefore means *a request can start a Runtime*.
 | Authenticated read | `GET /api/v1/runtime` with `Authorization: Bearer <operator token>` | `200`, `state: running`, a new `runtime_id` on every call |
 | Console | `GET /` | `200 text/html`; `app.js`, `api.js` load |
 | Readiness gate (local) | `python -m fullstack.readiness evaluate` | JSON; see `docs/fullstack/FS-09-READINESS-PROGRAM.md` |
+| Runtime | the build log | *"Using Python 3.12 from .python-version"* (`FS-09-RUNTIME` P2) |
+| Request log | Vercel runtime logs, query `fullstack.request/1` | one line per request (`§12`) |
 
-Edge protection is a project setting held by the Founder. At FS-08 it was on:
-an unauthenticated request got `302` or `401` **from Vercel** before AIOS ran.
-**Observed 2026-09-27 19:57Z: it is off** (`EXT-06`), so anonymous requests reach
-AIOS, which refuses them (`401`) and records each refusal in the audit. Which
-state is required is `FS-DP-03`'s decision. Check the setting before trusting
-either behaviour.
+Edge protection (`FS-DP-03` N1, form X2) is a project setting held by the
+operator: Vercel login protection on every deployment URL
+(`all_except_custom_domains`). An unauthenticated request gets `302`/`401`
+**from Vercel** before AIOS runs: protection working, not a fault. Check the
+setting before trusting either behaviour. *History: it was observed off on
+2026-09-27 19:57Z (EXT-06), an accidental change the Founder corrected (Register
+`§90`); it was on throughout the FS-09 live verification.*
 
 ## 2. Authentication failure
 
@@ -94,7 +97,7 @@ a missing document). Nothing is left `running`.
 | what did a run do | `GET /api/v1/runs/{run_id}`: `steps`, `states`, `outcome`, `failure_reason` |
 | which Trace records are the run's | the run's `trace` = `{runtime, runtime_from, runtime_to, count}`: its Runtime's own records, by ordinal (`FS-DP-05` C1). In code, `AIOSApplication.run_trace(run_id)`. Legacy `fullstack.run/1` runs keep a global range |
 | who did what, allowed or refused | `GET /api/v1/audit` (scope `aios.audit`): `subject`, `method`, `path`, `scope`, `decision`, `status`, `request_id`. Anonymous refusals have `subject: null` |
-| correlate a response with the audit | the `X-Request-Id` response header = the audit entry's `request_id` |
+| correlate a response with the audit and the log | the `X-Request-Id` response header = the audit entry's `request_id` = the L1 line's `request_id` |
 | raw store | operator SQL: `select seq, partition, convert_from(record, 'UTF8') from aios_records order by seq` |
 
 No credential is ever written to Trace or audit. If one is found, that is an incident (`§11`).
@@ -120,9 +123,12 @@ backup is an **operator-run logical export** in the `fullstack.backup/1` format
    `Bearer`); there must be none. Keep it with a manifest (source, time, digests,
    the file's own SHA-256), as in `docs/fullstack/evidence/FS-09-BACKUP-MANIFEST-2026-09-27.json`.
 
-Drilled on 2026-09-27: 80 records, every partition and the whole table equal to
-the database's digests. **Unset:** cadence, retention and who runs it
-(`OPERATIONAL-OWNERSHIP`, Founder).
+Drilled on 2026-09-27 on the Preview store: 80 records, every partition and the
+whole table equal to the database's digests. **Per environment** (`FS-09-ENV` E1):
+the Preview store `scfymftfzkpilqbgmfwv` and the Production store
+`hmljfyqycxcueulhsjae` are exported separately and never mixed. Cadence,
+retention and who runs it: `FS-09-OPERATIONAL-OWNERSHIP.md` `§4`. *History:
+until `§93` these were unset.*
 
 ## 8. Restore
 
@@ -140,11 +146,11 @@ digests, which must equal the manifest's. Then check that the runs, each run's
 Trace and the audit read back (`fullstack/tests/test_backup_restore.py` does
 exactly this, on every regression run).
 
-**Boundary.** Restoring into a *live* Supabase project other than
-`scfymftfzkpilqbgmfwv` means creating or choosing a second environment. That
-waits on the Architect's `FS-09-ENV` decision. Restoring *into*
-`scfymftfzkpilqbgmfwv` is refused by design while it holds the partitions, and
-nothing may delete them.
+**Boundary.** A restore makes a fresh store of the **same** environment. A
+Preview export is never restored into the Production project, nor the reverse
+(ACT-004 `§15`). Restoring *into* a store that still holds the partitions is
+refused by design, and nothing may delete them. *History: until `§93` a live
+second target waited on the environment-separation decision.*
 
 ## 9. Rollback
 
@@ -159,8 +165,14 @@ What rollback means here: serving an **earlier deployment's code** over the
 After any rollback: `§1` health, one Scenario B run and one Scenario C run,
 then compare `GET /runs` before and after. Every earlier record must still read.
 
-**Status: NOT VERIFIED.** No deployment rollback has been exercised on any
-environment. Only data compatibility is verified (`§10`).
+**Status: drilled on Preview, 2026-09-28** (`FS-09-ACT-005-EXECUTION-RECORD.md`
+`§14`): the branch alias moved from `dpl_8Znqrn818NgYy66RU7hz819t4ZTj`
+(`a4a11cf`) to `dpl_EJJbGcdvDEfm4b2JQE14d1uaN2Xc` (`d64b179`) and back. Each
+version read the other's records, served Scenarios B and C, kept the B3
+posture (anonymous 401) and the same store and variables. A rollback below the
+L1 commit loses request logs. Production rollback has not been exercised: it
+is the operator's, on a Founder decision. *History: until `§93` this read NOT
+VERIFIED.*
 
 ## 10. Rollback compatibility boundaries
 
@@ -174,6 +186,7 @@ run's Trace. **Data compatibility does not make a rollback target safe.**
 | `0706446` (`FS-DP-05` C1) | **reintroduces the historical concurrency risk**: two Runtimes can give runs the same id, and a run's Trace range can include another run's records | **No** |
 | `215248f` (`FS-DP-02` B3) | **changes the authentication posture**: the function builds no authenticator from `AIOS_OPERATOR_TOKENS`, so the API authenticates nobody (every protected route `401`) | **No** |
 | `207ee77` | a malformed key is no longer named; the function fails with a generic 503 | degraded diagnosis |
+| `a4a11cf` (`FS-DP-06` L1) | no request log lines; Trace, audit and data unaffected | degraded observability |
 | `8d088fb` (`FS-DP-01` store, `FS-DP-04` function) | no API function and no Supabase store: `/api/v1/*` does not exist, only static files are served | **No** |
 
 **The rollback floor for any release is the release candidate itself.** A
@@ -199,26 +212,37 @@ and is not changed by this runbook.
 
 ## 12. Monitoring and alerting
 
-**Placeholder: waits on `FS-DP-06` (Architect, not ratified).** Nothing here is
-implemented or decided.
+`FS-DP-06` as decided by ACT-004 DG-02 (Register `§93`): **L1 / M1 / R2**.
+Trace and audit are unchanged and separate.
 
-| Signal | Today | After FS-DP-06 |
+| Signal | Mechanism | Where |
 |---|---|---|
-| request log | the host's function log captures stderr: configuration refusals, start failures and tracebacks (no request line) | *to be decided*: one structured line per request, separate from Trace and audit |
-| availability | manual `§1` checks | *to be decided*: readiness signal and an uptime check |
-| alerting | none | *to be decided*: host alerts or an external check. A paid alerting product is a Founder spending decision (D3-A) |
-| backup freshness | none | *to be decided* with the backup cadence (`§7`) |
+| request log (L1) | one `fullstack.request/1` JSON line per request: time, `request_id`, method, route **template**, status, latency, `runtime_id`. Never a credential, body or raw path. Refusals before the Application (503) are logged too, with `runtime_id: null` | Vercel runtime logs (stdout); query `fullstack.request/1` |
+| metrics (M1) | derived from L1 lines: request count, status classes, server errors, p50/p95/max latency, per route | `python -m fullstack.backend metrics --log <exported log>` |
+| readiness (R2) | deployed `GET /api/v1/health` = 200 only after a Runtime started on the store; 503 otherwise | `§1` |
+| alerting | **none: unresolved.** No H1/H2/H3 option is selected (ACT-004 `§10` labelled R2 "Alerting"; R2 is readiness). Failures are found by `§1` checks | — |
+| backup freshness | the date of the latest export manifest (`§7`) | the evidence directory |
+
+Verified live on 2026-09-28: all 45 function requests of the FS-09 suite appear
+in the host log with their `request_id`; metrics derived from those lines. The
+host's own access line (`127.0.0.1 - - … "GET /api/v1/runs/run-…"`) shows raw
+paths; it is the host's, not AIOS telemetry. *History: until `§93` this section
+was a placeholder.*
 
 ## 13. Operator responsibilities
 
-Unassigned until the Founder decides `OPERATIONAL-OWNERSHIP`. The duties are:
+Defined in `FS-09-OPERATIONAL-OWNERSHIP.md` (ACT-004 `§37`): the Founder is the
+operator of record and custodian of every credential; Claude Code is a
+delegated executor only while an Act authorizes it. The duties:
 
 * hold operator tokens off the repository and issue, rotate and revoke them (`§2`);
-* hold the Supabase server-side key and set it on the host (`§3`);
+* hold each environment's Supabase key and set it on the host in its own scope only (`§3`);
 * run `§1` after every deployment and before any release decision;
-* take backups (`§7`) at the cadence the Founder sets, and keep them without credentials;
-* keep the Supabase project from pausing, or restore it;
+* take backups (`§7`) at the defined cadence, per environment, without credentials;
+* keep both Supabase projects from pausing, or restore them;
 * handle incidents (`§11`) and escalate (`§14`).
+
+*History: until `§93` these were unassigned.*
 
 ## 14. Escalation boundaries
 
@@ -229,6 +253,7 @@ Unassigned until the Founder decides `OPERATIONAL-OWNERSHIP`. The duties are:
 | temporary access past Vercel SSO | **Founder**, per occasion | any bypass; it is revoked after use |
 | operational ownership, backup cadence, incident owner | **Founder** | — |
 | a performance requirement | **Founder** | treating any latency as a pass/fail requirement |
-| networking (`FS-DP-03`), observability (`FS-DP-06`), Agent creation (`FS-DP-07`) | **Architect** | implementing them |
-| environment separation (`FS-09-ENV`); the Python runtime version (`FS-09-RUNTIME`) | **Architect** | a second project or table; pinning a version |
+| networking, observability, Agent creation, environment separation, runtime | decided by ACT-004 (Register `§93`); implemented under ACT-004/005 | changing those decisions |
+| alerting (`FS-DP-06` H1–H3), unresolved | **Founder as Architect** |
+| architecture beyond the ACT-004 decisions | **Architect** | a second project or table; pinning a version |
 | changes to certified roots P10–P13, Phase 14 | not open | — |

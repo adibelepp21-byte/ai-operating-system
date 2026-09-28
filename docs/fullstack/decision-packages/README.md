@@ -1,6 +1,6 @@
 # Full Stack Decision Packages (`FD-FS-001` D2-A)
 
-**Status of every package: PROPOSED — NOT RATIFIED.** Prepared by Claude Code
+**Status when prepared: PROPOSED — NOT RATIFIED** (each package's own Status row gives its current state). Prepared by Claude Code
 under `FD-FS-001` D2-A: *"Claude Code shall prepare ADR/decision packages for
 Architect ratification; Claude Code shall not treat preparation as
 ratification."* The holder of Architect authority decides. `FD-2` (Founder ≡
@@ -42,8 +42,9 @@ ADR number is taken here.
 
 `FS-DP-03`, `FS-DP-06` and `FS-DP-07` carry a **Revision 2** (FS-09 Architect
 review, Register `§89`); `FS-09-ENV` and `FS-09-RUNTIME` were prepared at `§89`.
-Each package's analytical recommendation is **UNRATIFIED** until the Architect
-decides.
+Each package's analytical recommendation was **UNRATIFIED** until decided.
+**All five were decided by the Founder in ACT-004** (Register `§93`: FS-DP-03 N1,
+FS-DP-06 L1/M1/R2 with alerting undecided, FS-DP-07 A1, FS-09-ENV E1, FS-09-RUNTIME P2).
 
 ## Minimum decision set
 

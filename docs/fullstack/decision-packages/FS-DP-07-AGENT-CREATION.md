@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-DP-07` (provisional) |
 | **Area** | Governed construction of Agent Definitions and Instances (the Agent Factory) — Architect-reserved (Freeze `§13`; Blueprint `§3`; `agent_spec §12–§13`) |
-| **Status** | **PROPOSED — NOT RATIFIED.** Revision 2 (below) prepared for Architect review, Register `§89` |
+| **Status** | **RATIFIED — A1**, by the Founder as Architect in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§12` (Register `§93`, `ACT-004-DG-03`). The Scenario A residual classification under A1 (`R2.5`) is not decided. Revision 2 (below) is the package as reviewed (`§89`) |
 | **Decision owner** | Holder of Architect authority. Authority over Definitions sits with the owning Platform Division (Domain Model `§6`, via the Agent Definition Framework `§3`) |
 | **Blocks** | Act FS-07 Scenario A: *User → Create Agent → Backend → AIOS Agent Capability → Persist → Result* |
 | **Prepared by** | Claude Code, 2026-09-26; **Revision 2** 2026-09-27 (below), on the Founder's *"FS-09 — DECISION PACKAGE PREPARATION"* |

@@ -9599,3 +9599,62 @@ Production Ready, Production Released or Operational AIOS.
 | **Technical permission blockers at receipt** | at ACT-004 execution: reading the migration for the Production project, a read-only search, and git commit/push were denied by the session's permission classifier ("Modify Shared Resources"). Re-verified under this Act in the execution record |
 | **Execution record** | `docs/fullstack/FS-09-ACT-005-EXECUTION-RECORD.md` |
 | **Final execution state** | recorded in the execution record and in a closing Register entry |
+
+---
+
+## 93. ACT-004 Architecture Decisions Recorded; FS-09 Construction Under ACT-004/ACT-005 (2026-09-28)
+
+The five decisions below were **decided by the Founder in ACT-004** (`§8`, `§10`, `§12`, `§14`, `§16`, `§18`), with bounded Architect authority delegated to Claude Code for their implementation (`§7`). Recording them here does not create authority (ACT-004 `§54`). Construction evidence: `docs/fullstack/FS-09-ACT-005-EXECUTION-RECORD.md`.
+
+### ACT-004-DG-01 — Founder Decision (ACT-004 §8) · FS-DP-03 Networking = N1
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-004-DG-01` |
+| **Date** | 2026-09-28 |
+| **Decided by** | Founder (Moriarty) as Architect, in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§8` |
+| **Ratifies** | FS-DP-03 |
+| **Decision** | *"OPTION = N1"*; implementation form delegated (*"Claude may optimize implementation. Claude may not redefine N1"*) |
+| **Implementation form selected** (`§8` delegation) | edge access **X2**: Vercel deployment protection on every deployment URL (`all_except_custom_domains`, the Founder-restored setting); no custom domain |
+
+### ACT-004-DG-02 — Founder Decision (ACT-004 §10) · FS-DP-06 Observability = L1 / M1 / R2
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-004-DG-02` |
+| **Date** | 2026-09-28 |
+| **Decided by** | Founder (Moriarty) as Architect, in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§10` |
+| **Ratifies** | FS-DP-06 |
+| **Decision** | L1 logging, M1 metrics, **R2 readiness signal** (as `FS-DP-06` revision 2 defines R2; ACT-005 `§5`) |
+| **Not decided** | **alerting** (H1–H3). ACT-004 `§10` labels R2 *"Alerting"*; the package defines R2 as readiness. No canonical selection of an H option exists (ACT-005 `§6` source recovery, Register `§92`). Alerting stays **UNRESOLVED** |
+
+### ACT-004-DG-03 — Founder Decision (ACT-004 §12) · FS-DP-07 Agent Creation = A1
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-004-DG-03` |
+| **Date** | 2026-09-28 |
+| **Decided by** | Founder (Moriarty) as Architect, in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§12` |
+| **Ratifies** | FS-DP-07 |
+| **Decision** | *"OPTION = A1"*: keep reserved; the application shows the Agent Instances that act and creates none. No Agent Factory, Planner, Scheduler or Orchestrator (`§13`) |
+| **Not decided** | whether mandatory Scenario A (ACT-001 `§18`) stands as a classified non-blocking residual under A1 (`FS-09-DECISION-REGISTER.md` `§2.1`): Founder |
+
+### ACT-004-DG-04 — Founder Decision (ACT-004 §14) · FS-09-ENV = E1, bounded fallback E2
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-004-DG-04` |
+| **Date** | 2026-09-28 |
+| **Decided by** | Founder (Moriarty) as Architect, in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§14` |
+| **Ratifies** | FS-09-ENV |
+| **Decision** | E1: a second Supabase project for Production; E2 only if E1 cannot be implemented within cost/availability. E1 was available (free organization): the new project serves **Production**, so none of the Preview test records are in Production's store. Amends `FS-ARCH-RAT-001` `§11.1` from one project to one per environment |
+
+### ACT-004-DG-05 — Founder Decision (ACT-004 §16) · FS-09-RUNTIME = P2
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-004-DG-05` |
+| **Date** | 2026-09-28 |
+| **Decided by** | Founder (Moriarty) as Architect, in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§16` |
+| **Ratifies** | FS-09-RUNTIME |
+| **Decision** | P2: Python 3.12, pinned; FS-02 amended explicitly (its former *"Python 3.11"* wording quoted in the amendment) |

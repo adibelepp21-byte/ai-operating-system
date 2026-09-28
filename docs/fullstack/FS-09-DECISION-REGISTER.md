@@ -142,3 +142,23 @@ no request to the AIOS API, no audit record created):
 | 6 | Production variables | none: the project holds two variables (`AIOS_OPERATOR_TOKENS`, `SUPABASE_SECRET_KEY`), both `preview` only; `hiddenProductionEnvCount: 0` |
 | 7 | Repository | no AIOS source, certified root or architecture package changed by this verification; only this register and the Decision Register record it |
 
+
+## 7. Resolution under ACT-004 / ACT-005 (2026-09-28)
+
+The entries above are kept as recorded. ACT-004 (Register `§91`, `§93`) decided
+the five Architect packages; ACT-005 (`§92`) reconciled its R2 wording.
+
+| Item | Decided | State | Record |
+|---|---|---|---|
+| `FS-DP-03` | N1 (form X2) | implemented and verified live | execution record `§9` |
+| `FS-DP-06` | L1 / M1 / R2 | implemented and verified live | `§10`–`§12` |
+| `FS-DP-06` alerting | **not decided** (H1–H3) | open: Founder as Architect | `§5`, `§6` |
+| `FS-DP-07` | A1 | in force | `§13` |
+| `§2.1` Scenario A residual | **not decided** | open: Founder | `§13` |
+| `FS-09-ENV` | E1 | Production store created and migrated, isolated; **adapter wiring blocked by execution permission** | `§7`, `§15` |
+| `FS-09-RUNTIME` | P2 | implemented and verified live | `§8` |
+| `§2.3` Operational ownership | defined under ACT-004 `§37` | `FS-09-OPERATIONAL-OWNERSHIP.md` | — |
+| `§2.4` Live access | ACT-004 `§56` | used once, revoked | `§14`, evidence |
+| `§3` Rollback not verified | — | **drilled on Preview** | `§14` |
+
+Execution record: `docs/fullstack/FS-09-ACT-005-EXECUTION-RECORD.md`.

@@ -70,16 +70,28 @@ PACKAGES = {
 PASS, FAIL, BLOCKED, OBSERVED = "PASS", "FAIL", "BLOCKED", "OBSERVED"
 READY, NOT_READY = "PRODUCTION READY", "NOT PRODUCTION READY"
 
-#: Decisions a criterion can wait on that have no decision package: Founder
-#: decisions, recorded in `docs/fullstack/FS-09-DECISION-REGISTER.md`. The two
-#: Architect decisions first recorded here (`§88`: ENVIRONMENT-SEPARATION,
-#: PYTHON-RUNTIME-VERSION) have packages since `§89`: FS-09-ENV, FS-09-RUNTIME.
+#: What a criterion can wait on besides an FS-DP package: Founder decisions and
+#: execution-permission dependencies (ACT-005 `§9`), each recorded in
+#: `docs/fullstack/FS-09-DECISION-REGISTER.md` and the ACT-005 execution record.
 OTHER_DECISIONS = {
-    "OPERATIONAL-OWNERSHIP": "Founder: who operates AIOS, holds the production operator "
-                             "token, runs backups and answers incidents (ACT-003 §19)",
+    "ALERTING-SELECTION": "Founder as Architect: FS-DP-06 alerting (H1, H2 or H3). ACT-004 "
+                          "ratified L1/M1/R2; R2 is the readiness signal, so no alerting "
+                          "option is selected (Register §92, §93)",
+    "SCENARIO-A-RESIDUAL": "Founder: under A1 (ratified), whether mandatory Scenario A "
+                           "(ACT-001 §18) stands as a classified non-blocking residual",
+    "E1-DEPLOYMENT-WIRING": "Execution permission: the edit that selects the Production "
+                            "store by environment in fullstack/deploy/vercel.py was denied by "
+                            "the session's permission classifier; the Founder/user must allow "
+                            "it (ACT-005 §9)",
 }
 #: Recorded live evidence the gate reads. It is never written here.
-PREVIEW_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-08-LIVE-PREVIEW-2026-09-27.json"
+PREVIEW_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-28.json"
+#: The FS-08 recording, kept as history; superseded for this gate by the FS-09 one.
+FS08_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-08-LIVE-PREVIEW-2026-09-27.json"
+OWNERSHIP = REPO_ROOT / "docs/fullstack/FS-09-OPERATIONAL-OWNERSHIP.md"
+PYTHON_VERSION = REPO_ROOT / ".python-version"
+#: FS-09-RUNTIME P2 (ACT-004 DG-05).
+PINNED_PYTHON = "3.12"
 BACKUP_EXPORT = REPO_ROOT / "docs/fullstack/evidence/FS-09-BACKUP-EXPORT-2026-09-27.jsonl"
 BACKUP_MANIFEST = REPO_ROOT / "docs/fullstack/evidence/FS-09-BACKUP-MANIFEST-2026-09-27.json"
 RUNBOOK = REPO_ROOT / "docs/fullstack/FS-09-OPERATIONAL-RUNBOOK.md"
@@ -87,10 +99,15 @@ MIGRATIONS = REPO_ROOT / "fullstack/deploy/supabase/migrations"
 #: Operator inspection of the live store (Supabase `list_migrations`, 2026-09-27,
 #: Register `§87` and `§88`): the migrations applied there.
 APPLIED_MIGRATIONS = ("20260927062422_aios_records",)
+#: The same migration on the Production store (FS-09-ENV E1), applied 2026-09-28
+#: with the repository's SQL unchanged; the host stamped its own version.
+PRODUCTION_MIGRATIONS = ("20260928051800_aios_records",)
+OWNERSHIP_SECTIONS = ("Roles", "Credentials", "Deployment", "Backup and restore",
+                      "Rollback", "Monitoring", "Incidents", "Escalation")
 #: What the Vercel function serves: its entry point, configuration and the code
 #: it imports. A change here since the recorded Preview commit makes the
 #: recording stale. Operator tools the function never imports are excluded.
-SERVED_PATHS = ("api", "vercel.json", "fullstack/__init__.py", "fullstack/deploy/__init__.py",
+SERVED_PATHS = ("api", "vercel.json", ".python-version", "fullstack/__init__.py", "fullstack/deploy/__init__.py",
                 "fullstack/deploy/vercel.py", "fullstack/backend", "fullstack/frontend",
                 "native_core", "consumers", "tools/__init__.py",
                 "tools/certified_write_barrier.py",
@@ -107,26 +124,21 @@ RUNBOOK_SECTIONS = ("Startup and health", "Authentication failure", "Dependency 
 #: unreachable, 2026-09-26) was resolved on 2026-09-27: the AIOS project is
 #: reachable and healthy (docs/fullstack/FS-08-VERCEL-SUPABASE-EXECUTION.md §J).
 #: EXT-05 (no server-side key) was resolved at FS-08: the Founder re-entered the
-#: key and the Preview wrote to and read from the store (Register `§86`).
+#: key and the Preview wrote to and read from the store (Register `§86`). EXT-06
+#: (deployment protection observed disabled, 2026-09-27 19:57Z, Register `§89`)
+#: was an accidental Founder configuration change, corrected by the Founder and
+#: verified read-only (Register `§90`); protection was on throughout FS-09 live.
 EXTERNAL_DEPENDENCIES = (
     {"id": "EXT-02", "what": "S-01 AIOS Transition Manifest not supplied (FD-FS-001 D5-A)",
      "needs": "the Founder to supply the exact document"},
-    {"id": "EXT-03", "what": "authenticated live checks need access the connector cannot "
-     "give: FS-08 used a Founder-authorized, temporary automation bypass, revoked after the "
-     "suite (Register §86). The connector reads build logs (2026-09-27)",
-     "needs": "a new, equally temporary Founder authorization for any further live Preview "
-     "check (FS-09: performance, a live 403, a rollback drill); the operator token stays "
-     "outside the repository"},
+    {"id": "EXT-03", "what": "authenticated live checks need access past Vercel protection: "
+     "FS-08 (Register §86) and FS-09 (ACT-004 §56, 2026-09-28) each used a temporary "
+     "automation bypass, revoked after the suite (protectionBypass: {})",
+     "needs": "a temporary, revocable mechanism for each further live check; none is active"},
     {"id": "EXT-04", "what": "the project-scoped Supabase connector is denied permission and "
      "was bound to a ref not in the account (2026-09-27); the account connector reaches the "
      "AIOS project scfymftfzkpilqbgmfwv, which is healthy",
      "needs": "the project-scoped connector re-bound to scfymftfzkpilqbgmfwv (non-blocking)"},
-    {"id": "EXT-06", "what": "Vercel deployment protection observed DISABLED on 2026-09-27 at "
-     "19:57Z (ssoProtection enabled: false); it was enabled at FS-08 (Register §86). Claude "
-     "Code did not change it. Previews and aios-platform-eight.vercel.app answer anonymous "
-     "requests; AIOS still refuses them (401), and each refusal appends an audit record",
-     "needs": "the Founder to confirm whether this is intended; the required edge access is "
-     "the Architect's FS-DP-03 decision (revision 2, R2.6 X1-X3)"},
 )
 
 
@@ -171,11 +183,30 @@ def _blocked_unless(area, name, packages, decided, evidence_if_ratified):
 
 
 def preview_record(path: Path = PREVIEW_EVIDENCE) -> dict:
-    """The recorded FS-08 live checks, and whether they still cover this tree."""
+    """The recorded live checks (FS-09, 2026-09-28), and whether they still
+    cover this tree. The FS-08 recording (`FS08_EVIDENCE`) is history."""
     data = json.loads(path.read_text(encoding="utf-8"))
-    passed = {r["check"] for r in data["results"] if r["result"] == "PASS"}
+    passed = {r["check"] for r in data["results"] + data.get("fs09_checks", [])
+              if r["result"] == "PASS"}
     if str(data.get("database_after", {}).get("update_attempt", "")).startswith("refused"):
         passed.add("store refuses UPDATE")
+    observed = data.get("observability", {})
+    if observed.get("function_requests_with_request_id") and (
+            observed.get("found_in_host_log") == observed.get("function_requests_with_request_id")):
+        passed.add("L1 lines observed in the host log for every request")
+    if observed.get("m1_metrics_derived", {}).get("total", {}).get("requests"):
+        passed.add("M1 metrics derived from the host log")
+    drill = data.get("rollback_drill", {})
+    if all(drill.get(p, {}).get("scenario_b", [0])[0] == 201
+           and drill.get(p, {}).get("reads_other_version_run", [0, False])[1]
+           for p in ("rolled_back", "rolled_forward")) and drill:
+        passed.add("rollback drill: back and forward, each reads the other's records")
+    if "production_hmljfyqycxcueulhsjae" in data.get("database_after", {}) and \
+            data["database_after"]["production_hmljfyqycxcueulhsjae"].get("rows") == 0:
+        passed.add("Production store untouched by Preview traffic")
+    if "Using Python " + PINNED_PYTHON + " from .python-version" in \
+            data.get("build", {}).get("runtime_line", ""):
+        passed.add("build ran the pinned runtime")
     diff = subprocess.run(["git", "diff", "--quiet", data["commit"], "--", *SERVED_PATHS],
                           cwd=str(REPO_ROOT), capture_output=True, text=True)
     current = {0: True, 1: False}.get(diff.returncode)   # None: commit not available
@@ -237,14 +268,19 @@ def _restore_drill() -> dict:
                 "partitions"]["fullstack-runs"]["records"]}
 
 
+def _sections_missing(path: Path, required) -> List[str]:
+    """The required `##` sections a document lacks (numbering ignored)."""
+    if not path.is_file():
+        return list(required)
+    headings = {line.lstrip("#").strip().split(". ", 1)[-1]
+                for line in path.read_text(encoding="utf-8").splitlines()
+                if line.startswith("## ")}
+    return [s for s in required if s not in headings]
+
+
 def _runbook_sections() -> List[str]:
     """The required runbook sections that are missing."""
-    if not RUNBOOK.is_file():
-        return list(RUNBOOK_SECTIONS)
-    headings = {line.lstrip("#").strip().split(". ", 1)[-1]
-                for line in RUNBOOK.read_text(encoding="utf-8").splitlines()
-                if line.startswith("## ")}
-    return [s for s in RUNBOOK_SECTIONS if s not in headings]
+    return _sections_missing(RUNBOOK, RUNBOOK_SECTIONS)
 
 
 def _dependency_failure() -> Dict[str, int]:
@@ -287,7 +323,10 @@ def _measure(runs: int) -> dict:
         def authenticate(self, headers):
             return self.principals.get(headers.get("x-gate-principal", ""))
 
+    made = []
+
     def call(app, method, path, who=None, body=None):
+        made.append(path)
         data = json.dumps(body).encode() if body is not None else b""
         path, _, query = path.partition("?")
         env = {"REQUEST_METHOD": method, "PATH_INFO": path, "QUERY_STRING": query,
@@ -333,6 +372,7 @@ def _measure(runs: int) -> dict:
             "headers": headers, "traces": traces, "expected_traces": 3 * runs + 2,
             "audit_entries": len(audit), "appended_only": appended_only,
             "runs_after_restart": survived, "runs_made": runs + 1,
+            "requests_made": len(made), "log_lines": list(log.lines),
             "latency_ms": {"runs": runs, "p50": round(statistics.median(latencies), 2),
                            "max": round(max(latencies), 2)}}
 
@@ -370,6 +410,18 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
     dependency = _dependency_failure()
     missing_sections = _runbook_sections()
     in_repo = sorted(p.stem for p in MIGRATIONS.glob("*.sql"))
+    from fullstack.backend import contract
+    from fullstack.deploy.metrics import derive
+    a1_holds = ([(r.method, r.template) for r in contract.ROUTES if r.method != "GET"]
+                == [("POST", "/api/v1/runs")]
+                and not [r for r in contract.ROUTES if "agent" in r.template.lower()])
+    joined = "\n".join(m["log_lines"])
+    l1_local = (len(m["log_lines"]) == m["requests_made"]
+                and "gate-operator" not in joined and "docs/absent.md" not in joined)
+    m1 = derive(m["log_lines"])
+    m1_local = m1["total"]["requests"] == m["requests_made"]
+    pinned = PYTHON_VERSION.read_text(encoding="utf-8").strip() if PYTHON_VERSION.is_file() else None
+    missing_ownership = _sections_missing(OWNERSHIP, OWNERSHIP_SECTIONS)
     only_scope = ("refusal for a missing scope (403) is evidenced locally only: the Preview "
                   "holds one principal with every scope")
     c: List[dict] = [
@@ -379,8 +431,17 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
               m["failure_state"] == "failed",
               f"state {m['failure_state']!r}: {m['failure_reason']}",
               ["failure paths are meaningful states"], preview),
-        _blocked_unless("Functionality", "agent creation (Scenario A)", ["FS-DP-07"], decided,
-                        "ratified but not implemented"),
+        _blocked("Functionality", "agent creation (Scenario A)",
+                 ["FS-DP-07", "SCENARIO-A-RESIDUAL"], decided,
+                 "A1 (ratified, ACT-004 DG-03) is in force: no route creates an Agent, so "
+                 "Scenario A cannot occur") or _criterion(
+            "Functionality", "agent creation (Scenario A)", PASS,
+            "classified by the Founder as a non-blocking residual under A1",
+            classes=[LOCAL]),
+        _criterion("Functionality", "A1: no route creates an Agent",
+                   PASS if a1_holds else FAIL,
+                   "the only state-changing route is POST /api/v1/runs; no route names an "
+                   "Agent; runs show the acting Agent Instances", classes=[LOCAL]),
         _blocked("Security", "authentication", ["FS-DP-02"], decided) or _live(
             "Security", "authentication", _no_shipped_credential(),
             "B3 is the composition's authenticator; unconfigured it accepts nobody",
@@ -416,23 +477,41 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
               ["8 concurrent POSTs", "distinct runtime-derived identities",
                "no duplicate identity in the store"], preview),
         _blocked("Reliability", "rollback of a deployment", ["FS-DP-01", "FS-DP-04"], decided)
-        or _criterion(
-            "Reliability", "rollback of a deployment", FAIL,
-            "NOT VERIFIED: no deployment rollback has been exercised. Data compatibility only "
-            "(FS-09 discovery: 6e31092 reads fullstack.run/2). Floors: below 0706446 (C1) "
-            "brings back duplicate run ids under concurrency; below 215248f (B3) the API "
-            "authenticates nobody. Neither target is production-safe because its data "
-            "reads", classes=[LOCAL_RECORDED]),
+        or _live("Reliability", "rollback of a deployment", None, "",
+                 ["rollback drill: back and forward, each reads the other's records"], preview,
+                 residual="drilled on Preview by alias (same store, same credentials, same "
+                          "B3 posture); a rollback below the L1 commit loses request logs. "
+                          "Production rollback is Founder-only (FD-FS-001 D4-A). Floors: below "
+                          "0706446 (C1) duplicate run ids return; below 215248f (B3) the API "
+                          "authenticates nobody; below 8d088fb there is no API. None is "
+                          "production-safe because its data reads"),
         _criterion("Performance", "latency of Scenario B (local, in-process)", OBSERVED,
                    f"p50 {m['latency_ms']['p50']} ms, max {m['latency_ms']['max']} ms over "
-                   f"{runs} runs. No canonical workload or latency requirement exists; a "
-                   "formal one needs a Founder decision. Live latency not measured",
-                   classes=[LOCAL]),
+                   f"{runs} runs. Live (recorded, Preview): see the evidence file's "
+                   "observed_latency_ms and M1 figures. No canonical workload or latency "
+                   "requirement exists; OBSERVED is not PASS (ACT-004 §39)",
+                   classes=[LOCAL, PREVIEW]),
         _live("Observability", "tracing (Trace)", m["traces"] == m["expected_traces"],
               f"{m['traces']} Trace records for {runs} successful and 1 failed run",
               ["Trace associated with the run"], preview),
-        _blocked_unless("Observability", "logging, metrics, alerting", ["FS-DP-06"], decided,
-                        "ratified but not implemented"),
+        _blocked("Observability", "logging (L1)", ["FS-DP-06"], decided) or _live(
+            "Observability", "logging (L1)", l1_local,
+            f"{len(m['log_lines'])} lines for {m['requests_made']} requests; no credential "
+            "or raw path in them", ["L1 lines observed in the host log for every request"],
+            preview),
+        _blocked("Observability", "metrics (M1)", ["FS-DP-06"], decided) or _live(
+            "Observability", "metrics (M1)", m1_local,
+            f"derived from the lines: {m1['total']['requests']} requests, status classes "
+            f"{m1['total']['status_classes']}", ["M1 metrics derived from the host log"],
+            preview),
+        _blocked("Observability", "readiness signal (R2)", ["FS-DP-06"], decided) or _live(
+            "Observability", "readiness signal (R2)",
+            dependency == {"no_key": 503, "unreachable": 503},
+            "deployed /health is 200 only after a Runtime started on the store, else 503",
+            ["health through the bypass"], preview),
+        _blocked("Observability", "alerting", ["ALERTING-SELECTION"], decided,
+                 "no H1/H2/H3 option is selected by any canonical source")
+        or _criterion("Observability", "alerting", FAIL, "selected; not yet implemented"),
         _live("Data", "integrity (append-only)", m["appended_only"],
               "every partition's earlier bytes are a prefix of its later bytes",
               ["store refuses UPDATE"], preview),
@@ -449,35 +528,46 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
             f"{drill['runs_read']} runs and resolves every run's Trace: "
             f"{drill['every_run_trace_resolved']}", classes=[OPERATOR, LOCAL],
             residual="backups exist only when the operator runs one (free plan: no "
-                     "downloadable backup); cadence and owner are unset "
-                     "(OPERATIONAL-OWNERSHIP); restore into a second live project waits "
-                     "on FS-09-ENV"),
-        _criterion("Data", "migration", PASS if in_repo == list(APPLIED_MIGRATIONS) else FAIL,
-                   f"in the repository: {in_repo}; applied on the live store (operator "
-                   f"inspection): {list(APPLIED_MIGRATIONS)}", classes=[LOCAL, OPERATOR],
-                   residual="never replayed on a second environment"),
-        _blocked("Data", "environment separation", ["FS-09-ENV"], decided,
-                 "Preview and a future Production would share one table") or _criterion(
-            "Data", "environment separation", FAIL, "decided; not implemented"),
+                     "downloadable backup); cadence and owner are defined in the ownership "
+                     "model; each environment is backed up and restored on its own"),
+        _criterion("Data", "migration",
+                   PASS if in_repo == list(APPLIED_MIGRATIONS)
+                   and [m_.split("_", 1)[1] for m_ in PRODUCTION_MIGRATIONS]
+                   == [m_.split("_", 1)[1] for m_ in in_repo] else FAIL,
+                   f"in the repository: {in_repo}; applied on the Preview store: "
+                   f"{list(APPLIED_MIGRATIONS)}; on the Production store: "
+                   f"{list(PRODUCTION_MIGRATIONS)} (operator inspection)",
+                   classes=[LOCAL, OPERATOR],
+                   residual="the Production store's version stamp is the host's own; the SQL "
+                            "is the repository's, and the schemas compare equal"),
+        _blocked("Data", "environment separation", ["FS-09-ENV", "E1-DEPLOYMENT-WIRING"],
+                 decided, "E1: Production project hmljfyqycxcueulhsjae created and migrated, "
+                 "0 rows, untouched by Preview traffic (recorded); the deployment adapter "
+                 "still names only the Preview project") or _live(
+            "Data", "environment separation", None, "",
+            ["Production store untouched by Preview traffic"], preview),
         _criterion("Operations", "runbook", FAIL if missing_sections else PASS,
                    ("missing sections: " + ", ".join(missing_sections)) if missing_sections
                    else f"{RUNBOOK.relative_to(REPO_ROOT).as_posix()} covers every required "
                         "section", classes=[LOCAL],
-                   residual="written, not yet exercised in an incident; its monitoring and "
-                            "alerting part waits on FS-DP-06"),
-        _blocked("Operations", "operational ownership", ["OPERATIONAL-OWNERSHIP"], decided)
-        or _criterion("Operations", "operational ownership", FAIL, "decided; not recorded"),
+                   residual="written, not yet exercised in an incident; alerting is "
+                            "unresolved (ALERTING-SELECTION)"),
+        _criterion("Operations", "operational ownership",
+                   PASS if not missing_ownership else FAIL,
+                   ("missing sections: " + ", ".join(missing_ownership)) if missing_ownership
+                   else f"{OWNERSHIP.relative_to(REPO_ROOT).as_posix()}: the model defined "
+                        "under ACT-004 §37", classes=[LOCAL]),
         _criterion("Reproducibility", "known artifact", PASS if head else FAIL,
                    f"commit {head}; no build step", classes=[LOCAL]),
-        _blocked("Reproducibility", "runtime version pinned", ["FS-09-RUNTIME"],
-                 decided, "nothing pins it; the host chose 3.12 for the FS-08 Preview "
-                 "(build log bld_8ubuwdj02) while every local run is 3.11")
-        or _criterion("Reproducibility", "runtime version pinned", FAIL,
-                      "decided; not yet pinned"),
-        _blocked_unless("Reproducibility", "reproducible deployment",
-                        ["FS-DP-03", "FS-DP-04"], decided,
-                        "each push builds a READY Preview (recorded at FS-08); networking "
-                        "rules not yet verified against a ratified FS-DP-03"),
+        _blocked("Reproducibility", "runtime version pinned", ["FS-09-RUNTIME"], decided)
+        or _live("Reproducibility", "runtime version pinned", pinned == PINNED_PYTHON,
+                 f".python-version = {pinned!r}", ["build ran the pinned runtime"], preview),
+        _blocked("Reproducibility", "reproducible deployment", ["FS-DP-03", "FS-DP-04"],
+                 decided) or _live(
+            "Reproducibility", "reproducible deployment", pinned == PINNED_PYTHON,
+            "the build is the commit, the pinned runtime and vercel.json; no dependency",
+            ["build ran the pinned runtime", "HSTS on HTTPS responses",
+             "no cross-origin grant on the API", "CORS preflight not honoured"], preview),
     ]
     blocking = [x for x in c if x["status"] in (FAIL, BLOCKED)]
     awaiting = sorted({p for x in c for p in x["blocked_by"]})

@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-09-ENV` (provisional) |
 | **Area** | Separation of Production data from Preview data in the ratified persistence arrangement; Architect-reserved (it amends or confirms `FS-DP-01` as ratified by `FS-ARCH-RAT-001`) |
-| **Status** | **PROPOSED — NOT RATIFIED.** Prepared for Architect review, Register `§89` |
+| **Status** | **RATIFIED — E1** (bounded fallback E2), by the Founder as Architect in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§14` (Register `§93`, `ACT-004-DG-04`). E1 implemented with the new project `hmljfyqycxcueulhsjae` serving Production (store created and migrated); the adapter's per-environment selection is **execution-permission blocked** (ACT-005 execution record). The analysis below is the package as reviewed (`§89`) |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A). Options that cost money are also a Founder decision (D3-A) |
 | **Founder constraints** | Vercel; Supabase; no spending (D3-A); no new Supabase Production project created before a decision (FS-09 instructions) |
 | **Prepared by** | Claude Code, 2026-09-27, on the Founder's *"FS-09 — DECISION PACKAGE PREPARATION"*. Options E1–E6 as recorded in `FS-09-DECISION-REGISTER.md` `§1.4`; no other option is introduced |
