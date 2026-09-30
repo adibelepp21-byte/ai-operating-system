@@ -1,0 +1,29 @@
+{
+ "act": "ACT-CC-POST-P13-AIOS-FULL-STACK-008 §10",
+ "date": "2026-09-30",
+ "bypass_revocation": {
+  "note": "TEMPORARY FS-09 final verification (ACT-008 s10.2) - revoke after",
+  "class": "DIRECTLY VERIFIED",
+  "revoked_at": "2026-09-30T18:59:59Z (project updatedAt after the revoke call); verified directly immediately after",
+  "control_response": {
+   "protectionBypass": {}
+  },
+  "control": "update_project_protection_bypass, revoke, regenerate false; the response is the project's bypass map after the call",
+  "protection_enabled": true,
+  "protection_state": "ssoProtection enabled, all_except_custom_domains; password protection off; trusted IPs off (get_project after the revoke)",
+  "old_secret_http_status": {
+   "final deployment /api/v1/health": 302,
+   "branch alias /api/v1/health": 302,
+   "aios-platform-eight.vercel.app /": 302
+  },
+  "without_secret_http_status": {
+   "final deployment /api/v1/health": 302,
+   "branch alias /api/v1/health": 302,
+   "aios-platform-eight.vercel.app /": 302
+  },
+  "json_clients_http_status": "with Accept: application/json the same requests return 401 instead of 302, identically with and without the old secret, on the final deployment, the branch alias, aios-platform-eight.vercel.app, the rolled-back deployment and the Production deployment URL (20 of 20 requests 401)",
+  "temporary_bypass_count_after": 0,
+  "no_replacement_created": "the revoke call used regenerate false; the response shows an empty map; exactly one bypass was created in this Act",
+  "secret_handling": "generated locally into a private file outside the repository and supplied to the create call; in no repository file; revoked"
+ }
+}

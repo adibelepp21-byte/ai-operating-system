@@ -1,0 +1,58 @@
+{
+ "format": "fullstack.backup-manifest/1",
+ "purpose": "FS-09 final backup/restore drill on current data (ACT-008 \u00a712; FS-DP-01 point 6): operator-run logical export of the AIOS store",
+ "supersedes_as_current": "FS-09-BACKUP-MANIFEST-2026-09-27.json (80 records, seq 6-85), kept as the historical control",
+ "source": {
+  "system": "Supabase project scfymftfzkpilqbgmfwv (the Preview store)",
+  "table": "public.aios_records",
+  "state_as_of": "snapshot seq <= 510, taken 2026-09-30 after the final live suites on dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER (d05261c)",
+  "re_verified_unchanged_at": "2026-09-30, after the export: the seq <= 510 digests were identical (append-only)"
+ },
+ "method": "read-only SQL through the operator's Supabase connection; each record's bytes materialized from its canonical JSON form and accepted only when sha256(record) equals the value the database computed for that row (505 of 505). No write, no Production change, no application credential used",
+ "export": {
+  "file": "FS-09-BACKUP-EXPORT-2026-09-30.jsonl",
+  "sha256": "7fe7e26f9d165e3325a8d5b7d4a9658bdbd03b09960dff09d3eacb2d5a2990e6",
+  "bytes": 317729,
+  "lines": 505,
+  "line_format": "fullstack.backup/1 (fullstack/deploy/backup.py)"
+ },
+ "server_digest_query": "select partition, count(*), sum(octet_length(record)), min(seq), max(seq), encode(sha256(string_agg(record, '\\x0a'::bytea order by seq)),'hex') from aios_records where seq <= 510 group by partition",
+ "partitions": {
+  "fullstack-agents": {
+   "records": 5,
+   "bytes": 3229,
+   "seq_first": 454,
+   "seq_last": 504,
+   "sha256_joined_server": "de3be65f911d15d376068130b8cf58c230cc0b308f613d010d67bcf2f18d69d8"
+  },
+  "fullstack-audit": {
+   "records": 245,
+   "bytes": 54016,
+   "seq_first": 6,
+   "seq_last": 510,
+   "sha256_joined_server": "a4700bae13737827b81b735b08b66e4a698b3288e2ed6800a068fbad2d70099d"
+  },
+  "fullstack-runs": {
+   "records": 66,
+   "bytes": 84603,
+   "seq_first": 33,
+   "seq_last": 502,
+   "sha256_joined_server": "49a5ea12ab9f51cfe0bb3731548c090253326aa1359aaceb3559bc1a2ffdcabc"
+  },
+  "trace": {
+   "records": 189,
+   "bytes": 64614,
+   "seq_first": 30,
+   "seq_last": 501,
+   "sha256_joined_server": "dc42a622b831a67729a8fa51918de85e886160f392db3f0f2cf4e640c2b8f151"
+  }
+ },
+ "table": {
+  "records": 505,
+  "bytes": 206462,
+  "sha256_joined_server": "b70efff95bd522fe69e015efb89dc81da231008a133451f10fe70788845a8de4",
+  "note": "seq 1-5 are absent in the source; identity gaps are allowed and the export keeps each record's own seq"
+ },
+ "production": "hmljfyqycxcueulhsjae: 0 rows before and after; the export was never restored into it",
+ "credentials": "none. Scanned absent: the operator token, the temporary bypass secret, the Supabase secret-key prefix, a JWT prefix, Bearer, apikey, service_role, AIOS_OPERATOR_TOKENS. Audit subjects are 'founder' or null"
+}

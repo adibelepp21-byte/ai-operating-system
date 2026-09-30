@@ -1,0 +1,892 @@
+{
+ "base": "https://aios-platform-ca0bh6oyn-adibelepp21-bytes-projects.vercel.app",
+ "deployment": "dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER",
+ "commit": "d05261c",
+ "date": "2026-09-30",
+ "supersedes": "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30.json (297e8b8), kept as history: the E1 wiring, the agent-instance routes and the console Agents view changed served code, so that recording no longer covers the tree",
+ "build": {
+  "id": "bld_7ijnvswek",
+  "runtime_line": "Using Python 3.12 from .python-version"
+ },
+ "access": "Vercel Protection Bypass for Automation, ONE, temporary, under ACT-008 §10.2: created 2026-09-30 ~18:45Z (note 'TEMPORARY FS-09 final verification (ACT-008 s10.2) - revoke after') because web_fetch_vercel_url is GET-only and cannot send an Authorization header or a body, so no non-bypass path can run the authenticated API checks. REVOKED after the last live check: see FS-09-ACT-008-REVOCATION-2026-09-30.json",
+ "access_revoked": true,
+ "credentials": "operator token and bypass secret read from private files outside the repository; neither recorded here. The bypass secret was generated locally and supplied to the create call (disclosed: it appears in this session's tool call) and is now revoked",
+ "results": [
+  {
+   "n": 0,
+   "check": "protection still active without the bypass",
+   "result": "PASS",
+   "evidence": "GET health without bypass → 401"
+  },
+  {
+   "n": 0,
+   "check": "health through the bypass",
+   "result": "PASS",
+   "evidence": "→ 200 {'status': 'ok', 'runtime_state': 'running'}"
+  },
+  {
+   "n": 1,
+   "check": "missing Authorization rejected",
+   "result": "PASS",
+   "evidence": "{'/api/v1/runs': 401, '/api/v1/runtime': 401, '/api/v1/traces': 401, '/api/v1/audit': 401, '/api/v1/session': 401}; POST runs → 401"
+  },
+  {
+   "n": 2,
+   "check": "invalid and malformed Authorization rejected",
+   "result": "PASS",
+   "evidence": "{'unknown token': 401, 'hash as token': 401, 'truncated': 401, 'wrong scheme': 401, 'no scheme': 401, 'empty bearer': 401}"
+  },
+  {
+   "n": 3,
+   "check": "valid B3 bearer authenticates",
+   "result": "PASS",
+   "evidence": "→ 200 {'subject': 'founder', 'scopes': ['aios.agent.register', 'aios.audit', 'aios.observe', 'aios.workflow.run']}"
+  },
+  {
+   "n": 4,
+   "check": "protected GET",
+   "result": "PASS",
+   "evidence": "runtime → 200, state running, runtime_id aios-fullstack/20260930T184836Z-2b837c93b739933e"
+  },
+  {
+   "n": 5,
+   "check": "authenticated POST creates a run",
+   "result": "PASS",
+   "evidence": "→ 201 run_id run-20260930T184837Z-7ea192fc43626732-0 state succeeded requested_by founder format fullstack.run/2"
+  },
+  {
+   "n": 6,
+   "check": "persisted in Supabase, read by a later Runtime",
+   "result": "PASS",
+   "evidence": "GET run → 200 identical=True; later runtime aios-fullstack/20260930T184839Z-0bcecc70c4e97a78 ≠ run runtime aios-fullstack/20260930T184837Z-7ea192fc43626732"
+  },
+  {
+   "n": 7,
+   "check": "Trace associated with the run",
+   "result": "PASS",
+   "evidence": "traces total 143; this run's 3 of 3; workflow record names [['document-conformance-review/run-20260930T184837Z-7ea192fc43626732-0']]"
+  },
+  {
+   "n": 8,
+   "check": "audit records subjects and decisions, no credential",
+   "result": "PASS",
+   "evidence": "entries 178; founder POST allowed 56; anonymous 401 refused 64; credential in audit: False"
+  },
+  {
+   "n": 9,
+   "check": "8 concurrent POSTs",
+   "result": "PASS",
+   "evidence": "statuses [201, 201, 201, 201, 201, 201, 201, 201]"
+  },
+  {
+   "n": 10,
+   "check": "distinct runtime-derived identities",
+   "result": "PASS",
+   "evidence": "8 ids, all match run-<boot>-0: True; distinct runtimes 8"
+  },
+  {
+   "n": 11,
+   "check": "no duplicate identity in the store",
+   "result": "PASS",
+   "evidence": "58 runs listed, 58 distinct; all concurrent ids present: True"
+  },
+  {
+   "n": 12,
+   "check": "failure paths are meaningful states",
+   "result": "PASS",
+   "evidence": "missing doc → 201 state failed (docs.read execution_failure: 'docs/absent.md' is not a document in the repository); invalid input → 400; unknown workflow → 400; unknown run → 404"
+  }
+ ],
+ "requests": [
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 401,
+   "request_id": null
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "0d49574ad82706b3"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs",
+   "status": 401,
+   "request_id": "79656695ead1adb4"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "8123fbb94e815853"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/traces",
+   "status": 401,
+   "request_id": "3084287b18db7ef6"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/audit",
+   "status": 401,
+   "request_id": "81ba18c12d56762f"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/session",
+   "status": 401,
+   "request_id": "564c583c14e74af2"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 401,
+   "request_id": "6d09a222cf1db22a"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "97e12f47a971c68b"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "7cf843c4b84f878f"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "fff5175bd3c787e6"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "a144371752ac2137"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "dbea27bec47a6270"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "a5b525d744340add"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/session",
+   "status": 200,
+   "request_id": "957fc22c838bbb7c"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 200,
+   "request_id": "f2947128c65eb0b7"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "40ec0322308a8a7d"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs/run-20260930T184837Z-7ea192fc43626732-0",
+   "status": 200,
+   "request_id": "a1b7a1571a77db24"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 200,
+   "request_id": "3134e935ab331eb4"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/traces?limit=200",
+   "status": 200,
+   "request_id": "d7ba524782270ac8"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/audit?limit=200",
+   "status": 200,
+   "request_id": "540b3fbe2af4289a"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "caa8a38f7e4a53a7"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "09a1a92445daeab0"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "4fff390bf0342479"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "3bec667d33e14db8"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "fd680856509b299c"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "db50d371c1a1f405"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "0bdffc0af1e26a7f"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "bbdd7d4b06b22ff2"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs",
+   "status": 200,
+   "request_id": "74eac2afa016fe64"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "75d615076b0805cd"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 400,
+   "request_id": "68cd7d64d4abe99f"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 400,
+   "request_id": "e5749901c97ab9e7"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs/run-does-not-exist",
+   "status": 404,
+   "request_id": "92aff89975ee0bcc"
+  }
+ ],
+ "run_ids": {
+  "single": "run-20260930T184837Z-7ea192fc43626732-0",
+  "concurrent": [
+   "run-20260930T184840Z-9cf8e1e05275d6e2-0",
+   "run-20260930T184840Z-3dd4b8ed62ce432b-0",
+   "run-20260930T184840Z-536794c548d01f69-0",
+   "run-20260930T184840Z-5b331be85683e254-0",
+   "run-20260930T184841Z-db72385d04334539-0",
+   "run-20260930T184840Z-1362b7a5ef1346a2-0",
+   "run-20260930T184840Z-c7c8202742cac9a9-0",
+   "run-20260930T184840Z-d222d5c1fdebfa25-0"
+  ],
+  "failed": "run-20260930T184843Z-cae6b8315fc3d3e9-0"
+ },
+ "fs09_checks": [
+  {
+   "check": "HSTS on HTTPS responses",
+   "result": "PASS",
+   "evidence": "strict-transport-security: max-age=63072000; includeSubDomains; preload"
+  },
+  {
+   "check": "no cross-origin grant on the API",
+   "result": "PASS",
+   "evidence": "access-control headers: []"
+  },
+  {
+   "check": "CORS preflight not honoured",
+   "result": "PASS",
+   "evidence": "OPTIONS → 405"
+  },
+  {
+   "check": "console served same-origin with its CSP",
+   "result": "PASS",
+   "evidence": "/ → 200; connect-src self: True"
+  },
+  {
+   "check": "repeated execution: 5 sequential runs succeed with distinct ids",
+   "result": "PASS",
+   "evidence": "5 distinct ids"
+  },
+  {
+   "check": "Scenario A: governed Definitions are listed",
+   "result": "PASS",
+   "evidence": "→ 200, 3 active Definitions"
+  },
+  {
+   "check": "Scenario A: unauthenticated and invalid-token registration rejected",
+   "result": "PASS",
+   "evidence": "no Authorization → 401; invalid token → 401"
+  },
+  {
+   "check": "Scenario A: agent instance registered and persisted",
+   "result": "PASS",
+   "evidence": "→ 201 live-desk-09301849b: lifecycle REGISTERED, grants_authority False, runtime aios-fullstack/20260930T184941Z-6ec8d513e1305d99"
+  },
+  {
+   "check": "Scenario A: read back by a later Runtime",
+   "result": "PASS",
+   "evidence": "GET → 200 identical=True; listed True; 3 instances"
+  },
+  {
+   "check": "Scenario A: failure paths are meaningful",
+   "result": "PASS",
+   "evidence": "duplicate → 409; unknown Definition → 400; foreign capability → 400; bad key → 400; unknown field → 400; unknown instance → 404"
+  },
+  {
+   "check": "Scenario A: concurrent registration of one key yields one registration",
+   "result": "PASS",
+   "evidence": "statuses [201, 409, 409, 409, 409, 409]; transport retries 0; registrations visible for the key: 1"
+  },
+  {
+   "check": "Scenario A: audit records the registration decisions, no credential",
+   "result": "PASS",
+   "evidence": "4 POST agent-instances audit entries; allowed+founder and refused 401 present: True; credential in audit: False"
+  },
+  {
+   "check": "Scenario A: missing scope aios.agent.register is refused",
+   "result": "PASS",
+   "evidence": "on dpl_9Zmdw29buRGkq6JzH6ebeDF93dRR (the same commit d05261c, built before the principal was given the scope): POST /api/v1/agent-instances → 403 {\"error\":\"forbidden\",\"detail\":\"scope aios.agent.register is required\"}; GET /api/v1/session showed scopes aios.audit, aios.observe, aios.workflow.run"
+  },
+  {
+   "check": "Scenario A: the same principal registers after the scope is added",
+   "result": "PASS",
+   "evidence": "AIOS_OPERATOR_TOKENS (Preview) edited to add aios.agent.register (hash-only value), redeployed as dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER: session scopes now include it and the registration → 201"
+  }
+ ],
+ "fs09_requests": [
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "ce0074a4364f7c08",
+   "ms": 510.9
+  },
+  {
+   "method": "OPTIONS",
+   "path": "/api/v1/runs",
+   "status": 405,
+   "request_id": "a55030ca6df291f4",
+   "ms": 442.3
+  },
+  {
+   "method": "GET",
+   "path": "/",
+   "status": 200,
+   "request_id": null,
+   "ms": 214.0
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "0f3e1ff0abf21131",
+   "ms": 922.2
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "9b20368beb744557",
+   "ms": 705.4
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "c0a0ae2b4d5a2ba4",
+   "ms": 723.2
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "836400ab3937547a",
+   "ms": 713.1
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "a578281d62a02609",
+   "ms": 704.3
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "c7c50eaefd67c32e",
+   "ms": 433.5
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "c708f3f6db623318",
+   "ms": 418.7
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "e85cd06d9412f14f",
+   "ms": 406.4
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "899f9b3efdd05aed",
+   "ms": 412.2
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "783e7a80dd18d5a9",
+   "ms": 413.9
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/agent-definitions",
+   "status": 200,
+   "request_id": "3132a502e9ace777"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 401,
+   "request_id": "7d0e606f85c94b64"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 401,
+   "request_id": "e8a07774c0303e25"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 201,
+   "request_id": "ba93929b30bb15de"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/agent-instances/live-desk-09301849b",
+   "status": 200,
+   "request_id": "b60eb2f63f53d658"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/agent-instances",
+   "status": 200,
+   "request_id": "cb9ac4b0a3fcdc6a"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 409,
+   "request_id": "cacf345d58fc07c3"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 400,
+   "request_id": "03d4e2a7678e9d16"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 400,
+   "request_id": "181a9ff449346762"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 400,
+   "request_id": "678bec20861a1dc1"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 400,
+   "request_id": "8a7da33676b31c72"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/agent-instances/does-not-exist",
+   "status": 404,
+   "request_id": "947b7cc9f93ec8d9"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 201,
+   "request_id": "e187c2d8357a5af2"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 409,
+   "request_id": "5c87d3a2e8990b58"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 409,
+   "request_id": "b6b13bf7c9d6ec29"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 409,
+   "request_id": "414543662f94e72c"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 409,
+   "request_id": "e348dc0bb5dc280d"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/agent-instances",
+   "status": 409,
+   "request_id": "b53bb400278191f2"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/agent-instances",
+   "status": 200,
+   "request_id": "f8a72011ee30e517"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/audit?limit=200",
+   "status": 200,
+   "request_id": "f757143f91795d69"
+  }
+ ],
+ "observed_latency_ms": {
+  "post_run": [
+   922,
+   705,
+   723,
+   713,
+   704
+  ],
+  "health": [
+   433,
+   419,
+   406,
+   412,
+   414
+  ]
+ },
+ "scenario_a": {
+  "instance_keys_second_attempt": [
+   "live-desk-09301849b",
+   "live-desk-09301849b-race"
+  ],
+  "instance_keys_first_attempt": [
+   "live-desk-09301848",
+   "live-desk-09301848-race"
+  ],
+  "first_attempt_note": "the first run of the Scenario A script registered live-desk-09301848 and live-desk-09301848-race and then crashed on one transport-level SSL EOF in a concurrent thread (no HTTP response); the script was changed to retry transport errors only and re-run with fresh keys. Both attempts' registrations stay in the append-only store",
+  "observability_probe_key": "obs-desk-185103",
+  "console_live": "NOT RUN: Chromium does not trust the sandbox proxy's CA (net::ERR_CERT_AUTHORITY_INVALID) and TLS verification is not disabled. The console's Agents view is verified against a real server over a socket by fullstack/tests/e2e/console.e2e.mjs (15 checks)"
+ },
+ "observability": {
+  "scope": "the 20 requests of the Scenario A live run (18:49:40-18:49:47Z), matched by request id against the host's runtime log; two later log queries (the 12-request observability probe at 18:51Z) timed out at the log service, so that probe's ids are recorded in obs_probe but not matched",
+  "l1_lines_from_host_log": [
+   "{\"at\":\"2026-09-30T18:49:40.340+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":37.45,\"method\":\"GET\",\"request_id\":\"3132a502e9ace777\",\"route\":\"/api/v1/agent-definitions\",\"runtime_id\":\"aios-fullstack/20260930T184940Z-1ae164c834d1b1b6\",\"status\":200}",
+   "{\"at\":\"2026-09-30T18:49:40.856+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":47.6,\"method\":\"POST\",\"request_id\":\"7d0e606f85c94b64\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184940Z-7f90c565e85b5556\",\"status\":401}",
+   "{\"at\":\"2026-09-30T18:49:41.311+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":39.84,\"method\":\"POST\",\"request_id\":\"e8a07774c0303e25\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184941Z-9bcebd34f62b875d\",\"status\":401}",
+   "{\"at\":\"2026-09-30T18:49:41.898+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":156.96,\"method\":\"POST\",\"request_id\":\"ba93929b30bb15de\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184941Z-6ec8d513e1305d99\",\"status\":201}",
+   "{\"at\":\"2026-09-30T18:49:42.384+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":88.12,\"method\":\"GET\",\"request_id\":\"b60eb2f63f53d658\",\"route\":\"/api/v1/agent-instances/{instance_key}\",\"runtime_id\":\"aios-fullstack/20260930T184942Z-b03a09550807c4c9\",\"status\":200}",
+   "{\"at\":\"2026-09-30T18:49:42.858+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":76.85,\"method\":\"GET\",\"request_id\":\"cb9ac4b0a3fcdc6a\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184942Z-18d84f5d32f3db8a\",\"status\":200}",
+   "{\"at\":\"2026-09-30T18:49:43.355+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":79.94,\"method\":\"POST\",\"request_id\":\"cacf345d58fc07c3\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184943Z-64ba0f152e3b2cc1\",\"status\":409}",
+   "{\"at\":\"2026-09-30T18:49:43.846+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":51.36,\"method\":\"POST\",\"request_id\":\"03d4e2a7678e9d16\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184943Z-f45f4e2552672f32\",\"status\":400}",
+   "{\"at\":\"2026-09-30T18:49:44.316+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":47.82,\"method\":\"POST\",\"request_id\":\"181a9ff449346762\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184944Z-83352a8267277b8e\",\"status\":400}",
+   "{\"at\":\"2026-09-30T18:49:44.806+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":44.26,\"method\":\"POST\",\"request_id\":\"678bec20861a1dc1\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184944Z-1010a85125153079\",\"status\":400}",
+   "{\"at\":\"2026-09-30T18:49:45.406+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":83.41,\"method\":\"POST\",\"request_id\":\"8a7da33676b31c72\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184945Z-909104841feef77a\",\"status\":400}",
+   "{\"at\":\"2026-09-30T18:49:45.934+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":68.21,\"method\":\"GET\",\"request_id\":\"947b7cc9f93ec8d9\",\"route\":\"/api/v1/agent-instances/{instance_key}\",\"runtime_id\":\"aios-fullstack/20260930T184945Z-32e9b1ead60e0afb\",\"status\":404}",
+   "{\"at\":\"2026-09-30T18:49:46.599+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":153.19,\"method\":\"POST\",\"request_id\":\"e187c2d8357a5af2\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184946Z-384982a3154aee70\",\"status\":201}",
+   "{\"at\":\"2026-09-30T18:49:46.772+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":81.79,\"method\":\"POST\",\"request_id\":\"5c87d3a2e8990b58\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184946Z-e59a66483de7af92\",\"status\":409}",
+   "{\"at\":\"2026-09-30T18:49:46.804+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":73.37,\"method\":\"POST\",\"request_id\":\"b6b13bf7c9d6ec29\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184946Z-c59a54403579f32a\",\"status\":409}",
+   "{\"at\":\"2026-09-30T18:49:46.815+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":73.2,\"method\":\"POST\",\"request_id\":\"414543662f94e72c\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184946Z-ca4e4953f2d2838c\",\"status\":409}",
+   "{\"at\":\"2026-09-30T18:49:46.826+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":68.95,\"method\":\"POST\",\"request_id\":\"e348dc0bb5dc280d\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184946Z-69a65e2290bbe71a\",\"status\":409}",
+   "{\"at\":\"2026-09-30T18:49:46.938+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":81.64,\"method\":\"POST\",\"request_id\":\"b53bb400278191f2\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184946Z-e4d116fa4347f922\",\"status\":409}",
+   "{\"at\":\"2026-09-30T18:49:47.419+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":82.09,\"method\":\"GET\",\"request_id\":\"f8a72011ee30e517\",\"route\":\"/api/v1/agent-instances\",\"runtime_id\":\"aios-fullstack/20260930T184947Z-a49752752edb6825\",\"status\":200}",
+   "{\"at\":\"2026-09-30T18:49:47.898+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":79.41,\"method\":\"GET\",\"request_id\":\"f757143f91795d69\",\"route\":\"/api/v1/audit\",\"runtime_id\":\"aios-fullstack/20260930T184947Z-04f4c305d6c4e329\",\"status\":200}"
+  ],
+  "function_requests_with_request_id": 20,
+  "found_in_host_log": 20,
+  "templated_routes": "GET /api/v1/agent-instances/{instance_key} appears as the template for both a 200 and a 404; no instance key appears in any route field",
+  "no_credential_in_log_lines": true,
+  "m1_metrics_derived": {
+   "lines_read": 20,
+   "ignored": 0,
+   "total": {
+    "requests": 20,
+    "status_classes": {
+     "2xx": 7,
+     "4xx": 13
+    },
+    "server_errors": 0,
+    "latency_ms": {
+     "p50": 75.11,
+     "p95": 153.19,
+     "max": 156.96
+    }
+   },
+   "routes": {
+    "GET /api/v1/agent-definitions": {
+     "requests": 1,
+     "status_classes": {
+      "2xx": 1
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 37.45,
+      "p95": 37.45,
+      "max": 37.45
+     }
+    },
+    "GET /api/v1/agent-instances": {
+     "requests": 2,
+     "status_classes": {
+      "2xx": 2
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 79.47,
+      "p95": 82.09,
+      "max": 82.09
+     }
+    },
+    "GET /api/v1/agent-instances/{instance_key}": {
+     "requests": 2,
+     "status_classes": {
+      "2xx": 1,
+      "4xx": 1
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 78.16,
+      "p95": 88.12,
+      "max": 88.12
+     }
+    },
+    "GET /api/v1/audit": {
+     "requests": 1,
+     "status_classes": {
+      "2xx": 1
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 79.41,
+      "p95": 79.41,
+      "max": 79.41
+     }
+    },
+    "POST /api/v1/agent-instances": {
+     "requests": 14,
+     "status_classes": {
+      "2xx": 2,
+      "4xx": 12
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 73.28,
+      "p95": 153.19,
+      "max": 156.96
+     }
+    }
+   },
+   "runtimes": 20
+  },
+  "h3_checks": "readiness: GET /api/v1/health 200 running (R2); error rate derived from the host log (M1): 0 server errors of 20; refusals before the Application: the platform-level 401 without the bypass (check 0); backup freshness: the export of 2026-09-30 (505 records); temporary access: one created, revoked, verified absent"
+ },
+ "rollback_drill": {
+  "alias": "aios-platform-git-claude-aios-897a81-adibelepp21-bytes-projects.vercel.app",
+  "alias_before": "dpl_FjjGC9Hg54RGzGSugwidwHdRTrwM (297e8b8, manually pinned on 2026-09-27)",
+  "sequence": "current dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER (d05261c) → rolled back to dpl_Gumff1FYuJP3L5agQrGtcwGqyY19 (d6afbdc, before A2) → rolled forward to dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER",
+  "alias_after": "dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER",
+  "current": {
+   "phase": "current",
+   "base": "https://aios-platform-git-claude-aios-897a81-adibelepp21-bytes-projects.vercel.app",
+   "health": [
+    200,
+    {
+     "status": "ok",
+     "runtime_state": "running"
+    }
+   ],
+   "agent_definitions_route": 200,
+   "agent_instances": [
+    200,
+    5
+   ],
+   "anonymous_runs": 401,
+   "runtime": [
+    200,
+    "aios-fullstack/20260930T185648Z-9d1e85617ff25813"
+   ],
+   "reads_other_version_run": [
+    200,
+    true,
+    "fullstack.run/2"
+   ],
+   "scenario_b": [
+    201,
+    "succeeded",
+    "run-20260930T185650Z-6eecc36a83734df0-0",
+    "fcc2e68481f17f29"
+   ],
+   "scenario_c": [
+    201,
+    "failed"
+   ],
+   "runs_listed": 68,
+   "runs_distinct": 68,
+   "traces_total": 194
+  },
+  "rolled_back": {
+   "phase": "rolled_back",
+   "base": "https://aios-platform-git-claude-aios-897a81-adibelepp21-bytes-projects.vercel.app",
+   "health": [
+    200,
+    {
+     "status": "ok",
+     "runtime_state": "running"
+    }
+   ],
+   "agent_definitions_route": 404,
+   "agent_instances": [
+    404,
+    null
+   ],
+   "anonymous_runs": 401,
+   "runtime": [
+    200,
+    "aios-fullstack/20260930T185719Z-d6d10b6e13923a65"
+   ],
+   "reads_other_version_run": [
+    200,
+    true,
+    "fullstack.run/2"
+   ],
+   "scenario_b": [
+    201,
+    "succeeded",
+    "run-20260930T185721Z-c6877db1161ebf70-0",
+    "0d6aa594a008feeb"
+   ],
+   "scenario_c": [
+    201,
+    "failed"
+   ],
+   "runs_listed": 70,
+   "runs_distinct": 70,
+   "traces_total": 199
+  },
+  "rolled_forward": {
+   "phase": "rolled_forward",
+   "base": "https://aios-platform-git-claude-aios-897a81-adibelepp21-bytes-projects.vercel.app",
+   "health": [
+    200,
+    {
+     "status": "ok",
+     "runtime_state": "running"
+    }
+   ],
+   "agent_definitions_route": 200,
+   "agent_instances": [
+    200,
+    5
+   ],
+   "anonymous_runs": 401,
+   "runtime": [
+    200,
+    "aios-fullstack/20260930T185736Z-84b2c86df5f8ab76"
+   ],
+   "reads_other_version_run": [
+    200,
+    true,
+    "fullstack.run/2"
+   ],
+   "scenario_b": [
+    201,
+    "succeeded",
+    "run-20260930T185738Z-4fc4fc31c631af77-0",
+    "983e046b2c6ace97"
+   ],
+   "scenario_c": [
+    201,
+    "failed"
+   ],
+   "runs_listed": 72,
+   "runs_distinct": 72,
+   "traces_total": 204
+  },
+  "note": "rolled back: service reachable (health 200, anonymous 401); the older code does not know the A2 routes (404 on /agent-definitions and /agent-instances, proving which code served); it read a run the newer code wrote and accepted new runs; rolled forward: the newer code reads the run written during the rollback, and still lists the 5 registrations. Data compatibility is shown; operational safety below C1 (concurrency identity) and below B3 (authentication posture) remains as documented in runbook §10"
+ },
+ "database_after": {
+  "preview_scfymftfzkpilqbgmfwv": {
+   "fullstack-agents": 5,
+   "fullstack-audit": 273,
+   "fullstack-runs": 72,
+   "trace": 204,
+   "max_seq": 559,
+   "fresh_writes": "Scenario A registrations live-desk-09301849b and its race key are in fullstack-agents (seq 474, 484); the runs and audit of these suites are in the same store"
+  },
+  "production_hmljfyqycxcueulhsjae": {
+   "rows": 0,
+   "checked": "after every live suite, the rollback drill and the export"
+  },
+  "update_attempt": "refused: aios_records is append-only: UPDATE refused (Preview store, seq 6, 2026-09-30)"
+ },
+ "isolation": "fresh Preview writes present in the Preview store; the Production store holds 0 rows; the Production deployment dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj was not touched; no Production variable exists",
+ "unknown_environment": "not testable live (VERCEL_ENV is set by the platform); verified by the real resolver in-process: fullstack/tests/test_environment_separation.py and the gate's measured wiring",
+ "after_revocation": {
+  "revoked_secret_refused": true,
+  "protection_enabled": true,
+  "record": "FS-09-ACT-008-REVOCATION-2026-09-30.json"
+ }
+}

@@ -1,0 +1,42 @@
+import { createRequire } from "node:module";
+import fs from "node:fs";
+const require = createRequire(import.meta.url);
+const { chromium } = require(process.env.PLAYWRIGHT_PATH);
+const base = process.argv[2];
+const token = fs.readFileSync("token", "utf8").trim();
+const bypass = fs.readFileSync("bypass09", "utf8").trim();
+const out = [];
+const tid = (id) => `[data-testid="${id}"]`;
+const browser = await chromium.launch();
+try {
+  const ctx = await browser.newContext({ extraHTTPHeaders: { "x-vercel-protection-bypass": bypass } });
+  const page = await ctx.newPage();
+  const problems = [];
+  page.on("pageerror", (e) => problems.push(e.message));
+  await page.goto(base);
+  await page.waitForSelector('body[data-ready="true"]');
+  out.push({ check: "console loads from the Preview", health: (await page.textContent(`${tid("health")} .label`)).trim() });
+  await page.click('.sidebar button[data-view="session"]');
+  await page.fill(tid("credential"), token);
+  await page.click(tid("credential-save"));
+  await page.waitForSelector(`${tid("view-overview")}:not([hidden])`);
+  await page.click('.sidebar button[data-view="agents"]');
+  await page.waitForSelector(`${tid("agent-definition")} option`, { state: "attached" });
+  await page.selectOption(tid("agent-definition"), "engineering-intelligence-agent");
+  await page.waitForSelector(`${tid("agent-capabilities")} input[value="engineering-intelligence"]`);
+  const key = "console-live-" + Date.now().toString(36);
+  await page.fill(tid("agent-key"), key);
+  await page.check(`${tid("agent-capabilities")} input[value="engineering-intelligence"]`);
+  await page.click(tid("agent-submit"));
+  await page.waitForSelector(`${tid("agent-view")}[data-instance="${key}"]`);
+  out.push({ check: "Scenario A through the console on the live Preview", instance: key,
+             authority: (await page.textContent(tid("agent-authority"))).trim() });
+  await page.waitForSelector(`${tid("agents-table")} tr[data-instance="${key}"]`);
+  await page.fill(tid("agent-key"), key);
+  await page.check(`${tid("agent-capabilities")} input[value="engineering-intelligence"]`);
+  await page.click(tid("agent-submit"));
+  await page.waitForSelector(tid("agent-refused"));
+  out.push({ check: "duplicate refused in the console", message: (await page.textContent(tid("agent-refused"))).trim() });
+  out.push({ check: "no page error", errors: problems });
+} finally { await browser.close(); }
+console.log(JSON.stringify(out, null, 1));

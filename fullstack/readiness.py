@@ -103,22 +103,22 @@ OTHER_DECISIONS = {
 #: is actually blocked on them.
 EXECUTION_DEPENDENCIES = ("LIVE-REVERIFICATION", "BYPASS-REVOCATION")
 #: Recorded live evidence the gate reads. It is never written here.
-PREVIEW_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30.json"
+PREVIEW_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30-ACT-008.json"
 #: The a4a11cf recording (2026-09-28), kept as history; the citation repair (297e8b8)
 #: changed a served docstring, so it no longer covers the tree.
 FS09_A4A11CF_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-28.json"
 #: Where the revocation of the temporary bypass is recorded (ACT-007 `§8`). The
 #: Preview recording above keeps `access_revoked: false`: that was true when it
 #: was made, and history is not rewritten. The revocation is a later fact.
-REVOCATION_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-ACT-007-REDISCOVERY-2026-09-30.json"
+REVOCATION_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-ACT-008-REVOCATION-2026-09-30.json"
 #: The FS-08 recording, kept as history; superseded for this gate by the FS-09 one.
 FS08_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-08-LIVE-PREVIEW-2026-09-27.json"
 OWNERSHIP = REPO_ROOT / "docs/fullstack/FS-09-OPERATIONAL-OWNERSHIP.md"
 PYTHON_VERSION = REPO_ROOT / ".python-version"
 #: FS-09-RUNTIME P2 (ACT-004 DG-05).
 PINNED_PYTHON = "3.12"
-BACKUP_EXPORT = REPO_ROOT / "docs/fullstack/evidence/FS-09-BACKUP-EXPORT-2026-09-27.jsonl"
-BACKUP_MANIFEST = REPO_ROOT / "docs/fullstack/evidence/FS-09-BACKUP-MANIFEST-2026-09-27.json"
+BACKUP_EXPORT = REPO_ROOT / "docs/fullstack/evidence/FS-09-BACKUP-EXPORT-2026-09-30.jsonl"
+BACKUP_MANIFEST = REPO_ROOT / "docs/fullstack/evidence/FS-09-BACKUP-MANIFEST-2026-09-30.json"
 RUNBOOK = REPO_ROOT / "docs/fullstack/FS-09-OPERATIONAL-RUNBOOK.md"
 MIGRATIONS = REPO_ROOT / "fullstack/deploy/supabase/migrations"
 #: Operator inspection of the live store (Supabase `list_migrations`, 2026-09-27,
@@ -160,7 +160,7 @@ EXTERNAL_DEPENDENCIES = (
      "FS-08 (Register §86) and FS-09 (ACT-004 §56, 2026-09-28) each used a temporary "
      "automation bypass, revoked after the suite (protectionBypass: {}); the one created "
      "2026-09-30 for the 297e8b8 re-verification was revoked under ACT-007 "
-     "(docs/fullstack/evidence/FS-09-ACT-007-REDISCOVERY-2026-09-30.json)",
+     "(docs/fullstack/evidence/FS-09-ACT-008-REVOCATION-2026-09-30.json)",
      "needs": "a Founder-authorized temporary, revocable mechanism for the live "
               "re-verification the changed served code now requires (LIVE-REVERIFICATION); "
               "none is active and ACT-007 forbids creating one"},
@@ -343,10 +343,12 @@ def _restore_drill() -> dict:
         aios.start()
         runs = aios.runs()
         traced = all(len(aios.run_trace(r["run_id"])) == r["trace"]["count"] for r in runs)
+        from fullstack.backend.agents import AgentRegistry, GovernedDefinitions
+        agents_read = len(AgentRegistry(aios.storage, GovernedDefinitions(REPO_ROOT)).instances())
         aios.stop()
     return {"records": len(entries), "digests_match_server": digests,
             "restored_identical": identical, "runs_read": len(runs),
-            "every_run_trace_resolved": traced,
+            "every_run_trace_resolved": traced, "agent_instances_read": agents_read,
             "ok": digests and identical and traced and len(runs) == manifest[
                 "partitions"]["fullstack-runs"]["records"]}
 
@@ -676,8 +678,8 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
                    f"{revocation.get('note') or '297e8b8 re-verification'!r}) is revoked: the "
                    "control returned an empty protectionBypass, Deployment Protection is "
                    f"enabled, and the revoked secret is refused at the edge "
-                   f"({revocation.get('at')}; ACT-007 §8)", classes=[OPERATOR])
-        if revocation["revoked"] or preview.get("access_revoked") else
+                   f"({revocation.get('at')})", classes=[OPERATOR])
+        if revocation["revoked"] else
         (_blocked("Security", "temporary access revoked", ["BYPASS-REVOCATION"], decided,
                   f"the bypass used for the {preview['commit']} recording has no recorded "
                   "revocation; it cannot be observed absent from a session (NC-16)")
@@ -749,12 +751,13 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
             ["authenticated POST creates a run",
              "persisted in Supabase, read by a later Runtime"], preview),
         _blocked("Data", "backup and restore", ["FS-DP-01"], decided) or _criterion(
-            "Data", "backup and restore", PASS if drill["ok"] else FAIL,
-            f"operator export of the live store ({drill['records']} records) matches the "
-            f"database's digests: {drill['digests_match_server']}; restored now into a fresh "
-            f"store byte-identical: {drill['restored_identical']}; the application reads "
-            f"{drill['runs_read']} runs and resolves every run's Trace: "
-            f"{drill['every_run_trace_resolved']}", classes=[OPERATOR, LOCAL],
+            "Data", "backup and restore", PASS if drill["ok"] and drill["agent_instances_read"] > 0 else FAIL,
+            f"operator export of the live store ({drill['records']} records, current at "
+            f"2026-09-30) matches the database's digests: {drill['digests_match_server']}; "
+            f"restored now into a fresh store byte-identical: {drill['restored_identical']}; "
+            f"the application reads {drill['runs_read']} runs, resolves every run's Trace: "
+            f"{drill['every_run_trace_resolved']}, and reads {drill['agent_instances_read']} "
+            "Agent Instance registrations", classes=[OPERATOR, LOCAL],
             residual="backups exist only when the operator runs one (free plan: no "
                      "downloadable backup); cadence and owner are defined in the ownership "
                      "model; each environment is backed up and restored on its own"),

@@ -93,13 +93,12 @@ class TheGate(unittest.TestCase):
         self.assertEqual(PASS, auth["status"])
         self.assertEqual([readiness.LOCAL, readiness.PREVIEW], auth["evidence_class"])
         self.assertIn("recorded, not re-measured", auth["evidence"])
-        self.assertIn("297e8b8", auth["evidence"])
-        self.assertEqual({"file": "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30.json",
-                          "date": "2026-09-30", "commit": "297e8b8",
-                          "deployment": "dpl_FjjGC9Hg54RGzGSugwidwHdRTrwM", "current": True,
-                          "access_revoked": False,
-                          "after_revocation": "not yet: the bypass is active (see access)"},
-                         self.live["preview_evidence"])
+        self.assertIn("d05261c", auth["evidence"])
+        evidence = self.live["preview_evidence"]
+        self.assertEqual(("docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30-ACT-008.json",
+                          "d05261c", "dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER", True),
+                         (evidence["file"], evidence["commit"], evidence["deployment"],
+                          evidence["access_revoked"]))
         self.assertTrue(readiness.FS08_EVIDENCE.is_file(), "the FS-08 recording stays as history")
         self.assertTrue(readiness.FS09_A4A11CF_EVIDENCE.is_file(),
                         "the a4a11cf recording stays as history")
@@ -294,11 +293,19 @@ class TheGate(unittest.TestCase):
         self.assertEqual((PASS, [readiness.OPERATOR]),
                          (self.by_name[row]["status"], self.by_name[row]["evidence_class"]))
 
-    def test_the_old_recordings_own_flag_is_history_not_a_revocation(self):
-        """The 297e8b8 recording says `access_revoked: false`: true when made. A
-        later revocation is a later fact, recorded elsewhere."""
-        self.assertIs(False, self.recorded["access_revoked"])
+    def test_a_recordings_own_flag_is_a_claim_the_revocation_record_is_the_proof(self):
+        """The 297e8b8 recording says `access_revoked: false`: true when made, and it
+        stays history. The current recording claims true, but the row needs the
+        independent revocation record (control response, protection, edge refusal)."""
+        import json
+        old = json.loads((readiness.REPO_ROOT / "docs/fullstack/evidence/"
+                          "FS-09-LIVE-PREVIEW-2026-09-30.json").read_text(encoding="utf-8"))
+        self.assertIs(False, old["access_revoked"])
+        self.assertIs(True, self.recorded["access_revoked"])
         self.assertTrue(readiness.revocation_record()["revoked"])
+        claim_only = {"revoked": False, "why": "no revocation record"}
+        gate = readiness.evaluate(runs=1, preview=self.covering, revocation=claim_only)
+        self.assertNotEqual(PASS, self.by_name_of(gate)["Security: temporary access revoked"]["status"])
 
     def test_the_gate_never_releases(self):
         self.assertIn("never releases", self.live["release"])
