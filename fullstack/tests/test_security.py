@@ -16,7 +16,7 @@ from pathlib import Path
 
 from fullstack.backend import contract, docs_tool
 from fullstack.backend.security import (
-    AUDIT, OBSERVE, PUBLIC, RUN_WORKFLOW, AuditLedger, Authenticator,
+    AGENT_REGISTER, AUDIT, OBSERVE, PUBLIC, RUN_WORKFLOW, AuditLedger, Authenticator,
     NoAuthenticator, OperatorTokenAuthenticator, Principal, authorize)
 from fullstack.tests.support import (
     OBSERVER_TOKEN, OPERATOR_TOKEN, Harness, operator_authenticator)
@@ -25,7 +25,7 @@ from native_core.shared import Failure, Success
 
 
 def _concrete(template):
-    return template.replace("{run_id}", "run-00001")
+    return template.replace("{run_id}", "run-00001").replace("{instance_key}", "agent-x-01")
 
 
 def _each_route(harness, token):
@@ -71,9 +71,9 @@ class Authorization(unittest.TestCase):
         for route, status in _each_route(self.h, OBSERVER_TOKEN):
             with self.subTest(route=f"{route.method} {route.template}"):
                 expected = {PUBLIC: 200, OBSERVE: 200, "authenticated": 200,
-                            RUN_WORKFLOW: 403, AUDIT: 403}[route.scope]
-                if route.template.endswith("{run_id}"):
-                    expected = 404  # allowed, and no such run
+                            RUN_WORKFLOW: 403, AUDIT: 403, AGENT_REGISTER: 403}[route.scope]
+                if route.template.endswith(("{run_id}", "{instance_key}")):
+                    expected = 404  # allowed, and no such run or instance
                 self.assertEqual(expected, status)
         self.assertEqual([], self.h.aios.runs())
 

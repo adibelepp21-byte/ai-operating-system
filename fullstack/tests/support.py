@@ -21,7 +21,8 @@ from wsgiref.util import setup_testing_defaults
 from fullstack.backend.api import create_app
 from fullstack.backend.telemetry import Collector
 from fullstack.backend.security import (
-    AUDIT, OBSERVE, RUN_WORKFLOW, Authenticator, OperatorTokenAuthenticator, token_sha256)
+    AGENT_REGISTER, AUDIT, OBSERVE, RUN_WORKFLOW, Authenticator, OperatorTokenAuthenticator,
+    token_sha256)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
@@ -44,7 +45,7 @@ def operator_authenticator(tokens: Mapping[str, tuple]) -> OperatorTokenAuthenti
 
 def default_authenticator() -> OperatorTokenAuthenticator:
     return operator_authenticator({
-        OPERATOR_TOKEN: ("operator@test", {OBSERVE, RUN_WORKFLOW, AUDIT}),
+        OPERATOR_TOKEN: ("operator@test", {OBSERVE, RUN_WORKFLOW, AUDIT, AGENT_REGISTER}),
         OBSERVER_TOKEN: ("observer@test", {OBSERVE}),
     })
 

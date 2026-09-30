@@ -33,7 +33,11 @@ from native_core.core.infrastructure import StorageFacility
 OBSERVE = "aios.observe"
 RUN_WORKFLOW = "aios.workflow.run"
 AUDIT = "aios.audit"
-SCOPES = (OBSERVE, RUN_WORKFLOW, AUDIT)
+#: FS-DP-07 A2 (Register `§101`): register an Agent Instance of an existing
+#: governed Definition. Granted explicitly to named operators only; a
+#: registered Instance holds no authority (`AGENT INSTANCE ≠ AUTHORITY`).
+AGENT_REGISTER = "aios.agent.register"
+SCOPES = (OBSERVE, RUN_WORKFLOW, AUDIT, AGENT_REGISTER)
 
 #: A route open to anyone. Only liveness uses it.
 PUBLIC = "public"

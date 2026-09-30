@@ -66,13 +66,26 @@ headers of `§6`.
 | GET | `/api/v1/runs` | `aios.observe` | every recorded run, newest first |
 | GET | `/api/v1/runs/{run_id}` | `aios.observe` | one run: lifecycle states, step results, outcome or failure, Trace range |
 | POST | `/api/v1/runs` | `aios.workflow.run` | starts a catalog Workflow; returns the terminal run |
+| GET | `/api/v1/agent-definitions` | `aios.observe` | the active governed Agent Definitions (read from their documents): key, version, owning Department, implemented Capabilities |
+| GET | `/api/v1/agent-instances` | `aios.observe` | every registered Agent Instance, in registration order |
+| GET | `/api/v1/agent-instances/{instance_key}` | `aios.observe` | one registered Agent Instance |
+| POST | `/api/v1/agent-instances` | `aios.agent.register` | registers an Instance of an existing governed Definition (FS-DP-07 **A2**, Register `§101`); returns the registration |
 | GET | `/api/v1/traces` | `aios.observe` | Trace records in append order; `offset`, `limit` |
 | GET | `/api/v1/audit` | `aios.audit` | the application's access decisions; `offset`, `limit` |
 
 **Error model.** `{"error": <code>, "detail": <text>}` with `400
 invalid_request`, `401 unauthenticated`, `403 forbidden`, `404 not_found`,
-`405 method_not_allowed`, `413 payload_too_large`, `503 unavailable`, `500
-internal_error`. A 500 carries no traceback.
+`405 method_not_allowed`, `409 conflict` (an Agent Instance identity already
+registered), `413 payload_too_large`, `503 unavailable`, `500 internal_error`.
+A 500 carries no traceback.
+
+*Amendment, 2026-09-30 (ACT-008 `§7`, Register `§101`).* The four
+`agent-…` rows and `409` are new. FS-DP-07 **A1** ("the application creates no
+Agent") was the contract until then; the delegated decision `ACT-008-DG-01`
+selected **A2**, instance registration only, because Scenario A is a mandatory
+class (ACT-001 `§18`) and A1 cannot execute it. No route creates or edits an
+Agent **Definition** (A3): Definitions remain governed documents the
+application only reads.
 
 **Why a run is a Workflow of its own.** Phase 9 defines a Workflow's lifecycle
 and no re-execution: a terminal Workflow *"SHALL NOT silently resume"*
@@ -112,8 +125,9 @@ refusal or failure raises `StepFailed`, which drives the Workflow to `FAILED`
   `OperatorTokenAuthenticator`, which verifies `Authorization: Bearer <token>`
   against the SHA-256 hashes in `AIOS_OPERATOR_TOKENS`. Unconfigured, it still
   authenticates nobody. Tests use the same authenticator on fake tokens.
-- **Authorization** is by scope: each route of `§4` names one; a principal
-  without it gets 403. Scopes are application vocabulary; *who holds which* is
+- **Authorization** is by scope (`aios.observe`, `aios.workflow.run`,
+  `aios.audit`, and, since `ACT-008-DG-01`, `aios.agent.register`): each route
+  of `§4` names one; a principal without it gets 403. Scopes are application vocabulary; *who holds which* is
   the authenticator's answer, and so FS-DP-02's.
 - **Tool calls** still pass `ToolInvocationGovernance`. The application
   cannot reach `ToolBoundary.invoke` except through it.

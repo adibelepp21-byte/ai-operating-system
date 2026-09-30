@@ -206,6 +206,10 @@ class AIOSApplication:
         return f"aios-fullstack/{self._boot_id}"
 
     @property
+    def repo_root(self) -> Path:
+        return self._repo_root
+
+    @property
     def storage(self) -> StorageFacility:
         if self._storage is None:
             raise NotRunning("the application has not started")

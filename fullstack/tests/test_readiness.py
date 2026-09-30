@@ -35,14 +35,15 @@ class Ratification(unittest.TestCase):
     def test_the_ratified_packages_today(self):
         """FS-DP-01 and FS-DP-04 by FS-ARCH-RAT-001 (Register `§68`); FS-DP-05 and
         FS-DP-02 by their Architect decisions (`§79`, `§81`); the other five by the
-        Founder in ACT-004 (`§93`, DG-01 to DG-05)."""
+        Founder in ACT-004 (`§93`, DG-01 to DG-05); FS-DP-07 was re-decided by the
+        delegated decision ACT-008-DG-01 (`§101`)."""
         today = ratified(readiness.REGISTER.read_text(encoding="utf-8"))
         self.assertEqual(sorted(PACKAGES), sorted(today))
         self.assertEqual({"FS-DP-01": "FS-ARCH-RAT-001", "FS-DP-04": "FS-ARCH-RAT-001",
                           "FS-DP-05": "FS-DP-05-ARCHITECT-DECISION",
                           "FS-DP-02": "FS-DP-02-ARCHITECT-DECISION",
                           "FS-DP-03": "ACT-004-DG-01", "FS-DP-06": "ACT-004-DG-02",
-                          "FS-DP-07": "ACT-004-DG-03", "FS-09-ENV": "ACT-004-DG-04",
+                          "FS-DP-07": "ACT-008-DG-01", "FS-09-ENV": "ACT-004-DG-04",
                           "FS-09-RUNTIME": "ACT-004-DG-05"},
                          {p: h.split(" ")[0] for p, h in today.items()})
 
@@ -58,7 +59,8 @@ class TheGate(unittest.TestCase):
         # The gate's logic when the recording covers the tree. Whether it really
         # does is a separate fact, tested in `TheRecordingAsItStandsToday`.
         cls.recorded = readiness.preview_record()
-        cls.covering = dict(cls.recorded, current=True)
+        cls.covering = dict(cls.recorded, current=True,
+                            passed=set(cls.recorded["passed"]) | {readiness.SCENARIO_A_LIVE})
         cls.live = readiness.evaluate(runs=2, preview=cls.covering)
         cls.by_name = {f"{c['area']}: {c['criterion']}": c for c in cls.live["criteria"]}
 
@@ -105,7 +107,7 @@ class TheGate(unittest.TestCase):
     def test_a_local_result_never_passes_a_live_criterion(self):
         """Without the recorded Preview checks, the live criteria fail even though
         every local measurement passes."""
-        empty = dict(readiness.preview_record(), passed=set())
+        empty = dict(readiness.preview_record(), passed=set(), current=True)
         gate = readiness.evaluate(runs=1, preview=empty)
         live = [c for c in gate["criteria"] if readiness.PREVIEW in c["evidence_class"]
                 and c["status"] != OBSERVED]
@@ -161,7 +163,7 @@ class TheGate(unittest.TestCase):
                       ["residual"])
 
     def test_what_remains_is_named_not_taken(self):
-        # Scenario A and alerting are decided by the ACT-007 entries (Register 98);
+        # Scenario A (A2) and alerting (H3) are decided by the ACT-008 entries (Register 101);
         # E1 wiring is measured; the bypass is recorded revoked; the stale-recording
         # dependency applies only while the recording is stale.
         self.assertEqual({}, self.live["other_decisions"])
@@ -177,7 +179,8 @@ class TheGate(unittest.TestCase):
                      "Observability: readiness signal (R2)",
                      "Reproducibility: runtime version pinned",
                      "Reproducibility: reproducible deployment",
-                     "Operations: operational ownership", "Functionality: A1: no route creates an Agent",
+                     "Operations: operational ownership",
+                     "Functionality: A2: instances are registered, Definitions are never authored",
                      "Data: migration"):
             with self.subTest(criterion=name):
                 self.assertEqual(PASS, self.by_name[name]["status"])
@@ -354,8 +357,8 @@ class TheRevocationRecord(unittest.TestCase):
 
 
 class DelegatedDecisions(unittest.TestCase):
-    """ACT-007 5 and 6: Scenario A and alerting can be decided by a Register
-    entry that names ACT-007, and by nothing else."""
+    """ACT-007 5 and 6, ACT-008 7 and 8: Scenario A and alerting can be decided by
+    a Register entry that names ACT-007 or ACT-008, and by nothing else."""
 
     def entry(self, ident, decision, by="Claude Code, under the delegated authority of ACT-007 3"):
         return DELEGATED_ENTRY.format(n=1, by=by, ident=ident, decision=decision)
@@ -381,9 +384,9 @@ class DelegatedDecisions(unittest.TestCase):
 
     def test_the_register_holds_both_decisions_today(self):
         found = readiness.delegated(readiness.REGISTER.read_text(encoding="utf-8"))
-        self.assertEqual({"SCENARIO-A-RESIDUAL": "A1", "ALERTING-SELECTION": "H3"},
+        self.assertEqual({"SCENARIO-A-RESIDUAL": "A2", "ALERTING-SELECTION": "H3"},
                          {k: v["option"] for k, v in found.items()})
-        self.assertTrue(all(v["entry"].startswith("ACT-007-DG-") for v in found.values()))
+        self.assertTrue(all(v["entry"].startswith("ACT-008-DG-") for v in found.values()))
 
     def test_without_the_entries_both_rows_wait(self):
         record = dict(readiness.preview_record(), current=True)
@@ -397,22 +400,42 @@ class DelegatedDecisions(unittest.TestCase):
     def test_the_scenario_a_classification_needs_the_absences_to_hold(self):
         from unittest import mock
         record = dict(readiness.preview_record(), current=True)
-        with mock.patch.object(readiness, "_a1_holds", return_value=False):
+        record["passed"] = set(record["passed"]) | {readiness.SCENARIO_A_LIVE}
+        with mock.patch.object(readiness, "_a2_holds", return_value=False):
             gate = readiness.evaluate(runs=1, preview=record)
         by = {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}
         self.assertEqual(FAIL, by["Functionality: agent creation (Scenario A)"]["status"])
-        self.assertEqual(FAIL, by["Functionality: A1: no route creates an Agent"]["status"])
+        self.assertEqual(
+            FAIL, by["Functionality: A2: instances are registered, Definitions are never authored"]
+            ["status"])
 
-    def test_the_scenario_a_row_says_it_is_not_executed_and_who_can_reverse_it(self):
+    def test_the_scenario_a_row_is_executed_locally_and_needs_the_live_check(self):
+        """A2 is executed: measured now, in-process, and PASS only with the
+        live check recorded on code the Preview still serves."""
         record = dict(readiness.preview_record(), current=True)
-        gate = readiness.evaluate(runs=1, preview=record)
-        row = {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}[
-            "Functionality: agent creation (Scenario A)"]
+        record["passed"] = set(record["passed"]) | {readiness.SCENARIO_A_LIVE}
+        name = "Functionality: agent creation (Scenario A)"
+        row = {f"{c['area']}: {c['criterion']}": c
+               for c in readiness.evaluate(runs=1, preview=record)["criteria"]}[name]
         self.assertEqual(PASS, row["status"])
-        self.assertIn("NOT executed", row["evidence"])
-        self.assertIn("delegated", row["evidence"])
+        self.assertIn("registered in-process: 201", row["evidence"])
+        self.assertNotIn("NOT executed", row["evidence"])
         self.assertIn("A2", row["residual"])
-        self.assertIn("reversed by the Founder", row["residual"])
+        self.assertIn("AGENT INSTANCE ≠ AUTHORITY", row["residual"])
+        missing = dict(record, passed=set(record["passed"]) - {readiness.SCENARIO_A_LIVE})
+        row = {f"{c['area']}: {c['criterion']}": c
+               for c in readiness.evaluate(runs=1, preview=missing)["criteria"]}[name]
+        self.assertEqual(FAIL, row["status"])
+        self.assertIn(readiness.SCENARIO_A_LIVE, row["evidence"])
+        stale = dict(missing, current=False)
+        row = {f"{c['area']}: {c['criterion']}": c
+               for c in readiness.evaluate(runs=1, preview=stale)["criteria"]}[name]
+        self.assertEqual((BLOCKED, ["LIVE-REVERIFICATION"]), (row["status"], row["blocked_by"]))
+
+    def test_a1_and_a3_do_not_execute_scenario_a(self):
+        for option in ("A1", "A3"):
+            row = readiness._scenario_a_row({"option": option, "entry": "X — y"}, {}, True, {})
+            self.assertEqual(FAIL, row["status"], option)
 
 
 class TheAlertingSelection(unittest.TestCase):
@@ -535,9 +558,14 @@ class TheRecordingAsItStandsToday(unittest.TestCase):
     def test_the_decision_rows_do_not_depend_on_the_recording(self):
         gate = readiness.evaluate(runs=1)
         by = {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}
-        for name in ("Functionality: agent creation (Scenario A)", "Observability: alerting",
-                     "Functionality: A1: no route creates an Agent"):
+        for name in ("Observability: alerting",
+                     "Functionality: A2: instances are registered, Definitions are never authored"):
             self.assertEqual(PASS, by[name]["status"], name)
+        # Scenario A is executed, so it is a live row: it follows the recording.
+        scenario = by["Functionality: agent creation (Scenario A)"]
+        expected = PASS if readiness.preview_record()["current"] is True and \
+            readiness.SCENARIO_A_LIVE in readiness.preview_record()["passed"] else BLOCKED
+        self.assertEqual(expected, scenario["status"])
 
 
 if __name__ == "__main__":

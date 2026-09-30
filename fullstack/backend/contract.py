@@ -12,14 +12,15 @@ import re
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from .security import AUDIT, AUTHENTICATED, OBSERVE, PUBLIC, RUN_WORKFLOW
+from .security import AGENT_REGISTER, AUDIT, AUTHENTICATED, OBSERVE, PUBLIC, RUN_WORKFLOW
 
 API_VERSION = "v1"
 BASE = f"/api/{API_VERSION}"
 MAX_BODY_BYTES = 64 * 1024
 MAX_PAGE = 200
 ERRORS = {400: "invalid_request", 401: "unauthenticated", 403: "forbidden",
-          404: "not_found", 405: "method_not_allowed", 413: "payload_too_large",
+          404: "not_found", 405: "method_not_allowed", 409: "conflict",
+          413: "payload_too_large",
           500: "internal_error", 503: "unavailable"}
 
 
@@ -46,6 +47,10 @@ ROUTES: Tuple[Route, ...] = (
     Route("GET", f"{BASE}/runs", OBSERVE, "runs"),
     Route("GET", f"{BASE}/runs/{{run_id}}", OBSERVE, "run"),
     Route("POST", f"{BASE}/runs", RUN_WORKFLOW, "start_run"),
+    Route("GET", f"{BASE}/agent-definitions", OBSERVE, "agent_definitions"),
+    Route("GET", f"{BASE}/agent-instances", OBSERVE, "agent_instances"),
+    Route("GET", f"{BASE}/agent-instances/{{instance_key}}", OBSERVE, "agent_instance"),
+    Route("POST", f"{BASE}/agent-instances", AGENT_REGISTER, "register_agent"),
     Route("GET", f"{BASE}/traces", OBSERVE, "traces"),
     Route("GET", f"{BASE}/audit", AUDIT, "audit"),
 )

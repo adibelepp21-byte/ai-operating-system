@@ -81,12 +81,24 @@ class N1OneOriginNoCrossOriginAccess(unittest.TestCase):
                 self.assertIsNone(re.search(r"sb_(?:secret|publishable)_|eyJhbGci", text))
 
 
-class A1NoRouteCreatesAnAgent(unittest.TestCase):
+class A2RegistersInstancesOnlyNeverDefinitions(unittest.TestCase):
+    """FS-DP-07 A2 (ACT-008-DG-01, Register `§101`): the application registers an
+    Agent **Instance** of an existing governed Definition and nothing more.
+    A1 ("creates none") was ratified by ACT-004 and is superseded by that
+    decision; A3 (authoring Definitions) is not built. What conforms to A2 is
+    partly a presence and partly absences, so both are tested."""
 
-    def test_the_only_state_changing_route_starts_a_workflow_run(self):
-        writes = [(r.method, r.template) for r in contract.ROUTES if r.method != "GET"]
-        self.assertEqual([("POST", "/api/v1/runs")], writes)
-        self.assertFalse([r for r in contract.ROUTES if "agent" in r.template.lower()])
+    def test_the_state_changing_routes_are_exactly_a_run_and_an_instance_registration(self):
+        writes = [(r.method, r.template, r.scope) for r in contract.ROUTES if r.method != "GET"]
+        self.assertEqual([("POST", "/api/v1/runs", "aios.workflow.run"),
+                          ("POST", "/api/v1/agent-instances", "aios.agent.register")], writes)
+
+    def test_no_route_authors_edits_or_retires_a_definition(self):
+        for route in contract.ROUTES:
+            if route.method != "GET":
+                self.assertNotIn("definition", route.template.lower(), route.template)
+        self.assertEqual(["GET"], [r.method for r in contract.ROUTES
+                                   if r.template.endswith("/agent-definitions")])
 
     def test_the_acting_agent_instances_are_shown(self):
         h = Harness()
@@ -99,26 +111,30 @@ class A1NoRouteCreatesAnAgent(unittest.TestCase):
                          {s["actor"] for s in run["steps"]})
         self.assertEqual(3, len(h.aios.run_trace(run["run_id"])))
 
-    # ACT-007-DG-01 (Register `§98`): A1 applies; Scenario A is classified outside
-    # the present FS-09 envelope. What conforms to that is an absence, so the
-    # absences are tested: no registration path, no authoring path, no control,
-    # no Agent partition.
-
-    def test_no_served_code_registers_or_authors_an_agent(self):
-        reserved = re.compile(r"agent_instance_registry|aios\.agent\.register|AgentDefinition\(",
-                              re.IGNORECASE)
+    def test_the_p11_registry_authority_is_not_reused(self):
+        """`FD-P11-001 §7` authorized registration for P11-W4 only; the application
+        has its own instrument (ACT-008 `§7.2`) and imports nothing from `tools/`."""
         for path in SERVED:
             with self.subTest(file=path.name):
-                self.assertIsNone(reserved.search(path.read_text(encoding="utf-8")),
-                                  "P11-W4 registration authority is not reused (FS-DP-07 R2.3)")
+                self.assertIsNone(re.search(r"(?m)^\s*(from|import)\b[^\n]*agent_instance_registry",
+                                            path.read_text(encoding="utf-8")),
+                                  "served code must not import the P11 registry")
 
-    def test_the_console_offers_no_way_to_create_an_agent(self):
-        control = re.compile(r"(create|register|add|new|author)[-_ ]?(an? )?agent", re.IGNORECASE)
+    def test_served_code_never_writes_a_definition_document(self):
+        source = (REPO_ROOT / "fullstack/backend/agents.py").read_text(encoding="utf-8")
+        self.assertNotRegex(source, r"write_text|write_bytes|open\([^)]*[\"'][wa]")
+        for path in SERVED:
+            if path.name != "agents.py":
+                self.assertNotIn("AgentDefinition(", path.read_text(encoding="utf-8"), path.name)
+
+    def test_the_console_offers_no_way_to_author_a_definition(self):
+        control = re.compile(r"(create|author|edit|retire|delete)[-_ ]?(an? )?(agent )?definition",
+                             re.IGNORECASE)
         for path in sorted((REPO_ROOT / "fullstack/frontend").glob("*.*")):
             with self.subTest(file=path.name):
                 self.assertIsNone(control.search(path.read_text(encoding="utf-8")))
 
-    def test_no_agent_record_is_ever_stored(self):
+    def test_only_the_three_partitions_plus_registrations_are_ever_stored(self):
         h = Harness()
         self.addCleanup(h.close)
         h.call("POST", "/api/v1/runs", OPERATOR_TOKEN, body={

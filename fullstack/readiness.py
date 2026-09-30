@@ -187,9 +187,10 @@ def ratified(register_text: str) -> Dict[str, str]:
     return found
 
 
-#: Non-package decisions a Register entry can take (ACT-007 `§5`, `§6`), by
-#: their `Ratifies` row. Only an entry whose `Decided by` row names ACT-007 counts:
-#: the delegation is FS-09-only and expires at that Act's terminal state.
+#: Non-package decisions a Register entry can take (ACT-007 `§5`, `§6`; ACT-008
+#: `§7`, `§8`), by their `Ratifies` row. Only an entry whose `Decided by` row
+#: names ACT-007 or ACT-008 counts: the delegation is FS-09-only and expires at
+#: that Act's terminal state. The latest entry for an id is the decision in force.
 DELEGATED_IDS = ("SCENARIO-A-RESIDUAL", "ALERTING-SELECTION")
 
 
@@ -203,7 +204,7 @@ def delegated(register_text: str) -> Dict[str, dict]:
         by = re.search(r"(?m)^\| \*\*Decided by\*\* \|([^\n]*)\|\s*$", block)
         ratifies = re.search(r"(?m)^\| \*\*Ratifies\*\* \|([^\n]*)\|\s*$", block)
         decision = re.search(r"(?m)^\| \*\*Decision\*\* \|([^\n]*)\|\s*$", block)
-        if not (by and ratifies and decision and "ACT-007" in by.group(1)):
+        if not (by and ratifies and decision and re.search(r"ACT-00[78]", by.group(1))):
             continue
         for ident in DELEGATED_IDS:
             if re.search(rf"(?<![A-Z-]){ident}(?![A-Z-])", ratifies.group(1)):
@@ -302,8 +303,14 @@ def _live(area, name, local_ok, local_evidence, checks, preview, residual=None):
     blocked_by = ()
     if local_ok is False:
         status = FAIL
-    elif missing:
+    elif missing and preview["current"] is True:
         status, evidence = FAIL, evidence + "; not recorded PASS: " + ", ".join(missing)
+    elif missing:
+        # A recording the tree has outgrown cannot have recorded a check the
+        # tree added since: that is re-verification owed, not a failure.
+        status, blocked_by = BLOCKED, ["LIVE-REVERIFICATION"]
+        evidence += ("; not in the recording, which no longer covers this tree: "
+                     + ", ".join(missing))
     elif checks and preview["current"] is not True:
         status, blocked_by = BLOCKED, ["LIVE-REVERIFICATION"]
         evidence += ("; the served code changed since the recorded commit, so the recording "
@@ -396,14 +403,47 @@ def _h3_missing() -> List[str]:
     return [m for m in H3_MARKERS if m not in text]
 
 
-def _a1_holds() -> bool:
-    """A1 (ACT-004 DG-03): the only state-changing route starts a Workflow run,
-    and no route names an Agent. Its absences are what the Scenario A
-    classification (Register `§98`) rests on."""
+SCENARIO_A_LIVE = "Scenario A: agent instance registered and persisted"
+
+
+def _a2_holds() -> bool:
+    """A2 (Register `§101`): the state-changing routes are exactly a run and an
+    Agent Instance registration, and no route authors, edits or retires a
+    Definition (that is A3, not built)."""
     from fullstack.backend import contract
-    return ([(r.method, r.template) for r in contract.ROUTES if r.method != "GET"]
-            == [("POST", "/api/v1/runs")]
-            and not [r for r in contract.ROUTES if "agent" in r.template.lower()])
+    writes = [(r.method, r.template) for r in contract.ROUTES if r.method != "GET"]
+    return (writes == [("POST", "/api/v1/runs"), ("POST", "/api/v1/agent-instances")]
+            and not [r for r in contract.ROUTES
+                     if r.method != "GET" and "definition" in r.template.lower()])
+
+
+def _scenario_a_row(decision: Optional[dict], scenario: dict, a2_holds: bool,
+                    preview: dict) -> Optional[dict]:
+    """Scenario A is mandatory (ACT-001 `§18`; ACT-008 `§7.2`, `§16`): it passes
+    only by being executed, locally now and on the Preview the recording covers.
+    A1 cannot execute it, so a decision for A1 fails the row rather than
+    classifying it away."""
+    area, name = "Functionality", "agent creation (Scenario A)"
+    option = decision["option"] if decision else None
+    who = decision["entry"].split(" — ")[0] if decision else "-"
+    if option == "A2":
+        local = (f"registered in-process: {scenario.get('status')} created, persisted and "
+                 f"listed ({scenario.get('listed')}), observer refused "
+                 f"({scenario.get('observer')}), duplicate refused ({scenario.get('duplicate')}), "
+                 f"an unknown Definition refused ({scenario.get('unknown_definition')}); "
+                 "only instance registration exists, no Definition authoring")
+        return _live(area, name, bool(a2_holds and scenario.get("ok")), local,
+                     [SCENARIO_A_LIVE], preview,
+                     residual=f"A2 was selected by the delegated decision {who} (Register §101); a "
+                              "registration grants no authority (AGENT INSTANCE ≠ AUTHORITY); "
+                              "Definitions stay governed documents the application only reads")
+    if option in ("A1", "A3"):
+        return _criterion(area, name, FAIL,
+                          f"{option} is the decision in force ({who}): "
+                          + ("the application creates no Agent, so the mandatory Scenario A is not "
+                             "executed (ACT-008 §7.2)" if option == "A1" else
+                             "the Agent Factory is not built"), classes=[LOCAL])
+    return None
 
 
 def _alerting_row(decision: Optional[dict], h3_missing: List[str]) -> dict:
@@ -461,13 +501,14 @@ def _measure(runs: int) -> dict:
     """Exercise the real application in a throwaway directory."""
     from fullstack.backend.api import create_app
     from fullstack.backend.telemetry import Collector
-    from fullstack.backend.security import (AUDIT, OBSERVE, RUN_WORKFLOW, Authenticator,
-                                            Principal)
+    from fullstack.backend.security import (AGENT_REGISTER, AUDIT, OBSERVE, RUN_WORKFLOW,
+                                            Authenticator, Principal)
     from wsgiref.util import setup_testing_defaults
 
     class _Gate(Authenticator):
         mechanism = "readiness-gate probe"
-        principals = {"gate-operator": Principal("gate-operator", {OBSERVE, RUN_WORKFLOW, AUDIT}),
+        principals = {"gate-operator": Principal("gate-operator", {OBSERVE, RUN_WORKFLOW, AUDIT,
+                                                                     AGENT_REGISTER}),
                       "gate-observer": Principal("gate-observer", {OBSERVE})}
 
         def authenticate(self, headers):
@@ -509,6 +550,27 @@ def _measure(runs: int) -> dict:
         anonymous = call(app, "GET", "/api/v1/runs")[0]
         _, headers, _ = call(app, "GET", "/api/v1/health")
         traces = call(app, "GET", "/api/v1/traces", "gate-observer")[2]["total"]
+        # Scenario A (FS-DP-07 A2): User -> Create Agent -> Backend -> AIOS Agent
+        # Capability -> Persist -> Result, then every refusal that matters.
+        agent = {"definition": "engineering-intelligence-agent", "instance_key": "gate-probe-01",
+                 "capabilities": ["engineering-intelligence"]}
+        a_status, _, a_created = call(app, "POST", "/api/v1/agent-instances", "gate-operator", agent)
+        a_observer = call(app, "POST", "/api/v1/agent-instances", "gate-observer", agent)[0]
+        a_anonymous = call(app, "POST", "/api/v1/agent-instances", None, agent)[0]
+        a_duplicate = call(app, "POST", "/api/v1/agent-instances", "gate-operator", agent)[0]
+        a_unknown = call(app, "POST", "/api/v1/agent-instances", "gate-operator",
+                         dict(agent, definition="no-such-agent", instance_key="gate-probe-02"))[0]
+        a_listed = [i["instance_key"] for i in
+                    call(app, "GET", "/api/v1/agent-instances", "gate-observer")[2]["instances"]]
+        a_traces = call(app, "GET", "/api/v1/traces", "gate-observer")[2]["total"]
+        scenario_a = {"status": a_status, "observer": a_observer, "anonymous": a_anonymous,
+                      "duplicate": a_duplicate, "unknown_definition": a_unknown,
+                      "listed": a_listed,
+                      "ok": (a_status == 201 and a_created.get("lifecycle") == "REGISTERED"
+                             and a_created.get("grants_authority") is False
+                             and (a_observer, a_anonymous, a_duplicate, a_unknown)
+                             == (403, 401, 409, 400)
+                             and a_listed == ["gate-probe-01"] and a_traces == traces)}
         audit = call(app, "GET", "/api/v1/audit?limit=200", "gate-operator")[2]["entries"]
         aios.stop()
         final = {p.name: p.read_bytes() for p in store.iterdir()}
@@ -522,7 +584,7 @@ def _measure(runs: int) -> dict:
             "headers": headers, "traces": traces, "expected_traces": 3 * runs + 2,
             "audit_entries": len(audit), "appended_only": appended_only,
             "runs_after_restart": survived, "runs_made": runs + 1,
-            "requests_made": len(made), "log_lines": list(log.lines),
+            "requests_made": len(made), "log_lines": list(log.lines), "scenario_a": scenario_a,
             "latency_ms": {"runs": runs, "p50": round(statistics.median(latencies), 2),
                            "max": round(max(latencies), 2)}}
 
@@ -565,7 +627,7 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
     missing_sections = _runbook_sections()
     in_repo = sorted(p.stem for p in MIGRATIONS.glob("*.sql"))
     from fullstack.deploy.request_metrics import derive
-    a1_holds = _a1_holds()
+    a2_holds = _a2_holds()
     wiring = _environment_wiring()
     h3_missing = _h3_missing()
     joined = "\n".join(m["log_lines"])
@@ -586,24 +648,16 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
               ["failure paths are meaningful states"], preview),
         _blocked("Functionality", "agent creation (Scenario A)",
                  ["FS-DP-07", "SCENARIO-A-RESIDUAL"], decided,
-                 "A1 (ratified, ACT-004 DG-03) is in force: no route creates an Agent, so "
-                 "Scenario A cannot occur") or _criterion(
-            "Functionality", "agent creation (Scenario A)",
-            PASS if a1_holds else FAIL,
-            ("classified outside the present FS-09 envelope, a non-blocking residual, by the "
-             f"delegated decision {delegated_now['SCENARIO-A-RESIDUAL']['entry'].split(' — ')[0]} "
-             "(ACT-007 §5; Register §98); A1 applies and its absences hold. Scenario A is "
-             "NOT executed") if "SCENARIO-A-RESIDUAL" in delegated_now else
-            "classified by the Founder as a non-blocking residual under A1",
-            classes=[LOCAL],
-            residual="Scenario A (mandatory, ACT-001 §18) is not executed and cannot be under "
-                     "A1; executing it needs A2 and an authority instrument extending "
-                     "FD-P11-001 §7 to the application (FS-DP-07 R2.5). A delegated "
-                     "classification can be reversed by the Founder"),
-        _criterion("Functionality", "A1: no route creates an Agent",
-                   PASS if a1_holds else FAIL,
-                   "the only state-changing route is POST /api/v1/runs; no route names an "
-                   "Agent; runs show the acting Agent Instances", classes=[LOCAL]),
+                 "FS-DP-07 is decided but no entry selects A1, A2 or A3 for Scenario A")
+        or _scenario_a_row(delegated_now.get("SCENARIO-A-RESIDUAL"), m["scenario_a"],
+                           a2_holds, preview)
+        or _criterion("Functionality", "agent creation (Scenario A)", FAIL,
+                      "the decision names no A1, A2 or A3", classes=[LOCAL]),
+        _criterion("Functionality", "A2: instances are registered, Definitions are never authored",
+                   PASS if a2_holds else FAIL,
+                   "the state-changing routes are POST /api/v1/runs and POST "
+                   "/api/v1/agent-instances; no route writes a Definition; runs show the acting "
+                   "Agent Instances", classes=[LOCAL]),
         _blocked("Security", "authentication", ["FS-DP-02"], decided) or _live(
             "Security", "authentication", _no_shipped_credential(),
             "B3 is the composition's authenticator; unconfigured it accepts nobody",

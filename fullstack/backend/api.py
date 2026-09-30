@@ -23,7 +23,7 @@ from pathlib import Path
 from typing import Callable, Iterable, List, Optional, Tuple
 from urllib.parse import parse_qs
 
-from . import contract, telemetry
+from . import agents, contract, telemetry
 from .aios import AIOSApplication, InvalidRunRequest, NotRunning, UnknownWorkflow
 from .security import PUBLIC, AuditLedger, Authenticator, authorize
 
@@ -124,8 +124,10 @@ class Application:
         except _Refusal as refusal:
             return self._json(refusal.status, {"error": contract.ERRORS[refusal.status],
                                                "detail": refusal.detail}, refusal.headers)
-        except InvalidRunRequest as error:
+        except (InvalidRunRequest, agents.InvalidAgentRequest) as error:
             return self._json(400, {"error": "invalid_request", "detail": str(error)})
+        except agents.DuplicateInstance as error:
+            return self._json(409, {"error": "conflict", "detail": str(error)})
         except UnknownWorkflow as error:
             return self._json(400, {"error": "invalid_request", "detail": str(error)})
         except NotRunning as error:
@@ -223,6 +225,27 @@ class Application:
         return 201, self._aios.start_run(body["workflow"], body.get("inputs"),
                                          requested_by=principal.subject)
 
+    def _registry(self) -> agents.AgentRegistry:
+        return agents.AgentRegistry(self._aios.storage,
+                                    agents.GovernedDefinitions(self._aios.repo_root),
+                                    runtime_id=self._aios.runtime_id)
+
+    def _h_agent_definitions(self, environ, params, principal):
+        return 200, {"definitions": agents.GovernedDefinitions(self._aios.repo_root).describe()}
+
+    def _h_agent_instances(self, environ, params, principal):
+        return 200, {"instances": self._registry().instances()}
+
+    def _h_agent_instance(self, environ, params, principal):
+        record = self._registry().instance(params["instance_key"])
+        if record is None:
+            raise _Refusal(404, f"no registered instance {params['instance_key']}")
+        return 200, record
+
+    def _h_register_agent(self, environ, params, principal):
+        request = agents.parse_request(self._body(environ))
+        return 201, self._registry().register(request, principal.subject)
+
     def _h_traces(self, environ, params, principal):
         offset, limit = self._page(environ)
         return 200, self._aios.traces(offset, limit)
@@ -262,7 +285,7 @@ class Application:
 def _reason(status: int) -> str:
     return {200: "OK", 201: "Created", 400: "Bad Request", 401: "Unauthorized",
             403: "Forbidden", 404: "Not Found", 405: "Method Not Allowed",
-            413: "Payload Too Large", 500: "Internal Server Error",
+            409: "Conflict", 413: "Payload Too Large", 500: "Internal Server Error",
             503: "Service Unavailable"}.get(status, "Unknown")
 
 

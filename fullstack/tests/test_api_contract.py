@@ -30,7 +30,7 @@ class ContractMatchesBlueprint(unittest.TestCase):
                 self.assertTrue(callable(getattr(Application, "_h_" + route.handler, None)))
 
     def test_every_error_code_is_named(self):
-        self.assertEqual({400, 401, 403, 404, 405, 413, 500, 503}, set(contract.ERRORS))
+        self.assertEqual({400, 401, 403, 404, 405, 409, 413, 500, 503}, set(contract.ERRORS))
 
 
 if __name__ == "__main__":

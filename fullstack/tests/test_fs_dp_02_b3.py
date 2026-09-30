@@ -18,7 +18,7 @@ import unittest
 
 from fullstack.backend import contract
 from fullstack.backend.security import (
-    AUDIT, OBSERVE, PUBLIC, RUN_WORKFLOW, AuditLedger, OperatorTokenAuthenticator,
+    AGENT_REGISTER, AUDIT, OBSERVE, PUBLIC, RUN_WORKFLOW, AuditLedger, OperatorTokenAuthenticator,
     parse_operator_tokens, OperatorTokenConfigurationError, token_sha256)
 from fullstack.tests.support import (
     OBSERVER_TOKEN, OPERATOR_TOKEN, REPO_ROOT, Harness, operator_configuration)
@@ -28,7 +28,7 @@ PROTECTED = [r for r in contract.ROUTES if r.scope != PUBLIC]
 
 
 def _path(template):
-    return template.replace("{run_id}", "run-x")
+    return template.replace("{run_id}", "run-x").replace("{instance_key}", "agent-x-01")
 
 
 def _body(route):
@@ -96,7 +96,7 @@ class V4ValidCredential(_Case):
         self.assertEqual("operator@test", run["requested_by"])
         session = self.h.call("GET", "/api/v1/session", OPERATOR_TOKEN)[2]
         self.assertEqual({"subject": "operator@test",
-                          "scopes": sorted([AUDIT, OBSERVE, RUN_WORKFLOW])}, session)
+                          "scopes": sorted([AGENT_REGISTER, AUDIT, OBSERVE, RUN_WORKFLOW])}, session)
         last = list(AuditLedger(self.h.aios.storage).entries())[-1]
         self.assertEqual(("operator@test", "allowed"), (last["subject"], last["decision"]))
 

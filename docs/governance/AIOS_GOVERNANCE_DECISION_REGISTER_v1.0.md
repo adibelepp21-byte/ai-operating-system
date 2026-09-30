@@ -9805,3 +9805,46 @@ Record of execution, not a decision. Full record: `docs/fullstack/FS-09-ACT-007-
 | **Not granted** (`§5`, `§31`, `§36`) | Constitution, Mission, Governance Model; P12/P13 certified artifacts or closure; Platform Organization closure; Native Core beyond 11; Phase 14; permanent bypass; unsupported spending; **final Production release without Founder Release Authorization** |
 | **Rules carried** | a mandatory scenario may not be downgraded (`§7.2`, `§16`); P12 is classified, never altered (`§15`); served-code change invalidates dependent live evidence (`§20`); EXHAUSTED_WITH_CLASSIFIED_REMAINDER is not a terminal state for work inside the Act (`§25`, `§34`) |
 | **Execution record** | `docs/fullstack/FS-09-ACT-008-EXECUTION-RECORD.md`; final state in a closing Register entry |
+
+---
+
+## 101. ACT-008 Delegated Architect Decisions — Scenario A = A2; Alerting = H3 re-verified and final (2026-09-30)
+
+Made by Claude Code under the bounded delegated authority of `ACT-CC-POST-P13-AIOS-FULL-STACK-008` `§3`, `§7`, `§8` (FS-09 only; expires at that Act's terminal state). **Delegated decisions, not Founder decisions.** Each follows ACT-008 `§4.2` (source · requirement · options · decision · rationale · boundary · verification · evidence). History stays: `ACT-007-DG-01` and `ACT-007-DG-02` (`§98`) are superseded for the current state and are not rewritten.
+
+### ACT-008-DG-01 — Delegated Decision (ACT-008 §7) · Scenario A = A2, Agent Instance registration only
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-008-DG-01` |
+| **Date** | 2026-09-30 |
+| **Decided by** | Claude Code, under the bounded delegated Architect authority of ACT-008 `§3` and `§7.2` (FS-09 only). Not a Founder decision |
+| **Ratifies** | FS-DP-07, SCENARIO-A-RESIDUAL |
+| **Source** | ACT-001 `§18` (Scenario A is a *mandatory* end-to-end class) and `§20`; ACT-008 `§7.2` (*"Scenario A MUST BE EXECUTED AND VERIFIED. It may not be downgraded to non-blocking merely because A1 makes implementation inconvenient"*), `§16` (*"A mandatory scenario is PASS or FS-09 not PASS"*), `§25` B; `FS-DP-07` revisions 1 and 2 (`R2.3`–`R2.17`); ACT-004 `§12`–`§13`, Register `§93` `ACT-004-DG-03` (A1); `ACT-007-DG-01` (A1 classified as a residual) |
+| **Requirement** | *User → Create Agent → Backend → AIOS Agent Capability → Persist → Result*: a user creates an Agent through the application; the backend uses the AIOS Agent contracts; the result is persisted and returned |
+| **Options considered** | **A1** keep reserved: cannot execute Scenario A, by design (`R2.7`); under ACT-008 it may not be carried as a non-blocking residual. **A2** instance registration only: an operator holding `aios.agent.register` registers an Instance of an **existing** governed Definition through the canonical contracts; Definitions stay documents. **A3** full Agent Factory: Definitions authored through the application; crosses Platform Division authority; the largest change. No other option |
+| **Decision** | **A2.** A1 is insufficient, and ACT-008 `§7.2` authorizes moving to another already-defined option. A2 is the smallest change that makes Scenario A executable without the application authoring Definitions (`R2.16`: *"A1 now; A2 when a use needs it"*, and the use is now mandatory) |
+| **Authority instrument** (`R2.5`, `R2.14`) | the package required *an authority instrument extending `FD-P11-001 §7`-style registration to the application*. ACT-008 `§7.2` is that instrument: a Founder Act, later than and expressly overriding the A1-only position for FS-09, naming the move to another FS-DP-07 option. `FD-P11-001`'s own authority (P11-W4 only) and `tools/agent_instance_registry.py` are **not** reused or imported |
+| **Implementation** | `fullstack/backend/agents.py`: governed Definitions read from their documents (`docs/architecture/organization/*/agent-definitions/*.md`, Active only) into the canonical `AgentDefinition`; `AgentInstance` (INV-3) built from it; an application registration record (`fullstack.agent-instance/1`) in the append-only partition `fullstack-agents` (who, on what authority, permitted capabilities, lifecycle, `grants_authority: false`). Routes: `GET /api/v1/agent-definitions`, `GET /api/v1/agent-instances[/{instance_key}]` (`aios.observe`), `POST /api/v1/agent-instances` (**new scope `aios.agent.register`**). FS-02 `§4` amended; `409 conflict` added |
+| **Boundary** | registration only: no route, console control or code path authors, edits or retires a Definition (A3); no Agent Factory, Planner, Scheduler or Orchestrator; **AGENT INSTANCE ≠ AUTHORITY** (a registration grants nothing and executes nothing); the request cannot name its own authority, lifecycle or creator; the scope is granted explicitly to named operators only; a registration is never deleted (a duplicate identity is refused, the first record wins); Native Core is unchanged (11); the Instance is not an actor in any run |
+| **Verification** | targeted: `fullstack/tests/test_agents.py` (20) and the A2 conformance class; gate: *agent creation (Scenario A)* is measured by executing the scenario in-process and requires the live recording to hold the check *"Scenario A: agent instance registered and persisted"*; live: the Preview run recorded in the final evidence file |
+| **Evidence** | `docs/fullstack/FS-09-ACT-008-EXECUTION-RECORD.md`; `docs/fullstack/evidence/FS-09-LIVE-PREVIEW-…-act008.json` |
+| **What would reverse it** | a Founder instrument choosing A1 again; the registrations already made stay in the store (append-only) |
+
+### ACT-008-DG-02 — Delegated Decision (ACT-008 §8) · Alerting = H3, sufficiency re-verified
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-008-DG-02` |
+| **Date** | 2026-09-30 |
+| **Decided by** | Claude Code, under the bounded delegated Architect authority of ACT-008 `§3` and `§8` (FS-09 only). Not a Founder decision |
+| **Ratifies** | ALERTING-SELECTION |
+| **Source** | `FS-DP-06` rev 2 `R2.4`–`R2.16` (option definitions unchanged since `5941d72`); ACT-001 `§20` (verify *logging, metrics, tracing, alerting*; *"where applicable … alerting"*); ACT-003 `§19` (operational readiness: *monitoring, alerting … operational ownership*); ACT-008 `§8.1`: H3 must be shown sufficient, not carried forward |
+| **Requirement** | FS-09 verifies alerting as the architecture defines it. `FS-DP-06` defines the mechanism by three options and keeps Logging (L1), Metrics (M1), Alerting and Readiness (R2) separate; **R2 = readiness and is not alerting** |
+| **Options considered** | **H1** the host's alerting if the plan provides it: Vercel alert rules exist (`vercel alerts rules add`; Slack or email), but **this session holds no control that creates one** (the Vercel connector has no alert-rule operation; the CLI has no token), the plan's entitlement is not established, and a **recipient** is Founder-reserved (`R2.5`). **H2** an external uptime check on `/health`: a third-party account (Founder-reserved) and an edge path; under N1/X2 every URL answers 302 to SSO, and ACT-008 `§10.2` allows one temporary Preview access only for verification, never for a standing monitor. **H3** none; the runbook's manual checks |
+| **Decision** | **Alerting = H3**, final. H1 and H2 are not implementable inside this authority (above); H3 is a defined option, the one `R2.16` anticipates (*"H1 or H3 with the residual stated"*), and ACT-001/003 ask for alerting to be verified as decided, in the forms `FS-DP-06` defines |
+| **Residual, stated** | **no automatic alert exists**: a failure is found only when a person runs the checks (`R2.10`). This is a decided, documented limitation, not an unreviewed one. **Revisit at FS-10:** a Production custom domain is not SSO-protected (`all_except_custom_domains`), which makes H2 reachable there; H1/H2 also need the Founder's recipient and any spend |
+| **Implementation** | runbook `§12.1` *Manual monitoring checks (H3)* and ownership `§6` (ACT-007); the gate checks their content |
+| **Operational verification** | the checks are run against the live deployment in the final evidence file: readiness, the error rate derived from the host log, refusals before the Application, backup freshness (refreshed by the drill), temporary access (the bypass list) |
+| **Boundary** | no fourth option; no paid service, third party or recipient decided; R2 not relabelled |
+| **Evidence** | as DG-01 |
