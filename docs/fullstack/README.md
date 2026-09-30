@@ -19,6 +19,6 @@ Under `ACT-CC-POST-P13-AIOS-FULL-STACK-001`, operative from `FD-FS-001`
 | FS-07 | [`FS-07-INTEGRATION-EVIDENCE.md`](FS-07-INTEGRATION-EVIDENCE.md) | B and C met; A blocked |
 | FS-08 | [`FS-08-INFRASTRUCTURE-AND-CLOUD.md`](FS-08-INFRASTRUCTURE-AND-CLOUD.md) | blocked |
 | FS-09 | [`FS-09-PRODUCTION-READINESS.md`](FS-09-PRODUCTION-READINESS.md) | not production ready |
-| FS-10 | [`FS-10-DEPLOYMENT.md`](FS-10-DEPLOYMENT.md) | not started |
+| FS-10 | [`FS-10-DEPLOYMENT.md`](FS-10-DEPLOYMENT.md) | active: deployment preparation |
 
 Decision packages awaiting the Architect: [`decision-packages/`](decision-packages/README.md).

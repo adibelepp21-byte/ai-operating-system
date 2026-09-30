@@ -9885,3 +9885,18 @@ Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-008` `§25`, `§2
 | **Not granted and not done** | Production deployment, Production credentials or variables, alias change, Founder Release Authorization, Operational AIOS. **Founder Release Authorization: NOT YET ISSUED** |
 | **Residuals, stated** | no automatic alert (H3); Production target not exercised live; unknown environment verified in-process; console not driven against the live Preview (browser and sandbox CA); P12-W6 red; backups only when an operator runs one |
 | **FS-10** | **ACTIVE** at *Deployment Preparation* (`§27`). Construction and verification proceed under the parent authority; the release to LIVE needs the Founder Release Authorization (`§28`) |
+
+---
+
+## 104. FS-10 Entered — Deployment & Operationalization ACTIVE at Deployment Preparation (2026-09-30)
+
+Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-008` `§27`, `§28` (automatic continuation after `§103`). **Not a Production deployment, not a release, not a Founder decision.**
+
+| Field | Value |
+|---|---|
+| **Status** | **FS-10 = ACTIVE**, current frontier *Deployment Preparation* |
+| **Built** | `fullstack/deploy/smoke.py` (`python -m fullstack.deploy.smoke`): a read-only smoke profile and an opt-in write profile; secrets read from files, never printed or recorded, an echoed credential aborts the run; it infers no environment and never turns the write profile on itself. `fullstack/tests/test_smoke.py` (8 tests) |
+| **Written** | `docs/fullstack/FS-10-DEPLOYMENT.md`: the authorized/reserved boundary, the state at entry, the Production pre-flight (P1 to P9), the smoke, health and integration plan |
+| **Founder-reserved, not done** | the Production `SUPABASE_SECRET_KEY` and `AIOS_OPERATOR_TOKENS` (Production scope); a Production deployment, promotion or alias; Production Deployment Protection stance; naming the release candidate; the smoke write policy (the store is append-only, so a Production smoke record is permanent); the Founder Release Authorization |
+| **Founder Release Authorization** | **NOT YET ISSUED.** Production is untouched and not LIVE |
+| **Next** | once the Founder supplies P1, P2, P5, P6, P7 and P8: Production Deployment, Smoke Test, Health Check, Integration Test, Production Verification, Operational Verification |
