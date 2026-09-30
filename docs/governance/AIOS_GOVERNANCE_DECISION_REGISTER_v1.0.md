@@ -9848,3 +9848,19 @@ Made by Claude Code under the bounded delegated authority of `ACT-CC-POST-P13-AI
 | **Operational verification** | the checks are run against the live deployment in the final evidence file: readiness, the error rate derived from the host log, refusals before the Application, backup freshness (refreshed by the drill), temporary access (the bypass list) |
 | **Boundary** | no fourth option; no paid service, third party or recipient decided; R2 not relabelled |
 | **Evidence** | as DG-01 |
+
+---
+
+## 102. ACT-008 §15 — P12-W6 Regression Signal Classified (2026-09-30)
+
+Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-008` `§15`. A **classification, not a decision and not a waiver**; P12 is untouched.
+
+| Field | Value |
+|---|---|
+| **Signal** | `tools.tests.test_p12_governance_evidence_verification … test_the_narrower_population_is_not_better [status]`: the Founder-Act share of `Status:` labels 0.4952 (52/105) exceeds the corpus share + 0.2 = 0.4926 (182/622) |
+| **Classification** | **known classified P12 baseline guard condition** (a hard-coded population-ratio tolerance), tripped by governance-corpus growth from verbatim Founder Acts. **Not** an FS-09 failure; **not** a test-harness integration defect; **not** a new system regression |
+| **Evidence** | bisect: passes at `ab18082^`, fails from `ab18082` (docs-only commit adding ACT-006 verbatim); counterfactual in a scratch worktree: passes with ACT-006 to ACT-008 removed; `native_core/`, `consumers/`, `tools/` unchanged since `edb3beb`; certified-evidence integrity intact |
+| **Does it block FS-09** | **No** (`§15.3`: only an actual FS-09 failure blocks FS-09). The test stays red in the global runner and is reported so |
+| **Not done** | P12 population, threshold, test or certified baseline altered, deleted, renamed or suppressed: none |
+| **Remedy owner** | P12 / governance owner under Founder authority; recurs with each further Act carrying a `Status` label |
+| **Record** | `docs/fullstack/FS-09-P12-W6-CLASSIFICATION.md`; `docs/fullstack/evidence/FS-09-ACT-008-P12-W6-CLASSIFICATION-2026-09-30.json` |

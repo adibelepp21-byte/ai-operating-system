@@ -1,0 +1,39 @@
+{
+  "format": "fullstack.evidence.p12-w6-classification/1",
+  "instrument": "ACT-CC-POST-P13-AIOS-FULL-STACK-008 §15",
+  "date": "2026-09-30",
+  "test": "tools.tests.test_p12_governance_evidence_verification.TheResultDoesNotDependOnMyChoiceOfPopulation.test_the_narrower_population_is_not_better [status]",
+  "raw_result": ".............F...\n======================================================================\nFAIL: test_the_narrower_population_is_not_better (tools.tests.test_p12_governance_evidence_verification.TheResultDoesNotDependOnMyChoiceOfPopulation.test_the_narrower_population_is_not_better) [status]\nRules out the objection that the wide population is diluted.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/home/user/ai-operating-system/tools/tests/test_p12_governance_evidence_verification.py\", line 112, in test_the_narrower_population_is_not_better\n    self.assertLessEqual(narrow[1] / max(narrow[2], 1),\nAssertionError: 0.49523809523809526 not less than or equal to 0.49260450160771707\n\n----------------------------------------------------------------------\nRan 17 tests in 1.548s\n\nFAILED (failures=1)\n",
+  "measured": {
+    "status_label_share": {
+      "corpus": {
+        "with_label": 182,
+        "population": 622,
+        "share": 0.2926
+      },
+      "founder_acts": {
+        "with_label": 52,
+        "population": 105,
+        "share": 0.4952
+      }
+    },
+    "tolerance": "founder_acts share must be <= corpus share + 0.2 = 0.4926; observed 0.4952; margin exceeded by 0.0026"
+  },
+  "bisect": {
+    "ab18082^": "17 tests OK",
+    "ab18082": "FAILED (1) — docs-only commit adding ACT-006 verbatim (+ Register §95)",
+    "3182510": "FAILED (1) — docs-only commit adding ACT-007 verbatim",
+    "d6afbdc": "FAILED (1) — docs-only commit adding ACT-008 verbatim"
+  },
+  "counterfactual": "HEAD with the three verbatim Acts (006, 007, 008) removed in a scratch worktree: 17 tests OK. Nothing was removed in the repository.",
+  "fullstack_code_involved": false,
+  "p12_modified": false,
+  "tools_last_commit": "8bb7ba2 (FD-P12-007), untouched by FS-09",
+  "classification": "known classified P12 baseline guard condition (population-sensitive tolerance), tripped by governance-corpus growth",
+  "not": [
+    "FS-09 failure",
+    "test-harness integration defect",
+    "new unexpected system regression"
+  ],
+  "blocks_fs_09": false
+}
