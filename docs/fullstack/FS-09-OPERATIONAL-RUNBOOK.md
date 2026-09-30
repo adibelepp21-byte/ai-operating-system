@@ -3,9 +3,9 @@
 | Field | Value |
 |---|---|
 | **Authority** | `ACT-CC-POST-P13-AIOS-FULL-STACK-003` `§18`, `§19`; the Founder's FS-09 continuation (Workstream C) |
-| **Register** | `§88` (written); `§93` (updated to the ACT-004 decisions and FS-09 live state) |
+| **Register** | `§88` (written); `§93` (updated to the ACT-004 decisions and FS-09 live state); `§94` (2026-09-30 re-verification, alias pinning) |
 | **Scope** | the deployed AIOS Full Stack: Vercel project `aios-platform` (static console and `/api/v1/*` Python function) over Supabase project `scfymftfzkpilqbgmfwv`, table `aios_records` |
-| **Status** | **current as of 2026-09-28 (ACT-004/005).** Checked against the code and the FS-09 live verification; not yet exercised in a real incident. Logging, metrics and readiness (`§12`) are implemented; **alerting is unresolved**. Duties (`§13`) follow `FS-09-OPERATIONAL-OWNERSHIP.md`. *History: until `§93` this row said monitoring and alerting were placeholders and ownership was unassigned* |
+| **Status** | **current as of 2026-09-30 (ACT-004/005).** Checked against the code and the FS-09 live verification; not yet exercised in a real incident. Logging, metrics and readiness (`§12`) are implemented; **alerting is unresolved**. Duties (`§13`) follow `FS-09-OPERATIONAL-OWNERSHIP.md`. *History: until `§93` this row said monitoring and alerting were placeholders and ownership was unassigned* |
 | **Is not** | a release, a Production procedure the operator may run on their own, or a readiness PASS |
 
 **Rules for every step.** No secret value goes into chat, a commit, a document,
@@ -173,6 +173,17 @@ posture (anonymous 401) and the same store and variables. A rollback below the
 L1 commit loses request logs. Production rollback has not been exercised: it
 is the operator's, on a Founder decision. *History: until `§93` this read NOT
 VERIFIED.*
+
+**Drilled again, 2026-09-30** (`§94`): from `dpl_FjjGC9Hg54RGzGSugwidwHdRTrwM`
+(`297e8b8`) back to `dpl_6xyzjXKxqcLkVdxHZ9QnXYQ46CZ4` (`7df974a`) and forward;
+same results (evidence `FS-09-LIVE-PREVIEW-2026-09-30.json`).
+
+**A manually assigned alias stays pinned.** After `vercel alias` / an alias
+assignment, the branch alias no longer follows new pushes to the branch: on
+2026-09-30 it still served `dpl_8Znqrn818NgYy66RU7hz819t4ZTj` (`a4a11cf`) two
+commits later. After a rollback drill, re-assign the alias to the newest
+deployment, and before any check through an alias, read which deployment it
+serves (`list_deployment_aliases`, or the `dep=` field of the runtime log).
 
 ## 10. Rollback compatibility boundaries
 

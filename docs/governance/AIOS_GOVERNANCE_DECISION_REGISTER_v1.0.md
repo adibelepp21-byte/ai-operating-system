@@ -9658,3 +9658,19 @@ The five decisions below were **decided by the Founder in ACT-004** (`§8`, `§1
 | **Decided by** | Founder (Moriarty) as Architect, in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§16` |
 | **Ratifies** | FS-09-RUNTIME |
 | **Decision** | P2: Python 3.12, pinned; FS-02 amended explicitly (its former *"Python 3.11"* wording quoted in the amendment) |
+
+---
+
+## 94. FS-09 Final State Under ACT-004/ACT-005 — Citation Repair, Re-verification, Blocked Rows Reconciled (2026-09-30)
+
+Record of execution, not a decision. Nothing here ratifies, selects or authorizes (ACT-004 `§54`; ACT-005 `§7`). Full record: `docs/fullstack/FS-09-ACT-005-EXECUTION-RECORD.md` `§18`–`§22`.
+
+| Field | Value |
+|---|---|
+| **Citation warning 95 vs 94** | `docs/governance/AIOS_NATIVE_CORE_CLOSEOUT_v1.0.md:285` cites `metrics.py`, made ambiguous when ACT-005 construction (`a4a11cf`) added `fullstack/deploy/metrics.py` beside the legacy `docs/architecture/history/legacy-execution/metrics.py`. **Classified:** genuine defect introduced by ACT-005 construction; governance-relevant (a governance record's citation no longer resolved to one file); non-functional; low materiality. **Repaired** within authority by renaming the new file (`297e8b8`, `fullstack/deploy/request_metrics.py`); the governance record untouched; nothing suppressed. **Result:** 94 warnings, the same set as baseline `edb3beb` |
+| **Re-verification** | the rename touched a served docstring, so the `a4a11cf` live recording no longer covered the tree. Re-verified on Preview `dpl_FjjGC9Hg54RGzGSugwidwHdRTrwM` (`297e8b8`): FS-08 14/14, FS-09 5/5, L1 45/45 in the host log, M1 derived, rollback drill both directions, Preview UPDATE refused, Production store 0 rows. Evidence `docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30.json`; the 2026-09-28 file kept as history |
+| **Temporary access** | the Protection Bypass for Automation created for this re-verification (ACT-004 `§56`) is **not revoked**: revoking it through the host takes the secret, and loading the secret into the session was denied by the permission classifier. Recorded as AUTHORITY GRANTED / EXECUTION PERMISSION BLOCKED (ACT-005 `§9`), not routed around. The gate blocks on it (`BYPASS-REVOCATION`); `EXT-03` corrected. **Founder/user action:** revoke it in Vercel (Deployment Protection → Protection Bypass for Automation, note *"TEMPORARY FS-09 re-verification 297e8b8"*) |
+| **Blocked rows** | **A** Scenario A residual (Founder) · **B** alerting selection H1/H2/H3 (Founder as Architect; not selected: no canonical basis) · **C** E1 deployment wiring (execution permission; the empty, correctly migrated Production store is neither PASS nor Production LIVE) · **D** bypass revocation (execution permission). Each with state, owner, authority, evidence, blocking effect and next action: execution record `§22.1` |
+| **Final gate** | readiness gate v3: **NOT PRODUCTION READY**; 26 PASS, 1 OBSERVED, 0 FAIL, 4 BLOCKED |
+| **Regression** | Python 3.12: native_core 801 (1 expected failure), consumers 276, bounded_exception 29, fullstack 197 OK; tools recorded in the execution record `§18.3`. Python 3.11: 801 / 276 / 29 / 197 OK. Citation audit 94 warnings = baseline set; integrity holds; secret scan clean |
+| **Classification** | **FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER.** Not PASS. FS-10 NOT STARTED. Production untouched; not released; not LIVE. ACT-004 unmodified; P13 not reopened; certified roots unchanged; no Phase 14 |

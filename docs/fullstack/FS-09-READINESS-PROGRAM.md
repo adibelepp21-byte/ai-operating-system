@@ -152,8 +152,10 @@ FS-09 remains **OPEN**. FS-10 remains **NOT STARTED**.
 
 The matrix above records FS-09 as it stood at `§88`/`§89`. Its current state is
 the readiness gate v3 (`python -m fullstack.readiness evaluate`) and the ACT-005
-execution record: 26 PASS, 1 OBSERVED, 0 FAIL, 3 BLOCKED (Scenario A residual,
-alerting selection, E1 deployment wiring).
+execution record: 26 PASS, 1 OBSERVED, 0 FAIL, 4 BLOCKED (Scenario A residual,
+alerting selection, E1 deployment wiring, and, since 2026-09-30, the revocation
+of the temporary bypass used for the `297e8b8` re-verification). *History: at
+`§93` this read 3 BLOCKED.*
 
 ```text
 FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER      FS-10 = NOT STARTED

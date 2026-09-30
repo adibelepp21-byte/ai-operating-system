@@ -143,7 +143,7 @@ no request to the AIOS API, no audit record created):
 | 7 | Repository | no AIOS source, certified root or architecture package changed by this verification; only this register and the Decision Register record it |
 
 
-## 7. Resolution under ACT-004 / ACT-005 (2026-09-28)
+## 7. Resolution under ACT-004 / ACT-005 (2026-09-28; updated 2026-09-30, Register `§94`)
 
 The entries above are kept as recorded. ACT-004 (Register `§91`, `§93`) decided
 the five Architect packages; ACT-005 (`§92`) reconciled its R2 wording.
@@ -158,7 +158,7 @@ the five Architect packages; ACT-005 (`§92`) reconciled its R2 wording.
 | `FS-09-ENV` | E1 | Production store created and migrated, isolated; **adapter wiring blocked by execution permission** | `§7`, `§15` |
 | `FS-09-RUNTIME` | P2 | implemented and verified live | `§8` |
 | `§2.3` Operational ownership | defined under ACT-004 `§37` | `FS-09-OPERATIONAL-OWNERSHIP.md` | — |
-| `§2.4` Live access | ACT-004 `§56` | used once, revoked | `§14`, evidence |
+| `§2.4` Live access | ACT-004 `§56` | used 2026-09-28 (revoked) and 2026-09-30 for the `297e8b8` re-verification: **still active**, revocation blocked by execution permission (`BYPASS-REVOCATION`) | `§15`, `§22`, evidence |
 | `§3` Rollback not verified | — | **drilled on Preview** | `§14` |
 
 Execution record: `docs/fullstack/FS-09-ACT-005-EXECUTION-RECORD.md`.
