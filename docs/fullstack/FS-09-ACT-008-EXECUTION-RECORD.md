@@ -8,7 +8,7 @@
 | **Served code** | commit `d05261c`; final served deployment `dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER` (Preview, Python 3.12 from `.python-version`, build `bld_7ijnvswek`) |
 | **Evidence** | `evidence/FS-09-LIVE-PREVIEW-2026-09-30-ACT-008.json` · `…-ACT-008-REVOCATION-2026-09-30.json` · `…-BACKUP-EXPORT/MANIFEST-2026-09-30` · `…-ACT-008-P12-W6-CLASSIFICATION-…json` · `…-ACT-008-NEGATIVE-CONTROLS-…json` · `evidence/live-scripts-2026-09-30/` |
 
-**Result: FS-09 = {{STATE}}.** `{{STATE_LINE}}`
+**Result: FS-09 = PASS / CLOSED.** Every `§25` criterion A to X is met (`§13`, `§11`). Declared under `§26`; it is not Production LIVE, not a Founder Release Authorization and not Operational AIOS. FS-10 is ACTIVE (`FS-10-DEPLOYMENT.md`).
 
 ## 1. What changed in this Act
 
@@ -103,7 +103,31 @@ Held: `fullstack/tests/test_negative_controls.py` (18 tests) and the live facts 
 
 ## 10. Regression
 
-{{REGRESSION}}
+Run from a clean worktree of commit `01b1fd0` (the commit that carries these documents), by suite and by Python version. Targeted, integration, live, regression and negative-control evidence are kept apart (`§22`).
+
+| Suite | Python 3.12 (reference) | Python 3.11 |
+|---|---|---|
+| native_core | 801 OK (1 expected failure) | 801 OK (1 expected failure) |
+| consumers | 276 OK | 276 OK |
+| bounded_exception | 29 OK | 29 OK |
+| fullstack (targeted + integration, incl. security, environment separation, observability, backup/restore, agents, negative controls, browser e2e) | **289 OK** | 289 OK |
+| tools | 1933 run, **1 failure**, 1 skipped (2469 s) | not run |
+
+**Expected failures = explicitly classified historical controls only:** the `native_core` expected failure (unchanged since baseline) and the one `tools` failure, `test_the_narrower_population_is_not_better [status]`, which is the P12-W6 signal classified in `§8` (Register `§102`). **Unexpected failures = 0.**
+
+| Kind | Evidence |
+|---|---|
+| Targeted | `test_agents` 20, `test_environment_separation` 11, `test_backup_current` 15, `test_negative_controls` 18, node unit tests 16+ |
+| Integration | `test_integration` (browser e2e, 15 checks, over a real socket) |
+| Live | `evidence/FS-09-LIVE-PREVIEW-2026-09-30-ACT-008.json` (FS-08 checks 0-12, FS-09 checks, Scenario A, rollback drill) |
+| Regression | the table above |
+| Negative control | NC-01..NC-20 (`§9`) |
+
+* **Citation audit:** 94 warnings and 0 errors, the same 94 as baseline `edb3beb` (measured again after this record was added).
+* **Certified-evidence integrity:** holds; `native_core/`, `consumers/` and `tools/` are unchanged since `edb3beb`; no Phase 14 path.
+* **Instruments:** ACT-004 to ACT-008 are byte-identical since their receipt commits (NC-02).
+* **Secret scan:** the operator token and the bypass secret appear in no file of the repository, in evidence or in history; the pattern scan finds none outside deliberate fakes (NC-11, NC-12).
+* **Working tree:** clean at the declaration.
 
 ## 11. Final re-discovery (independent, on current state)
 
@@ -140,3 +164,26 @@ Run after the last live check, the revocation and the documents, on current stat
 ## 13. Gate
 
 `python -m fullstack.readiness evaluate`: **READY, never a release** (`FD-FS-001` D4-A): 30 PASS · 1 OBSERVED · 0 FAIL · 0 BLOCKED · `awaiting: []`. Every row is listed by `python -m fullstack.readiness evaluate`; the recording it reads is `evidence/FS-09-LIVE-PREVIEW-2026-09-30-ACT-008.json` and the revocation record is `evidence/FS-09-ACT-008-REVOCATION-2026-09-30.json`.
+
+## 14. §25 criteria
+
+| | Criterion | Met by |
+|---|---|---|
+| A | all mandatory requirements verified | `§2` to `§9`, gate |
+| B, C, D | Scenario A, B, C PASS | `§2` |
+| E | E1 separation verified | `§3` |
+| F, M | Security, access control PASS | `§4`, live checks 0-3, 403 |
+| G, L | Reliability, failure handling PASS | live checks 9-12, `§2` C, gate |
+| H | Backup/restore PASS | `§6` |
+| I | Rollback PASS | `§6` |
+| J | Reproducibility PASS | `§7` |
+| K | Observability PASS | `§5` |
+| N | documentation reconciled | `§7`, banners |
+| O | live evidence fresh | recording covers `d05261c`; served diff empty |
+| P | negative controls HELD | `§9` |
+| Q | no Production mutation | Production 0 rows; one unchanged deployment |
+| R | no active temporary bypass | `§4` |
+| S, T, U | no BLOCKED, FAIL or UNKNOWN item | gate `awaiting: []`, 0 FAIL, 0 BLOCKED; residuals stated in `§12` |
+| V | final re-discovery completed | `§11` |
+| W | evidence persisted | `evidence/` |
+| X | working tree clean | checked at the declaration |
