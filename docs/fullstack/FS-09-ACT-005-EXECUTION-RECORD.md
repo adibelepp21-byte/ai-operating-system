@@ -237,7 +237,7 @@ is BLOCKED on `BYPASS-REVOCATION` until it is, and `EXT-03` says so.
 | consumers | 276 OK | 276 OK |
 | bounded_exception | 29 OK | 29 OK |
 | fullstack | 197 OK | 197 OK |
-| tools | running when this record was first committed; result recorded in the following commit | not run (3.12 is the reference) |
+| tools | 1933 OK (1 skipped), 2376 s | not run (3.12 is the reference) |
 
 * **Citation audit** (`python -m tools.corpus_citation_audit`): 94 warnings, 0 errors; its 182 findings are **the same set** as at baseline `edb3beb` (compared entry by entry: none added, none removed).
 * **Certified-evidence integrity** (`python -m tools.certified_evidence_integrity`): holds.
