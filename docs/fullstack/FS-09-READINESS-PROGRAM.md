@@ -154,7 +154,8 @@ The matrix above records FS-09 as it stood at `§88`/`§89`. Its current state i
 the readiness gate v3 (`python -m fullstack.readiness evaluate`) and the ACT-005
 execution record: 26 PASS, 1 OBSERVED, 0 FAIL, 4 BLOCKED (Scenario A residual,
 alerting selection, E1 deployment wiring, and, since 2026-09-30, the revocation
-of the temporary bypass used for the `297e8b8` re-verification). *History: at
+of the temporary bypass used for the `297e8b8` re-verification; ACT-006, 2026-09-30,
+attempted it and is BLOCKED: `FS-09-ACT-006-EXECUTION-RECORD.md`). *History: at
 `§93` this read 3 BLOCKED.*
 
 ```text
