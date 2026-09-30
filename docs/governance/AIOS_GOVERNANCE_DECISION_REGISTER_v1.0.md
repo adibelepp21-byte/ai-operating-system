@@ -9705,3 +9705,17 @@ Record of execution, not a decision. Nothing here ratifies, selects or authorize
 | **New findings** | N-1 no session can observe a bypass's absence · N-2 the "unchanged since `5941d72`" wording in `§92` and the ACT-005 record concerned the option definitions; the Status row changed at `7df974a` (qualified in the record, `§92` left as written) · N-3 "still active" was inferred; reworded to "no recorded revocation" in the gate and two status documents |
 | **Gate** | NOT PRODUCTION READY; 26 PASS, 1 OBSERVED, 0 FAIL, 4 BLOCKED (unchanged) |
 | **Classification** | **ACT-006 = C. BLOCKED.** Re-discovery complete. **FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER**, not PASS. FS-10 NOT STARTED. Production untouched; not released; not LIVE. ACT-004 and ACT-005 unmodified; certified roots, Native Core, P13 unchanged; no Phase 14 |
+
+---
+
+## 97. ACT-CC-POST-P13-AIOS-FULL-STACK-007 Received — FS-09 Residual Authority, Dependency Resolution & Readiness Continuation (2026-09-30)
+
+| Field | Value |
+|---|---|
+| **ACT ID** | `ACT-CC-POST-P13-AIOS-FULL-STACK-007`; instrument `docs/governance/acts/ACT-CC-POST-P13-AIOS-FULL-STACK-007-FS-09-RESIDUAL-AUTHORITY-DEPENDENCY-RESOLUTION.md` (verbatim) |
+| **Founder authority** | FOUNDER-ISSUED — EXECUTION AUTHORIZATION GRANTED (Moriarty) |
+| **Parent Act / predecessor** | `ACT-CC-POST-P13-AIOS-FULL-STACK-003` / `ACT-CC-POST-P13-AIOS-FULL-STACK-006` (BLOCKED, `§96`). ACT-004, -005, -006 preserved, not modified |
+| **Bounded delegated authority** (`§3`) | for FS-09 only, expiring at this Act's terminal state: decide Scenario A among the already-defined A1/A2/A3; select among the already-defined alerting options H1/H2/H3 of `FS-DP-06` rev 2; record the decisions; implement them and the E1 environment wiring; revoke the temporary bypass through an authorized control path; verify; re-discover; determine the gate state |
+| **Not delegated** (`§3`, `§20`, `§22`, `§23`) | Constitution, Mission, Governance Model, Founder-reserved authority; certified P12/P13 roots; Native Core; Phase 14; P13 reopening; Production release or LIVE; a new bypass; disabling protection; spending; any authority outside FS-09 |
+| **Rule carried into every decision** (`§4.2`) | SOURCE · REQUIREMENT · OPTIONS CONSIDERED · DECISION · RATIONALE · BOUNDARY · VERIFICATION · EVIDENCE. Decisions made under this delegation are recorded as **delegated** decisions, not as Founder decisions |
+| **Execution record** | `docs/fullstack/FS-09-ACT-007-EXECUTION-RECORD.md`; final state in a closing Register entry |
