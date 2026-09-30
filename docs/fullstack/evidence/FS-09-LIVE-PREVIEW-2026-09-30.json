@@ -1,0 +1,749 @@
+{
+ "base": "https://aios-platform-off4otyfw-adibelepp21-bytes-projects.vercel.app",
+ "deployment": "dpl_FjjGC9Hg54RGzGSugwidwHdRTrwM",
+ "commit": "297e8b8",
+ "date": "2026-09-30",
+ "supersedes": "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-28.json (a4a11cf), kept as history: the citation repair (297e8b8) changed a served docstring, so that recording no longer covers the tree",
+ "build": {
+  "id": "bld_blcnziphb",
+  "runtime_line": "Using Python 3.12 from .python-version"
+ },
+ "access": "Vercel Protection Bypass for Automation, temporary, under ACT-004 §56; created 2026-09-30 before 15:30Z for this re-verification. NOT REVOKED at the time of recording: the host's revoke call takes the secret, and loading the secret into the session was denied by the session's permission classifier (Credential Materialization). Recorded as BYPASS-REVOCATION (ACT-005 §9: AUTHORITY GRANTED, EXECUTION PERMISSION BLOCKED); the Founder/user revokes it",
+ "access_revoked": false,
+ "credentials": "operator token and bypass secret read from private files outside the repository; neither recorded here",
+ "results": [
+  {
+   "n": 0,
+   "check": "protection still active without the bypass",
+   "result": "PASS",
+   "evidence": "GET health without bypass → 401"
+  },
+  {
+   "n": 0,
+   "check": "health through the bypass",
+   "result": "PASS",
+   "evidence": "→ 200 {'status': 'ok', 'runtime_state': 'running'}"
+  },
+  {
+   "n": 1,
+   "check": "missing Authorization rejected",
+   "result": "PASS",
+   "evidence": "{'/api/v1/runs': 401, '/api/v1/runtime': 401, '/api/v1/traces': 401, '/api/v1/audit': 401, '/api/v1/session': 401}; POST runs → 401"
+  },
+  {
+   "n": 2,
+   "check": "invalid and malformed Authorization rejected",
+   "result": "PASS",
+   "evidence": "{'unknown token': 401, 'hash as token': 401, 'truncated': 401, 'wrong scheme': 401, 'no scheme': 401, 'empty bearer': 401}"
+  },
+  {
+   "n": 3,
+   "check": "valid B3 bearer authenticates",
+   "result": "PASS",
+   "evidence": "→ 200 {'subject': 'founder', 'scopes': ['aios.audit', 'aios.observe', 'aios.workflow.run']}"
+  },
+  {
+   "n": 4,
+   "check": "protected GET",
+   "result": "PASS",
+   "evidence": "runtime → 200, state running, runtime_id aios-fullstack/20260930T153018Z-ef46e1b921c2e043"
+  },
+  {
+   "n": 5,
+   "check": "authenticated POST creates a run",
+   "result": "PASS",
+   "evidence": "→ 201 run_id run-20260930T153019Z-c21397dbb92ac563-0 state succeeded requested_by founder format fullstack.run/2"
+  },
+  {
+   "n": 6,
+   "check": "persisted in Supabase, read by a later Runtime",
+   "result": "PASS",
+   "evidence": "GET run → 200 identical=True; later runtime aios-fullstack/20260930T153020Z-1e2e452df17209ff ≠ run runtime aios-fullstack/20260930T153019Z-c21397dbb92ac563"
+  },
+  {
+   "n": 7,
+   "check": "Trace associated with the run",
+   "result": "PASS",
+   "evidence": "traces total 86; this run's 3 of 3; workflow record names [['document-conformance-review/run-20260930T153019Z-c21397dbb92ac563-0']]"
+  },
+  {
+   "n": 8,
+   "check": "audit records subjects and decisions, no credential",
+   "result": "PASS",
+   "evidence": "entries 114; founder POST allowed 34; anonymous 401 refused 48; credential in audit: False"
+  },
+  {
+   "n": 9,
+   "check": "8 concurrent POSTs",
+   "result": "PASS",
+   "evidence": "statuses [201, 201, 201, 201, 201, 201, 201, 201]"
+  },
+  {
+   "n": 10,
+   "check": "distinct runtime-derived identities",
+   "result": "PASS",
+   "evidence": "8 ids, all match run-<boot>-0: True; distinct runtimes 8"
+  },
+  {
+   "n": 11,
+   "check": "no duplicate identity in the store",
+   "result": "PASS",
+   "evidence": "38 runs listed, 38 distinct; all concurrent ids present: True"
+  },
+  {
+   "n": 12,
+   "check": "failure paths are meaningful states",
+   "result": "PASS",
+   "evidence": "missing doc → 201 state failed (docs.read execution_failure: 'docs/absent.md' is not a document in the repository); invalid input → 400; unknown workflow → 400; unknown run → 404"
+  }
+ ],
+ "requests": [
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 401,
+   "request_id": null
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "d7c8f5543bb2c453"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs",
+   "status": 401,
+   "request_id": "6ca329a006dc5279"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "7714d0e22179f547"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/traces",
+   "status": 401,
+   "request_id": "ea711567aefc5b46"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/audit",
+   "status": 401,
+   "request_id": "5a413fdcb200c01f"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/session",
+   "status": 401,
+   "request_id": "80c54ee6b0cf1884"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 401,
+   "request_id": "9268a98ed0639a24"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "1eced555fc80fdbc"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "5ab0e9786e86a64b"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "9ab0eb4fbf75c965"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "8423c59478ae6e86"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "0ade6dd51eea628c"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 401,
+   "request_id": "3c6556de93319dba"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/session",
+   "status": 200,
+   "request_id": "801fb38f0dfe0ba6"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 200,
+   "request_id": "50676d066b355287"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "b9fafe851ba14535"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs/run-20260930T153019Z-c21397dbb92ac563-0",
+   "status": 200,
+   "request_id": "85a269180ebd7eeb"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runtime",
+   "status": 200,
+   "request_id": "3ddb61fcd4c5176a"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/traces?limit=200",
+   "status": 200,
+   "request_id": "5b9b2d26ef9206d1"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/audit?limit=200",
+   "status": 200,
+   "request_id": "9940b16ff26e3b76"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "d61c53ba2acf446f"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "a9e6cd8b82e969ec"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "f5f813d47f147f86"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "cf5c0b71bb2fd497"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "6d2eef9bb03d8ee0"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "d6425b7b90153297"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "09fce15ddd08fc82"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "80038d86a1cffb9a"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs",
+   "status": 200,
+   "request_id": "6588d60ff1ae9b2d"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "4cec22a799857ade"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 400,
+   "request_id": "e1a0b51bf6a8086a"
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 400,
+   "request_id": "6ae709c94ffd9db4"
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/runs/run-does-not-exist",
+   "status": 404,
+   "request_id": "f58184d708a89ddf"
+  }
+ ],
+ "run_ids": {
+  "single": "run-20260930T153019Z-c21397dbb92ac563-0",
+  "concurrent": [
+   "run-20260930T153022Z-04730d2e7f045676-0",
+   "run-20260930T153022Z-cd0614004afc9a04-0",
+   "run-20260930T153022Z-01d28bb97adeedf4-0",
+   "run-20260930T153022Z-91c357c7e241df30-0",
+   "run-20260930T153022Z-3fc128096a100312-0",
+   "run-20260930T153023Z-0928998d2d67e9de-0",
+   "run-20260930T153023Z-43ea9507233dd565-0",
+   "run-20260930T153022Z-b083ce3b95428e01-0"
+  ],
+  "failed": "run-20260930T153024Z-c490e58218cbc163-0"
+ },
+ "fs09_checks": [
+  {
+   "check": "HSTS on HTTPS responses",
+   "result": "PASS",
+   "evidence": "strict-transport-security: max-age=63072000; includeSubDomains; preload"
+  },
+  {
+   "check": "no cross-origin grant on the API",
+   "result": "PASS",
+   "evidence": "access-control headers: []"
+  },
+  {
+   "check": "CORS preflight not honoured",
+   "result": "PASS",
+   "evidence": "OPTIONS → 405"
+  },
+  {
+   "check": "console served same-origin with its CSP",
+   "result": "PASS",
+   "evidence": "/ → 200; connect-src self: True"
+  },
+  {
+   "check": "repeated execution: 5 sequential runs succeed with distinct ids",
+   "result": "PASS",
+   "evidence": "5 distinct ids"
+  }
+ ],
+ "fs09_requests": [
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "54e83f7ed49167fb",
+   "ms": 543.8
+  },
+  {
+   "method": "OPTIONS",
+   "path": "/api/v1/runs",
+   "status": 405,
+   "request_id": "68f0052409ba481b",
+   "ms": 442.1
+  },
+  {
+   "method": "GET",
+   "path": "/",
+   "status": 200,
+   "request_id": null,
+   "ms": 254.7
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "45c3421ec979be19",
+   "ms": 736.9
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "98840c1912f84b54",
+   "ms": 740.9
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "ad6f36561f868e98",
+   "ms": 772.7
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "84e7eec79caef59c",
+   "ms": 1139.6
+  },
+  {
+   "method": "POST",
+   "path": "/api/v1/runs",
+   "status": 201,
+   "request_id": "b9873eeb77ff3ca7",
+   "ms": 701.9
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "a21f701d811b3cbb",
+   "ms": 514.6
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "26661f122a9c1987",
+   "ms": 449.7
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "146c2f0da513ddfb",
+   "ms": 500.2
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "a84a363fdc222d4d",
+   "ms": 452.6
+  },
+  {
+   "method": "GET",
+   "path": "/api/v1/health",
+   "status": 200,
+   "request_id": "3787adcdfd8df800",
+   "ms": 477.6
+  }
+ ],
+ "observed_latency_ms": {
+  "post_run": [
+   737,
+   741,
+   773,
+   1140,
+   702
+  ],
+  "health": [
+   515,
+   450,
+   500,
+   453,
+   478
+  ]
+ },
+ "observability": {
+  "l1_lines_from_host_log": [
+   "{\"at\":\"2026-09-30T15:30:11.216+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.86,\"method\":\"GET\",\"request_id\":\"d7c8f5543bb2c453\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153009Z-cd60f13268edca07\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:11.860+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":122.7,\"method\":\"GET\",\"request_id\":\"6ca329a006dc5279\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153011Z-a9187b64483b7dc0\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:12.416+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":48.18,\"method\":\"GET\",\"request_id\":\"7714d0e22179f547\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153012Z-c8495eb596c325ca\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:12.893+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":51.57,\"method\":\"GET\",\"request_id\":\"ea711567aefc5b46\",\"route\":\"/api/v1/traces\",\"runtime_id\":\"aios-fullstack/20260930T153012Z-d7d929c9948ca56c\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:13.367+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":43.99,\"method\":\"GET\",\"request_id\":\"5a413fdcb200c01f\",\"route\":\"/api/v1/audit\",\"runtime_id\":\"aios-fullstack/20260930T153013Z-e96506d1b9ff4775\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:13.875+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":50.1,\"method\":\"GET\",\"request_id\":\"80c54ee6b0cf1884\",\"route\":\"/api/v1/session\",\"runtime_id\":\"aios-fullstack/20260930T153013Z-55788de7671a8588\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:14.402+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":63.37,\"method\":\"POST\",\"request_id\":\"9268a98ed0639a24\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153014Z-51406b89c3160293\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:14.881+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":37.99,\"method\":\"GET\",\"request_id\":\"1eced555fc80fdbc\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153014Z-dbc02ef66a5695e3\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:15.683+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":41.13,\"method\":\"GET\",\"request_id\":\"5ab0e9786e86a64b\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153015Z-39c7a5bcc9aa039d\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:16.160+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":38.84,\"method\":\"GET\",\"request_id\":\"9ab0eb4fbf75c965\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153016Z-087ce7aba7035456\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:16.653+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":38.78,\"method\":\"GET\",\"request_id\":\"8423c59478ae6e86\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153016Z-3fd39917850fd1a1\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:17.172+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":45.59,\"method\":\"GET\",\"request_id\":\"0ade6dd51eea628c\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153017Z-4ce863f938906e77\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:17.660+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":55.75,\"method\":\"GET\",\"request_id\":\"3c6556de93319dba\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153017Z-bf6d31e23bccf7b8\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:30:18.142+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":50.43,\"method\":\"GET\",\"request_id\":\"801fb38f0dfe0ba6\",\"route\":\"/api/v1/session\",\"runtime_id\":\"aios-fullstack/20260930T153018Z-7e3680592ed8e630\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:18.633+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":40.76,\"method\":\"GET\",\"request_id\":\"50676d066b355287\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153018Z-ef46e1b921c2e043\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:19.470+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":369.66,\"method\":\"POST\",\"request_id\":\"b9fafe851ba14535\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153019Z-c21397dbb92ac563\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:19.980+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":101.26,\"method\":\"GET\",\"request_id\":\"85a269180ebd7eeb\",\"route\":\"/api/v1/runs/{run_id}\",\"runtime_id\":\"aios-fullstack/20260930T153019Z-fa19df2b767863e1\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:20.504+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":40.86,\"method\":\"GET\",\"request_id\":\"3ddb61fcd4c5176a\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153020Z-1e2e452df17209ff\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:21.013+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":97.69,\"method\":\"GET\",\"request_id\":\"5b9b2d26ef9206d1\",\"route\":\"/api/v1/traces\",\"runtime_id\":\"aios-fullstack/20260930T153020Z-ef103ec7b284ce78\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:21.542+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":94.55,\"method\":\"GET\",\"request_id\":\"9940b16ff26e3b76\",\"route\":\"/api/v1/audit\",\"runtime_id\":\"aios-fullstack/20260930T153021Z-442a5bc4835c8e0d\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:22.535+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":328.48,\"method\":\"POST\",\"request_id\":\"d61c53ba2acf446f\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153022Z-04730d2e7f045676\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:23.556+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":304.18,\"method\":\"POST\",\"request_id\":\"80038d86a1cffb9a\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153023Z-0928998d2d67e9de\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:22.788+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":337.43,\"method\":\"POST\",\"request_id\":\"a9e6cd8b82e969ec\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153022Z-b083ce3b95428e01\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:22.794+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":314.4,\"method\":\"POST\",\"request_id\":\"f5f813d47f147f86\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153022Z-3fc128096a100312\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:22.881+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":328.15,\"method\":\"POST\",\"request_id\":\"cf5c0b71bb2fd497\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153022Z-91c357c7e241df30\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:22.899+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":379.06,\"method\":\"POST\",\"request_id\":\"6d2eef9bb03d8ee0\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153022Z-cd0614004afc9a04\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:22.899+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":365.77,\"method\":\"POST\",\"request_id\":\"d6425b7b90153297\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153022Z-01d28bb97adeedf4\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:23.533+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":289.73,\"method\":\"POST\",\"request_id\":\"09fce15ddd08fc82\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153023Z-43ea9507233dd565\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:24.096+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":76.8,\"method\":\"GET\",\"request_id\":\"6588d60ff1ae9b2d\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153023Z-404ea2e3c5265142\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:24.823+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":217.53,\"method\":\"POST\",\"request_id\":\"4cec22a799857ade\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153024Z-c490e58218cbc163\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:25.340+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":52.94,\"method\":\"POST\",\"request_id\":\"e1a0b51bf6a8086a\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153025Z-ac1f15e833499bf1\",\"status\":400}",
+   "{\"at\":\"2026-09-30T15:30:25.844+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":40.91,\"method\":\"POST\",\"request_id\":\"6ae709c94ffd9db4\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153025Z-05758f1922dea681\",\"status\":400}",
+   "{\"at\":\"2026-09-30T15:30:26.375+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":77.97,\"method\":\"GET\",\"request_id\":\"f58184d708a89ddf\",\"route\":\"/api/v1/runs/{run_id}\",\"runtime_id\":\"aios-fullstack/20260930T153026Z-a701e244baba8d81\",\"status\":404}",
+   "{\"at\":\"2026-09-30T15:30:27.002+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.31,\"method\":\"GET\",\"request_id\":\"54e83f7ed49167fb\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153026Z-96ea6f242bf4ab72\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:27.448+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.28,\"method\":\"OPTIONS\",\"request_id\":\"68f0052409ba481b\",\"route\":\"(unmatched)\",\"runtime_id\":\"aios-fullstack/20260930T153027Z-7dad7e3826d80123\",\"status\":405}",
+   "{\"at\":\"2026-09-30T15:30:28.445+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":297.16,\"method\":\"POST\",\"request_id\":\"45c3421ec979be19\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153028Z-5e6602a9fc9507a7\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:29.186+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":281.12,\"method\":\"POST\",\"request_id\":\"98840c1912f84b54\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153028Z-2d8714eb05ed9566\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:29.944+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":275.5,\"method\":\"POST\",\"request_id\":\"ad6f36561f868e98\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153029Z-8cb775710c38781e\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:31.095+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":279.66,\"method\":\"POST\",\"request_id\":\"84e7eec79caef59c\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153030Z-61a8b41bb249cb2e\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:31.802+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":247.92,\"method\":\"POST\",\"request_id\":\"b9873eeb77ff3ca7\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153031Z-673cf99a4f36909a\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:30:32.316+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.34,\"method\":\"GET\",\"request_id\":\"a21f701d811b3cbb\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153032Z-ba5ec88c9f190204\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:32.768+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.31,\"method\":\"GET\",\"request_id\":\"26661f122a9c1987\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153032Z-c7251e203734532b\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:33.255+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.32,\"method\":\"GET\",\"request_id\":\"146c2f0da513ddfb\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153033Z-be0c99c1b9d612a9\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:33.707+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.31,\"method\":\"GET\",\"request_id\":\"a84a363fdc222d4d\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153033Z-eabfaf6e282d47b3\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:30:34.195+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.37,\"method\":\"GET\",\"request_id\":\"3787adcdfd8df800\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153034Z-95d16b5177dd2e37\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:33:52.184+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.3,\"method\":\"GET\",\"request_id\":\"b13ae4f896578d63\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153352Z-6ddeaf440e77808c\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:33:52.671+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":36.84,\"method\":\"GET\",\"request_id\":\"7966a92744272d50\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153352Z-f4c43b108f53b8f8\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:33:53.143+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":40.72,\"method\":\"GET\",\"request_id\":\"8d7f8bb72a8ce468\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153353Z-3ee6918e83fadc58\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:33:53.775+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":88.79,\"method\":\"GET\",\"request_id\":\"a0d0e4359a799177\",\"route\":\"/api/v1/runs/{run_id}\",\"runtime_id\":\"aios-fullstack/20260930T153353Z-1a95d4b8136a8be1\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:34:00.817+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":0.32,\"method\":\"GET\",\"request_id\":\"c4f6b61a08c9b9dd\",\"route\":\"/api/v1/health\",\"runtime_id\":\"aios-fullstack/20260930T153400Z-3c55b29075a9ff27\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:34:01.306+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":48.06,\"method\":\"GET\",\"request_id\":\"6a556209b0bec679\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153401Z-0671ef1677d7a09f\",\"status\":401}",
+   "{\"at\":\"2026-09-30T15:34:01.789+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":45.27,\"method\":\"GET\",\"request_id\":\"ce3a4068efba72ca\",\"route\":\"/api/v1/runtime\",\"runtime_id\":\"aios-fullstack/20260930T153401Z-c74757072711fbe9\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:34:02.304+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":83.82,\"method\":\"GET\",\"request_id\":\"d5598c68eaf0790a\",\"route\":\"/api/v1/runs/{run_id}\",\"runtime_id\":\"aios-fullstack/20260930T153402Z-f62c666cc50351c3\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:34:02.819+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":82.74,\"method\":\"GET\",\"request_id\":\"6c0d41e9c119ffc1\",\"route\":\"/api/v1/runs/{run_id}\",\"runtime_id\":\"aios-fullstack/20260930T153402Z-d8a2d51f7c033a7b\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:34:03.554+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":301.34,\"method\":\"POST\",\"request_id\":\"2b853a9fb5225413\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153403Z-06f2d0220fbd1699\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:34:04.269+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":280.55,\"method\":\"POST\",\"request_id\":\"9fe5d4b559bc061a\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153403Z-e106992f019b8b82\",\"status\":201}",
+   "{\"at\":\"2026-09-30T15:34:04.786+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":99.75,\"method\":\"GET\",\"request_id\":\"4146e9d0c59c5e8c\",\"route\":\"/api/v1/runs\",\"runtime_id\":\"aios-fullstack/20260930T153404Z-396b5b51f42bf80a\",\"status\":200}",
+   "{\"at\":\"2026-09-30T15:34:05.309+00:00\",\"format\":\"fullstack.request/1\",\"latency_ms\":82.74,\"method\":\"GET\",\"request_id\":\"ff9a8c5fdae598eb\",\"route\":\"/api/v1/traces\",\"runtime_id\":\"aios-fullstack/20260930T153405Z-6b0c0d18b7fe22b4\",\"status\":200}"
+  ],
+  "host_log_source": "Vercel runtime logs for dpl_FjjGC9Hg54RGzGSugwidwHdRTrwM, query 'fullstack.request/1', 2026-09-30 15:20Z-15:40Z (two windows; the first stopped at the host's time budget, the second covers the rest)",
+  "function_requests_with_request_id": 45,
+  "found_in_host_log": 45,
+  "drill_requests_on_this_deployment": "13 lines: the rolled-forward phase (9) and its first attempt (4, ended by a TLS handshake EOF before any write)",
+  "rolled_back_request_found_in_other_deployment_log": "22124c27ac06395c in dpl_6xyzjXKxqcLkVdxHZ9QnXYQ46CZ4's log (POST /api/v1/runs 201)",
+  "m1_metrics_derived": {
+   "lines_read": 58,
+   "ignored": 0,
+   "total": {
+    "requests": 58,
+    "status_classes": {
+     "2xx": 40,
+     "4xx": 18
+    },
+    "server_errors": 0,
+    "latency_ms": {
+     "p50": 59.56,
+     "p95": 337.43,
+     "max": 379.06
+    }
+   },
+   "routes": {
+    "GET /api/v1/audit": {
+     "requests": 2,
+     "status_classes": {
+      "2xx": 1,
+      "4xx": 1
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 69.27,
+      "p95": 94.55,
+      "max": 94.55
+     }
+    },
+    "GET /api/v1/health": {
+     "requests": 9,
+     "status_classes": {
+      "2xx": 9
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 0.32,
+      "p95": 0.86,
+      "max": 0.86
+     }
+    },
+    "GET /api/v1/runs": {
+     "requests": 5,
+     "status_classes": {
+      "2xx": 2,
+      "4xx": 3
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 76.8,
+      "p95": 122.7,
+      "max": 122.7
+     }
+    },
+    "GET /api/v1/runs/{run_id}": {
+     "requests": 5,
+     "status_classes": {
+      "2xx": 4,
+      "4xx": 1
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 83.82,
+      "p95": 101.26,
+      "max": 101.26
+     }
+    },
+    "GET /api/v1/runtime": {
+     "requests": 11,
+     "status_classes": {
+      "2xx": 4,
+      "4xx": 7
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 40.86,
+      "p95": 55.75,
+      "max": 55.75
+     }
+    },
+    "GET /api/v1/session": {
+     "requests": 2,
+     "status_classes": {
+      "2xx": 1,
+      "4xx": 1
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 50.27,
+      "p95": 50.43,
+      "max": 50.43
+     }
+    },
+    "GET /api/v1/traces": {
+     "requests": 3,
+     "status_classes": {
+      "2xx": 2,
+      "4xx": 1
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 82.74,
+      "p95": 97.69,
+      "max": 97.69
+     }
+    },
+    "OPTIONS (unmatched)": {
+     "requests": 1,
+     "status_classes": {
+      "4xx": 1
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 0.28,
+      "p95": 0.28,
+      "max": 0.28
+     }
+    },
+    "POST /api/v1/runs": {
+     "requests": 20,
+     "status_classes": {
+      "2xx": 17,
+      "4xx": 3
+     },
+     "server_errors": 0,
+     "latency_ms": {
+      "p50": 293.45,
+      "p95": 369.66,
+      "max": 379.06
+     }
+    }
+   },
+   "runtimes": 58
+  }
+ },
+ "rollback_drill": {
+  "alias": "aios-platform-git-claude-aios-897a81-adibelepp21-bytes-projects.vercel.app",
+  "alias_before": "dpl_8Znqrn818NgYy66RU7hz819t4ZTj (a4a11cf): a manually assigned alias stays pinned and does not follow later pushes",
+  "from": "dpl_FjjGC9Hg54RGzGSugwidwHdRTrwM (297e8b8)",
+  "to": "dpl_6xyzjXKxqcLkVdxHZ9QnXYQ46CZ4 (7df974a)",
+  "rolled_back": {
+   "phase": "rolled_back",
+   "base": "https://aios-platform-git-claude-aios-897a81-adibelepp21-bytes-projects.vercel.app",
+   "health": [
+    200,
+    {
+     "status": "ok",
+     "runtime_state": "running"
+    }
+   ],
+   "anonymous_runs": 401,
+   "runtime": [
+    200,
+    "aios-fullstack/20260930T153335Z-cf69c7fc74279d0c"
+   ],
+   "reads_other_version_run": [
+    200,
+    true,
+    "fullstack.run/2"
+   ],
+   "scenario_b": [
+    201,
+    "succeeded",
+    "run-20260930T153336Z-5a7e10d30f3d9ddf-0",
+    "22124c27ac06395c"
+   ],
+   "scenario_c": [
+    201,
+    "failed"
+   ],
+   "runs_listed": 47,
+   "runs_distinct": 47,
+   "traces_total": 135
+  },
+  "rolled_forward": {
+   "phase": "rolled_forward",
+   "base": "https://aios-platform-git-claude-aios-897a81-adibelepp21-bytes-projects.vercel.app",
+   "health": [
+    200,
+    {
+     "status": "ok",
+     "runtime_state": "running"
+    }
+   ],
+   "anonymous_runs": 401,
+   "runtime": [
+    200,
+    "aios-fullstack/20260930T153401Z-c74757072711fbe9"
+   ],
+   "reads_other_version_run": [
+    200,
+    true,
+    "fullstack.run/2"
+   ],
+   "scenario_b": [
+    201,
+    "succeeded",
+    "run-20260930T153403Z-06f2d0220fbd1699-0",
+    "2b853a9fb5225413"
+   ],
+   "scenario_c": [
+    201,
+    "failed"
+   ],
+   "runs_listed": 49,
+   "runs_distinct": 49,
+   "traces_total": 140
+  },
+  "served_by": "each phase's scenario_b request id appears only in the log of the deployment the alias pointed to",
+  "attempts": "rolled_back: first attempt ended by a TLS EOF at the scenario_c POST (its scenario_b run was written on dpl_6xyz); rolled_forward: first attempt ended by a TLS handshake EOF at a GET, before any write. Both re-run in full; the records above are the complete runs"
+ },
+ "database_after": {
+  "preview_scfymftfzkpilqbgmfwv": {
+   "fullstack-audit": 156,
+   "fullstack-runs": 49,
+   "trace": 140,
+   "written_since_seq_86": 264,
+   "max_seq": 350
+  },
+  "production_hmljfyqycxcueulhsjae": {
+   "rows": 0
+  },
+  "update_attempt": "refused: aios_records is append-only: UPDATE refused (Preview store, seq 350, 2026-09-30)",
+  "production_schema": "hmljfyqycxcueulhsjae: migration aios_records (version 20260928051800, the repository's SQL unchanged); columns, check constraints, triggers, function definitions, RLS (no policy) and grants equal to the Preview store's, compared from the catalog; no row written (compared 2026-09-28; migrations list unchanged on both stores 2026-09-30: Preview 20260927062422_aios_records, Production 20260928051800_aios_records)"
+ },
+ "after_revocation": "not yet: the bypass is active (see access)"
+}

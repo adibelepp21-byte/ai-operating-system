@@ -60,10 +60,11 @@ class TheGate(unittest.TestCase):
 
     def test_it_is_not_ready_and_says_exactly_why(self):
         self.assertEqual(NOT_READY, self.live["result"])
-        self.assertEqual(["ALERTING-SELECTION", "E1-DEPLOYMENT-WIRING", "SCENARIO-A-RESIDUAL"],
-                         self.live["awaiting"])
+        self.assertEqual(["ALERTING-SELECTION", "BYPASS-REVOCATION", "E1-DEPLOYMENT-WIRING",
+                          "SCENARIO-A-RESIDUAL"], self.live["awaiting"])
         self.assertEqual([], [n for n, c in self.by_name.items() if c["status"] == FAIL])
-        self.assertEqual(["Functionality: agent creation (Scenario A)", "Observability: alerting",
+        self.assertEqual(["Functionality: agent creation (Scenario A)",
+                          "Security: temporary access revoked", "Observability: alerting",
                           "Data: environment separation"],
                          [n for n, c in self.by_name.items() if c["status"] == BLOCKED])
 
@@ -87,12 +88,16 @@ class TheGate(unittest.TestCase):
         self.assertEqual(PASS, auth["status"])
         self.assertEqual([readiness.LOCAL, readiness.PREVIEW], auth["evidence_class"])
         self.assertIn("recorded, not re-measured", auth["evidence"])
-        self.assertIn("a4a11cf", auth["evidence"])
-        self.assertEqual({"file": "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-28.json",
-                          "date": "2026-09-28", "commit": "a4a11cf",
-                          "deployment": "dpl_8Znqrn818NgYy66RU7hz819t4ZTj", "current": True},
+        self.assertIn("297e8b8", auth["evidence"])
+        self.assertEqual({"file": "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30.json",
+                          "date": "2026-09-30", "commit": "297e8b8",
+                          "deployment": "dpl_FjjGC9Hg54RGzGSugwidwHdRTrwM", "current": True,
+                          "access_revoked": False,
+                          "after_revocation": "not yet: the bypass is active (see access)"},
                          self.live["preview_evidence"])
         self.assertTrue(readiness.FS08_EVIDENCE.is_file(), "the FS-08 recording stays as history")
+        self.assertTrue(readiness.FS09_A4A11CF_EVIDENCE.is_file(),
+                        "the a4a11cf recording stays as history")
 
     def test_a_local_result_never_passes_a_live_criterion(self):
         """Without the recorded Preview checks, the live criteria fail even though
@@ -157,6 +162,7 @@ class TheGate(unittest.TestCase):
         self.assertIn("R2 is the readiness signal", others["ALERTING-SELECTION"])
         self.assertTrue(others["SCENARIO-A-RESIDUAL"].startswith("Founder"))
         self.assertTrue(others["E1-DEPLOYMENT-WIRING"].startswith("Execution permission"))
+        self.assertTrue(others["BYPASS-REVOCATION"].startswith("Execution permission"))
         for package in readiness.PACKAGES:
             self.assertTrue(self.live["decision_packages"][package].startswith("RATIFIED"))
 
@@ -261,6 +267,21 @@ class TheGate(unittest.TestCase):
         with mock.patch.object(readiness, "_measure", one_line_lost):
             gate = readiness.evaluate(runs=1)
         self.assertEqual(FAIL, self.by_name_of(gate)["Observability: logging (L1)"]["status"])
+
+    def test_an_active_temporary_bypass_blocks_and_a_revoked_one_passes(self):
+        row = "Security: temporary access revoked"
+        self.assertEqual((BLOCKED, ["BYPASS-REVOCATION"]),
+                         (self.by_name[row]["status"], self.by_name[row]["blocked_by"]))
+        self.assertIn("NC-16", self.by_name[row]["evidence"])
+        taken = readiness.evaluate(runs=1, decisions=["BYPASS-REVOCATION"])
+        self.assertEqual(FAIL, self.by_name_of(taken)[row]["status"],
+                         "a decision alone does not revoke the bypass")
+        revoked = dict(readiness.preview_record(), access_revoked=True,
+                       after_revocation="302 with the revoked secret and without it")
+        gate = readiness.evaluate(runs=1, preview=revoked)
+        self.assertEqual((PASS, [readiness.OPERATOR]),
+                         (self.by_name_of(gate)[row]["status"],
+                          self.by_name_of(gate)[row]["evidence_class"]))
 
     def test_the_gate_never_releases(self):
         self.assertIn("never releases", self.live["release"])

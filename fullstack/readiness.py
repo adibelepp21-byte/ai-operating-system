@@ -83,9 +83,19 @@ OTHER_DECISIONS = {
                             "store by environment in fullstack/deploy/vercel.py was denied by "
                             "the session's permission classifier; the Founder/user must allow "
                             "it (ACT-005 §9)",
+    "BYPASS-REVOCATION": "Execution permission: the temporary automation bypass created "
+                         "2026-09-30 for the 297e8b8 re-verification (ACT-004 §56) is still "
+                         "active. The host's revoke call takes the secret, and loading it "
+                         "into the session was denied by the permission classifier; the "
+                         "Founder/user revokes it in Vercel (Deployment Protection, "
+                         "Protection Bypass for Automation) or allows the load (NC-16, "
+                         "ACT-005 §9)",
 }
 #: Recorded live evidence the gate reads. It is never written here.
-PREVIEW_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-28.json"
+PREVIEW_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30.json"
+#: The a4a11cf recording (2026-09-28), kept as history; the citation repair (297e8b8)
+#: changed a served docstring, so it no longer covers the tree.
+FS09_A4A11CF_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-28.json"
 #: The FS-08 recording, kept as history; superseded for this gate by the FS-09 one.
 FS08_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-08-LIVE-PREVIEW-2026-09-27.json"
 OWNERSHIP = REPO_ROOT / "docs/fullstack/FS-09-OPERATIONAL-OWNERSHIP.md"
@@ -133,8 +143,10 @@ EXTERNAL_DEPENDENCIES = (
      "needs": "the Founder to supply the exact document"},
     {"id": "EXT-03", "what": "authenticated live checks need access past Vercel protection: "
      "FS-08 (Register §86) and FS-09 (ACT-004 §56, 2026-09-28) each used a temporary "
-     "automation bypass, revoked after the suite (protectionBypass: {})",
-     "needs": "a temporary, revocable mechanism for each further live check; none is active"},
+     "automation bypass, revoked after the suite (protectionBypass: {}); the one created "
+     "2026-09-30 for the 297e8b8 re-verification is still active (BYPASS-REVOCATION)",
+     "needs": "the active bypass revoked; a temporary, revocable mechanism for each "
+              "further live check"},
     {"id": "EXT-04", "what": "the project-scoped Supabase connector is denied permission and "
      "was bound to a ref not in the account (2026-09-27); the account connector reaches the "
      "AIOS project scfymftfzkpilqbgmfwv, which is healthy",
@@ -183,8 +195,8 @@ def _blocked_unless(area, name, packages, decided, evidence_if_ratified):
 
 
 def preview_record(path: Path = PREVIEW_EVIDENCE) -> dict:
-    """The recorded live checks (FS-09, 2026-09-28), and whether they still
-    cover this tree. The FS-08 recording (`FS08_EVIDENCE`) is history."""
+    """The recorded live checks (FS-09, 2026-09-30), and whether they still
+    cover this tree. The FS-08 and a4a11cf recordings are history."""
     data = json.loads(path.read_text(encoding="utf-8"))
     passed = {r["check"] for r in data["results"] + data.get("fs09_checks", [])
               if r["result"] == "PASS"}
@@ -212,6 +224,8 @@ def preview_record(path: Path = PREVIEW_EVIDENCE) -> dict:
     current = {0: True, 1: False}.get(diff.returncode)   # None: commit not available
     return {"file": path.relative_to(REPO_ROOT).as_posix(), "date": data["date"],
             "commit": data["commit"], "deployment": data["deployment"],
+            "access_revoked": data.get("access_revoked") is True,
+            "after_revocation": data.get("after_revocation"),
             "passed": passed, "current": current}
 
 
@@ -455,6 +469,15 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
         _live("Security", "secrets not exposed", _no_shipped_credential(),
               "the compositions hold token hashes only (AIOS_OPERATOR_TOKENS)",
               ["audit records subjects and decisions, no credential"], preview),
+        _criterion("Security", "temporary access revoked", PASS,
+                   f"the recording's temporary bypass is revoked: "
+                   f"{preview.get('after_revocation')}", classes=[OPERATOR])
+        if preview.get("access_revoked") else
+        (_blocked("Security", "temporary access revoked", ["BYPASS-REVOCATION"], decided,
+                  f"the bypass used for the {preview['commit']} recording is still active "
+                  "(NC-16)")
+         or _criterion("Security", "temporary access revoked", FAIL,
+                       "the recording says the temporary bypass is still active")),
         _live("Security", "attack-surface controls", security_headers,
               "security headers present; 64 KiB body limit; Tool confined to docs/", [],
               preview),
