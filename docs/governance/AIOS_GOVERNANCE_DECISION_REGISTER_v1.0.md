@@ -9791,3 +9791,17 @@ Record of execution, not a decision. Full record: `docs/fullstack/FS-09-ACT-007-
 | **Regression** | Python 3.12 / 3.11: native_core 801 (1 expected failure), consumers 276, bounded_exception 29, fullstack 233: all OK. `tools` (3.12): 1933 run, **1 failure, 1 skipped** — finding F-1: `test_the_narrower_population_is_not_better` (P12-W6, corpus statistics over `docs/governance/acts/`) passed at `6ffa6f5` (0.4902 against a limit of 0.4917) and has failed since ACT-006 was persisted (0.4951 against 0.4929; 0.5000 after ACT-007). Not repaired: P12 surface, verbatim instruments. Citation audit 94 = baseline set; integrity holds |
 | **Classification** | **FS-09 = BLOCKED** on the one named dependency; 0 FAIL; not PASS. FS-10 NOT STARTED. Production untouched; not released; not LIVE. ACT-004, -005, -006 unmodified; certified roots, Native Core, P13 unchanged; no Phase 14 |
 | **Authority required next** | a Founder instrument for one temporary access for the live re-run (and its revocation), or the Founder running the suites; the Founder's review of `ACT-007-DG-01` and `ACT-007-DG-02` |
+
+---
+
+## 100. ACT-CC-POST-P13-AIOS-FULL-STACK-008 Received — FS-09 Final Closure & FS-10 Continuation Master Act (2026-09-30)
+
+| Field | Value |
+|---|---|
+| **ACT ID** | `ACT-CC-POST-P13-AIOS-FULL-STACK-008`; instrument `docs/governance/acts/ACT-CC-POST-P13-AIOS-FULL-STACK-008-FS-09-FINAL-CLOSURE-FS-10-CONTINUATION.md` (verbatim) |
+| **Founder authority** | FOUNDER-ISSUED — FINAL EXECUTION AUTHORIZATION (Moriarty). Parent `ACT-CC-POST-P13-AIOS-FULL-STACK-003`; predecessor `ACT-CC-POST-P13-AIOS-FULL-STACK-007`. ACT-004 to ACT-007 preserved, not modified |
+| **Objective** | close FS-09 to a clean, evidence-backed PASS/CLOSED state, then continue into FS-10 without another micro-act |
+| **Authority granted** (`§3`, `§7`–`§10`, `§26`, `§27`) | bounded Architect decisions inside the existing option sets (A1/A2/A3, H1/H2/H3); implementation, repair and deployment on Preview; **one** temporary Preview-only verification access instrument when technically necessary, revoked and verified absent (`§10.2`, overriding the predecessors' no-new-bypass rule for this purpose only); declaring FS-09 PASS and CLOSED when `§25` is met; entering FS-10 |
+| **Not granted** (`§5`, `§31`, `§36`) | Constitution, Mission, Governance Model; P12/P13 certified artifacts or closure; Platform Organization closure; Native Core beyond 11; Phase 14; permanent bypass; unsupported spending; **final Production release without Founder Release Authorization** |
+| **Rules carried** | a mandatory scenario may not be downgraded (`§7.2`, `§16`); P12 is classified, never altered (`§15`); served-code change invalidates dependent live evidence (`§20`); EXHAUSTED_WITH_CLASSIFIED_REMAINDER is not a terminal state for work inside the Act (`§25`, `§34`) |
+| **Execution record** | `docs/fullstack/FS-09-ACT-008-EXECUTION-RECORD.md`; final state in a closing Register entry |
