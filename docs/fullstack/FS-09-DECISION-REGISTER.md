@@ -158,7 +158,7 @@ the five Architect packages; ACT-005 (`§92`) reconciled its R2 wording.
 | `FS-09-ENV` | E1 | Production store created and migrated, isolated; **adapter wiring blocked by execution permission** | `§7`, `§15` |
 | `FS-09-RUNTIME` | P2 | implemented and verified live | `§8` |
 | `§2.3` Operational ownership | defined under ACT-004 `§37` | `FS-09-OPERATIONAL-OWNERSHIP.md` | — |
-| `§2.4` Live access | ACT-004 `§56` | used 2026-09-28 (revoked) and 2026-09-30 for the `297e8b8` re-verification: **still active**, revocation blocked by execution permission (`BYPASS-REVOCATION`) | `§15`, `§22`, evidence |
+| `§2.4` Live access | ACT-004 `§56` | used 2026-09-28 (revoked) and 2026-09-30 for the `297e8b8` re-verification: **no recorded revocation**; revoking it needs a credential load the session may not perform (`BYPASS-REVOCATION`; ACT-006 attempted it, 2026-09-30, and is BLOCKED); its absence cannot be observed from a session | `§15`, `§22`, ACT-006 record |
 | `§3` Rollback not verified | — | **drilled on Preview** | `§14` |
 
 Execution record: `docs/fullstack/FS-09-ACT-005-EXECUTION-RECORD.md`.

@@ -9689,3 +9689,19 @@ Record of execution, not a decision. Nothing here ratifies, selects or authorize
 | **Not granted** (`§2`, `§12`, `§19`) | resolution of Scenario A or alerting H1/H2/H3; FS-10; Production release or LIVE; Founder Acceptance; a new bypass; disabling protection; certified roots, Native Core, P13, Phase 14 |
 | **Terminal states** (`§13`) | A clean re-discovery · B `EXHAUSTED_WITH_CLASSIFIED_REMAINDER` · C `BLOCKED`. FS-09 PASS, Production LIVE, Founder Acceptance and Operational AIOS are not producible by this Act |
 | **Execution record** | `docs/fullstack/FS-09-ACT-006-EXECUTION-RECORD.md`; final state in a closing Register entry |
+
+---
+
+## 96. ACT-006 Executed — Revocation BLOCKED; Final FS-09 Re-Discovery Complete (2026-09-30)
+
+Record of execution, not a decision. Nothing here ratifies, selects or authorizes. Full record: `docs/fullstack/FS-09-ACT-006-EXECUTION-RECORD.md`; evidence `docs/fullstack/evidence/FS-09-ACT-006-REDISCOVERY-2026-09-30.json`.
+
+| Field | Value |
+|---|---|
+| **Revocation** | **BLOCKED.** The revoke control takes the bypass secret; loading it into the session was denied by the permission classifier (Credential Materialization) at the end of ACT-005 and again after ACT-006 was issued. The revoke call was not made; no other route to the secret was tried; no bypass was generated; protection was not changed (ACT-006 `§4.4`) |
+| **Verified first-hand** | Deployment Protection enabled (`all_except_custom_domains`); anonymous requests to the newest Preview and the branch alias, `/` and `/api/v1/runs`, are answered 302 by Vercel SSO; Production deployment `22c0b49` unchanged, no Production variables, Production store 0 rows; Preview store unchanged (max seq 350) |
+| **Not evidenced** | that the temporary bypass is absent. It is UNKNOWN: recorded as created and not revoked; the connector lists no bypass entries |
+| **Residuals** | **A** Scenario A: no classification; A1 applies; Founder. **B** alerting: R2 = readiness; no H1/H2/H3 selected; Founder as Architect. **C** E1: Production project ✔, schema ✔, application wiring ✘, deployment ✘, LIVE ✘; outside ACT-006's scope, earlier denial stands. **D** bypass: protection ON, revocation not evidenced. None changed, none resolved |
+| **New findings** | N-1 no session can observe a bypass's absence · N-2 the "unchanged since `5941d72`" wording in `§92` and the ACT-005 record concerned the option definitions; the Status row changed at `7df974a` (qualified in the record, `§92` left as written) · N-3 "still active" was inferred; reworded to "no recorded revocation" in the gate and two status documents |
+| **Gate** | NOT PRODUCTION READY; 26 PASS, 1 OBSERVED, 0 FAIL, 4 BLOCKED (unchanged) |
+| **Classification** | **ACT-006 = C. BLOCKED.** Re-discovery complete. **FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER**, not PASS. FS-10 NOT STARTED. Production untouched; not released; not LIVE. ACT-004 and ACT-005 unmodified; certified roots, Native Core, P13 unchanged; no Phase 14 |

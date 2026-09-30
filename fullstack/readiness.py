@@ -84,12 +84,14 @@ OTHER_DECISIONS = {
                             "the session's permission classifier; the Founder/user must allow "
                             "it (ACT-005 §9)",
     "BYPASS-REVOCATION": "Execution permission: the temporary automation bypass created "
-                         "2026-09-30 for the 297e8b8 re-verification (ACT-004 §56) is still "
-                         "active. The host's revoke call takes the secret, and loading it "
-                         "into the session was denied by the permission classifier; the "
+                         "2026-09-30 for the 297e8b8 re-verification (ACT-004 §56) has no "
+                         "recorded revocation (ACT-005, ACT-006). The host's revoke call "
+                         "takes the secret, and loading it into the session was denied by "
+                         "the permission classifier twice; the connector cannot list bypass "
+                         "entries, so its absence cannot be observed from a session. The "
                          "Founder/user revokes it in Vercel (Deployment Protection, "
                          "Protection Bypass for Automation) or allows the load (NC-16, "
-                         "ACT-005 §9)",
+                         "ACT-005 §9, ACT-006 §4.4)",
 }
 #: Recorded live evidence the gate reads. It is never written here.
 PREVIEW_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30.json"
@@ -144,7 +146,8 @@ EXTERNAL_DEPENDENCIES = (
     {"id": "EXT-03", "what": "authenticated live checks need access past Vercel protection: "
      "FS-08 (Register §86) and FS-09 (ACT-004 §56, 2026-09-28) each used a temporary "
      "automation bypass, revoked after the suite (protectionBypass: {}); the one created "
-     "2026-09-30 for the 297e8b8 re-verification is still active (BYPASS-REVOCATION)",
+     "2026-09-30 for the 297e8b8 re-verification has no recorded revocation "
+     "(BYPASS-REVOCATION)",
      "needs": "the active bypass revoked; a temporary, revocable mechanism for each "
               "further live check"},
     {"id": "EXT-04", "what": "the project-scoped Supabase connector is denied permission and "
@@ -474,8 +477,8 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
                    f"{preview.get('after_revocation')}", classes=[OPERATOR])
         if preview.get("access_revoked") else
         (_blocked("Security", "temporary access revoked", ["BYPASS-REVOCATION"], decided,
-                  f"the bypass used for the {preview['commit']} recording is still active "
-                  "(NC-16)")
+                  f"the bypass used for the {preview['commit']} recording has no recorded "
+                  "revocation; it cannot be observed absent from a session (NC-16)")
          or _criterion("Security", "temporary access revoked", FAIL,
                        "the recording says the temporary bypass is still active")),
         _live("Security", "attack-surface controls", security_headers,

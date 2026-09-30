@@ -1,0 +1,139 @@
+{
+ "act": "ACT-CC-POST-P13-AIOS-FULL-STACK-006",
+ "date": "2026-09-30",
+ "observed_at": "16:20Z-16:35Z",
+ "repository": {
+  "head_at_start": "6ffa6f5",
+  "head_after_receipt": "ab18082",
+  "branch": "claude/aios-activation-authority-discovery-enq7bk"
+ },
+ "evidence_classes": [
+  "DIRECTLY VERIFIED",
+  "OBSERVED",
+  "RECORDED",
+  "INFERRED",
+  "UNKNOWN",
+  "BLOCKED"
+ ],
+ "w1_revocation": {
+  "target": "TEMPORARY FS-09 re-verification 297e8b8",
+  "class": "BLOCKED",
+  "attempt": "the revoke control (update_project_protection_bypass, revoke) takes the bypass secret as a parameter; the connector cannot list bypass entries. Loading the secret from its private file into the session was denied by the permission classifier (Credential Materialization), first at the end of ACT-005 and again under ACT-006 §4 (2026-09-30, after the Act was issued)",
+  "boundary": "session permission: reading the secret into the session. The revoke call itself was not made",
+  "not_done": [
+   "no other tool, script, transcript search or host was used to obtain the secret",
+   "no new bypass generated",
+   "Deployment Protection not changed"
+  ],
+  "revocation_evidence": null,
+  "handoff": "Founder/user revokes the entry noted 'TEMPORARY FS-09 re-verification 297e8b8' in Vercel: project aios-platform, Settings, Deployment Protection, Protection Bypass for Automation; or allows the session to load the private file so the revoke can be made"
+ },
+ "w2_protection": {
+  "v2_1_deployment_protection": {
+   "class": "DIRECTLY VERIFIED",
+   "evidence": "get_project aios-platform: ssoProtection {enabled: true, deploymentType: all_except_custom_domains}; passwordProtection off; trustedIps off; project updatedAt unchanged (1790782199466) across the Act"
+  },
+  "v2_2_temporary_bypass": {
+   "class": "UNKNOWN (absence not observable)",
+   "recorded": "created 2026-09-30 before 15:30Z; no revocation recorded",
+   "why_unknown": "the connector returns no bypass entries, and using the old secret to test it needs the same denied load"
+  },
+  "v2_3_anonymous_static": {
+   "class": "DIRECTLY VERIFIED",
+   "evidence": {
+    "latest Preview deployment /": "302 to vercel.com/sso-api",
+    "branch alias (pinned to 297e8b8) /": "302 to vercel.com/sso-api"
+   }
+  },
+  "v2_4_anonymous_protected_api": {
+   "class": "DIRECTLY VERIFIED for the Vercel layer; RECORDED for the AIOS layer",
+   "evidence": {
+    "latest Preview /api/v1/runs": "302 to vercel.com/sso-api (answered by Vercel before the function)",
+    "branch alias /api/v1/runs": "302 to vercel.com/sso-api"
+   },
+   "note": "the AIOS layer (401 without a token) was verified through the bypass on 297e8b8 and is recorded in FS-09-LIVE-PREVIEW-2026-09-30.json; it was not re-measured here, and no anonymous request reached the function (Preview store unchanged: max seq 350, 345 rows)"
+  },
+  "v2_5_production_isolation": {
+   "class": "DIRECTLY VERIFIED",
+   "evidence": {
+    "deployment": "dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj, target production, 22c0b49, READY, aliases unchanged",
+    "production_environment_variables": "none (Vercel filter_project_envs: only AIOS_OPERATOR_TOKENS and SUPABASE_SECRET_KEY, Preview scope; hiddenProductionEnvCount 0)",
+    "production_store_hmljfyqycxcueulhsjae": "0 rows (select count)",
+    "preview_store_scfymftfzkpilqbgmfwv": "max seq 350, 345 rows: identical to the end of ACT-005",
+    "production_domain_aios-platform-eight.vercel.app": "GET / 302 to vercel.com/sso-api"
+   }
+  }
+ },
+ "residuals": {
+  "R-A_scenario_a": {
+   "class": "RECORDED",
+   "fact": "no source classifies Scenario A under A1",
+   "sources": [
+    "FS-DP-07 status row: RATIFIED A1; residual classification not decided",
+    "Register 93 ACT-004-DG-03: not decided",
+    "FS-09-DECISION-REGISTER 2.1",
+    "ACT-006 12 keeps it outside the Act"
+   ]
+  },
+  "R-B_alerting": {
+   "class": "DIRECTLY VERIFIED (source text)",
+   "fact": "FS-DP-06 rev 2 R2.6 defines Alerting H1/H2/H3 and Readiness R1/R2 as separate mechanisms; R2 = keep the implicit meaning of deployed 200; no source selects H1/H2/H3. The package's own analytical recommendation (lines 199-201) is UNRATIFIED text and is not a selection",
+   "package_sha256_prefix": "f16aabd3006f6924 (5941d72 was 7aad41b3b57cf3df; the only difference is the Status row updated at 7df974a to record ACT-004-DG-02; the option definitions are unchanged)"
+  },
+  "R-C_e1_wiring": {
+   "class": "DIRECTLY VERIFIED (code) / BLOCKED (execution)",
+   "fact": "fullstack/deploy/vercel.py names only SUPABASE_PROJECT_URL = scfymftfzkpilqbgmfwv (Preview); last changed a4a11cf; no VERCEL_ENV selection; Production store exists, migrated, 0 rows; no Production deployment or variable. Distinct states: project exists YES / schema verified YES (O, 2026-09-28; migrations list re-read 2026-09-30) / application wiring NO / Production deployment NO / Production LIVE NO",
+   "act_006_scope": "the wiring is application construction, outside ACT-006's bounded scope (2, 8); the earlier denial stands; not attempted"
+  },
+  "R-D_bypass": {
+   "class": "BLOCKED",
+   "fact": "Protection = ON (directly verified); temporary bypass = revoked-or-absent is NOT evidenced"
+  }
+ },
+ "new_findings": [
+  {
+   "id": "N-1",
+   "kind": "verification gap",
+   "fact": "no session can observe a bypass's absence: the connector hides entries and the only test uses the secret. After a manual revocation the evidence is the Founder's dashboard observation (RECORDED), unless a session is later permitted to load the file (then a 302 with the old secret is DIRECTLY VERIFIED)"
+  },
+  {
+   "id": "N-2",
+   "kind": "documentation",
+   "fact": "ACT-005 record 5 and Register 92 say the FS-DP-06 package is 'unchanged since 5941d72 (SHA 7aad41b3)'. Its Status row changed at 7df974a. Content unchanged. Qualified in the ACT-006 record; the historical Register entry is left as written"
+  },
+  {
+   "id": "N-3",
+   "kind": "documentation",
+   "fact": "gate text asserted 'still active' for the bypass, which is INFERRED, not observed. Reworded to 'no recorded revocation' (fullstack/readiness.py); status BLOCKED unchanged"
+  }
+ ],
+ "negative_controls": {
+  "NC-01": "HELD (OBSERVED: no update_project_protection_bypass call was made in this Act; not externally verifiable)",
+  "NC-02": "HELD (DIRECTLY VERIFIED)",
+  "NC-03": "HELD (OBSERVED: pattern scan of every line added since 297e8b8~1 finds no non-hex 32-character token; the value comparison of the earlier scan at 03e4b0e is RECORDED and was not repeated because it reads the denied file)",
+  "NC-04": "HELD",
+  "NC-05": "HELD (DIRECTLY VERIFIED)",
+  "NC-06": "HELD (DIRECTLY VERIFIED: 0 rows)",
+  "NC-07": "HELD (integrity holds; tools/ unchanged since edb3beb)",
+  "NC-08": "HELD (native_core, consumers unchanged since edb3beb)",
+  "NC-09": "HELD (no p14 / phase-14 path in the repository)",
+  "NC-10": "HELD",
+  "NC-11": "HELD",
+  "NC-12": "HELD",
+  "NC-13": "HELD (E1 wiring not claimed; vercel.py unchanged)",
+  "NC-14": "HELD",
+  "NC-15": "HELD",
+  "NC-16": "HELD (the credential-load denial was not worked around)",
+  "NC-17": "HELD (the bypass state is UNKNOWN, not REVOKED)",
+  "NC-18": "HELD (records of 2026-09-30 16:10Z are qualified, not rewritten)"
+ },
+ "gate": {
+  "result": "NOT PRODUCTION READY",
+  "PASS": 26,
+  "OBSERVED": 1,
+  "FAIL": 0,
+  "BLOCKED": 4,
+  "recording_current": true
+ },
+ "terminal_classification": "C. BLOCKED for W1/W2 (revocation and absence); B. EXHAUSTED_WITH_CLASSIFIED_REMAINDER for the re-discovery. Overall: BLOCKED"
+}

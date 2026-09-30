@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | **Acts** | `ACT-CC-POST-P13-AIOS-FULL-STACK-004` (FS-09 Master Act, Register `§91`); `ACT-CC-POST-P13-AIOS-FULL-STACK-005` (Continuation, Reconciliation & Execution Resumption, Register `§92`) |
-| **Register** | `§91`–`§94` |
+| **Register** | `§91`–`§94`; continued by ACT-006 (`§95`, `§96`; `docs/fullstack/FS-09-ACT-006-EXECUTION-RECORD.md`) |
 | **Date** | 2026-09-28; final reconciliation 2026-09-30 (`§18`, `§22`) |
 | **FS-09 classification** | **EXHAUSTED_WITH_CLASSIFIED_REMAINDER** (`§21`) |
 | **Not** | FS-09 PASS; Production release; Production LIVE; Founder Release Authorization; FS-10 started |
@@ -47,7 +47,7 @@ registered at `§92`, committed and pushed (`d64b179`).
 ## 5. FS-DP-06 source recovery result
 
 Located (ACT-005 `§6` priority 2): `docs/fullstack/decision-packages/FS-DP-06-OBSERVABILITY.md`
-revision 2, committed `5941d72`, unchanged since (SHA-256 `7aad41b3…`). `R2.6`
+revision 2, committed `5941d72` (SHA-256 `7aad41b3…`). *Qualification, 2026-09-30 (ACT-006 record `§6` N-2): only its Status row has changed since, at `7df974a`, to record the ratification; the option definitions are byte-identical to `5941d72` and the file now hashes `f16aabd3…`.* `R2.6`
 defines **L1–L3** logging, **M1–M3** metrics, **H1–H3 alerting**, **R1/R2
 readiness signal**. No Architect ratification record selects an H option
 (priority 1: the Register holds none before ACT-004; ACT-004 selects none).
