@@ -9674,3 +9674,18 @@ Record of execution, not a decision. Nothing here ratifies, selects or authorize
 | **Final gate** | readiness gate v3: **NOT PRODUCTION READY**; 26 PASS, 1 OBSERVED, 0 FAIL, 4 BLOCKED |
 | **Regression** | Python 3.12: native_core 801 (1 expected failure), consumers 276, bounded_exception 29, fullstack 197 OK; tools recorded in the execution record `§18.3`. Python 3.11: 801 / 276 / 29 / 197 OK. Citation audit 94 warnings = baseline set; integrity holds; secret scan clean |
 | **Classification** | **FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER.** Not PASS. FS-10 NOT STARTED. Production untouched; not released; not LIVE. ACT-004 unmodified; P13 not reopened; certified roots unchanged; no Phase 14 |
+
+---
+
+## 95. ACT-CC-POST-P13-AIOS-FULL-STACK-006 Received — FS-09 Temporary Access Revocation & Final Re-Discovery (2026-09-30)
+
+| Field | Value |
+|---|---|
+| **ACT ID** | `ACT-CC-POST-P13-AIOS-FULL-STACK-006`; instrument `docs/governance/acts/ACT-CC-POST-P13-AIOS-FULL-STACK-006-FS-09-TEMPORARY-ACCESS-REVOCATION-FINAL-REDISCOVERY.md` (verbatim) |
+| **Founder authority** | FOUNDER-ISSUED — EXECUTION AUTHORIZATION GRANTED (Moriarty) |
+| **Parent Act** | `ACT-CC-POST-P13-AIOS-FULL-STACK-003`; immediate predecessor state: ACT-005 final reconciliation (`§94`). ACT-004 and ACT-005 are preserved, not modified |
+| **Purpose** | revoke the temporary Vercel Protection Bypass created for the `297e8b8` re-verification; verify protection restored and no active temporary bypass; final FS-09 re-discovery with residuals A–D re-checked; evidence-backed terminal classification |
+| **Authority granted** (`§3`) | DISCOVER · VERIFY · REVOKE TEMPORARY ACCESS · CLASSIFY · RECONCILE EVIDENCE · RE-DISCOVER · DOCUMENT · HAND OFF. Nothing more |
+| **Not granted** (`§2`, `§12`, `§19`) | resolution of Scenario A or alerting H1/H2/H3; FS-10; Production release or LIVE; Founder Acceptance; a new bypass; disabling protection; certified roots, Native Core, P13, Phase 14 |
+| **Terminal states** (`§13`) | A clean re-discovery · B `EXHAUSTED_WITH_CLASSIFIED_REMAINDER` · C `BLOCKED`. FS-09 PASS, Production LIVE, Founder Acceptance and Operational AIOS are not producible by this Act |
+| **Execution record** | `docs/fullstack/FS-09-ACT-006-EXECUTION-RECORD.md`; final state in a closing Register entry |
