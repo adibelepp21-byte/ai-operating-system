@@ -411,7 +411,7 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
     missing_sections = _runbook_sections()
     in_repo = sorted(p.stem for p in MIGRATIONS.glob("*.sql"))
     from fullstack.backend import contract
-    from fullstack.deploy.metrics import derive
+    from fullstack.deploy.request_metrics import derive
     a1_holds = ([(r.method, r.template) for r in contract.ROUTES if r.method != "GET"]
                 == [("POST", "/api/v1/runs")]
                 and not [r for r in contract.ROUTES if "agent" in r.template.lower()])

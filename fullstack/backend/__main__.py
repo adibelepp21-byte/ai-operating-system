@@ -26,7 +26,7 @@ that already holds the exported partitions, then compare it record by record.
     python -m fullstack.backend metrics --log <file>
 
 FS-DP-06 M1: request volume, status classes and latency, derived from the L1
-request lines in a captured or exported log (`fullstack/deploy/metrics.py`).
+request lines in a captured or exported log (`fullstack/deploy/request_metrics.py`).
 """
 
 from __future__ import annotations
@@ -67,7 +67,7 @@ def main(argv=None) -> int:
     metrics.add_argument("--log", required=True, type=Path)
     args = parser.parse_args(argv)
     if args.command == "metrics":
-        from fullstack.deploy.metrics import derive
+        from fullstack.deploy.request_metrics import derive
         with open(args.log, encoding="utf-8") as handle:
             print(json.dumps(derive(handle), indent=2, sort_keys=True))
         return 0

@@ -19,7 +19,7 @@ from pathlib import Path
 from fullstack.backend import telemetry
 from fullstack.backend.security import AuditLedger, token_sha256
 from fullstack.backend.supabase_storage import SupabaseStorage
-from fullstack.deploy import metrics, vercel
+from fullstack.deploy import request_metrics as metrics, vercel
 from fullstack.tests.support import OBSERVER_TOKEN, OPERATOR_TOKEN, Harness
 from fullstack.tests.test_deployment import KEY, URL, FakePostgREST
 

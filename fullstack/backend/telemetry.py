@@ -12,7 +12,7 @@ A line never carries the Authorization header, a token or its hash, a request
 body, a document's contents or a database key. It names the route **template**,
 never the raw path, so no identifier or input reaches the log. The host's
 function log collects stdout; metrics are derived from these lines (M1,
-`fullstack/deploy/metrics.py`). `request_id` equals the response's
+`fullstack/deploy/request_metrics.py`). `request_id` equals the response's
 `X-Request-Id` and the audit entry's `request_id`: the only join between them.
 """
 

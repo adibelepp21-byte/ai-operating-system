@@ -109,7 +109,7 @@ verified.**
 
 ## 11. M1 state
 
-`fullstack/deploy/metrics.py` and `python -m fullstack.backend metrics --log`.
+`fullstack/deploy/request_metrics.py` (created as `metrics.py` in `a4a11cf`; renamed, `§18`) and `python -m fullstack.backend metrics --log`.
 No emitter. P (derived from the host log lines): 45 requests; 29 2xx, 16 4xx, 0
 server errors; latency p50 55 ms, p95 693 ms, max 708 ms. **Implemented and
 verified.** Figures are observations; no requirement exists (ACT-004 `§39`).
