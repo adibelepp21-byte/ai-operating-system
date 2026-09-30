@@ -87,6 +87,27 @@ try {
   assert.equal(await page.locator(`${tid("run-result")} img`).count(), 0);
   report("user-supplied text is rendered inertly");
 
+  // Scenario A — User → Create Agent → Backend → AIOS Agent Capability → Persist → Result
+  await page.click('.sidebar button[data-view="agents"]');
+  await page.waitForSelector(`${tid("agent-definition")} option`, { state: "attached" });
+  await page.selectOption(tid("agent-definition"), "engineering-intelligence-agent");
+  await page.waitForSelector(`${tid("agent-capabilities")} input[value="engineering-intelligence"]`);
+  await page.fill(tid("agent-key"), "console-desk-01");
+  await page.check(`${tid("agent-capabilities")} input[value="engineering-intelligence"]`);
+  await page.click(tid("agent-submit"));
+  await page.waitForSelector(`${tid("agent-view")}[data-instance="console-desk-01"]`);
+  assert.match(await page.textContent(tid("agent-authority")), /grants no authority/);
+  await page.waitForSelector(`${tid("agents-table")} tr[data-instance="console-desk-01"]`);
+  report("scenario A: an Agent Instance is registered through the console and listed");
+  await shot(page, "02b-agent-registered");
+  await page.fill(tid("agent-key"), "console-desk-01");
+  await page.check(`${tid("agent-capabilities")} input[value="engineering-intelligence"]`);
+  await page.click(tid("agent-submit"));
+  await page.waitForSelector(tid("agent-refused"));
+  assert.match(await page.textContent(tid("agent-refused")), /already registered/);
+  report("scenario A: a duplicate registration is refused with its reason");
+
+  await page.click('.sidebar button[data-view="workflows"]');
   await page.waitForFunction((sel) => document.querySelectorAll(sel).length === 3, `${tid("runs-table")} tbody tr`);
   await page.click(`${tid("runs-table")} tbody tr[data-run="${firstRun}"]`);
   await page.waitForSelector(`${tid("run-detail")} ${tid("run-view")}[data-run="${firstRun}"]`);
@@ -125,6 +146,17 @@ try {
   assert.match(await page.textContent(tid("run-refused")), /scope aios\.workflow\.run is required/);
   report("an observer cannot run a workflow even with the UI bypassed");
 
+  await page.click('.sidebar button[data-view="agents"]');
+  await page.waitForSelector(`${tid("agents-table")} tr[data-instance="console-desk-01"]`);
+  assert.equal(await page.isDisabled(tid("agent-submit")), true);
+  await page.$eval(tid("agent-submit"), (b) => { b.disabled = false; });   // bypass the UI
+  await page.fill(tid("agent-key"), "observer-desk-01");
+  await page.check(`${tid("agent-capabilities")} input[value="engineering-intelligence"]`);
+  await page.click(tid("agent-submit"));
+  await page.waitForSelector(tid("agent-refused"));
+  assert.match(await page.textContent(tid("agent-refused")), /scope aios\.agent\.register is required/);
+  report("an observer cannot register an Agent Instance even with the UI bypassed");
+
   await page.click('.sidebar button[data-view="audit"]');
   await page.waitForSelector(`${tid("banner")}:not([hidden])`);
   assert.match(await page.textContent(tid("banner")), /scope aios\.audit is required/);
@@ -134,7 +166,7 @@ try {
 
   // Only the deliberate refusals may appear as console errors (failed fetches log nothing in Chromium,
   // but a 4xx response is reported by the browser as a resource error).
-  const unexpected = problems.filter((p) => !/Failed to load resource: the server responded with a status of (403|401)/.test(p));
+  const unexpected = problems.filter((p) => !/Failed to load resource: the server responded with a status of (403|401|409)/.test(p));
   assert.deepEqual(unexpected, []);
   report("no script error, CSP violation or dialog occurred");
 } finally {

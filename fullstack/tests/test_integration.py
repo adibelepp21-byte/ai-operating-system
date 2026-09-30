@@ -95,7 +95,7 @@ class ConsoleInABrowser(unittest.TestCase):
             h.close()
         self.assertEqual(0, done.returncode, done.stdout[-3000:] + done.stderr[-3000:])
         checks = [json.loads(line) for line in done.stdout.splitlines() if line.startswith("{")]
-        self.assertEqual(12, len(checks), done.stdout)
+        self.assertEqual(15, len(checks), done.stdout)
         self.assertTrue(all(c["ok"] for c in checks))
 
 

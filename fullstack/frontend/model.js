@@ -6,6 +6,7 @@ export const SCOPES = Object.freeze({
   OBSERVE: "aios.observe",
   RUN_WORKFLOW: "aios.workflow.run",
   AUDIT: "aios.audit",
+  AGENT_REGISTER: "aios.agent.register",
 });
 
 export const MAX_CRITERIA = 20;
@@ -37,6 +38,8 @@ export function classifyError(status, body) {
       return { kind: "forbidden", message: detail || "Your principal lacks the required scope." };
     case 503:
       return { kind: "unavailable", message: detail || "The AIOS Runtime is not running." };
+    case 409:
+      return { kind: "conflict", message: detail || "That already exists." };
     case 400:
     case 404:
     case 413:
@@ -96,5 +99,39 @@ export function traceRow(record) {
     runtime: record.runtime,
     tools: (record.tools_used ?? []).join(", ") || "—",
     skills: (record.skills_used ?? []).join(", ") || "—",
+  };
+}
+
+// FS-DP-07 A2: an Agent Instance is registered from an existing governed
+// Definition. The key rule mirrors the backend's; the backend decides.
+export const INSTANCE_KEY = /^[a-z0-9][a-z0-9-]{2,63}$/;
+
+export function validateAgentForm(definitions, definition, instanceKey, capabilities) {
+  const errors = [];
+  const chosen = (Array.isArray(definitions) ? definitions : []).find((d) => d.definition === definition);
+  const key = String(instanceKey ?? "").trim();
+  const picked = Array.isArray(capabilities) ? capabilities : [];
+  if (!chosen) errors.push("Choose an existing Agent Definition.");
+  if (!INSTANCE_KEY.test(key)) {
+    errors.push("The instance key is 3-64 characters: lower-case letters, digits and hyphens.");
+  }
+  if (picked.length === 0) errors.push("Choose at least one capability.");
+  if (chosen && picked.some((c) => !chosen.implemented_capabilities.includes(c))) {
+    errors.push("A capability the Definition does not implement cannot be chosen.");
+  }
+  return { ok: errors.length === 0, errors,
+           body: { definition: chosen ? chosen.definition : String(definition ?? ""),
+                   instance_key: key, capabilities: picked } };
+}
+
+export function instanceRow(record) {
+  return {
+    key: record.instance_key,
+    definition: `${record.definition.key} v${record.definition.version}`,
+    department: record.definition.owning_department,
+    capabilities: (record.permitted_capabilities ?? []).join(", ") || "—",
+    createdBy: record.created_by,
+    lifecycle: record.lifecycle,
+    authority: record.grants_authority === false ? "grants no authority" : "unexpected: grants authority",
   };
 }

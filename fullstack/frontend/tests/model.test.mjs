@@ -63,3 +63,35 @@ test("a trace row carries the actor and what it used", () => {
   assert.deepEqual(row, { position: 4, actor: "tool-proposing-agent", status: "success",
                           runtime: "r", tools: "docs.read", skills: "—" });
 });
+
+import { instanceRow, validateAgentForm } from "../model.js";
+
+const DEFS = [{ definition: "engineering-intelligence-agent", version: "1.0",
+                owning_department: "engineering",
+                implemented_capabilities: ["engineering-intelligence"] }];
+
+test("the agent form names an existing Definition, a valid key and its own capabilities", () => {
+  const ok = validateAgentForm(DEFS, "engineering-intelligence-agent", " desk-01 ", ["engineering-intelligence"]);
+  assert.equal(ok.ok, true);
+  assert.deepEqual(ok.body, { definition: "engineering-intelligence-agent", instance_key: "desk-01",
+                              capabilities: ["engineering-intelligence"] });
+  assert.equal(validateAgentForm(DEFS, "no-such", "desk-01", ["x"]).ok, false);
+  assert.equal(validateAgentForm(DEFS, "engineering-intelligence-agent", "Desk 01", ["engineering-intelligence"]).ok, false);
+  assert.equal(validateAgentForm(DEFS, "engineering-intelligence-agent", "desk-01", []).ok, false);
+  assert.equal(validateAgentForm(DEFS, "engineering-intelligence-agent", "desk-01", ["other"]).ok, false);
+  assert.equal(validateAgentForm(undefined, "x", "desk-01", ["x"]).ok, false);
+});
+
+test("the register scope and conflicts are known to the console", () => {
+  assert.equal(SCOPES.AGENT_REGISTER, "aios.agent.register");
+  assert.equal(classifyError(409, { detail: "instance 'a' is already registered" }).kind, "conflict");
+});
+
+test("an instance row says it grants no authority", () => {
+  const row = instanceRow({ instance_key: "desk-01", created_by: "op@x", lifecycle: "REGISTERED",
+    grants_authority: false, permitted_capabilities: ["engineering-intelligence"],
+    definition: { key: "engineering-intelligence-agent", version: "1.0", owning_department: "engineering" } });
+  assert.deepEqual(row, { key: "desk-01", definition: "engineering-intelligence-agent v1.0",
+    department: "engineering", capabilities: "engineering-intelligence", createdBy: "op@x",
+    lifecycle: "REGISTERED", authority: "grants no authority" });
+});

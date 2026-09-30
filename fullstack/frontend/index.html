@@ -17,6 +17,7 @@
     <nav class="sidebar" aria-label="Sections">
       <button data-view="overview" class="active">Overview</button>
       <button data-view="workflows">Workflows &amp; runs</button>
+      <button data-view="agents">Agents</button>
       <button data-view="tools">Tools</button>
       <button data-view="traces">Traces</button>
       <button data-view="audit">Audit</button>
@@ -51,6 +52,25 @@
           <tbody></tbody>
         </table>
         <div data-testid="run-detail"></div>
+      </section>
+
+      <section id="view-agents" data-testid="view-agents" hidden>
+        <h1>Agents</h1>
+        <p class="muted">Register an Agent Instance of an existing governed Definition. Definitions are governed documents and are not created here. A registration grants no authority.</p>
+        <form data-testid="agent-form" class="panel" novalidate>
+          <h2>Register an Agent Instance</h2>
+          <label>Definition <select name="definition" data-testid="agent-definition"></select></label>
+          <label>Instance key <input name="instance_key" data-testid="agent-key" placeholder="research-desk-01" autocomplete="off"></label>
+          <fieldset data-testid="agent-capabilities"><legend>Capabilities</legend></fieldset>
+          <ul class="errors" data-testid="agent-errors"></ul>
+          <button type="submit" data-testid="agent-submit">Register</button>
+        </form>
+        <div data-testid="agent-result"></div>
+        <h2>Registered instances</h2>
+        <table class="grid" data-testid="agents-table">
+          <thead><tr><th>Instance</th><th>Definition</th><th>Department</th><th>Capabilities</th><th>Registered by</th><th>Lifecycle</th><th>Authority</th></tr></thead>
+          <tbody></tbody>
+        </table>
       </section>
 
       <section id="view-tools" data-testid="view-tools" hidden>

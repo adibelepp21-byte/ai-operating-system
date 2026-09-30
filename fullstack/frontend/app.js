@@ -4,13 +4,13 @@
 
 import { createClient } from "./api.js";
 import {
-  SCOPES, classifyError, hasScope, outcomeLabel, runSummary, stateLabel,
-  traceRow, validateRunForm,
+  SCOPES, classifyError, hasScope, instanceRow, outcomeLabel, runSummary, stateLabel,
+  traceRow, validateAgentForm, validateRunForm,
 } from "./model.js";
 
 const client = createClient();
 const $ = (selector) => document.querySelector(selector);
-const state = { session: null, traceOffset: 0, traceLimit: 25 };
+const state = { session: null, traceOffset: 0, traceLimit: 25, definitions: [] };
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -82,6 +82,7 @@ async function refreshSession() {
       classifyError(response.status, response.body).message));
   }
   $("[data-testid=run-submit]").disabled = !hasScope(state.session, SCOPES.RUN_WORKFLOW);
+  $("[data-testid=agent-submit]").disabled = !hasScope(state.session, SCOPES.AGENT_REGISTER);
 }
 
 // -- views ------------------------------------------------------------------
@@ -167,6 +168,59 @@ async function submitRun(event) {
   await renderWorkflows();
 }
 
+// FS-DP-07 A2: User -> Create Agent -> Backend -> AIOS Agent Capability -> Persist -> Result.
+function drawCapabilities() {
+  const chosen = state.definitions.find((d) => d.definition === $("[data-testid=agent-definition]").value);
+  $("[data-testid=agent-capabilities]").replaceChildren(el("legend", {}, "Capabilities"),
+    ...(chosen ? chosen.implemented_capabilities : []).map((c) =>
+      el("label", { class: "check" }, el("input", { type: "checkbox", name: "capability", value: c }), ` ${c}`)));
+}
+
+async function renderAgents() {
+  const [definitions, instances] = await Promise.all([load("/agent-definitions"), load("/agent-instances")]);
+  if (!definitions || !instances) return;
+  state.definitions = definitions.definitions;
+  const select = $("[data-testid=agent-definition]");
+  const previous = select.value;
+  select.replaceChildren(...state.definitions.map((d) =>
+    el("option", { value: d.definition }, `${d.definition} (v${d.version}, ${d.owning_department})`)));
+  if (state.definitions.some((d) => d.definition === previous)) select.value = previous;
+  drawCapabilities();
+  fillTable("agents-table", instances.instances.map((record) => {
+    const row = instanceRow(record);
+    return el("tr", { "data-instance": row.key }, el("td", {}, row.key), el("td", {}, row.definition),
+      el("td", {}, row.department), el("td", {}, row.capabilities), el("td", {}, row.createdBy),
+      el("td", {}, row.lifecycle), el("td", {}, row.authority));
+  }));
+}
+
+async function submitAgent(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const picked = [...form.querySelectorAll("input[name=capability]:checked")].map((n) => n.value);
+  const checked = validateAgentForm(state.definitions, form.definition.value, form.instance_key.value, picked);
+  const errors = $("[data-testid=agent-errors]");
+  errors.replaceChildren(...checked.errors.map((e) => el("li", {}, e)));
+  if (!checked.ok) return;
+  const button = $("[data-testid=agent-submit]");
+  button.disabled = true;
+  const response = await client.post("/agent-instances", checked.body);
+  button.disabled = !hasScope(state.session, SCOPES.AGENT_REGISTER);
+  if (!response.ok) {
+    errors.replaceChildren(el("li", { "data-testid": "agent-refused" },
+      classifyError(response.status, response.body).message));
+    return;
+  }
+  showBanner(null);
+  const row = instanceRow(response.body);
+  $("[data-testid=agent-result]").replaceChildren(el("div", { class: "panel", "data-testid": "agent-view",
+    "data-instance": row.key }, el("h2", {}, `${row.key} `, el("span", { class: "badge tone-good" }, row.lifecycle)),
+    el("p", {}, `Definition ${row.definition} · ${row.department} · capabilities ${row.capabilities}`),
+    el("p", { class: "muted", "data-testid": "agent-authority" }, row.authority)));
+  form.instance_key.value = "";
+  await renderAgents();
+}
+
 async function renderTools() {
   const [tools, ledger] = await Promise.all([load("/tools"), load("/tools/invocations")]);
   if (!tools || !ledger) return;
@@ -205,14 +259,14 @@ async function renderAudit() {
 // cleared before every render and whenever the credential changes, so a
 // refusal never leaves an earlier principal's data on screen.
 const DYNAMIC = ["overview-cards", "overview-last-run", "catalog", "run-result", "run-detail",
-                 "traces-range", "session-info"];
+                 "traces-range", "session-info", "agent-result", "agent-capabilities", "agent-errors"];
 
 function clearViews() {
   for (const body of document.querySelectorAll("main table tbody")) body.replaceChildren();
   for (const id of DYNAMIC) $(`[data-testid=${id}]`).replaceChildren();
 }
 
-const VIEWS = { overview: renderOverview, workflows: renderWorkflows, tools: renderTools,
+const VIEWS = { overview: renderOverview, workflows: renderWorkflows, agents: renderAgents, tools: renderTools,
                 traces: renderTraces, audit: renderAudit, session: refreshSession };
 
 async function show(view) {
@@ -230,6 +284,8 @@ function wire() {
     button.addEventListener("click", () => show(button.dataset.view));
   }
   $("[data-testid=run-form]").addEventListener("submit", submitRun);
+  $("[data-testid=agent-form]").addEventListener("submit", submitAgent);
+  $("[data-testid=agent-definition]").addEventListener("change", drawCapabilities);
   $("[data-testid=credential-form]").addEventListener("submit", async (event) => {
     event.preventDefault();
     client.setCredential(event.currentTarget.credential.value.trim());
