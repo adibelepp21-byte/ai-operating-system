@@ -5,7 +5,7 @@
 | **Direction** | Founder, 2026-09-27: *"BEGIN FS-09 PRODUCTION READINESS"*, under `ACT-CC-POST-P13-AIOS-FULL-STACK-003`, after the FS-08 PASS (Register `§86`) |
 | **Register** | `§87` (discovery); `§88` (authorized construction: this matrix updated, `§8`); `§89` (Architect packages prepared, `§10`) |
 | **Nature** | a readiness program. **Not** production release, not Founder Release Authorization, not Operational AIOS |
-| **Result so far** | **FS-09 OPEN — NOT PASSED.** Authorized construction done (`§8`): gate v2, backup/restore drill, runbook, decision register. Six decisions and one verification gap remain (`§9`). FS-10 NOT STARTED |
+| **Result so far** | **CURRENT (ACT-008, 2026-09-30): FS-09 = PASS / CLOSED** (`§12`). *History, as at `§88`/`§89`:* **FS-09 OPEN — NOT PASSED.** Authorized construction done (`§8`): gate v2, backup/restore drill, runbook, decision register. Six decisions and one verification gap remain (`§9`). FS-10 NOT STARTED |
 | **Earlier record** | `FS-09-PRODUCTION-READINESS.md` (gate on `c4b9636`, before FS-08) stays as the historical first evaluation |
 
 ## 1. Canonical sources
@@ -168,3 +168,25 @@ alerting, E1 wiring, bypass revocation); at `§93`, 3 BLOCKED.*
 ```text
 FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER      FS-10 = NOT STARTED
 ```
+
+
+## 12. Final state under ACT-008 (`§100`–`§103`)
+
+The matrix above and `§11` record FS-09 as it stood at `§88` to `§99`. Its
+final state is in `FS-09-ACT-008-EXECUTION-RECORD.md`.
+
+```text
+FS-09 = PASS      FS-09 = CLOSED      (ACT-008 §26; 2026-09-30)
+FS-10 = ACTIVE    Deployment Preparation
+Gate  = READY (not a release)    Founder Release Authorization = NOT YET ISSUED
+```
+
+What moved since `§11`: Scenario A is *executed* (A2, `§101`); alerting is H3,
+re-verified and final; E1 is wired and verified live on Preview; the final
+served code (`d05261c`) was re-verified live on `dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER`
+through one temporary Preview-only bypass, now revoked and verified absent; the
+backup/restore and rollback/roll-forward drills were redone on current data;
+the P12-W6 signal was classified (`§102`) without touching P12.
+
+*History: at `§99` this read `FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER`, one
+dependency (`LIVE-REVERIFICATION`).*

@@ -1,5 +1,7 @@
 # AIOS Full Stack Program — Return Package (Act `§29`)
 
+> **Superseded as current state (2026-09-30, ACT-008).** FS-09 is PASS / CLOSED and FS-10 is ACTIVE; see `FS-09-ACT-008-EXECUTION-RECORD.md` and `FS-10-DEPLOYMENT.md`. The text below is the return package as written when authorized work was exhausted and is kept as history.
+
 **Program state: AUTHORIZED WORK EXHAUSTED — BLOCKED ON ARCHITECT DECISIONS.**
 FS-00 → FS-07 are executed, and FS-08 discovery is done. FS-08 provisioning,
 FS-09 and FS-10 wait on the decision packages below. **No claim of

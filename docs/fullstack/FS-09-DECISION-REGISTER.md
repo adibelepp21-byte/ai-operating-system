@@ -1,5 +1,7 @@
 # FS-09 — Decisions Blocking Production Readiness
 
+> **Historical register of the questions FS-09 raised (`§88`/`§89`).** Every entry has since been decided or implemented; the final state is in `FS-09-ACT-008-EXECUTION-RECORD.md` (FS-09 PASS / CLOSED, 2026-09-30). Read the status tables in `§3` for the current decisions.
+
 | Field | Value |
 |---|---|
 | **Authority** | the Founder's FS-09 continuation, Workstream E: *"record … Do not choose an option on behalf of Architect or Founder"* |
@@ -81,7 +83,7 @@
 | 2.5 | **Operator identities**: a second, narrower Preview principal for a live 403; custody and delivery of the production operator token (never through chat) | FS-08 residual; ACT-003 access control | configure one (the hash only, by the operator) · keep the local 403 evidence as the residual | the authorization residual |
 | 2.6 | **Spending** (D3-A): paid alerting; a paid Supabase plan (downloadable backups, no pause, branching) | `FD-FS-001` D3-A; `FS-DP-01` point 6 | spend · do not spend | only the options that cost money (FS-DP-06 alerting; E4) |
 | 2.7 | ~~open~~ **RESOLVED 2026-09-28** (`§6`). **Deployment protection observed disabled** (`EXT-06`), as recorded at `§89`: was the change of Vercel `ssoProtection` (enabled at FS-08, `enabled: false` at 2026-09-27 19:57Z; not made by Claude Code) intended? | ACT-003 NC-04; `FS-DP-03` revision 2 `R2.4` | confirm as intended · restore it (a Founder-held setting). The required edge access is decided by the Architect in `FS-DP-03` (X1–X3) | the Preview's exposure until `FS-DP-03` is decided |
-| 2.8 | **Release** (`FD-FS-001` D4-A): after a FS-09 PASS, whether and what to release | `FD-FS-001` D4-A; ACT-003 | — | not due: FS-09 has not passed; FS-10 is NOT STARTED |
+| 2.8 | **Release** (`FD-FS-001` D4-A): after a FS-09 PASS, whether and what to release | `FD-FS-001` D4-A; ACT-003 | — | *(as at `§88`: not due, FS-09 had not passed.)* **Now:** FS-09 PASSED and CLOSED (ACT-008); FS-10 is ACTIVE at Deployment Preparation; the Founder Release Authorization is **not issued** and stays Founder-reserved |
 
 ## 3. What is not a decision but a gap (authorized, not yet done)
 

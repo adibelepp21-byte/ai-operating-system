@@ -9864,3 +9864,24 @@ Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-008` `§15`. A **
 | **Not done** | P12 population, threshold, test or certified baseline altered, deleted, renamed or suppressed: none |
 | **Remedy owner** | P12 / governance owner under Founder authority; recurs with each further Act carrying a `Status` label |
 | **Record** | `docs/fullstack/FS-09-P12-W6-CLASSIFICATION.md`; `docs/fullstack/evidence/FS-09-ACT-008-P12-W6-CLASSIFICATION-2026-09-30.json` |
+
+---
+
+## 103. FS-09 Final State Under ACT-008 — PASS / CLOSED; FS-10 ACTIVE (2026-09-30)
+
+Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-008` `§25`, `§26`, `§27`. **A closure under the Act's own authority, not a Founder certification and not a release.**
+
+| Field | Value |
+|---|---|
+| **Status** | **FS-09 = PASS · FS-09 = CLOSED.** Every `§25` criterion A to X is met; the evidence is `docs/fullstack/FS-09-ACT-008-EXECUTION-RECORD.md` |
+| **Served code** | commit `d05261c`; live on Preview `dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER` (Python 3.12, `bld_7ijnvswek`); the recording covers the served tree (`git diff d05261c -- <served paths>` is empty) |
+| **Mandatory scenarios** | **A** executed (A2, `§101`): register, read back, refusals 401/403/409/400, one registration per key under concurrency. **B** and **C** live and local. No scenario was downgraded |
+| **E1** | Preview → Preview Supabase (proven live); Production → Production Supabase (resolver, measured; **not exercised live**: no Production key or deployment exists); unknown → 503 (in-process); Production holds 0 rows |
+| **Security** | Deployment Protection ON; **one** temporary bypass created under `§10.2` and **revoked**; the control returns an empty map; the old secret gets the same 302 as no secret; count 0. Historical event preserved (`§30`): contained, revoked, no credential in the repository or evidence |
+| **Observability** | L1 / M1 / R2 separate; alerting **H3** (no automatic alert, stated); live L1 cross-check 20 of 20 |
+| **Data** | backup and restore redone on current data (505 records), byte-identical; rollback and roll-forward drilled; data compatibility kept apart from operational safety |
+| **P12-W6** | classified (`§102`); not an FS-09 failure; P12 untouched; the test stays red in the global runner |
+| **Negative controls** | NC-01 to NC-20 held |
+| **Not granted and not done** | Production deployment, Production credentials or variables, alias change, Founder Release Authorization, Operational AIOS. **Founder Release Authorization: NOT YET ISSUED** |
+| **Residuals, stated** | no automatic alert (H3); Production target not exercised live; unknown environment verified in-process; console not driven against the live Preview (browser and sandbox CA); P12-W6 red; backups only when an operator runs one |
+| **FS-10** | **ACTIVE** at *Deployment Preparation* (`§27`). Construction and verification proceed under the parent authority; the release to LIVE needs the Founder Release Authorization (`§28`) |

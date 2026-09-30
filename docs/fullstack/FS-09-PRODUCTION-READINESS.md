@@ -1,5 +1,7 @@
 # FS-09 — Production Readiness Gate
 
+> **Historical first evaluation** (commit `c4b9636`, before FS-08 closed). The current gate result is in `FS-09-ACT-008-EXECUTION-RECORD.md`: FS-09 PASS / CLOSED on 2026-09-30.
+
 | Field | Value |
 |---|---|
 | **Stage** | FS-09 Production Readiness Gate (Act `§20`) |

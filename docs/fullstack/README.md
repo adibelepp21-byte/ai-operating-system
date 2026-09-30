@@ -3,7 +3,9 @@
 Under `ACT-CC-POST-P13-AIOS-FULL-STACK-001`, operative from `FD-FS-001`
 (Decision Register `§60`, `§62`). The code is in `fullstack/`.
 
-**Start here: [`PROGRAM-RETURN-PACKAGE.md`](PROGRAM-RETURN-PACKAGE.md).**
+**Current state (2026-09-30, ACT-008): FS-00 to FS-09 are PASS and FS-09 is CLOSED; FS-10 is ACTIVE at Deployment Preparation; Production is not deployed or LIVE; the Founder Release Authorization is not issued.** Start with [`FS-09-ACT-008-EXECUTION-RECORD.md`](FS-09-ACT-008-EXECUTION-RECORD.md). The table below gives each record's result *at the time it was written* and is kept as history.
+
+**History: [`PROGRAM-RETURN-PACKAGE.md`](PROGRAM-RETURN-PACKAGE.md).**
 
 | Stage | Record | Result |
 |---|---|---|
