@@ -34,7 +34,7 @@ executable claim through its public contract
 
 ## 3. Implementation inventory
 
-Measured on the entry commit. Python 3.11 standard library only: the
+Measured on the entry commit *(2026-09-26; the runtime has since been pinned to Python 3.12, `.python-version`, ACT-004-DG-05)*. Python 3.11 standard library only: the
 repository declares **no third-party dependency** (no `requirements.txt`,
 `pyproject.toml`, `package.json`, `Dockerfile` or CI configuration).
 

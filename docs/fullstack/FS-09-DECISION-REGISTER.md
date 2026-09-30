@@ -67,7 +67,7 @@
 | **Decision authority** | Architect: the version belongs to the deployment arrangement (`FS-DP-04`) and settles a conflict between the blueprint and the verified deployment |
 | **Available options** | **P1** pin 3.11 (the blueprint and all local evidence; host availability to be verified; the FS-08 live evidence was produced on 3.12, so the Preview would need re-verification) · **P2** pin 3.12 (the version the live evidence ran on; FS-02 amended; local and certified suites would need a 3.12 run to keep the classes aligned) · **P3** leave unpinned (the host's default decides, and may change without a commit) |
 | **Implementation impact** | P1/P2: one file (`.python-version`) or `requires-python` in a `pyproject.toml`, then a Preview build whose log shows the pinned version, then live re-verification (needs Preview access: **Founder**). P3: none, and the reproducibility gap stays |
-| **Blocker status** | **OPEN, blocking.** Gate row *Reproducibility: runtime version pinned* is BLOCKED. **Nothing was pinned** |
+| **Blocker status** | *As recorded at `§88`:* **OPEN, blocking**; nothing was pinned. **Current (ACT-004-DG-05, `§93`): P2, Python 3.12 pinned by `.python-version`; `FS-02` `§3` amended.** The 3.11 statements in this entry are history |
 | **Package** | `docs/fullstack/decision-packages/FS-09-RUNTIME-PYTHON-RUNTIME-REPRODUCIBILITY.md` (`§89`). PROPOSED — NOT RATIFIED |
 
 ## 2. Founder decisions
@@ -153,8 +153,8 @@ the five Architect packages; ACT-005 (`§92`) reconciled its R2 wording.
 | `FS-DP-03` | N1 (form X2) | implemented and verified live | execution record `§9` |
 | `FS-DP-06` | L1 / M1 / R2 | implemented and verified live | `§10`–`§12` |
 | `FS-DP-06` alerting | **H3** (none; manual checks), a **delegated** decision, ACT-007-DG-02 | decided; runbook `§12.1`; H1/H2 stay with the Founder | Register `§98`; ACT-007 record |
-| `FS-DP-07` | A1 | in force | `§13` |
-| `§2.1` Scenario A residual | **classified outside the present FS-09 envelope; a non-blocking residual; NOT executed**, a **delegated** decision, ACT-007-DG-01 | decided; the Founder may reverse it (A2 needs an authority instrument) | Register `§98`; ACT-007 record |
+| `FS-DP-07` | **A2** (current; was A1 until ACT-008) | implemented: `POST /api/v1/agent-instances`, scope `aios.agent.register`, console Agents view; Definitions are read, never written | Register `§101`; ACT-008 record |
+| `§2.1` Scenario A residual | **superseded.** ACT-007-DG-01 classified it a residual under A1; ACT-008-DG-01 (`§101`) selected A2 and Scenario A is **executed**, not classified | Scenario A is a mandatory scenario with SETUP/ACTION/EXPECTED/ACTUAL/TRACE/DATABASE/SECURITY/EVIDENCE | Register `§101`; ACT-008 record |
 | `FS-09-ENV` | E1 | Production store created and migrated, isolated; **adapter wiring implemented** under ACT-007 (`VERCEL_ENV` selects the project; unresolved environments refused) | ACT-007 record |
 | `FS-09-RUNTIME` | P2 | implemented and verified live | `§8` |
 | `§2.3` Operational ownership | defined under ACT-004 `§37` | `FS-09-OPERATIONAL-OWNERSHIP.md` | — |

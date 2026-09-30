@@ -49,6 +49,7 @@ hashes, in `AIOS_OPERATOR_TOKENS`.
 | every protected route `401`, `/health` `200` | the token is wrong, or `AIOS_OPERATOR_TOKENS` is absent or refused | check the function log for `AIOS_OPERATOR_TOKENS <reason>; nobody is authenticated`. The reason names the fault (not JSON, an unknown key, a bad hash), never a value |
 | one principal `401`, others `200` | that token's hash is not in the configuration | issue a new token (`python -m fullstack.backend operator-token …`, on the operator's own machine) and replace that entry |
 | `403` | authenticated, but the scope is missing | intended least privilege; grant the scope only if the principal's role needs it |
+| `409` | `POST /api/v1/agent-instances` named an instance key already registered | intended: a registration is append-only and unique by key; choose another key. A registration cannot be edited or retracted (`fullstack/backend/agents.py`) |
 | token suspected exposed | — | **incident** (`§11`): remove its entry, redeploy so the function reads the new value, issue a replacement, and check the audit (`§6`) for its subject |
 
 Rotation: add the new entry, redeploy, confirm the new token works, remove the
@@ -290,3 +291,19 @@ delegated executor only while an Act authorizes it. The duties:
 | replacing H3 by H1 or H2 (`FS-DP-06`): spending, an external service, who receives alerts, an edge path | **Founder** (H3 was selected by delegation, Register `§98`) | treating R2 as an alert, or adding a monitor, a paid alert or an edge path on the delegation's strength |
 | architecture beyond the ACT-004 decisions | **Architect** | a second project or table; pinning a version |
 | changes to certified roots P10–P13, Phase 14 | not open | — |
+
+
+## 13. Agent Instances (FS-DP-07 A2)
+
+Scope `aios.agent.register` is held by the operator principal only; an observer
+gets `403`. A registration names an existing governed Definition, an instance
+key and capabilities the Definition implements, and is stored in the
+append-only partition `fullstack-agents`. It **grants no authority**
+(`grants_authority: false`): it is an identity, not a permission. The
+application never creates, edits or retires a Definition; that stays with the
+owning Platform Division (A3 is not built). Because nothing in the store is
+deleted, a mistaken registration stays visible; correct it by registering a
+new key and recording the reason in the Register. To add the scope to a
+deployed principal, edit `AIOS_OPERATOR_TOKENS` (hash, subject, scopes) in
+the Vercel scope of that environment and redeploy; never put the token itself
+in a file.

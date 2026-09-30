@@ -45,6 +45,8 @@ review, Register `§89`); `FS-09-ENV` and `FS-09-RUNTIME` were prepared at `§89
 Each package's analytical recommendation was **UNRATIFIED** until decided.
 **All five were decided by the Founder in ACT-004** (Register `§93`: FS-DP-03 N1,
 FS-DP-06 L1/M1/R2 with alerting undecided, FS-DP-07 A1, FS-09-ENV E1, FS-09-RUNTIME P2).
+Later: alerting H3 (`ACT-007-DG-02`, re-verified `ACT-008-DG-02`) and FS-DP-07 **A2**
+(`ACT-008-DG-01`, Register `§101`) were decided by delegation.
 
 ## Minimum decision set
 
