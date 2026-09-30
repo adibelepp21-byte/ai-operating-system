@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | **Acts** | `ACT-CC-POST-P13-AIOS-FULL-STACK-004` (FS-09 Master Act, Register `§91`); `ACT-CC-POST-P13-AIOS-FULL-STACK-005` (Continuation, Reconciliation & Execution Resumption, Register `§92`) |
-| **Register** | `§91`–`§94`; continued by ACT-006 (`§95`, `§96`; `docs/fullstack/FS-09-ACT-006-EXECUTION-RECORD.md`) |
+| **Register** | `§91`–`§94`; continued by ACT-006 (`§95`, `§96`; `docs/fullstack/FS-09-ACT-006-EXECUTION-RECORD.md`) and ACT-007 (`§97`–`§99`; `docs/fullstack/FS-09-ACT-007-EXECUTION-RECORD.md`) |
 | **Date** | 2026-09-28; final reconciliation 2026-09-30 (`§18`, `§22`) |
 | **FS-09 classification** | **EXHAUSTED_WITH_CLASSIFIED_REMAINDER** (`§21`) |
 | **Not** | FS-09 PASS; Production release; Production LIVE; Founder Release Authorization; FS-10 started |

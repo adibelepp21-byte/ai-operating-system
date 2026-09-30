@@ -62,12 +62,14 @@ class TheGate(unittest.TestCase):
         cls.live = readiness.evaluate(runs=2, preview=cls.covering)
         cls.by_name = {f"{c['area']}: {c['criterion']}": c for c in cls.live["criteria"]}
 
-    def test_it_is_not_ready_and_says_exactly_why(self):
-        self.assertEqual(NOT_READY, self.live["result"])
-        self.assertEqual(["BYPASS-REVOCATION"], self.live["awaiting"])
-        self.assertEqual([], [n for n, c in self.by_name.items() if c["status"] == FAIL])
-        self.assertEqual(["Security: temporary access revoked"],
-                         [n for n, c in self.by_name.items() if c["status"] == BLOCKED])
+    def test_with_a_recording_that_covers_the_tree_nothing_else_blocks_the_gate(self):
+        """A hypothetical: the recorded live checks cover this tree. Whether they
+        do is a separate fact (`TheRecordingAsItStandsToday`). Every decision is
+        taken, the wiring is measured, the bypass is revoked: nothing else stands
+        between the gate and READY, and READY is not a release (FD-FS-001 D4-A)."""
+        self.assertEqual([], self.live["awaiting"])
+        self.assertEqual([], [n for n, c in self.by_name.items() if c["status"] in (FAIL, BLOCKED)])
+        self.assertEqual(readiness.READY, self.live["result"])
 
     def test_every_measurable_criterion_passes(self):
         measured = [c for c in self.live["criteria"] if c["status"] not in (BLOCKED, FAIL)]
@@ -160,11 +162,11 @@ class TheGate(unittest.TestCase):
 
     def test_what_remains_is_named_not_taken(self):
         # Scenario A and alerting are decided by the ACT-007 entries (Register 98);
-        # E1 wiring is measured; the stale-recording dependency applies only while
-        # the recording is stale. What is left is the bypass.
-        others = self.live["other_decisions"]
-        self.assertEqual({"BYPASS-REVOCATION"}, set(others))
-        self.assertTrue(others["BYPASS-REVOCATION"].startswith("Execution permission"))
+        # E1 wiring is measured; the bypass is recorded revoked; the stale-recording
+        # dependency applies only while the recording is stale.
+        self.assertEqual({}, self.live["other_decisions"])
+        self.assertTrue(readiness.OTHER_DECISIONS["BYPASS-REVOCATION"].startswith(
+            "Execution permission"))
         self.assertIn("R2 is the readiness signal", readiness.OTHER_DECISIONS["ALERTING-SELECTION"])
         self.assertNotIn("E1-DEPLOYMENT-WIRING", readiness.OTHER_DECISIONS)
         for package in readiness.PACKAGES:
@@ -197,7 +199,7 @@ class TheGate(unittest.TestCase):
         for required in ("reintroduces the historical concurrency risk",
                          "changes the authentication posture",
                          "Data compatibility does not make a rollback target safe",
-                         "alerting is unresolved"):
+                         "alerting is H3 (none; manual checks"):
             self.assertIn(required, text)
 
     def test_a_runbook_missing_a_section_fails(self):
@@ -272,20 +274,28 @@ class TheGate(unittest.TestCase):
             gate = readiness.evaluate(runs=1)
         self.assertEqual(FAIL, self.by_name_of(gate)["Observability: logging (L1)"]["status"])
 
-    def test_an_active_temporary_bypass_blocks_and_a_revoked_one_passes(self):
+    def test_an_unrevoked_bypass_blocks_and_a_recorded_revocation_passes(self):
         row = "Security: temporary access revoked"
+        unrevoked = {"revoked": False, "why": "no revocation record"}
+        gate = readiness.evaluate(runs=1, preview=self.covering, revocation=unrevoked)
         self.assertEqual((BLOCKED, ["BYPASS-REVOCATION"]),
-                         (self.by_name[row]["status"], self.by_name[row]["blocked_by"]))
-        self.assertIn("NC-16", self.by_name[row]["evidence"])
-        taken = readiness.evaluate(runs=1, decisions=["BYPASS-REVOCATION"])
+                         (self.by_name_of(gate)[row]["status"],
+                          self.by_name_of(gate)[row]["blocked_by"]))
+        self.assertIn("NC-16", self.by_name_of(gate)[row]["evidence"])
+        self.assertEqual(["BYPASS-REVOCATION"], gate["awaiting"])
+        self.assertIn("BYPASS-REVOCATION", gate["other_decisions"])
+        taken = readiness.evaluate(runs=1, preview=self.covering, revocation=unrevoked,
+                                   decisions=["BYPASS-REVOCATION"])
         self.assertEqual(FAIL, self.by_name_of(taken)[row]["status"],
                          "a decision alone does not revoke the bypass")
-        revoked = dict(readiness.preview_record(), access_revoked=True,
-                       after_revocation="302 with the revoked secret and without it")
-        gate = readiness.evaluate(runs=1, preview=revoked)
         self.assertEqual((PASS, [readiness.OPERATOR]),
-                         (self.by_name_of(gate)[row]["status"],
-                          self.by_name_of(gate)[row]["evidence_class"]))
+                         (self.by_name[row]["status"], self.by_name[row]["evidence_class"]))
+
+    def test_the_old_recordings_own_flag_is_history_not_a_revocation(self):
+        """The 297e8b8 recording says `access_revoked: false`: true when made. A
+        later revocation is a later fact, recorded elsewhere."""
+        self.assertIs(False, self.recorded["access_revoked"])
+        self.assertTrue(readiness.revocation_record()["revoked"])
 
     def test_the_gate_never_releases(self):
         self.assertIn("never releases", self.live["release"])
@@ -299,6 +309,48 @@ class TheGate(unittest.TestCase):
 DELEGATED_ENTRY = (
     "### ACT-007-DG-{n} — Delegated Decision · fixture\n\n| Field | Value |\n|---|---|\n"
     "| **Decided by** | {by} |\n| **Ratifies** | {ident} |\n| **Decision** | {decision} |\n")
+
+
+class TheRevocationRecord(unittest.TestCase):
+    """A revocation counts only with the control's own response, protection
+    still on, and the revoked secret refused at the edge."""
+
+    GOOD = {"bypass_revocation": {
+        "note": "x", "revoked_at": "t", "control_response": {"protectionBypass": {}},
+        "protection_enabled": True, "old_secret_http_status": {"a": 302, "b": 302}}}
+
+    def record(self, **changes):
+        import json
+        import tempfile
+        from pathlib import Path
+        data = json.loads(json.dumps(self.GOOD))
+        data["bypass_revocation"].update(changes)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "e.json"
+            path.write_text(json.dumps(data), encoding="utf-8")
+            return readiness.revocation_record(path)
+
+    def test_a_complete_record_counts(self):
+        self.assertTrue(self.record()["revoked"])
+
+    def test_each_missing_proof_defeats_it(self):
+        for change in ({"control_response": {"protectionBypass": {"k": {}}}},
+                       {"control_response": None}, {"protection_enabled": False},
+                       {"protection_enabled": None}, {"old_secret_http_status": {}},
+                       {"old_secret_http_status": {"a": 302, "b": 200}},
+                       {"old_secret_http_status": None}):
+            with self.subTest(change=change):
+                self.assertFalse(self.record(**change)["revoked"])
+
+    def test_no_file_is_no_revocation(self):
+        from pathlib import Path
+        self.assertFalse(readiness.revocation_record(Path("/nonexistent/e.json"))["revoked"])
+
+    def test_the_real_record_holds_no_secret(self):
+        import re
+        text = readiness.REVOCATION_EVIDENCE.read_text(encoding="utf-8")
+        self.assertEqual([], [t for t in re.findall(r"\b[A-Za-z0-9]{32}\b", text)
+                              if not re.fullmatch(r"[0-9a-f]{32}", t)])
 
 
 class DelegatedDecisions(unittest.TestCase):

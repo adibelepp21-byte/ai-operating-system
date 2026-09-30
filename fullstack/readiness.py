@@ -99,11 +99,18 @@ OTHER_DECISIONS = {
                          "Protection Bypass for Automation) or allows the load (NC-16, "
                          "ACT-005 §9, ACT-006 §4.4)",
 }
+#: Dependencies that are facts about the world, listed only while a criterion
+#: is actually blocked on them.
+EXECUTION_DEPENDENCIES = ("LIVE-REVERIFICATION", "BYPASS-REVOCATION")
 #: Recorded live evidence the gate reads. It is never written here.
 PREVIEW_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-30.json"
 #: The a4a11cf recording (2026-09-28), kept as history; the citation repair (297e8b8)
 #: changed a served docstring, so it no longer covers the tree.
 FS09_A4A11CF_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-LIVE-PREVIEW-2026-09-28.json"
+#: Where the revocation of the temporary bypass is recorded (ACT-007 `§8`). The
+#: Preview recording above keeps `access_revoked: false`: that was true when it
+#: was made, and history is not rewritten. The revocation is a later fact.
+REVOCATION_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-09-ACT-007-REDISCOVERY-2026-09-30.json"
 #: The FS-08 recording, kept as history; superseded for this gate by the FS-09 one.
 FS08_EVIDENCE = REPO_ROOT / "docs/fullstack/evidence/FS-08-LIVE-PREVIEW-2026-09-27.json"
 OWNERSHIP = REPO_ROOT / "docs/fullstack/FS-09-OPERATIONAL-OWNERSHIP.md"
@@ -152,10 +159,11 @@ EXTERNAL_DEPENDENCIES = (
     {"id": "EXT-03", "what": "authenticated live checks need access past Vercel protection: "
      "FS-08 (Register §86) and FS-09 (ACT-004 §56, 2026-09-28) each used a temporary "
      "automation bypass, revoked after the suite (protectionBypass: {}); the one created "
-     "2026-09-30 for the 297e8b8 re-verification has no recorded revocation "
-     "(BYPASS-REVOCATION)",
-     "needs": "the active bypass revoked; a temporary, revocable mechanism for each "
-              "further live check"},
+     "2026-09-30 for the 297e8b8 re-verification was revoked under ACT-007 "
+     "(docs/fullstack/evidence/FS-09-ACT-007-REDISCOVERY-2026-09-30.json)",
+     "needs": "a Founder-authorized temporary, revocable mechanism for the live "
+              "re-verification the changed served code now requires (LIVE-REVERIFICATION); "
+              "none is active and ACT-007 forbids creating one"},
     {"id": "EXT-04", "what": "the project-scoped Supabase connector is denied permission and "
      "was bound to a ref not in the account (2026-09-27); the account connector reaches the "
      "AIOS project scfymftfzkpilqbgmfwv, which is healthy",
@@ -262,6 +270,23 @@ def preview_record(path: Path = PREVIEW_EVIDENCE) -> dict:
             "access_revoked": data.get("access_revoked") is True,
             "after_revocation": data.get("after_revocation"),
             "passed": passed, "current": current}
+
+
+def revocation_record(path: Path = REVOCATION_EVIDENCE) -> dict:
+    """Whether the temporary bypass is recorded revoked, with first-hand proof:
+    the control's own response (`protectionBypass` empty), Deployment Protection
+    still enabled, and the revoked secret refused at the edge. A record that
+    says less is not a revocation."""
+    if not path.is_file():
+        return {"revoked": False, "why": "no revocation record"}
+    data = json.loads(path.read_text(encoding="utf-8")).get("bypass_revocation") or {}
+    statuses = data.get("old_secret_http_status") or {}
+    revoked = (data.get("control_response") == {"protectionBypass": {}}
+               and data.get("protection_enabled") is True
+               and bool(statuses) and all(v == 302 for v in statuses.values()))
+    return {"revoked": revoked, "at": data.get("revoked_at"), "note": data.get("note"),
+            "why": None if revoked else "the record lacks the control response, protection "
+                                        "state or the edge refusal of the revoked secret"}
 
 
 def _live(area, name, local_ok, local_evidence, checks, preview, residual=None):
@@ -519,7 +544,8 @@ def _no_shipped_credential() -> bool:
 
 
 def evaluate(runs: int = 20, register_text: Optional[str] = None,
-             preview: Optional[dict] = None, decisions: Sequence[str] = ()) -> dict:
+             preview: Optional[dict] = None, decisions: Sequence[str] = (),
+             revocation: Optional[dict] = None) -> dict:
     """`preview` replaces the recorded Preview checks (tests only); `decisions`
     names non-package decisions to treat as taken (tests only: none is taken)."""
     text = register_text if register_text is not None else REGISTER.read_text(encoding="utf-8")
@@ -527,6 +553,7 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
     decided = dict(ratified(text), **{d: v["entry"] for d, v in delegated_now.items()},
                    **{d: "test" for d in decisions})
     preview = preview if preview is not None else preview_record()
+    revocation = revocation if revocation is not None else revocation_record()
     m = _measure(runs)
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(REPO_ROOT),
                           capture_output=True, text=True).stdout.strip()
@@ -591,9 +618,12 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
               "the compositions hold token hashes only (AIOS_OPERATOR_TOKENS)",
               ["audit records subjects and decisions, no credential"], preview),
         _criterion("Security", "temporary access revoked", PASS,
-                   f"the recording's temporary bypass is revoked: "
-                   f"{preview.get('after_revocation')}", classes=[OPERATOR])
-        if preview.get("access_revoked") else
+                   "the temporary bypass (note "
+                   f"{revocation.get('note') or '297e8b8 re-verification'!r}) is revoked: the "
+                   "control returned an empty protectionBypass, Deployment Protection is "
+                   f"enabled, and the revoked secret is refused at the edge "
+                   f"({revocation.get('at')}; ACT-007 §8)", classes=[OPERATOR])
+        if revocation["revoked"] or preview.get("access_revoked") else
         (_blocked("Security", "temporary access revoked", ["BYPASS-REVOCATION"], decided,
                   f"the bypass used for the {preview['commit']} recording has no recorded "
                   "revocation; it cannot be observed absent from a session (NC-16)")
@@ -731,7 +761,7 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
                               else "PROPOSED — NOT RATIFIED" for p in PACKAGES},
         "other_decisions": {d: OTHER_DECISIONS[d] for d in OTHER_DECISIONS
                             if d not in decided
-                            and (d != "LIVE-REVERIFICATION" or d in awaiting)},
+                            and (d not in EXECUTION_DEPENDENCIES or d in awaiting)},
         "awaiting": awaiting,
         "external_dependencies": list(EXTERNAL_DEPENDENCIES),
         "release": "not due: the Founder release decision follows a PASS of this gate "

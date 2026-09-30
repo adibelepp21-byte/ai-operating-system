@@ -143,7 +143,7 @@ no request to the AIOS API, no audit record created):
 | 7 | Repository | no AIOS source, certified root or architecture package changed by this verification; only this register and the Decision Register record it |
 
 
-## 7. Resolution under ACT-004 / ACT-005 (2026-09-28; updated 2026-09-30, Register `§94`)
+## 7. Resolution under ACT-004 to ACT-007 (2026-09-28; updated 2026-09-30, Register `§94`, `§98`, `§99`)
 
 The entries above are kept as recorded. ACT-004 (Register `§91`, `§93`) decided
 the five Architect packages; ACT-005 (`§92`) reconciled its R2 wording.
@@ -152,13 +152,13 @@ the five Architect packages; ACT-005 (`§92`) reconciled its R2 wording.
 |---|---|---|---|
 | `FS-DP-03` | N1 (form X2) | implemented and verified live | execution record `§9` |
 | `FS-DP-06` | L1 / M1 / R2 | implemented and verified live | `§10`–`§12` |
-| `FS-DP-06` alerting | **not decided** (H1–H3) | open: Founder as Architect | `§5`, `§6` |
+| `FS-DP-06` alerting | **H3** (none; manual checks), a **delegated** decision, ACT-007-DG-02 | decided; runbook `§12.1`; H1/H2 stay with the Founder | Register `§98`; ACT-007 record |
 | `FS-DP-07` | A1 | in force | `§13` |
-| `§2.1` Scenario A residual | **not decided** | open: Founder | `§13` |
-| `FS-09-ENV` | E1 | Production store created and migrated, isolated; **adapter wiring blocked by execution permission** | `§7`, `§15` |
+| `§2.1` Scenario A residual | **classified outside the present FS-09 envelope; a non-blocking residual; NOT executed**, a **delegated** decision, ACT-007-DG-01 | decided; the Founder may reverse it (A2 needs an authority instrument) | Register `§98`; ACT-007 record |
+| `FS-09-ENV` | E1 | Production store created and migrated, isolated; **adapter wiring implemented** under ACT-007 (`VERCEL_ENV` selects the project; unresolved environments refused) | ACT-007 record |
 | `FS-09-RUNTIME` | P2 | implemented and verified live | `§8` |
 | `§2.3` Operational ownership | defined under ACT-004 `§37` | `FS-09-OPERATIONAL-OWNERSHIP.md` | — |
-| `§2.4` Live access | ACT-004 `§56` | used 2026-09-28 (revoked) and 2026-09-30 for the `297e8b8` re-verification: **no recorded revocation**; revoking it needs a credential load the session may not perform (`BYPASS-REVOCATION`; ACT-006 attempted it, 2026-09-30, and is BLOCKED); its absence cannot be observed from a session | `§15`, `§22`, ACT-006 record |
+| `§2.4` Live access | ACT-004 `§56` | used 2026-09-28 and 2026-09-30 (the `297e8b8` re-verification); **both revoked**. The second could not be revoked under ACT-006 (BLOCKED); it was revoked under ACT-007 on 2026-09-30 (the control returned an empty `protectionBypass`; the revoked secret gets 302 at the edge). *History: ACT-006 recorded it as unrevoked.* | ACT-007 record `§3` |
 | `§3` Rollback not verified | — | **drilled on Preview** | `§14` |
 
 Execution record: `docs/fullstack/FS-09-ACT-005-EXECUTION-RECORD.md`.

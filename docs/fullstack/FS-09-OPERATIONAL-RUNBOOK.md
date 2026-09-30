@@ -5,7 +5,7 @@
 | **Authority** | `ACT-CC-POST-P13-AIOS-FULL-STACK-003` `§18`, `§19`; the Founder's FS-09 continuation (Workstream C) |
 | **Register** | `§88` (written); `§93` (updated to the ACT-004 decisions and FS-09 live state); `§94` (2026-09-30 re-verification, alias pinning) |
 | **Scope** | the deployed AIOS Full Stack: Vercel project `aios-platform` (static console and `/api/v1/*` Python function) over Supabase project `scfymftfzkpilqbgmfwv`, table `aios_records` |
-| **Status** | **current as of 2026-09-30 (ACT-004/005).** Checked against the code and the FS-09 live verification; not yet exercised in a real incident. Logging, metrics and readiness (`§12`) are implemented; **alerting is unresolved**. Duties (`§13`) follow `FS-09-OPERATIONAL-OWNERSHIP.md`. *History: until `§93` this row said monitoring and alerting were placeholders and ownership was unassigned* |
+| **Status** | **current as of 2026-09-30 (ACT-004 to ACT-007).** Checked against the code and the FS-09 live verification; not yet exercised in a real incident. Logging, metrics and readiness (`§12`) are implemented; **alerting is H3 (none; manual checks, `§12.1`)**, a delegated decision (Register `§98`). Duties (`§13`) follow `FS-09-OPERATIONAL-OWNERSHIP.md`. *History: until `§93` this row said monitoring and alerting were placeholders and ownership was unassigned* |
 | **Is not** | a release, a Production procedure the operator may run on their own, or a readiness PASS |
 
 **Rules for every step.** No secret value goes into chat, a commit, a document,
@@ -287,6 +287,6 @@ delegated executor only while an Act authorizes it. The duties:
 | operational ownership, backup cadence, incident owner | **Founder** | — |
 | a performance requirement | **Founder** | treating any latency as a pass/fail requirement |
 | networking, observability, Agent creation, environment separation, runtime | decided by ACT-004 (Register `§93`); implemented under ACT-004/005 | changing those decisions |
-| alerting (`FS-DP-06` H1–H3), unresolved | **Founder as Architect** |
+| replacing H3 by H1 or H2 (`FS-DP-06`): spending, an external service, who receives alerts, an edge path | **Founder** (H3 was selected by delegation, Register `§98`) | treating R2 as an alert, or adding a monitor, a paid alert or an edge path on the delegation's strength |
 | architecture beyond the ACT-004 decisions | **Architect** | a second project or table; pinning a version |
 | changes to certified roots P10–P13, Phase 14 | not open | — |

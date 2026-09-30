@@ -4,7 +4,7 @@
 |---|---|
 | **Identifier** | `FS-DP-06` (provisional) |
 | **Area** | Observability implementation — Freeze `§10`, Architect-reserved |
-| **Status** | **RATIFIED — L1 / M1 / R2**, by the Founder as Architect in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§10` (Register `§93`, `ACT-004-DG-02`). R2 is the readiness signal (`R2.6`). **Alerting (H1–H3) is not decided** (ACT-004 labels R2 "Alerting"; reconciled under ACT-005, Register `§92`). Revision 2 (below) is the package as reviewed (`§89`) |
+| **Status** | **RATIFIED — L1 / M1 / R2**, by the Founder as Architect in `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§10` (Register `§93`, `ACT-004-DG-02`). R2 is the readiness signal (`R2.6`). **Alerting (H1–H3): not decided by ACT-004; H3 selected by the delegated decision `ACT-007-DG-02` (Register `§98`, 2026-09-30)** (ACT-004 labels R2 "Alerting"; reconciled under ACT-005, Register `§92`). Revision 2 (below) is the package as reviewed (`§89`) |
 | **Decision owner** | Holder of Architect authority (`FD-FS-001` D2-A) |
 | **Founder constraints** | Vercel, Supabase; no spending (D3-A) |
 | **Prepared by** | Claude Code, 2026-09-26; **Revision 2** 2026-09-27 (below), on the Founder's *"FS-09 — DECISION PACKAGE PREPARATION"* |

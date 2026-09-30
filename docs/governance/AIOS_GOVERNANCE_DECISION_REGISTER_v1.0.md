@@ -9772,3 +9772,22 @@ Made by Claude Code under the **bounded delegated Architect authority** the Foun
 | **Security effect** | a notification channel carrying operational data | puts an external party on the monitoring path; needs `/health` reachable | none |
 | **Verification method** | induced failure raises an alert to the recorded owner (`R2.11` item 5): impossible without rule, recipient and access | same | checks run against the live posture; content gate |
 | **Within ACT-007?** | **no** (control, recipient, possible spend) | **no** (third party, edge) | **yes** |
+
+---
+
+## 99. FS-09 Final State Under ACT-007 — Residuals Resolved, One Verification Dependency Remains (2026-09-30)
+
+Record of execution, not a decision. Full record: `docs/fullstack/FS-09-ACT-007-EXECUTION-RECORD.md`; evidence `docs/fullstack/evidence/FS-09-ACT-007-REDISCOVERY-2026-09-30.json`.
+
+| Field | Value |
+|---|---|
+| **Residual A** | `ACT-007-DG-01` (`§98`, delegated): A1 applies; Scenario A outside the present FS-09 envelope; a non-blocking residual; **not executed**. Conformance (absences) verified |
+| **Residual B** | `ACT-007-DG-02` (`§98`, delegated): alerting = **H3**, residual stated. Runbook `§12.1`; R2 stays readiness |
+| **Residual C** | E1 wired: `fullstack/deploy/vercel.py` selects the project by `VERCEL_ENV`; any other value is refused with 503. Preview target confirmed live in part (the Preview project answered the Preview build; the Production project's log is empty). Production target verified by the resolver and recording fakes, not live. Production store 0 rows; Production deployment unchanged |
+| **Residual D** | the temporary bypass is **revoked**: the control returned an empty `protectionBypass`; Deployment Protection enabled; the revoked secret is refused (302) on three hosts. The secret was displayed in the session's output when loaded; it is revoked and in no repository file |
+| **Consequence** | wiring E1 changed served code, so the `297e8b8` live recording no longer covers it. 19 criteria that rest on the live suites are **BLOCKED on `LIVE-REVERIFICATION`** (not failed): re-running them needs a temporary access ACT-007 forbids creating. The gate now reports a recording the code has outgrown as BLOCKED, never PASS |
+| **Qualification** | the connector's `web_fetch_vercel_url` (3 GETs) appears to work through Vercel's shareable-link mechanism; no Protection Bypass for Automation entry was created; the tool was not used again |
+| **Gate** | @@REGISTER_GATE@@ |
+| **Regression** | @@REGISTER_REGRESSION@@ |
+| **Classification** | **FS-09 = BLOCKED** on the one named dependency; 0 FAIL; not PASS. FS-10 NOT STARTED. Production untouched; not released; not LIVE. ACT-004, -005, -006 unmodified; certified roots, Native Core, P13 unchanged; no Phase 14 |
+| **Authority required next** | a Founder instrument for one temporary access for the live re-run (and its revocation), or the Founder running the suites; the Founder's review of `ACT-007-DG-01` and `ACT-007-DG-02` |

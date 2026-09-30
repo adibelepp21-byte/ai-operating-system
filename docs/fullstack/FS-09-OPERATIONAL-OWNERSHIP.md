@@ -5,7 +5,7 @@
 | **Authority** | `ACT-CC-POST-P13-AIOS-FULL-STACK-004` `§37`: *"Claude may define and implement the operational ownership model required by FS-09 … No new Founder authority is created by this operational model"*; continued under ACT-005 |
 | **Register** | `§93` |
 | **Scope** | who does what to operate the AIOS Full Stack: the Vercel project `aios-platform`, the Preview store `scfymftfzkpilqbgmfwv`, the Production store `hmljfyqycxcueulhsjae` |
-| **Is not** | a governance change, a delegation of Founder authority, a release, or an alerting decision (alerting is unresolved, Register `§93` DG-02) |
+| **Is not** | a governance change, a delegation of Founder authority, a release, or an alerting decision beyond the delegated H3 (Register `§98` `ACT-007-DG-02`); H1/H2 and alert recipients stay with the Founder |
 
 This model assigns **operational duties**. Every decision it touches keeps the
 authority it already has (runbook `§14`).

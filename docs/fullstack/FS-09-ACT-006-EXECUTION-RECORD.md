@@ -3,7 +3,7 @@
 | Field | Value |
 |---|---|
 | **Act** | `ACT-CC-POST-P13-AIOS-FULL-STACK-006` — FS-09 Temporary Access Revocation & Final Re-Discovery (Register `§95`, `§96`) |
-| **Date** | 2026-09-30 |
+| **Date** | 2026-09-30. Continued by ACT-007 (`docs/fullstack/FS-09-ACT-007-EXECUTION-RECORD.md`): the revocation this record could not make was made there. This record stands as written |
 | **Evidence** | `docs/fullstack/evidence/FS-09-ACT-006-REDISCOVERY-2026-09-30.json` |
 | **Act classification** | **C. BLOCKED** (`§13`): the revocation, the Act's primary objective, could not be made. Re-discovery itself is complete |
 | **FS-09 state** | unchanged: **EXHAUSTED_WITH_CLASSIFIED_REMAINDER**; not PASS |

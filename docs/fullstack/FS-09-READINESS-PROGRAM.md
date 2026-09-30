@@ -148,15 +148,22 @@ time after FS-08 (observed 19:57Z; `EXT-06`, Founder `§2.7`).
 FS-09 remains **OPEN**. FS-10 remains **NOT STARTED**.
 
 
-## 11. Under ACT-004 / ACT-005 (`§91`–`§94`)
+## 11. Under ACT-004 to ACT-007 (`§91`–`§99`)
 
 The matrix above records FS-09 as it stood at `§88`/`§89`. Its current state is
-the readiness gate v3 (`python -m fullstack.readiness evaluate`) and the ACT-005
-execution record: 26 PASS, 1 OBSERVED, 0 FAIL, 4 BLOCKED (Scenario A residual,
-alerting selection, E1 deployment wiring, and, since 2026-09-30, the revocation
-of the temporary bypass used for the `297e8b8` re-verification; ACT-006, 2026-09-30,
-attempted it and is BLOCKED: `FS-09-ACT-006-EXECUTION-RECORD.md`). *History: at
-`§93` this read 3 BLOCKED.*
+the readiness gate v3 (`python -m fullstack.readiness evaluate`) and the
+execution records of ACT-005, ACT-006 and ACT-007.
+
+At ACT-007 (2026-09-30): **11 PASS, 1 OBSERVED, 0 FAIL, 19 BLOCKED, all 19 on
+one dependency, `LIVE-REVERIFICATION`**: the served code changed to wire E1, so
+the recorded live checks no longer cover it, and re-running them needs
+Founder-authorized temporary access that ACT-007 forbids creating. Scenario A
+and alerting are decided by delegation (Register `§98`), E1 is wired and
+measured, and the temporary bypass is revoked
+(`FS-09-ACT-007-EXECUTION-RECORD.md`).
+
+*History: at `§94` this read 26 PASS, 1 OBSERVED, 4 BLOCKED (Scenario A,
+alerting, E1 wiring, bypass revocation); at `§93`, 3 BLOCKED.*
 
 ```text
 FS-09 = EXHAUSTED_WITH_CLASSIFIED_REMAINDER      FS-10 = NOT STARTED

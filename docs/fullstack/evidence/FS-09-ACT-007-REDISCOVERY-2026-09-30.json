@@ -1,0 +1,177 @@
+{
+ "act": "ACT-CC-POST-P13-AIOS-FULL-STACK-007",
+ "date": "2026-09-30",
+ "evidence_classes": [
+  "DIRECTLY VERIFIED",
+  "OBSERVED",
+  "RECORDED",
+  "INFERRED",
+  "UNKNOWN",
+  "BLOCKED"
+ ],
+ "bypass_revocation": {
+  "note": "TEMPORARY FS-09 re-verification 297e8b8",
+  "class": "DIRECTLY VERIFIED",
+  "revoked_at": "2026-09-30T17:11Z (control call); verified 17:12:19Z",
+  "control_response": {
+   "protectionBypass": {}
+  },
+  "control": "update_project_protection_bypass, revoke, regenerate false; the response is the project's bypass map after the call",
+  "protection_enabled": true,
+  "protection_state": "ssoProtection enabled, all_except_custom_domains; password protection off; trusted IPs off (get_project after the revoke)",
+  "old_secret_http_status": {
+   "branch alias (pinned to 297e8b8) /api/v1/health": 302,
+   "newest Preview /api/v1/health": 302,
+   "aios-platform-eight.vercel.app /": 302
+  },
+  "without_secret_http_status": {
+   "branch alias (pinned to 297e8b8) /api/v1/health": 302,
+   "newest Preview /api/v1/health": 302,
+   "aios-platform-eight.vercel.app /": 302
+  },
+  "no_replacement_created": "no generate call was made in this Act; the revoke response shows an empty map",
+  "secret_handling": "ACT-006 could not load the secret (classifier denial). Under ACT-007 section 8, one load attempt was permitted by the classifier. The value appeared in this session's output when loaded (disclosed to the Founder); it was passed only to the revoke call and, as a header, to the status-only edge test; the private copy was deleted; it is in no repository file, and it is now revoked"
+ },
+ "repository": {
+  "branch": "claude/aios-activation-authority-discovery-enq7bk",
+  "head_at_start": "9b7aa2f",
+  "wiring_commit": "acab4df"
+ },
+ "residual_a_scenario_a": {
+  "authority": "ACT-007 sections 3 and 5: bounded delegated Architect authority, FS-09 only",
+  "decision": "ACT-007-DG-01 (Register 98): A1 applies and stays in force; A1 cannot execute Scenario A by design; A2 (the only defined option that could) needs an authority instrument extending FD-P11-001 section 7 that does not exist; A3 excluded. Scenario A is classified OUTSIDE the present FS-09 envelope: NOT executed, a non-blocking residual for the FS-09 gate",
+  "sources": [
+   "ACT-001 sections 18 and 20",
+   "FS-DP-07 rev 1 and 2 (R2.3 to R2.17)",
+   "ACT-004 sections 12 and 13; Register 93 ACT-004-DG-03",
+   "FS-09-DECISION-REGISTER 2.1",
+   "ACT-005 section 7"
+  ],
+  "ambiguity_recorded": "ACT-004 section 12 says 'implement the A1 Agent Creation architecture ... to make it operational' while the package defines A1 as creating none; the ratified identifier is read as the package defines it",
+  "implementation": "none beyond absences: no route, scope, partition, registry use or console control for Agents",
+  "verification": {
+   "class": "DIRECTLY VERIFIED",
+   "tests": "fullstack/tests/test_architecture_conformance.py (10), test_readiness.py DelegatedDecisions",
+   "gate_rows": [
+    "Functionality: agent creation (Scenario A): PASS (classified; NOT executed)",
+    "Functionality: A1: no route creates an Agent: PASS"
+   ]
+  },
+  "scenario_a_executed": false,
+  "reversal": "a Founder instrument choosing A2 and supplying the authority extending FD-P11-001 section 7"
+ },
+ "residual_b_alerting": {
+  "authority": "ACT-007 sections 3 and 6: bounded delegated Architect authority, FS-09 only",
+  "definitions_confirmed": "FS-DP-06 rev 2 R2.6: H1 host alerting if the plan provides it (possibly paid); H2 external uptime check on /health (third party); H3 none, the runbook's manual checks. R2 (readiness) is a different mechanism; option definitions unchanged since 5941d72 (only the Status row changed, at 7df974a and again under ACT-007)",
+  "selection": "ACT-007-DG-02 (Register 98): alerting = H3, residual stated",
+  "why_not_h1": "plan entitlement for alerts not established by the documentation retrieved; no alert-rule control in this session (the Vercel connector has none; the CLI is not authenticated); a recipient and possible spend are Founder-reserved",
+  "why_not_h2": "a third party (Founder-reserved) and an edge path: under N1/X2 every URL answers 302 to Vercel SSO, so a monitor needs a bypass or unprotecting, both forbidden",
+  "implementation": "runbook 12.1 Manual monitoring checks (H3); ownership 6; the gate checks the content (H3_MARKERS)",
+  "verification": {
+   "class": "DIRECTLY VERIFIED (content gate, tests) + OBSERVED (drill)",
+   "drill_2026-09-30": {
+    "readiness_R2": "GET /api/v1/health on the wiring build: 200 {status ok, runtime_state running} (connector fetch; see access_qualification)",
+    "error_rate_M1": "runtime log for dpl_GnbHK8R7haxE6fGXpPATPHsZ8XPp, query fullstack.request/1: 1 line, status 200, server_errors 0",
+    "refusals_before_application": "no L1 line with runtime_id null and 503 in the window",
+    "backup_freshness": "FINDING: the latest export manifest is 2026-09-27; the Preview store now holds 345 rows (max seq 350), about 264 more than when it was exported; all are test traffic, the Production store holds none. No export was made (outside this Act's scope)",
+    "temporary_access": "the revoke response shows protectionBypass {} (DIRECTLY VERIFIED)"
+   }
+  },
+  "residual": "no automatic alert; failures are found only when a person runs the checks; R2 is not an alert"
+ },
+ "residual_c_e1_wiring": {
+  "implementation": "fullstack/deploy/vercel.py at acab4df: SUPABASE_PROJECTS {preview: scfymftfzkpilqbgmfwv, production: hmljfyqycxcueulhsjae} keyed by VERCEL_ENV exactly; any other value (absent, development, empty, case or whitespace variants) raises UnknownEnvironment before a key is read or a database called, and the function answers 503; no variable overrides the project; the environment comes from the process, never from a request",
+  "tests": "fullstack/tests/test_environment_separation.py (11) + updated test_deployment.py; mutations caught: fall back to preview, production pointed at preview, folding/trimming the value, bypassing the resolver",
+  "preview_target": {
+   "class": "DIRECTLY VERIFIED (live, partial)",
+   "deployment": "dpl_GnbHK8R7haxE6fGXpPATPHsZ8XPp (acab4df), READY",
+   "evidence": "health 200 at 17:12:47Z, request_id 418b99ea7ce08e21, L1 line in the Vercel runtime log with the same id; the Preview project's Supabase API log shows GET /rest/v1/aios_records 200 at 17:12:46.975Z from Python-urllib/3.12 (the function). This proves VERCEL_ENV resolved to preview on Vercel and the Preview project answered"
+  },
+  "production_target": {
+   "class": "OBSERVED (code and recording fakes); not live",
+   "evidence": "the resolver selects the Production project for VERCEL_ENV=production and a production-env function reaches only that host (recording databases); no Production deployment, key or release exists, none was made"
+  },
+  "production_isolation": {
+   "class": "DIRECTLY VERIFIED",
+   "production_store_rows": 0,
+   "production_project_api_requests_24h": 0,
+   "production_project_api_requests_10min_window_around_the_live_check": 0,
+   "production_deployment": "dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj (22c0b49), unchanged",
+   "production_environment_variables": "none"
+  },
+  "stray_requests": "two GETs at 17:11:19Z and 17:11:22Z to the Preview project from Python-urllib/3.11 returned 401: local mutation-test runs sent an invalid test key. Refused; nothing read or written",
+  "preview_store": {
+   "max_seq_start": 350,
+   "max_seq_end": 350,
+   "rows": 345,
+   "note": "no write from the live checks"
+  }
+ },
+ "residual_d_bypass": "see bypass_revocation",
+ "access_qualification": {
+  "what": "web_fetch_vercel_url (Vercel connector) was used for 3 GET requests to the wiring build. One returned 200 (/api/v1/health), one 302 (/api/v1/runs), one failed (/). Its redirect carried a _vercel_share token: the tool appears to authenticate through Vercel's shareable-link mechanism, which I did not know before using it",
+  "effect": "no Protection Bypass for Automation entry (none was generated; the revoke response was an empty map before these fetches); a shareable link is short-lived (the sibling tool states 23 hours) and was not stored",
+  "position": "NC-07 is held for Protection Bypass for Automation and QUALIFIED for shareable links. The tool is not used again in this Act. Evidence obtained through it is labelled as such",
+  "not_used": "get_access_to_vercel_url (it is documented as creating a bypass link) was never called"
+ },
+ "live_reverification": {
+  "state": "BLOCKED",
+  "fact": "vercel.py is served code; it changed after the 297e8b8 recording. The gate counts a recording only while git diff from its commit over the served paths is clean, so 19 criteria that rest on the live suites (FS-08 14 checks, FS-09 5 checks, rollback drill, L1/M1 in the host log) are BLOCKED on LIVE-REVERIFICATION",
+  "why_not_done": "the suites need access past Vercel SSO and the operator token. The only access mechanism is a Protection Bypass for Automation, which ACT-007 forbids creating; the one that existed was revoked as required",
+  "needs": "a Founder instrument authorizing one temporary access for the re-run (and its revocation), or the Founder running the suites"
+ },
+ "verification_matrix": {
+  "V-01": "DIRECTLY VERIFIED: ACT-001 section 18",
+  "V-02": "DIRECTLY VERIFIED: Register 98 DG-01",
+  "V-03": "DIRECTLY VERIFIED (absences); Scenario A itself NOT executed",
+  "V-04": "DIRECTLY VERIFIED: FS-DP-06 rev 2 R2.6",
+  "V-05": "DIRECTLY VERIFIED: Register 98 DG-02 (H3)",
+  "V-06": "DIRECTLY VERIFIED (content) + OBSERVED (drill); residual stated",
+  "V-07": "DIRECTLY VERIFIED (real resolver, tests, mutations)",
+  "V-08": "DIRECTLY VERIFIED live, partial (health path)",
+  "V-09": "OBSERVED (code and fakes); not live",
+  "V-10": "DIRECTLY VERIFIED",
+  "V-11": "DIRECTLY VERIFIED",
+  "V-12": "DIRECTLY VERIFIED",
+  "V-13": "DIRECTLY VERIFIED",
+  "V-14": "DIRECTLY VERIFIED at the Vercel layer; AIOS layer RECORDED (297e8b8) and local; not re-measured live on the new code",
+  "V-15": "BLOCKED (LIVE-REVERIFICATION); local regression OK",
+  "V-16": "BLOCKED (LIVE-REVERIFICATION); local regression OK",
+  "V-17": "see negative_controls",
+  "V-18": "done"
+ },
+ "negative_controls": {
+  "NC-01": "HELD",
+  "NC-02": "HELD",
+  "NC-03": "HELD (integrity holds; tools unchanged since edb3beb)",
+  "NC-04": "HELD (native_core, consumers unchanged since edb3beb)",
+  "NC-05": "HELD",
+  "NC-06": "HELD",
+  "NC-07": "HELD for Protection Bypass for Automation; QUALIFIED for shareable links (see access_qualification)",
+  "NC-08": "HELD (DIRECTLY VERIFIED)",
+  "NC-09": "HELD for persistence (pattern scan of added lines; private copy shredded); EXPOSURE DISCLOSED: the value was displayed in the session output when loaded; it is revoked",
+  "NC-10": "HELD",
+  "NC-11": "HELD",
+  "NC-12": "HELD",
+  "NC-13": "HELD (Production side stated as not live)",
+  "NC-14": "HELD",
+  "NC-15": "HELD (ACT-004 section 12 ambiguity recorded, not resolved)",
+  "NC-16": "HELD (one permitted load; no other route)",
+  "NC-17": "HELD",
+  "NC-18": "HELD",
+  "NC-19": "HELD",
+  "NC-20": "HELD"
+ },
+ "terminal_classification": "FS-09 = BLOCKED on one dependency (LIVE-REVERIFICATION); 0 FAIL; not PASS; FS-10 not started; Production untouched, not released, not LIVE",
+ "gate": {
+  "result": "NOT PRODUCTION READY",
+  "PASS": 11,
+  "OBSERVED": 1,
+  "FAIL": 0,
+  "BLOCKED": 19,
+  "blocked_on": [
+   "LIVE-REVERIFICATION"
+  ],
+  "hypothetical_with_a_covering_recording": "PRODUCTION READY"
+ }
+}
