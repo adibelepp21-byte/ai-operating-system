@@ -7,6 +7,7 @@
 | **Evidence** | `docs/fullstack/evidence/FS-09-ACT-007-REDISCOVERY-2026-09-30.json` |
 | **FS-09 classification** | **BLOCKED**, on one named dependency: `LIVE-REVERIFICATION` (`§7`). Not PASS. Not FAIL |
 | **Residuals** | **A** decided (delegated) and conforming · **B** decided (delegated) and implemented, residual stated · **C** implemented and verified, Production side not live · **D** revoked, directly verified |
+| **Also found** | **F-1**: one P12 corpus test red since ACT-006 (`§11`); not an FS-09 gate row, not repaired here |
 | **Not** | FS-09 PASS · Production release · Production LIVE · Founder Release Authorization · Founder Acceptance · FS-10 started |
 
 Evidence states are kept apart (ACT-007 `§13`): **DIRECTLY VERIFIED** · **OBSERVED** · **RECORDED** · **INFERRED** · **UNKNOWN** · **BLOCKED**.
@@ -135,7 +136,7 @@ With a recording that covered the tree, the gate would read PRODUCTION READY: no
 
 ## 9. Final re-discovery (ACT-007 `§16`)
 
-* **What remains unresolved:** the judgment in `§2` (Founder review); the H1/H2 question (spending, recipient, an edge path); Production key/variables/deployment (FS-10); a fresh backup export.
+* **What remains unresolved:** the judgment in `§2` (Founder review); the H1/H2 question (spending, recipient, an edge path); Production key/variables/deployment (FS-10); a fresh backup export; **F-1** (`§11`): one red P12 corpus test, red since ACT-006.
 * **What remains blocked:** `LIVE-REVERIFICATION` only.
 * **What changed:** `vercel.py` (E1 selection); the gate (delegated decisions, measured wiring, revocation record, stale → BLOCKED); runbook `§12.1`; ownership `§6`; Register `§97`–`§99`; status rows of three packages; tests 197 → 233. The bypass is gone.
 * **What did not change:** `native_core/`, `consumers/`, `tools/`, certified evidence, ACT-004/005/006 (byte-identical), the Production deployment, the Production store, the migrations on both stores, the Preview store's contents.
@@ -146,7 +147,7 @@ With a recording that covered the tree, the gate would read PRODUCTION READY: no
 
 ## 10. Gate and terminal classification
 
-@@GATE@@
+Readiness gate v3 (`python -m fullstack.readiness evaluate`), at `1d13359`: **NOT PRODUCTION READY; 11 PASS, 1 OBSERVED, 0 FAIL, 19 BLOCKED**, all 19 on `LIVE-REVERIFICATION` (`§7`). The rows this Act was about: *agent creation (Scenario A)* PASS (classified, not executed) · *alerting* PASS (H3, residual stated) · *temporary access revoked* PASS · *A1: no route creates an Agent* PASS · *environment separation* BLOCKED only by the stale live recording (the local wiring measurement passes).
 
 ```text
 ACT-007 residuals:  A decided (delegated)   B decided (delegated)   C implemented   D revoked
@@ -157,7 +158,29 @@ Production       = untouched; not released; not LIVE
 
 ## 11. Regression
 
-@@REGRESSION@@
+| Suite | Python 3.12 (reference) | Python 3.11 |
+|---|---|---|
+| native_core | 801 OK (1 expected failure) | 801 OK (1 expected failure) |
+| consumers | 276 OK | 276 OK |
+| bounded_exception | 29 OK | 29 OK |
+| fullstack | **233 OK** (197 before this Act) | 233 OK |
+| tools | 1933 run: **1 failure**, 1 skipped (2485 s), finding F-1 below | not run |
+
+* **Citation audit:** 94 warnings, 0 errors; the 182 findings are the same set as at baseline `edb3beb` (compared entry by entry).
+* **Certified-evidence integrity:** holds. `native_core/`, `consumers/`, `tools/` unchanged since `edb3beb`. No Phase 14 path.
+* **Instruments:** ACT-004 and ACT-005 byte-identical since `d64b179`; ACT-006 and ACT-007 byte-identical since their receipt commits.
+* **Token scan:** no non-hex 32-character token in any line added since `297e8b8~1`.
+* **Mutations:** four resolver mutations, three gate-row mutations and every H3 marker removal are caught.
+
+**F-1 — a P12 corpus test has been red since ACT-006 persisted.** `tools.tests.test_p12_governance_evidence_verification.TheResultDoesNotDependOnMyChoiceOfPopulation.test_the_narrower_population_is_not_better` (element `status`) asserts that the share of Founder Acts (everything under `docs/governance/acts/`) carrying a `Status:` header is at most the whole corpus's share plus 0.2.
+
+| Commit | Founder Acts with `Status:` | Share | Limit (corpus share + 0.2) | Test |
+|---|---|---|---|---|
+| `6ffa6f5` (before ACT-006) | 50 / 102 | 0.4902 | 0.4917 | passes, by 0.0015 |
+| `ab18082` (ACT-006 persisted) | 51 / 103 | 0.4951 | 0.4929 | **fails** |
+| `3182510` (ACT-007 persisted) | 52 / 104 | 0.5000 | 0.4935 | fails |
+
+It is a measurement over documents, not a defect in code: every Founder Act is persisted verbatim and these two carry a `Status:` header. I did not see it after ACT-006 because I ran only the fullstack suite then and said so; documentation can move a corpus statistic, so that was the wrong economy. **Not repaired here:** the test and its tool are P12-W6 surfaces (ACT-007 `§22` sends any conflict touching them outside this Act), the Acts are verbatim instruments, and moving them to escape the measurement would be gaming it. The owner decides: re-baseline the tolerance, redefine the population (for example, instruments issued after the P13 closure), or accept. Until then the `tools` suite is red by this one test, and each further Founder Act with a `Status:` header widens the gap.
 
 ## 12. Next frontier
 
@@ -168,3 +191,4 @@ Production       = untouched; not released; not LIVE
 | Alerting beyond H3 | no automatic alert | Founder | spending, a recipient, an external service, an edge path | Founder-reserved | `§5` |
 | Production | no key, variable, deployment or release | Founder, FS-10 | the release sequence | outside FS-09 | `§4` |
 | Backup | the export is 3 days and ~260 test records behind | operator | none | outside this Act; matters before Production use | `§5` |
+| **F-1** P12 corpus test | `test_the_narrower_population_is_not_better` fails since ACT-006 persisted; the `tools` suite is red by that one test | Founder / owner of the P12-W6 verification | a decision: re-baseline the tolerance, redefine the population, or accept | P12 surfaces are outside ACT-007 (`§22`); the Acts are verbatim; relocating them would game the measure | `§11`, worktree measurements at four commits |

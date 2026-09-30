@@ -173,5 +173,35 @@
    "LIVE-REVERIFICATION"
   ],
   "hypothetical_with_a_covering_recording": "PRODUCTION READY"
+ },
+ "regression": {
+  "python3.12": {
+   "native_core": "801 OK (1 expected failure)",
+   "consumers": "276 OK",
+   "bounded_exception": "29 OK",
+   "fullstack": "233 OK",
+   "tools": "1933 run, 1 failure, 1 skipped"
+  },
+  "python3.11": {
+   "native_core": "801 OK",
+   "consumers": "276 OK",
+   "bounded_exception": "29 OK",
+   "fullstack": "233 OK"
+  },
+  "citation_audit": "94 warnings = baseline edb3beb set (182 findings identical)",
+  "integrity": "holds"
+ },
+ "finding_F1": {
+  "test": "tools.tests.test_p12_governance_evidence_verification.TheResultDoesNotDependOnMyChoiceOfPopulation.test_the_narrower_population_is_not_better [status]",
+  "measurements": {
+   "6ffa6f5": "50/102=0.4902 vs limit 0.4917: passes",
+   "ab18082": "51/103=0.4951 vs 0.4929: fails",
+   "3182510": "52/104=0.5000 vs 0.4935: fails",
+   "1d13359": "52/104=0.5000 vs 0.4931: fails"
+  },
+  "cause": "persisting Founder Acts verbatim under docs/governance/acts/ (each carries a Status header); a corpus statistic, not code",
+  "red_since": "ab18082 (ACT-006 persisted)",
+  "not_repaired": "P12-W6 surface (ACT-007 section 22); verbatim instruments; relocating them would game the measure",
+  "owner": "Founder / owner of the P12-W6 verification"
  }
 }
