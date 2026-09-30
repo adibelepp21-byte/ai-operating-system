@@ -127,6 +127,7 @@ Run from a clean worktree of commit `01b1fd0` (the commit that carries these doc
 * **Certified-evidence integrity:** holds; `native_core/`, `consumers/` and `tools/` are unchanged since `edb3beb`; no Phase 14 path.
 * **Instruments:** ACT-004 to ACT-008 are byte-identical since their receipt commits (NC-02).
 * **Secret scan:** the operator token and the bypass secret appear in no file of the repository, in evidence or in history; the pattern scan finds none outside deliberate fakes (NC-11, NC-12).
+* **After the closing commit:** `01b1fd0` was the commit tested. Two later commits changed only documents, the Register, the FS-10 document and `fullstack/deploy/smoke.py` with its tests (fullstack then 297 OK on 3.12 and 3.11; citation audit 0 errors, the same 182 findings). The 37 `tools` test modules that read governance or fullstack documents were re-run on them. One module, `test_e11_measurement_currency`, fails when run **on its own** (4 tests, "imports X from tools, which no longer defines it"); it fails identically on the pre-program baseline `edb3beb` run the same way, because it checks attributes of the `tools` package that exist only after other tests have imported the submodules, and it passes inside the full `tools` discovery run above. It is an invocation artifact, not a result of this work.
 * **Working tree:** clean at the declaration.
 
 ## 11. Final re-discovery (independent, on current state)
