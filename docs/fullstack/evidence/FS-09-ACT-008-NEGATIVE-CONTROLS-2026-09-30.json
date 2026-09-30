@@ -1,0 +1,27 @@
+{
+ "act": "ACT-CC-POST-P13-AIOS-FULL-STACK-008 \u00a721",
+ "date": "2026-09-30",
+ "live": {
+  "production_deployments": [
+   "dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj"
+  ],
+  "production_deployment_commit": "22c0b49 (created 2026-09-27, before this program's FS-09; list_deployments target=production returned exactly this one)",
+  "environment_variable_targets": [
+   "preview"
+  ],
+  "environment_variables": [
+   "AIOS_OPERATOR_TOKENS (sensitive, preview only)",
+   "SUPABASE_SECRET_KEY (sensitive, preview only)"
+  ],
+  "hidden_production_env_count": 0,
+  "production_rows": 0,
+  "production_rows_checked": "SQL on hmljfyqycxcueulhsjae after the live suites, the rollback drill, the export and the UPDATE attempt",
+  "preview_fullstack_agents_rows": 5,
+  "temporary_bypass_count": 0,
+  "protection_enabled": true,
+  "protected_api_fail_closed": "without the bypass every protected route: 401 (platform) and, with the bypass during the window, 401 without Authorization (application)"
+ },
+ "undecidable_from_the_repository": [
+  "NC-07 and NC-08 are first-hand live facts; the repository can only show it changes nothing that Production serves"
+ ]
+}

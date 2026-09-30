@@ -75,3 +75,27 @@ each broken version is caught by the tests.
   retention and who runs it wait on the Founder (`OPERATIONAL-OWNERSHIP`).
 * **A restore into a second live project**, which waits on `ENVIRONMENT-SEPARATION`.
 * **Point-in-time recovery.** The free plan has none; the export is the recovery point.
+
+
+## 6. Final drill on current data (ACT-008 `§12`, 2026-09-30)
+
+The 2026-09-27 drill above (80 records) is now the **historical control**. The
+final drill repeats the procedure on the store as it stands after the final
+live suites.
+
+| # | Step | Result |
+|---|---|---|
+| 1 | Live digests (read-only SQL, `seq <= 510`) | 505 records, 206 462 bytes; partitions `fullstack-agents` 5, `fullstack-audit` 245, `fullstack-runs` 66, `trace` 189; whole-table SHA-256 `b70efff9…8de4` |
+| 2 | Export | every row materialized from its canonical JSON and accepted only when its SHA-256 equalled the database's for that row: **505 of 505**; `FS-09-BACKUP-EXPORT-2026-09-30.jsonl`, 317 729 bytes, SHA-256 `7fe7e26f…90e6` |
+| 3 | Integrity | every partition's joined digest and the whole table equal the database's (`FS-09-BACKUP-MANIFEST-2026-09-30.json`) |
+| 4 | Store unchanged | the same digests over `seq <= 510` after the export (append-only) |
+| 5 | Credential scan | none: the operator token, the temporary bypass secret, the Supabase key prefix, a JWT prefix, `Bearer`, `apikey`, `service_role`, `AIOS_OPERATOR_TOKENS`. Audit subjects `founder` or `null` |
+| 6 | Restore into an empty target | `backup-restore` into a fresh directory: identical; into `SupabaseStorage` over the in-memory PostgREST: identical; a second restore into the same directory is refused (*never merges*) |
+| 7 | Readability | the application reads 66 runs, resolves every run's Trace, lists 245 audit entries in order, 189 Trace records, and the **Agent Instance registrations** through the registry; the API serves them; a new run appends without touching any earlier record |
+
+Held by `fullstack/tests/test_backup_current.py` (15 tests) and by the gate row
+*Data: backup and restore*, which now restores this export on every evaluation.
+Not restored into the Production project: it holds 0 rows and stays apart.
+Runbook check for a backup before a Production deployment: `§7` then `§8`,
+exactly as above. What this does not establish is unchanged (`§5`): no
+schedule, no point-in-time recovery; cadence and owner wait on the Founder.

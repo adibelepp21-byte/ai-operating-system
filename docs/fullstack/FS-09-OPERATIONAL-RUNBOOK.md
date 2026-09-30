@@ -179,6 +179,16 @@ VERIFIED.*
 (`297e8b8`) back to `dpl_6xyzjXKxqcLkVdxHZ9QnXYQ46CZ4` (`7df974a`) and forward;
 same results (evidence `FS-09-LIVE-PREVIEW-2026-09-30.json`).
 
+**Final drill, 2026-09-30 (ACT-008 `§13`)**, on the commit the gate covers
+(`d05261c`, `dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER`): current → rolled back to
+`dpl_Gumff1FYuJP3L5agQrGtcwGqyY19` (`d6afbdc`) → rolled forward. Each phase was
+reachable (`/health` 200, anonymous 401), read a run written by the other
+version, and accepted a Scenario B run and a Scenario C run. Rolled back, the
+A2 routes answered 404, which proves which code served; the five Agent
+Instance registrations stayed in the store, unread there and read again after
+the roll-forward. The alias was left on the final deployment. This shows **data
+compatibility**; **operational safety** is the table in `§10`, unchanged by it.
+
 **A manually assigned alias stays pinned.** After `vercel alias` / an alias
 assignment, the branch alias no longer follows new pushes to the branch: on
 2026-09-30 it still served `dpl_8Znqrn818NgYy66RU7hz819t4ZTj` (`a4a11cf`) two
@@ -198,6 +208,7 @@ run's Trace. **Data compatibility does not make a rollback target safe.**
 | `0706446` (`FS-DP-05` C1) | **reintroduces the historical concurrency risk**: two Runtimes can give runs the same id, and a run's Trace range can include another run's records | **No** |
 | `215248f` (`FS-DP-02` B3) | **changes the authentication posture**: the function builds no authenticator from `AIOS_OPERATOR_TOKENS`, so the API authenticates nobody (every protected route `401`) | **No** |
 | `207ee77` | a malformed key is no longer named; the function fails with a generic 503 | degraded diagnosis |
+| `200bd81` (`FS-DP-07` A2) | the `/agent-definitions` and `/agent-instances` routes do not exist (404) and the console has no Agents view; registrations stay in the store, unread | degraded: Scenario A is unavailable |
 | `a4a11cf` (`FS-DP-06` L1) | no request log lines; Trace, audit and data unaffected | degraded observability |
 | `8d088fb` (`FS-DP-01` store, `FS-DP-04` function) | no API function and no Supabase store: `/api/v1/*` does not exist, only static files are served | **No** |
 
