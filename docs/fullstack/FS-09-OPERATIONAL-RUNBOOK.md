@@ -231,8 +231,30 @@ Trace and audit are unchanged and separate.
 | request log (L1) | one `fullstack.request/1` JSON line per request: time, `request_id`, method, route **template**, status, latency, `runtime_id`. Never a credential, body or raw path. Refusals before the Application (503) are logged too, with `runtime_id: null` | Vercel runtime logs (stdout); query `fullstack.request/1` |
 | metrics (M1) | derived from L1 lines: request count, status classes, server errors, p50/p95/max latency, per route | `python -m fullstack.backend metrics --log <exported log>` |
 | readiness (R2) | deployed `GET /api/v1/health` = 200 only after a Runtime started on the store; 503 otherwise | `§1` |
-| alerting | **none: unresolved.** No H1/H2/H3 option is selected (ACT-004 `§10` labelled R2 "Alerting"; R2 is readiness). Failures are found by `§1` checks | — |
+| alerting | **H3: none; manual checks** (Register `§98` `ACT-007-DG-02`, delegated under ACT-007). No automatic alert exists. R2 is readiness, not alerting. Failures are found by the checks in `§12.1` | `§12.1` |
 | backup freshness | the date of the latest export manifest (`§7`) | the evidence directory |
+
+### 12.1 Manual monitoring checks (H3)
+
+There is no alert: nobody is paged, and nothing watches the service between
+checks. These are the checks that stand in for one. **Residual: a failure is
+found only when a person runs them** (`FS-DP-06` `R2.10`). Choosing H1 or H2
+later needs the Founder's decisions on spending or an external service, on who
+receives alerts, and (H2) on an edge path to `/health` that protection X2
+denies; it supersedes this section.
+
+| Check | How | A problem looks like | Then |
+|---|---|---|---|
+| readiness (R2) | `GET /api/v1/health` (`§1`) | anything but 200 `{"status":"ok","runtime_state":"running"}` | `§3` dependency failure, `§4` persistence failure |
+| error rate (M1) | export the runtime log for the deployment (query `fullstack.request/1`), then `python -m fullstack.backend metrics --log <export>`; read `total.server_errors` and `status_classes` | `server_errors` above 0, or 4xx rising without a cause | `§11` incident handling |
+| refusals before the Application | L1 lines with `runtime_id: null` and status 503 | any | `§3`, `§4` |
+| backup freshness | the date of the latest export manifest (`§7`) | older than the last store change that matters | `§7` |
+| temporary access | the Protection Bypass for Automation list in Vercel (Deployment Protection) | any entry not under a current Act | revoke it; `§14` |
+
+**When:** on every verification by the executor, before and after any deploy,
+rollback or restore, and by the operator at will. No schedule is imposed.
+**Who:** as `FS-09-OPERATIONAL-OWNERSHIP.md` `§6`. **Not an alert:** R2 tells a
+person who asks; it never tells anyone unasked.
 
 Verified live on 2026-09-28: all 45 function requests of the FS-09 suite appear
 in the host log with their `request_id`; metrics derived from those lines. The

@@ -99,6 +99,35 @@ class A1NoRouteCreatesAnAgent(unittest.TestCase):
                          {s["actor"] for s in run["steps"]})
         self.assertEqual(3, len(h.aios.run_trace(run["run_id"])))
 
+    # ACT-007-DG-01 (Register `§98`): A1 applies; Scenario A is classified outside
+    # the present FS-09 envelope. What conforms to that is an absence, so the
+    # absences are tested: no registration path, no authoring path, no control,
+    # no Agent partition.
+
+    def test_no_served_code_registers_or_authors_an_agent(self):
+        reserved = re.compile(r"agent_instance_registry|aios\.agent\.register|AgentDefinition\(",
+                              re.IGNORECASE)
+        for path in SERVED:
+            with self.subTest(file=path.name):
+                self.assertIsNone(reserved.search(path.read_text(encoding="utf-8")),
+                                  "P11-W4 registration authority is not reused (FS-DP-07 R2.3)")
+
+    def test_the_console_offers_no_way_to_create_an_agent(self):
+        control = re.compile(r"(create|register|add|new|author)[-_ ]?(an? )?agent", re.IGNORECASE)
+        for path in sorted((REPO_ROOT / "fullstack/frontend").glob("*.*")):
+            with self.subTest(file=path.name):
+                self.assertIsNone(control.search(path.read_text(encoding="utf-8")))
+
+    def test_no_agent_record_is_ever_stored(self):
+        h = Harness()
+        self.addCleanup(h.close)
+        h.call("POST", "/api/v1/runs", OPERATOR_TOKEN, body={
+            "workflow": "document-conformance-review",
+            "inputs": {"document": "docs/architecture/AIOS_ARCHITECTURE_FREEZE_v1.0.md",
+                       "criteria": ["INV-4"]}})
+        self.assertEqual({"trace", "fullstack-runs", "fullstack-audit"},
+                         set(h.aios.storage.partitions()))
+
 
 if __name__ == "__main__":
     unittest.main()

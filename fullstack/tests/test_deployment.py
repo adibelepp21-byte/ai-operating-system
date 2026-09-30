@@ -277,18 +277,19 @@ class ThePerRequestFunction(unittest.TestCase):
                     '"sb_secret_abc"', "sb_secret_abcé"):
             with self.subTest(key=repr(bad)):
                 app = vercel.make_app(storage_factory=lambda b=bad: vercel.storage_from_environment(
-                    {"SUPABASE_SECRET_KEY": b}, transport=self.fake))
+                    {"VERCEL_ENV": "preview", "SUPABASE_SECRET_KEY": b}, transport=self.fake))
                 status, _, body = call(app, "GET", "/api/v1/health")
                 self.assertEqual(503, status)
                 self.assertIn("cannot be sent", body["detail"])
                 self.assertNotIn("sb_secret", json.dumps(body))
         self.assertEqual([], self.fake.calls)
-        good = vercel.storage_from_environment({"SUPABASE_SECRET_KEY": f"  {KEY}\n"},
-                                               transport=self.fake)
+        good = vercel.storage_from_environment(
+            {"VERCEL_ENV": "preview", "SUPABASE_SECRET_KEY": f"  {KEY}\n"}, transport=self.fake)
         self.assertIsInstance(good, SupabaseStorage)
 
     def test_no_key_means_503_and_nothing_else(self):
-        app = vercel.make_app(storage_factory=lambda: vercel.storage_from_environment({}))
+        app = vercel.make_app(storage_factory=lambda: vercel.storage_from_environment(
+            {"VERCEL_ENV": "preview"}))
         for path in ("/api/v1/health", "/api/v1/runs"):
             status, headers, body = call(app, "GET", path)
             self.assertEqual((503, "unavailable"), (status, body["error"]))
@@ -317,12 +318,14 @@ class ThePerRequestFunction(unittest.TestCase):
         self.assertNotIn("LocalAppendOnlyStorage", source)
         self.assertNotIn("data_dir", source)
 
-    def test_the_store_is_the_ratified_project(self):
-        store = vercel.storage_from_environment({"SUPABASE_SECRET_KEY": KEY,
+    def test_the_preview_store_is_the_ratified_project(self):
+        store = vercel.storage_from_environment({"VERCEL_ENV": "preview",
+                                                 "SUPABASE_SECRET_KEY": KEY,
                                                  "SUPABASE_URL": "https://other.supabase.co"})
         self.assertEqual("SupabaseStorage('https://scfymftfzkpilqbgmfwv.supabase.co/rest/v1')",
                          repr(store))
-        self.assertIsNone(vercel.storage_from_environment({"SUPABASE_SECRET_KEY": "  "}))
+        self.assertIsNone(vercel.storage_from_environment(
+            {"VERCEL_ENV": "preview", "SUPABASE_SECRET_KEY": "  "}))
 
 
 class _SerializedDatabase:

@@ -8,8 +8,12 @@ HTTP request → this adapter → Application (API v1) → AIOSApplication
 
 For every request the adapter:
 
-1. builds the ratified store, `SupabaseStorage` on project
-   `scfymftfzkpilqbgmfwv`, with the server-side key from the environment;
+1. resolves the deployment environment (`VERCEL_ENV`) and builds the store for
+   it, `SupabaseStorage` on that environment's project (FS-09-ENV E1: Preview
+   `scfymftfzkpilqbgmfwv`, Production `hmljfyqycxcueulhsjae`), with the
+   server-side key from the same environment. An environment that is neither
+   `preview` nor `production` (absent, `development`, misspelt) resolves to no
+   store: every API route answers 503 and no database is called;
 2. bootstraps a fresh Runtime on it (`AIOSApplication.start`), whose identity
    is unique to this request;
 3. serves the request through the unchanged API v1 `Application`: the same
@@ -52,9 +56,21 @@ from fullstack.backend.security import (
 from fullstack.backend.supabase_storage import SupabaseStorage, StorageUnavailable
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-#: The ratified project (FS-ARCH-RAT-001 `§11.1`). Not configurable, so the
-#: deployment cannot be pointed at another database by an environment variable.
-SUPABASE_PROJECT_URL = "https://scfymftfzkpilqbgmfwv.supabase.co"
+#: FS-09-ENV E1 (ACT-004 DG-04, Register `§93`): one Supabase project per
+#: deployment environment, amending FS-ARCH-RAT-001 `§11.1` from one project to
+#: one per environment. Fixed in code, keyed by Vercel's own `VERCEL_ENV`, so
+#: the deployment cannot be pointed at another database by a variable an
+#: operator sets. Each environment's key is a Vercel variable scoped to that
+#: environment alone.
+SUPABASE_PROJECTS = {
+    "preview": "https://scfymftfzkpilqbgmfwv.supabase.co",
+    "production": "https://hmljfyqycxcueulhsjae.supabase.co",
+}
+#: The Preview project (the ratified project of FS-ARCH-RAT-001 `§11.1`).
+SUPABASE_PROJECT_URL = SUPABASE_PROJECTS["preview"]
+#: The variable Vercel sets on every deployment: `production`, `preview` or
+#: `development`. Only the first two name a project; anything else is refused.
+ENVIRONMENT_VARIABLE = "VERCEL_ENV"
 #: Where the operator puts the server-side key, first match wins. The value is
 #: read here and handed to the store; it is never logged or returned.
 KEY_VARIABLES = ("SUPABASE_SECRET_KEY", "SUPABASE_SERVICE_ROLE_KEY")
@@ -70,8 +86,28 @@ class MalformedKey(ValueError):
     """The configured key cannot be sent. The message never quotes it."""
 
 
+class UnknownEnvironment(ValueError):
+    """The deployment environment names no project (FS-09-ENV E1, Fail Closed).
+    The message never quotes the observed value."""
+
+
+def project_url_for(environment: Mapping[str, str] = os.environ) -> str:
+    """The Supabase project of this deployment's environment, or refuse.
+
+    The value must be exactly `preview` or `production`, as Vercel sets it. It
+    is never trimmed, folded or defaulted: a deployment whose environment
+    cannot be read safely must not guess a database."""
+    name = environment.get(ENVIRONMENT_VARIABLE)
+    if name not in SUPABASE_PROJECTS:
+        raise UnknownEnvironment(
+            f"the deployment environment ({ENVIRONMENT_VARIABLE}) is not 'preview' or "
+            "'production', so no database is selected")
+    return SUPABASE_PROJECTS[name]
+
+
 def storage_from_environment(environment: Mapping[str, str] = os.environ,
                              **options) -> Optional[SupabaseStorage]:
+    project_url = project_url_for(environment)   # refuses before any key is read
     key = next((environment[v] for v in KEY_VARIABLES if environment.get(v, "").strip()),
                None)
     if key is None:
@@ -81,7 +117,7 @@ def storage_from_environment(environment: Mapping[str, str] = os.environ,
         raise MalformedKey("the server-side database key contains a character that cannot "
                            "be sent (a line break, space, quote or non-ASCII character); "
                            "enter it again as one line")
-    return SupabaseStorage(SUPABASE_PROJECT_URL, key, **options)
+    return SupabaseStorage(project_url, key, **options)
 
 
 def _refusal(start_response, status: int, error: str, detail: str,
@@ -144,7 +180,7 @@ def make_app(storage_factory: Callable[[], Optional[object]] = storage_from_envi
                           "this function serves /api/ only; the console is static")
         try:
             storage = storage_factory()
-        except MalformedKey as error:
+        except (MalformedKey, UnknownEnvironment) as error:
             print(f"storage not configured: {error}", file=sys.stderr)
             return refuse(503, "unavailable", str(error))
         if storage is None:

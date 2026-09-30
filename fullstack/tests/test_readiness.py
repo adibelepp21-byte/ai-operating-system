@@ -55,17 +55,18 @@ class Ratification(unittest.TestCase):
 class TheGate(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.live = readiness.evaluate(runs=2)
+        # The gate's logic when the recording covers the tree. Whether it really
+        # does is a separate fact, tested in `TheRecordingAsItStandsToday`.
+        cls.recorded = readiness.preview_record()
+        cls.covering = dict(cls.recorded, current=True)
+        cls.live = readiness.evaluate(runs=2, preview=cls.covering)
         cls.by_name = {f"{c['area']}: {c['criterion']}": c for c in cls.live["criteria"]}
 
     def test_it_is_not_ready_and_says_exactly_why(self):
         self.assertEqual(NOT_READY, self.live["result"])
-        self.assertEqual(["ALERTING-SELECTION", "BYPASS-REVOCATION", "E1-DEPLOYMENT-WIRING",
-                          "SCENARIO-A-RESIDUAL"], self.live["awaiting"])
+        self.assertEqual(["BYPASS-REVOCATION"], self.live["awaiting"])
         self.assertEqual([], [n for n, c in self.by_name.items() if c["status"] == FAIL])
-        self.assertEqual(["Functionality: agent creation (Scenario A)",
-                          "Security: temporary access revoked", "Observability: alerting",
-                          "Data: environment separation"],
+        self.assertEqual(["Security: temporary access revoked"],
                          [n for n, c in self.by_name.items() if c["status"] == BLOCKED])
 
     def test_every_measurable_criterion_passes(self):
@@ -111,7 +112,7 @@ class TheGate(unittest.TestCase):
         self.assertIn("not recorded PASS", live[0]["evidence"])
 
     def test_recorded_live_evidence_never_covers_a_local_failure(self):
-        record = readiness.preview_record()
+        record = self.covering
         check = ["authenticated POST creates a run"]
         self.assertEqual(PASS, readiness._live("A", "c", True, "ok", check, record)["status"])
         self.assertEqual(FAIL, readiness._live("A", "c", False, "no", check, record)["status"])
@@ -124,11 +125,13 @@ class TheGate(unittest.TestCase):
         gate = readiness.evaluate(runs=1, preview=stale)
         live = [c for c in gate["criteria"] if readiness.PREVIEW in c["evidence_class"]
                 and c["status"] != OBSERVED]
-        self.assertEqual({FAIL}, {c["status"] for c in live})
+        # Not verified is not failed (ACT-007 15): BLOCKED on a named dependency,
+        # never PASS and never FAIL.
+        self.assertEqual({BLOCKED}, {c["status"] for c in live})
+        self.assertEqual({("LIVE-REVERIFICATION",)}, {tuple(c["blocked_by"]) for c in live})
         self.assertIn("served code changed", live[0]["evidence"])
-
-    def test_the_served_code_is_what_the_preview_was_verified_on(self):
-        self.assertTrue(readiness.preview_record()["current"])
+        self.assertIn("LIVE-REVERIFICATION", gate["awaiting"])
+        self.assertEqual(NOT_READY, gate["result"])
 
     def test_rollback_rests_on_the_recorded_drill_and_names_the_floors(self):
         rollback = self.by_name["Reliability: rollback of a deployment"]
@@ -156,13 +159,14 @@ class TheGate(unittest.TestCase):
                       ["residual"])
 
     def test_what_remains_is_named_not_taken(self):
-        self.assertEqual(set(readiness.OTHER_DECISIONS), set(self.live["other_decisions"]))
+        # Scenario A and alerting are decided by the ACT-007 entries (Register 98);
+        # E1 wiring is measured; the stale-recording dependency applies only while
+        # the recording is stale. What is left is the bypass.
         others = self.live["other_decisions"]
-        self.assertTrue(others["ALERTING-SELECTION"].startswith("Founder as Architect"))
-        self.assertIn("R2 is the readiness signal", others["ALERTING-SELECTION"])
-        self.assertTrue(others["SCENARIO-A-RESIDUAL"].startswith("Founder"))
-        self.assertTrue(others["E1-DEPLOYMENT-WIRING"].startswith("Execution permission"))
+        self.assertEqual({"BYPASS-REVOCATION"}, set(others))
         self.assertTrue(others["BYPASS-REVOCATION"].startswith("Execution permission"))
+        self.assertIn("R2 is the readiness signal", readiness.OTHER_DECISIONS["ALERTING-SELECTION"])
+        self.assertNotIn("E1-DEPLOYMENT-WIRING", readiness.OTHER_DECISIONS)
         for package in readiness.PACKAGES:
             self.assertTrue(self.live["decision_packages"][package].startswith("RATIFIED"))
 
@@ -175,12 +179,12 @@ class TheGate(unittest.TestCase):
                      "Data: migration"):
             with self.subTest(criterion=name):
                 self.assertEqual(PASS, self.by_name[name]["status"])
-        self.assertEqual(["ALERTING-SELECTION"],
-                         self.by_name["Observability: alerting"]["blocked_by"])
+        for name in ("Observability: alerting", "Functionality: agent creation (Scenario A)"):
+            self.assertEqual(PASS, self.by_name[name]["status"], name)
 
     def test_ratification_alone_does_not_make_it_ready(self):
         """Every decision taken still leaves unimplemented work: BLOCKED becomes FAIL."""
-        gate = readiness.evaluate(runs=1, register_text=RATIFY_ALL,
+        gate = readiness.evaluate(runs=1, register_text=RATIFY_ALL, preview=self.covering,
                                   decisions=list(readiness.OTHER_DECISIONS))
         self.assertEqual(NOT_READY, gate["result"])
         self.assertEqual([], gate["awaiting"])
@@ -290,6 +294,198 @@ class TheGate(unittest.TestCase):
     def test_external_dependencies_are_named(self):
         self.assertEqual(["EXT-02", "EXT-03", "EXT-04"],
                          [d["id"] for d in self.live["external_dependencies"]])
+
+
+DELEGATED_ENTRY = (
+    "### ACT-007-DG-{n} — Delegated Decision · fixture\n\n| Field | Value |\n|---|---|\n"
+    "| **Decided by** | {by} |\n| **Ratifies** | {ident} |\n| **Decision** | {decision} |\n")
+
+
+class DelegatedDecisions(unittest.TestCase):
+    """ACT-007 5 and 6: Scenario A and alerting can be decided by a Register
+    entry that names ACT-007, and by nothing else."""
+
+    def entry(self, ident, decision, by="Claude Code, under the delegated authority of ACT-007 3"):
+        return DELEGATED_ENTRY.format(n=1, by=by, ident=ident, decision=decision)
+
+    def test_an_act_007_entry_is_read_with_its_option(self):
+        found = readiness.delegated(
+            self.entry("SCENARIO-A-RESIDUAL", "**A1 applies and stays in force**")
+            + self.entry("ALERTING-SELECTION", "**Alerting = H3.** Residual stated"))
+        self.assertEqual({"SCENARIO-A-RESIDUAL": "A1", "ALERTING-SELECTION": "H3"},
+                         {k: v["option"] for k, v in found.items()})
+
+    def test_an_entry_that_does_not_name_act_007_decides_nothing(self):
+        for by in ("Architect", "Founder", "Claude Code"):
+            with self.subTest(by=by):
+                self.assertEqual({}, readiness.delegated(
+                    self.entry("ALERTING-SELECTION", "**Alerting = H3.**", by=by)))
+
+    def test_a_proposal_or_a_neighbouring_id_decides_nothing(self):
+        self.assertEqual({}, readiness.delegated(
+            "### X\n\n| **Ratifies** | ALERTING-SELECTION |\n| **Decision** | **H3** |\n"))
+        self.assertEqual({}, readiness.delegated(
+            self.entry("ALERTING-SELECTIONS", "**H3**") + self.entry("XSCENARIO-A-RESIDUAL", "**A1**")))
+
+    def test_the_register_holds_both_decisions_today(self):
+        found = readiness.delegated(readiness.REGISTER.read_text(encoding="utf-8"))
+        self.assertEqual({"SCENARIO-A-RESIDUAL": "A1", "ALERTING-SELECTION": "H3"},
+                         {k: v["option"] for k, v in found.items()})
+        self.assertTrue(all(v["entry"].startswith("ACT-007-DG-") for v in found.values()))
+
+    def test_without_the_entries_both_rows_wait(self):
+        record = dict(readiness.preview_record(), current=True)
+        gate = readiness.evaluate(runs=1, register_text=RATIFY_ALL, preview=record)
+        by = {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}
+        self.assertEqual(BLOCKED, by["Functionality: agent creation (Scenario A)"]["status"])
+        self.assertEqual(BLOCKED, by["Observability: alerting"]["status"])
+        self.assertEqual({"SCENARIO-A-RESIDUAL", "ALERTING-SELECTION"},
+                         {d for c in gate["criteria"] for d in c["blocked_by"]} - {"BYPASS-REVOCATION"})
+
+    def test_the_scenario_a_classification_needs_the_absences_to_hold(self):
+        from unittest import mock
+        record = dict(readiness.preview_record(), current=True)
+        with mock.patch.object(readiness, "_a1_holds", return_value=False):
+            gate = readiness.evaluate(runs=1, preview=record)
+        by = {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}
+        self.assertEqual(FAIL, by["Functionality: agent creation (Scenario A)"]["status"])
+        self.assertEqual(FAIL, by["Functionality: A1: no route creates an Agent"]["status"])
+
+    def test_the_scenario_a_row_says_it_is_not_executed_and_who_can_reverse_it(self):
+        record = dict(readiness.preview_record(), current=True)
+        gate = readiness.evaluate(runs=1, preview=record)
+        row = {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}[
+            "Functionality: agent creation (Scenario A)"]
+        self.assertEqual(PASS, row["status"])
+        self.assertIn("NOT executed", row["evidence"])
+        self.assertIn("delegated", row["evidence"])
+        self.assertIn("A2", row["residual"])
+        self.assertIn("reversed by the Founder", row["residual"])
+
+
+class TheAlertingSelection(unittest.TestCase):
+
+    def setUp(self):
+        self.record = dict(readiness.preview_record(), current=True)
+
+    def row(self, **patches):
+        from unittest import mock
+        with mock.patch.multiple(readiness, **patches) if patches else mock.patch.dict({}):
+            gate = readiness.evaluate(runs=1, preview=self.record)
+        return {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}["Observability: alerting"]
+
+    def test_h3_passes_with_its_residual_stated(self):
+        row = self.row()
+        self.assertEqual(PASS, row["status"])
+        self.assertIn("H3", row["evidence"])
+        self.assertIn("no automatic alert", row["residual"])
+        self.assertIn("R2 is readiness, not alerting", row["residual"])
+
+    def missing_after(self, marker):
+        """What `_h3_missing` reports when the runbook loses `marker`."""
+        import tempfile
+        from pathlib import Path
+        from unittest import mock
+        text = readiness.RUNBOOK.read_text(encoding="utf-8").replace(marker, "REMOVED")
+        with tempfile.TemporaryDirectory() as tmp:
+            mutated = Path(tmp) / "runbook.md"
+            mutated.write_text(text, encoding="utf-8")
+            with mock.patch.object(readiness, "RUNBOOK", mutated):
+                return readiness._h3_missing()
+
+    def test_h3_fails_when_the_runbook_loses_its_manual_checks(self):
+        missing = self.missing_after("### 12.1 Manual monitoring checks (H3)")
+        self.assertEqual(["### 12.1 Manual monitoring checks (H3)"], missing)
+        row = readiness._alerting_row({"entry": "ACT-007-DG-02 — x", "option": "H3"}, missing)
+        self.assertEqual(FAIL, row["status"])
+        self.assertIn("### 12.1 Manual monitoring checks (H3)", row["evidence"])
+        self.assertEqual([], readiness._h3_missing())
+
+    def test_each_manual_check_is_required(self):
+        for marker in readiness.H3_MARKERS:
+            with self.subTest(marker=marker):
+                self.assertEqual([marker], self.missing_after(marker))
+
+    def test_h1_and_h2_are_not_implementable_inside_fs09(self):
+        for option in ("H1", "H2"):
+            with self.subTest(option=option):
+                row = readiness._alerting_row({"entry": "ACT-007-DG-02 — x", "option": option}, [])
+                self.assertEqual(FAIL, row["status"])
+                self.assertIn("Founder-reserved", row["evidence"])
+
+    def test_the_runbook_keeps_readiness_and_alerting_apart(self):
+        text = readiness.RUNBOOK.read_text(encoding="utf-8")
+        self.assertIn("R2 is readiness, not alerting", text)
+        self.assertIn("never tells anyone unasked", text)
+
+
+class TheEnvironmentWiring(unittest.TestCase):
+
+    def setUp(self):
+        self.record = dict(readiness.preview_record(), current=True)
+
+    def row(self, **patches):
+        from unittest import mock
+        from fullstack.deploy import vercel
+        with mock.patch.multiple(vercel, **patches):
+            gate = readiness.evaluate(runs=1, preview=self.record)
+        return {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}["Data: environment separation"]
+
+    def test_the_wiring_is_measured_from_the_real_resolver(self):
+        measured = readiness._environment_wiring()
+        self.assertTrue(measured["ok"])
+        self.assertEqual("5 of 5", measured["unresolved_refused"])
+        gate = readiness.evaluate(runs=1, preview=self.record)
+        row = {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}[
+            "Data: environment separation"]
+        self.assertEqual(PASS, row["status"])
+        self.assertEqual([readiness.LOCAL, readiness.PREVIEW], row["evidence_class"])
+        self.assertIn("not live", row["residual"])
+
+    def test_two_environments_on_one_project_fail(self):
+        same = {"preview": readiness.PREVIEW_PROJECT, "production": readiness.PREVIEW_PROJECT}
+        self.assertEqual(FAIL, self.row(SUPABASE_PROJECTS=same)["status"])
+
+    def test_the_projects_swapped_fail(self):
+        swapped = {"preview": readiness.PRODUCTION_PROJECT, "production": readiness.PREVIEW_PROJECT}
+        self.assertEqual(FAIL, self.row(SUPABASE_PROJECTS=swapped)["status"])
+
+    def test_an_environment_that_falls_back_to_preview_fails(self):
+        from fullstack.deploy import vercel
+        real = vercel.SUPABASE_PROJECTS
+
+        def lenient(environment=None):
+            return real.get((environment or {}).get("VERCEL_ENV"), real["preview"])
+        self.assertEqual(FAIL, self.row(project_url_for=lenient)["status"])
+
+
+class TheRecordingAsItStandsToday(unittest.TestCase):
+    """The Preview recording is a fact about a commit. When the served code has
+    outgrown it, the gate must say so, and must not pass on it."""
+
+    def test_a_recording_the_code_has_outgrown_is_never_hidden(self):
+        recorded = readiness.preview_record()
+        gate = readiness.evaluate(runs=1)
+        live = [c for c in gate["criteria"] if readiness.PREVIEW in c["evidence_class"]
+                and c["status"] != OBSERVED]
+        self.assertTrue(live)
+        if recorded["current"]:
+            self.assertNotIn("LIVE-REVERIFICATION", gate["awaiting"])
+            self.assertEqual({PASS}, {c["status"] for c in live})
+        else:
+            self.assertIn("LIVE-REVERIFICATION", gate["awaiting"])
+            self.assertEqual({BLOCKED}, {c["status"] for c in live})
+            self.assertEqual(NOT_READY, gate["result"])
+            self.assertIn("LIVE-REVERIFICATION", gate["other_decisions"])
+            self.assertIn("forbid creating a new bypass",
+                          gate["other_decisions"]["LIVE-REVERIFICATION"])
+
+    def test_the_decision_rows_do_not_depend_on_the_recording(self):
+        gate = readiness.evaluate(runs=1)
+        by = {f"{c['area']}: {c['criterion']}": c for c in gate["criteria"]}
+        for name in ("Functionality: agent creation (Scenario A)", "Observability: alerting",
+                     "Functionality: A1: no route creates an Agent"):
+            self.assertEqual(PASS, by[name]["status"], name)
 
 
 if __name__ == "__main__":

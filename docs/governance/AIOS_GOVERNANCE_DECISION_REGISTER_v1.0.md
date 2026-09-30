@@ -9719,3 +9719,56 @@ Record of execution, not a decision. Nothing here ratifies, selects or authorize
 | **Not delegated** (`§3`, `§20`, `§22`, `§23`) | Constitution, Mission, Governance Model, Founder-reserved authority; certified P12/P13 roots; Native Core; Phase 14; P13 reopening; Production release or LIVE; a new bypass; disabling protection; spending; any authority outside FS-09 |
 | **Rule carried into every decision** (`§4.2`) | SOURCE · REQUIREMENT · OPTIONS CONSIDERED · DECISION · RATIONALE · BOUNDARY · VERIFICATION · EVIDENCE. Decisions made under this delegation are recorded as **delegated** decisions, not as Founder decisions |
 | **Execution record** | `docs/fullstack/FS-09-ACT-007-EXECUTION-RECORD.md`; final state in a closing Register entry |
+
+---
+
+## 98. ACT-007 Delegated Architect Decisions — Scenario A Classification and Alerting Selection (2026-09-30)
+
+Made by Claude Code under the **bounded delegated Architect authority** the Founder granted for FS-09 only in `ACT-CC-POST-P13-AIOS-FULL-STACK-007` `§3`, `§5`, `§6`. They are **delegated decisions, not Founder decisions**: the delegation expires at the Act's terminal state, and the Founder may reverse either by a later instrument. Neither creates authority beyond FS-09 (ACT-007 `§20`). Each rows-set follows ACT-007 `§4.2`.
+
+### ACT-007-DG-01 — Delegated Decision (ACT-007 §5) · Scenario A = A1 applies; outside the present FS-09 envelope
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-007-DG-01` |
+| **Date** | 2026-09-30 |
+| **Decided by** | Claude Code, under the bounded delegated Architect authority of ACT-007 `§3` and `§5` (FS-09 only). Not a Founder decision |
+| **Ratifies** | SCENARIO-A-RESIDUAL |
+| **Source** | ACT-001 `§18` (FS-07, mandatory class) and `§20` (*"residual non-blocking findings classified"*); `FS-DP-07` revision 1 and 2 (`R2.3`–`R2.17`); ACT-004 `§12`–`§13` and Register `§93` `ACT-004-DG-03` (A1 ratified; residual classification *not decided*); `FS-09-DECISION-REGISTER.md` `§2.1`; ACT-005 `§7` |
+| **Requirement** | Scenario A: *User → Create Agent → Backend → AIOS Agent Capability → Persist → Result*. A user creates an Agent through the application and it is persisted and returned |
+| **Options considered** | **A1** keep reserved: the application shows the Agent Instances that act and creates none. **A2** instance registration only, under a new scope `aios.agent.register`; it needs an **authority instrument** extending `FD-P11-001 §7`-style registration to the application (`R2.5`, `R2.14`). **A3** full Agent Factory: crosses Platform Division authority over Definitions (`R2.7`). No other option exists or is invented |
+| **Decision** | **A1 applies and stays in force** (ratified by the Founder as Architect; not revoked, not overridden). A1 **cannot execute** Scenario A, by design (`R2.7`: *"Scenario A stays impossible, contrary to its mandatory status, unless classified"*). The only defined option that would make it executable is A2, whose precondition (the authority instrument) does not exist and is not created by ACT-007; A3 is excluded. Therefore **Scenario A is classified outside the present FS-09 architecture envelope: not executed, and a non-blocking residual for the FS-09 gate** (`R2.11`, `R2.15`, the A1 path) |
+| **Rationale** | (1) A1 is the Founder's ratified decision and ranks above this delegation (ACT-007 `§4.1`). (2) Choosing A2 would add a route, a scope, a security surface and an append-only registration partition (*"a registration can never be deleted"*, `R2.8`): a new capability, which ACT-007 `§4.3` sends to escalation unless clearly inside the envelope, and it would need an instrument from the owner of `FD-P11-001` that no instrument in the repository supplies. *Unknown authority is not authorized* (ACT-005 `§7`). (3) FS-09 is a readiness program; building an Agent creation surface is feature construction. (4) The classification the package reserved to the Founder (`R2.5`) is the one ACT-007 `§5.1` delegates |
+| **Ambiguity recorded, not resolved** | ACT-004 `§12` says *"Claude may implement the A1 Agent Creation architecture and all supporting mechanisms required to make it operational"*, while the package defines A1 as creating none. This decision follows the ratified identifier as the package defines it (as ACT-005 did); ACT-004 `§13` (*"A1 does not authorize … general autonomous Agent architecture"*) is consistent with that reading. If the Founder meant an operational creation path, that is A2 and needs its instrument |
+| **Boundary** | No Agent architecture is created. No A2/A3 route, scope, partition or registry use. `FS-DP-07` stays RATIFIED A1. ACT-001 `§18` is not rewritten: Scenario A remains a mandatory class for any program that adopts A2 or A3. This is not a statement that Scenario A works, and not Founder Acceptance |
+| **Verification** | conformance is an absence, tested: only state-changing route is `POST /api/v1/runs`; no route names an Agent; no served code references the P11 registry or an `aios.agent.register` scope; the console has no create/register-agent control; the store holds only the `trace`, `fullstack-runs` and `fullstack-audit` partitions (`fullstack/tests/test_architecture_conformance.py`); gate row *Functionality: agent creation (Scenario A)* and *A1: no route creates an Agent* |
+| **Evidence** | `docs/fullstack/FS-09-ACT-007-EXECUTION-RECORD.md`; `docs/fullstack/evidence/FS-09-ACT-007-REDISCOVERY-2026-09-30.json` |
+| **What would reverse it** | a Founder instrument that chooses A2 and supplies the authority extending `FD-P11-001 §7` to the application; then Scenario A is executed live on a Preview |
+
+### ACT-007-DG-02 — Delegated Decision (ACT-007 §6) · FS-DP-06 Alerting = H3
+
+| Field | Value |
+|---|---|
+| **Identifier** | `ACT-007-DG-02` |
+| **Date** | 2026-09-30 |
+| **Decided by** | Claude Code, under the bounded delegated Architect authority of ACT-007 `§3` and `§6` (FS-09 only). Not a Founder decision |
+| **Ratifies** | ALERTING-SELECTION |
+| **Source** | `FS-DP-06` revision 2 `R2.4`–`R2.16` (committed `5941d72`; option definitions unchanged; only the Status row changed at `7df974a`); ACT-001 `§20`; ACT-003 `§19`; Register `§93` `ACT-004-DG-02` (L1/M1/R2 only); ACT-007 `§6.1`–`§6.5` |
+| **Requirement** | observability includes alerting (ACT-001 `§20`); monitoring, alerting and operational ownership (ACT-003 `§19`). Logging (L1), Metrics (M1), Alerting and Readiness (R2) stay distinct; **R2 = readiness and is not an alerting option** |
+| **Options considered** (`R2.6`, verbatim) | **H1** the host's alerting, if the plan provides it (possibly paid) · **H2** an external uptime check on `/api/v1/health` (a third party) · **H3** none; the runbook's manual checks. No fourth option |
+| **Comparison** | see below |
+| **Decision** | **Alerting = H3.** *Residual stated:* no automated alert exists; failures are found only when a person runs the checks (`R2.10`). R2 is unchanged and remains the readiness signal |
+| **Rationale** | H1 and H2 each need something this delegation cannot supply (below), and ACT-007 `§6.4` forbids silently introducing a paid service, a new monitoring platform or a spending commitment. H3 is the only defined option that is fully inside FS-09: no spending, no third party, no edge change, no new credential. `R2.16` itself anticipates *"H1 or H3 with the residual stated"* |
+| **Boundary** | H3 does **not** decide spending, an external service, or who receives alerts (Founder-reserved, `R2.5`). H1 and H2 stay available to the Founder later; choosing one supersedes this entry. No fourth option, no new monitoring platform, no paid service |
+| **Verification** | runbook `§12.1` holds the manual checks (signal, method, problem signal, next step, when, who, residual) and the gate checks its content; the checks were run once on 2026-09-30 against the live posture (the drill in the evidence file); `test_readiness.py` |
+| **Evidence** | `docs/fullstack/FS-09-OPERATIONAL-RUNBOOK.md` `§12.1`; `docs/fullstack/FS-09-OPERATIONAL-OWNERSHIP.md` `§6`; the execution record; the evidence file |
+
+| Comparison (ACT-007 `§6.3`) | H1 host alerting | H2 external uptime check | H3 none; manual checks |
+|---|---|---|---|
+| **Requirement fit** | would satisfy the need for automatic detection | same | does not detect automatically; satisfies the option set with a stated residual |
+| **Operational effect** | alerts on host-visible conditions | alerts on `/health` only | failures found when a person looks |
+| **Dependencies** | plan entitlement (**not established**: the documentation retrieved does not state which plans include alerts); an alert rule, for which this session holds **no control** (the Vercel connector has no alert-rule operation; the CLI is not authenticated); a named recipient (Founder-reserved) | a third-party service (Founder-reserved); an **edge path to `/health`**: under ratified N1/X2 every URL answers 302 to Vercel SSO, so a monitor is reached only through a bypass or by unprotecting, both forbidden (ACT-007 `§23`) | runbook `§12.1`; ownership `§6` |
+| **Cost / resource** | possibly paid (D3-A): not authorizable here | a service account, possibly paid | none |
+| **Security effect** | a notification channel carrying operational data | puts an external party on the monitoring path; needs `/health` reachable | none |
+| **Verification method** | induced failure raises an alert to the recorded owner (`R2.11` item 5): impossible without rule, recipient and access | same | checks run against the live posture; content gate |
+| **Within ACT-007?** | **no** (control, recipient, possible spend) | **no** (third party, edge) | **yes** |

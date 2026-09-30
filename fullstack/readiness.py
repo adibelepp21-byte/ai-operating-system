@@ -5,7 +5,9 @@
 Every criterion of Act `§20` (and ACT-003 `§19`) gets one of:
 
 * **PASS**: met, on the evidence named in the criterion;
-* **FAIL**: not met, or not verified (a gap to close);
+* **FAIL**: affirmatively tested and found not met, or a check that was
+  recorded as not passing (a gap to close). *Not verified is not failed*
+  (ACT-007 `§15`): a recording the served code has outgrown is BLOCKED;
 * **BLOCKED**: cannot be met until a named decision is taken (an Architect
   package ratified, a Founder decision recorded), or an external dependency
   is supplied;
@@ -21,7 +23,8 @@ Each criterion also says **which evidence** it rests on (``evidence_class``):
   **historical**: read from that file, never re-measured here, and never
   relabelled as local. They count only while the code the Preview serves is
   unchanged since the recorded commit; any change there turns the criterion
-  to FAIL until the Preview is verified again.
+  to BLOCKED on `LIVE-REVERIFICATION` until the Preview is verified again. It
+  never passes on the old recording.
 * ``operator-recorded``: taken by the operator on the live store and persisted
   as evidence (the FS-09 logical export and its server-computed digests).
 * ``local-recorded``: measured locally once and recorded in a document, not
@@ -74,15 +77,18 @@ READY, NOT_READY = "PRODUCTION READY", "NOT PRODUCTION READY"
 #: execution-permission dependencies (ACT-005 `§9`), each recorded in
 #: `docs/fullstack/FS-09-DECISION-REGISTER.md` and the ACT-005 execution record.
 OTHER_DECISIONS = {
-    "ALERTING-SELECTION": "Founder as Architect: FS-DP-06 alerting (H1, H2 or H3). ACT-004 "
-                          "ratified L1/M1/R2; R2 is the readiness signal, so no alerting "
-                          "option is selected (Register §92, §93)",
-    "SCENARIO-A-RESIDUAL": "Founder: under A1 (ratified), whether mandatory Scenario A "
+    "ALERTING-SELECTION": "FS-DP-06 alerting (H1, H2 or H3). ACT-004 ratified L1/M1/R2; R2 "
+                          "is the readiness signal, so no alerting option is selected by it "
+                          "(Register §92, §93). Decided by ACT-007 (Register §98) when an "
+                          "entry there carries it",
+    "SCENARIO-A-RESIDUAL": "Founder, or delegated under ACT-007 (Register §98): under A1 "
+                           "(ratified), whether mandatory Scenario A "
                            "(ACT-001 §18) stands as a classified non-blocking residual",
-    "E1-DEPLOYMENT-WIRING": "Execution permission: the edit that selects the Production "
-                            "store by environment in fullstack/deploy/vercel.py was denied by "
-                            "the session's permission classifier; the Founder/user must allow "
-                            "it (ACT-005 §9)",
+    "LIVE-REVERIFICATION": "Execution access: the code the Preview serves changed since the "
+                           "recorded Preview commit, so the live suites must be run again on "
+                           "the new one. That needs Founder-authorized temporary access to "
+                           "the Preview. ACT-006/ACT-007 forbid creating a new bypass, and "
+                           "this session cannot load the existing one (NC-16)",
     "BYPASS-REVOCATION": "Execution permission: the temporary automation bypass created "
                          "2026-09-30 for the 297e8b8 re-verification (ACT-004 §56) has no "
                          "recorded revocation (ACT-005, ACT-006). The host's revoke call "
@@ -173,6 +179,32 @@ def ratified(register_text: str) -> Dict[str, str]:
     return found
 
 
+#: Non-package decisions a Register entry can take (ACT-007 `§5`, `§6`), by
+#: their `Ratifies` row. Only an entry whose `Decided by` row names ACT-007 counts:
+#: the delegation is FS-09-only and expires at that Act's terminal state.
+DELEGATED_IDS = ("SCENARIO-A-RESIDUAL", "ALERTING-SELECTION")
+
+
+def delegated(register_text: str) -> Dict[str, dict]:
+    """Decision id → {"entry": heading, "option": the option named in its
+    `Decision` row}, for the ACT-007 delegated decisions in the Register."""
+    found = {}
+    for block in re.split(r"(?m)^(?=#{2,3} )", register_text):
+        if not block.startswith("### "):
+            continue
+        by = re.search(r"(?m)^\| \*\*Decided by\*\* \|([^\n]*)\|\s*$", block)
+        ratifies = re.search(r"(?m)^\| \*\*Ratifies\*\* \|([^\n]*)\|\s*$", block)
+        decision = re.search(r"(?m)^\| \*\*Decision\*\* \|([^\n]*)\|\s*$", block)
+        if not (by and ratifies and decision and "ACT-007" in by.group(1)):
+            continue
+        for ident in DELEGATED_IDS:
+            if re.search(rf"(?<![A-Z-]){ident}(?![A-Z-])", ratifies.group(1)):
+                option = re.search(r"\*\*(?:Alerting = )?(H[123]|A[123])\b", decision.group(1))
+                found[ident] = {"entry": block.splitlines()[0][4:].strip(),
+                                "option": option.group(1) if option else None}
+    return found
+
+
 LOCAL, PREVIEW = "local-current", "preview-recorded"
 OPERATOR, LOCAL_RECORDED = "operator-recorded", "local-recorded"
 
@@ -242,18 +274,20 @@ def _live(area, name, local_ok, local_evidence, checks, preview, residual=None):
         f"local now: {local_evidence}" if local_ok is not None else "",
         f"{where}: " + ", ".join(checks) if checks else ""]))
     missing = [c for c in checks if c not in preview["passed"]]
+    blocked_by = ()
     if local_ok is False:
         status = FAIL
     elif missing:
         status, evidence = FAIL, evidence + "; not recorded PASS: " + ", ".join(missing)
     elif checks and preview["current"] is not True:
-        status = FAIL
+        status, blocked_by = BLOCKED, ["LIVE-REVERIFICATION"]
         evidence += ("; the served code changed since the recorded commit, so the recording "
                      "no longer covers this tree" if preview["current"] is False else
                      "; the recorded commit is not available to compare with this tree")
     else:
         status = PASS
-    return _criterion(area, name, status, evidence, classes=classes, residual=residual)
+    return _criterion(area, name, status, evidence, blocked_by, classes=classes,
+                      residual=residual)
 
 
 def _restore_drill() -> dict:
@@ -293,6 +327,80 @@ def _sections_missing(path: Path, required) -> List[str]:
                 for line in path.read_text(encoding="utf-8").splitlines()
                 if line.startswith("## ")}
     return [s for s in required if s not in headings]
+
+
+#: The two Supabase projects of FS-09-ENV E1, as recorded (Register `§93` DG-04).
+PREVIEW_PROJECT = "https://scfymftfzkpilqbgmfwv.supabase.co"
+PRODUCTION_PROJECT = "https://hmljfyqycxcueulhsjae.supabase.co"
+
+
+def _environment_wiring() -> dict:
+    """Measured now: what the deployed function selects for each environment.
+    It runs the real resolver; it calls no database and reads no key."""
+    from fullstack.deploy import vercel
+    facts = {}
+    for name in ("preview", "production"):
+        try:
+            store = vercel.storage_from_environment(
+                {"VERCEL_ENV": name, "SUPABASE_SECRET_KEY": "gate-probe-not-a-key"})
+            facts[name] = repr(store)
+        except Exception as error:               # pragma: no cover - reported, not raised
+            facts[name] = f"refused: {type(error).__name__}"
+    refused = []
+    for bad in ({}, {"VERCEL_ENV": "development"}, {"VERCEL_ENV": "Production"},
+                {"VERCEL_ENV": ""}, {"VERCEL_ENV": "staging"}):
+        try:
+            vercel.storage_from_environment({**bad, "SUPABASE_SECRET_KEY": "gate-probe-not-a-key"})
+            refused.append(False)
+        except vercel.UnknownEnvironment:
+            refused.append(True)
+    ok = (facts["preview"] == f"SupabaseStorage('{PREVIEW_PROJECT}/rest/v1')"
+          and facts["production"] == f"SupabaseStorage('{PRODUCTION_PROJECT}/rest/v1')"
+          and PREVIEW_PROJECT != PRODUCTION_PROJECT and all(refused))
+    return {"ok": ok, "facts": facts, "unresolved_refused": f"{sum(refused)} of {len(refused)}"}
+
+
+#: What runbook `§12.1` must hold for the H3 selection to be implemented.
+H3_MARKERS = ("### 12.1 Manual monitoring checks (H3)", "readiness (R2)", "error rate (M1)",
+              "refusals before the Application", "backup freshness", "temporary access",
+              "**When:**", "**Who:**", "Residual: a failure is", "Not an alert")
+
+
+def _h3_missing() -> List[str]:
+    text = RUNBOOK.read_text(encoding="utf-8") if RUNBOOK.is_file() else ""
+    return [m for m in H3_MARKERS if m not in text]
+
+
+def _a1_holds() -> bool:
+    """A1 (ACT-004 DG-03): the only state-changing route starts a Workflow run,
+    and no route names an Agent. Its absences are what the Scenario A
+    classification (Register `§98`) rests on."""
+    from fullstack.backend import contract
+    return ([(r.method, r.template) for r in contract.ROUTES if r.method != "GET"]
+            == [("POST", "/api/v1/runs")]
+            and not [r for r in contract.ROUTES if "agent" in r.template.lower()])
+
+
+def _alerting_row(decision: Optional[dict], h3_missing: List[str]) -> dict:
+    """The alerting criterion once an option is selected. Only H3 is
+    implementable inside FS-09 (Register `§98` `ACT-007-DG-02`); H1 and H2 need
+    a Founder-reserved spending, recipient or external-service decision."""
+    option = decision["option"] if decision else None
+    residual = ("no automatic alert: failures are found only when a person runs the checks "
+                "(FS-DP-06 R2.10); R2 is readiness, not alerting; H1/H2 remain for the "
+                "Founder (spending, recipient, external service, an edge path)")
+    if option == "H3" and not h3_missing:
+        return _criterion("Observability", "alerting", PASS,
+                          f"H3 (none; manual checks) selected by {decision['entry'].split(' — ')[0]} "
+                          "(ACT-007 §6; Register §98); runbook §12.1 holds the checks",
+                          classes=[LOCAL], residual=residual)
+    if option == "H3":
+        return _criterion("Observability", "alerting", FAIL,
+                          "H3 selected; runbook §12.1 lacks: " + ", ".join(h3_missing),
+                          classes=[LOCAL], residual=residual)
+    return _criterion("Observability", "alerting", FAIL,
+                      f"{option or 'an option'} selected; not implemented: it needs a "
+                      "Founder-reserved decision (spending, recipient, external service, edge)")
 
 
 def _runbook_sections() -> List[str]:
@@ -415,7 +523,9 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
     """`preview` replaces the recorded Preview checks (tests only); `decisions`
     names non-package decisions to treat as taken (tests only: none is taken)."""
     text = register_text if register_text is not None else REGISTER.read_text(encoding="utf-8")
-    decided = dict(ratified(text), **{d: "test" for d in decisions})
+    delegated_now = delegated(text)
+    decided = dict(ratified(text), **{d: v["entry"] for d, v in delegated_now.items()},
+                   **{d: "test" for d in decisions})
     preview = preview if preview is not None else preview_record()
     m = _measure(runs)
     head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=str(REPO_ROOT),
@@ -427,11 +537,10 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
     dependency = _dependency_failure()
     missing_sections = _runbook_sections()
     in_repo = sorted(p.stem for p in MIGRATIONS.glob("*.sql"))
-    from fullstack.backend import contract
     from fullstack.deploy.request_metrics import derive
-    a1_holds = ([(r.method, r.template) for r in contract.ROUTES if r.method != "GET"]
-                == [("POST", "/api/v1/runs")]
-                and not [r for r in contract.ROUTES if "agent" in r.template.lower()])
+    a1_holds = _a1_holds()
+    wiring = _environment_wiring()
+    h3_missing = _h3_missing()
     joined = "\n".join(m["log_lines"])
     l1_local = (len(m["log_lines"]) == m["requests_made"]
                 and "gate-operator" not in joined and "docs/absent.md" not in joined)
@@ -452,9 +561,18 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
                  ["FS-DP-07", "SCENARIO-A-RESIDUAL"], decided,
                  "A1 (ratified, ACT-004 DG-03) is in force: no route creates an Agent, so "
                  "Scenario A cannot occur") or _criterion(
-            "Functionality", "agent creation (Scenario A)", PASS,
+            "Functionality", "agent creation (Scenario A)",
+            PASS if a1_holds else FAIL,
+            ("classified outside the present FS-09 envelope, a non-blocking residual, by the "
+             f"delegated decision {delegated_now['SCENARIO-A-RESIDUAL']['entry'].split(' — ')[0]} "
+             "(ACT-007 §5; Register §98); A1 applies and its absences hold. Scenario A is "
+             "NOT executed") if "SCENARIO-A-RESIDUAL" in delegated_now else
             "classified by the Founder as a non-blocking residual under A1",
-            classes=[LOCAL]),
+            classes=[LOCAL],
+            residual="Scenario A (mandatory, ACT-001 §18) is not executed and cannot be under "
+                     "A1; executing it needs A2 and an authority instrument extending "
+                     "FD-P11-001 §7 to the application (FS-DP-07 R2.5). A delegated "
+                     "classification can be reversed by the Founder"),
         _criterion("Functionality", "A1: no route creates an Agent",
                    PASS if a1_holds else FAIL,
                    "the only state-changing route is POST /api/v1/runs; no route names an "
@@ -537,7 +655,7 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
             ["health through the bypass"], preview),
         _blocked("Observability", "alerting", ["ALERTING-SELECTION"], decided,
                  "no H1/H2/H3 option is selected by any canonical source")
-        or _criterion("Observability", "alerting", FAIL, "selected; not yet implemented"),
+        or _alerting_row(delegated_now.get("ALERTING-SELECTION"), h3_missing),
         _live("Data", "integrity (append-only)", m["appended_only"],
               "every partition's earlier bytes are a prefix of its later bytes",
               ["store refuses UPDATE"], preview),
@@ -566,18 +684,21 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
                    classes=[LOCAL, OPERATOR],
                    residual="the Production store's version stamp is the host's own; the SQL "
                             "is the repository's, and the schemas compare equal"),
-        _blocked("Data", "environment separation", ["FS-09-ENV", "E1-DEPLOYMENT-WIRING"],
-                 decided, "E1: Production project hmljfyqycxcueulhsjae created and migrated, "
-                 "0 rows, untouched by Preview traffic (recorded); the deployment adapter "
-                 "still names only the Preview project") or _live(
-            "Data", "environment separation", None, "",
-            ["Production store untouched by Preview traffic"], preview),
+        _blocked("Data", "environment separation", ["FS-09-ENV"], decided,
+                 "E1: Production project hmljfyqycxcueulhsjae created and migrated") or _live(
+            "Data", "environment separation", wiring["ok"],
+            f"the deployed function selects by VERCEL_ENV: preview → {wiring['facts']['preview']}; "
+            f"production → {wiring['facts']['production']}; an unresolved environment is refused "
+            f"({wiring['unresolved_refused']}); Production store 0 rows (recorded, operator "
+            "inspection)", ["Production store untouched by Preview traffic"], preview,
+            residual="no Production key or deployment exists (FS-10); Production wiring is "
+                     "verified by the resolver and recording fakes, not live"),
         _criterion("Operations", "runbook", FAIL if missing_sections else PASS,
                    ("missing sections: " + ", ".join(missing_sections)) if missing_sections
                    else f"{RUNBOOK.relative_to(REPO_ROOT).as_posix()} covers every required "
                         "section", classes=[LOCAL],
-                   residual="written, not yet exercised in an incident; alerting is "
-                            "unresolved (ALERTING-SELECTION)"),
+                   residual="written, not yet exercised in an incident; alerting is H3 "
+                            "(none; manual checks, runbook §12.1)"),
         _criterion("Operations", "operational ownership",
                    PASS if not missing_ownership else FAIL,
                    ("missing sections: " + ", ".join(missing_ownership)) if missing_ownership
@@ -609,7 +730,8 @@ def evaluate(runs: int = 20, register_text: Optional[str] = None,
         "decision_packages": {p: ("RATIFIED by " + decided[p]) if p in decided
                               else "PROPOSED — NOT RATIFIED" for p in PACKAGES},
         "other_decisions": {d: OTHER_DECISIONS[d] for d in OTHER_DECISIONS
-                            if d not in decided},
+                            if d not in decided
+                            and (d != "LIVE-REVERIFICATION" or d in awaiting)},
         "awaiting": awaiting,
         "external_dependencies": list(EXTERNAL_DEPENDENCIES),
         "release": "not due: the Founder release decision follows a PASS of this gate "

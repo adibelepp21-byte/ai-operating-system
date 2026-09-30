@@ -55,7 +55,7 @@ authority it already has (runbook `§14`).
 
 * **Logging (L1)** and **metrics (M1)**: the host's function log carries one `fullstack.request/1` line per request; metrics come from `python -m fullstack.backend metrics --log <export>`. The executor reviews them on each verification; the operator can read them in the Vercel dashboard.
 * **Readiness (R2)**: `GET /api/v1/health` = 200 means a Runtime started on the store.
-* **Alerting: none.** Unresolved (no H1/H2/H3 selection). Until it is decided, failures are found by the checks in runbook `§1`, run by the executor on each verification and by the operator at will.
+* **Alerting: H3, none; manual checks** (Register `§98` `ACT-007-DG-02`, a delegated decision). There is no automatic alert and nobody is paged. Failures are found by the checks in runbook `§12.1`, run by the executor on each verification and before and after any deploy, rollback or restore, and by the operator at will. Who would receive an alert under H1 or H2 is a Founder decision not taken. *History: until ACT-007 this read "unresolved (no H1/H2/H3 selection)".*
 
 ## 7. Incidents
 
