@@ -245,3 +245,26 @@ class TheM1CustodyGateIsNotPassedByInference(unittest.TestCase):
         acts = REPO_ROOT / "docs/governance/acts"
         self.assertEqual([], sorted(p.name for p in acts.glob("FDP-012*")))
         self.assertNotIn("FDP-012", CURRENT["decisions"])
+
+
+class TheProviderInjectionRecordSelectsNothing(unittest.TestCase):
+    """Provider-injection MI §2, §17, §18: twenty matrix rows, one final class, mechanism unselected."""
+
+    RECORD = REPO_ROOT / "docs/fullstack/FS-10-PROVIDER-CREDENTIAL-INJECTION-EVIDENCE.md"
+
+    def test_the_decision_matrix_has_the_twenty_properties(self):
+        text = self.RECORD.read_text(encoding="utf-8")
+        table = text[text.index("## 18. Decision matrix"):text.index("## 19.")]
+        rows = [line for line in table.splitlines()
+                if line.startswith("| ") and not line.startswith(("| Property", "|---"))]
+        self.assertEqual(20, len(rows))
+
+    def test_one_final_classification_and_isolation_is_not_claimed(self):
+        text = self.RECORD.read_text(encoding="utf-8")
+        self.assertIn("**D. FOUNDER DECISION REQUIRED.**", text)
+        self.assertIn("| **Selection** | **UNSELECTED.**", text)
+        matrix = text[text.index("## 18. Decision matrix"):text.index("## 19.")]
+        for prop in ("Session isolation", "Cross-session isolation", "Routine isolation"):
+            row = next(line for line in matrix.splitlines() if line.startswith(f"| {prop} "))
+            self.assertIn("**FAIL**", row)
+        self.assertNotRegex(text, r"(?i)\b(recommend\w*|preferred|best|optimal|safest|obvious)\b")

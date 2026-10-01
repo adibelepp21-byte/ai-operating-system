@@ -10230,3 +10230,18 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Needed** | the FDP-012 text (authority); provider capability for session-scoped, non-readable injection, or another custody mechanism under separate authority (G1, G3, G6, G7, G8, G10); provider documentation of internal telemetry and Vercel header logging (G2, G4, G5) |
 | **Record (analysis)** | `docs/fullstack/FS-10-FDP012-M1-CUSTODY-VALIDATION.md` |
 | **State** | O-A authorized, **NOT IMPLEMENTED** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
+
+---
+
+## 121. Provider-Side Credential Injection — Evidence & Compatibility Gate: Receipt and Result: FOUNDER DECISION REQUIRED (mechanism UNSELECTED) (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/MI-FS10-PROVIDER-CREDENTIAL-INJECTION-EVIDENCE-COMPATIBILITY-GATE.md` (verbatim, extracted byte-exactly from the session transcript) · content sha256 `258d072d1410ccffb12ab30f02ff700f0c0a03f90ea583b22dc782f04307d816` |
+| **Issued by** | Founder, 2026-10-01; evidence discovery and compatibility analysis only |
+| **Mechanism** | Claude Code cloud-environment **API credentials** (M-AC): stored on the environment, attached by Anthropic's agent proxy to requests for listed hosts after they leave the VM; *"never reaches Claude, the commands it runs, or the session's environment variables"*; custom header supported; value not viewable after saving; active in every session of the environment until deleted; Pro/Max plans only |
+| **Findings** | X2 contract unchanged (same `x-vercel-protection-bypass` header as FDP-009-03); B3 unchanged. **Session, cross-session and Routine isolation FAIL** (environment-wide). Plan entitlement, proxy and Vercel header logging, provider telemetry, deletion immediacy and caching **UNKNOWN**. Custody path not designated under FDP-011 T5; the reading of `FDP-010` `§4.2` (*"the provider's appropriate secret mechanism"*) is open; new trust boundary (agent proxy). O-A compatibility **ambiguous** → hard stop (MI `§6`) |
+| **Final classification / state** | **D. FOUNDER DECISION REQUIRED** · **STATE D**. Concurrent: provider/account-holder dependency (plan); insufficient evidence (logging, telemetry, deletion) |
+| **Decision surface** | prepared, unranked, not decided: Q-1 O-A delivery or different mechanism · Q-2 T5 authorized path · Q-3 `FDP-010` `§4.2` · Q-4 environment-wide attachment under D-1 (`docs/fullstack/FS-10-PROVIDER-CREDENTIAL-INJECTION-EVIDENCE.md` `§19.1`) |
+| **Boundary kept** | mechanism **UNSELECTED**; no credential created, uploaded, configured, used or deleted; no provider setting, X2, B3, FDP-011 or Production change; no FDP-012 or other Founder Decision created |
+| **State** | O-A authorized, **NOT IMPLEMENTED** · M1 FAILED · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
