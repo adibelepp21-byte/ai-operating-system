@@ -10261,3 +10261,21 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Conflicts with FDP-011 (recorded)** | D-1 and T5 (*"only for the authorized operational session"*) against M-AC's environment-wide attachment; T5's *"authorized … path"* not designated |
 | **Boundary kept** | no decision; M-AC **UNSELECTED**; no credential, bypass or provider configuration; FDP-011, X2, B3, Production unchanged; no FDP-012 |
 | **State** | **FOUNDER DECISION PACKAGE PREPARED — NO DECISION MADE** · O-A authorized, **NOT IMPLEMENTED** · M1 FAILED · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
+
+---
+
+## 123. FD-2 Authority Reconciliation Gate — RECONCILIATION RECORD — NO NEW AUTHORITY CREATED: FD-2 NOT RATIFIED / IMPLIED ONLY (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Status** | **RECONCILIATION RECORD — NO NEW AUTHORITY CREATED.** Not a ratification of `FD-2`, not a Founder or Architect approval, not an authority expansion, not a validation of any dependent decision |
+| **Record** | `acts/MI-FD2-AUTHORITY-RECONCILIATION-GATE.md` (verbatim, extracted byte-exactly from the session transcript) · content sha256 `3814ca376240bc3b5e58376fb8bdbda1bdc41ae599443e37d8edcc913c797464` |
+| **Analysis** | `docs/fullstack/FD-2-AUTHORITY-RECONCILIATION-GATE.md` (21 sections) |
+| **Final state** | **STATE B — FD-2 NOT RATIFIED / IMPLIED ONLY** · *FD-2 AUTHORITY UNRESOLVED — FOUNDER GOVERNANCE DECISION MAY BE REQUIRED* |
+| **Basis** | 17 sources agree, none conflicting: origin ACT-CC-T4.1 (*"IMPLIED, not VERIFIED … a Founder decision (FD-2)"*); GDR-0015 and Delegation Register (*"IMPLIED, not separately ratified"*); Appointment Register `§8`; Co-Founder V2 (`RD-04`, `FR-2`); Post-V2 baseline; and as *open / not decided* in FDR-2 `§6`, FD-P13-005, FDR-4, FDR-G1 `§42`, FDR-G3, FD-PO-003-01, FD-FS-001, FS-ARCH-RAT-001. Engineering Constitution `§3.1`–`§3.2` name *"the Architect"*, not the Founder. No approval, canonicalization, activation, supersession or withdrawal found |
+| **Dependency findings (observations, not adjudications)** | no dependency: FDP-009, FDP-010 · ambiguous: FDP-011 (Founder authority under FS-DP-03 `R2.10` explicit; architectural-tier standing unresolved), AD-FS10-ESC03 (capacity unstated), `APT-CD1.1-AA-001` · relied upon: X2 / FS-DP-03 N1 (*"Founder (Moriarty) as Architect"*, ACT-004 `§8`), Full Stack Architect decisions signed *"Architect (Moriarty)"* (`§68`, `§79`, `§81`), Act-bounded Architect delegations to Claude (ACT-004/007/008), `DEL-T4.4-CF-001`, FS-09 ownership model, ESC-03 authority-resolution record, FS-DP-03-R3 package · potential invalid basis (one clause each): ADR record `§9`, S0/S1 record, complete ESC-03 package `§10`, injection evidence `§19` · mention only: provider injection decision package, current FS-10 authority |
+| **New finding** | an ACTIVE Founder-made **Architecture Authority** appointment exists (`APT-CD1.1-AA-001`, holder Claude Code / Co-Founder, GDR-0016). Earlier FS-10 records did not cite it. Its reach into Full Stack Production edge architecture is **not established**: FD-FS-001 (`§62`) *"Not granted: Architect authority"*; `FDP-009` `§8`; exclusions 19 and 26 |
+| **Discrepancy recorded** | the instruction's entering state calls M1 *"provider credential injection"*; in the records M1 is the environment-variable path (`§120`); provider injection is unselected (`§121`–`§122`) |
+| **Open questions (not answered)** | G-Q1 is the Founder the Architect (Constitution `§3.1`/`§3.2`; FD-2/FR-2) · G-Q2 which authority holds the architectural tier for Full Stack Production edge access · G-Q3 capacity of AD-FS10-ESC03 · G-Q4 whether a per-session bypass under `R2.10` is an *"architectural modification"* (`FDP-009-02` `§5.5`). Narrowest next question: **G-Q1** |
+| **Boundary kept** | no decision; no record modified (FDP-009/010/011, AD-FS10-ESC03, prior FS-10 records, P12/P13, earlier Register entries unchanged); no mechanism selected; no credential; no Production, X2 or B3 change; no FDP-012 |
+| **State** | O-A authorized, **NOT IMPLEMENTED** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
