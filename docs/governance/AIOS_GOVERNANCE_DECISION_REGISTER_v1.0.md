@@ -9932,3 +9932,49 @@ Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-009` `§22`–`§
 | **Negative controls** | NC-01 to NC-15 held |
 | **Terminal state** | **D — CONFLICT** on the next Production action; Founder-reserved decisions exist and their package is **READY**. FS-10 stays ACTIVE at Deployment Preparation; Production execution stops at `FDP-009-01` |
 | **Next legal boundary** | without further authority: correcting `FS-10-DEPLOYMENT.md` to this map (recorded edit), the release package for the candidate, Preview work, read-only Production observation. Nothing Production-changing until `FDP-009-01` is answered |
+
+---
+
+## 107. FDP-009 Registered — Founder Decision: FS-10 Production Authority & Release Boundary; FDP-009-01 · -02 · -03 APPROVED (2026-10-01)
+
+**Canonical registration** of the Founder Decision Record the Founder issued in answer to the ACT-009 package (`§106`), as its `§18` requires. Recorded by Claude Code under explicit Founder direction. **Recording it is not issuing it**; the decisions are the Founder's.
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/FDP-009-FS-10-PRODUCTION-AUTHORITY-AND-RELEASE-BOUNDARY.md` (verbatim) · content sha256 `33fecb973b153d581a7b703b9772fb2133b15e4440b0b9ae35bfaf38a1b02d9d` (over the fenced text) |
+| **Decided by** | Founder (Moriarty), 2026-10-01 |
+| **Canonical status** | **CANONICAL** from this entry (record `§18`) |
+
+### FDP-009-01 — Founder Decision · Production Deployment Ordering
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDP-009-01` |
+| **Decided by** | Founder |
+| **Decision** | **APPROVED.** *"FS-10 Preparation → Production Deployment → Production Verification → Founder Release Authorization → Production Release → LIVE → Operational AIOS"* (record `§4`): the ordering of ACT-003, with *"ACT-003's \"Production Deployment\" does NOT constitute Production Release or LIVE."* |
+| **Supersession** | *"FD-FS-001 D4-A is superseded ONLY to the extent that its ordering would require Founder Release Decision to occur before Production Deployment."* No other part of FD-FS-001 is superseded (D2-A, D3-A no spending, D5-A stand) |
+| **Effect** | resolves the CONFLICT of `§106` (rows E and Q of the ACT-009 record) |
+
+### FDP-009-02 — Founder Decision · Deployment ≠ Release ≠ LIVE
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDP-009-02` |
+| **Decided by** | Founder |
+| **Decision** | **APPROVED.** Production Deployment = the Release Candidate made available in Production *"for the purpose of Production Verification, without thereby granting Release or LIVE status"*; Production Verification is evidence generation; Production Release and LIVE require the Founder Release Authorization (record `§5.1`–`§5.4`) |
+| **Protection** | *"The existing X2 deployment-protection architecture remains unchanged."* LIVE's access state stays bounded by X2 (`§5.5`, `§5.6`) |
+
+### FDP-009-03 — Founder Decision · Temporary Production Verification Access
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FDP-009-03` |
+| **Decided by** | Founder |
+| **Decision** | **APPROVED, with boundary.** *"Temporary access MAY be used when necessary to perform authorized Production Verification"*, classified as verification access only, under the 14 conditions of record `§6`: necessary, verification-only, temporary, evidenced, no architecture or X2 change, no permanent bypass, no public access, not a release or LIVE, revoked immediately after, revocation verified and evidenced, credentials under existing controls, no Production change beyond the authorized verification procedure |
+
+| Field | Value |
+|---|---|
+| **CEO may** (record `§8`) | identify the release candidate; prepare and perform Production deployment; smoke, health and integration verification; use, revoke and verify revocation of temporary verification access; preserve evidence; roll back when operationally required and already authorized by the applicable boundary; report; prepare the Release Package (`§9`) |
+| **CEO may not** | declare Production Released or LIVE; activate unrestricted access; treat verification PASS as release; infer the Founder Release Authorization; permanently disable deployment protection; redesign the Production access architecture |
+| **Unchanged** | Constitution, Mission, Founder Authority, Governance Model, P12/P13, Platform Organization, Native Core = 11, certified roots; no Phase 14 (record `§13`). Non-retroactive (`§12`) |
+| **Not decided** | the persons who may hold permanent Production access (`ESC-01`); rollback after a release (`ESC-02`); Final System Acceptance (A19) |
