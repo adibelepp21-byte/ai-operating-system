@@ -291,17 +291,24 @@ delegated executor only while an Act authorizes it. The duties:
 
 ## 14. Escalation boundaries
 
+*Current since 2026-10-01: `FDP-009` (Register `§107`) and the ACT-009 classification (`FS-10-ACT-009-AUTHORITY-BOUNDARY-RECORD.md`). The table is updated in place; the rows it replaced are listed under it.*
+
 | Matter | Decided by | Never done without that decision |
 |---|---|---|
-| Production deploy, promote, rollback, alias, variables, credentials | **Founder** (`FD-FS-001` D4-A; ACT-003) | any Production change |
+| Production deployment of the release candidate, roll-forward, rollback before a release | **CEO**, for verification only (`FDP-009-01`, `§8`) | treating a deployment as a release |
+| Production release, LIVE, traffic | **Founder** (`FDP-009` `§5.3`, `§5.4`, `§10`; ACT-003 `§21`) | any release or LIVE claim |
+| Production database key, Production variables, provider settings | **account holder** (external control: ACT-001 `§7.1`; ACT-003 `§13`, `§28`) | a credential passing through the session |
+| permanent Production principals; rollback after a release | **UNKNOWN**, escalated (`ESC-01`, `ESC-02`) | acting on either |
 | spending: paid plans, alerting, backups | **Founder** (D3-A) | any purchase or upgrade |
-| temporary access past Vercel SSO | **Founder**, per occasion | any bypass; it is revoked after use |
-| operational ownership, backup cadence, incident owner | **Founder** | — |
+| temporary access past Vercel SSO | Preview: per authorizing Act. Production verification: **CEO under `FDP-009-03`** (14 conditions) | any bypass outside those; it is revoked after use and the revocation verified |
+| operational ownership, backup cadence, incident owner | **CEO** (ACT-004 `§37`; ACT-009 rows O1, R, X3) | changing a Founder decision through them |
 | a performance requirement | **Founder** | treating any latency as a pass/fail requirement |
 | networking, observability, Agent creation, environment separation, runtime | decided by ACT-004 (Register `§93`); implemented under ACT-004/005 | changing those decisions |
 | replacing H3 by H1 or H2 (`FS-DP-06`): spending, an external service, who receives alerts, an edge path | **Founder** (H3 was selected by delegation, Register `§98`) | treating R2 as an alert, or adding a monitor, a paid alert or an edge path on the delegation's strength |
 | architecture beyond the ACT-004 decisions | **Architect** | a second project or table; pinning a version |
 | changes to certified roots P10–P13, Phase 14 | not open | — |
+
+*Replaced rows (until 2026-10-01):* Production deploy, promote, rollback, alias, variables, credentials → *Founder (`FD-FS-001` D4-A; ACT-003)*; temporary access past Vercel SSO → *Founder, per occasion*; operational ownership, backup cadence, incident owner → *Founder*.
 
 
 ## 13. Agent Instances (FS-DP-07 A2)

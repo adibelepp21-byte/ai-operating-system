@@ -32,7 +32,7 @@ authority it already has (runbook `§14`).
 ## 3. Deployment
 
 * Preview deployments are built from the working branch on every push. The executor verifies them (runbook `§1`) when an Act asks.
-* **Production deployment, promotion, alias and variables are the operator's, on a Founder release decision** (`FD-FS-001` D4-A). Nothing in this model deploys to Production.
+* **Production deployment for verification is the executor's** under `FDP-009-01` (Register `§107`); it is not a release. **Production release and LIVE are the Founder's** (`FDP-009` `§10`). Production variables and credentials are set by the operator as account holder (external control). *Until 2026-10-01 this read: "Production deployment, promotion, alias and variables are the operator's, on a Founder release decision (`FD-FS-001` D4-A). Nothing in this model deploys to Production."*
 * The build must show the pinned runtime (*"Using Python 3.12 from .python-version"*).
 
 ## 4. Backup and restore
@@ -48,7 +48,7 @@ authority it already has (runbook `§14`).
 ## 5. Rollback
 
 * Preview: the executor may drill it (alias re-pointing), as at FS-09 (`FS-09-ACT-005-EXECUTION-RECORD.md` `§14`).
-* Production: the operator, on a Founder decision; never to gain evidence.
+* Production, before a release: the executor, when operationally required (`FDP-009` `§8`); after a release: not assigned (`ESC-02`). Never to gain evidence (ACT-003 `§12`). *Until 2026-10-01: "the operator, on a Founder decision".*
 * Floors: runbook `§10`.
 
 ## 6. Monitoring

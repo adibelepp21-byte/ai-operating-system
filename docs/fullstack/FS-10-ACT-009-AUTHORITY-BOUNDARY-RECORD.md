@@ -1,5 +1,7 @@
 # FS-10 — Authority Boundary Record (ACT-009)
 
+> **Resolved in part by `FDP-009` (Founder Decision, Register `§107`, 2026-10-01).** Rows E and Q (CONFLICT) → CEO-AUTHORIZED-WITH-BOUNDARY: Production deployment for verification precedes the Founder Release Authorization (`FDP-009-01`). Row X1 → CEO-AUTHORIZED-WITH-BOUNDARY under `FDP-009-03`. Row P before a release → CEO when operationally required (`FDP-009` `§8`). Rows S and T stay FOUNDER-RESERVED; C and P after a release stay UNKNOWN. The record below is the classification as determined under ACT-009 and is kept unaltered; the current map is `FS-10-DEPLOYMENT.md` `§1`.
+
 | Field | Value |
 |---|---|
 | **Act** | `ACT-CC-POST-P13-AIOS-FULL-STACK-009`, *FS-10 Founder-Reserved Boundary Reconciliation Act* (verbatim: `docs/governance/acts/ACT-CC-POST-P13-AIOS-FULL-STACK-009-…`) |

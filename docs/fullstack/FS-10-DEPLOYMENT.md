@@ -3,6 +3,109 @@
 | Field | Value |
 |---|---|
 | **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
+| **Status** | **ACTIVE — Deployment Preparation**, at the last step before Production Deployment |
+| **Authority** | `FDP-009` (Founder Decision, Register `§107`): deployment and verification **before** the Founder Release Authorization; deployment ≠ release ≠ LIVE; temporary verification access with boundary. Classification of every action: `FS-10-ACT-009-AUTHORITY-BOUNDARY-RECORD.md`, as resolved by `FDP-009` (`§1` below) |
+| **Production** | **not deployed, not LIVE.** Production serves `22c0b49` (before this program) and is untouched |
+| **Founder Release Authorization** | **NOT YET ISSUED.** It follows Production Verification and the Release Package (`FDP-009` `§9`, `§10`) |
+| **Release candidate** | **`d05261c`**: the served tree verified live on Preview at FS-09 (`dpl_EJucmiuLbgmgX1ar7SDZ25Ngp3ER`). Every later commit leaves the served paths unchanged. Identified by the CEO (`FDP-009` `§8`); approving it is the Founder's release decision |
+| **Next step** | **blocked on one external action:** the Production database key (`§3` P1) |
+
+```text
+FS-10 Preparation   ← here: everything done except P1
+   → Production Deployment        (CEO; FDP-009-01)
+   → Production Verification      (CEO; smoke, health, integration; temporary access per FDP-009-03)
+   → Release Package              (CEO; evidence, not authorization)
+   → Founder Release Authorization (Founder)
+   → Production Release → LIVE (bounded by X2) → Operational AIOS
+```
+
+## 1. Authority map after `FDP-009`
+
+From the ACT-009 classification; rows changed by `FDP-009` are marked ◆.
+
+| Action | Authority | Who |
+|---|---|---|
+| ◆ Production deployment of the release candidate; roll-forward | **CEO-AUTHORIZED-WITH-BOUNDARY** (`FDP-009-01`, `§8`): deployment for verification only; not a release | CEO |
+| Production smoke, health and integration verification, including labelled test writes | CEO-AUTHORIZED-WITH-BOUNDARY (ACT-003 `§20`; `FDP-009` `§8`) | CEO |
+| ◆ Temporary access past Vercel SSO, and a temporary verification principal | **CEO-AUTHORIZED-WITH-BOUNDARY** (`FDP-009-03`, its 14 conditions): created, used for verification only, revoked, revocation verified | CEO |
+| ◆ Rollback before a release | CEO-AUTHORIZED-WITH-BOUNDARY (`FDP-009` `§8`: when operationally required) | CEO |
+| Rollback after a release | **UNKNOWN** (`ESC-02`) | escalated |
+| Permanent Production principals (who uses AIOS once released) | **UNKNOWN** (`ESC-01`) | escalated; needed before LIVE, not before verification |
+| Production database key; Production variables; provider settings | **EXTERNAL-CONTROL** (ACT-001 `§7.1`; ACT-003 `§13`, `§28`) | account holder |
+| Deployment Protection (X2); custom domain; production branch; alerting mechanism; schema | **ARCHITECT-RESERVED** (X2 decided and unchanged, `FDP-009-02` `§5.5`) | Architect |
+| Release candidate identification; Release Package; monitoring (L1/M1/R2); H3 check cadence; incidents; read-only backups | CEO-AUTHORIZED / WITH BOUNDARY | CEO |
+| ◆ Production Release; LIVE activation; traffic | **FOUNDER-RESERVED** (`FDP-009` `§5.3`, `§5.4`, `§10`) | Founder |
+| Spending | FOUNDER-RESERVED (D3-A, standing: none) | Founder |
+| Final System Acceptance | FOUNDER-RESERVED (A19), not due | Founder |
+
+## 2. Done
+
+| Item | State |
+|---|---|
+| FS-09 | PASS / CLOSED (`FS-09-ACT-008-EXECUTION-RECORD.md`); gate READY, which is not a release |
+| Release candidate | `d05261c`, verified live on Preview; Python 3.12 build from `.python-version` |
+| Production store | `hmljfyqycxcueulhsjae`: migration `20260928051800_aios_records` applied, schema equal to Preview, **0 rows**, append-only triggers |
+| E1 wiring | `VERCEL_ENV=production` selects the Production project; unknown refuses (503); a Preview key never serves Production |
+| Runbook, ownership, backup and rollback procedures | written and drilled on Preview (runbook `§7`–`§10`, `§12.1`) |
+| Smoke tooling | `python -m fullstack.deploy.smoke` (`§4`) |
+| Authority | ACT-009 map; `FDP-009` registered |
+
+## 3. Pre-flight
+
+| # | Item | State | Holder |
+|---|---|---|---|
+| **P1** | Production `SUPABASE_SECRET_KEY` (secret key of `hmljfyqycxcueulhsjae`) as a Vercel variable, **Production scope only**, type Sensitive | **not set** (re-discovered 2026-10-01: no Production-scope variable) | **account holder** (external control; the value never passes through the session) |
+| P2 | Production `AIOS_OPERATOR_TOKENS` for verification: one temporary principal `fs10-verification`, hash only | prepared at deployment time; removed after verification (`FDP-009-03`) | CEO |
+| P3 | `VERCEL_ENV=production` | set by the platform on a Production deployment | platform |
+| P4 | A backup of the Production store before the release (runbook `§7`) | Production holds 0 rows; a read-only export follows verification | CEO |
+| P5 | Deployment Protection | **X2, decided and unchanged**: the Production URL answers 401/302 to anyone without Vercel access | Architect (to change) |
+| P6 | Release candidate | **`d05261c`** | CEO (identified); Founder (approves in the release) |
+| P7 | Test writes during verification | permitted, labelled by the verification principal's subject, minimal | CEO |
+| P8 | H3 check cadence | runbook `§12.1` before and after every deployment, rollback or restore, and at each verification; weekly once released | CEO |
+| P9 | Rollback | before a release: the CEO, when operationally required (promote the previous deployment); after a release: `ESC-02` | CEO / escalated |
+| P10 | Permanent Production principals | `ESC-01` | escalated; before LIVE |
+
+Without P1 the Production function answers 503 to every API request (no key; runbook `§3`), so a deployment could not be verified. Deploying before P1 would change Production for no evidence; the deployment therefore follows P1.
+
+## 4. Deployment and verification procedure
+
+1. **Deploy** the release candidate `d05261c` as a Production-target deployment through the Vercel connector, from that commit. The repository's default branch is **not** merged (a merge would also deploy, and would carry unrelated documents).
+2. **Read** the deployment: READY, build log *"Using Python 3.12 from .python-version"*, Production alias moved to it, protection unchanged.
+3. **Temporary access** (`FDP-009-03`): one automation bypass and the `fs10-verification` principal, each recorded; evidence holds no secret.
+4. **Verify** with `python -m fullstack.deploy.smoke` (read-only, then `--write`), plus the Production-specific checks: the run lands in the Production store and **not** in Preview (SQL on both), `VERCEL_ENV` resolution, L1 lines in the host log, the runbook `§12.1` checks.
+5. **Revoke**: remove the bypass; remove the verification principal and redeploy the same commit, so the deployed function no longer accepts it; verify the bypass gives the same response as none and the token gives 401.
+6. **Release Package** (`FDP-009` `§9`): candidate, commit, deployment, every check's evidence, protection state, temporary-access and revocation evidence, open issues, the result.
+7. **Stop** at the Founder Release Authorization.
+
+## 5. Smoke, health and integration plan
+
+`fullstack/deploy/smoke.py`, tested in `fullstack/tests/test_smoke.py` (8 tests, Python 3.11 and 3.12).
+
+| Step | Check | Profile | Writes to the store |
+|---|---|---|---|
+| Health | `GET /health` 200, `runtime_state: running` (R2) | read-only | no |
+| Smoke | anonymous, invalid and malformed `Authorization` refused on every protected route; valid bearer authenticates; Runtime running; read routes answer; console served with its security headers | read-only | no |
+| Integration | Scenario B (a run succeeds and reads back) and Scenario C (a failure is a meaningful state) | `--write` | **yes: permanent**, labelled by the subject `fs10-verification` |
+| Operational verification | the runbook `§12.1` checks; a read-only export of the Production store verified against its digests | manual, runbook | no |
+
+The tool reads secrets from files, prints none, stores none in its evidence, aborts if a response echoes a credential, and **never enables `--write` by itself**. It does not infer an environment from a host name.
+
+## 6. Current frontier
+
+**Production Deployment, waiting on P1** (the account holder sets the Production database key). Everything else needed to deploy and verify is in place and authorized.
+Remaining: Production Deployment · Production Verification · Release Package · Founder Release Authorization · Production Release · LIVE · Operational AIOS.
+
+---
+
+# History: FS-10 as written at entry (2026-09-30), before ACT-009 and `FDP-009`
+
+The text below is the document as it stood before the authority review. Its `§1`
+and pre-flight over-escalated P5–P8 and mislabelled P1–P2 (ACT-009 record `§2`).
+Kept unaltered as history.
+
+| Field | Value |
+|---|---|
+| **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
 | **Status** | **ACTIVE — Deployment Preparation** (entered 2026-09-30, automatically, on FS-09 PASS / CLOSED: `ACT-CC-POST-P13-AIOS-FULL-STACK-008` `§27`; Register `§104`) |
 | **Production** | **not deployed, not LIVE.** Production serves `22c0b49` (before this program) and is untouched |
 | **Founder Release Authorization** | **NOT YET ISSUED.** Construction and verification are authorized; the release to LIVE is not (`§28`) |
