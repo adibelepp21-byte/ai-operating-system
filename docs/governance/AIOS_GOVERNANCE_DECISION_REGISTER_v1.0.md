@@ -9996,3 +9996,49 @@ Recorded by Claude Code as CEO under `FDP-009` `§8` and `§14` items 4–7 (`§
 | **Not done** | Production Release; LIVE; traffic; public access; any Production rollback (not operationally required); any change to certified roots, P12, P13, Platform Organization, Native Core or X2; no Phase 14 |
 | **Open** | `ESC-01` permanent Production principals (needed before LIVE); `ESC-02` rollback after a release; the classified non-blocking items of the package `§16` |
 | **Result** | **PRODUCTION VERIFICATION PASS — FOUNDER RELEASE AUTHORIZATION REQUIRED** |
+
+---
+
+## 109. FDP-010 Registered — Founder Decision: FS-10 Operational Access, Rollback & Governance Reconciliation; ESC-01 · ESC-02 RESOLVED; FDP-010-01 · -02 · -03 · -04 APPROVED (2026-10-01)
+
+**Canonical registration** of the Founder Decision Record the Founder issued after the FS-10 Production Verification (`§108`), as its `§21` requires. Recorded by Claude Code under explicit Founder direction. **Recording it is not issuing it**; the decisions are the Founder's.
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/FDP-010-FS-10-OPERATIONAL-ACCESS-ROLLBACK-GOVERNANCE-RECONCILIATION.md` (verbatim; byte-equal to the received message, 19,700 characters) · content sha256 `fa1d8b121b81e08b30403f7f77621ba9f0c31c0067b934006c83f2f53c4543b5` (over the fenced text, as `§107`) |
+| **Decided by** | Founder (Moriarty), 2026-10-01 |
+| **Operates under** | `FDP-009` (`§107`); does not replace it |
+| **Canonical status** | **CANONICAL** from this entry (record `§21`) |
+
+### FDP-010-01 — Founder Decision · Permanent Production Operational Access (`ESC-01` RESOLVED)
+
+| Field | Value |
+|---|---|
+| **Decision** | **APPROVED.** Permanent Production operational access as *"an operational capability, not as Release or LIVE authority"* (record `§4.1`). A permanent AIOS operational principal *"MAY exist for the delegated CEO / operational runtime"*: dedicated, server-side, secure credential material only, least-privilege, scope-limited, auditable, revocable, separate from Founder identity, provider ownership and Release Authorization (`§4.3`); scopes *"derived from the existing canonical operator scope model"*, no new scopes (`§4.4`) |
+| **Unchanged** | provider account, credentials and billing remain account-holder controls (`§4.2`); Founder emergency access through the provider control plane (`§4.5`); operational access ≠ LIVE ≠ release (`§4.6`, `§14`) |
+
+### FDP-010-02 — Founder Decision · Post-Release Rollback Authority (`ESC-02` RESOLVED)
+
+| Field | Value |
+|---|---|
+| **Decision** | **APPROVED.** After a release, rollback is an operational reliability action of the CEO when the system is released, rollback is operationally necessary, the target is *"a verified known-good deployment"*, and governance, certified architecture and the deployment architecture are unchanged, with evidence preserved (record `§5.1`) |
+| **Target rule** | unknown or unverified target = not an authorized target (`§6`); **`22c0b49` is NOT A VALID APPLICATION ROLLBACK TARGET** (`§6.1`); before a release a verified known-good target, procedure and evidence must exist, and none may be fabricated (`§7`); without one, the Release Package states *"RELEASE READINESS = BLOCKED BY ROLLBACK READINESS"* (`§15`) |
+| **Not** | rollback ≠ release, LIVE, governance change or certification (`§9`) |
+
+### FDP-010-03 — Founder Decision · Historical FS-09 Gate / Current Governance Reconciliation
+
+| Field | Value |
+|---|---|
+| **Decision** | **APPROVED.** The closed FS-09 readiness gate stays **immutable historical evidence**; its rollback wording is not edited (record `§10.2`). A successor/current authority layer states that `FDP-009` / `FDP-010` govern the current Production rollback boundary (`§10.3`). Closure: historical wording preserved; current FS-10 authority points to `FDP-009`/`FDP-010`; no current execution path reads the historical wording as overriding them; distinction documented; governance and citation checks pass (`§10.5`) |
+
+### FDP-010-04 — Founder Decision · Production Operator-Token Residual
+
+| Field | Value |
+|---|---|
+| **Decision** | **APPROVED.** The empty Production `AIOS_OPERATOR_TOKENS` is a *"CONFIGURATION RESIDUAL"*, not active access (record `§11.2`); removal authorized where the provider permits, else by the account holder (`§11.3`); it may be populated only with a token of the approved permanent model; no plaintext token in repository, documentation, evidence, logs or chat (`§11.4`) |
+
+| Field | Value |
+|---|---|
+| **Authority state after registration** (record `§22`) | Production deployment, verification: CEO AUTHORIZED · operational access, rollback: **CEO AUTHORIZED WITH BOUNDARY** · Production Release, LIVE, Final System Acceptance: **FOUNDER RESERVED** |
+| **Required next** (record `§17`) | re-discover; reconcile FS-10 documents; establish and verify the operational-access model; residual variable; preserve the FS-09 gate; successor authority layer; known-good rollback target and its readiness; checks; Release Package update; **STOP** — no release, no LIVE (`§16`) |
+| **Unchanged** | Constitution, Mission, Founder Authority, Governance Model, P12/P13, Platform Organization, Native Core, certified roots; no Phase 14 (record `§13`) |
