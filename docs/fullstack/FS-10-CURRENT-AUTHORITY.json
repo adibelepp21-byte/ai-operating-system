@@ -12,6 +12,11 @@
    "record": "docs/governance/acts/FDP-010-FS-10-OPERATIONAL-ACCESS-ROLLBACK-GOVERNANCE-RECONCILIATION.md",
    "register": "§109",
    "sha256": "fa1d8b121b81e08b30403f7f77621ba9f0c31c0067b934006c83f2f53c4543b5"
+  },
+  "ACT-ESC03": {
+   "record": "docs/governance/acts/ACT-CC-POST-P13-AIOS-FS10-ESC03-X2-OPERATIONAL-ACCESS-AUTHORITY-RESOLUTION.md",
+   "register": "§111",
+   "sha256": "b09e56ed5f0aee65f3e2094ffb9e5a0ce90c3e2380f3851eb4fdfe30cc45b7ca"
   }
  },
  "authority": {
@@ -122,7 +127,7 @@
   "environment": "production only (Vercel AIOS_OPERATOR_TOKENS, Production scope, hash only)",
   "sha256": "0ccb723cf7dccd591bc22e7448792a9522b299bf9a40e2d487089acf83ed8f4e",
   "custody": "the delegated CEO's execution environment, in a private file; never in repository, documentation, evidence, logs or chat; on loss or suspicion: rotate (new token, new hash, redeploy) per runbook §15",
-  "edge_access": "X2 (unchanged) admits Vercel-authenticated members of the account; the CEO has no standing X2 path (FDP-009 §5.5: no permanent bypass; FS-DP-03 R2.10). Classified open: ESC-03"
+  "edge_access": "X2 (unchanged) admits Vercel-authenticated members of the account and Founder-authorized revocable mechanisms (FS-DP-03 R2.10); no mechanism is authorized for the CEO's routine operation. ESC-03 = NOT RESOLVED, ARCHITECT DECISION REQUIRED (docs/fullstack/FS-10-ESC-03-AUTHORITY-RESOLUTION.md; package decision-packages/FS-DP-03-R3-ESC-03-OPERATIONAL-EDGE-ACCESS.md; Register §112)"
  },
  "rollback_target": {
   "designated": {

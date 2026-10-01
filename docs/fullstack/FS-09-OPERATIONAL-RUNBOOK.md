@@ -340,3 +340,5 @@ Current authority: `FS-10-CURRENT-AUTHORITY.md` (`FDP-009` + `FDP-010`).
 | Revocation | set `AIOS_OPERATOR_TOKENS` to `[]` and redeploy as above; verify the token answers 401 |
 | Edge (X2) | unchanged; the CEO has no standing path through X2 (`ESC-03`). Temporary access past X2 is for verification only, under `FDP-009-03`, and is revoked and its revocation verified each time |
 | Not | a release, LIVE, Founder authority, or authority to change governance or certified roots (`FDP-010` `§4.6`, `§13`) |
+
+**Connector fetch (ESC-03, `FS-10-ESC-03-AUTHORITY-RESOLUTION.md` `§5.3`).** Do not use the Vercel connector's `web_fetch_vercel_url` (or `get_access_to_vercel_url`) on an SSO-protected deployment: it creates a deployment shareable link — an X2 exception — as a side effect, and cannot carry an `Authorization` header anyway. If one is created, revoke it at the deployment level (`patch_url_protection_bypass`, `revoke`) and record it.

@@ -10061,3 +10061,35 @@ Recorded by Claude Code as CEO under `FDP-010` `§17` (`§109`). **An execution 
 | **Checks** | native_core 801 · consumers 276 · bounded 29 · fullstack 310 OK on 3.12 and 3.11; tools 1933 with 1 classified failure (`§102`); citation 0 errors |
 | **Open, non-blocking** | `ESC-03`: no standing CEO path through X2 (Founder / Architect; FS-DP-03 `R2.10`); `SEC-OBS-02`: a connector-created X2 share value appeared in session tool output only, classified |
 | **Result** | **PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · FOUNDER RELEASE AUTHORIZATION REQUIRED** — STOP (`FDP-010` `§17` step 12) |
+
+---
+
+## 111. ACT-CC-POST-P13-AIOS-FS10-ESC03 Received — ESC-03 X2 Protected Production Operational Access: Authority-Resolution & Access-Path Discovery (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/ACT-CC-POST-P13-AIOS-FS10-ESC03-X2-OPERATIONAL-ACCESS-AUTHORITY-RESOLUTION.md` (verbatim; byte-equal to the received message) · content sha256 `b09e56ed5f0aee65f3e2094ffb9e5a0ce90c3e2380f3851eb4fdfe30cc45b7ca` (over the fenced text) |
+| **Issued by** | Founder, 2026-10-01; status *"FOUNDER AUTHORIZED — EXECUTION"* |
+| **Parent authority** | `FDP-009` (`§107`), `FDP-010` (`§109`), FS-10 Production Verification (`§108`), FS-10 Current Authority (`§110`) |
+| **Question** | how the delegated CEO obtains operational access to the protected Production AIOS API through X2 without a permanent bypass and without Release or LIVE authority (Act header) |
+| **Authorizes** | discovery, an authority matrix and classification, an authority-resolution record, and implementation **only** where existing authority already covers a mechanism (`§2`, `§17`, `§21`); otherwise a decision package and a stop (`§18`–`§20`) |
+| **Does not authorize** | Production Release, LIVE, Operational AIOS activation (`§27`); a permanent bypass; a temporary bypass merely to discover (`§14`); new scopes, authentication or identity architecture, authority, Phase, Division; changes to X2, P12, P13 or certified roots (`§10`, `§21`) |
+| **Result** | recorded at `§112` |
+
+---
+
+## 112. ESC-03 Authority Resolution — X2 Authority Found; No Authorized CEO Edge Path; ARCHITECT DECISION REQUIRED; SEC-OBS-02 Closed (2026-10-01)
+
+Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FS10-ESC03` (`§111`). **A classification and a decision package, not a decision.** Nothing that changes access was implemented.
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/FS-10-ESC-03-AUTHORITY-RESOLUTION.md`; package `docs/fullstack/decision-packages/FS-DP-03-R3-ESC-03-OPERATIONAL-EDGE-ACCESS.md`; tests `fullstack/tests/test_esc03_boundaries.py` |
+| **Canonical X2 authority** | **FOUND and consistent**: N1 by the Founder as Architect (ACT-004 `§8`); X2 selected under that delegation (`§93`); frozen by `FDP-009-02` `§5.5`, which routes any modification of deployment protection to the architecture authority path; X2 admits *"a Vercel login or a Founder-authorized, revocable mechanism"* (FS-DP-03 `R2.10`); protection settings Founder-held (`R2.5`); ACT-003 `§12`, `§14` |
+| **Operational access path** | **NOT FOUND**: `aios-operator` authenticates at the application only; no mechanism is authorized for routine CEO passage of X2. The connector cannot carry `Authorization` and does not complete SSO — a **connector capability limitation**, not an AIOS architecture limitation |
+| **Classification** (15 mechanisms, record `§7`) | existing authorized: SSO login (members), bearer token, provider control plane · with boundary: verification bypass, read-only store · Founder decision: per-session bypass, shareable link, user-scoped bypass, CLI token · Architect decision: Trusted Sources OIDC, in-boundary runtime · prohibited: standing bypass · conflict: X2 → X1 · provider dependency: connector fetch · unknown: Trusted IPs |
+| **Required next action** | **ARCHITECT DECISION REQUIRED** (the Founder acting as Architect; options ◆ also need a Founder authorization). **ESC-03 = NOT RESOLVED** |
+| **SEC-OBS-02** | closed: the connector's fetch had created deployment shareable links on six deployments (2026-09-27, -30, -10-01); the one still existing (Production serving deployment) was **revoked**; all other known values no longer exist; none in repository or evidence; none passes B3. **Correction** of `§110`: the connector does offer deployment-level revocation |
+| **Negative controls** | NC-01–NC-10 **PASS** (record `§8.2`) |
+| **Unchanged** | `FDP-009`, `FDP-010`, X2, scopes, Release and LIVE boundaries, certified roots, P12, P13, Platform Organization, Native Core; temporary bypass **NONE**, permanent bypass **NONE** |
+| **Release / LIVE** | **PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED** |

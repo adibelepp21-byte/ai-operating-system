@@ -263,3 +263,17 @@ The closed FS-09 gate (`fullstack/readiness.py`) is **byte-identical** to its cl
 | Mutation checks | a current "Founder-only" rollback line → test fails; an edited FS-09 gate → 2 tests fail |
 | Boundaries | no diff in served paths, `native_core`, `consumers`, `tools`, the FS-09 gate, acts, Co-Founder V2 instruments, architecture or program documents; Register append-only |
 | Secrets | no bypass value, share value or token plaintext in the working tree; Production records: 0 credential patterns |
+
+## 19. Update under `ACT-CC-POST-P13-AIOS-FS10-ESC03` (2026-10-01; Register `§111`, `§112`)
+
+Record: `FS-10-ESC-03-AUTHORITY-RESOLUTION.md`.
+
+| Item | Status now |
+|---|---|
+| **ESC-03** | **NOT RESOLVED — ARCHITECT DECISION REQUIRED.** Canonical X2 authority found and consistent; no mechanism is authorized for the CEO's routine API operation; 15 mechanisms classified (record `§6`–`§8`); package `decision-packages/FS-DP-03-R3-ESC-03-OPERATIONAL-EDGE-ACCESS.md` (no option selected). **Non-blocking for the release decision** as before: rollback, recovery and observation run through the provider control plane |
+| **SEC-OBS-02** | **closed.** Re-examined (record `§5.3`): the connector's fetch had created deployment shareable links on six deployments (two today, twelve values on five Preview deployments on 27 and 30 September). The only link that still existed was **revoked**; every other known value no longer exists. None was in the repository or evidence; none passed B3. **Correction of `§18.4`:** the connector *does* offer revocation at the deployment level (`patch_url_protection_bypass`); the statement that it offers none was wrong |
+| Negative controls NC-01–NC-10 | **PASS** (record `§8.2`; `fullstack/tests/test_esc03_boundaries.py`) |
+| Temporary / permanent bypass | **NONE / NONE** |
+| Release readiness | unchanged: not blocked by rollback readiness; no unresolved **blocking** condition |
+
+**State:** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED**. **PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED.**
