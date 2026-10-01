@@ -10,7 +10,7 @@
 | **Founder principal** | `FDP-011` **P-2** (observe, workflow.run, audit): authorized, **not established** — needs the Founder token's custody and an X2 path for post-deploy verification |
 | **Rollback** | CEO with boundary (`FDP-009` `§8`, `FDP-010-02`); verified known-good target; `22c0b49` is not a target. Post-rollback API verification (runbook `§9`) waits for O-A |
 | **Temporary access** | **NONE** (no bypass exists) |
-| **Next step** | **Founder input under FDP-011 T5** (the secret-handling path for the bypass value) and the P-2 token custody. Founder Release Authorization stays Founder-reserved (`FDP-009` `§10`) |
+| **Next step** | **Founder input under FDP-011 T5**: the T5 feasibility verification (Register `§119`) found **no existing authorized secret-handling path** (`FS-10-FDP011-T5-SECRET-CUSTODY-FEASIBILITY.md` `§14`); P-2 has an existing canonical creation method (`operator-token`, on the Founder's machine) and waits on O-A for verification. Founder Release Authorization stays Founder-reserved (`FDP-009` `§10`) |
 
 ```text
 FS-10 Preparation                    done

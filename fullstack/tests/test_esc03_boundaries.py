@@ -191,3 +191,27 @@ class Fdp011IsCanonicalAndItsBoundaryHolds(unittest.TestCase):
 
     def test_no_bypass_is_declared_to_exist(self):
         self.assertIn("No bypass exists.", CURRENT["operational_principal"]["edge_access"])
+
+
+class TheT5FeasibilityRecordClassifiesWithoutSelecting(unittest.TestCase):
+    """T5 feasibility instruction §4, §7: one class per mechanism, none selected, final state C."""
+
+    RECORD = REPO_ROOT / "docs/fullstack/FS-10-FDP011-T5-SECRET-CUSTODY-FEASIBILITY.md"
+    CLASSES = ("EXISTING AUTHORIZED", "AUTHORIZED WITH BOUNDARY", "REQUIRES FOUNDER DECISION",
+               "REQUIRES ARCHITECT DECISION", "PROVIDER DEPENDENCY", "INSUFFICIENT EVIDENCE",
+               "INCOMPATIBLE WITH FDP-011 T5", "PROHIBITED")
+
+    def test_each_mechanism_has_exactly_one_class(self):
+        text = self.RECORD.read_text(encoding="utf-8")
+        table = text[text.index("## 12. Classification"):text.index("## 13.")]
+        rows = [line for line in table.splitlines() if re.match(r"\| M\d+ ", line)]
+        self.assertEqual(11, len(rows))
+        for row in rows:
+            cell = row.split("|")[3]
+            found = [c for c in self.CLASSES if f"**{c}" in cell]
+            self.assertEqual(1, len(found), row)
+
+    def test_final_state_and_no_selection_language(self):
+        text = self.RECORD.read_text(encoding="utf-8")
+        self.assertIn("C. NO EXISTING AUTHORIZED SECRET-HANDLING PATH", text)
+        self.assertNotRegex(text, r"(?i)\b(recommend\w*|preferred|best|optimal|obvious|natural choice)\b")
