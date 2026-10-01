@@ -3,6 +3,48 @@
 | Field | Value |
 |---|---|
 | **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
+| **Status** | **ACTIVE — BLOCKED at S5 (FDP-011 T5 credential boundary).** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · FDP-009 `§9` Release Package prepared · `FDP-011` **CANONICAL** · `ESC-03` **DECIDED, NOT RESOLVED** · `FDP-010` **NOT COMPLETE** · **FOUNDER RELEASE AUTHORIZATION REQUIRED** |
+| **Authority** | **`FDP-009`** (Register `§107`) **+ `FDP-010`** (Register `§109`) **+ `FDP-011`** (Register `§117`); current classes in `FS-10-CURRENT-AUTHORITY.md`. The closed FS-09 gate is history, not current authority (`FDP-010-03`) |
+| **Production** | release candidate **`d05261c`**: `dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv` serves the Production alias behind **unchanged X2**; designated rollback target `dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T` (same commit, verified). **Not released, not LIVE, not public** |
+| **Operational access** | `aios-operator` (`FDP-010-01`) exists and is verified. `FDP-011` authorizes **O-A** (per-session bypass, Production only, serving + designated target, revoked each session). **Not operable yet:** the connector returns the bypass value on creation and needs it to revoke, which T5 forbids, and no secret path is authorized (`FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md`) |
+| **Founder principal** | `FDP-011` **P-2** (observe, workflow.run, audit): authorized, **not established** — needs the Founder token's custody and an X2 path for post-deploy verification |
+| **Rollback** | CEO with boundary (`FDP-009` `§8`, `FDP-010-02`); verified known-good target; `22c0b49` is not a target. Post-rollback API verification (runbook `§9`) waits for O-A |
+| **Temporary access** | **NONE** (no bypass exists) |
+| **Next step** | **Founder input under FDP-011 T5** (the secret-handling path for the bypass value) and the P-2 token custody. Founder Release Authorization stays Founder-reserved (`FDP-009` `§10`) |
+
+```text
+FS-10 Preparation                    done
+   → Production Deployment           done   (CEO; FDP-009-01)  d05261c
+   → Production Verification         PASS   (CEO; FDP-009-03 temporary access, revoked)
+   → Operational principal + rollback done  (CEO; FDP-010-01/-02)
+   → ESC-03 edge mechanism           decided: FDP-011 O-A (Register §117)
+   → O-A implementation              ← here: BLOCKED at the T5 credential boundary (Register §118)
+   → FDP-010 completion, integration verification, reconciliation
+   → Founder Release Gate            (Founder)
+   → Production Release → LIVE (bounded by X2) → Operational AIOS
+```
+
+## 1. FDP-011 execution (2026-10-01; Register `§117`, `§118`)
+
+| State | Result |
+|---|---|
+| S4 validation | 10/10 PASS; canonical at `§117` (sha256 `5a6e5a8b…`); package unchanged |
+| Envelope | O-A authorized with boundary; connector create/revoke not authorized (value exposure); secret path requires Founder decision; P-2 authorized with boundary |
+| S5 O-A | **blocked** before any provider action |
+| S5 P-2 | not executable (token custody; post-deploy verification needs O-A) |
+| S6–S9 | not entered |
+
+## 2. Current frontier
+
+Founder input under `FDP-011` T5 and for P-2 custody (`FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md` `§7`). Until O-A operates and is verified, `ESC-03` is not resolved, `FDP-010` is **NOT COMPLETE** and FS-10 is not READY. Founder Release Authorization, Production Release, LIVE and Operational AIOS remain Founder-reserved.
+
+---
+
+# History: FS-10 under the ESC-03 Master Instruction (2026-10-01), paused at S3, before `FDP-011`
+
+| Field | Value |
+|---|---|
+| **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
 | **Status** | **ACTIVE — PAUSED at a Founder Decision (Master Instruction S3).** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · FDP-009 `§9` Release Package prepared · `ESC-03` **NOT RESOLVED** · `FDP-010` **NOT COMPLETE** (MI `§21` item 3, 4) · **FOUNDER RELEASE AUTHORIZATION REQUIRED** |
 | **Authority** | **`FDP-009`** (Register `§107`) **+ `FDP-010`** (Register `§109`); current classes in `FS-10-CURRENT-AUTHORITY.md`. Execution instruction: the Master Instruction (Register `§115`, result `§116`). The closed FS-09 gate is history, not current authority (`FDP-010-03`) |
 | **Production** | release candidate **`d05261c`**: `dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv` serves the Production alias behind **unchanged X2**; designated rollback target `dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T` (same commit, verified). **Not released, not LIVE, not public** |

@@ -305,3 +305,18 @@ Record: `FS-10-ESC-03-AUTHORITY-RESOLUTION.md`.
 | **Checks** (on `cea0d68`; Register `§116`) | `native_core` 801 · `consumers` 276 · `tools/bounded_exception` 29 · `fullstack` **326** OK on Python 3.12 and 3.11; `tools` 1962 run, **1 failure** = the P12-W6 population signal classified at Register `§102` (0.50 against 0.4895; P12 untouched), no new failure; citation audit 0 errors, 94 warnings (unchanged); mutation checks: a steering word, a missing element, a selection each fail the package tests; secret scan: no operator plaintext, bypass or share value in the tree; Production `updatedAt` unchanged after the work |
 
 **PRODUCTION RELEASE = NOT AUTHORIZED (FOUNDER RESERVED) · LIVE = NOT ACTIVE (FOUNDER RESERVED).**
+
+---
+
+## 22. Update under `FDP-011` (2026-10-01; Register `§117`, `§118`)
+
+| Item | Status now |
+|---|---|
+| **FDP-011** | **CANONICAL** (Register `§117`, sha256 `5a6e5a8b…`): D-1 **O-A** per-session bypass; D-2 T1–T9 (Production only; serving + designated target; `FDP-010` `§13` duties; per session; T5 custody; rotation; revocation; evidence; extends `FDP-009-03`); D-3 **P-2** Founder principal (three scopes) |
+| **S4** | validation 10/10 PASS (`FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md`) |
+| **S5** | **BLOCKED at the T5 credential boundary**: the connector's bypass API returns the value on creation and requires it on revocation; T5 forbids the value in normal tool output and names no secret path. Nothing created or deployed |
+| **ESC-03** | **DECIDED, NOT RESOLVED** |
+| **FDP-010** | **NOT COMPLETE** (MI `§21` items 3, 4) |
+| **FS-10** | not READY |
+
+**PRODUCTION RELEASE = NOT AUTHORIZED (FOUNDER RESERVED) · LIVE = NOT ACTIVE (FOUNDER RESERVED).**

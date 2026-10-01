@@ -10156,3 +10156,41 @@ Recorded by Claude Code under the Master Instruction (`§115`). States executed:
 | **Records** | `docs/fullstack/FS-10-ESC03-MI-S0-S1-RECORD.md`; current docs updated (`FS-10-CURRENT-AUTHORITY.*`, `FS-10-DEPLOYMENT.md` with the previous head kept as *History*, Release Package `§21`); predecessor package kept, with a successor pointer; tests `fullstack/tests/test_esc03_boundaries.py` (16) |
 | **Release / LIVE** | **PRODUCTION RELEASE = NOT AUTHORIZED · LIVE = NOT ACTIVE** |
 | **Checks** (on `cea0d68`) | `native_core` 801 · `consumers` 276 · `tools/bounded_exception` 29 · `fullstack` **326** OK on Python 3.12 and 3.11; `tools` 1962 run, **1 failure** = the P12-W6 population signal classified at `§102` (0.50 against 0.4895; P12 untouched), no new failure; citation audit 0 errors, 94 warnings (unchanged); mutation checks: a steering word, a missing element, a selection each fail the package tests; secret scan: no operator plaintext, bypass or share value in the tree; Production `updatedAt` unchanged after the work |
+
+---
+
+## 117. `FDP-011` — FS-10 ESC-03 Production Operational Edge Access: Founder Decision Canonical Registration (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/FDP-011-FS-10-ESC03-PER-SESSION-X2-OPERATIONAL-ACCESS.md` (verbatim; the instrument designated in `§0` of the submission) · content sha256 `5a6e5a8b3cf449824fbc5ae55eeb59ebf4ebf22d5579a17b8f807116820f1296` (over the fenced text) |
+| **Issued by** | Founder, 2026-10-01 |
+| **Answers** | `docs/fullstack/decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md` (`§116`; unchanged) |
+| **D-1** | **O-A** — E-A per-session automation bypass carrying `aios-operator` through X2 to the Production AIOS API; no standing or permanent bypass, no public exposure, no Release, LIVE or traffic activation |
+| **D-2** | T1 Production only · T2 serving deployment and designated verified rollback target · T3 `FDP-010` `§13` duties, no capability expansion · T4 per session; revoke at session end; expiry if supported, else explicit revocation and verification · T5 created through the provider control plane by the authorized account holder; never in repository, code, documentation, evidence, logs, chat or normal tool output; tool-output transmission only if `FDP-010` `§11.4` explicitly permits it · T6 rotate every session and on the listed triggers · T7 revoke on the five listed triggers; independent verification (302) · T8 per-session evidence fields, never the value · T9 **extends** `FDP-009-03` |
+| **D-3** | **P-2** — a separate human Founder principal with `aios.observe`, `aios.workflow.run`, `aios.audit`; no `aios.agent.register` |
+| **Release / LIVE** | **remain Founder-reserved** (constraints 4–6) |
+| **Accompanying instructions** | Resume Gate MI `acts/MI-FS10-FDP011-FOUNDER-DECISION-COMPLETION-RESUME-GATE.md` (sha256 `b28d79aafad02700c1a15e46b10cafb89d18bc8b12a2c8e64b50c3206c78923d`); Submission & S4 Resume Instruction `acts/MI-FS10-FDP011-SUBMISSION-S4-RESUME-INSTRUCTION.md` (sha256 `eaf0159b5dc7bb1e0b5622b37627d87d2e0d0b93e431a60956afb3d5c8db5abf`); both verbatim, extracted byte-exactly from the session transcript |
+| **Variance** | the submission opens with an undesignated copy of the decision, differing in one T4 line (*"It"* / *"The bypass"*), same meaning; the designated instrument is canonical |
+| **Validation** | S4 checks 1–10 **PASS**; no ambiguity of operative meaning; no conflict with higher authority (`docs/fullstack/FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md` `§2`) |
+| **Result** | recorded at `§118` |
+
+---
+
+## 118. FDP-011 Execution Result — Canonical; Implementation Envelope Derived; S5 BLOCKED at the T5 Credential Boundary (2026-10-01)
+
+Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
+
+| Stage | State |
+|---|---|
+| **S4** | **PASS** — validated, persisted, hashed, registered (`§117`), re-discovered; package unchanged |
+| **Envelope** | O-A per-session bypass **AUTHORIZED WITH BOUNDARY** (T1–T4, T7, T8); creating or revoking it through the Vercel connector **NOT AUTHORIZED** (the value appears in tool output or input: T5, `FDP-010` `§11.4`); a non-chat secret path **REQUIRES FOUNDER DECISION** (T5 names none); P-2 **AUTHORIZED WITH BOUNDARY**; CEO custody of the Founder's plaintext **NOT AUTHORIZED** (constraint 9) |
+| **S5 — O-A** | **BLOCKED (H8)** before any provider action: no T5-compliant create / deliver / revoke path exists in this execution environment. Provider facts checked first (constraint 10): no automatic expiry documented for automation bypasses; `revoke` requires the value; `generate` returns it |
+| **S5 — P-2** | **not executable**: needs the Founder token's custody (e.g. a Founder-generated token, hash supplied) and an X2 path for the runbook `§15` post-deploy verification (O-A) |
+| **ESC-03** | **decided (O-A); NOT RESOLVED** (not implemented, not usable) |
+| **FDP-010** | **NOT COMPLETE** (MI `§21` items 3, 4) |
+| **Production / X2 / B3** | unchanged (no bypass, no deployment, no variable change) |
+| **State** | **A. BLOCKED — SECURITY (credential custody)** |
+| **Founder input required** | (1) the T5 secret-handling path for the bypass value; (2) the P-2 token hash or custody path |
+| **Record** | `docs/fullstack/FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md` |
+| **Release / LIVE** | **PRODUCTION RELEASE = NOT AUTHORIZED · LIVE = NOT ACTIVE** |

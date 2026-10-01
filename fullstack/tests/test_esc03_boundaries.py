@@ -158,3 +158,36 @@ class TheCompleteFounderPackageStaysUnselected(unittest.TestCase):
         self.assertIn("**S1-B — FOUNDER DECISION REQUIRED**", text)
         self.assertIn("**B** — mechanism selection/authorization for an already-authorized capability", text)
         self.assertIn("FOUNDER DECISION REQUIRED\nEXECUTION PAUSED\nNO IMPLEMENTATION AUTHORIZED", text)
+
+
+class Fdp011IsCanonicalAndItsBoundaryHolds(unittest.TestCase):
+    """FDP-011 (Register §117): the record, its hash, the unchanged package, and the D-3 scopes."""
+
+    RECORD = REPO_ROOT / "docs/governance/acts/FDP-011-FS-10-ESC03-PER-SESSION-X2-OPERATIONAL-ACCESS.md"
+    PACKAGE = REPO_ROOT / "docs/fullstack/decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md"
+    PACKAGE_SHA256 = "5cef394cbd421331155ea531ae304acbacbfa553544e6f31cf704f70f77707e1"
+
+    def test_the_record_hash_is_registered_and_current(self):
+        import hashlib
+        text = self.RECORD.read_text(encoding="utf-8")
+        digest = hashlib.sha256(
+            text[text.index("````text\n") + 8:text.rindex("\n````")].encode("utf-8")).hexdigest()
+        entry = CURRENT["decisions"]["FDP-011"]
+        self.assertEqual("§117", entry["register"])
+        self.assertEqual(digest, entry["sha256"])
+        register = (REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md").read_text(encoding="utf-8")
+        self.assertIn(digest, register)
+
+    def test_the_decision_package_is_preserved_unchanged(self):
+        import hashlib
+        self.assertEqual(self.PACKAGE_SHA256, hashlib.sha256(self.PACKAGE.read_bytes()).hexdigest())
+
+    def test_the_founder_principal_has_the_three_scopes_and_is_not_the_operator(self):
+        founder = CURRENT["founder_principal"]
+        self.assertEqual({"aios.observe", "aios.workflow.run", "aios.audit"}, set(founder["scopes"]))
+        self.assertTrue(set(founder["scopes"]) <= set(security.SCOPES))
+        self.assertNotIn(security.AGENT_REGISTER, founder["scopes"])
+        self.assertNotEqual("aios-operator", founder.get("subject"))
+
+    def test_no_bypass_is_declared_to_exist(self):
+        self.assertIn("No bypass exists.", CURRENT["operational_principal"]["edge_access"])
