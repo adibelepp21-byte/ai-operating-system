@@ -158,7 +158,22 @@ The 14 conditions: necessary (Production is behind X2 and has no principal) ✓ 
 
 | U-9 | The FS-09 readiness gate's criterion text still says *"Production rollback is Founder-only (FD-FS-001 D4-A)"* (`fullstack/readiness.py:714`); `FDP-009` `§8` now lets the CEO roll back before a release when operationally required | stale wording in the closed FS-09 gate (result unchanged: 30 PASS, 1 OBSERVED); `FDP-009` governs; left unedited so FS-09's closing evaluator is not altered | no |
 
+| U-10 | `fullstack/deploy/smoke.py` (added at FS-10 entry, `b586a9b`) did not install the certified-write barrier in its `__main__` (GOAL-V2-004); found by `tools.tests.test_certified_write_closure` in this regression | **fixed** (barrier installed first, as in `fullstack/readiness.py`); the tool is not a served path; the Production runs used `-m`, which loads only `fullstack` packages, and wrote evidence only to a scratch directory outside the repository | no |
+
 No unresolved **blocking** Production condition was found.
+
+### Regression, citation and governance checks (2026-10-01, on the commit carrying this package)
+
+| Check | Result |
+|---|---|
+| `native_core` | 801 OK (1 expected failure) on Python 3.12 and 3.11 |
+| `consumers` | 276 OK on 3.12 and 3.11 |
+| `tools/bounded_exception` | 29 OK on 3.12 and 3.11 |
+| `fullstack` (incl. negative controls, smoke, readiness) | 297 OK on 3.12 and 3.11 |
+| `tools` | 1933 run: **2 failures** — `test_certified_write_closure` (U-10, fixed; re-run 51 OK) and the P12-W6 population signal (`test_p12_governance_evidence_verification … [status]`, ratio 0.5047 against 0.4925), **classified** at Register `§102`, P12 untouched |
+| Citation audit | 0 errors, 94 warnings (unchanged) |
+| Readiness gate | unchanged: 30 PASS, 1 OBSERVED |
+| Boundaries | no diff in served paths, `native_core`, `consumers`, `tools` (except the fix above, outside `tools`), acts, Co-Founder V2 instruments, architecture or program documents; Register append-only |
 
 ## 17. Final Production Verification result
 

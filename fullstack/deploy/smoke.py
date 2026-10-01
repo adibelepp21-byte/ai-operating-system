@@ -180,4 +180,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
 
 if __name__ == "__main__":
+    # GOAL-V2-004: install the certified-write barrier before anything runs,
+    # even when this file is run by path and has not imported `tools`
+    # (`--out` writes a file).
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+    import tools  # noqa: E402,F401
     sys.exit(main())
