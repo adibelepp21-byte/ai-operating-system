@@ -3,6 +3,46 @@
 | Field | Value |
 |---|---|
 | **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
+| **Status** | **ACTIVE — PAUSED at a Founder Decision (Master Instruction S3).** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · FDP-009 `§9` Release Package prepared · `ESC-03` **NOT RESOLVED** · `FDP-010` **NOT COMPLETE** (MI `§21` item 3, 4) · **FOUNDER RELEASE AUTHORIZATION REQUIRED** |
+| **Authority** | **`FDP-009`** (Register `§107`) **+ `FDP-010`** (Register `§109`); current classes in `FS-10-CURRENT-AUTHORITY.md`. Execution instruction: the Master Instruction (Register `§115`, result `§116`). The closed FS-09 gate is history, not current authority (`FDP-010-03`) |
+| **Production** | release candidate **`d05261c`**: `dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv` serves the Production alias behind **unchanged X2**; designated rollback target `dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T` (same commit, verified). **Not released, not LIVE, not public** |
+| **Operational access** | permanent principal `aios-operator` (`FDP-010-01`): observe, workflow.run, audit; hash only; verified with negative controls. Capability **authorized** (`FDP-010` `§4.1`, `§13`); **no mechanism** carries it through X2 (302 at 2026-10-01T11:18:48Z). MI S1: capability check **B**, exit **S1-B**; complete Founder Decision Package `decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md` (23 elements; all candidates **UNSELECTED**); record `FS-10-ESC03-MI-S0-S1-RECORD.md` |
+| **Rollback** | CEO with boundary before and after a release (`FDP-009` `§8`, `FDP-010-02`); verified known-good target established; `22c0b49` is not a target. Post-rollback API verification (runbook `§9`) needs an X2 path (ESC-03) |
+| **Temporary access** | **NONE** |
+| **Next step** | **Founder Decision on ESC-03** (MI S3: *FOUNDER DECISION REQUIRED · EXECUTION PAUSED · NO IMPLEMENTATION AUTHORIZED*). Founder Release Authorization stays Founder-reserved (`FDP-009` `§10`) |
+
+```text
+FS-10 Preparation                    done
+   → Production Deployment           done   (CEO; FDP-009-01)  d05261c
+   → Production Verification         PASS   (CEO; FDP-009-03 temporary access, revoked)
+   → Operational principal + rollback done  (CEO; FDP-010-01/-02)
+   → ESC-03 edge mechanism           ← here: Founder Decision required (MI S3)
+   → FDP-010 completion, integration verification, reconciliation (MI S4–S8)
+   → Founder Release Gate            (Founder)
+   → Production Release → LIVE (bounded by X2) → Operational AIOS
+```
+
+## 1. Master Instruction execution (2026-10-01; Register `§115`, `§116`)
+
+| State | Result |
+|---|---|
+| S0 re-discovery | all instrument hashes found in the Register; FS-09 gate byte-identical to `de47057`; X2 on, no bypass, no trusted IPs; Production env: `AIOS_OPERATOR_TOKENS` (hash only), `SUPABASE_SECRET_KEY`; serving `dpl_s8c6m…`, target `dpl_76CYC…`; store 118 rows; edge 302 with and without the operator bearer. No precedence conflict |
+| S1 analysis | six candidates classified on the ten MI `§6` fields; capability authorized, mechanism not (MI `§7` answer **B**); exit **S1-B** |
+| S2 preparation | `decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md`; proposed identifier `FDP-011` (not registered) |
+| S3 | **STOP.** No option selected, implemented, configured or canonicalized |
+| S4–S9 | not entered |
+
+## 2. Current frontier
+
+The **ESC-03 Founder Decision** (package above). Until it exists and is implemented and verified, `FDP-010` is **NOT COMPLETE** under MI `§21`, and FS-10 is not in the MI `§22` ready state. Founder Release Authorization, Production Release, LIVE and Operational AIOS remain Founder-reserved.
+
+---
+
+# History: FS-10 under `FDP-010` and `AD-FS10-ESC03` (2026-10-01), before the Master Instruction
+
+| Field | Value |
+|---|---|
+| **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
 | **Status** | **ACTIVE — at the Founder Release Gate.** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED** |
 | **Authority** | **`FDP-009`** (Register `§107`) **+ `FDP-010`** (Register `§109`); current classes in `FS-10-CURRENT-AUTHORITY.md`. The closed FS-09 gate is history, not current authority (`FDP-010-03`) |
 | **Production** | release candidate **`d05261c`**: `dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv` serves the Production alias behind **unchanged X2**; designated rollback target `dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T` (same commit, verified). **Not released, not LIVE, not public** |

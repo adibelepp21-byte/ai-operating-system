@@ -122,3 +122,39 @@ class TheEdgeAccessDecisionStaysUnselected(unittest.TestCase):
         self.assertEqual(6, len(rows))
         for row in rows:
             self.assertTrue(row.rstrip().endswith("**NO** |"), row)
+
+
+class TheCompleteFounderPackageStaysUnselected(unittest.TestCase):
+    """Master Instruction §9, §10: all 23 elements, in order; no candidate selected; no steering word."""
+
+    PACKAGE = REPO_ROOT / "docs/fullstack/decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md"
+    RECORD = REPO_ROOT / "docs/fullstack/FS-10-ESC03-MI-S0-S1-RECORD.md"
+    ELEMENTS = ("Decision ID", "Context", "Existing canonical authority", "Current verified state",
+                "Evidence inventory", "Directly verified facts", "Provider-documented facts",
+                "Implementation-observed facts", "Unknowns", "Authority classification",
+                "Candidate mechanisms", "Security implications", "Governance implications",
+                "Operational implications", "Release / LIVE boundary implications",
+                "Exact Founder Decision Question", "Decision options", "Consequences of each option",
+                "Required implementation scope after decision", "Explicit non-decisions",
+                "Negative controls", "Evidence references", "Canonicalization requirements")
+
+    def test_the_23_elements_appear_in_order(self):
+        headings = re.findall(r"^## (\d+)\. (.+?)(?: \(|$)", self.PACKAGE.read_text(encoding="utf-8"), re.M)
+        self.assertEqual([(str(i), e) for i, e in enumerate(self.ELEMENTS, 1)],
+                         [(n, h.strip()) for n, h in headings])
+
+    def test_no_steering_word(self):
+        text = self.PACKAGE.read_text(encoding="utf-8")
+        self.assertNotRegex(text, r"(?i)\b(recommend\w*|preferred|best|optimal|obvious|natural choice)\b")
+
+    def test_every_candidate_is_unselected_and_the_package_is_not_a_decision(self):
+        text = self.PACKAGE.read_text(encoding="utf-8")
+        self.assertIn("All six: **UNSELECTED**.", text)
+        self.assertIn("**not** a Founder Decision Record", text)
+        self.assertNotRegex(text, r"(?i)\bselected\b(?! by)")
+
+    def test_s1_exit_is_founder_decision_required_with_capability_answer_b(self):
+        text = self.RECORD.read_text(encoding="utf-8")
+        self.assertIn("**S1-B — FOUNDER DECISION REQUIRED**", text)
+        self.assertIn("**B** — mechanism selection/authorization for an already-authorized capability", text)
+        self.assertIn("FOUNDER DECISION REQUIRED\nEXECUTION PAUSED\nNO IMPLEMENTATION AUTHORIZED", text)

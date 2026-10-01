@@ -10124,3 +10124,34 @@ Recorded by Claude Code under `AD-FS10-ESC03` (`§113`). The stages are kept dis
 | **Record** | `docs/fullstack/FS-10-ESC03-ARCHITECTURE-DECISION.md`; Founder package `docs/fullstack/decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE.md` |
 | **Final ADR state** | **ARCHITECTURE CONSTRAINED — NO AUTHORIZED MECHANISM** · ESC-03 **NOT RESOLVED** · next: **Founder decision** (as Architect and as Founder) |
 | **Release / LIVE** | **PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED** |
+
+---
+
+## 115. Master Instruction Received — FS-10: ESC-03 Authority Resolution → Founder Decision → FDP-010 Completion → FS-10 Final Reconciliation (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/MI-FS10-ESC03-FDP010-FS10-FINAL-RECONCILIATION-MASTER-INSTRUCTION.md` (verbatim; byte-equal to the received message) · content sha256 `549c39eb4845ad68d38ff456e9c5465b40a64a58a8d655ec6b868914412a5fff` (over the fenced text) |
+| **Issued by** | Founder, 2026-10-01; *"FOUNDER-ISSUED EXECUTION INSTRUCTION"* |
+| **Structure** | conditional state machine S0 re-discovery → S1 ESC-03 authority analysis → S2 Founder Decision preparation → **S3 hard stop** (when a Founder Decision is required) → S4 canonicalization → S5 implementation → S6 FDP-010 completion → S7 integration verification → S8 reconciliation → S9 Founder Release Gate (`§4`) |
+| **Authorizes** | the bounded resolution, implementation and verification **once authority is established**; it does not itself supply a Founder Decision (`§1` items 2, 9, 10; `§10`) |
+| **Does not authorize** | Production Release, LIVE, Founder Release Authorization, permanent X2 bypass or public exposure without explicit authority, Constitution/Mission/Governance/Founder-authority change, Native Core #12, Phase 14, P12/P13 or Platform Organization reopening (`§30`) |
+| **Result** | recorded at `§116` |
+
+---
+
+## 116. Master Instruction Result — S0 Verified; S1-B Founder Decision Required; Complete Founder Decision Package; S3 Hard Stop (2026-10-01)
+
+Recorded by Claude Code under the Master Instruction (`§115`). States executed: S0 → S1 → S2 → S3. States S4–S9 **not entered**: their entry condition (an explicit Founder Decision) does not exist.
+
+| State | Result |
+|---|---|
+| **S0 re-discovery** | instruments `FDP-009` (`33fecb97…`), `FDP-010` (`fa1d8b12…`), ESC-03 Act (`b09e56ed…`), `AD-FS10-ESC03` (`d10a16af…`), this MI (`549c39eb…`) found in the Register; FS-09 gate byte-identical to `de47057`; X2 on (`all_except_custom_domains`), no bypass, no share link, no trusted IPs; Production env `AIOS_OPERATOR_TOKENS` (hash only) and `SUPABASE_SECRET_KEY`; serving `dpl_s8c6m…`, designated rollback target `dpl_76CYC…`, `22c0b49` not a candidate; store 118 rows; edge 302 with and without the operator bearer (2026-10-01T11:18:48Z). **CURRENT STATE VERIFIED · NO UNRESOLVED PRECEDENCE CONFLICT** |
+| **S1 analysis** | E-A–E-F classified on the ten MI `§6` fields; **capability authority check (MI `§7`) = B**: the capability is authorized (`FDP-010` `§4.1`, `§13`); the mechanism carrying it through X2 is not (FS-DP-03 `R2.5`, `R2.10`; `FDP-009-02` `§5.5`; `FDP-009` `§8`; `FDP-010` `§4.2`). Exit **S1-B — FOUNDER DECISION REQUIRED** |
+| **S2 preparation** | `docs/fullstack/decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md`: all 23 elements of MI `§9`; proposed identifier `FDP-011` (**not registered**; no Register number reserved); D-1 mechanism (O-A … O-H), D-2 terms T1–T9, D-3 Founder principal (P-1 … P-3); every candidate **UNSELECTED**; no steering word (tested) |
+| **S3** | **FOUNDER DECISION REQUIRED · EXECUTION PAUSED · NO IMPLEMENTATION AUTHORIZED** |
+| **ESC-03** | **NOT RESOLVED** |
+| **FDP-010** | CANONICAL; **NOT COMPLETE** under MI `§21` (items 3, 4) |
+| **Implementation** | none: no X2 change, bypass, identity, token, trust boundary, public exposure or code change to served modules |
+| **Records** | `docs/fullstack/FS-10-ESC03-MI-S0-S1-RECORD.md`; current docs updated (`FS-10-CURRENT-AUTHORITY.*`, `FS-10-DEPLOYMENT.md` with the previous head kept as *History*, Release Package `§21`); predecessor package kept, with a successor pointer; tests `fullstack/tests/test_esc03_boundaries.py` (16) |
+| **Release / LIVE** | **PRODUCTION RELEASE = NOT AUTHORIZED · LIVE = NOT ACTIVE** |

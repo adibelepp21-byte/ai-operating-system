@@ -22,6 +22,11 @@
    "record": "docs/governance/acts/AD-FS10-ESC03-PRODUCTION-OPERATIONAL-EDGE-ACCESS-ARCHITECTURE-DECISION.md",
    "register": "§113",
    "sha256": "d10a16af1406acc67220b7bd9eb6fa2571afc91fff66870fa90cd075f6b497d2"
+  },
+  "MI-FS10-ESC03": {
+   "record": "docs/governance/acts/MI-FS10-ESC03-FDP010-FS10-FINAL-RECONCILIATION-MASTER-INSTRUCTION.md",
+   "register": "§115",
+   "sha256": "549c39eb4845ad68d38ff456e9c5465b40a64a58a8d655ec6b868914412a5fff"
   }
  },
  "authority": {
@@ -132,7 +137,7 @@
   "environment": "production only (Vercel AIOS_OPERATOR_TOKENS, Production scope, hash only)",
   "sha256": "0ccb723cf7dccd591bc22e7448792a9522b299bf9a40e2d487089acf83ed8f4e",
   "custody": "the delegated CEO's execution environment, in a private file; never in repository, documentation, evidence, logs or chat; on loss or suspicion: rotate (new token, new hash, redeploy) per runbook §15",
-  "edge_access": "X2 (unchanged) admits Vercel-authenticated members of the account and Founder-authorized revocable mechanisms (FS-DP-03 R2.10); no mechanism is authorized for the CEO's routine operation. ESC-03 = NOT RESOLVED. AD-FS10-ESC03 evidence phase complete: ARCHITECTURE CONSTRAINED — NO AUTHORIZED MECHANISM; all candidates UNSELECTED; FOUNDER DECISION REQUIRED (docs/fullstack/FS-10-ESC03-ARCHITECTURE-DECISION.md; decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE.md; Register §114)"
+  "edge_access": "X2 (unchanged) admits Vercel-authenticated members of the account and Founder-authorized revocable mechanisms (FS-DP-03 R2.10); no mechanism is authorized for the CEO's routine operation. ESC-03 = NOT RESOLVED. The capability is authorized (FDP-010 §4.1, §13); the mechanism is not (Master Instruction §7 answer B; S1 exit S1-B). AD-FS10-ESC03: ARCHITECTURE CONSTRAINED — NO AUTHORIZED MECHANISM (Register §114). Master Instruction S3 (Register §116): FOUNDER DECISION REQUIRED · EXECUTION PAUSED · NO IMPLEMENTATION AUTHORIZED; all candidates UNSELECTED (docs/fullstack/decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md; docs/fullstack/FS-10-ESC03-MI-S0-S1-RECORD.md)"
  },
  "rollback_target": {
   "designated": {

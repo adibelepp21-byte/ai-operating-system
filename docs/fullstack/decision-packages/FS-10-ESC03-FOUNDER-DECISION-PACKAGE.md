@@ -5,6 +5,7 @@
 | **Prepared under** | `AD-FS10-ESC03` `§22`, `§23`, `§30` (Register `§113`); record `FS-10-ESC03-ARCHITECTURE-DECISION.md`; evidence `evidence/FS-10-ESC03-ARCHITECTURE-EVIDENCE.json` |
 | **Status** | **PREPARED — AWAITING FOUNDER.** Nothing is selected, recommended, ranked or implemented. This package is not a Founder Decision Record |
 | **Why the Founder** | edge access is Founder-held configuration (FS-DP-03 `R2.5`); X2 admits only *"a Vercel login or a Founder-authorized, revocable mechanism"* (`R2.10`); deployment-protection changes go through the architecture authority path (`FDP-009-02` `§5.5`), which the Founder holds as Architect (`FD-2` open); temporary access is verification-only by Founder decision (`FDP-009-03`); provider identities and credentials are account-holder controls (`FDP-010` `§4.2`). Existing delegation (`FDP-009` `§8`, `FDP-010` `§13`) does not reach any of these |
+| **Successor** | `FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md` (Master Instruction `§9`, all 23 elements; Register `§116`). This package is kept unchanged below as the earlier preparation |
 | **Release / LIVE** | **unaffected by every option: PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED** |
 
 ## 1. Exact decision question

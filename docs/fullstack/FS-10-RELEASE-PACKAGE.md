@@ -287,3 +287,20 @@ Record: `FS-10-ESC-03-AUTHORITY-RESOLUTION.md`.
 | Implementation | none; no bypass, identity, token, service or X2 change |
 
 **PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED.**
+
+---
+
+## 21. Update under the Master Instruction (2026-10-01; Register `§115`, `§116`)
+
+| Item | Status now |
+|---|---|
+| **S0** | current state re-discovered and verified; no precedence conflict (`FS-10-ESC03-MI-S0-S1-RECORD.md` `§1`–`§3`) |
+| **S1** | capability authorized (`FDP-010` `§4.1`, `§13`); mechanism not authorized; MI `§7` answer **B**; exit **S1-B — FOUNDER DECISION REQUIRED** |
+| **S2** | complete package (23 elements): `decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md`; proposed identifier `FDP-011` (not registered); all candidates **UNSELECTED** |
+| **S3** | **FOUNDER DECISION REQUIRED · EXECUTION PAUSED · NO IMPLEMENTATION AUTHORIZED** |
+| **ESC-03** | **NOT RESOLVED** |
+| **FDP-010** | CANONICAL; ESC-01 and ESC-02 executed and verified; **NOT COMPLETE** under MI `§21` (items 3 and 4 need ESC-03) |
+| **FS-10 under MI `§22`** | not yet in the ready state (it requires ESC-03 RESOLVED and FDP-010 FULLY EXECUTED) |
+| Implementation | none; X2, B3, scopes, Production configuration and store unchanged (118 rows) |
+
+**PRODUCTION RELEASE = NOT AUTHORIZED (FOUNDER RESERVED) · LIVE = NOT ACTIVE (FOUNDER RESERVED).**
