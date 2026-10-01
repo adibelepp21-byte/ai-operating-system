@@ -3,12 +3,14 @@
 | Field | Value |
 |---|---|
 | **Nature** | **Evidence. Not Founder Release Authorization** (`FDP-009` `§9`, `§10`) |
-| **Prepared by** | Claude Code, CEO under `FDP-009` `§8` (Register `§107`); recorded at Register `§108` |
+| **Prepared by** | Claude Code, CEO under `FDP-009` `§8` (Register `§107`); recorded at Register `§108`; **updated under `FDP-010` `§17` step 11 (Register `§109`, `§110`) — see `§18`** |
+| **Current authority** | `FDP-009` + `FDP-010` (`FS-10-CURRENT-AUTHORITY.md`); the closed FS-09 gate is history (`FDP-010-03`) |
 | **Date** | 2026-10-01 |
 | **Production Verification result** | **PASS** |
 | **State** | **PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · FOUNDER RELEASE AUTHORIZATION REQUIRED** |
 | **Not** | released, LIVE, publicly accessible, Production accepted, or an operational AIOS. None of these is claimed or implied (`FDP-009-02` `§5.3`–`§5.6`) |
-| **Evidence** | `evidence/FS-10-PRODUCTION-VERIFICATION-2026-10-01.json` (every result below, raw) · `evidence/FS-10-PRODUCTION-L1-2026-10-01.jsonl` · `evidence/FS-10-PRODUCTION-BACKUP-MANIFEST-2026-10-01.json` with `…-BACKUP-EXPORT-2026-10-01.jsonl` |
+| **Release readiness** | **not blocked by rollback readiness**: a verified known-good rollback target exists (`§18.2`) |
+| **Evidence** | `evidence/FS-10-FDP-010-OPERATIONAL-ACCESS-ROLLBACK-2026-10-01.json` (`§18`) · `evidence/FS-10-PRODUCTION-VERIFICATION-2026-10-01.json` (every result below, raw) · `evidence/FS-10-PRODUCTION-L1-2026-10-01.jsonl` · `evidence/FS-10-PRODUCTION-BACKUP-MANIFEST-2026-10-01.json` with `…-BACKUP-EXPORT-2026-10-01.jsonl` |
 
 Facts are observed unless marked **[INF]** (inference).
 
@@ -25,6 +27,8 @@ Facts are observed unless marked **[INF]** (inference).
 `d05261cb7c02c6c489efbe5dff67ec86a22c0136` on `claude/aios-activation-authority-discovery-enq7bk` (*"FS-09 ACT-008: classify the P12-W6 regression signal (Register §102) …"*). The default branch `claude/aios-genesis-planning-hmbvlc` was **not merged** and is unchanged.
 
 ## 3. Production deployment identity
+
+*As verified at Register `§108`. Serving now: `dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv` (`§18.1`).*
 
 | Deployment | Commit | Role | State |
 |---|---|---|---|
@@ -110,6 +114,8 @@ The read-only smoke profile appended 18 access-audit records: by design every pr
 
 ## 12. Rollback readiness
 
+*As at Register `§108`. Current: `§18.2` — a verified known-good target now exists.*
+
 | Item | State |
 |---|---|
 | Mechanism | Vercel instant rollback / promote of a previous Production deployment (runbook `§10`, drilled on Preview in ACT-008) |
@@ -144,6 +150,8 @@ The 14 conditions: necessary (Production is behind X2 and has no principal) ✓ 
 **TEMPORARY ACCESS = NONE.**
 
 ## 16. Unresolved issue classification
+
+*As at Register `§108`. Current status of every item: `§18.4`.*
 
 | # | Issue | Class | Blocks release? |
 |---|---|---|---|
@@ -180,3 +188,66 @@ No unresolved **blocking** Production condition was found.
 **PRODUCTION VERIFICATION PASS.** Release candidate `d05261c` is deployed to Production (`dpl_CHV72ePvPE7doNu4WaKp93qXXu8x`) behind unchanged X2 protection. Smoke 7/7 and 10/10, health, integration, security, environment separation, state, observability and revocation all pass, and temporary access is none.
 
 **FOUNDER RELEASE AUTHORIZATION REQUIRED.** This package does not authorize Production Release, LIVE, traffic or an operational AIOS (`FDP-009` `§10`). The Founder decides.
+
+## 18. Update under `FDP-010` (2026-10-01; Register `§109`, `§110`)
+
+Evidence: `evidence/FS-10-FDP-010-OPERATIONAL-ACCESS-ROLLBACK-2026-10-01.json`. Current authority: `FS-10-CURRENT-AUTHORITY.md`.
+
+### 18.1 Operational access (`FDP-010-01`, `ESC-01` resolved)
+
+| Item | Result |
+|---|---|
+| Principal | `aios-operator`; scopes `aios.observe`, `aios.workflow.run`, `aios.audit` from the canonical model; **not** `aios.agent.register`; Production only; hash `0ccb723c…` in `AIOS_OPERATOR_TOKENS` (the `FDP-010-04` empty-list residual is replaced by the approved principal; the connector offers no delete) |
+| Deployments | `d05261c` rebuilt twice with it: **`dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T`** (rollback target) then **`dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv`** (serving the Production alias); Python 3.12; default branch not merged |
+| Scopes verified | smoke read-only **7/7** on both, as `aios-operator` with exactly the three scopes; one Scenario B run (`run-20261001T064549Z-6ea7aa47802a7a93-0`, `requested_by: aios-operator`) |
+| Negative controls | `aios.agent.register` → **403**, nothing registered · the Preview principal on Production → **401** · the operator on Preview → **401** · the operator on the superseded `dpl_CHV72…` and `dpl_Dfs1…` → **401** · bypass without token → **401** · token without bypass → **302** (X2) · unknown token → **401** |
+| Audit | 107 entries, 25 attributed to `aios-operator`. One check of mine failed on its own assumption (it read the first five entries of an oldest-first list) and was corrected by paging; recorded as such |
+| Custody | the delegated CEO's execution environment, private file; in no repository file, document, evidence, log or chat; rotation and revocation: runbook `§15` |
+
+### 18.2 Rollback (`FDP-010-02`, `ESC-02` resolved)
+
+| Item | Result |
+|---|---|
+| **Designated verified known-good target** | **`dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T`** — deployable (READY), compatible (same commit, schema, variables, region and store), verified (smoke 7/7; it reads the run the serving deployment wrote, equal), immutable identity, documented (`FS-10-CURRENT-AUTHORITY.md` `§3`, runbook `§9`) |
+| Vercel candidacy | `isRollbackCandidate: true` only for the target and the serving deployment; **false** for `dpl_A5Qs…` (`22c0b49`, **not a valid target**, `FDP-010` `§6.1`), `dpl_CHV72…`, `dpl_Dfs1…` |
+| Procedure | Instant Rollback to the designated target only; then runbook `§1` and `§12.1`; evidence. **Not executed**: not operationally required |
+| Limit | same commit: recovers from a failure of the serving deployment or its configuration; cannot undo a defect of `d05261c` itself (no earlier working application exists) — `FDP-010` `§8` containment applies |
+| **Release readiness** | **not blocked by rollback readiness** (`FDP-010` `§15`) |
+
+### 18.3 Governance reconciliation (`FDP-010-03`)
+
+The closed FS-09 gate (`fullstack/readiness.py`) is **byte-identical** to its closing state `de47057`, its wording preserved. `FS-10-CURRENT-AUTHORITY.md`/`.json` state that `FDP-009` + `FDP-010` govern current operation and list the historical wording as superseded; the runbook keeps the old row labelled *History* under the current one; no served or operational module imports the gate or carries the wording. `fullstack/tests/test_current_authority.py` (13 tests) holds all of this.
+
+### 18.4 Issues — current status
+
+| # | Issue (from `§16`) | Status now |
+|---|---|---|
+| U-1 | no permanent Production principal | **resolved** (`FDP-010-01`; `§18.1`) |
+| U-2 | rollback after a release | **resolved** (`FDP-010-02`) |
+| U-3 | no prior working version; rollback = offline | **resolved for rollback readiness**: verified target of the same release (`§18.2`); the limit stands and is documented |
+| U-4 | `dpl_Dfs1…` keeps the verification hash | unchanged, non-blocking; token destroyed; not a rollback candidate |
+| U-5 | empty `AIOS_OPERATOR_TOKENS` | **resolved**: replaced by the approved principal (`FDP-010` `§11.4`) |
+| U-6 | H3 manual monitoring | unchanged (decided) |
+| U-7 | P12-W6 signal | unchanged (classified, `§102`) |
+| U-8 | transport errors at the sandbox proxy | none in this run |
+| U-9 | FS-09 gate rollback wording | **reconciled** (`FDP-010-03`; `§18.3`) |
+| U-10 | smoke barrier install | fixed (`§108` follow-up) |
+| **ESC-03** | **the CEO has no standing path through X2.** Members of the Vercel account pass X2 by login; a permanent bypass is excluded (`FDP-009` `§5.5`); temporary access is for verification only (`FDP-009-03`); the provider connector does not complete the SSO flow (302 on `/api/v1/health`). So the CEO can operate through the provider control plane (deploy, rollback, configuration, logs, read-only store access) but cannot call the AIOS API for routine operation | **open — a Founder / Architect matter** (X2 is Architect-reserved, FS-DP-03 `R2.10`: *"a Vercel login or a Founder-authorized, revocable mechanism"*). Not inferred. Non-blocking for the release decision: rollback, recovery and observation do not need the API |
+| **SEC-OBS-02** | the connector's 302 carried a connector-created `_vercel_share` value (an expiring X2 share credential) in this session's tool output | classified: not reproduced anywhere; it does not pass the application's bearer check; the connector offers no revocation; the account holder may invalidate share links in the dashboard; the function is not used again on Production. Non-blocking |
+
+### 18.5 `FDP-010` `§15` pre-requisites
+
+| # | Requirement | State |
+|---|---|---|
+| 1 | permanent operational access model configured | **yes** (`§18.1`; `ESC-03` noted) |
+| 2 | required operational scopes verified | **yes** |
+| 3 | temporary verification credentials revoked | **yes**: bypass list empty; revoked bypass ≡ none on 7 hosts; credentials destroyed |
+| 4 | no unintended operator token active | **yes**: Production accepts `aios-operator` only; superseded deployments refuse it; the verification token is destroyed |
+| 5 | rollback target valid and documented | **yes** (`§18.2`) |
+| 6 | current rollback authority reconciled | **yes** |
+| 7 | historical FS-09 evidence immutable | **yes** (tested) |
+| 8 | current FS-10 documentation points to `FDP-009`/`FDP-010` | **yes** (tested) |
+| 9 | Release Package valid | **yes**: same candidate `d05261c`; served paths unchanged |
+| 10 | no unresolved **blocking** security or operational condition | **none found** (`ESC-03` and `SEC-OBS-02` classified non-blocking) |
+
+**State:** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED**. Nothing here authorizes Production Release, LIVE, traffic or an operational AIOS (`FDP-010` `§16`).

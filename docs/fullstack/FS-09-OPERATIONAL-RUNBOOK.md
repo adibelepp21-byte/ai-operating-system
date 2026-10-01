@@ -161,7 +161,8 @@ What rollback means here: serving an **earlier deployment's code** over the
 | Environment | Procedure | Who |
 |---|---|---|
 | Preview | redeploy the earlier commit's build (Vercel: redeploy that deployment, or push a revert to the branch), then run `§1` and a Scenario B and C run | operator; any live check needs Preview access (`EXT-03`) |
-| Production | Vercel Instant Rollback / promote an earlier deployment | **Founder only** (`FD-FS-001` D4-A). Never used to gain evidence |
+| Production (**current**, `FDP-009` `§8`, `FDP-010-02`; Register `§107`, `§109`) | Vercel Instant Rollback (`request_rollback`) to the **designated verified known-good target** only (`FS-10-CURRENT-AUTHORITY.md` `§3`); never `22c0b49` (`FDP-010` `§6.1`); never to an unverified deployment | the **CEO**, when operationally necessary, before or after a release, with evidence preserved; no governance, certified-architecture or deployment-architecture change. A rollback is not a release (`FDP-010` `§9`). Without a valid target: preserve evidence, classify, contain (`§11`), escalate (`FDP-010` `§8`) |
+| *History (FS-09, superseded for current operation by `FDP-009`/`FDP-010`):* Production | Vercel Instant Rollback / promote an earlier deployment | **Founder only** (`FD-FS-001` D4-A). Never used to gain evidence |
 
 After any rollback: `§1` health, one Scenario B run and one Scenario C run,
 then compare `GET /runs` before and after. Every earlier record must still read.
@@ -325,3 +326,17 @@ new key and recording the reason in the Register. To add the scope to a
 deployed principal, edit `AIOS_OPERATOR_TOKENS` (hash, subject, scopes) in
 the Vercel scope of that environment and redeploy; never put the token itself
 in a file.
+
+## 15. Production operational principal (`FDP-010-01`)
+
+Current authority: `FS-10-CURRENT-AUTHORITY.md` (`FDP-009` + `FDP-010`).
+
+| Item | Rule |
+|---|---|
+| Principal | `aios-operator`, scopes `aios.observe`, `aios.workflow.run`, `aios.audit`; **not** `aios.agent.register`; Production only |
+| Configuration | Production `AIOS_OPERATOR_TOKENS` holds `[{"subject":"aios-operator","sha256":…,"scopes":[…]}]` — the hash only. A change takes effect on the next deployment |
+| Custody | the delegated CEO's execution environment, private file (mode 600). Never in repository, documentation, evidence, logs or chat. Nobody pastes a provider secret into a conversation (`FDP-010` `§4.2`) |
+| Rotation (loss, suspicion, or by routine) | generate a new token locally; set the new hash (`subject` unchanged); deploy the current release commit **twice** — first the new rollback target, then the serving deployment — so the designated target always carries the current principal; verify (smoke read-only, scope 403 on `aios.agent.register`, old token 401 on the serving deployment); update `FS-10-CURRENT-AUTHORITY.*`; destroy the old token |
+| Revocation | set `AIOS_OPERATOR_TOKENS` to `[]` and redeploy as above; verify the token answers 401 |
+| Edge (X2) | unchanged; the CEO has no standing path through X2 (`ESC-03`). Temporary access past X2 is for verification only, under `FDP-009-03`, and is revoked and its revocation verified each time |
+| Not | a release, LIVE, Founder authority, or authority to change governance or certified roots (`FDP-010` `§4.6`, `§13`) |

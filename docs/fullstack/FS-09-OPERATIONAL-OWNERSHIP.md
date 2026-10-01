@@ -48,7 +48,8 @@ authority it already has (runbook `§14`).
 ## 5. Rollback
 
 * Preview: the executor may drill it (alias re-pointing), as at FS-09 (`FS-09-ACT-005-EXECUTION-RECORD.md` `§14`).
-* Production, before a release: the executor, when operationally required (`FDP-009` `§8`); after a release: not assigned (`ESC-02`). Never to gain evidence (ACT-003 `§12`). *Until 2026-10-01: "the operator, on a Founder decision".*
+* Production, before and after a release: the executor (CEO), when operationally necessary, **to the designated verified known-good target only** (`FDP-009` `§8`, `FDP-010-02`; `FS-10-CURRENT-AUTHORITY.md` `§3`); never `22c0b49`. Never to gain evidence (ACT-003 `§12`). *History: until `FDP-010` this read "after a release: not assigned (`ESC-02`)"; until 2026-10-01, "the operator, on a Founder decision".*
+* Operational access: the permanent principal `aios-operator` (`FDP-010-01`; runbook `§15`), held by the executor.
 * Floors: runbook `§10`.
 
 ## 6. Monitoring

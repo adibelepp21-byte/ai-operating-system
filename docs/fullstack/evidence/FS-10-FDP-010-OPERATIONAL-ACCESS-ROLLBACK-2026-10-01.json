@@ -1,0 +1,1725 @@
+{
+ "format": "fullstack.fdp010-execution/1",
+ "authority": "FDP-010 (Register §109) under FDP-009 (Register §107); temporary verification access under FDP-009-03",
+ "date": "2026-10-01",
+ "rediscovery": {
+  "FDP-009_sha256": "33fecb973b153d581a7b703b9772fb2133b15e4440b0b9ae35bfaf38a1b02d9d",
+  "FDP-010_sha256": "fa1d8b121b81e08b30403f7f77621ba9f0c31c0067b934006c83f2f53c4543b5",
+  "fs09_gate": "fullstack/readiness.py byte-identical to de47057",
+  "production_store": {
+   "rows": 64,
+   "joined_sha256": "782dee3eda19906df07d38218a18c63360f2c24528c2521655f52c5cdc6675f3"
+  },
+  "AIOS_OPERATOR_TOKENS_production": "[] (FDP-010-04 residual)"
+ },
+ "operational_principal": {
+  "subject": "aios-operator",
+  "scopes": [
+   "aios.audit",
+   "aios.observe",
+   "aios.workflow.run"
+  ],
+  "sha256": "0ccb723cf7dccd591bc22e7448792a9522b299bf9a40e2d487089acf83ed8f4e",
+  "env": "AIOS_OPERATOR_TOKENS id A1cdEwJaCNaUPNcP (production, sensitive), edited 1790837003374 from [] to the principal's hash entry",
+  "token": "generated locally into a mode-600 file; never printed, never in a tool call; sent only as the Authorization header from local scripts"
+ },
+ "deployments": {
+  "rollback_target": {
+   "id": "dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T",
+   "url": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+   "commit": "d05261c",
+   "build": "bld_jhg0uv4jm: Commit d05261c, no cache, Using Python 3.12 from .python-version",
+   "ready": 1790837032373
+  },
+  "serving": {
+   "id": "dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv",
+   "url": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "commit": "d05261c",
+   "build": "bld_om67gm8bw: Commit d05261c, no cache, Using Python 3.12 from .python-version",
+   "ready": 1790837066947,
+   "alias": "aios-platform-adibelepp21-bytes-projects.vercel.app"
+  },
+  "rollback_candidacy_after": {
+   "dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv": true,
+   "dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T": true,
+   "dpl_CHV72ePvPE7doNu4WaKp93qXXu8x": false,
+   "dpl_Dfs1Fx8P9G4QuNd1EYPSwet3VLG1": false,
+   "dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj": false
+  },
+  "default_branch_merged": false
+ },
+ "temporary_access": {
+  "bypass_sha256": "revoked; value destroyed before hashing was recorded",
+  "note": "FDP-009 TEMPORARY FDP-010 step 4/9 verification; revoke after use",
+  "created": 1790837108327,
+  "revoked_control_response": {
+   "protectionBypass": {}
+  },
+  "value_handling": "generated locally; supplied to the Vercel create and revoke calls, so it appears in this session's tool calls (disclosed, as in ACT-008 and §108); in no repository file, evidence or log; revoked; file destroyed"
+ },
+ "pre_bypass_protection": [
+  {
+   "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+   "path": "/",
+   "accept": "plain",
+   "status": 302
+  },
+  {
+   "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+   "path": "/",
+   "accept": "json",
+   "status": 401
+  },
+  {
+   "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+   "path": "/api/v1/health",
+   "accept": "plain",
+   "status": 302
+  },
+  {
+   "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+   "path": "/api/v1/health",
+   "accept": "json",
+   "status": 401
+  },
+  {
+   "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "path": "/",
+   "accept": "plain",
+   "status": 302
+  },
+  {
+   "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "path": "/",
+   "accept": "json",
+   "status": 401
+  },
+  {
+   "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "path": "/api/v1/health",
+   "accept": "plain",
+   "status": 302
+  },
+  {
+   "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "path": "/api/v1/health",
+   "accept": "json",
+   "status": 401
+  },
+  {
+   "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+   "path": "/",
+   "accept": "plain",
+   "status": 302
+  },
+  {
+   "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+   "path": "/",
+   "accept": "json",
+   "status": 401
+  },
+  {
+   "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+   "path": "/api/v1/health",
+   "accept": "plain",
+   "status": 302
+  },
+  {
+   "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+   "path": "/api/v1/health",
+   "accept": "json",
+   "status": 401
+  }
+ ],
+ "smoke_serving": {
+  "format": "fullstack.smoke/1",
+  "base": "https://aios-platform-adibelepp21-bytes-projects.vercel.app",
+  "profile": "read-only",
+  "results": [
+   {
+    "check": "health and readiness (R2)",
+    "result": "PASS",
+    "evidence": "GET /health → 200 {'status': 'ok', 'runtime_state': 'running'}",
+    "mutates": false
+   },
+   {
+    "check": "anonymous protected routes refused",
+    "result": "PASS",
+    "evidence": "{'/api/v1/runs': 401, '/api/v1/runtime': 401, '/api/v1/traces': 401, '/api/v1/audit': 401, '/api/v1/session': 401, '/api/v1/agent-instances': 401}",
+    "mutates": false
+   },
+   {
+    "check": "invalid and malformed Authorization refused",
+    "result": "PASS",
+    "evidence": "{'unknown token': 401, 'hash-shaped': 401, 'wrong scheme': 401, 'empty bearer': 401}",
+    "mutates": false
+   },
+   {
+    "check": "valid bearer authenticates",
+    "result": "PASS",
+    "evidence": "→ 200, subject aios-operator, scopes ['aios.audit', 'aios.observe', 'aios.workflow.run']",
+    "mutates": false
+   },
+   {
+    "check": "Runtime running on the store",
+    "result": "PASS",
+    "evidence": "→ 200, state running",
+    "mutates": false
+   },
+   {
+    "check": "read routes answer",
+    "result": "PASS",
+    "evidence": "{'/api/v1/runs': 200, '/api/v1/traces': 200, '/api/v1/workflows': 200, '/api/v1/tools': 200, '/api/v1/agent-definitions': 200, '/api/v1/agent-instances': 200}",
+    "mutates": false
+   },
+   {
+    "check": "console served with its security headers",
+    "result": "PASS",
+    "evidence": "→ 200, missing []",
+    "mutates": false
+   }
+  ],
+  "ok": true,
+  "writes_made": false
+ },
+ "smoke_rollback_target": {
+  "format": "fullstack.smoke/1",
+  "base": "https://aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+  "profile": "read-only",
+  "results": [
+   {
+    "check": "health and readiness (R2)",
+    "result": "PASS",
+    "evidence": "GET /health → 200 {'status': 'ok', 'runtime_state': 'running'}",
+    "mutates": false
+   },
+   {
+    "check": "anonymous protected routes refused",
+    "result": "PASS",
+    "evidence": "{'/api/v1/runs': 401, '/api/v1/runtime': 401, '/api/v1/traces': 401, '/api/v1/audit': 401, '/api/v1/session': 401, '/api/v1/agent-instances': 401}",
+    "mutates": false
+   },
+   {
+    "check": "invalid and malformed Authorization refused",
+    "result": "PASS",
+    "evidence": "{'unknown token': 401, 'hash-shaped': 401, 'wrong scheme': 401, 'empty bearer': 401}",
+    "mutates": false
+   },
+   {
+    "check": "valid bearer authenticates",
+    "result": "PASS",
+    "evidence": "→ 200, subject aios-operator, scopes ['aios.audit', 'aios.observe', 'aios.workflow.run']",
+    "mutates": false
+   },
+   {
+    "check": "Runtime running on the store",
+    "result": "PASS",
+    "evidence": "→ 200, state running",
+    "mutates": false
+   },
+   {
+    "check": "read routes answer",
+    "result": "PASS",
+    "evidence": "{'/api/v1/runs': 200, '/api/v1/traces': 200, '/api/v1/workflows': 200, '/api/v1/tools': 200, '/api/v1/agent-definitions': 200, '/api/v1/agent-instances': 200}",
+    "mutates": false
+   },
+   {
+    "check": "console served with its security headers",
+    "result": "PASS",
+    "evidence": "→ 200, missing []",
+    "mutates": false
+   }
+  ],
+  "ok": true,
+  "writes_made": false
+ },
+ "negative_controls_and_scope": {
+  "start": "2026-10-01T06:45:41Z",
+  "checks": [
+   {
+    "check": "operator authenticates as aios-operator with exactly observe, workflow.run, audit",
+    "result": "PASS",
+    "evidence": "→ 200 {'subject': 'aios-operator', 'scopes': ['aios.audit', 'aios.observe', 'aios.workflow.run']}"
+   },
+   {
+    "check": "NC: aios.agent.register not granted → 403",
+    "result": "PASS",
+    "evidence": "→ 403 {'error': 'forbidden', 'detail': 'scope aios.agent.register is required'}"
+   },
+   {
+    "check": "NC: no agent instance created",
+    "result": "PASS",
+    "evidence": "→ 200 {'instances': []}"
+   },
+   {
+    "check": "NC: the Preview principal (founder) is refused on Production",
+    "result": "PASS",
+    "evidence": "→ 401"
+   },
+   {
+    "check": "NC: operator refused on superseded dpl_CHV72 (built with [])",
+    "result": "PASS",
+    "evidence": "→ 401"
+   },
+   {
+    "check": "NC: operator refused on superseded dpl_Dfs1 (built with the revoked verification principal)",
+    "result": "PASS",
+    "evidence": "→ 401"
+   },
+   {
+    "check": "NC: operator refused on Preview (principal is Production-only)",
+    "result": "PASS",
+    "evidence": "aios-platform-eight.vercel.app → 401"
+   },
+   {
+    "check": "NC: bypass without token → 401",
+    "result": "PASS",
+    "evidence": "→ 401"
+   },
+   {
+    "check": "NC: token without bypass stopped by X2 → 302",
+    "result": "PASS",
+    "evidence": "→ 302"
+   },
+   {
+    "check": "NC: unknown token → 401",
+    "result": "PASS",
+    "evidence": "→ 401"
+   },
+   {
+    "check": "workflow.run exercised: one Scenario B run succeeds, requested_by aios-operator",
+    "result": "PASS",
+    "evidence": "→ 201 run-20261001T064549Z-6ea7aa47802a7a93-0 succeeded"
+   },
+   {
+    "check": "rollback target reads the serving deployment's record (same store, same principal)",
+    "result": "PASS",
+    "evidence": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app GET run → 200, equal True"
+   },
+   {
+    "check": "audit readable; entries attribute aios-operator",
+    "result": "FAIL",
+    "evidence": "→ 200, subjects ['None']",
+    "note": "FAIL of the check, not of the system: /audit returns entries oldest first, so limit=5 returned the first five (anonymous refusals). Re-checked by paging (audit_paged below): 107 entries, 25 attributed to aios-operator"
+   }
+  ],
+  "request_ids": [
+   "71c0796ed702c27c",
+   "8af4fe8ae083f31a",
+   "92ff5e2c685f0fcc",
+   "738140c0e0afeeef",
+   "a40b8fee8e21ee57",
+   "83f5f78b5c82a89a",
+   "4846e48f619ebcd7",
+   "e55cbbbf12dda848",
+   "608f6087d6e032ae",
+   "c1b2b2094e45149f",
+   "c870eac9f2f55d6f",
+   "b04cdd6f2477fdc0"
+  ],
+  "run_id": "run-20261001T064549Z-6ea7aa47802a7a93-0",
+  "end": "2026-10-01T06:45:51Z",
+  "transport_retries": 0
+ },
+ "audit_paged": {
+  "request_ids": [
+   "1ead1f198e04a3ed",
+   "2f5f8bb66bb89e09"
+  ],
+  "entries": 107,
+  "subjects": {
+   "None": 56,
+   "fs10-verification": 26,
+   "aios-operator": 25
+  },
+  "order": "oldest first",
+  "operator_last": {
+   "at": "2026-10-01T06:46:10.778+00:00",
+   "decision": "allowed",
+   "format": "fullstack.audit/1",
+   "method": "GET",
+   "path": "/api/v1/audit",
+   "request_id": "2f5f8bb66bb89e09",
+   "scope": "aios.audit",
+   "status": 200,
+   "subject": "aios-operator",
+   "position": 106
+  }
+ },
+ "revocation": {
+  "phase": "bypass_revoked",
+  "at": "2026-10-01T06:47:26Z",
+  "rows": [
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-37py3evu2-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-lrz7nrx7n-adibelepp21-bytes-projects.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/health",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": true,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": true,
+    "json_accept": true,
+    "status": 401
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": false,
+    "status": 302
+   },
+   {
+    "host": "aios-platform-eight.vercel.app",
+    "path": "/api/v1/session",
+    "bypass": false,
+    "token": false,
+    "json_accept": true,
+    "status": 401
+   }
+  ],
+  "transport_retries": 0
+ },
+ "store_after": {
+  "production": {
+   "rows": 118,
+   "max_seq": 118,
+   "partitions": {
+    "fullstack-audit": 107,
+    "fullstack-runs": 3,
+    "trace": 8
+   },
+   "aios_operator_records": 26,
+   "credential_patterns": 0
+  },
+  "preview": {
+   "rows": 555,
+   "max_seq": 560,
+   "new": "1 audit record: the refused GET /api/v1/session of the operator-on-Preview negative control (subject null, 401)"
+  }
+ },
+ "connector_edge_probe": {
+  "tool": "Vercel MCP web_fetch_vercel_url",
+  "GET /api/v1/health": 302,
+  "GET /api/v1/session": 302,
+  "finding": "the connector does not complete the SSO flow: no X2 path for the CEO through it",
+  "security_observation": "SEC-OBS-02: the 302 Location carried a connector-created _vercel_share value (an X2 share credential with expiry), visible in this session's tool output only; not reproduced here or anywhere in the repository; it does not satisfy the application's bearer check; the connector offers no revocation; the account holder may invalidate share links in the dashboard. The function is not used again on Production"
+ }
+}

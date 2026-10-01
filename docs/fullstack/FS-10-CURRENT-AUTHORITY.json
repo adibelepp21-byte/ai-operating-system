@@ -1,0 +1,147 @@
+{
+ "format": "fullstack.current-authority/1",
+ "scope": "current FS-10 Production operation (successor authority layer, FDP-010-03 §10.2-§10.4)",
+ "as_of": "2026-10-01",
+ "decisions": {
+  "FDP-009": {
+   "record": "docs/governance/acts/FDP-009-FS-10-PRODUCTION-AUTHORITY-AND-RELEASE-BOUNDARY.md",
+   "register": "§107",
+   "sha256": "33fecb973b153d581a7b703b9772fb2133b15e4440b0b9ae35bfaf38a1b02d9d"
+  },
+  "FDP-010": {
+   "record": "docs/governance/acts/FDP-010-FS-10-OPERATIONAL-ACCESS-ROLLBACK-GOVERNANCE-RECONCILIATION.md",
+   "register": "§109",
+   "sha256": "fa1d8b121b81e08b30403f7f77621ba9f0c31c0067b934006c83f2f53c4543b5"
+  }
+ },
+ "authority": {
+  "production_deployment": {
+   "class": "CEO-AUTHORIZED",
+   "sources": [
+    "FDP-009-01",
+    "FDP-010 §22"
+   ]
+  },
+  "production_verification": {
+   "class": "CEO-AUTHORIZED",
+   "sources": [
+    "FDP-009 §8",
+    "FDP-010 §22"
+   ]
+  },
+  "operational_access": {
+   "class": "CEO-AUTHORIZED-WITH-BOUNDARY",
+   "sources": [
+    "FDP-010-01",
+    "FDP-010 §13",
+    "FDP-010 §22"
+   ]
+  },
+  "rollback_before_release": {
+   "class": "CEO-AUTHORIZED-WITH-BOUNDARY",
+   "sources": [
+    "FDP-009 §8",
+    "FDP-010 §22"
+   ],
+   "conditions": [
+    "operationally required",
+    "verified known-good target only",
+    "evidence preserved"
+   ]
+  },
+  "rollback_after_release": {
+   "class": "CEO-AUTHORIZED-WITH-BOUNDARY",
+   "sources": [
+    "FDP-010-02",
+    "FDP-010 §5.1",
+    "FDP-010 §6",
+    "FDP-010 §22"
+   ],
+   "conditions": [
+    "system already released",
+    "operationally necessary",
+    "verified known-good target only",
+    "no governance change",
+    "no certified-architecture change",
+    "within the existing deployment architecture",
+    "evidence preserved"
+   ]
+  },
+  "production_release": {
+   "class": "FOUNDER-RESERVED",
+   "sources": [
+    "FDP-009 §5.3",
+    "FDP-009 §10",
+    "FDP-010 §14",
+    "FDP-010 §22"
+   ]
+  },
+  "live": {
+   "class": "FOUNDER-RESERVED",
+   "sources": [
+    "FDP-009 §5.4",
+    "FDP-010 §14",
+    "FDP-010 §22"
+   ]
+  },
+  "final_system_acceptance": {
+   "class": "FOUNDER-RESERVED",
+   "sources": [
+    "FDP-010 §22"
+   ]
+  }
+ },
+ "supersedes_for_current_operation": [
+  {
+   "historical": "fullstack/readiness.py (closed FS-09 readiness gate) criterion text: \"Production rollback is Founder-only (FD-FS-001 D4-A)\"",
+   "status": "HISTORICAL — preserved unchanged as FS-09 evidence (FDP-010 §10.2); not current authority",
+   "current": "rollback_before_release / rollback_after_release above"
+  },
+  {
+   "historical": "docs/fullstack/FS-09-OPERATIONAL-RUNBOOK.md §9 row \"Production … **Founder only** (FD-FS-001 D4-A)\"",
+   "status": "HISTORICAL — kept as a labelled history row",
+   "current": "the runbook's current Production row (FDP-009 §8, FDP-010-02)"
+  },
+  {
+   "historical": "docs/fullstack/FS-09-READINESS-PROGRAM.md row 8 \"Production rollback is Founder-only\"",
+   "status": "HISTORICAL — closed FS-09 record, unchanged",
+   "current": "rollback_before_release / rollback_after_release above"
+  }
+ ],
+ "operational_principal": {
+  "subject": "aios-operator",
+  "scopes": [
+   "aios.observe",
+   "aios.workflow.run",
+   "aios.audit"
+  ],
+  "not_granted": [
+   "aios.agent.register"
+  ],
+  "derivation": "canonical operator scope model fullstack/backend/security.py SCOPES (FS-DP-02 B3; FS-DP-07 A2): observe, run workflows and read the audit are the operational duties (FDP-010 §13); aios.agent.register is granted to named operators only and is not required to operate; no new scope",
+  "environment": "production only (Vercel AIOS_OPERATOR_TOKENS, Production scope, hash only)",
+  "sha256": "0ccb723cf7dccd591bc22e7448792a9522b299bf9a40e2d487089acf83ed8f4e",
+  "custody": "the delegated CEO's execution environment, in a private file; never in repository, documentation, evidence, logs or chat; on loss or suspicion: rotate (new token, new hash, redeploy) per runbook §15",
+  "edge_access": "X2 (unchanged) admits Vercel-authenticated members of the account; the CEO has no standing X2 path (FDP-009 §5.5: no permanent bypass; FS-DP-03 R2.10). Classified open: ESC-03"
+ },
+ "rollback_target": {
+  "designated": {
+   "deployment": "dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T",
+   "url": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+   "commit": "d05261cb7c02c6c489efbe5dff67ec86a22c0136",
+   "built_with": "the permanent operational principal (same AIOS_OPERATOR_TOKENS and SUPABASE_SECRET_KEY as the serving deployment)"
+  },
+  "serving": {
+   "deployment": "dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv",
+   "url": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "commit": "d05261cb7c02c6c489efbe5dff67ec86a22c0136"
+  },
+  "not_targets": {
+   "dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj": "22c0b49 — NOT A VALID APPLICATION ROLLBACK TARGET (FDP-010 §6.1): serves 404",
+   "dpl_CHV72ePvPE7doNu4WaKp93qXXu8x": "d05261c built with an empty principal list: no operational access; not designated",
+   "dpl_Dfs1Fx8P9G4QuNd1EYPSwet3VLG1": "d05261c built with the revoked verification principal; not designated"
+  },
+  "procedure": "Vercel Instant Rollback (request_rollback) of project prj_exqF51HASzlwn5kiO4kAGJ9mHe0N to the designated deployment only; then runbook §1 health and §12.1 checks through an authorized access path; evidence preserved",
+  "limit": "the target runs the same commit as the serving deployment: it restores service after a failure of the serving deployment or of its configuration; it cannot undo a defect of d05261c itself, for which no earlier working application version exists (FDP-010 §8 containment applies)"
+ }
+}

@@ -4,6 +4,52 @@
 |---|---|
 | **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
 | **Status** | **ACTIVE — at the Founder Release Gate.** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED** |
+| **Authority** | **`FDP-009`** (Register `§107`) **+ `FDP-010`** (Register `§109`); current classes in `FS-10-CURRENT-AUTHORITY.md`. The closed FS-09 gate is history, not current authority (`FDP-010-03`) |
+| **Production** | release candidate **`d05261c`**: `dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv` serves the Production alias behind **unchanged X2**; designated rollback target `dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T` (same commit, verified). **Not released, not LIVE, not public** |
+| **Operational access** | permanent principal `aios-operator` (`FDP-010-01`): observe, workflow.run, audit; hash only; verified with negative controls. The CEO has no standing path through X2 (`ESC-03`, open) |
+| **Rollback** | CEO with boundary before and after a release (`FDP-009` `§8`, `FDP-010-02`); verified known-good target established; `22c0b49` is not a target |
+| **Temporary access** | **NONE** (verification bypass revoked; revocation verified on 7 hosts) |
+| **Next step** | **Founder Release Authorization** (`FDP-009` `§10`; `FDP-010` `§16`) |
+
+```text
+FS-10 Preparation                    done
+   → Production Deployment           done   (CEO; FDP-009-01)  d05261c
+   → Production Verification         PASS   (CEO; FDP-009-03 temporary access, revoked)
+   → Operational access + rollback   done   (CEO; FDP-010-01/-02; ESC-03 open, non-blocking)
+   → Release Package                 READY  (CEO; evidence, not authorization)
+   → Founder Release Authorization     ← here (Founder)
+   → Production Release → LIVE (bounded by X2) → Operational AIOS
+```
+
+## 1. What was done under `FDP-010` (2026-10-01)
+
+| `§17` step | Result |
+|---|---|
+| 1 Re-discovery | `FDP-009` `33fecb97…` and `FDP-010` `fa1d8b12…` recomputed equal to Register `§107`, `§109`; FS-09 gate byte-identical to `de47057`; Production 64 rows, `AIOS_OPERATOR_TOKENS = []` |
+| 2 Documents | this document, the runbook (`§9` current rollback row, `§15` operational principal), the Release Package, `FS-10-CURRENT-AUTHORITY.*` |
+| 3 Operational access | `aios-operator` (observe, workflow.run, audit), hash only in Production `AIOS_OPERATOR_TOKENS`; token held privately by the delegated CEO |
+| 4 Scopes and negative controls | smoke 7/7 on the serving deployment and on the rollback target; `agent.register` → 403; Preview principal refused on Production; operator refused on Preview and on the superseded deployments; bypass alone 401; token alone 302; one Scenario B run as `aios-operator` |
+| 5 Residual variable | the connector offers no delete; the variable now carries the approved principal (`FDP-010` `§11.4`), so the empty-list residual no longer exists |
+| 6 FS-09 gate | unchanged; test pins it to its closing state |
+| 7 Successor authority | `FS-10-CURRENT-AUTHORITY.md` / `.json`, tested (`fullstack/tests/test_current_authority.py`) |
+| 8 Rollback target | `dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T` (`d05261c`), built with the operational principal |
+| 9 Rollback readiness | target READY, Vercel rollback candidate, smoke 7/7, reads the serving deployment's records; procedure in runbook `§9`; not executed (not operationally required) |
+| 10 Checks | regression, citation, governance: Release Package `§16` |
+| 11 Release Package | updated (`§18` there) |
+| 12 | **STOP** at the Founder Release Gate |
+
+## 2. Current frontier
+
+**Founder Release Authorization.** Open, non-blocking: `ESC-03` (no standing CEO path through X2). Remaining: Founder Release Authorization · Production Release · LIVE · Operational AIOS.
+
+---
+
+# History: FS-10 after Production Verification (2026-10-01), before `FDP-010`
+
+| Field | Value |
+|---|---|
+| **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
+| **Status** | **ACTIVE — at the Founder Release Gate.** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED** |
 | **Authority** | `FDP-009` (Register `§107`): Production deployment and verification before the Founder Release Authorization; deployment ≠ release ≠ LIVE; temporary verification access with boundary |
 | **Production** | release candidate **`d05261c`** deployed: `dpl_CHV72ePvPE7doNu4WaKp93qXXu8x` serves the Production alias behind **unchanged X2**. **Not released, not LIVE, not public** |
 | **Verification** | **PASS** (2026-10-01; Register `§108`): `FS-10-RELEASE-PACKAGE.md`, evidence `evidence/FS-10-PRODUCTION-VERIFICATION-2026-10-01.json` |
