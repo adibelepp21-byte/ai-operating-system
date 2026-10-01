@@ -10245,3 +10245,19 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Decision surface** | prepared, unranked, not decided: Q-1 O-A delivery or different mechanism · Q-2 T5 authorized path · Q-3 `FDP-010` `§4.2` · Q-4 environment-wide attachment under D-1 (`docs/fullstack/FS-10-PROVIDER-CREDENTIAL-INJECTION-EVIDENCE.md` `§19.1`) |
 | **Boundary kept** | mechanism **UNSELECTED**; no credential created, uploaded, configured, used or deleted; no provider setting, X2, B3, FDP-011 or Production change; no FDP-012 or other Founder Decision created |
 | **State** | O-A authorized, **NOT IMPLEMENTED** · M1 FAILED · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
+
+---
+
+## 122. Provider Credential Injection — Founder Decision Package Prepared; No Decision Made; `FD-2` Reliance Corrected (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/MI-FS10-PROVIDER-CREDENTIAL-INJECTION-FOUNDER-DECISION-PREPARATION-GATE.md` (verbatim, extracted byte-exactly from the session transcript) · content sha256 `70022e37a40a29d023fe66aae45302a6c90858ecab967e4fc6bd9794e0e46e17` |
+| **Issued by** | Founder, 2026-10-01; preparation only |
+| **Package** | `docs/fullstack/decision-packages/FS-10-PROVIDER-CREDENTIAL-INJECTION-FOUNDER-DECISION-PACKAGE.md`: Q-1 O-A compatibility (A / B / unresolved, each with its canonical support) · Q-2 T5 custody (15 elements: 7 PASS, 1 FAIL — delivery, 7 UNKNOWN) · Q-3 `FDP-010` `§4.2` (for, against, unresolved) · Q-4 environment-wide lifetime (interpretations A, B, C; procedural per-session use distinguished from technical session isolation). Choices unranked; nothing selected |
+| **Plan entitlement** | **UNKNOWN** — account-holder / provider verification required (plan; API-credentials section visible; customer-managed keys; admin role). Not a governance choice |
+| **Governance impact** | Founder Decision (Q-1–Q-4) **and** Architect Decision (new trust boundary: Engineering Constitution `§3.1`–`§3.2`; `FDP-009-02` `§5.5`; AD-FS10-ESC03 S7). Whether one Founder act carries both depends on `FD-2` |
+| **Correction — `FD-2` reliance** | `FD-2` (*"Founder ≡ Architect"*) is *"IMPLIED — open"* (Delegation Register) and *"open, not relied on"* (P13 exit package). Several FS-10 records described the architecture path as *"held by the Founder (FD-2 open)"*: `FS-10-ESC03-ARCHITECTURE-DECISION.md` `§9`; `FS-10-ESC03-MI-S0-S1-RECORD.md` `§3`, `§5`, `§6`; `decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE-COMPLETE.md` `§10`; `FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md` `§2` check 9; `FS-10-PROVIDER-CREDENTIAL-INJECTION-EVIDENCE.md` `§19`. That relied on an unratified premise. **Observation, not resolved:** the architecture-tier standing of `FDP-011` D-1 rests on that implied premise. `FDP-011` itself remains canonical and unchanged; the earlier records are preserved |
+| **Conflicts with FDP-011 (recorded)** | D-1 and T5 (*"only for the authorized operational session"*) against M-AC's environment-wide attachment; T5's *"authorized … path"* not designated |
+| **Boundary kept** | no decision; M-AC **UNSELECTED**; no credential, bypass or provider configuration; FDP-011, X2, B3, Production unchanged; no FDP-012 |
+| **State** | **FOUNDER DECISION PACKAGE PREPARED — NO DECISION MADE** · O-A authorized, **NOT IMPLEMENTED** · M1 FAILED · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |

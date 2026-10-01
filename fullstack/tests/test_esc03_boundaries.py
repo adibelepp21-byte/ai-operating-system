@@ -268,3 +268,54 @@ class TheProviderInjectionRecordSelectsNothing(unittest.TestCase):
             row = next(line for line in matrix.splitlines() if line.startswith(f"| {prop} "))
             self.assertIn("**FAIL**", row)
         self.assertNotRegex(text, r"(?i)\b(recommend\w*|preferred|best|optimal|safest|obvious)\b")
+
+
+class TheInjectionDecisionPackageDecidesNothing(unittest.TestCase):
+    """Preparation gate §11: four questions, facts kept, UNKNOWN kept, Q-4 procedural ≠ technical,
+    no ranking, nothing selected, no implementation authorized, Release/LIVE Founder-reserved."""
+
+    PACKAGE = REPO_ROOT / "docs/fullstack/decision-packages/FS-10-PROVIDER-CREDENTIAL-INJECTION-FOUNDER-DECISION-PACKAGE.md"
+
+    def setUp(self):
+        self.text = self.PACKAGE.read_text(encoding="utf-8")
+
+    def test_1_the_four_questions_exist_in_order(self):
+        heads = re.findall(r"^## (Q-\d) — ", self.text, re.M)
+        self.assertEqual(["Q-1", "Q-2", "Q-3", "Q-4"], heads)
+
+    def test_2_the_known_provider_facts_are_represented(self):
+        for fact in ("never reaches Claude, the commands it runs, or the session's environment variables",
+                     "whoever started it, until you delete it",
+                     "You can't view the value again after saving",
+                     "available on Pro and Max plans",
+                     "doesn't go through the agent proxy",
+                     "x-vercel-protection-bypass"):
+            self.assertIn(fact, self.text, fact)
+
+    def test_3_unknowns_are_not_converted_to_pass(self):
+        q2 = self.text[self.text.index("## Q-2"):self.text.index("## Q-3")]
+        for element in ("logging exclusion", "telemetry exclusion", "deletion", "custody", "auditability"):
+            row = next(line for line in q2.splitlines() if line.startswith(f"| {element} "))
+            self.assertIn("**UNKNOWN**", row, element)
+        self.assertIn("**FAIL**", next(line for line in q2.splitlines() if line.startswith("| delivery ")))
+        self.assertIn("PLAN ENTITLEMENT = UNKNOWN", self.text)
+
+    def test_4_procedural_use_is_distinguished_from_technical_isolation(self):
+        self.assertIn("Procedural per-session use is not technical session isolation.", self.text)
+        q4 = self.text[self.text.index("## Q-4"):]
+        for label in ("Interpretation A", "Interpretation B", "Interpretation C"):
+            self.assertIn(label, q4)
+
+    def test_5_no_ranking_language(self):
+        self.assertNotRegex(self.text, r"(?i)\b(recommend\w*|preferred|best|optimal|safest|obvious|natural choice)\b")
+
+    def test_6_no_mechanism_is_selected(self):
+        self.assertIn("is **UNSELECTED**", self.text)
+        self.assertNotRegex(self.text, r"(?i)(?<!un)(?<!not )\bselected\b")
+
+    def test_7_no_implementation_is_authorized(self):
+        self.assertIn("| **Implementation** | **NOT AUTHORIZED.**", self.text)
+        self.assertNotIn("IMPLEMENTATION AUTHORIZED", self.text.replace("NOT AUTHORIZED", ""))
+
+    def test_8_release_and_live_stay_founder_reserved(self):
+        self.assertIn("**PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED**", self.text)
