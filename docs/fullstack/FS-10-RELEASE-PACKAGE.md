@@ -251,3 +251,15 @@ The closed FS-09 gate (`fullstack/readiness.py`) is **byte-identical** to its cl
 | 10 | no unresolved **blocking** security or operational condition | **none found** (`ESC-03` and `SEC-OBS-02` classified non-blocking) |
 
 **State:** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED**. Nothing here authorizes Production Release, LIVE, traffic or an operational AIOS (`FDP-010` `§16`).
+
+### 18.6 Checks under `FDP-010` (on `4343b64`)
+
+| Check | Result |
+|---|---|
+| `native_core` · `consumers` · `tools/bounded_exception` · `fullstack` | 801 · 276 · 29 · **310** OK on Python 3.12 and 3.11 (`fullstack` adds the 13 current-authority tests) |
+| `tools` | 1933 run, **1 failure**: the P12-W6 population signal, classified at Register `§102` (ratio 0.5093 against 0.4932), P12 untouched |
+| Citation audit | 0 errors, 94 warnings (unchanged) |
+| FS-09 readiness gate | unchanged: 30 PASS, 1 OBSERVED; file byte-identical to `de47057` |
+| Mutation checks | a current "Founder-only" rollback line → test fails; an edited FS-09 gate → 2 tests fail |
+| Boundaries | no diff in served paths, `native_core`, `consumers`, `tools`, the FS-09 gate, acts, Co-Founder V2 instruments, architecture or program documents; Register append-only |
+| Secrets | no bypass value, share value or token plaintext in the working tree; Production records: 0 credential patterns |

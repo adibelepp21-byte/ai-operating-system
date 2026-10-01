@@ -10042,3 +10042,22 @@ Recorded by Claude Code as CEO under `FDP-009` `§8` and `§14` items 4–7 (`§
 | **Authority state after registration** (record `§22`) | Production deployment, verification: CEO AUTHORIZED · operational access, rollback: **CEO AUTHORIZED WITH BOUNDARY** · Production Release, LIVE, Final System Acceptance: **FOUNDER RESERVED** |
 | **Required next** (record `§17`) | re-discover; reconcile FS-10 documents; establish and verify the operational-access model; residual variable; preserve the FS-09 gate; successor authority layer; known-good rollback target and its readiness; checks; Release Package update; **STOP** — no release, no LIVE (`§16`) |
 | **Unchanged** | Constitution, Mission, Founder Authority, Governance Model, P12/P13, Platform Organization, Native Core, certified roots; no Phase 14 (record `§13`) |
+
+---
+
+## 110. FDP-010 Executed — Operational Principal, Verified Rollback Target, Current-Authority Layer; Release Package Updated; Founder Release Authorization Required (2026-10-01)
+
+Recorded by Claude Code as CEO under `FDP-010` `§17` (`§109`). **An execution result, not a decision.** Nothing was released.
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/FS-10-RELEASE-PACKAGE.md` `§18`; `docs/fullstack/FS-10-CURRENT-AUTHORITY.md` / `.json`; `docs/fullstack/FS-10-DEPLOYMENT.md`; runbook `§9`, `§15`; ownership `§5`; evidence `docs/fullstack/evidence/FS-10-FDP-010-OPERATIONAL-ACCESS-ROLLBACK-2026-10-01.json`; tests `fullstack/tests/test_current_authority.py` |
+| **Operational access** (`FDP-010-01`) | principal `aios-operator`, scopes observe · workflow.run · audit (not agent.register), Production only, hash `0ccb723c…`; the `FDP-010-04` empty-list residual replaced by it (no connector delete) |
+| **Deployments** | `d05261c` → `dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T` (designated rollback target) → `dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv` (serving); default branch not merged |
+| **Verified** | smoke 7/7 on both as `aios-operator`; negative controls: agent.register 403, Preview principal 401 on Production, operator 401 on Preview and on superseded deployments, bypass alone 401, token alone 302; one Scenario B run; the target reads the serving deployment's record |
+| **Rollback** (`FDP-010-02`) | verified known-good target established and documented; `22c0b49` not a target; not executed (not operationally required); release readiness not blocked by rollback readiness |
+| **Governance** (`FDP-010-03`) | FS-09 gate byte-identical to `de47057`; current-authority layer names `FDP-009` + `FDP-010`; tested, mutation-checked |
+| **Temporary access** | one verification bypass (`FDP-009-03`): created, used, revoked; revocation verified on 7 hosts; **NONE** now |
+| **Checks** | native_core 801 · consumers 276 · bounded 29 · fullstack 310 OK on 3.12 and 3.11; tools 1933 with 1 classified failure (`§102`); citation 0 errors |
+| **Open, non-blocking** | `ESC-03`: no standing CEO path through X2 (Founder / Architect; FS-DP-03 `R2.10`); `SEC-OBS-02`: a connector-created X2 share value appeared in session tool output only, classified |
+| **Result** | **PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · FOUNDER RELEASE AUTHORIZATION REQUIRED** — STOP (`FDP-010` `§17` step 12) |
