@@ -6,7 +6,7 @@
 | **Status** | **ACTIVE — at the Founder Release Gate.** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED** |
 | **Authority** | **`FDP-009`** (Register `§107`) **+ `FDP-010`** (Register `§109`); current classes in `FS-10-CURRENT-AUTHORITY.md`. The closed FS-09 gate is history, not current authority (`FDP-010-03`) |
 | **Production** | release candidate **`d05261c`**: `dpl_s8c6mTVKiQixKrjYwyqeKso1kXSv` serves the Production alias behind **unchanged X2**; designated rollback target `dpl_76CYCCMjZf4SvT9BLwcNDV4Hdc8T` (same commit, verified). **Not released, not LIVE, not public** |
-| **Operational access** | permanent principal `aios-operator` (`FDP-010-01`): observe, workflow.run, audit; hash only; verified with negative controls. The CEO has no authorized path through X2 for routine operation: `ESC-03` **NOT RESOLVED — ARCHITECT DECISION REQUIRED** (`FS-10-ESC-03-AUTHORITY-RESOLUTION.md`, Register `§112`) |
+| **Operational access** | permanent principal `aios-operator` (`FDP-010-01`): observe, workflow.run, audit; hash only; verified with negative controls. The CEO has no authorized path through X2 for routine operation: `ESC-03` **NOT RESOLVED**; `AD-FS10-ESC03`: architecture constrained, no authorized mechanism, candidates unselected, **Founder decision required** (`FS-10-ESC03-ARCHITECTURE-DECISION.md`, Register `§114`) |
 | **Rollback** | CEO with boundary before and after a release (`FDP-009` `§8`, `FDP-010-02`); verified known-good target established; `22c0b49` is not a target |
 | **Temporary access** | **NONE** (verification bypass revoked; revocation verified on 7 hosts) |
 | **Next step** | **Founder Release Authorization** (`FDP-009` `§10`; `FDP-010` `§16`) |
@@ -40,7 +40,7 @@ FS-10 Preparation                    done
 
 ## 2. Current frontier
 
-**Founder Release Authorization.** Open, non-blocking: `ESC-03` — Architect decision required (package `decision-packages/FS-DP-03-R3-ESC-03-OPERATIONAL-EDGE-ACCESS.md`). Remaining: Founder Release Authorization · Production Release · LIVE · Operational AIOS.
+**Founder Release Authorization.** Open, non-blocking: `ESC-03` — Founder decision required (`decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE.md`). Remaining: Founder Release Authorization · Production Release · LIVE · Operational AIOS.
 
 ---
 

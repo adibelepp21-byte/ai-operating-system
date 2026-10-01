@@ -10093,3 +10093,34 @@ Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FS10-ESC03` (`§111`). **A c
 | **Negative controls** | NC-01–NC-10 **PASS** (record `§8.2`) |
 | **Unchanged** | `FDP-009`, `FDP-010`, X2, scopes, Release and LIVE boundaries, certified roots, P12, P13, Platform Organization, Native Core; temporary bypass **NONE**, permanent bypass **NONE** |
 | **Release / LIVE** | **PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED** |
+
+---
+
+## 113. AD-FS10-ESC03 Received — Production Operational Edge Access: Architecture Decision, Evidence Phase Opened (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/AD-FS10-ESC03-PRODUCTION-OPERATIONAL-EDGE-ACCESS-ARCHITECTURE-DECISION.md` (verbatim; byte-equal to the received message) · content sha256 `d10a16af1406acc67220b7bd9eb6fa2571afc91fff66870fa90cd075f6b497d2` (over the fenced text) |
+| **Issued by** | Founder, 2026-10-01, as an Architect Decision Record; status *"ARCHITECTURAL DECISION — EVIDENCE REQUIRED"* |
+| **Answers** | the Architect Decision Package `FS-DP-03-R3` (`§112`) |
+| **Phase** | **DISCOVERY / EVIDENCE.** No candidate (E-A–E-F) is selected; *"DECISION = UNSELECTED"* until the evidence is complete (`§5`, `§19`); during evidence: no X2 change, bypass, identity, token, service, trust boundary or public exposure (`§24`) |
+| **Firewall** | does not authorize Production Release, LIVE or Operational AIOS (`§28`) |
+| **Result** | recorded at `§114` |
+
+---
+
+## 114. AD-FS10-ESC03 Result — Evidence Complete for Authority; ARCHITECTURE CONSTRAINED — NO AUTHORIZED MECHANISM; Candidates UNSELECTED; Founder Decision Required (2026-10-01)
+
+Recorded by Claude Code under `AD-FS10-ESC03` (`§113`). The stages are kept distinct (ADR `§31`):
+
+| Stage | State |
+|---|---|
+| **Discovery** | done: canonical X2 authority (FS-DP-03 `R2.5`, `R2.6`, `R2.10`; ACT-004 `§8`; `FDP-009-02` `§5.5`; `FDP-009` `§8`; `FDP-009-03`; `FDP-010` `§4.2`; ACT-003 `§12`, `§14`) — consistent, no conflict |
+| **Evidence** | done: `docs/fullstack/evidence/FS-10-ESC03-ARCHITECTURE-EVIDENCE.json`, 70 findings classified CANONICAL / DIRECTLY VERIFIED / PROVIDER-DOCUMENTED / CONFIGURATION OBSERVED / INFERRED / UNKNOWN. **Open UNKNOWNs** that only a provider-side change could close: Trusted Sources plan entitlement, project support and X2 acceptance; an OIDC issuer for the CEO's environment; cron passage of X2; plan and seats |
+| **Architect decision** | **not made.** All six candidates **UNSELECTED**. Classification on the evidence (not a selection): E-A, E-B, E-D FOUNDER DECISION REQUIRED · E-C INSUFFICIENT EVIDENCE · E-E INCOMPATIBLE WITH CURRENT ARCHITECTURE · E-F ACCEPTABLE WITH BOUNDARY. G10 (Release/LIVE) = NO for every candidate |
+| **Implementation** | **none / not authorized** |
+| **Verification** | of existing behaviour only; NC-01–NC-11 PASS for the current state; tests `fullstack/tests/test_esc03_boundaries.py` (12, including unselected/no-ranking pins) |
+| **Finding** | nobody can use the Production API today (Founder: no principal; CEO: no X2 path) |
+| **Record** | `docs/fullstack/FS-10-ESC03-ARCHITECTURE-DECISION.md`; Founder package `docs/fullstack/decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE.md` |
+| **Final ADR state** | **ARCHITECTURE CONSTRAINED — NO AUTHORIZED MECHANISM** · ESC-03 **NOT RESOLVED** · next: **Founder decision** (as Architect and as Founder) |
+| **Release / LIVE** | **PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED** |

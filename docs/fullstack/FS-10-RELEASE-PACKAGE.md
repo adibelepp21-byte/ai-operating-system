@@ -277,3 +277,13 @@ Record: `FS-10-ESC-03-AUTHORITY-RESOLUTION.md`.
 | Release readiness | unchanged: not blocked by rollback readiness; no unresolved **blocking** condition |
 
 **State:** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED**. **PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED.**
+
+## 20. Update under `AD-FS10-ESC03` (2026-10-01; Register `§113`, `§114`)
+
+| Item | Status now |
+|---|---|
+| **ESC-03** | **NOT RESOLVED.** Evidence phase complete for authority (`FS-10-ESC03-ARCHITECTURE-DECISION.md`; 70 classified findings). Final ADR state **ARCHITECTURE CONSTRAINED — NO AUTHORIZED MECHANISM**; E-A–E-F **UNSELECTED**; **Founder decision required** (`decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE.md`). Non-blocking for the release decision |
+| New finding | **nobody can use the Production API today**: the Founder passes X2 but holds no Production principal; the CEO holds `aios-operator` but cannot pass X2. Raised in the package as a related Founder question; it bears on Operational AIOS, not on the release decision |
+| Implementation | none; no bypass, identity, token, service or X2 change |
+
+**PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED.**

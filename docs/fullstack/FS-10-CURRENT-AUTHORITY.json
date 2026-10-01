@@ -17,6 +17,11 @@
    "record": "docs/governance/acts/ACT-CC-POST-P13-AIOS-FS10-ESC03-X2-OPERATIONAL-ACCESS-AUTHORITY-RESOLUTION.md",
    "register": "§111",
    "sha256": "b09e56ed5f0aee65f3e2094ffb9e5a0ce90c3e2380f3851eb4fdfe30cc45b7ca"
+  },
+  "AD-FS10-ESC03": {
+   "record": "docs/governance/acts/AD-FS10-ESC03-PRODUCTION-OPERATIONAL-EDGE-ACCESS-ARCHITECTURE-DECISION.md",
+   "register": "§113",
+   "sha256": "d10a16af1406acc67220b7bd9eb6fa2571afc91fff66870fa90cd075f6b497d2"
   }
  },
  "authority": {
@@ -127,7 +132,7 @@
   "environment": "production only (Vercel AIOS_OPERATOR_TOKENS, Production scope, hash only)",
   "sha256": "0ccb723cf7dccd591bc22e7448792a9522b299bf9a40e2d487089acf83ed8f4e",
   "custody": "the delegated CEO's execution environment, in a private file; never in repository, documentation, evidence, logs or chat; on loss or suspicion: rotate (new token, new hash, redeploy) per runbook §15",
-  "edge_access": "X2 (unchanged) admits Vercel-authenticated members of the account and Founder-authorized revocable mechanisms (FS-DP-03 R2.10); no mechanism is authorized for the CEO's routine operation. ESC-03 = NOT RESOLVED, ARCHITECT DECISION REQUIRED (docs/fullstack/FS-10-ESC-03-AUTHORITY-RESOLUTION.md; package decision-packages/FS-DP-03-R3-ESC-03-OPERATIONAL-EDGE-ACCESS.md; Register §112)"
+  "edge_access": "X2 (unchanged) admits Vercel-authenticated members of the account and Founder-authorized revocable mechanisms (FS-DP-03 R2.10); no mechanism is authorized for the CEO's routine operation. ESC-03 = NOT RESOLVED. AD-FS10-ESC03 evidence phase complete: ARCHITECTURE CONSTRAINED — NO AUTHORIZED MECHANISM; all candidates UNSELECTED; FOUNDER DECISION REQUIRED (docs/fullstack/FS-10-ESC03-ARCHITECTURE-DECISION.md; decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE.md; Register §114)"
  },
  "rollback_target": {
   "designated": {

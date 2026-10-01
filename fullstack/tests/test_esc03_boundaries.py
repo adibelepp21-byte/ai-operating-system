@@ -90,3 +90,35 @@ class TheCredentialSeparationIsDeclared(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TheEdgeAccessDecisionStaysUnselected(unittest.TestCase):
+    """AD-FS10-ESC03 §5, §19, §20: no selection before the decision authority acts; no ranking."""
+
+    ADR = REPO_ROOT / "docs/fullstack/FS-10-ESC03-ARCHITECTURE-DECISION.md"
+    PACKAGE = REPO_ROOT / "docs/fullstack/decision-packages/FS-10-ESC03-FOUNDER-DECISION-PACKAGE.md"
+
+    def test_every_candidate_is_unselected(self):
+        text = self.ADR.read_text(encoding="utf-8")
+        matrix = text[text.index("## 8. Decision matrix"):text.index("## 9.")]
+        rows = [line for line in matrix.splitlines() if line.startswith("| E-")]
+        self.assertEqual(6, len(rows))
+        for row in rows:
+            self.assertTrue(row.rstrip().endswith("**UNSELECTED** |"), row)
+
+    def test_no_ranking_or_recommendation_language(self):
+        for path in (self.ADR, self.PACKAGE):
+            text = path.read_text(encoding="utf-8").lower()
+            for word in ("recommend", "preferred", "best option", "winner", "most suitable",
+                         "least risky", "ranked first"):
+                body = text.replace("not ranked", "").replace("nothing is selected, recommended, ranked",
+                                                              "")
+                self.assertNotIn(word, body, f"{path.name}: {word}")
+
+    def test_release_and_live_are_untouched_by_every_candidate(self):
+        text = self.ADR.read_text(encoding="utf-8")
+        governance = text[text.index("## 7. Governance evaluation"):text.index("## 8.")]
+        rows = [line for line in governance.splitlines() if line.startswith("| E-")]
+        self.assertEqual(6, len(rows))
+        for row in rows:
+            self.assertTrue(row.rstrip().endswith("**NO** |"), row)

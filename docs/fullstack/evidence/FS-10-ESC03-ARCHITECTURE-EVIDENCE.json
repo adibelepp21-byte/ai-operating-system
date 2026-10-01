@@ -1,0 +1,371 @@
+{
+ "format": "fullstack.adr-evidence/1",
+ "adr": "AD-FS10-ESC03",
+ "register": "§113 receipt, §114 result",
+ "date": "2026-10-01",
+ "phase": "EVIDENCE ONLY (ADR §24): no X2 change, bypass, identity, token, service, trust boundary or public exposure was created",
+ "common": [
+  {
+   "finding": "X2 = deployment protection on every deployment, Production included",
+   "class": "CANONICAL",
+   "source": "FS-DP-03 R2.6; ACT-004 §8; Register §93"
+  },
+  {
+   "finding": "X2 admits 'a Vercel login or a Founder-authorized, revocable mechanism'",
+   "class": "CANONICAL",
+   "source": "FS-DP-03 R2.10"
+  },
+  {
+   "finding": "deployment-protection settings are Founder-held configuration",
+   "class": "CANONICAL",
+   "source": "FS-DP-03 R2.5"
+  },
+  {
+   "finding": "any future architectural modification to deployment protection must use the architecture authority path; FDP-009 creates no permanent bypass",
+   "class": "CANONICAL",
+   "source": "FDP-009-02 §5.5"
+  },
+  {
+   "finding": "the CEO may not redesign the Production access architecture",
+   "class": "CANONICAL",
+   "source": "FDP-009 §8"
+  },
+  {
+   "finding": "temporary access past X2 is for Production Verification only",
+   "class": "CANONICAL",
+   "source": "FDP-009-03"
+  },
+  {
+   "finding": "provider credentials and accounts remain account-holder controls, never pasted into a conversation",
+   "class": "CANONICAL",
+   "source": "FDP-010 §4.2"
+  },
+  {
+   "finding": "Claude shall not bypass Vercel access controls or circumvent SSO; access via reconnected connector or Founder-created access configuration",
+   "class": "CANONICAL",
+   "source": "ACT-003 §12, §14"
+  },
+  {
+   "finding": "B3 authenticates aios-operator with exactly observe, workflow.run, audit once a request reaches the function",
+   "class": "DIRECTLY VERIFIED",
+   "source": "evidence/FS-10-FDP-010-OPERATIONAL-ACCESS-ROLLBACK-2026-10-01.json"
+  },
+  {
+   "finding": "a request with the bearer token and no X2 credential receives 302 (plain) / 401 (JSON) from the platform",
+   "class": "DIRECTLY VERIFIED",
+   "source": "same evidence; Register §108"
+  },
+  {
+   "finding": "the Claude execution environment can send arbitrary request headers (Authorization, x-vercel-protection-bypass) to the Production host through its egress proxy",
+   "class": "DIRECTLY VERIFIED",
+   "source": "FS-10 verification scripts (Register §108, §110)"
+  },
+  {
+   "finding": "the Vercel connector's web_fetch_vercel_url takes only a URL (no header parameter) and returns the SSO 302 on protected deployments",
+   "class": "DIRECTLY VERIFIED",
+   "source": "tool schema; probes 2026-10-01 06:47Z (ESC-03 record §5)"
+  },
+  {
+   "finding": "Production AIOS_OPERATOR_TOKENS holds one principal, aios-operator; no Founder or human principal exists in Production",
+   "class": "CONFIGURATION OBSERVED",
+   "source": "filter_project_envs (comment, no decryption); FDP-010 configuration"
+  },
+  {
+   "finding": "the Vercel team has exactly one member: the Founder (OWNER)",
+   "class": "CONFIGURATION OBSERVED",
+   "source": "list_team_members"
+  },
+  {
+   "finding": "the Vercel plan of the team",
+   "class": "UNKNOWN",
+   "source": "get_team returns no plan field"
+  },
+  {
+   "finding": "therefore nobody can use the Production API today: the Founder passes X2 but holds no Production principal; the CEO holds the principal but cannot pass X2",
+   "class": "INFERRED",
+   "source": "the two findings above"
+  },
+  {
+   "finding": "no in-boundary runtime exists: vercel.json defines no crons; the only function is api/index.py, which runs only for requests X2 admits; the repository has no CI workflows",
+   "class": "DIRECTLY VERIFIED",
+   "source": "vercel.json; ls api; no .github directory"
+  }
+ ],
+ "E-A": [
+  {
+   "finding": "Vercel Protection Bypass for Automation exists; generated/revoked through the project protection-bypass API",
+   "class": "PROVIDER-DOCUMENTED",
+   "source": "Vercel docs; used and revoked under FDP-009-03"
+  },
+  {
+   "finding": "FDP-009-03 covers verification only, not ordinary operation",
+   "class": "CANONICAL",
+   "source": "FDP-009-03; FDP-009 §6 conditions 1-2"
+  },
+  {
+   "finding": "each operating session would need a Founder authorization under current text; a standing authorization of a per-session procedure would itself be a Founder decision",
+   "class": "INFERRED",
+   "source": "FDP-009-03; FS-DP-03 R2.10"
+  },
+  {
+   "finding": "revocation is an explicit API call; no automatic expiry of an automation bypass is documented in what was retrieved",
+   "class": "PROVIDER-DOCUMENTED / UNKNOWN (expiry)",
+   "source": "Vercel docs"
+  },
+  {
+   "finding": "revocation verified repeatedly (revoked bypass ≡ no bypass: 302/401)",
+   "class": "DIRECTLY VERIFIED",
+   "source": "Register §108, §110"
+  },
+  {
+   "finding": "audit: provider records the bypass note and creator; AIOS audit attributes requests to aios-operator",
+   "class": "DIRECTLY VERIFIED (AIOS) / PROVIDER-DOCUMENTED (Vercel)",
+   "source": "audit evidence; bypass create responses"
+  },
+  {
+   "finding": "public accessibility unchanged; Release/LIVE semantics unchanged",
+   "class": "INFERRED",
+   "source": "edge exception for holders; app has no release/LIVE route (test_esc03_boundaries)"
+  },
+  {
+   "finding": "the bypass value transits the executor's tool calls",
+   "class": "DIRECTLY VERIFIED",
+   "source": "FS-10 precedent (Register §108)"
+  },
+  {
+   "finding": "routine repetition would approximate standing access",
+   "class": "INFERRED",
+   "source": "frequency of operations"
+  }
+ ],
+ "E-B": [
+  {
+   "finding": "no canonical source authorizes a standing bypass; FDP-009 creates none",
+   "class": "CANONICAL",
+   "source": "FDP-009-02 §5.5"
+  },
+  {
+   "finding": "X2 as decided admits a Founder-authorized revocable mechanism; a standing bypass is revocable but persistent",
+   "class": "CANONICAL / INFERRED",
+   "source": "FS-DP-03 R2.10"
+  },
+  {
+   "finding": "a standing bypass admits any holder of the secret to the edge; B3 still applies behind it",
+   "class": "PROVIDER-DOCUMENTED / DIRECTLY VERIFIED (B3)",
+   "source": "Vercel docs; B3 tests"
+  },
+  {
+   "finding": "it adds a trust boundary: the set of secret holders",
+   "class": "INFERRED",
+   "source": "—"
+  },
+  {
+   "finding": "security ownership: protection settings are Founder-held",
+   "class": "CANONICAL",
+   "source": "FS-DP-03 R2.5"
+  }
+ ],
+ "E-C": [
+  {
+   "finding": "Trusted Sources exists: requests carry x-vercel-trusted-oidc-idp-token from a trusted OIDC issuer",
+   "class": "PROVIDER-DOCUMENTED",
+   "source": "Vercel docs (trusted-sources)"
+  },
+  {
+   "finding": "documented issuers: GitHub Actions, GitLab CI, Vercel functions forwarding their own OIDC token",
+   "class": "PROVIDER-DOCUMENTED",
+   "source": "Vercel docs"
+  },
+  {
+   "finding": "plan entitlement",
+   "class": "UNKNOWN",
+   "source": "not stated in the documentation retrieved; plan not returned"
+  },
+  {
+   "finding": "project support / current trusted-source configuration",
+   "class": "UNKNOWN",
+   "source": "get_project exposes no trusted-source field"
+  },
+  {
+   "finding": "compatibility with the current X2 configuration (Vercel Authentication, all_except_custom_domains)",
+   "class": "UNKNOWN",
+   "source": "documented as a method to bypass deployment protection; not verified on this project"
+  },
+  {
+   "finding": "supports machine/service identities",
+   "class": "PROVIDER-DOCUMENTED",
+   "source": "Vercel docs"
+  },
+  {
+   "finding": "the CEO execution environment holds no token from a documented issuer (no ACTIONS_ID_TOKEN_REQUEST_URL, VERCEL_OIDC_TOKEN, GitLab id_token)",
+   "class": "DIRECTLY VERIFIED",
+   "source": "environment variable names only; no values read"
+  },
+  {
+   "finding": "whether the execution environment can obtain any OIDC token Vercel would trust",
+   "class": "UNKNOWN",
+   "source": "no documented issuer for it"
+  },
+  {
+   "finding": "presentation through the connector: impossible (no header parameter); through local execution: headers can be sent",
+   "class": "DIRECTLY VERIFIED",
+   "source": "see common findings"
+  },
+  {
+   "finding": "X2 acceptance of such a token on this project",
+   "class": "UNKNOWN",
+   "source": "verifiable only after configuration, which ADR §24 forbids"
+  },
+  {
+   "finding": "B3 unchanged (different header)",
+   "class": "INFERRED",
+   "source": "header names differ"
+  },
+  {
+   "finding": "no new AIOS identity architecture; a new edge trust relationship with an external issuer",
+   "class": "INFERRED",
+   "source": "—"
+  },
+  {
+   "finding": "requires a provider-side change to Founder-held protection settings",
+   "class": "CANONICAL",
+   "source": "FS-DP-03 R2.5"
+  },
+  {
+   "finding": "whether the connector can configure trusted sources",
+   "class": "UNKNOWN",
+   "source": "no such operation observed"
+  },
+  {
+   "finding": "a usable issuer path for the CEO would need an external runtime (e.g. CI) that does not exist",
+   "class": "DIRECTLY VERIFIED (absence) / INFERRED (need)",
+   "source": "no CI workflows"
+  }
+ ],
+ "E-D": [
+  {
+   "finding": "a Vercel identity is a human user account (team member) or a user-scoped bypass for an existing user",
+   "class": "PROVIDER-DOCUMENTED",
+   "source": "Vercel docs (alias protection-bypass 'scope': email/userId)"
+  },
+  {
+   "finding": "it satisfies X2 through an interactive Vercel login (browser session)",
+   "class": "PROVIDER-DOCUMENTED / INFERRED",
+   "source": "Vercel Authentication"
+  },
+  {
+   "finding": "requires a new member or user; the team has one member; seat availability depends on the plan",
+   "class": "CONFIGURATION OBSERVED / UNKNOWN",
+   "source": "list_team_members; plan unknown"
+  },
+  {
+   "finding": "requires Founder-controlled provider administration; logging in would put provider credentials into the CEO's session",
+   "class": "CANONICAL",
+   "source": "FDP-010 §4.2"
+  },
+  {
+   "finding": "no change of account ownership if added as a non-owner member",
+   "class": "INFERRED",
+   "source": "—"
+  },
+  {
+   "finding": "persistent until removed; revocable by removing the member or the scoped bypass",
+   "class": "PROVIDER-DOCUMENTED",
+   "source": "Vercel docs"
+  },
+  {
+   "finding": "auditable at AIOS via the bearer subject; provider audit logs depend on plan",
+   "class": "DIRECTLY VERIFIED / UNKNOWN",
+   "source": "—"
+  },
+  {
+   "finding": "no Release/LIVE authority",
+   "class": "INFERRED",
+   "source": "app has no release/LIVE route"
+  }
+ ],
+ "E-E": [
+  {
+   "finding": "no in-boundary runtime exists today",
+   "class": "DIRECTLY VERIFIED",
+   "source": "vercel.json; api/"
+  },
+  {
+   "finding": "Vercel cron jobs exist (vercel.json crons; vercel crons run from the CLI) and authenticate with Authorization: Bearer CRON_SECRET",
+   "class": "PROVIDER-DOCUMENTED",
+   "source": "Vercel docs (cron-jobs)"
+  },
+  {
+   "finding": "the cron credential would use the same Authorization header B3 uses",
+   "class": "INFERRED",
+   "source": "Vercel docs; FS-DP-02 B3"
+  },
+  {
+   "finding": "whether cron invocations pass Vercel Authentication",
+   "class": "UNKNOWN",
+   "source": "not stated in the documentation retrieved"
+  },
+  {
+   "finding": "an in-process runtime calling AIOS directly would sidestep B3 unless it authenticated as aios-operator, which means relocating the token into the function environment",
+   "class": "INFERRED",
+   "source": "FS-DP-02 B3; contract.ROUTES"
+  },
+  {
+   "finding": "on-demand triggering by the CEO would need the CLI (a provider credential) or a new trigger route",
+   "class": "INFERRED",
+   "source": "FDP-010 §4.2"
+  },
+  {
+   "finding": "requires new code, infrastructure, credential placement and a new operational surface; the CEO may not redesign the Production access architecture",
+   "class": "CANONICAL (constraint) / INFERRED (scope)",
+   "source": "FDP-009 §8, §5.5"
+  }
+ ],
+ "E-F": [
+  {
+   "finding": "CEO responsibilities: observe, operate, procedures, incident response, rollback, recovery, credential rotation, configuration, evidence",
+   "class": "CANONICAL",
+   "source": "FDP-010 §13"
+  },
+  {
+   "finding": "deployment, rollback execution, configuration and log/metric observation are executable through the provider control plane",
+   "class": "DIRECTLY VERIFIED",
+   "source": "FS-10 executions; tools"
+  },
+  {
+   "finding": "audit and records readable read-only from the store",
+   "class": "DIRECTLY VERIFIED",
+   "source": "SQL reads (Register §108, §110)"
+  },
+  {
+   "finding": "active readiness checks (GET /api/v1/health, runbook §1, §12.1) are not executable by the CEO",
+   "class": "DIRECTLY VERIFIED",
+   "source": "connector 302; X2"
+  },
+  {
+   "finding": "post-rollback / post-deploy verification (runbook §9: §1 health, Scenario B and C runs) is not executable by the CEO",
+   "class": "CANONICAL (requirement) / DIRECTLY VERIFIED (no path)",
+   "source": "runbook §9"
+  },
+  {
+   "finding": "running workflows (aios.workflow.run, granted to the operational principal by FDP-010-01) is not executable by the CEO",
+   "class": "CANONICAL / DIRECTLY VERIFIED",
+   "source": "FDP-010 §4.3"
+  },
+  {
+   "finding": "whether CEO workflow operation is mandatory for Operational AIOS",
+   "class": "UNKNOWN",
+   "source": "no canonical definition of who runs workflows once LIVE"
+  },
+  {
+   "finding": "absence of CEO API access does not block the Founder Release decision",
+   "class": "CANONICAL / INFERRED",
+   "source": "Release Package §16, §18-§19"
+  },
+  {
+   "finding": "a mechanism can be added later as a successor without changing Release/LIVE boundaries",
+   "class": "INFERRED",
+   "source": "X2 and B3 are independent of release state"
+  }
+ ]
+}
