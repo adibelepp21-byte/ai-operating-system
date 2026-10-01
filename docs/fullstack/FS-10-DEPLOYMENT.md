@@ -3,6 +3,52 @@
 | Field | Value |
 |---|---|
 | **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
+| **Status** | **ACTIVE — at the Founder Release Gate.** PRODUCTION DEPLOYED · PRODUCTION VERIFIED · RELEASE PACKAGE READY · **FOUNDER RELEASE AUTHORIZATION REQUIRED** |
+| **Authority** | `FDP-009` (Register `§107`): Production deployment and verification before the Founder Release Authorization; deployment ≠ release ≠ LIVE; temporary verification access with boundary |
+| **Production** | release candidate **`d05261c`** deployed: `dpl_CHV72ePvPE7doNu4WaKp93qXXu8x` serves the Production alias behind **unchanged X2**. **Not released, not LIVE, not public** |
+| **Verification** | **PASS** (2026-10-01; Register `§108`): `FS-10-RELEASE-PACKAGE.md`, evidence `evidence/FS-10-PRODUCTION-VERIFICATION-2026-10-01.json` |
+| **Temporary access** | **NONE**: the verification principal and the bypass were revoked and the revocation verified on 5 hosts |
+| **Next step** | **Founder Release Authorization** (`FDP-009` `§10`). Then, before LIVE, permanent Production principals (`ESC-01`) |
+
+```text
+FS-10 Preparation                 done
+   → Production Deployment        done   (CEO; FDP-009-01)  d05261c
+   → Production Verification      PASS   (CEO; temporary access per FDP-009-03, revoked)
+   → Release Package              READY  (CEO; evidence, not authorization)
+   → Founder Release Authorization  ← here (Founder)
+   → Production Release → LIVE (bounded by X2; ESC-01 first) → Operational AIOS
+```
+
+## 1. What was done (2026-10-01)
+
+| Step | Result |
+|---|---|
+| Re-discovery | `FDP-009` registered (`§107`), fenced hash `33fecb97…` recomputed equal; served paths unchanged since `d05261c`; Production key present (Production scope, Sensitive, not decrypted); Production store 0 rows; Preview 554 |
+| Temporary principal | `fs10-verification` (observe, workflow.run, audit), hash only, Production scope |
+| Deployment | `d05261c` → `dpl_Dfs1Fx8P9G4QuNd1EYPSwet3VLG1`, Python 3.12, READY, alias moved; default branch not merged |
+| Temporary bypass | one automation bypass, labelled |
+| Verification | smoke read-only 7/7, write 10/10; 11 additional checks (scope 403, audit, headers, 405/404, X2 with and without bypass); Production store 0 → 52, Preview unchanged; 50 L1 lines, M1 0 server errors |
+| Rollback readiness | candidates recorded; not performed (not operationally required) |
+| Revocation | principal emptied, `d05261c` redeployed as `dpl_CHV72ePvPE7doNu4WaKp93qXXu8x`, token 401; bypass revoked, old bypass ≡ none (302/401) on 5 hosts; local credentials destroyed |
+| Backup | read-only export of the Production store (64 rows), equal to the server digests |
+| Release Package | `FS-10-RELEASE-PACKAGE.md` (`FDP-009` `§9`, 17 items) |
+
+## 2. Authority map
+
+Unchanged from the post-`FDP-009` map in the history below (`§1` there). The steps above used only CEO-AUTHORIZED-WITH-BOUNDARY actions. **Founder-reserved and not taken:** Production Release, LIVE activation, traffic, Final System Acceptance, spending. **Escalated and open:** `ESC-01` permanent Production principals (before LIVE), `ESC-02` rollback after a release.
+
+## 3. Current frontier
+
+**Founder Release Authorization.** Nothing further is authorized to the CEO on Production except H3 checks, read-only backups, and a rollback if operationally required (`FDP-009` `§8`).
+Remaining: Founder Release Authorization · Production Release · (`ESC-01`) · LIVE · Operational AIOS.
+
+---
+
+# History: FS-10 as reconciled with `FDP-009` (2026-10-01), before Production Deployment
+
+| Field | Value |
+|---|---|
+| **Stage** | FS-10 Deployment & Operationalization (Act `§21`) |
 | **Status** | **ACTIVE — Deployment Preparation**, at the last step before Production Deployment |
 | **Authority** | `FDP-009` (Founder Decision, Register `§107`): deployment and verification **before** the Founder Release Authorization; deployment ≠ release ≠ LIVE; temporary verification access with boundary. Classification of every action: `FS-10-ACT-009-AUTHORITY-BOUNDARY-RECORD.md`, as resolved by `FDP-009` (`§1` below) |
 | **Production** | **not deployed, not LIVE.** Production serves `22c0b49` (before this program) and is untouched |

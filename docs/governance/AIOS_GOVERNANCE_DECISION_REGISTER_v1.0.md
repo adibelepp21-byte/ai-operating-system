@@ -9978,3 +9978,21 @@ Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-009` `§22`–`§
 | **CEO may not** | declare Production Released or LIVE; activate unrestricted access; treat verification PASS as release; infer the Founder Release Authorization; permanently disable deployment protection; redesign the Production access architecture |
 | **Unchanged** | Constitution, Mission, Founder Authority, Governance Model, P12/P13, Platform Organization, Native Core = 11, certified roots; no Phase 14 (record `§13`). Non-retroactive (`§12`) |
 | **Not decided** | the persons who may hold permanent Production access (`ESC-01`); rollback after a release (`ESC-02`); Final System Acceptance (A19) |
+
+---
+
+## 108. FS-10 Production Deployment and Production Verification — PASS; Release Package Ready; Founder Release Authorization Required (2026-10-01)
+
+Recorded by Claude Code as CEO under `FDP-009` `§8` and `§14` items 4–7 (`§107`), on the Founder's instruction to continue FS-10 after the canonical registration. **This is a verification result, not a decision.** No Act was created, no Founder Decision was requested, and nothing was released.
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/FS-10-RELEASE-PACKAGE.md` (`FDP-009` `§9`, 17 items); `docs/fullstack/FS-10-DEPLOYMENT.md` (current state); evidence `docs/fullstack/evidence/FS-10-PRODUCTION-VERIFICATION-2026-10-01.json`, `…-PRODUCTION-L1-2026-10-01.jsonl`, `…-PRODUCTION-BACKUP-MANIFEST-2026-10-01.json` with its export |
+| **Release candidate** | `d05261c` (served paths unchanged to `72ad0fb`; not substituted) |
+| **Production deployment** | `dpl_Dfs1Fx8P9G4QuNd1EYPSwet3VLG1` (verification), then `dpl_CHV72ePvPE7doNu4WaKp93qXXu8x` (same commit, rebuilt without the verification principal) serving the Production alias; Python 3.12; default branch **not** merged |
+| **Verification** | smoke read-only 7/7 and write 10/10; 11 additional checks; Production store 0 → 64 rows (verification data only), Preview unchanged at 554; L1 50/50 lines, M1 0 server errors; no warning or error; export equal to the server digests |
+| **Temporary access** (`FDP-009-03`) | principal `fs10-verification` (hash only) and one automation bypass: created, used ~05:36–05:39 UTC, revoked, revocation verified on 5 hosts (revoked bypass ≡ none: 302/401; token → 401); credentials destroyed. **Temporary access: NONE** |
+| **Protection** | X2 unchanged (`ssoProtection` all_except_custom_domains; bypass list empty) |
+| **Not done** | Production Release; LIVE; traffic; public access; any Production rollback (not operationally required); any change to certified roots, P12, P13, Platform Organization, Native Core or X2; no Phase 14 |
+| **Open** | `ESC-01` permanent Production principals (needed before LIVE); `ESC-02` rollback after a release; the classified non-blocking items of the package `§16` |
+| **Result** | **PRODUCTION VERIFICATION PASS — FOUNDER RELEASE AUTHORIZATION REQUIRED** |

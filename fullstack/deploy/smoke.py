@@ -7,7 +7,10 @@ python -m fullstack.deploy.smoke --base https://<host> --token-file <file> \
 
 **Two profiles.**
 
-* **Read-only** (default): nothing is written to the target's store. It checks
+* **Read-only** (default): no run, trace or agent record is written. The
+  application still appends one access-audit record (`fullstack-audit`) for
+  each request to a protected route, allowed or refused, by design; the
+  profile makes 18 such requests (observed on Production, FS-10). It checks
   health and readiness, that every protected route refuses a missing, an
   invalid and a malformed `Authorization`, that a valid bearer authenticates,
   that the Runtime is running, that the read routes answer, and that the

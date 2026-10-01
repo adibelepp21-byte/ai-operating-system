@@ -1,0 +1,55 @@
+{
+ "format": "fullstack.backup-manifest/1",
+ "purpose": "FS-10 Production store export after Production Verification (runbook \u00a77; FS-10-DEPLOYMENT.md P4): the backup before any Founder Release decision",
+ "source": {
+  "system": "Supabase project hmljfyqycxcueulhsjae (the Production store)",
+  "table": "public.aios_records",
+  "state_as_of": "seq <= 64, 2026-10-01 after verification and revocation; the table held exactly 64 rows (seq 1-64, no gaps)"
+ },
+ "method": "read-only SQL through the operator's Supabase connection (select seq, partition, base64(record), sha256(record)); each record accepted only when sha256 of the decoded bytes equals the database's value (64 of 64); written with fullstack/deploy/backup.py line_for, re-read with parse and summary. No write, no application credential",
+ "export": {
+  "file": "FS-10-PRODUCTION-BACKUP-EXPORT-2026-10-01.jsonl",
+  "sha256": "db74e00bb0b09e100382a6d1f2c32892d846b3799ceceba17dad29c07970ffe5",
+  "bytes": 30143,
+  "lines": 64,
+  "line_format": "fullstack.backup/1"
+ },
+ "server_digest_query": "select partition, count(*), sum(octet_length(record)), min(seq), max(seq), encode(sha256(string_agg(record, '\\x0a'::bytea order by seq)),'hex') from aios_records where seq <= 64 group by partition",
+ "partitions": {
+  "fullstack-audit": {
+   "records": 57,
+   "bytes": 12518,
+   "seq_first": 1,
+   "seq_last": 64,
+   "sha256_joined_server": "18bf18c4f1d6947e4ba4a012e49990480f15e8db70b589a6a6c23260a3c6d845"
+  },
+  "fullstack-runs": {
+   "records": 2,
+   "bytes": 2503,
+   "seq_first": 41,
+   "seq_last": 46,
+   "sha256_joined_server": "e59a9c893c10aab07766478e78fa72c59815489c03c47a823b485ed7c8ef6ebf"
+  },
+  "trace": {
+   "records": 5,
+   "bytes": 1798,
+   "seq_first": 38,
+   "seq_last": 45,
+   "sha256_joined_server": "eacbd91f7c4d3f57b48e69215ff8519b60c02e8176588735bfd4b63788620ed6"
+  }
+ },
+ "table": {
+  "records": 64,
+  "bytes": 16819,
+  "sha256_joined_server": "782dee3eda19906df07d38218a18c63360f2c24528c2521655f52c5cdc6675f3"
+ },
+ "export_check": "backup.summary(parse(file)) equals every partition's server count, bytes and joined digest; whole-table joined digest equal",
+ "credential_scan": {
+  "Bearer": 0,
+  "sb_secret_": 0,
+  "eyJhbGci": 0,
+  "x-vercel-protection-bypass": 0,
+  "Authorization": 0
+ },
+ "content": "verification data only: 57 access-audit records (subject fs10-verification or null), 2 runs (Scenario B succeeded, Scenario C failed), 5 trace records; no agent instance"
+}
