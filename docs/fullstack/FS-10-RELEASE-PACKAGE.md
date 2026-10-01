@@ -302,5 +302,6 @@ Record: `FS-10-ESC-03-AUTHORITY-RESOLUTION.md`.
 | **FDP-010** | CANONICAL; ESC-01 and ESC-02 executed and verified; **NOT COMPLETE** under MI `§21` (items 3 and 4 need ESC-03) |
 | **FS-10 under MI `§22`** | not yet in the ready state (it requires ESC-03 RESOLVED and FDP-010 FULLY EXECUTED) |
 | Implementation | none; X2, B3, scopes, Production configuration and store unchanged (118 rows) |
+| **Checks** (on `cea0d68`; Register `§116`) | `native_core` 801 · `consumers` 276 · `tools/bounded_exception` 29 · `fullstack` **326** OK on Python 3.12 and 3.11; `tools` 1962 run, **1 failure** = the P12-W6 population signal classified at Register `§102` (0.50 against 0.4895; P12 untouched), no new failure; citation audit 0 errors, 94 warnings (unchanged); mutation checks: a steering word, a missing element, a selection each fail the package tests; secret scan: no operator plaintext, bypass or share value in the tree; Production `updatedAt` unchanged after the work |
 
 **PRODUCTION RELEASE = NOT AUTHORIZED (FOUNDER RESERVED) · LIVE = NOT ACTIVE (FOUNDER RESERVED).**
