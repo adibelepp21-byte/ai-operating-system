@@ -2,7 +2,7 @@
 
 ```text
 python -m fullstack.deploy.smoke --base https://<host> --token-file <file> \
-    [--bypass-file <file>] [--write] [--out <evidence.json>]
+    [--bypass-file <file> | --bypass-env <NAME>] [--write] [--out <evidence.json>]
 ```
 
 **Two profiles.**
@@ -21,8 +21,11 @@ python -m fullstack.deploy.smoke --base https://<host> --token-file <file> \
   profile on by itself and prints the target before it writes.
 
 **Secrets.** The operator token and, where Deployment Protection is on, the
-bypass secret are read from files, sent as headers, never printed, and never
-written to the evidence. A response that echoes either aborts the run.
+bypass secret are read from files (or, for the bypass, from a named
+environment variable), sent as headers, never printed, and never written to the
+evidence. A response that echoes either aborts the run. Where the session's
+agent proxy attaches the bypass itself (FDP-012 O-A delivery), pass neither
+bypass option: the value never reaches this process.
 
 **No environment inference.** The tool is told the base URL; it does not decide
 that a host is Preview or Production. It records the URL it was given.
@@ -32,6 +35,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 import urllib.error
@@ -158,13 +162,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(prog="python -m fullstack.deploy.smoke", description=__doc__.split("\n")[0])
     parser.add_argument("--base", required=True)
     parser.add_argument("--token-file", required=True, type=Path)
-    parser.add_argument("--bypass-file", type=Path)
+    source = parser.add_mutually_exclusive_group()
+    source.add_argument("--bypass-file", type=Path)
+    source.add_argument("--bypass-env", metavar="NAME",
+                        help="read the bypass from this environment variable; never printed")
     parser.add_argument("--write", action="store_true",
                         help="also run Scenarios B and C; appends records to the target's store")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args(argv)
     token = args.token_file.read_text(encoding="utf-8").strip()
     bypass = args.bypass_file.read_text(encoding="utf-8").strip() if args.bypass_file else None
+    if args.bypass_env:
+        bypass = os.environ.get(args.bypass_env, "").strip()
+        if not bypass:
+            print(f"aborted: {args.bypass_env} is not set", file=sys.stderr)
+            return 2
     if args.write:
         print(f"WRITE profile against {args.base}: records will be appended to its store", file=sys.stderr)
     try:

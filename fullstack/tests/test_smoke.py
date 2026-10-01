@@ -105,3 +105,47 @@ class TheSafetyRules(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TheBypassFromTheEnvironment(unittest.TestCase):
+    """FDP-012 O-A delivery fallback: the bypass may come from a named variable, never printed."""
+
+    def setUp(self):
+        self.harness = Harness()
+        self.server = LiveServer(self.harness)
+        self.addCleanup(self.harness.close)
+        self.addCleanup(self.server.close)
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        self.token_file = Path(folder.name) / "token"
+        self.token_file.write_text(OPERATOR_TOKEN, encoding="utf-8")
+
+    def _main(self, *extra, env=None):
+        import os
+        out, err = io.StringIO(), io.StringIO()
+        saved = dict(os.environ)
+        os.environ.update(env or {})
+        try:
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                code = smoke.main(["--base", self.server.url, "--token-file", str(self.token_file), *extra])
+        finally:
+            os.environ.clear()
+            os.environ.update(saved)
+        return code, out.getvalue() + err.getvalue()
+
+    def test_a_named_variable_is_used_and_never_printed(self):
+        value = "e" * 32
+        code, printed = self._main("--bypass-env", "AIOS_TEST_BYPASS", env={"AIOS_TEST_BYPASS": value})
+        self.assertEqual(0, code, printed)
+        self.assertNotIn(value, printed)
+        self.assertNotIn(OPERATOR_TOKEN, printed)
+
+    def test_an_unset_variable_aborts_before_any_request(self):
+        code, printed = self._main("--bypass-env", "AIOS_TEST_BYPASS_UNSET")
+        self.assertEqual(2, code)
+        self.assertIn("is not set", printed)
+
+    def test_file_and_variable_cannot_both_be_given(self):
+        with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+            smoke.main(["--base", self.server.url, "--token-file", str(self.token_file),
+                        "--bypass-file", str(self.token_file), "--bypass-env", "X"])

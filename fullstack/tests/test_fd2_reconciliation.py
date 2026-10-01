@@ -86,7 +86,11 @@ class TheReconciliationRecordCreatesNoAuthority(unittest.TestCase):
             self.assertEqual(digest, hashlib.sha256((REPO_ROOT / path).read_bytes()).hexdigest(), path)
 
     def test_no_fdp012_and_the_register_says_no_new_authority(self):
-        self.assertEqual([], sorted((REPO_ROOT / "docs/governance/acts").glob("FDP-012*")))
+        # The gate created no FDP-012; the one record that exists is the Founder-issued
+        # decision registered afterwards at §124.
+        self.assertEqual(["FDP-012-FS-10-FINAL-ARCHITECTURE-AUTHORITY-ESC03-RESOLUTION-FDP010-COMPLETION.md"],
+                         [p.name for p in (REPO_ROOT / "docs/governance/acts").glob("FDP-012*")])
+        self.assertIn("5ad7f321c463c7dbaf10998946a9933a2e165a82f6f5f582f8ff2c88ad64891f", REGISTER.read_text(encoding="utf-8").split("## 124. ", 1)[1])
         register = REGISTER.read_text(encoding="utf-8")
         entry = register[register.index("## 123. FD-2 Authority Reconciliation Gate"):]
         self.assertIn("**RECONCILIATION RECORD — NO NEW AUTHORITY CREATED.**", entry)

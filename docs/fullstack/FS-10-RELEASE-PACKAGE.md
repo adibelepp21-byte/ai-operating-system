@@ -320,3 +320,17 @@ Record: `FS-10-ESC-03-AUTHORITY-RESOLUTION.md`.
 | **FS-10** | not READY |
 
 **PRODUCTION RELEASE = NOT AUTHORIZED (FOUNDER RESERVED) · LIVE = NOT ACTIVE (FOUNDER RESERVED).**
+
+---
+
+## 23. Update under `FDP-012` (2026-10-01; Register `§124`, `§125`)
+
+| Item | Status now |
+|---|---|
+| **FDP-012** | **CANONICAL · OPERATIVE** (Register `§124`, sha256 `5ad7f321…`): bounded Architect authority for FS-10 / ESC-03 to Claude Code / Co-Founder; not global; `FD-2` not ratified; `APT-CD1.1-AA-001` preserved |
+| **Architecture** | `AD-FS10-ESC03-R1` (Register `§125`): **O-A** per-session bypass, created and revoked by the account holder, delivered by provider-side credential injection to the alias, serving deployment and rollback target only; fallback M1 in a dedicated environment |
+| **Implementation** | **authorized, NOT YET OCCURRED** — awaits the account-holder steps (runbook `§15`) |
+| **ESC-03 / FDP-010 / FS-10** | NOT RESOLVED / NOT COMPLETE / NOT READY |
+| **Production** | unchanged; X2 active; no bypass; no credential |
+
+**PRODUCTION RELEASE = NOT AUTHORIZED (FOUNDER RESERVED) · LIVE = NOT ACTIVE (FOUNDER RESERVED).**

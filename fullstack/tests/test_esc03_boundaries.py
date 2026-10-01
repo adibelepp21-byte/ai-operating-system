@@ -242,9 +242,16 @@ class TheM1CustodyGateIsNotPassedByInference(unittest.TestCase):
         self.assertEqual("UNKNOWN", self._gates()["4"])
 
     def test_no_fdp012_record_was_manufactured(self):
+        # Until the Founder issued it (Register §124), no FDP-012 existed; the only
+        # admissible FDP-012 record is that Founder-issued one, with its registered hash.
+        import hashlib
         acts = REPO_ROOT / "docs/governance/acts"
-        self.assertEqual([], sorted(p.name for p in acts.glob("FDP-012*")))
-        self.assertNotIn("FDP-012", CURRENT["decisions"])
+        self.assertEqual(["FDP-012-FS-10-FINAL-ARCHITECTURE-AUTHORITY-ESC03-RESOLUTION-FDP010-COMPLETION.md"], sorted(p.name for p in acts.glob("FDP-012*")))
+        text = (acts / "FDP-012-FS-10-FINAL-ARCHITECTURE-AUTHORITY-ESC03-RESOLUTION-FDP010-COMPLETION.md").read_text(encoding="utf-8")
+        digest = hashlib.sha256(text[text.index("````text\n") + 8:text.rindex("\n````")].encode()).hexdigest()
+        self.assertEqual("5ad7f321c463c7dbaf10998946a9933a2e165a82f6f5f582f8ff2c88ad64891f", digest)
+        register = (REPO_ROOT / "docs/governance/AIOS_GOVERNANCE_DECISION_REGISTER_v1.0.md").read_text(encoding="utf-8")
+        self.assertIn(digest, register[register.index("## 124. "):])
 
 
 class TheProviderInjectionRecordSelectsNothing(unittest.TestCase):
@@ -319,3 +326,33 @@ class TheInjectionDecisionPackageDecidesNothing(unittest.TestCase):
 
     def test_8_release_and_live_stay_founder_reserved(self):
         self.assertIn("**PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED**", self.text)
+
+
+class Fdp012IsCanonicalAndO_AIsNotClaimedImplemented(unittest.TestCase):
+    """FDP-012 (Register §124, §125): bounded authority recorded; O-A selected but not implemented."""
+
+    ADR = REPO_ROOT / "docs/fullstack/AD-FS10-ESC03-R1-OPERATIONAL-EDGE-ACCESS-SELECTION.md"
+
+    def test_fdp012_is_registered_with_its_hash_and_is_bounded(self):
+        import hashlib
+        entry = CURRENT["decisions"]["FDP-012"]
+        text = (REPO_ROOT / entry["record"]).read_text(encoding="utf-8")
+        digest = hashlib.sha256(text[text.index("````text\n") + 8:text.rindex("\n````")].encode()).hexdigest()
+        self.assertEqual(("§124", digest), (entry["register"], entry["sha256"]))
+        authority = CURRENT["architecture_authority_fs10_esc03"]
+        self.assertIn("bounded, not global", authority["scope"])
+        self.assertIn("NOT RATIFIED", authority["fd2"])
+        self.assertEqual({"Production Release", "LIVE", "Final System Acceptance"}, set(authority["founder_reserved"]))
+
+    def test_o_a_is_selected_but_not_implemented_and_no_bypass_exists(self):
+        edge = CURRENT["operational_principal"]["edge_access"]
+        self.assertIn("Implementation authorized, NOT YET OCCURRED", edge)
+        self.assertIn("ESC-03 NOT RESOLVED", edge)
+        self.assertIn("No bypass exists.", edge)
+        self.assertNotRegex(edge, r"(?i)ESC-03 (= )?RESOLVED|(?<!NOT yet )operationally accessible")
+
+    def test_the_selection_is_made_under_fdp012_and_excludes_tool_output_delivery(self):
+        text = self.ADR.read_text(encoding="utf-8")
+        self.assertIn("under `FDP-012`", text)
+        self.assertIn("Connector-created bypass (tool output)", text)
+        self.assertIn("PRODUCTION RELEASE = FOUNDER RESERVED · LIVE = FOUNDER RESERVED**", text)

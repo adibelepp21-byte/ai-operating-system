@@ -32,7 +32,20 @@
    "record": "docs/governance/acts/FDP-011-FS-10-ESC03-PER-SESSION-X2-OPERATIONAL-ACCESS.md",
    "register": "§117",
    "sha256": "5a6e5a8b3cf449824fbc5ae55eeb59ebf4ebf22d5579a17b8f807116820f1296"
+  },
+  "FDP-012": {
+   "record": "docs/governance/acts/FDP-012-FS-10-FINAL-ARCHITECTURE-AUTHORITY-ESC03-RESOLUTION-FDP010-COMPLETION.md",
+   "register": "§124",
+   "sha256": "5ad7f321c463c7dbaf10998946a9933a2e165a82f6f5f582f8ff2c88ad64891f"
   }
+ },
+ "architecture_authority_fs10_esc03": {
+  "holder": "Claude Code / Co-Founder",
+  "basis": "FDP-012 §3 (Register §124)",
+  "scope": "bounded, not global: FS-10 / ESC-03 only",
+  "fd2": "globally IMPLIED / OPEN / NOT RATIFIED (Register §123); not ratified by FDP-012",
+  "apt_cd1_1_aa_001": "preserved; not the basis",
+  "founder_reserved": ["Production Release", "LIVE", "Final System Acceptance"]
  },
  "authority": {
   "production_deployment": {
@@ -142,7 +155,7 @@
   "environment": "production only (Vercel AIOS_OPERATOR_TOKENS, Production scope, hash only)",
   "sha256": "0ccb723cf7dccd591bc22e7448792a9522b299bf9a40e2d487089acf83ed8f4e",
   "custody": "the delegated CEO's execution environment, in a private file; never in repository, documentation, evidence, logs or chat; on loss or suspicion: rotate (new token, new hash, redeploy) per runbook §15",
-  "edge_access": "X2 (unchanged) admits Vercel-authenticated members of the account and Founder-authorized revocable mechanisms (FS-DP-03 R2.10). FDP-011 (Register §117) authorizes O-A: a per-session automation bypass, Production only, for the serving deployment and the designated verified rollback target, for FDP-010 §13 duties; revoked and verified at session end; never standing; the value never in repository, documentation, evidence, logs, chat or normal tool output (T5). ESC-03 = DECIDED, NOT RESOLVED: S5 blocked at the T5 credential boundary (no compliant create/deliver/revoke path in the execution environment; Register §118; docs/fullstack/FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md). No bypass exists. T5 feasibility (Register §119): NO EXISTING AUTHORIZED SECRET-HANDLING PATH (docs/fullstack/FS-10-FDP011-T5-SECRET-CUSTODY-FEASIBILITY.md). M1 custody validation (Register §120): FDP-012 NOT RECEIVED (not canonicalized); M1 BLOCKED — telemetry / logging / session isolation (docs/fullstack/FS-10-FDP012-M1-CUSTODY-VALIDATION.md). Provider-side credential injection (Register §121): UNSELECTED; FOUNDER DECISION REQUIRED (docs/fullstack/FS-10-PROVIDER-CREDENTIAL-INJECTION-EVIDENCE.md). Founder Decision Package prepared, no decision (Register §122): docs/fullstack/decision-packages/FS-10-PROVIDER-CREDENTIAL-INJECTION-FOUNDER-DECISION-PACKAGE.md; FD-2 (Founder ≡ Architect) is implied, not ratified."
+  "edge_access": "X2 ACTIVE and unchanged; no bypass and no credential exist. Current architecture: AD-FS10-ESC03-R1, selected under FDP-012 (Register §124, §125): O-A, a per-session Protection Bypass for Automation created and revoked by the account holder in Vercel, delivered by provider-side credential injection (header x-vercel-protection-bypass, attached by the agent proxy) to the Production alias, the serving deployment and the designated rollback target only; the client sends only the B3 bearer; the value never enters the VM, tool output, chat, logs, evidence or the repository; revocation verified by 302 without the value; fallback M1 in a dedicated environment. Implementation authorized, NOT YET OCCURRED; Production NOT yet operationally accessible; next steps are account-holder actions (docs/fullstack/FS-10-FDP012-EXECUTION-RECORD.md §6). ESC-03 NOT RESOLVED. No bypass exists. History (Register §117-§123): FDP-011 (Register §117) authorizes O-A: a per-session automation bypass, Production only, for the serving deployment and the designated verified rollback target, for FDP-010 §13 duties; revoked and verified at session end; never standing; the value never in repository, documentation, evidence, logs, chat or normal tool output (T5). ESC-03 = DECIDED, NOT RESOLVED: S5 blocked at the T5 credential boundary (no compliant create/deliver/revoke path in the execution environment; Register §118; docs/fullstack/FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md). No bypass exists. T5 feasibility (Register §119): NO EXISTING AUTHORIZED SECRET-HANDLING PATH (docs/fullstack/FS-10-FDP011-T5-SECRET-CUSTODY-FEASIBILITY.md). M1 custody validation (Register §120): FDP-012 NOT RECEIVED (not canonicalized); M1 BLOCKED — telemetry / logging / session isolation (docs/fullstack/FS-10-FDP012-M1-CUSTODY-VALIDATION.md). Provider-side credential injection (Register §121): UNSELECTED; FOUNDER DECISION REQUIRED (docs/fullstack/FS-10-PROVIDER-CREDENTIAL-INJECTION-EVIDENCE.md). Founder Decision Package prepared, no decision (Register §122): docs/fullstack/decision-packages/FS-10-PROVIDER-CREDENTIAL-INJECTION-FOUNDER-DECISION-PACKAGE.md; FD-2 (Founder ≡ Architect) is implied, not ratified."
  },
  "rollback_target": {
   "designated": {

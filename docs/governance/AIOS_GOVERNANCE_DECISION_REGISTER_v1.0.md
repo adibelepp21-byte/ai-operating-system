@@ -10279,3 +10279,33 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Open questions (not answered)** | G-Q1 is the Founder the Architect (Constitution `§3.1`/`§3.2`; FD-2/FR-2) · G-Q2 which authority holds the architectural tier for Full Stack Production edge access · G-Q3 capacity of AD-FS10-ESC03 · G-Q4 whether a per-session bypass under `R2.10` is an *"architectural modification"* (`FDP-009-02` `§5.5`). Narrowest next question: **G-Q1** |
 | **Boundary kept** | no decision; no record modified (FDP-009/010/011, AD-FS10-ESC03, prior FS-10 records, P12/P13, earlier Register entries unchanged); no mechanism selected; no credential; no Production, X2 or B3 change; no FDP-012 |
 | **State** | O-A authorized, **NOT IMPLEMENTED** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
+
+---
+
+## 124. `FDP-012` — FS-10 Final Architecture Authority, ESC-03 Resolution & FDP-010 Completion: Founder Decision Canonical Registration (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/FDP-012-FS-10-FINAL-ARCHITECTURE-AUTHORITY-ESC03-RESOLUTION-FDP010-COMPLETION.md` (verbatim, extracted byte-exactly from the session transcript) · content sha256 `5ad7f321c463c7dbaf10998946a9933a2e165a82f6f5f582f8ff2c88ad64891f` |
+| **Issued by** | Founder, 2026-10-01; *"FOUNDER DECIDED — PENDING CANONICAL REGISTRATION"*. Registration directed by the Founder's execution instruction `acts/MI-FDP012-CANONICALIZATION-ESC03-FDP010-FS10-FINAL-EXECUTION.md` (sha256 `7cbbaa68fd0e1970e2ceb68fe6a0980bec85cc04a836177d166189f61594eb99`) |
+| **Decision** | `§26`: (1) bounded Architect authority **GRANTED** to Claude Code / Co-Founder for the FS-10 / ESC-03 workstream (`§3`); (2)–(3) resolve, select and implement the mechanism within the envelope; (4) `FD-2` **NOT globally ratified**; (5) `APT-CD1.1-AA-001` not revoked; (6) historical records not rewritten; (7) FDP-009, FDP-010, FDP-011 operative; (8) O-A remains the objective; (9) provider injection only if its conditions are met (`§6`); (10) another valid mechanism may be chosen; (11) no further Micro-Act for in-scope work; (12)–(14) Production Release, LIVE and Final System Acceptance **Founder-reserved** |
+| **Exclusions** | Constitution, Mission/Identity, Founder authority, governance and delegation models, permanent global Architect appointment, Phase 14, Native Core #12, P12/P13, Platform Organization, certified roots, Release, LIVE, Final System Acceptance (`§3`) |
+| **Validation** | integrity verified; scope bounded to FS-10 / ESC-03; Release, LIVE and Final System Acceptance reserved; no conflicting higher Founder decision. Observation: the Founder's capacity to delegate architectural-tier authority under Constitution `§3.2` rests on the same stated basis as GDR-0015 (`FD-2` implied); FDP-012 `§2` acknowledges this and does not ratify `FD-2` |
+| **Note** | Register `§120` recorded *"FDP-012 NOT RECEIVED"* for an earlier instruction; that entry stands as history. This is the first FDP-012 instrument |
+| **Status** | **CANONICAL · OPERATIVE** for the FS-10 / ESC-03 workstream |
+
+---
+
+## 125. FDP-012 Execution — Current Authority Reconciled; AD-FS10-ESC03-R1 Architecture Selected (O-A via Provider-Side Credential Injection); Implementation Not Yet Occurred; Account-Holder Boundary (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Instruction** | `acts/MI-FDP012-CANONICALIZATION-ESC03-FDP010-FS10-FINAL-EXECUTION.md` (sha256 `7cbbaa68…`), continued under the Founder's explicit interactive approval of the security-sensitive documentation writes: `acts/MI-FDP012-CONTINUE-AFTER-EXPLICIT-INTERACTIVE-APPROVAL.md` (verbatim; content sha256 `842afcb9eb8f265be4976e31c6dfd60ba55946c084d0777c5892d4e9944caf2e`). The Claude Code auto-mode classifier (`[Security Weaken]`) was not routed around; no permanent permission rule was created |
+| **States kept distinct** | Founder Decision (FDP-012, issued) ≠ canonical registration (`§124`) ≠ **architecture selection** (this entry) ≠ **implementation (NOT YET)** ≠ **verification (NOT YET)** ≠ Release (Founder-reserved) ≠ LIVE (Founder-reserved) |
+| **Authority** | for FS-10 / ESC-03: bounded, not global, Architect authority held by Claude Code / Co-Founder under `FDP-012` `§3`. `FD-2` globally IMPLIED / OPEN / NOT RATIFIED (`§123`); `APT-CD1.1-AA-001` preserved, not the basis. `FDP-009` `§8` operative outside the workstream; the `FDP-009-02` `§5.5` path within it is `FDP-012` `§3`. `FDP-010` `§4.2` interpreted for this workstream only (`docs/fullstack/FS-10-FDP012-EXECUTION-RECORD.md` `§2`). FDP-009, FDP-010, FDP-011 and all historical records unchanged |
+| **Architecture selected** | `docs/fullstack/AD-FS10-ESC03-R1-OPERATIONAL-EDGE-ACCESS-SELECTION.md` — **O-A**: per-session Protection Bypass for Automation, created and revoked by the account holder in Vercel, delivered by **provider-side credential injection** (header `x-vercel-protection-bypass`, prefix cleared) to the Production alias, serving `dpl_s8c6m…` and target `dpl_76CYC…` only. B3 bearer from the CEO's private file. Revocation verified by 302 without the value (revoke at Vercel before deleting the credential). Environment-wide attachment accepted only with window, host, B3, no-Routine, no-concurrent-session and revoke-first controls. **Fallback:** M1 in a dedicated environment (`smoke.py --bypass-env`). Not selected: connector-created bypass, standing bypass, OIDC, Vercel identity, runtime-in-boundary, external relay, Vercel API token in the proxy |
+| **Current documents** | `FS-10-CURRENT-AUTHORITY.md` / `.json` (FDP-012 bounded authority; O-A selected, **not implemented**; X2 active; no bypass or credential); execution record; runbook `§15`; deployment head; Release Package `§23` |
+| **Code** | `fullstack/deploy/smoke.py` `--bypass-env` (never printed; exclusive with `--bypass-file`), 3 tests; FDP-012 existence guards now admit only the registered Founder-issued record |
+| **Production** | unchanged: X2 on, all three hosts 302, no bypass, no credential, no trusted IPs, `updatedAt` `1790837188645` |
+| **Next** | implementation needs **account-holder actions** (`FDP-010` `§4.2`): confirm the API-credentials section; create the bypass; add the credential (three hosts, `x-vercel-protection-bypass`, prefix cleared); later revoke, then delete. Not a decision request |
+| **State** | FDP-012 **CANONICAL · OPERATIVE** · O-A **SELECTED, NOT IMPLEMENTED** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
