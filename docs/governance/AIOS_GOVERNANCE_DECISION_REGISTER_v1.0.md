@@ -10194,3 +10194,4 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Founder input required** | (1) the T5 secret-handling path for the bypass value; (2) the P-2 token hash or custody path |
 | **Record** | `docs/fullstack/FS-10-FDP011-S4-VALIDATION-AND-ENVELOPE.md` |
 | **Release / LIVE** | **PRODUCTION RELEASE = NOT AUTHORIZED · LIVE = NOT ACTIVE** |
+| **Checks** (on `1aec493`) | `native_core` 801 · `consumers` 276 · `tools/bounded_exception` 29 · `fullstack` **330** OK on Python 3.12 and 3.11 (4 new FDP-011 tests); `tools` 1962 run, **1 failure** = the P12-W6 population signal classified at `§102` (0.50 against 0.4891; P12 untouched), no new failure; citation audit 0 errors, 94 warnings (unchanged); secret scan: no operator plaintext or bypass value in the tree; no diff in served code, `vercel.json`, `native_core`, `consumers`, `tools` or the FS-09 gate; Register append-only; Production `updatedAt` unchanged after registration |

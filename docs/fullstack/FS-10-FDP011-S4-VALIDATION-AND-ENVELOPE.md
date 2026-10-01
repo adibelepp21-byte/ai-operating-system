@@ -102,3 +102,9 @@ Authorized (D-3) but **not executable now**:
 2. **P-2 token hash** — or another custody path for the Founder principal's plaintext.
 
 Neither is selected here.
+
+## 8. Checks
+
+| Check | Result |
+|---|---|
+| Suites, audit, scans (on `1aec493`; Register `§118`) | `native_core` 801 · `consumers` 276 · `tools/bounded_exception` 29 · `fullstack` **330** OK on Python 3.12 and 3.11 (4 new FDP-011 tests); `tools` 1962 run, **1 failure** = the P12-W6 population signal classified at Register `§102` (0.50 against 0.4891; P12 untouched), no new failure; citation audit 0 errors, 94 warnings (unchanged); secret scan: no operator plaintext or bypass value in the tree; no diff in served code, `vercel.json`, `native_core`, `consumers`, `tools` or the FS-09 gate; Register append-only; Production `updatedAt` unchanged after registration |
