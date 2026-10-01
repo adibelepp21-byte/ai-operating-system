@@ -116,3 +116,40 @@ It then completes FS-10 reconciliation and stops at the Founder Release Gate.
 ## 7. Residuals outside FDP-012's completion criteria
 
 `FDP-011` D-3 (**P-2**, the Founder principal) is still to be established. It needs the Founder's own `operator-token` entry (hash only, runbook `§2`). Its post-deploy verification can run in the same O-A session.
+
+## 8. Implementation instruction executed to the boundary (Register `§126`)
+
+**Instruction:** `acts/MI-FS10-IMPLEMENT-ESC03-OA-FDP010-FS10-FINAL-RECONCILIATION.md` (verbatim; content sha256 `48fe25e45f26c49ef116bea6e5fd612b961d6a3962ac92704bbd7218475557d2`).
+
+**Re-discovery (2026-10-01T19:39Z)** — no canonical conflict:
+- FDP-009, FDP-010, FDP-011 and FDP-012 hashes match their Register entries; `§124` and `§125` are present.
+- FDP-012 is canonical and operative. O-A is selected and its implementation is authorized.
+- ESC-03 is not resolved. FDP-010 is not complete. FS-10 is not ready.
+- Release is not authorized. LIVE is not active.
+- Production:
+  - the alias serves `dpl_s8c6m…` (commit `d05261c`);
+  - rollback target `dpl_76CYC…` is READY;
+  - SSO is `all_except_custom_domains`; no trusted IPs; no bypass; project `updatedAt` is `1790837188645`.
+
+**Constructed:** the O-A session runner `fullstack/deploy/oa_session.py`, with 17 tests in `fullstack/tests/test_oa_session.py`:
+- it has no bypass option and sends only the B3 bearer;
+- it attributes a 401 to X2 or to B3 by `X-Request-Id`;
+- it covers the instruction's P1–P8: health and smoke, reads, exact scopes, the `aios.agent.register` refusal, audit attribution, Scenario B/C runs with Trace and audit, unlisted-host controls, and revocation.
+
+**Run against Production** (evidence `docs/fullstack/evidence/FS-10-OA-BASELINE-2026-10-01.json`, no credential in it):
+
+| Check | Result |
+|---|---|
+| no bypass in the process environment | PASS |
+| injection on the three T2 hosts | **FAIL — every T2 host is stopped by X2 (401 *"Protected deployment"*, no `X-Request-Id`): no O-A credential is attached** |
+| unlisted Production deployment and Preview stopped by X2 | PASS |
+| X2 on all three hosts; the B3 bearer alone does not pass (the `revoked` controls) | PASS |
+
+**Boundary.** O-A cannot be implemented by the CEO:
+- The bypass is created at Vercel and attached as an environment API credential. Both are account-holder controls (`FDP-010` `§4.2`; `AD-…-R1` `§7`).
+- The connector path that returns the value in tool output stays rejected (`AD-…-R1` `§4`; FDP-011 T5; FDP-012 `§8`).
+- M1 is not substituted. It would need the same account-holder creation step plus a variable in a dedicated environment.
+
+The steps of `§6` remain the exact actions required. The P1–P8 run, ESC-03 resolution, FDP-010 completion and the FS-10 gate follow in the first session started after the account holder confirms *"O-A credential installed"*.
+
+**State:** FS-10 BLOCKED — O-A credential not installed (account-holder action). ESC-03 NOT RESOLVED · FDP-010 NOT COMPLETE · FS-10 NOT READY · RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE.

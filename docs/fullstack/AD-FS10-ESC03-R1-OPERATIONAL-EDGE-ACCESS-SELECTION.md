@@ -120,3 +120,19 @@ Each is neutralized by step-6 ordering: any retained copy is a revoked value.
 - It creates no permanent bypass and no public exposure.
 - It does not declare Release or LIVE.
 - It does not perform account-holder actions: steps 1, 2, 5 and 7 are account-holder controls (`FDP-010` `§4.2`).
+
+## 8. Implementation notes (2026-10-01; Register `§126`)
+
+- **Session runner:** `fullstack/deploy/oa_session.py` (tests: `fullstack/tests/test_oa_session.py`). It implements the CEO steps of `§5`: `preflight` for step 3, `verify [--write]` for step 4, `revoked` for step 6.
+  - It has no bypass option and never reads, sends or prints the value: the proxy attaches it.
+  - The client sends only the B3 bearer, from the CEO's private file.
+  - The evidence holds no credential; the run aborts if a response echoes the bearer.
+- **What "302" in `§5` and `§6` means.** X2 answers:
+  - **302** to a browser-style request;
+  - **401** *"Protected deployment"* to a JSON client, without `X-Request-Id`.
+
+  The AIOS API sets `X-Request-Id` on every answer. So a 401 is attributed to X2 or to B3 by that header, never by the status alone. "302" in `§5` and `§6` reads as *stopped by X2* in either form.
+- **Baseline before the account-holder steps** (`docs/fullstack/evidence/FS-10-OA-BASELINE-2026-10-01.json`):
+  - `preflight` FAILS at injection: every T2 host is stopped by X2, so no credential is attached.
+  - The unlisted Production deployment and the Preview are stopped by X2.
+  - `revoked` PASSES: X2 is enforced on all three hosts, and the B3 bearer alone does not pass X2.

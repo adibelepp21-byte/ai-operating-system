@@ -1,0 +1,86 @@
+{
+ "format": "fullstack.oa-session-baseline/1",
+ "at": "2026-10-01T19:44Z",
+ "purpose": "O-A baseline before the account-holder steps (AD-FS10-ESC03-R1 §5 steps 1-2 not yet performed)",
+ "tool": "python -m fullstack.deploy.oa_session <phase> --token-file <private file>",
+ "principal": "aios-operator (B3 bearer from the CEO's private file; value never recorded)",
+ "interpretation": {
+  "preflight": "FAIL at injection: no O-A credential is attached; every T2 host is stopped by X2 (401 Protected deployment, no X-Request-Id)",
+  "revoked": "PASS: X2 enforced on all three T2 hosts; the B3 bearer alone does not pass X2",
+  "controls": "unlisted Production deployment and Preview stopped by X2"
+ },
+ "phases": {
+  "preflight": {
+   "format": "fullstack.oa-session/1",
+   "phase": "preflight",
+   "t2_hosts": [
+    "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app"
+   ],
+   "control_hosts": {
+    "unlisted Production deployment (dpl_CHV72…)": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "Preview deployment (dpl_HvyYh…)": "aios-platform-9ohavmco2-adibelepp21-bytes-projects.vercel.app"
+   },
+   "results": [
+    {
+     "check": "no bypass in the process environment",
+     "result": "PASS",
+     "evidence": "bypass-named variables []; header-carrying []",
+     "mutates": false
+    },
+    {
+     "check": "injection proven on every T2 host (health 200 through X2)",
+     "result": "FAIL",
+     "evidence": "{'aios-platform-adibelepp21-bytes-projects.vercel.app': 'x2 401', 'aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app': 'x2 401', 'aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app': 'x2 401'}",
+     "mutates": false
+    },
+    {
+     "check": "hosts not listed stay behind X2",
+     "result": "PASS",
+     "evidence": "{'unlisted Production deployment (dpl_CHV72…)': 'x2 401', 'Preview deployment (dpl_HvyYh…)': 'x2 401'}",
+     "mutates": false
+    }
+   ],
+   "smoke": {},
+   "ok": false,
+   "writes_made": false
+  },
+  "revoked": {
+   "format": "fullstack.oa-session/1",
+   "phase": "revoked",
+   "t2_hosts": [
+    "aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+    "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app"
+   ],
+   "control_hosts": {
+    "unlisted Production deployment (dpl_CHV72…)": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+    "Preview deployment (dpl_HvyYh…)": "aios-platform-9ohavmco2-adibelepp21-bytes-projects.vercel.app"
+   },
+   "results": [
+    {
+     "check": "aios-platform-adibelepp21-bytes-projects.vercel.app: X2 back after revocation (anonymous and B3-only stopped by X2)",
+     "result": "PASS",
+     "evidence": "anonymous x2 401, B3-only x2 401",
+     "mutates": false
+    },
+    {
+     "check": "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app: X2 back after revocation (anonymous and B3-only stopped by X2)",
+     "result": "PASS",
+     "evidence": "anonymous x2 401, B3-only x2 401",
+     "mutates": false
+    },
+    {
+     "check": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app: X2 back after revocation (anonymous and B3-only stopped by X2)",
+     "result": "PASS",
+     "evidence": "anonymous x2 401, B3-only x2 401",
+     "mutates": false
+    }
+   ],
+   "smoke": {},
+   "ok": true,
+   "writes_made": false
+  }
+ }
+}

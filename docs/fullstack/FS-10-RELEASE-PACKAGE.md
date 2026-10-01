@@ -334,3 +334,25 @@ Record: `FS-10-ESC-03-AUTHORITY-RESOLUTION.md`.
 | **Production** | unchanged; X2 active; no bypass; no credential |
 
 **PRODUCTION RELEASE = NOT AUTHORIZED (FOUNDER RESERVED) · LIVE = NOT ACTIVE (FOUNDER RESERVED).**
+
+---
+
+## 24. FS-10 state after the O-A implementation instruction (2026-10-01; Register `§126`)
+
+These are seven distinct states (instruction `§12`):
+
+| # | State | Status | Basis |
+|---|---|---|---|
+| 1 | Production Deployment | **DONE** — alias → `dpl_s8c6m…`, commit `d05261c` | `FDP-009-01`; `§1`–`§21` |
+| 2 | Production Verification | **DONE** for the deployed build (`evidence/FS-10-PRODUCTION-VERIFICATION-2026-10-01.json`) | `FDP-009` `§8` |
+| 3 | Operational Access (ESC-03) | **NOT VERIFIED** — O-A selected and authorized; the session runner is built; no O-A credential is attached (`evidence/FS-10-OA-BASELINE-2026-10-01.json`) | `FDP-012`; `AD-FS10-ESC03-R1` |
+| 4 | Rollback Readiness (ESC-02) | **TARGET DESIGNATED, RE-VERIFICATION PENDING** — `dpl_76CYC…` READY, verified 7/7 under FDP-010; re-verification through O-A is pending; `22c0b49` excluded | `FDP-010` `§6`, `§7` |
+| 5 | Founder Release Authorization | **NOT ISSUED** — Founder-reserved | `FDP-009` `§5.3`, `§10` |
+| 6 | Production Release | **NOT AUTHORIZED** | `FDP-009`; `FDP-010` `§14` |
+| 7 | LIVE | **NOT ACTIVE** | `FDP-009` `§5.4`; `FDP-010` `§14` |
+
+ESC-01 (`aios-operator`: hash-only, three scopes, not `aios.agent.register`) stands as verified under FDP-010. FDP-010 as a whole is **NOT COMPLETE** until rows 3 and 4 are proven in an O-A session.
+
+**FS-10 BLOCKED — O-A credential not installed (account-holder action).** The steps are in `FS-10-FDP012-EXECUTION-RECORD.md` `§6`.
+
+**PRODUCTION RELEASE = NOT AUTHORIZED (FOUNDER RESERVED) · LIVE = NOT ACTIVE (FOUNDER RESERVED).**
