@@ -24,8 +24,9 @@ from fullstack.tests.support import REPO_ROOT
 #: The commit at which the certified roots were last changed before the
 #: ACT-004 to ACT-008 execution (certified-evidence integrity held there).
 BASELINE = "edb3beb"
-#: ACT-008 received (the verbatim Act is committed here).
+#: ACT-008 received (the verbatim Act is committed here), and its last commit.
 ACT_008_RECEIVED = "d6afbdc"
+ACT_008_CLOSED = "de47057"
 EVIDENCE = REPO_ROOT / "docs/fullstack/evidence"
 
 
@@ -39,8 +40,8 @@ def available(commit: str) -> bool:
                           capture_output=True).returncode == 0
 
 
-def changed(commit: str, *paths) -> list:
-    return [line for line in git("diff", "--name-status", commit, "HEAD", "--", *paths).splitlines()]
+def changed(commit: str, *paths, until: str = "HEAD") -> list:
+    return [line for line in git("diff", "--name-status", commit, until, "--", *paths).splitlines()]
 
 
 @unittest.skipUnless(available(BASELINE), "baseline commit not available")
@@ -64,16 +65,21 @@ class CertifiedRootsAndPhases(unittest.TestCase):
         self.assertEqual([], added)
 
 
-@unittest.skipUnless(available(ACT_008_RECEIVED), "receipt commit not available")
+@unittest.skipUnless(available(ACT_008_RECEIVED) and available(ACT_008_CLOSED),
+                     "receipt or closing commit not available")
 class AuthorityAndActs(unittest.TestCase):
 
     def test_nc_02_no_unauthorized_act_creation(self):
-        """Since ACT-008 was received no Act was added, edited or removed."""
-        self.assertEqual([], changed(ACT_008_RECEIVED, "docs/governance/acts"))
+        """During ACT-008 no Act was added, edited or removed; since then, Acts
+        have only been added (each as received), never edited or removed."""
+        self.assertEqual([], changed(ACT_008_RECEIVED, "docs/governance/acts", until=ACT_008_CLOSED))
+        later = changed(ACT_008_CLOSED, "docs/governance/acts")
+        self.assertEqual([], [line for line in later if not line.startswith("A\t")], later)
 
     def test_nc_19_no_p12_measure_manipulation(self):
         """Neither the P12 test, its population nor the Acts it measures changed."""
-        self.assertEqual([], changed(ACT_008_RECEIVED, "tools", "docs/governance/acts"))
+        self.assertEqual([], changed(ACT_008_RECEIVED, "tools"))
+        self.assertEqual([], changed(ACT_008_RECEIVED, "docs/governance/acts", until=ACT_008_CLOSED))
         record = json.loads((EVIDENCE / "FS-09-ACT-008-P12-W6-CLASSIFICATION-2026-09-30.json")
                             .read_text(encoding="utf-8"))
         self.assertFalse(record["p12_modified"])

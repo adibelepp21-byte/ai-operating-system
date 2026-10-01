@@ -1,0 +1,85 @@
+{
+ "act": "ACT-CC-POST-P13-AIOS-FULL-STACK-009",
+ "date": "2026-10-01",
+ "method": "read-only: Vercel list_deployments (target production), get_project, filter_project_envs (no decryption); Supabase execute_sql (select only) and list_migrations on the Production project; git ls-remote for the default branch",
+ "before": {
+  "production_deployments": [
+   "dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj"
+  ],
+  "production_deployment_commit": "22c0b4915a23bd73c38c11e50d36183be4f2da56",
+  "production_deployment_branch": "claude/aios-genesis-planning-hmbvlc (the repository default branch)",
+  "project_updatedAt": 1790794799156,
+  "ssoProtection": {
+   "enabled": true,
+   "deploymentType": "all_except_custom_domains"
+  },
+  "passwordProtection_enabled": false,
+  "trustedIps_enabled": false,
+  "custom_domains": [],
+  "env_targets": {
+   "AIOS_OPERATOR_TOKENS": [
+    "preview"
+   ],
+   "SUPABASE_SECRET_KEY": [
+    "preview"
+   ]
+  },
+  "hiddenProductionEnvCount": 0,
+  "production_store": {
+   "project": "hmljfyqycxcueulhsjae",
+   "rows": 0,
+   "max_seq": 0,
+   "migrations": [
+    "20260928051800_aios_records"
+   ]
+  }
+ },
+ "after": {
+  "production_deployments": [
+   "dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj"
+  ],
+  "production_deployment_commit": "22c0b4915a23bd73c38c11e50d36183be4f2da56",
+  "production_deployment_branch": "claude/aios-genesis-planning-hmbvlc (the repository default branch)",
+  "project_updatedAt": 1790794799156,
+  "ssoProtection": {
+   "enabled": true,
+   "deploymentType": "all_except_custom_domains"
+  },
+  "passwordProtection_enabled": false,
+  "trustedIps_enabled": false,
+  "custom_domains": [],
+  "env_targets": {
+   "AIOS_OPERATOR_TOKENS": [
+    "preview"
+   ],
+   "SUPABASE_SECRET_KEY": [
+    "preview"
+   ]
+  },
+  "hiddenProductionEnvCount": 0,
+  "production_store": {
+   "project": "hmljfyqycxcueulhsjae",
+   "rows": 0,
+   "max_seq": 0,
+   "migrations": [
+    "20260928051800_aios_records"
+   ]
+  }
+ },
+ "identical": true,
+ "fs10_deployment_md_sha256": {
+  "before": "b9710fcaa8d646c35eef154678a71b878bc050cf56819fb80831086be3dac86a",
+  "after": "b9710fcaa8d646c35eef154678a71b878bc050cf56819fb80831086be3dac86a"
+ },
+ "not_done": [
+  "deployment",
+  "write",
+  "variable",
+  "token",
+  "protection change",
+  "bypass",
+  "billing",
+  "release"
+ ],
+ "fs10_deployment_md_unaltered": true
+}

@@ -9900,3 +9900,35 @@ Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-008` `§27`, `§2
 | **Founder-reserved, not done** | the Production `SUPABASE_SECRET_KEY` and `AIOS_OPERATOR_TOKENS` (Production scope); a Production deployment, promotion or alias; Production Deployment Protection stance; naming the release candidate; the smoke write policy (the store is append-only, so a Production smoke record is permanent); the Founder Release Authorization |
 | **Founder Release Authorization** | **NOT YET ISSUED.** Production is untouched and not LIVE |
 | **Next** | once the Founder supplies P1, P2, P5, P6, P7 and P8: Production Deployment, Smoke Test, Health Check, Integration Test, Production Verification, Operational Verification |
+
+---
+
+## 105. ACT-CC-POST-P13-AIOS-FULL-STACK-009 Received — FS-10 Founder-Reserved Boundary Reconciliation Act (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **ACT ID** | `ACT-CC-POST-P13-AIOS-FULL-STACK-009`; instrument `docs/governance/acts/ACT-CC-POST-P13-AIOS-FULL-STACK-009-FS-10-FOUNDER-RESERVED-BOUNDARY-RECONCILIATION.md` (verbatim) · content sha256 `d046013e311f8c21df23c33797197073389d508c97f80a18c082d7f82350a16c` (over the fenced text) |
+| **Founder authority** | FOUNDER-ISSUED (Moriarty), in the message body, 2026-10-01 |
+| **Objective** | determine, from canonical authority, which planned FS-10 Production actions are Founder-reserved, CEO-authorized, Architect-reserved, external-control, in conflict or UNKNOWN; prepare a Founder Decision Package for the Founder-reserved ones |
+| **Authority granted** | reading, enumeration, classification, evidence, a decision package. **No Production action of any kind** (`§4`): no deployment, write, release, traffic, migration, smoke run, token, secret, alias, billing, protection change or bypass |
+| **Rules carried** | `UNKNOWN AUTHORITY is not AUTHORIZED`; no authority inferred from necessity, convenience, convention, silence, document existence, a spent Act or an unactivated instrument (`§16`); FS-10-DEPLOYMENT.md is not silently altered (`§6`); classification is not a decision (`§25`) |
+| **Record** | `docs/fullstack/FS-10-ACT-009-AUTHORITY-BOUNDARY-RECORD.md`; result in a closing Register entry |
+
+---
+
+## 106. ACT-009 Result — FS-10 Authority Boundary Map; Terminal State D (Conflict on Production Deployment); Founder Decision Package Ready (2026-10-01)
+
+Recorded by Claude Code under `ACT-CC-POST-P13-AIOS-FULL-STACK-009` `§22`–`§23`. **A classification and a decision package, not a decision.** No option is selected, and no Production action is authorized or taken.
+
+| Field | Value |
+|---|---|
+| **Record** | `docs/fullstack/FS-10-ACT-009-AUTHORITY-BOUNDARY-RECORD.md`; evidence `docs/fullstack/evidence/FS-10-ACT-009-PRODUCTION-STATE-2026-10-01.json` |
+| **Classified** | 29 actions: CEO-AUTHORIZED 2 · CEO-AUTHORIZED-WITH-BOUNDARY 9 · ARCHITECT-RESERVED 5 · FOUNDER-RESERVED 5 · EXTERNAL-CONTROL 4 · CONFLICT 2 · UNKNOWN 2 |
+| **Conflict** | Production deployment and roll-forward. FD-FS-001 D4-A (record `§5`, `§9` item 9) places the Founder Release Decision before FS-10 deployment; issued ACT-003 `§4.8`, `§20`, `§33` authorizes FS-10 deployment and Production verification after FS-09 PASS, with the Founder Release Authorization before LIVE. ACT-003 names neither FD-FS-001 nor D4-A; F04 `§19.2` therefore requires escalation. Routed as `FDP-009-01` |
+| **Founder-reserved** | release and traffic activation (`FDP-009-02`); temporary access to Production past SSO (`FDP-009-03`, ACT-003 `§12`, `§14`); spending (`FDP-009-04`, D3-A standing: none); Final System Acceptance (`FDP-009-05`, not due) |
+| **UNKNOWN, escalated** | who may hold Production access (`ESC-01`); who may roll Production back after a release (`ESC-02`) |
+| **Corrected from FS-10 preparation** | Production credentials are EXTERNAL-CONTROL (ACT-001 `§7.1`), not a Founder decision; Deployment Protection is decided (X2, `ACT-004-DG-01`) and ARCHITECT-RESERVED to change; the release candidate is identified by the CEO and approved in the release decision; smoke writes and the H3 check cadence are CEO-authorized with boundaries. `FS-10-DEPLOYMENT.md` itself was not altered (sha256 `b9710fca…` before and after) |
+| **Production** | **UNCHANGED.** One Production deployment (`dpl_A5Qs4nVK3ufkseGv3brxGSYr3ivj`, `22c0b49`); no Production variable; SSO protection on, project `updatedAt` unchanged; Production store 0 rows, one migration — identical before and after |
+| **Negative controls** | NC-01 to NC-15 held |
+| **Terminal state** | **D — CONFLICT** on the next Production action; Founder-reserved decisions exist and their package is **READY**. FS-10 stays ACTIVE at Deployment Preparation; Production execution stops at `FDP-009-01` |
+| **Next legal boundary** | without further authority: correcting `FS-10-DEPLOYMENT.md` to this map (recorded edit), the release package for the candidate, Preview work, read-only Production observation. Nothing Production-changing until `FDP-009-01` is answered |
