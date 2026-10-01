@@ -215,3 +215,33 @@ class TheT5FeasibilityRecordClassifiesWithoutSelecting(unittest.TestCase):
         text = self.RECORD.read_text(encoding="utf-8")
         self.assertIn("C. NO EXISTING AUTHORIZED SECRET-HANDLING PATH", text)
         self.assertNotRegex(text, r"(?i)\b(recommend\w*|preferred|best|optimal|obvious|natural choice)\b")
+
+
+class TheM1CustodyGateIsNotPassedByInference(unittest.TestCase):
+    """FDP-012 custody MI §6, §24, §32: sixteen gates, UNKNOWN is not PASS, no FDP-012 manufactured."""
+
+    RECORD = REPO_ROOT / "docs/fullstack/FS-10-FDP012-M1-CUSTODY-VALIDATION.md"
+
+    def _gates(self):
+        text = self.RECORD.read_text(encoding="utf-8")
+        table = text[text.index("## 5. G1–G16 results"):text.index("## 6.")]
+        return {m.group(1): m.group(2) for m in
+                re.finditer(r"^\| \*\*G(\d+)\*\*[^|]*\| \*\*(PASS|FAIL|UNKNOWN)", table, re.M)}
+
+    def test_all_sixteen_gates_have_a_result(self):
+        self.assertEqual({str(n) for n in range(1, 17)}, set(self._gates()))
+
+    def test_a_non_pass_gate_blocks_and_the_state_says_so(self):
+        gates = self._gates()
+        self.assertTrue(any(v != "PASS" for v in gates.values()))
+        text = self.RECORD.read_text(encoding="utf-8")
+        self.assertIn("STATE B — BLOCKED — TELEMETRY / LOGGING / SESSION ISOLATION", text)
+        self.assertNotIn("STATE A — ", text.replace("MI `§31` STATE A", ""))
+
+    def test_telemetry_unknown_is_not_converted_to_pass(self):
+        self.assertEqual("UNKNOWN", self._gates()["4"])
+
+    def test_no_fdp012_record_was_manufactured(self):
+        acts = REPO_ROOT / "docs/governance/acts"
+        self.assertEqual([], sorted(p.name for p in acts.glob("FDP-012*")))
+        self.assertNotIn("FDP-012", CURRENT["decisions"])

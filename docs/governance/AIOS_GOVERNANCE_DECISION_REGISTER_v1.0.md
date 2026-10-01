@@ -10212,3 +10212,21 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Remaining** | B-1 no designated T5 delivery path (authority) · B-2 no session-scoped injection (provider dependency, or acceptance of environment scope) · B-3 telemetry / settings visibility UNKNOWN (evidence) · B-4 per-session account-holder actions (operational) · B-5 P-2 depends on O-A |
 | **Record (analysis)** | `docs/fullstack/FS-10-FDP011-T5-SECRET-CUSTODY-FEASIBILITY.md` |
 | **State** | O-A authorized, **NOT IMPLEMENTED** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
+
+---
+
+## 120. FDP-012 Credential Delivery & Custody Validation — Receipt and Result: FDP-012 NOT RECEIVED (not canonicalized); M1 BLOCKED — Telemetry / Logging / Session Isolation (2026-10-01)
+
+| Field | Value |
+|---|---|
+| **Record** | `acts/MI-FS10-FDP012-CREDENTIAL-DELIVERY-CUSTODY-VALIDATION.md` (verbatim, extracted byte-exactly from the session transcript) · content sha256 `e560cb24cda9986712d9e1b6f96581fa9fa75e049e269db9b249557da85e300e` |
+| **Issued by** | Founder, 2026-10-01; validation and feasibility gate for M1 under the already-canonical `FDP-011` |
+| **FDP-012** | **NOT RECEIVED.** The instruction describes FDP-012's scope, but the decision text was not supplied. **Not validated, not canonicalized, not registered**: the description is not the decision, and no Founder Decision is inferred. No Register number is assigned to FDP-012 |
+| **M1 gates** | G1 FAIL · G2 UNKNOWN · G3 FAIL · G4 **UNKNOWN (hard stop)** · G5 UNKNOWN (Vercel header logging) · G6 FAIL · G7 FAIL · G8 FAIL · G9 PASS (stage sequence; blocked by G10) · G10 FAIL · G11 PASS · G12 PASS · G13 PASS · G14 PASS · G15 PASS · G16 PASS |
+| **Key evidence** | provider documentation: environment variables are *"ordinary environment variables that any command Claude runs can read"*; *"Anyone who uses the environment can read the values"*, and the dialog warns against secrets; values are read on session creation and on every VM restore; *"an existing session … keeps the values it last read until its VM is next restored or rebuilt"*. Internal tracing and telemetry handling undocumented |
+| **Correction to `§119`** | M3 (proxy-side injection) was recorded as having no user-configurable route. The provider documents **API credentials** (Pro/Max plans): stored on the environment and attached by the agent proxy to listed hosts; *"The key never reaches Claude, the commands it runs, or the session's environment variables"*; custom header names; applies to every session in the environment until deleted. Recorded as a fact only; **not M1**, outside FDP-012's described scope; not evaluated, ranked or selected. `§119` itself preserved unchanged |
+| **Boundary kept** | no real bypass created, obtained, installed, used or revoked; no secret set, printed, transmitted or stored; FDP-011, X2, B3, Production unchanged; no synthetic-value test (M1 cannot be set from this session) |
+| **Final state** | **STATE B — BLOCKED — TELEMETRY / LOGGING / SESSION ISOLATION** (concurrent: FDP-012 not received; custody failures G1, G3, G10) |
+| **Needed** | the FDP-012 text (authority); provider capability for session-scoped, non-readable injection, or another custody mechanism under separate authority (G1, G3, G6, G7, G8, G10); provider documentation of internal telemetry and Vercel header logging (G2, G4, G5) |
+| **Record (analysis)** | `docs/fullstack/FS-10-FDP012-M1-CUSTODY-VALIDATION.md` |
+| **State** | O-A authorized, **NOT IMPLEMENTED** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
