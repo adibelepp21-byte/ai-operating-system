@@ -10419,3 +10419,15 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Gaps** | • C-1: no `COMPLETED` state; the termination condition is unevaluated text.<br>• C-2: `revoke` is in-process only.<br>• C-3: certified evidence roots hold live operational state.<br>• F-S1-4: `EscalationRegister.record_response()` writes beside the escalation with no guard call, so a Founder response to `23f315ba` would add an undeclared file to certified evidence.<br>None fixed; no replacement mechanism created |
 | **Decisions required** | Q-S1-A, how certified-root grants reach a terminal state:<br>• A1: certified successor (`FDR-G1`);<br>• A2: frozen history plus a live ledger outside the certified root (recommended);<br>• A3: no action.<br>Q-S1-B: response to `23f315ba` |
 | **State** | **S-1 COMPLETE — CLASSIFIED, NOT CLOSED** · S-2 not started · deployment PAUSED |
+
+## 136. S-1 Founder Decision — Q-S1-A = A2 (Live Operational Ledger Outside the Certified Boundary), Implemented; Q-S1-B Deferred, Evidence Returned (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Decision** | `acts/FD-AGENCY-001-S1-TERMINAL-STATE-DECISION.md` (verbatim; content sha256 `224e92d8ffb164b2cda7d18c1874ff7fac71b1102cf4d8cb48a88b176d33056c`). Founder (Moriarty), 2026-10-02. Q-S1-A: **APPROVED — A2**. Q-S1-B: **DEFER PENDING EVIDENCE** |
+| **Mechanism** | `docs/architecture/agency/W4-OPERATIONAL-LEDGER.md`. In `tools/w4_delegation.py`:<br>• `plan_completion` computes completion from evidence;<br>• `record_disposition` writes append-only, delegator-only, over historical `ACTIVE` only, hash-bound, guarded;<br>• `read_dispositions` reports a fault on any changed basis.<br>`tools/w4_continuity.reconstruct(..., operational_ledger=...)` is opt-in; the default reading is unchanged.<br>Dispositions: `COMPLETED`, `REVOKED`. Historical status (`ACTIVE` / `REVOKED`) is kept as a separate fact. No new subsystem, entity, state machine or authority |
+| **Applied** | `COMPLETED`: `4daebea9012d4cc7`, `0f7ac0785bd8442b`, `a437cdbbd29940af` (`docs/architecture/agency/operations/w4-dispositions/`).<br>`4313bd2246124a94`: refused by the mechanism (plan escalated); stays operationally ACTIVE pending Q-S1-B |
+| **Verification** | `tools/tests/test_w4_operational_ledger.py`: 18 tests, mutation-checked.<br>32 dependent modules: all pass, except `test_e11_measurement_currency` (fails identically on clean HEAD) and one parallel-run interference in `test_p11_governance_boundary` (passes alone).<br>`docs/architecture/p11`: 0 bytes changed. Certified evidence integrity: no faults |
+| **Q-S1-B evidence** | `docs/architecture/agency/ESCALATION-23f315ba-EVIDENCE.md`, items 1–8. Neither B1 nor B2 can persist a response beside the escalation (F-S1-4: unguarded write into the certified root), so either needs the response recorded outside the certified root |
+| **Not done** | escalation not closed; no grant issued; escalation register unchanged; W3 projections unchanged; S-2 not started |
+| **State** | **A2 IMPLEMENTED · 3 GRANTS OPERATIONALLY COMPLETED · Q-S1-B AWAITING FOUNDER** · deployment PAUSED |

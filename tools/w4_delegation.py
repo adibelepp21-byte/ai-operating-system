@@ -44,6 +44,7 @@ accountable party, and `§17` forbids an instance authorizing another
 from __future__ import annotations
 
 import json
+import re
 import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -319,3 +320,234 @@ class W4DelegationRegistry:
 
     def keys(self) -> Tuple[str, ...]:
         return tuple(sorted(self._issued))
+
+
+# ---- operational disposition (FD-AGENCY-001 · S-1 · Q-S1-A = A2) -------------
+#
+# The ledger above writes a grant's **historical status** — `ACTIVE` or
+# `REVOKED` — into the delegation record itself. When that record lies in a
+# certified evidence root, the status can never move again: the P11 ledger was
+# certified by `FD-P11-002`, and `P12-F12` refuses every rewrite. Four grants
+# there finished their work and still read `ACTIVE` (S-1, Register `§135`).
+#
+# The Founder's A2 decision keeps those records as immutable history and allows
+# a **live operational ledger outside the certified boundary**. This is that
+# ledger, and it is deliberately small:
+#
+# * it adds **one record per grant**, append-only, beside nothing it describes;
+# * it never edits, deletes or reinterprets a delegation record. The historical
+#   status stays what the record says; the disposition is a second, separate fact;
+# * it accepts a disposition only over a historically `ACTIVE` grant, so a
+#   `REVOKED` record is never re-read as anything else;
+# * it is bound to the exact bytes of the delegation record (and, for
+#   `COMPLETED`, of the evidence) it was recorded against. A reader that finds
+#   those bytes changed reports a fault and does not honour it;
+# * only the authorized delegator records one (`FD-P11-001 §4.1`). The accountable
+#   party does not move.
+#
+# Semantics (documented in `docs/architecture/agency/W4-OPERATIONAL-LEDGER.md`):
+#
+#   COMPLETED  the grant's own termination condition "on completion of the bound
+#              plan" is met, **computed here from the evidence**, never asserted
+#              by a caller: the bound plan's evidence names the grant, every
+#              outcome is `success`, no escalation was raised, and every step in
+#              the work scope succeeded.
+#   REVOKED    the delegator withdrew the grant (`§29` revocation), for a grant
+#              whose record cannot be rewritten in place.
+
+COMPLETED = "COMPLETED"
+DISPOSITIONS = (COMPLETED, REVOKED)
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+#: The live operational ledger. It must never lie inside a certified root; the
+#: write is guarded, and the reader reports a fault if it ever does.
+LIVE_LEDGER = _REPO_ROOT / "docs/architecture/agency/operations/w4-dispositions"
+DISPOSITION_AUTHORITY = (
+    "FD-AGENCY-001 S-1 Q-S1-A (A2)",
+    "docs/governance/acts/FD-AGENCY-001-S1-TERMINAL-STATE-DECISION.md")
+_COMPLETION_CLAUSE = "completion of the bound plan"
+
+
+def _sha256(path: Path) -> str:
+    import hashlib
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _rel(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(_REPO_ROOT))
+    except ValueError:
+        return str(path.resolve())
+
+
+def _bound_plan(record: dict) -> Optional[str]:
+    """The plan key in a lifecycle boundary of the form '... of plan <key>'."""
+    match = re.search(r"\bplan\s+(\S+)\s*$", record.get("lifecycle_boundary", ""))
+    return match.group(1) if match else None
+
+
+def _names_grant(evidence: dict, delegation_id: str) -> bool:
+    return (evidence.get("delegation_id") == delegation_id
+            or delegation_id in (evidence.get("grants") or {}).values()
+            or any(o.get("delegation") == delegation_id
+                   for o in evidence.get("outcomes", [])))
+
+
+def plan_completion(root: Path, record: dict) -> Tuple[bool, Optional[Path], Tuple[str, ...]]:
+    """Whether the grant's bound plan completed, from the root's evidence alone.
+
+    Returns ``(met, evidence_path, reasons_not_met)``. Nothing is assumed: an
+    absent, unreadable or ambiguous evidence record is a reason, not a pass.
+    """
+    reasons = []
+    gid = record.get("delegation_id")
+    if _COMPLETION_CLAUSE not in record.get("termination_condition", ""):
+        reasons.append("termination condition does not name completion of the bound plan")
+    plan = _bound_plan(record)
+    if plan is None:
+        reasons.append("lifecycle boundary names no bound plan")
+    matches = []
+    for path in sorted(Path(root).glob("*.evidence.json")):
+        try:
+            evidence = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            reasons.append(f"unreadable evidence record {path.name}")
+            continue
+        if evidence.get("plan") == plan and _names_grant(evidence, gid):
+            matches.append((path, evidence))
+    if len(matches) != 1:
+        reasons.append(f"{len(matches)} evidence records name plan {plan!r} and "
+                       f"grant {gid!r}; exactly one is required")
+        return False, None, tuple(reasons)
+    path, evidence = matches[0]
+    outcomes = evidence.get("outcomes", [])
+    if not outcomes:
+        reasons.append("the evidence records no outcome")
+    bad = [(o["step"], o["status"]) for o in outcomes if o.get("status") != "success"]
+    if bad:
+        reasons.append(f"not every plan step succeeded: {bad}")
+    if evidence.get("escalations"):
+        reasons.append(f"the plan raised escalations {evidence['escalations']}")
+    terminal = evidence.get("workflow_terminal_state")
+    if terminal is not None and "SUCCEEDED" not in terminal:
+        reasons.append("the workflow did not reach SUCCEEDED")
+    done = {o["step"] for o in outcomes if o.get("status") == "success"}
+    missing = [s for s in record.get("work_scope", []) if s not in done]
+    if missing:
+        reasons.append(f"work-scope steps without a success outcome: {missing}")
+    return not reasons, path, tuple(reasons)
+
+
+def _disposition_path(ledger: Path, root: Path, delegation_id: str) -> Path:
+    return Path(ledger) / Path(root).name / f"{delegation_id}.disposition.json"
+
+
+def record_disposition(root: Path, delegation_id: str, *, disposition: str,
+                       delegator: str, reason: str,
+                       ledger: Path = LIVE_LEDGER) -> Path:
+    """Record a grant's terminal operational disposition in the live ledger.
+
+    The delegation record is read, never written. Refuses, rather than
+    records, anything it cannot establish.
+    """
+    from tools.p12_certified_evidence_guard import guard
+
+    if disposition not in DISPOSITIONS:
+        raise DelegationError(f"{disposition!r} is not a disposition {DISPOSITIONS}")
+    if delegator != AUTHORIZED_DELEGATOR:
+        raise DelegationError(
+            f"only {AUTHORIZED_DELEGATOR!r} records a disposition (FD-P11-001 §4.1)")
+    if not reason or not reason.strip():
+        raise DelegationError("a disposition must record why the grant ended")
+    source = Path(root) / f"{delegation_id}.delegation.json"
+    if not source.is_file():
+        raise DelegationError(f"no such delegation record: {source}")
+    record = json.loads(source.read_text(encoding="utf-8"))
+    if record.get("delegator") != delegator:
+        raise DelegationError("the recording party is not the grant's delegator")
+    if record.get("status") != ACTIVE:
+        raise DelegationError(
+            f"historical status is {record.get('status')!r}: a disposition is "
+            "recorded only over an ACTIVE grant, never over a revoked one")
+    evidence = None
+    if disposition == COMPLETED:
+        met, evidence, reasons = plan_completion(root, record)
+        if not met:
+            raise DelegationError(
+                "termination by completion is not established: " + "; ".join(reasons))
+
+    target = _disposition_path(ledger, root, delegation_id)
+    guard(target)                       # before any directory is created
+    if target.exists():
+        raise DelegationError(
+            f"{delegation_id} already has a disposition; the ledger is append-only")
+    target.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "delegation_id": delegation_id,
+        "root": _rel(Path(root)),
+        "disposition": disposition,
+        "historical_status": record["status"],
+        "record_sha256": _sha256(source),
+        "evidence": None if evidence is None else _rel(evidence),
+        "evidence_sha256": None if evidence is None else _sha256(evidence),
+        "reason": reason,
+        "recorded_by": delegator,
+        "accountable_party": record.get("accountable_party"),
+        "authority_instrument": DISPOSITION_AUTHORITY[0],
+        "authority_record": DISPOSITION_AUTHORITY[1],
+        "recorded_at": datetime.now(timezone.utc).isoformat(),
+    }
+    guard(target).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return target
+
+
+def read_dispositions(root: Path, ledger: Path = LIVE_LEDGER
+                      ) -> Tuple[Dict[str, dict], Tuple[str, ...]]:
+    """The dispositions the live ledger holds for ``root``, and the faults.
+
+    A disposition is honoured only if everything it was recorded against still
+    holds; otherwise it is a fault and the grant keeps its historical status.
+    """
+    from tools.p12_certified_evidence_guard import is_protected
+
+    valid: Dict[str, dict] = {}
+    faults = []
+    folder = Path(ledger) / Path(root).name
+    if not folder.is_dir():
+        return valid, ()
+    if is_protected(folder):
+        return valid, (f"live ledger {folder} lies inside a certified root; "
+                       "no disposition there is honoured",)
+    for path in sorted(folder.glob("*.disposition.json")):
+        try:
+            item = json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            faults.append(f"{path.name}: unreadable")
+            continue
+        gid = item.get("delegation_id")
+        source = Path(root) / f"{gid}.delegation.json"
+        problems = []
+        if item.get("disposition") not in DISPOSITIONS:
+            problems.append(f"unknown disposition {item.get('disposition')!r}")
+        if item.get("root") != _rel(Path(root)):
+            problems.append(f"recorded for root {item.get('root')!r}")
+        if not source.is_file():
+            problems.append("its delegation record is missing")
+        elif _sha256(source) != item.get("record_sha256"):
+            problems.append("its delegation record changed since it was recorded")
+        elif json.loads(source.read_text(encoding="utf-8")).get("status") != ACTIVE:
+            problems.append("its delegation record is not historically ACTIVE")
+        if item.get("recorded_by") != AUTHORIZED_DELEGATOR:
+            problems.append("not recorded by the authorized delegator")
+        if item.get("disposition") == COMPLETED:
+            evidence = _REPO_ROOT / (item.get("evidence") or "")
+            if not item.get("evidence") or not evidence.is_file():
+                problems.append("its evidence record is missing")
+            elif _sha256(evidence) != item.get("evidence_sha256"):
+                problems.append("its evidence record changed since it was recorded")
+        if path.name != f"{gid}.disposition.json":
+            problems.append("file name does not match its delegation id")
+        if problems:
+            faults.append(f"{path.name}: " + "; ".join(problems))
+        else:
+            valid[gid] = item
+    return valid, tuple(faults)

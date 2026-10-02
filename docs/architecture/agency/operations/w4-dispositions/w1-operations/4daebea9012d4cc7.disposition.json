@@ -1,0 +1,15 @@
+{
+  "delegation_id": "4daebea9012d4cc7",
+  "root": "docs/architecture/p11/w1-operations",
+  "disposition": "COMPLETED",
+  "historical_status": "ACTIVE",
+  "record_sha256": "82e7e501065633f508d1af39e90ffccadea58df8d2bce27bbdaebae5f91b132c",
+  "evidence": "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+  "evidence_sha256": "0013c95fdc230e72996aa21ce9196715232e4fd36782ae02ffebf826c16b4dfc",
+  "reason": "Termination condition met by evidence: the bound plan completed (S-1, Register \u00a7135); the certified record stays ACTIVE as history (FD-AGENCY-001 S-1 A2).",
+  "recorded_by": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-AGENCY-001 S-1 Q-S1-A (A2)",
+  "authority_record": "docs/governance/acts/FD-AGENCY-001-S1-TERMINAL-STATE-DECISION.md",
+  "recorded_at": "2026-10-02T14:05:43.690942+00:00"
+}

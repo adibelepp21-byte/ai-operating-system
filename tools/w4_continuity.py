@@ -24,6 +24,16 @@ and a grant whose cited instrument has vanished does not come back at all.
 
 Each is derived from what the records actually say, never assumed from their
 presence. A file existing proves a file exists.
+
+**Historical status and operational disposition (`FD-AGENCY-001` S-1, A2).**
+By default this reader reports exactly what the delegation records say. Passed
+an ``operational_ledger``, it also honours the live ledger kept outside the
+certified boundary (`tools.w4_delegation.read_dispositions`). A grant with a
+valid disposition leaves ``active_grants``. Its historical status is still
+reported, unchanged, under ``historical_active_grants``. The two are never merged
+into one field: a certified record that says `ACTIVE` is history, and the
+ledger says what became of it. Semantics:
+`docs/architecture/agency/W4-OPERATIONAL-LEDGER.md`.
 """
 
 from __future__ import annotations
@@ -59,8 +69,13 @@ def _load(path: Path) -> Optional[dict]:
         return None
 
 
-def reconstruct(root: Path = OPERATIONS) -> dict:
-    """`§20`'s eleven items, recovered from disk and nothing else."""
+def reconstruct(root: Path = OPERATIONS,
+                operational_ledger: Optional[Path] = None) -> dict:
+    """`§20`'s eleven items, recovered from disk and nothing else.
+
+    ``operational_ledger`` is opt-in. Left as ``None``, the result is the
+    historical reading, byte-for-byte what it was before the live ledger existed.
+    """
     if not root.is_dir():
         raise ContinuityError(f"no persisted W4 state at {root}")
 
@@ -109,7 +124,14 @@ def reconstruct(root: Path = OPERATIONS) -> dict:
         elif loaded.get("executed_at", "") >= evidence.get("executed_at", ""):
             evidence = loaded
 
-    active = sorted(k for k, g in grants.items() if g.get("status") == "ACTIVE")
+    historical_active = sorted(k for k, g in grants.items()
+                               if g.get("status") == "ACTIVE")
+    dispositions: Dict[str, dict] = {}
+    disposition_faults: Tuple[str, ...] = ()
+    if operational_ledger is not None:
+        from tools.w4_delegation import read_dispositions
+        dispositions, disposition_faults = read_dispositions(root, operational_ledger)
+    active = [k for k in historical_active if k not in dispositions]
 
     # Accumulation is **per recipient instance**, not per root.
     #
@@ -173,6 +195,17 @@ def reconstruct(root: Path = OPERATIONS) -> dict:
         "authority_instruments": sorted({g.get("authority_instrument")
                                          for g in grants.values()
                                          if g.get("authority_instrument")}),
+        **({} if operational_ledger is None else {
+            "operational_ledger": _describe(Path(operational_ledger)),
+            "historical_active_grants": historical_active,
+            "operational_dispositions": {k: v["disposition"]
+                                         for k, v in sorted(dispositions.items())},
+            "completed_grants": sorted(k for k, v in dispositions.items()
+                                       if v["disposition"] == "COMPLETED"),
+            "operationally_revoked_grants": sorted(
+                k for k, v in dispositions.items() if v["disposition"] == "REVOKED"),
+            "disposition_faults": list(disposition_faults),
+        }),
     }
 
 
@@ -194,6 +227,11 @@ def continuation_conditions(state: dict) -> Tuple[str, ...]:
         conditions.append(
             f"UNREADABLE RECORDS: {state['unreadable_records']} — corruption is "
             "not absence, and must not be read as 'no prior state' (§22)")
+    if state.get("disposition_faults"):
+        conditions.append(
+            f"DISPOSITION FAULTS: {state['disposition_faults']} — a disposition "
+            "whose basis changed is not honoured; the grant keeps its historical "
+            "status until the fault is resolved")
     if state["open_escalations"]:
         conditions.append(
             f"OPEN ESCALATIONS: {state['open_escalations']} — blocked work "

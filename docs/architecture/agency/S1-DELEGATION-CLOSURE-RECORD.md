@@ -7,6 +7,7 @@
 | **Evidence** | `evidence/S1-DELEGATION-CLOSURE-2026-10-02.json`, produced by `evidence/s1_delegation_closure_check.py`. The script is read-only over the ledger; the guard is consulted, never bypassed |
 | **Result** | **0 of 4 closed. 4 of 4 classified** under exhaustion condition 2 (an existing authorized next action is required; the blocking condition and evidence are persisted). Three grants have met their own termination condition by evidence; one has not. **No ledger closure is possible without rewriting certified P11 evidence**, which constraint 9 forbids |
 | **Writes** | `docs/architecture/p11`: **0 bytes changed** (`git status` empty; certified evidence integrity: no faults for P10–P13) |
+| **Subsequent** | Founder chose **A2** for Q-S1-A and deferred Q-S1-B pending evidence (Register `§136`). Live ledger: `W4-OPERATIONAL-LEDGER.md`. `4daebea9…`, `0f7ac078…` and `a437cdbb…` now read **COMPLETED** operationally; their certified records are unchanged. `4313bd22…` stays ACTIVE. Escalation evidence: `ESCALATION-23f315ba-EVIDENCE.md` |
 
 ---
 
