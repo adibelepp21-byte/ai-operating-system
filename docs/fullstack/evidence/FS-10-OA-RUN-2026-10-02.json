@@ -1,0 +1,260 @@
+{
+ "format": "fullstack.oa-session-run/1",
+ "at": "2026-10-02T08:01Z",
+ "environment": "env_01X4j1qVyxMRoTsGvotFpwue (renamed AIOS)",
+ "window_checks": {
+  "routines_enabled": 0
+ },
+ "preflight": {
+  "format": "fullstack.oa-session/1",
+  "phase": "preflight",
+  "t2_hosts": [
+   "aios-platform-adibelepp21-bytes-projects.vercel.app",
+   "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app"
+  ],
+  "control_hosts": {
+   "unlisted Production deployment (dpl_CHV72…)": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+   "Preview deployment (dpl_HvyYh…)": "aios-platform-9ohavmco2-adibelepp21-bytes-projects.vercel.app"
+  },
+  "results": [
+   {
+    "check": "no bypass in the process environment",
+    "result": "PASS",
+    "evidence": "bypass-named variables []; header-carrying []",
+    "mutates": false
+   },
+   {
+    "check": "injection proven on every T2 host (health 200 through X2)",
+    "result": "PASS",
+    "evidence": "{'aios-platform-adibelepp21-bytes-projects.vercel.app': 'app 200', 'aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app': 'app 200', 'aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app': 'app 200'}",
+    "mutates": false
+   },
+   {
+    "check": "hosts not listed stay behind X2",
+    "result": "PASS",
+    "evidence": "{'unlisted Production deployment (dpl_CHV72…)': 'x2 401', 'Preview deployment (dpl_HvyYh…)': 'x2 401'}",
+    "mutates": false
+   }
+  ],
+  "smoke": {},
+  "ok": true,
+  "writes_made": false
+ },
+ "verify_write": {
+  "format": "fullstack.oa-session/1",
+  "phase": "verify",
+  "t2_hosts": [
+   "aios-platform-adibelepp21-bytes-projects.vercel.app",
+   "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app"
+  ],
+  "control_hosts": {
+   "unlisted Production deployment (dpl_CHV72…)": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+   "Preview deployment (dpl_HvyYh…)": "aios-platform-9ohavmco2-adibelepp21-bytes-projects.vercel.app"
+  },
+  "results": [
+   {
+    "check": "no bypass in the process environment",
+    "result": "PASS",
+    "evidence": "bypass-named variables []; header-carrying []",
+    "mutates": false
+   },
+   {
+    "check": "injection proven on every T2 host (health 200 through X2)",
+    "result": "PASS",
+    "evidence": "{'aios-platform-adibelepp21-bytes-projects.vercel.app': 'app 200', 'aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app': 'app 200', 'aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app': 'app 200'}",
+    "mutates": false
+   },
+   {
+    "check": "hosts not listed stay behind X2",
+    "result": "PASS",
+    "evidence": "{'unlisted Production deployment (dpl_CHV72…)': 'x2 401', 'Preview deployment (dpl_HvyYh…)': 'x2 401'}",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-adibelepp21-bytes-projects.vercel.app: read-only smoke profile",
+    "result": "FAIL",
+    "evidence": "4/7 PASS",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-adibelepp21-bytes-projects.vercel.app: principal is aios-operator with exactly its three scopes",
+    "result": "FAIL",
+    "evidence": "→ 401, {'error': 'unauthenticated', 'detail': 'no authenticated principal'}",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-adibelepp21-bytes-projects.vercel.app: aios.agent.register refused (403)",
+    "result": "FAIL",
+    "evidence": "→ 401",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-adibelepp21-bytes-projects.vercel.app: audit attributes the session read to aios-operator (allowed)",
+    "result": "FAIL",
+    "evidence": "None",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-adibelepp21-bytes-projects.vercel.app: audit records the register attempt as refused for aios-operator",
+    "result": "FAIL",
+    "evidence": "None",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app: read-only smoke profile",
+    "result": "FAIL",
+    "evidence": "4/7 PASS",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app: principal is aios-operator with exactly its three scopes",
+    "result": "FAIL",
+    "evidence": "→ 401, {'error': 'unauthenticated', 'detail': 'no authenticated principal'}",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app: aios.agent.register refused (403)",
+    "result": "FAIL",
+    "evidence": "→ 401",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app: audit attributes the session read to aios-operator (allowed)",
+    "result": "FAIL",
+    "evidence": "None",
+    "mutates": false
+   },
+   {
+    "check": "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app: audit records the register attempt as refused for aios-operator",
+    "result": "FAIL",
+    "evidence": "None",
+    "mutates": false
+   },
+   {
+    "check": "Scenario B: a run succeeds, requested by the principal",
+    "result": "FAIL",
+    "evidence": "→ 401 None",
+    "mutates": true
+   }
+  ],
+  "smoke": {
+   "aios-platform-adibelepp21-bytes-projects.vercel.app": {
+    "format": "fullstack.smoke/1",
+    "base": "https://aios-platform-adibelepp21-bytes-projects.vercel.app",
+    "profile": "read-only",
+    "results": [
+     {
+      "check": "health and readiness (R2)",
+      "result": "PASS",
+      "evidence": "GET /health → 200 {'status': 'ok', 'runtime_state': 'running'}",
+      "mutates": false
+     },
+     {
+      "check": "anonymous protected routes refused",
+      "result": "PASS",
+      "evidence": "{'/api/v1/runs': 401, '/api/v1/runtime': 401, '/api/v1/traces': 401, '/api/v1/audit': 401, '/api/v1/session': 401, '/api/v1/agent-instances': 401}",
+      "mutates": false
+     },
+     {
+      "check": "invalid and malformed Authorization refused",
+      "result": "PASS",
+      "evidence": "{'unknown token': 401, 'hash-shaped': 401, 'wrong scheme': 401, 'empty bearer': 401}",
+      "mutates": false
+     },
+     {
+      "check": "valid bearer authenticates",
+      "result": "FAIL",
+      "evidence": "→ 401, subject None, scopes None",
+      "mutates": false
+     },
+     {
+      "check": "Runtime running on the store",
+      "result": "FAIL",
+      "evidence": "→ 401, state None",
+      "mutates": false
+     },
+     {
+      "check": "read routes answer",
+      "result": "FAIL",
+      "evidence": "{'/api/v1/runs': 401, '/api/v1/traces': 401, '/api/v1/workflows': 401, '/api/v1/tools': 401, '/api/v1/agent-definitions': 401, '/api/v1/agent-instances': 401}",
+      "mutates": false
+     },
+     {
+      "check": "console served with its security headers",
+      "result": "PASS",
+      "evidence": "→ 200, missing []",
+      "mutates": false
+     }
+    ],
+    "ok": false,
+    "writes_made": false
+   },
+   "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app": {
+    "format": "fullstack.smoke/1",
+    "base": "https://aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app",
+    "profile": "read-only",
+    "results": [
+     {
+      "check": "health and readiness (R2)",
+      "result": "PASS",
+      "evidence": "GET /health → 200 {'status': 'ok', 'runtime_state': 'running'}",
+      "mutates": false
+     },
+     {
+      "check": "anonymous protected routes refused",
+      "result": "PASS",
+      "evidence": "{'/api/v1/runs': 401, '/api/v1/runtime': 401, '/api/v1/traces': 401, '/api/v1/audit': 401, '/api/v1/session': 401, '/api/v1/agent-instances': 401}",
+      "mutates": false
+     },
+     {
+      "check": "invalid and malformed Authorization refused",
+      "result": "PASS",
+      "evidence": "{'unknown token': 401, 'hash-shaped': 401, 'wrong scheme': 401, 'empty bearer': 401}",
+      "mutates": false
+     },
+     {
+      "check": "valid bearer authenticates",
+      "result": "FAIL",
+      "evidence": "→ 401, subject None, scopes None",
+      "mutates": false
+     },
+     {
+      "check": "Runtime running on the store",
+      "result": "FAIL",
+      "evidence": "→ 401, state None",
+      "mutates": false
+     },
+     {
+      "check": "read routes answer",
+      "result": "FAIL",
+      "evidence": "{'/api/v1/runs': 401, '/api/v1/traces': 401, '/api/v1/workflows': 401, '/api/v1/tools': 401, '/api/v1/agent-definitions': 401, '/api/v1/agent-instances': 401}",
+      "mutates": false
+     },
+     {
+      "check": "console served with its security headers",
+      "result": "PASS",
+      "evidence": "→ 200, missing []",
+      "mutates": false
+     }
+    ],
+    "ok": false,
+    "writes_made": false
+   }
+  },
+  "ok": false,
+  "writes_made": true
+ },
+ "diagnosis": {
+  "token_hash_matches_recorded": true,
+  "production_AIOS_OPERATOR_TOKENS_updatedAt": 1790837003374,
+  "built_after_it": [
+   "dpl_76CYC (1790837012262)",
+   "dpl_s8c6m (1790837046734)"
+  ],
+  "observed": "with injection active, every bearer request gets the application's 401 unauthenticated; Scenario B refused (401): no record written",
+  "inference": "the Authorization header sent by the client does not reach the application intact on the injected hosts (for example, an Authorization header row on the environment credential); not a token or Production change"
+ },
+ "credential_handling": "no bypass value read, sent, printed or stored by this session"
+}
