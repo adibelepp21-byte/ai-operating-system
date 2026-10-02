@@ -10330,3 +10330,13 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Run** | `oa_session preflight` (evidence `docs/fullstack/evidence/FS-10-OA-ATTEMPT-2026-10-02.json`):<br>• no bypass in the environment: PASS;<br>• injection on the three T2 hosts: **FAIL** — stopped by X2;<br>• unlisted hosts stopped by X2: PASS.<br>A fresh session in the same environment (`session_01Xgb77efedtcyJycudWF2nv`, public health only) also saw no injection |
 | **Result** | the Vercel bypass is reported created, but the environment API credential (`AD-FS10-ESC03-R1` `§5` step 2) is not attached for the `§2` hosts. Verification, rollback re-verification and revocation have **not run**. Nothing revoked or changed; no credential exposed |
 | **State** | **FS-10 BLOCKED — O-A environment credential not effective (account-holder action)** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
+
+## 129. Deployment Pause & Agency Construction Directive — Receipt; Deployment PAUSED / DEFERRED; Agency Current-State Map v1 (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-DEPLOYMENT-PAUSE-AND-AGENCY-CONSTRUCTION.md` (verbatim; content sha256 `d5d29f9bbc3d94a7cce9e36bf64e86a0729a82f01d49f12dd3f98c1d5f734e41`). No Act, Micro-Act or Founder Decision created |
+| **Deployment** | **PAUSED / DEFERRED**, not cancelled. FS-10 frozen at:<br>• the M1 runner built and tested (`f9bf8a7`);<br>• the M1 variable not set;<br>• the O-A environment credential and the Vercel bypass still active — their revocation and deletion are account-holder actions.<br>ESC-03 NOT RESOLVED · FDP-010 NOT COMPLETE · RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE |
+| **First output** | `docs/architecture/agency/AIOS-AGENCY-CURRENT-STATE-MAP.md`: 28 sections, evidence E-1…E-10, read-only |
+| **Finding** | The organizational loop (P11 W1/W4) and the executive loop (P13) are each implemented, executed and verified. Not living yet:<br>• G-1: CEO → delegation not connected (`issue.delegation` Founder-reserved);<br>• G-2: no Founder goal intake;<br>• G-3: the executive loop does not read organizational work state;<br>• continuous operation MISSING (manual triggers only).<br>No new subsystem is indicated |
+| **Candidates** | CC-1 (reconcile 4 ACTIVE delegations) and CC-7 (unified state view): in authority. CC-2 and CC-3: authority to be verified (U-2, U-3). CC-4, CC-5, CC-6: Founder decision required |
