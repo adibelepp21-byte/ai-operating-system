@@ -70,11 +70,14 @@ def _load(path: Path) -> Optional[dict]:
 
 
 def reconstruct(root: Path = OPERATIONS,
-                operational_ledger: Optional[Path] = None) -> dict:
+                operational_ledger: Optional[Path] = None,
+                response_ledger: Optional[Path] = None) -> dict:
     """`§20`'s eleven items, recovered from disk and nothing else.
 
     ``operational_ledger`` is opt-in. Left as ``None``, the result is the
     historical reading, byte-for-byte what it was before the live ledger existed.
+    ``response_ledger`` is the same for escalation responses recorded outside a
+    certified root (`tools.escalation_register.LIVE_RESPONSES`).
     """
     if not root.is_dir():
         raise ContinuityError(f"no persisted W4 state at {root}")
@@ -103,6 +106,10 @@ def reconstruct(root: Path = OPERATIONS,
             unreadable.append(path.name)
             continue
         answered = (root / f"{record['escalation_id']}.response.json").is_file()
+        if not answered and response_ledger is not None:
+            from tools.escalation_register import EscalationRegister
+            answered = EscalationRegister(root, response_ledger).status(
+                record["escalation_id"]) == "ANSWERED"
         escalations[record["escalation_id"]] = {
             **record, "state": "ANSWERED" if answered else "OPEN"}
 
@@ -195,6 +202,8 @@ def reconstruct(root: Path = OPERATIONS,
         "authority_instruments": sorted({g.get("authority_instrument")
                                          for g in grants.values()
                                          if g.get("authority_instrument")}),
+        **({} if response_ledger is None else {
+            "response_ledger": _describe(Path(response_ledger))}),
         **({} if operational_ledger is None else {
             "operational_ledger": _describe(Path(operational_ledger)),
             "historical_active_grants": historical_active,
@@ -246,3 +255,16 @@ def continuation_conditions(state: dict) -> Tuple[str, ...]:
     if not conditions:
         conditions.append("NO BLOCKING CONDITION — prior state is coherent")
     return tuple(conditions)
+
+
+def operational_state(root: Path = OPERATIONS) -> dict:
+    """The reading that honours both live ledgers (`FD-AGENCY-001` S-1 A2, B1).
+
+    The same reconstruction, with the delegation dispositions and the
+    out-of-boundary escalation responses taken into account. ``reconstruct(root)``
+    with no ledger remains the historical reading.
+    """
+    from tools.escalation_register import LIVE_RESPONSES
+    from tools.w4_delegation import LIVE_LEDGER
+    return reconstruct(root, operational_ledger=LIVE_LEDGER,
+                       response_ledger=LIVE_RESPONSES)

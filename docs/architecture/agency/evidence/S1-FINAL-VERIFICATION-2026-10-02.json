@@ -1,0 +1,100 @@
+{
+ "checked_at": "2026-10-02T14:58:58.581697+00:00",
+ "script_sha256": "7a538ea243316c2d7569030fab8aad02aefa24cf2a9a85aabd6e94e4a6cd7d3e",
+ "live_ledgers": {
+  "dispositions": "docs/architecture/agency/operations/w4-dispositions",
+  "responses": "docs/architecture/agency/operations/escalation-responses"
+ },
+ "checks": {
+  "1_certified_p11_bytes_unchanged": {
+   "files_checked": 58,
+   "mismatches": [],
+   "integrity_faults": [],
+   "git_status_p11": "(clean)",
+   "ok": true
+  },
+  "2_response_outside_certified_boundary": {
+   "path": "docs/architecture/agency/operations/escalation-responses/w4-operations/23f315ba9f504272.response.json",
+   "protected": false,
+   "beside_escalation_exists": false,
+   "responded_by": "Moriarty (Founder)",
+   "basis": "docs/governance/acts/FD-AGENCY-001-S1-ESCALATION-CLOSURE-DECISION.md (content sha256 f63bc9fcba9c529e7821e3de74ffd7ac2370ca72d29c223a19fcedfc2f76faca); recorded by Claude Code / AIOS Co-Founder as a transcription of the Founder's decision",
+   "bound_to_escalation_sha256": true,
+   "ok": true
+  },
+  "3_escalation_observably_closed": {
+   "operational_status": "ANSWERED",
+   "operational_open": [],
+   "operational_conditions": [
+    "NO BLOCKING CONDITION \u2014 prior state is coherent"
+   ],
+   "ok": true
+  },
+  "4_dispositions": {
+   "w1-operations": {
+    "4daebea9012d4cc7": "COMPLETED"
+   },
+   "w4-operations": {
+    "4313bd2246124a94": "REVOKED"
+   },
+   "x-department-operations": {
+    "0f7ac0785bd8442b": "COMPLETED",
+    "a437cdbbd29940af": "COMPLETED"
+   },
+   "ok": true
+  },
+  "5_historical_vs_operational": {
+   "w1-operations": {
+    "historical_active": [
+     "4daebea9012d4cc7"
+    ],
+    "operational_active": [],
+    "disposition_faults": []
+   },
+   "w4-operations": {
+    "historical_active": [
+     "4313bd2246124a94"
+    ],
+    "operational_active": [],
+    "disposition_faults": []
+   },
+   "x-department-operations": {
+    "historical_active": [
+     "0f7ac0785bd8442b",
+     "a437cdbbd29940af"
+    ],
+    "operational_active": [],
+    "disposition_faults": []
+   },
+   "ok": true
+  },
+  "6_default_reader_unchanged": {
+   "w1-operations": {
+    "active_grants": [
+     "4daebea9012d4cc7"
+    ],
+    "open_escalations": [],
+    "has_operational_keys": false
+   },
+   "w4-operations": {
+    "active_grants": [
+     "4313bd2246124a94"
+    ],
+    "open_escalations": [
+     "23f315ba9f504272"
+    ],
+    "has_operational_keys": false
+   },
+   "x-department-operations": {
+    "active_grants": [
+     "0f7ac0785bd8442b",
+     "a437cdbbd29940af"
+    ],
+    "open_escalations": [],
+    "has_operational_keys": false
+   },
+   "ok": true
+  }
+ },
+ "all_ok": true
+}

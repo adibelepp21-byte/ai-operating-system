@@ -1,0 +1,15 @@
+{
+  "delegation_id": "4313bd2246124a94",
+  "root": "docs/architecture/p11/w4-operations",
+  "disposition": "REVOKED",
+  "historical_status": "ACTIVE",
+  "record_sha256": "9272f24c0e8f6436a34cc8dbd7448ddb8ed68bdfacc8c330a7855163aec7dd74",
+  "evidence": null,
+  "evidence_sha256": null,
+  "reason": "REVOKED / CLOSED DUE TO UNEXECUTED OUT-OF-SCOPE STEP (Founder B1, docs/governance/acts/FD-AGENCY-001-S1-ESCALATION-CLOSURE-DECISION.md). Work scope verify-delegation-elements completed 13/13; plan step report-conformance was outside scope, escalated as 23f315ba9f504272, and closed by the Founder without execution. Not represented as COMPLETED.",
+  "recorded_by": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-AGENCY-001 S-1 Q-S1-A (A2)",
+  "authority_record": "docs/governance/acts/FD-AGENCY-001-S1-TERMINAL-STATE-DECISION.md",
+  "recorded_at": "2026-10-02T14:58:34.784830+00:00"
+}

@@ -49,15 +49,28 @@ The reader never merges the two facts:
 
 ## 5. Applied (S-1)
 
-The three grants whose termination condition S-1 established were recorded `COMPLETED`:
-- `4daebea9012d4cc7`;
-- `0f7ac0785bd8442b`;
-- `a437cdbbd29940af`.
+| Grant | Disposition | Basis |
+|---|---|---|
+| `4daebea9012d4cc7` | `COMPLETED` | bound plan completed (computed) |
+| `0f7ac0785bd8442b` | `COMPLETED` | bound plan completed (computed) |
+| `a437cdbbd29940af` | `COMPLETED` | bound plan completed (computed) |
+| `4313bd2246124a94` | `REVOKED`, with reason *"REVOKED / CLOSED DUE TO UNEXECUTED OUT-OF-SCOPE STEP"* | Founder B1 (`docs/governance/acts/FD-AGENCY-001-S1-ESCALATION-CLOSURE-DECISION.md`). **Not** `COMPLETED`: the mechanism itself refuses `COMPLETED` for this grant, because its plan escalated |
 
-**`4313bd2246124a94` was not dispositioned.** Its plan did not complete, and its escalation `23f315ba9f504272` is deferred by the Founder (Q-S1-B). It stays operationally `ACTIVE`.
+## 6. Escalation responses (Founder B1 — F-S1-4 closed)
 
-## 6. F-S1-4 (escalation response write)
+`tools/escalation_register.py` was changed **only** where a response is written and read:
 
-`EscalationRegister.record_response()` still writes beside the escalation, which for `23f315ba` is a certified root. A2 does not authorize changing the escalation register, and Q-S1-B is deferred. So this record does **not** change it.
+- **Uncertified root:** the response is written beside the escalation, exactly as before. Same file, same payload shape. `basis` is added only if a caller passes it.
+- **Certified root:** the response is **never** written beside the escalation.
+  - It is written to `LIVE_RESPONSES` (`docs/architecture/agency/operations/escalation-responses/<root-name>/<id>.response.json`).
+  - The write is guarded before any directory is created.
+  - The response is bound to the escalation's sha256 and names its root and basis.
+  - Without a response ledger, the write is **refused** rather than made in place.
+- **Reading is opt-in:** `EscalationRegister(root, response_ledger=...)` and `reconstruct(root, response_ledger=...)`. An external response counts only if it names the escalation and the root, the escalation's bytes are unchanged, and the ledger is outside every certified root.
+- **Unchanged:** closing still requires a `HumanAuthority`, and the register still has no method that approves or grants anything.
 
-Before any response to a certified-root escalation is persisted, the same pattern applies: a response recorded outside the certified boundary. That is a separate, bounded change for when Q-S1-B is decided.
+`tools.w4_continuity.operational_state(root)` is the reading that honours both live ledgers. `reconstruct(root)` with no ledger is the historical reading.
+
+**Applied:** escalation `23f315ba9f504272` was answered by the Founder (B1), recorded at `operations/escalation-responses/w4-operations/23f315ba9f504272.response.json`. Its basis cites the decision instrument and its content sha256.
+
+**Not changed:** `EscalationRegister.record()`, which raises new escalations, still writes into whatever root it is given. No new escalation is being raised into a certified root, and B1 authorizes only the response path.

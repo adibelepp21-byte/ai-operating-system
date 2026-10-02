@@ -219,5 +219,78 @@ class TheCertifiedLedgerReadsAsS1Found(unittest.TestCase):
         self.assertFalse(is_protected(w4.LIVE_LEDGER))
 
 
+
+class EscalationResponsesStayOutsideCertifiedEvidence(unittest.TestCase):
+    """F-S1-4 / B1: a response to a certified-root escalation is routed outside."""
+
+    ROOT = P11 / "w4-operations"
+    ESC = "23f315ba9f504272"
+
+    def setUp(self):
+        from native_core.core.governance import HumanAuthority
+        from tools.escalation_register import EscalationRegister, EscalationRegisterError
+        self.Register, self.Error = EscalationRegister, EscalationRegisterError
+        self.human = HumanAuthority("test reviewer")
+        self.tmp = Path(tempfile.mkdtemp(prefix="responses-"))
+        self.beside = self.ROOT / f"{self.ESC}.response.json"
+        self.certified = hashlib.sha256(
+            (self.ROOT / f"{self.ESC}.escalation.json").read_bytes()).hexdigest()
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+        self.assertFalse(self.beside.exists())
+        self.assertEqual(self.certified, hashlib.sha256(
+            (self.ROOT / f"{self.ESC}.escalation.json").read_bytes()).hexdigest())
+
+    def test_without_a_ledger_the_response_is_refused_not_written_in_place(self):
+        with self.assertRaisesRegex(self.Error, "certified evidence"):
+            self.Register(self.ROOT).record_response(
+                self.ESC, authority=self.human, response="x")
+
+    def test_with_a_ledger_it_is_written_outside_and_read_only_on_request(self):
+        path = self.Register(self.ROOT, self.tmp).record_response(
+            self.ESC, authority=self.human, response="acknowledged", basis="test")
+        self.assertTrue(path.is_relative_to(self.tmp))
+        self.assertEqual("OPEN", self.Register(self.ROOT).status(self.ESC))
+        self.assertEqual("ANSWERED", self.Register(self.ROOT, self.tmp).status(self.ESC))
+        self.assertIn(self.ESC, reconstruct(self.ROOT)["open_escalations"])
+        self.assertEqual([], reconstruct(self.ROOT, response_ledger=self.tmp)["open_escalations"])
+
+    def test_append_only(self):
+        register = self.Register(self.ROOT, self.tmp)
+        register.record_response(self.ESC, authority=self.human, response="a")
+        with self.assertRaisesRegex(self.Error, "append-only"):
+            register.record_response(self.ESC, authority=self.human, response="b")
+
+    def test_a_response_bound_to_other_bytes_is_not_honoured(self):
+        path = self.Register(self.ROOT, self.tmp).record_response(
+            self.ESC, authority=self.human, response="a")
+        item = json.loads(path.read_text())
+        item["escalation_record_sha256"] = "0" * 64
+        path.write_text(json.dumps(item))
+        self.assertEqual("OPEN", self.Register(self.ROOT, self.tmp).status(self.ESC))
+
+    def test_automation_still_cannot_respond(self):
+        with self.assertRaises(self.Error):
+            self.Register(self.ROOT, self.tmp).record_response(
+                self.ESC, authority="Claude Code", response="x")
+
+
+class UncertifiedEscalationsAreAnsweredAsBefore(unittest.TestCase):
+    def test_the_response_is_written_beside_and_its_shape_is_unchanged(self):
+        from native_core.core.governance import HumanAuthority
+        from tools.escalation_register import EscalationRegister
+        tmp = Path(tempfile.mkdtemp(prefix="esc-"))
+        try:
+            (tmp / "e1.escalation.json").write_text(json.dumps({"escalation_id": "e1"}))
+            path = EscalationRegister(tmp).record_response(
+                "e1", authority=HumanAuthority("r"), response="ok")
+            self.assertEqual(tmp / "e1.response.json", path)
+            self.assertEqual({"escalation_id", "responded_by", "response", "responded_at"},
+                             set(json.loads(path.read_text())))
+        finally:
+            shutil.rmtree(tmp)
+
+
 if __name__ == "__main__":
     unittest.main()

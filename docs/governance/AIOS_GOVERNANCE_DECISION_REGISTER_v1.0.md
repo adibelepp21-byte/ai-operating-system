@@ -10431,3 +10431,14 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Q-S1-B evidence** | `docs/architecture/agency/ESCALATION-23f315ba-EVIDENCE.md`, items 1–8. Neither B1 nor B2 can persist a response beside the escalation (F-S1-4: unguarded write into the certified root), so either needs the response recorded outside the certified root |
 | **Not done** | escalation not closed; no grant issued; escalation register unchanged; W3 projections unchanged; S-2 not started |
 | **State** | **A2 IMPLEMENTED · 3 GRANTS OPERATIONALLY COMPLETED · Q-S1-B AWAITING FOUNDER** · deployment PAUSED |
+
+## 137. S-1 Founder Decision Q-S1-B = B1 — Escalation 23f315ba Closed Outside the Certified Boundary; 4313bd22 REVOKED; S-1 COMPLETE (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Decision** | `acts/FD-AGENCY-001-S1-ESCALATION-CLOSURE-DECISION.md` (verbatim; content sha256 `f63bc9fcba9c529e7821e3de74ffd7ac2370ca72d29c223a19fcedfc2f76faca`). Founder (Moriarty), 2026-10-02: **APPROVED — B1**, acknowledge and close with no new authority |
+| **Mechanism** | `tools/escalation_register.py`, response path only (F-S1-4):<br>• certified root: the response goes to `LIVE_RESPONSES` (`docs/architecture/agency/operations/escalation-responses/`), guarded and bound to the escalation's sha256; without a ledger it is refused, never written in place;<br>• uncertified root: unchanged;<br>• reading is opt-in (`response_ledger`).<br>`tools/w4_continuity.py`: `reconstruct(..., response_ledger=...)` and `operational_state(root)`. `HumanAuthority` is still required |
+| **Applied** | • Founder response to `23f315ba9f504272`: `responded_by` *"Moriarty (Founder)"*, basis = this decision instrument and its sha256. Recorded by Claude Code as a transcription.<br>• `4313bd2246124a94`: disposition `REVOKED`, *"REVOKED / CLOSED DUE TO UNEXECUTED OUT-OF-SCOPE STEP"*. `COMPLETED` is refused by the mechanism |
+| **Verification** | `docs/architecture/agency/evidence/S1-FINAL-VERIFICATION-2026-10-02.json` (`s1_final_verification.py`), fresh process, from files, **all_ok**:<br>1. 58 certified P11 files byte-identical, integrity no faults, `git status` clean;<br>2. response outside the boundary and hash-bound;<br>3. `23f315ba` ANSWERED, no open escalation operationally;<br>4. dispositions 3 × `COMPLETED` + `4313bd22` `REVOKED`;<br>5. historical `ACTIVE` vs operational `ACTIVE` kept distinct, no faults;<br>6. default reader unchanged (still 4 active, 1 open).<br>Ledger suite 24 tests; regression in the S-1 record |
+| **Not done** | `report-conformance` not executed; no delegation issued or widened; no agent decision or delegation authority; certified P11 evidence unchanged; S-2 not started |
+| **State** | **S-1 COMPLETE** · 3 COMPLETED · 1 REVOKED (B1) · escalation 23f315ba CLOSED · deployment PAUSED |

@@ -82,9 +82,29 @@ SANCTIONED_REFUSALS = (EscalationRequired, ExecutionRefused)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
+#: Where a response goes when the escalation itself is certified evidence
+#: (`FD-AGENCY-001` S-1, B1; the same pattern as the S-1 A2 delegation ledger,
+#: `docs/architecture/agency/W4-OPERATIONAL-LEDGER.md`). A response to an
+#: escalation in a certified root is never written beside it: the certified
+#: bytes stay frozen, and the answer is recorded here, bound to them by hash.
+#: Escalations in uncertified roots are answered beside themselves, unchanged.
+LIVE_RESPONSES = REPO_ROOT / "docs/architecture/agency/operations/escalation-responses"
+
 
 class EscalationRegisterError(RuntimeError):
     """Fail closed (`PR-4`)."""
+
+
+def _sha256(path: Path) -> str:
+    import hashlib
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _rel(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path.resolve())
 
 
 def record_refusals(root: Path, refusals, *, subject: str,
@@ -208,11 +228,46 @@ class EscalationRecord:
 class EscalationRegister:
     """Durable, append-only escalations. Holds no authority of its own."""
 
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, response_ledger: Optional[Path] = None):
+        """``response_ledger`` is opt-in. Without it the register reads and
+        writes exactly as before; with it, responses recorded outside a
+        certified root are honoured (and are where such responses are written).
+        """
         if not isinstance(root, Path):
             raise EscalationRegisterError("the register requires an explicit root")
         self._root = root
+        self._responses = None if response_ledger is None else Path(response_ledger)
         self._root.mkdir(parents=True, exist_ok=True)
+
+    def _external_response(self, escalation_id: str) -> Optional[Path]:
+        if self._responses is None:
+            return None
+        return self._responses / self._root.name / f"{escalation_id}.response.json"
+
+    def _answered(self, escalation_id: str) -> bool:
+        """A response beside the escalation, or a **valid** one in the ledger.
+
+        An external response is honoured only if it names this escalation and
+        this root, the ledger is not itself certified evidence, and the
+        escalation's bytes are still the ones it answered.
+        """
+        if (self._root / f"{escalation_id}.response.json").is_file():
+            return True
+        external = self._external_response(escalation_id)
+        if external is None or not external.is_file():
+            return False
+        from tools.p12_certified_evidence_guard import is_protected
+        if is_protected(external):
+            return False
+        try:
+            item = json.loads(external.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return False
+        source = self._root / f"{escalation_id}.escalation.json"
+        return (item.get("escalation_id") == escalation_id
+                and item.get("root") == _rel(self._root)
+                and source.is_file()
+                and item.get("escalation_record_sha256") == _sha256(source))
 
     def record(self, error, *, subject: str,
                authority: AuthorityProvenance) -> EscalationRecord:
@@ -249,7 +304,7 @@ class EscalationRegister:
         return record
 
     def record_response(self, escalation_id: str, *, authority: HumanAuthority,
-                        response: str) -> Path:
+                        response: str, basis: Optional[str] = None) -> Path:
         """Record that a **human** answered. Not a grant of anything.
 
         `HumanAuthority` is the frozen governance boundary: *"a governed decision
@@ -272,18 +327,42 @@ class EscalationRegister:
                 "closing an escalation requires a human authority — automation "
                 "may request and recommend, never decide "
                 "(Constitution §6.2 invariant 2)")
-        if not (self._root / f"{escalation_id}.escalation.json").is_file():
+        source = self._root / f"{escalation_id}.escalation.json"
+        if not source.is_file():
             raise EscalationRegisterError(f"no such escalation: {escalation_id}")
-        path = self._root / f"{escalation_id}.response.json"
-        if path.exists():
+        from tools.p12_certified_evidence_guard import guard, is_protected
+        beside = self._root / f"{escalation_id}.response.json"
+        if self._answered(escalation_id):
             raise EscalationRegisterError(
                 f"escalation {escalation_id} already has a response; append-only")
-        path.write_text(json.dumps({
+        payload = {
             "escalation_id": escalation_id,
             "responded_by": authority.reviewer_id,
             "response": response,
             "responded_at": datetime.now(timezone.utc).isoformat(),
-        }, indent=2), encoding="utf-8")
+        }
+        if not is_protected(beside):
+            # Uncertified root: answered beside itself, as it always was.
+            if basis is not None:
+                payload["basis"] = basis
+            beside.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+            return beside
+        # Certified root (F-S1-4): never beside the escalation. Routed to the
+        # live ledger, bound to the escalation's exact bytes, guarded.
+        path = self._external_response(escalation_id)
+        if path is None:
+            raise EscalationRegisterError(
+                f"{source} is certified evidence: its response must be recorded "
+                "in a response ledger outside the certified boundary")
+        guard(path)                     # before any directory is created
+        if path.exists():
+            raise EscalationRegisterError(
+                f"escalation {escalation_id} already has a response; append-only")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        payload.update({"root": _rel(self._root),
+                        "escalation_record_sha256": _sha256(source),
+                        "basis": basis})
+        guard(path).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
         return path
 
     # ---- reading ----------------------------------------------------------
@@ -291,7 +370,7 @@ class EscalationRegister:
         """Ids with no recorded response. Derived from the files present."""
         return tuple(sorted(
             p.name.split(".")[0] for p in self._root.glob("*.escalation.json")
-            if not (self._root / f"{p.name.split('.')[0]}.response.json").is_file()))
+            if not self._answered(p.name.split(".")[0])))
 
     def all_escalations(self) -> Tuple[str, ...]:
         return tuple(sorted(p.name.split(".")[0]
@@ -305,8 +384,7 @@ class EscalationRegister:
         """
         if not (self._root / f"{escalation_id}.escalation.json").is_file():
             raise EscalationRegisterError(f"no such escalation: {escalation_id}")
-        answered = (self._root / f"{escalation_id}.response.json").is_file()
-        return "ANSWERED" if answered else "OPEN"
+        return "ANSWERED" if self._answered(escalation_id) else "OPEN"
 
     def load(self, escalation_id: str) -> dict:
         path = self._root / f"{escalation_id}.escalation.json"
