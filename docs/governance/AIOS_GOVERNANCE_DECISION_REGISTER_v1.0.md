@@ -10406,3 +10406,16 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Record** | `docs/architecture/agency/FD-AGENCY-001-DECISION-RECORD.md` `§1`, `§2.1`, `§3`, `§6` updated |
 | **Not changed** | no Agent created or activated; no decision authority granted; CEO authority unchanged; no agent delegation; no entity or capability; PD-01 FROZEN; deployment PAUSED |
 | **State** | **FD-AGENCY-001 REGISTERED · OPERATIVE · Q2 = Q2-A** · gate CLOSED |
+
+## 135. S-1 Delegation Closure — CLASSIFIED, NOT CLOSED: Four Certified-Root Grants Cannot Close Without Rewriting Certified P11 Evidence (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S1-DELEGATION-CLOSURE.md` (verbatim; content sha256 `cd2bf90cd91194ba89d1dfa72a05f8bc5ec06dacc769d6dfe2afc4022394d8ed`), authority `FD-AGENCY-001` (`§133`, `§134`). No Act, Micro-Act or Founder Decision created |
+| **Record** | `docs/architecture/agency/S1-DELEGATION-CLOSURE-RECORD.md`; evidence `docs/architecture/agency/evidence/S1-DELEGATION-CLOSURE-2026-10-02.json` from the read-only `s1_delegation_closure_check.py` |
+| **Per grant** | • `4daebea9012d4cc7` (W1): bound plan completed; termination condition **MET**.<br>• `0f7ac0785bd8442b` and `a437cdbbd29940af` (cross-department): plan completed; **MET**.<br>• `4313bd2246124a94` (W4): work scope completed 13/13; plan **not** completed; step escalated as `23f315ba9f504272`, **OPEN** (human-reserved).<br>All four: lifecycle consumed, authority resolves, records byte-identical to certified hashes |
+| **Closure** | **None on the ledger.**<br>• `W4DelegationRegistry.revoke()` is unreachable for persisted grants.<br>• The persisting `ACTIVE → REVOKED` rewrite is refused by the certified-evidence guard: `docs/architecture/p11` is FD-P11-002 evidence, enforced by P12-F12.<br>• A re-run would exceed each one-execution boundary.<br>0 bytes changed under `docs/architecture/p11`; certified evidence integrity: no faults |
+| **Exhaustion** | condition 2 for all four: blocking condition and evidence persisted outside the certified root, as the guard directs |
+| **Gaps** | • C-1: no `COMPLETED` state; the termination condition is unevaluated text.<br>• C-2: `revoke` is in-process only.<br>• C-3: certified evidence roots hold live operational state.<br>• F-S1-4: `EscalationRegister.record_response()` writes beside the escalation with no guard call, so a Founder response to `23f315ba` would add an undeclared file to certified evidence.<br>None fixed; no replacement mechanism created |
+| **Decisions required** | Q-S1-A, how certified-root grants reach a terminal state:<br>• A1: certified successor (`FDR-G1`);<br>• A2: frozen history plus a live ledger outside the certified root (recommended);<br>• A3: no action.<br>Q-S1-B: response to `23f315ba` |
+| **State** | **S-1 COMPLETE — CLASSIFIED, NOT CLOSED** · S-2 not started · deployment PAUSED |

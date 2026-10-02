@@ -1,0 +1,184 @@
+{
+ "directive": "docs/governance/acts/DIR-AIOS-AGENCY-S1-DELEGATION-CLOSURE.md",
+ "checked_at": "2026-10-02T13:58:07.197820+00:00",
+ "script_sha256": "ae8b8f57ff6451fe320846b9c5150acb67f12be8059c4fb4a321ba2cefd8ed63",
+ "certified_evidence_faults": [],
+ "p11_writes": 0,
+ "delegations": {
+  "4daebea9012d4cc7": {
+   "root": "docs/architecture/p11/w1-operations",
+   "ledger_status": "ACTIVE",
+   "issued_at": "2026-09-11T07:33:36.099543+00:00",
+   "recipient_instance": "governance-artifact-integrity-instance-001",
+   "instance_lifecycle": "REGISTERED",
+   "authority_record_resolves": true,
+   "certified_sha256": "82e7e501065633f508d1af39e90ffccadea58df8d2bce27bbdaebae5f91b132c",
+   "resident_sha256": "82e7e501065633f508d1af39e90ffccadea58df8d2bce27bbdaebae5f91b132c",
+   "certified_intact": true,
+   "work_scope": [
+    "review-open-items",
+    "summarize-diffs"
+   ],
+   "plan": "w1-coordination-proof-plan-0",
+   "plan_steps": [
+    "review-open-items",
+    "summarize-diffs"
+   ],
+   "in_scope_outcomes": [
+    [
+     "review-open-items",
+     "success"
+    ],
+    [
+     "summarize-diffs",
+     "success"
+    ]
+   ],
+   "work_scope_completed": true,
+   "plan_completed": true,
+   "termination_condition": "on completion of the bound plan, or revocation",
+   "termination_by_completion_met": true,
+   "lifecycle_boundary": "one execution of plan w1-coordination-proof-plan-0",
+   "lifecycle_consumed_by": "2026-09-11T07:33:36.101285+00:00",
+   "plan_escalations": [],
+   "closure_path_revoke": "UNREACHABLE: no such delegation: '4daebea9012d4cc7'",
+   "closure_path_persisting_write": "REFUSED: CertifiedEvidenceProtected"
+  },
+  "4313bd2246124a94": {
+   "root": "docs/architecture/p11/w4-operations",
+   "ledger_status": "ACTIVE",
+   "issued_at": "2026-09-11T02:33:13.799880+00:00",
+   "recipient_instance": "engineering-intelligence-instance-001",
+   "instance_lifecycle": "REGISTERED",
+   "authority_record_resolves": true,
+   "certified_sha256": "9272f24c0e8f6436a34cc8dbd7448ddb8ed68bdfacc8c330a7855163aec7dd74",
+   "resident_sha256": "9272f24c0e8f6436a34cc8dbd7448ddb8ed68bdfacc8c330a7855163aec7dd74",
+   "certified_intact": true,
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "plan": "w4-first-execution-proof-plan-0",
+   "plan_steps": [
+    "verify-delegation-elements",
+    "report-conformance"
+   ],
+   "in_scope_outcomes": [
+    [
+     "verify-delegation-elements",
+     "success"
+    ]
+   ],
+   "work_scope_completed": true,
+   "plan_completed": false,
+   "termination_condition": "on completion of the bound plan, or on revocation by the authorized delegator",
+   "termination_by_completion_met": false,
+   "lifecycle_boundary": "one execution of plan w4-first-execution-proof-plan-0",
+   "lifecycle_consumed_by": "2026-09-11T02:33:13.801569+00:00",
+   "plan_escalations": [
+    "23f315ba9f504272"
+   ],
+   "closure_path_revoke": "UNREACHABLE: no such delegation: '4313bd2246124a94'",
+   "closure_path_persisting_write": "REFUSED: CertifiedEvidenceProtected"
+  },
+  "0f7ac0785bd8442b": {
+   "root": "docs/architecture/p11/x-department-operations",
+   "ledger_status": "ACTIVE",
+   "issued_at": "2026-09-11T09:57:01.893304+00:00",
+   "recipient_instance": "engineering-intelligence-instance-001",
+   "instance_lifecycle": "REGISTERED",
+   "authority_record_resolves": true,
+   "certified_sha256": "e9a7ce532112b44f815ee55292a8fa1edde8c83b9304957de2f501336ca53215",
+   "resident_sha256": "e9a7ce532112b44f815ee55292a8fa1edde8c83b9304957de2f501336ca53215",
+   "certified_intact": true,
+   "work_scope": [
+    "verify-artifact-conformance"
+   ],
+   "plan": "cross-department-conformance-review-plan-0",
+   "plan_steps": [
+    "verify-artifact-conformance",
+    "verify-citation-discipline"
+   ],
+   "in_scope_outcomes": [
+    [
+     "verify-artifact-conformance",
+     "success"
+    ]
+   ],
+   "work_scope_completed": true,
+   "plan_completed": true,
+   "termination_condition": "on completion of the bound plan, or revocation",
+   "termination_by_completion_met": true,
+   "lifecycle_boundary": "one execution of plan cross-department-conformance-review-plan-0",
+   "lifecycle_consumed_by": "2026-09-11T09:57:01.937771+00:00",
+   "plan_escalations": [],
+   "closure_path_revoke": "UNREACHABLE: no such delegation: '0f7ac0785bd8442b'",
+   "closure_path_persisting_write": "REFUSED: CertifiedEvidenceProtected"
+  },
+  "a437cdbbd29940af": {
+   "root": "docs/architecture/p11/x-department-operations",
+   "ledger_status": "ACTIVE",
+   "issued_at": "2026-09-11T09:57:01.893450+00:00",
+   "recipient_instance": "governance-artifact-integrity-instance-001",
+   "instance_lifecycle": "REGISTERED",
+   "authority_record_resolves": true,
+   "certified_sha256": "3de557a9f4f7f398ea746f64f8d642b517897e9408954ad7a2c5fbcecf089b00",
+   "resident_sha256": "3de557a9f4f7f398ea746f64f8d642b517897e9408954ad7a2c5fbcecf089b00",
+   "certified_intact": true,
+   "work_scope": [
+    "verify-citation-discipline"
+   ],
+   "plan": "cross-department-conformance-review-plan-0",
+   "plan_steps": [
+    "verify-artifact-conformance",
+    "verify-citation-discipline"
+   ],
+   "in_scope_outcomes": [
+    [
+     "verify-citation-discipline",
+     "success"
+    ]
+   ],
+   "work_scope_completed": true,
+   "plan_completed": true,
+   "termination_condition": "on completion of the bound plan, or revocation",
+   "termination_by_completion_met": true,
+   "lifecycle_boundary": "one execution of plan cross-department-conformance-review-plan-0",
+   "lifecycle_consumed_by": "2026-09-11T09:57:01.937771+00:00",
+   "plan_escalations": [],
+   "closure_path_revoke": "UNREACHABLE: no such delegation: 'a437cdbbd29940af'",
+   "closure_path_persisting_write": "REFUSED: CertifiedEvidenceProtected"
+  }
+ },
+ "continuity": {
+  "w1-operations": {
+   "active_grants": [
+    "4daebea9012d4cc7"
+   ],
+   "open_escalations": [],
+   "continuation_conditions": [
+    "NO BLOCKING CONDITION \u2014 prior state is coherent"
+   ]
+  },
+  "w4-operations": {
+   "active_grants": [
+    "4313bd2246124a94"
+   ],
+   "open_escalations": [
+    "23f315ba9f504272"
+   ],
+   "continuation_conditions": [
+    "OPEN ESCALATIONS: ['23f315ba9f504272'] \u2014 blocked work remains blocked; an escalation is not resolved by re-running (\u00a716)"
+   ]
+  },
+  "x-department-operations": {
+   "active_grants": [
+    "0f7ac0785bd8442b",
+    "a437cdbbd29940af"
+   ],
+   "open_escalations": [],
+   "continuation_conditions": [
+    "NO BLOCKING CONDITION \u2014 prior state is coherent"
+   ]
+  }
+ }
+}
