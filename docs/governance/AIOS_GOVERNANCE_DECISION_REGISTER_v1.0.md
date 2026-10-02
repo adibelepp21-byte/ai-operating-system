@@ -10376,3 +10376,21 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Effect** | none on authority, architecture, PD-01, capabilities, entities, delegations or deployment. `§131` Q-1…Q-9 remain open; the `§131` matrix stays in force |
 | **Next** | Founder marks one option per question (and fills conditions for any `-C`). Then a decision record, architecture/governance reconciliation, per `§7` |
 | **State** | **FD-AGENCY-001 PENDING FOUNDER DECISION** · gate not closed · deployment PAUSED |
+
+## 133. FD-AGENCY-001 — Founder Decision on Agency Authority: Three-Tier Model; Executive Tier and Ten-Agent Model Deferred (2026-10-02)
+
+### FD-AGENCY-001 — Founder Decision · AIOS Agency Organizational Authority (Q1–Q9)
+
+| Field | Value |
+|---|---|
+| **Identifier** | `FD-AGENCY-001` |
+| **Date** | 2026-10-02 |
+| **Decided by** | Founder (Moriarty) |
+| **Instrument** | `acts/FD-AGENCY-001-FOUNDER-DECISION.md` (verbatim; content sha256 `f05c05f1406ad08105fbbb109c800fa65d471246e4296792c8985003d91ba481`). Completes the gate received at `§132` |
+| **Decision** | Q1-B · Q2 *"B — Bounded decision rights only"* (see D-1) · Q3-A · Q4-A · Q5-C · Q6-A · Q7-A · Q8-B · Q9-A. Gate disposition: *"APPROVED WITH DEFERRED ORGANIZATIONAL EXPANSION"* |
+| **Closes** | `G-10` — Q7-A adopts Reading 1: ESDs are internal PD-01 stewardship, own no Capability, hold no authority; no fourth Spine level. Domain Model unchanged (invariant 1 satisfied by PD-01 ownership) |
+| **Authority envelope** | Founder → Co-Founder / Delegated CEO (A01–A23 unchanged; sole delegator) → Agent Instance:<br>• ACT within one W4 grant;<br>• no decision right today;<br>• no delegation;<br>• verification evidence only;<br>• escalation raise only.<br>Agent-to-agent coordination only through shared Workflow / Knowledge / scoped Memory |
+| **D-1 (open)** | In the issued gate, Q2-B is the NO option, but the decision text describes bounded decision rights within an envelope (the Q2-A content, narrowed). Applied: the floor common to both readings, which is no agent decision right today; governed, Founder-reserved, approval and CEO-reserved matters excluded; any future envelope Founder-issued, P13-style. Whether a future envelope may grant agents decisions awaits Founder confirmation |
+| **Record** | `docs/architecture/agency/FD-AGENCY-001-DECISION-RECORD.md`:<br>• dispositions;<br>• D-1;<br>• the resulting envelope;<br>• the PD-01 function mapping (Q5-C steps 1–4, Q8-B): 8 of 10 functions have an authority or mechanism counterpart, F-03 a partial Capability counterpart, risk management a genuine gap; CFO, Creative, Client Relations, PR / Social and Legal are genuine gaps outside the Platform Organization, routed to Founder Decision;<br>• implementation surface S-1…S-7, none started |
+| **Not changed** | no Agent, Role, Position, ESD, Department or Capability created; candidates CANDIDATE ONLY — NOT CANONICAL — NOT REGISTERED — NOT ACTIVATED; Co-Founder / CEO identity unchanged; PD-01 FROZEN, NOT ACTIVATION-ELIGIBLE; deployment PAUSED; FD-2, G-09 / ADR-0029, Constitution and Delegation Charter untouched |
+| **State** | **FD-AGENCY-001 REGISTERED · OPERATIVE** · Q2 at its common floor (D-1 pending) · gate CLOSED |

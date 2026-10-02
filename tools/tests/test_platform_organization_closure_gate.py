@@ -58,10 +58,12 @@ class TheLiveState(unittest.TestCase):
     def test_nothing_else_was_resolved(self):
         """ACT-004 NC-09 … NC-11, §19."""
         items = {i["id"]: i["status"] for i in po.open_items()}
-        for identifier in ("P7-I99", "RG-1", "FDP-P10-003", "G-02", "G-06", "G-07", "G-10",
+        for identifier in ("P7-I99", "RG-1", "FDP-P10-003", "G-02", "G-06", "G-07",
                            "ADP-P10-001", "C6-A1"):
             self.assertEqual("OPEN", items[identifier], identifier)
         self.assertEqual("CLOSED by FD-PO-005", items["ESC-C7-01"])
+        # Closed later, by its holder's superior: FD-AGENCY-001 Q7-A (Register §133).
+        self.assertEqual("CLOSED by FD-AGENCY-001", items["G-10"])
 
     def test_every_residual_is_classified(self):
         for identifier, (kind, cls, basis) in self.report["residuals"].items():

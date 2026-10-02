@@ -59,7 +59,8 @@ class TheLiveState(unittest.TestCase):
         for n in range(5, 11):
             self.assertIn("canonical construction baseline (FD-PO-004)",
                           self.report["divisions"][f"PD-{n:02d}"]["reasons"][0])
-        self.assertIn(po.ARCHITECT_DECISION, self.report["divisions"]["PD-01"]["also"])
+        # `G-10` was PD-01's architect matter; `FD-AGENCY-001` Q7-A closed it.
+        self.assertNotIn(po.ARCHITECT_DECISION, self.report["divisions"]["PD-01"]["also"])
         self.assertIn(po.CONFLICTED, self.report["divisions"]["PD-10"]["also"])
 
     def test_non_blocking_items_follow_their_sources(self):
@@ -77,7 +78,8 @@ class TheLiveState(unittest.TestCase):
         closed = {i["id"]: i["status"] for i in self.report["open_items"]
                   if i["status"] != "OPEN"}
         self.assertEqual({**{i: "CLOSED by FD-PO-004" for i in ("G-01", "FDP-P10-001", "FDP-P10-002")},
-                          "ESC-C7-01": "CLOSED by FD-PO-005"}, closed)
+                          "ESC-C7-01": "CLOSED by FD-PO-005", "G-10": "CLOSED by FD-AGENCY-001"},
+                         closed)
 
     def test_pd_02_is_complete_only_through_its_registered_contract(self):
         pd02 = self.report["divisions"]["PD-02"]
@@ -98,7 +100,7 @@ class TheLiveState(unittest.TestCase):
         items = self.report["open_items"]
         self.assertEqual(len(po.OPEN_ITEMS), len(items))
         self.assertTrue(all(i["recorded"] for i in items), [i for i in items if not i["recorded"]])
-        self.assertEqual(4, sum(i["status"] != "OPEN" for i in items))
+        self.assertEqual(5, sum(i["status"] != "OPEN" for i in items))
 
     def test_the_received_volumes_verify(self):
         volumes = self.report["volume_integrity"]
@@ -178,6 +180,15 @@ class _Copy(unittest.TestCase):
             self.assertIn(row, text)
             text = text.replace(row, "")
         self._write(po.REGISTER, text)
+
+    def _pre_fd_agency_001(self):
+        """The fixture as it stood before `FD-AGENCY-001` (Q7-A) closed `G-10`,
+        for the controls that use `G-10` as their architect-held sample."""
+        text = self._text(po.REGISTER)
+        rows = [line for line in text.splitlines(keepends=True)
+                if line.startswith("| **Closes** | `G-10`")]
+        self.assertEqual(1, len(rows))
+        self._write(po.REGISTER, text.replace(rows[0], ""))
 
     def _item(self, report, identifier):
         (item,) = [i for i in report["open_items"] if i["id"] == identifier]
@@ -378,12 +389,14 @@ class ReservedMattersCloseOnlyByTheirHolder(_Copy):
         self.assertNotIn("FDP-P10-001", report["divisions"]["PD-08"]["residual"])
 
     def test_nc13_a_ceo_record_does_not_close_an_architect_matter(self):
+        self._pre_fd_agency_001()
         self._decision("FDR-82", "Claude Code", ["C6-A1", "G-10"])
         report = self._eval()
         self.assertEqual("OPEN", self._item(report, "C6-A1"))
         self.assertEqual("OPEN", self._item(report, "G-10"))
 
     def test_nc13_positive_the_architect_closes_an_architect_matter(self):
+        self._pre_fd_agency_001()
         self._decision("FDR-81", "Architect", ["G-10"])
         report = self._eval()
         self.assertEqual("CLOSED by FDR-81", self._item(report, "G-10"))

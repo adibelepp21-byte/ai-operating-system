@@ -103,7 +103,7 @@ class TheLiveState(unittest.TestCase):
     # NC-03
     def test_nc03_reserved_items_open_unless_the_founder_closed_them(self):
         decided = {"G-01": "FD-PO-004", "FDP-P10-001": "FD-PO-004", "FDP-P10-002": "FD-PO-004",
-                   "ESC-C7-01": "FD-PO-005"}
+                   "ESC-C7-01": "FD-PO-005", "G-10": "FD-AGENCY-001"}
         for item in po.open_items():
             expected = f"CLOSED by {decided[item['id']]}" if item["id"] in decided else "OPEN"
             self.assertEqual(expected, item["status"], item["id"])

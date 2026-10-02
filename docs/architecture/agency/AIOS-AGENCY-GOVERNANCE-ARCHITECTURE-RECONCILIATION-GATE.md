@@ -8,6 +8,7 @@
 | **Actor** | Claude Code — AIOS Co-Founder + Delegated CEO (`ACT-CFV2-CEO-001-A`, `DEL-CFV2-CEO-001`), acting under A03 Discovery, A04 Work Classification and A16 Escalation Determination |
 | **Gate result** | **DECISION REQUIRED** (`§28` critical stop). Executive-Agent **DECIDE** and **DELEGATE** authority, and the standing of an Executive Agent as an organizational actor distinct from an executing Agent Instance, are not established by any instrument. The precise questions are in OUTPUT 6. Everything else is classified |
 | **Candidates** | Luffy, Nami, Zoro, Usopp, Robin, Franky, Chopper, Sanji, Jinbe, Brook: **CANDIDATE ONLY — NOT CANONICAL**. Used as paper fixtures in `§9` only |
+| **Subsequent decision** | `FD-AGENCY-001` (Register `§133`) decided Q-1…Q-9: Q1-B · Q2 (D-1 open) · Q3-A · Q4-A · Q5-C · Q6-A · Q7-A (closes `G-10`) · Q8-B · Q9-A. The operative envelope is in `FD-AGENCY-001-DECISION-RECORD.md` `§3`. Where it differs from OUTPUT 3 below, the decision record governs. This document is kept as the evidence base |
 
 ---
 
