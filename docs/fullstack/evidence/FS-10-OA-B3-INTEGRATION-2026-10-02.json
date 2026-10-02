@@ -1,0 +1,47 @@
+{
+ "format": "fullstack.oa-b3-integration/1",
+ "at": "2026-10-02",
+ "phase_a": {
+  "A1_client": "smoke.Client.request (used by oa_session) builds one header dict: Authorization: Bearer <token> once, token read from a private file and never printed; x-vercel-protection-bypass only when a bypass is passed, and oa_session always passes none; no duplicate Authorization",
+  "A2_b3": "security.OperatorTokenAuthenticator reads only 'authorization', requires 'Bearer <b64token>', sha256 + constant-time compare, then authorize() scope check; any failure is the same 401",
+  "A3_previous_success": "FDP-010 (evidence/FS-10-FDP-010-OPERATIONAL-ACCESS-ROLLBACK-2026-10-01.json): same token, same dpl_76CYC, same client code, through the same agent proxy, bypass header sent by the client -> 200 subject aios-operator. Only difference now: the bypass is attached by the environment API credential",
+  "A4_proxy": "UNKNOWN — provider documentation is silent on client Authorization under a Bearer credential with a renamed header; Bearer is documented as 'sent as Authorization: Bearer <token>' (evidence/FS-10-OA-PROXY-AUTH-COMPAT-2026-10-02.json). Classification: STRONGLY INDICATED — PROVIDER PROXY / AUTHORIZATION HEADER INTERACTION"
+ },
+ "phase_b_candidates": [
+  {
+   "candidate": "Basic, OAuth 2.0 JWT bearer, OAuth 2.0 client credentials, GCP types",
+   "provider_support": "documented types",
+   "header_behavior": "place the credential in Authorization",
+   "b3": "incompatible by design (occupy Authorization)",
+   "verdict": "REJECTED"
+  },
+  {
+   "candidate": "Body parameter (token in body or query string)",
+   "provider_support": "documented in the Claude Tag type list; cloud-environment dialog fields not documented",
+   "header_behavior": "no header ('instead of a header')",
+   "x2": "Vercel documents ?x-vercel-protection-bypass=<secret>",
+   "secret_handling": "FAILS: Vercel does not document removing the parameter before the function; the deployed function's access log records the full query string (runtime logs show '?path=...'), so the secret would reach Production logs",
+   "verdict": "REJECTED — credential-in-logs risk; not configured, not tested"
+  },
+  {
+   "candidate": "x-vercel-set-bypass-cookie on the O-A request",
+   "header_behavior": "returns a bypass cookie to the client",
+   "secret_handling": "FAILS: a bypass-derived credential enters the session",
+   "b3": "does not help: later requests to the same listed hosts still pass the proxy credential path",
+   "verdict": "REJECTED"
+  },
+  {
+   "candidate": "Shareable links / per-URL protection bypass",
+   "verdict": "PROHIBITED by instruction"
+  }
+ ],
+ "phase_d_already_authorized_equivalent": {
+  "candidate": "M1 — AD-FS10-ESC03-R1 conditional fallback: the client sends x-vercel-protection-bypass read from a variable in a dedicated cloud environment (smoke.py --bypass-env)",
+  "within_fdp012": "recorded in AD-FS10-ESC03-R1 §2/§5 (Register §125) as the conditional fallback",
+  "compatibility_with_b3": "the client-supplied-bypass path is the one empirically proven with B3 (A3)",
+  "constraints": "the Founder's instruction of 2026-10-02 states M1 is not the selected O-A implementation unless a separate authorized decision says so; Register §120 recorded M1 custody gates G1, G3, G6-G8, G10 FAIL for the shared environment (R1 answers with a dedicated environment)",
+  "status": "NOT USED — needs the Founder's explicit confirmation"
+ },
+ "changes_made": "none (B3, X2, credential, Production, scopes, token unchanged; no writes)",
+ "result": "O-A IMPLEMENTATION BLOCKED — PROVIDER PROXY / B3 AUTHORIZATION COMPATIBILITY"
+}
