@@ -1,15 +1,24 @@
 """O-A operating session checks (`AD-FS10-ESC03-R1` `§5`, `§6`; `FDP-012`).
 
 ```text
-python -m fullstack.deploy.oa_session preflight --token-file <file> [--out <evidence.json>]
-python -m fullstack.deploy.oa_session verify    --token-file <file> [--write] [--out <evidence.json>]
-python -m fullstack.deploy.oa_session revoked   --token-file <file> [--out <evidence.json>]
+python -m fullstack.deploy.oa_session preflight --token-file <file> [--bypass-env NAME] [--out <evidence.json>]
+python -m fullstack.deploy.oa_session verify    --token-file <file> [--bypass-env NAME] [--write] [--out <evidence.json>]
+python -m fullstack.deploy.oa_session revoked   --token-file <file> [--bypass-env NAME] [--out <evidence.json>]
 ```
 
 **Delivery.** Under O-A the Protection Bypass is attached by the session's
-agent proxy (cloud-environment API credential) to the three T2 hosts only. This
-tool never receives, reads, sends or prints it: no bypass option exists here.
-The client sends only the B3 bearer, read from a private file and never printed.
+agent proxy (cloud-environment API credential) to the three T2 hosts only; the
+tool is run without ``--bypass-env`` and never receives, reads, sends or prints
+it. The client sends only the B3 bearer, read from a private file and never printed.
+
+**M1** (``--bypass-env NAME``; the `AD-FS10-ESC03-R1` fallback, authorized by the
+Founder on 2026-10-02 for a dedicated environment). The client itself sends
+``x-vercel-protection-bypass``, read privately from the named variable of the
+dedicated cloud environment, together with the B3 bearer. The value is attached
+to requests for the three T2 hosts **only**, never printed, never written, and
+the evidence is checked for it before it is written. Under M1 no environment API
+credential may attach the bypass as well: the check "B3 without the bypass is
+stopped by X2" fails if one does.
 
 **Phases.**
 
@@ -83,8 +92,11 @@ def _open(request, timeout):
     return _OPENER.open(request, timeout=timeout)
 
 
-def _client(host: str, token: str, opener: Callable) -> smoke.Client:
-    return smoke.Client("https://" + host, token, bypass=None, opener=opener)
+def _client(host: str, token: str, opener: Callable,
+            bypass: Optional[str] = None) -> smoke.Client:
+    """The bypass (M1) is attached for the T2 hosts only, whatever the caller passes."""
+    return smoke.Client("https://" + host, token,
+                        bypass=bypass if host in T2_HOSTS else None, opener=opener)
 
 
 def _reach(client: smoke.Client, path: str = "/api/v1/health", bearer: bool = False) -> str:
@@ -108,11 +120,47 @@ def _check(results: List[dict], name: str, ok: bool, evidence: str, mutates: boo
                     "mutates": mutates})
 
 
-def _environment_clean(results: List[dict], environ: Dict[str, str]) -> None:
+def _environment_clean(results: List[dict], environ: Dict[str, str],
+                       m1_variable: Optional[str] = None) -> None:
     named = sorted(k for k in environ if "BYPASS" in k.upper())
     carried = sorted(k for k, v in environ.items() if smoke.BYPASS_HEADER in str(v).lower())
-    _check(results, "no bypass in the process environment",
-           not named and not carried, f"bypass-named variables {named}; header-carrying {carried}")
+    if m1_variable is None:
+        _check(results, "no bypass in the process environment",
+               not named and not carried,
+               f"bypass-named variables {named}; header-carrying {carried}")
+    else:
+        _check(results, "M1: only the designated variable holds a bypass (names only)",
+               named == [m1_variable] and not carried,
+               f"bypass-named variables {named}; header-carrying {carried}")
+
+
+def _edge_m1(results: List[dict], token: str, opener: Callable, bypass: str) -> bool:
+    reached = {h: _reach(_client(h, token, opener, bypass)) for h in T2_HOSTS}
+    passed = set(reached.values()) == {"app 200"}
+    _check(results, "T1 M1: the client bypass reaches the application on every T2 host",
+           passed, f"{reached}")
+    without = {h: _reach(_client(h, token, opener), "/api/v1/session", bearer=True)
+               for h in T2_HOSTS}
+    _check(results, "T4 B3 without M1 is stopped by X2 on every T2 host "
+                    "(no other mechanism attaches the bypass)",
+           all(_x2(a) for a in without.values()), f"{without}")
+    controls = {label: _reach(_client(h, token, opener, bypass))
+                for label, h in CONTROL_HOSTS.items()}
+    _check(results, "M1 is never sent to hosts outside T2; they stay behind X2",
+           all(_x2(a) for a in controls.values()), f"{controls}")
+    return passed
+
+
+def _b3_independent(results: List[dict], host: str, token: str, opener: Callable,
+                    bypass: str) -> None:
+    client = _client(host, token, opener, bypass)
+    missing = _reach(client, "/api/v1/session")
+    _check(results, f"{host}: T3 M1 without a B3 bearer is refused by the application (401)",
+           missing == "app 401", missing)
+    invalid = _client(host, "invalid-" + "0" * 24, opener, bypass)
+    answer = _reach(invalid, "/api/v1/session", bearer=True)
+    _check(results, f"{host}: T5 M1 with an invalid B3 bearer is refused by the application (401)",
+           answer == "app 401", answer)
 
 
 def _edge(results: List[dict], token: str, opener: Callable) -> bool:
@@ -200,17 +248,27 @@ def _write_checks(results: List[dict], client: smoke.Client) -> None:
 
 
 def run(phase: str, token: str, *, write: bool = False, opener: Optional[Callable] = None,
-        environ: Optional[Dict[str, str]] = None) -> dict:
-    """Run one phase. Returns the evidence record (no credential in it)."""
+        environ: Optional[Dict[str, str]] = None, bypass: Optional[str] = None,
+        m1_variable: Optional[str] = None) -> dict:
+    """Run one phase. Returns the evidence record (no credential in it).
+
+    ``bypass`` set means M1: the client sends it, to the T2 hosts only."""
     opener = opener or _open
     results: List[dict] = []
     smoke_records: Dict[str, dict] = {}
     if phase in ("preflight", "verify"):
-        _environment_clean(results, dict(os.environ if environ is None else environ))
-        injected = _edge(results, token, opener)
+        _environment_clean(results, dict(os.environ if environ is None else environ),
+                           m1_variable if bypass else None)
+        if bypass:
+            injected = _edge_m1(results, token, opener, bypass)
+            if injected:
+                for host in (ALIAS, TARGET):
+                    _b3_independent(results, host, token, opener, bypass)
+        else:
+            injected = _edge(results, token, opener)
         if phase == "verify" and injected:
             for host in (ALIAS, TARGET):
-                client = _client(host, token, opener)
+                client = _client(host, token, opener, bypass)
                 record = smoke.run(client, write=False)
                 smoke_records[host] = record
                 _check(results, f"{host}: read-only smoke profile", record["ok"],
@@ -218,21 +276,23 @@ def run(phase: str, token: str, *, write: bool = False, opener: Optional[Callabl
                        f"/{len(record['results'])} PASS")
                 _principal_checks(results, host, client)
             if write:
-                _write_checks(results, _client(ALIAS, token, opener))
+                _write_checks(results, _client(ALIAS, token, opener, bypass))
     elif phase == "revoked":
         for host in T2_HOSTS:
-            client = _client(host, token, opener)
+            client = _client(host, token, opener, bypass)
             anonymous, bearer = _reach(client), _reach(client, "/api/v1/session", bearer=True)
             _check(results, f"{host}: X2 back after revocation (anonymous and B3-only stopped by X2)",
                    _x2(anonymous) and _x2(bearer), f"anonymous {anonymous}, B3-only {bearer}")
     else:
         raise ValueError(f"unknown phase {phase!r}")
-    record = {"format": FORMAT, "phase": phase, "t2_hosts": list(T2_HOSTS),
+    record = {"format": FORMAT, "phase": phase, "mechanism": "M1" if bypass else "O-A",
+              "t2_hosts": list(T2_HOSTS),
               "control_hosts": CONTROL_HOSTS, "results": results, "smoke": smoke_records,
               "ok": bool(results) and all(r["result"] == "PASS" for r in results),
               "writes_made": phase == "verify" and write}
-    if token and token in json.dumps(record):
-        raise smoke.SecretEchoed("the evidence would carry the bearer")
+    blob = json.dumps(record)
+    if (token and token in blob) or (bypass and bypass in blob):
+        raise smoke.SecretEchoed("the evidence would carry a credential")
     return record
 
 
@@ -243,15 +303,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--token-file", required=True, type=Path)
     parser.add_argument("--write", action="store_true",
                         help="verify: also run Scenarios B and C on the alias (appends records)")
+    parser.add_argument("--bypass-env", metavar="NAME",
+                        help="M1: read the bypass from this variable of the dedicated "
+                             "environment; sent to the T2 hosts only, never printed")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args(argv)
     if args.write and args.phase != "verify":
         parser.error("--write applies to verify only")
     token = args.token_file.read_text(encoding="utf-8").strip()
+    bypass = None
+    if args.bypass_env:
+        bypass = os.environ.get(args.bypass_env, "").strip()
+        if not bypass:
+            print(f"aborted: {args.bypass_env} is not set", file=sys.stderr)
+            return 2
     if args.write:
         print(f"WRITE: Scenario B and C runs will be appended on {ALIAS}", file=sys.stderr)
     try:
-        record = run(args.phase, token, write=args.write)
+        record = run(args.phase, token, write=args.write, bypass=bypass,
+                     m1_variable=args.bypass_env)
     except smoke.SecretEchoed as error:
         print(f"aborted: {error}", file=sys.stderr)
         return 3

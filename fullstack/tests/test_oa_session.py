@@ -5,6 +5,8 @@ from __future__ import annotations
 import contextlib
 import io
 import json
+import os
+import re
 import tempfile
 import unittest
 import urllib.error
@@ -204,7 +206,118 @@ class TheHostsAreTheDecidedOnes(unittest.TestCase):
             self.assertIn(host, adr)
         self.assertFalse(set(oa_session.CONTROL_HOSTS.values()) & set(oa_session.T2_HOSTS))
 
-    def test_the_tool_has_no_bypass_option_and_no_deploy_path(self):
+    def test_the_only_bypass_input_is_a_named_variable_and_there_is_no_deploy_path(self):
         source = (REPO_ROOT / "fullstack/deploy/oa_session.py").read_text(encoding="utf-8")
-        self.assertNotIn("--bypass", source)
+        self.assertEqual(["--bypass-env"], sorted(set(re.findall(r"--bypass[\w-]*", source))))
+        self.assertNotIn("--bypass-file", source)
         self.assertNotRegex(source, r"(?i)request_rollback|promote|/v\d+/deployments|release\(")
+
+
+SECRET = "m1-test-bypass-value-5c2e9a"
+
+
+class M1Edge:
+    """X2 as Vercel applies it: a request carrying the valid bypass reaches the
+    application on any deployment; anything else gets the protection 401 (JSON)."""
+
+    def __init__(self, server: LiveServer, valid=SECRET, injected=()):
+        self.server, self.valid, self.injected, self.seen = server, valid, set(injected), []
+
+    def __call__(self, request, timeout):
+        url = urllib.parse.urlsplit(request.full_url)
+        headers = {k.lower(): v for k, v in request.header_items()}
+        if url.hostname in self.injected:          # a proxy credential as well (must not be)
+            headers["x-vercel-protection-bypass"] = self.valid
+        self.seen.append((url.hostname, headers))
+        if self.valid is None or headers.get("x-vercel-protection-bypass") != self.valid:
+            raise urllib.error.HTTPError(
+                request.full_url, 401, "Unauthorized", {"Content-Type": "application/json"},
+                io.BytesIO(b'{"message":"Protected by Vercel Authentication"}'))
+        target = urllib.request.Request(
+            self.server.url + url.path + (("?" + url.query) if url.query else ""),
+            data=request.data, headers={k: v for k, v in request.header_items()},
+            method=request.get_method())
+        return urllib.request.urlopen(target, timeout=timeout)
+
+
+class TheM1Path(Base):
+
+    def run_m1(self, phase, edge=None, environ=None, **kw):
+        self.edge = edge or M1Edge(self.server)
+        return oa_session.run(phase, TOKEN, opener=self.edge, bypass=SECRET,
+                              m1_variable="AIOS_OA_BYPASS",
+                              environ={"AIOS_OA_BYPASS": SECRET} if environ is None else environ,
+                              **kw)
+
+    def test_preflight_proves_both_layers_independently(self):
+        record = self.run_m1("preflight")
+        self.assertTrue(record["ok"], json.dumps(record["results"], indent=1))
+        names = {r["check"] for r in record["results"]}
+        for host in (oa_session.ALIAS, oa_session.TARGET):
+            self.assertIn(f"{host}: T3 M1 without a B3 bearer is refused by the application (401)", names)
+            self.assertIn(f"{host}: T5 M1 with an invalid B3 bearer is refused by the application (401)", names)
+        self.assertEqual("M1", record["mechanism"])
+
+    def test_the_bypass_is_never_sent_outside_the_t2_hosts(self):
+        self.run_m1("verify", write=True)
+        for host, headers in self.edge.seen:
+            if host not in oa_session.T2_HOSTS:
+                self.assertNotIn("x-vercel-protection-bypass", headers)
+        self.assertTrue(any(h not in oa_session.T2_HOSTS for h, _ in self.edge.seen))
+
+    def test_verify_with_write_passes_and_holds_no_credential(self):
+        before = len(self.harness.aios.runs())
+        record = self.run_m1("verify", write=True)
+        self.assertTrue(record["ok"], json.dumps(record["results"], indent=1))
+        self.assertEqual(before + 2, len(self.harness.aios.runs()))
+        blob = json.dumps(record)
+        self.assertNotIn(SECRET, blob)
+        self.assertNotIn(TOKEN, blob)
+
+    def test_a_second_mechanism_attaching_the_bypass_is_caught(self):
+        record = self.run_m1("preflight", edge=M1Edge(self.server, injected=oa_session.T2_HOSTS))
+        failed = {r["check"] for r in record["results"] if r["result"] == "FAIL"}
+        self.assertTrue(any(c.startswith("T4 ") for c in failed))
+
+    def test_a_wrong_bypass_does_not_reach_the_application(self):
+        record = self.run_m1("preflight", edge=M1Edge(self.server, valid="another-value"))
+        self.assertFalse(record["ok"])
+        self.assertEqual({}, record["smoke"])
+
+    def test_other_bypass_variables_fail_the_custody_check(self):
+        record = self.run_m1("preflight", environ={"AIOS_OA_BYPASS": SECRET, "OTHER_BYPASS": "x"})
+        self.assertEqual("FAIL", self.results(record)[
+            "M1: only the designated variable holds a bypass (names only)"])
+
+    def test_after_revocation_x2_stops_the_revoked_bypass(self):
+        record = self.run_m1("revoked", edge=M1Edge(self.server, valid=None))
+        self.assertTrue(record["ok"], json.dumps(record["results"], indent=1))
+
+    def test_the_cli_reads_the_bypass_from_the_named_variable_and_prints_neither(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            token_file = Path(tmp, "token")
+            token_file.write_text(TOKEN + "\n", encoding="utf-8")
+            original, out = oa_session._open, io.StringIO()
+            oa_session._open = M1Edge(self.server, valid=None)
+            os.environ["AIOS_OA_BYPASS_TEST"] = SECRET
+            try:
+                with contextlib.redirect_stdout(out), contextlib.redirect_stderr(io.StringIO()):
+                    code = oa_session.main(["revoked", "--token-file", str(token_file),
+                                            "--bypass-env", "AIOS_OA_BYPASS_TEST",
+                                            "--out", str(Path(tmp, "e.json"))])
+            finally:
+                oa_session._open = original
+                del os.environ["AIOS_OA_BYPASS_TEST"]
+            self.assertEqual(0, code)
+            for text in (out.getvalue(), Path(tmp, "e.json").read_text(encoding="utf-8")):
+                self.assertNotIn(SECRET, text)
+                self.assertNotIn(TOKEN, text)
+
+    def test_an_unset_variable_aborts(self):
+        os.environ.pop("AIOS_OA_BYPASS_UNSET", None)
+        with tempfile.TemporaryDirectory() as tmp:
+            token_file = Path(tmp, "token")
+            token_file.write_text(TOKEN, encoding="utf-8")
+            with contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(2, oa_session.main(["preflight", "--token-file", str(token_file),
+                                                     "--bypass-env", "AIOS_OA_BYPASS_UNSET"]))

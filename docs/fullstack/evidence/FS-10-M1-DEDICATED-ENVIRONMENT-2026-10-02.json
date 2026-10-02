@@ -1,0 +1,42 @@
+{
+ "format": "fullstack.m1-dedicated-environment/1",
+ "at": "2026-10-02",
+ "authorization": "Founder instruction 2026-10-02: M1 client-side bypass in a dedicated Claude Code cloud environment (AD-FS10-ESC03-R1 fallback)",
+ "environment": {
+  "id": "env_01X4j1qVyxMRoTsGvotFpwue",
+  "name": "AIOS",
+  "kind": "anthropic_cloud",
+  "state": "active"
+ },
+ "sessions_in_environment": [
+  {
+   "id": "session_01JS1Yy2Uu4qCpb9gPUSshQt",
+   "status": "RUNNING",
+   "role": "the AIOS FS-10 operating session (holds the aios-operator private file)"
+  },
+  {
+   "id": "session_01Xgb77efedtcyJycudWF2nv",
+   "status": "ARCHIVED 2026-10-02",
+   "role": "O-A probe session created by this session; archived so it cannot read the M1 variable"
+  },
+  {
+   "id": "session_018MxqCcL9u5Lo5JEcjhuaZ3",
+   "status": "ARCHIVED 2026-07-11",
+   "role": "old research session; archived sessions cannot start"
+  }
+ ],
+ "unrelated_work": "all other sessions run in env_0165MzuvWJ7YeP6yHp6YBfth (MoriartyTalk)",
+ "routines": "none enabled",
+ "why_this_environment": "the aios-operator plaintext exists only in this session's private file; a new environment would need a token transfer (prohibited channel) or a rotation (not authorized)",
+ "accepted_m1_residuals": {
+  "G3/G6": "any command in the session can read the variable — controlled by conduct: no unrelated work while it is set; regression suites run after removal",
+  "G7": "session isolation by the environment being single-session (verified above)",
+  "G8": "no Routine exists; none may be created during the window",
+  "G10": "the operating VM keeps the last value until restored; revoke-first makes it a revoked value"
+ },
+ "m1_preconditions_pending": [
+  "account holder deletes the O-A API credential from this environment (one mechanism only; check T4 detects a second one)",
+  "account holder adds variable AIOS_OA_BYPASS to this environment's variables"
+ ],
+ "credential_handling": "no value read, printed or stored by this session"
+}

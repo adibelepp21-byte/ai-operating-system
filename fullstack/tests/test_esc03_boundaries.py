@@ -67,9 +67,15 @@ class NoBypassLivesInTheApplication(unittest.TestCase):
                 if re.search(r"(?i)x-vercel-protection-bypass|VERCEL_AUTOMATION_BYPASS|_vercel_share|"
                              r"x-vercel-trusted-oidc", text):
                     carriers.append(rel)
-        # The smoke tool is the one client that may send a temporary bypass, read
-        # from a file at run time for FDP-009-03 verification; it holds none.
-        self.assertEqual(["fullstack/deploy/smoke.py"], carriers)
+        # The smoke tool may send a temporary bypass, read from a file at run time
+        # for FDP-009-03 verification; the O-A session runner may send the M1
+        # bypass read from the dedicated environment's variable (AD-FS10-ESC03-R1
+        # fallback, Founder-authorized 2026-10-02). Neither holds a value.
+        self.assertEqual(["fullstack/deploy/oa_session.py", "fullstack/deploy/smoke.py"],
+                         sorted(carriers))
+        for rel in carriers:
+            text = (REPO_ROOT / rel).read_text(encoding="utf-8")
+            self.assertNotRegex(text, r"(?i)protection-bypass[\"']?\s*[:=]\s*[\"'][A-Za-z0-9]{16,}")
 
     def test_nc03_vercel_json_configures_no_protection_change(self):
         config = json.loads((REPO_ROOT / "vercel.json").read_text(encoding="utf-8"))
