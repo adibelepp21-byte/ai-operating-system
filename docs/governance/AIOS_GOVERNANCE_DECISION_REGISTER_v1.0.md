@@ -10351,3 +10351,17 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Finding** | Every mechanism exists. Bindings missing:<br>• runtime binder;<br>• result model;<br>• Trace identity;<br>• verification → decision;<br>• intake;<br>• unified view.<br>Governance: executive Agent as actor, decider and delegator not authorized (`FD-P11-001 §4.1`); P13 `issue.delegation` reserved; PD-01 ESD-01…ESD-10 exist as documentation, G-10 open. Architectural question: Role / Responsibility is not a ratified entity |
 | **Candidate executives** | not created, not registered. Six overlap ESD functions; CFO, Creative, Client Relations and PR/Social have no canonical counterpart |
 | **State** | **MECHANISMALLY READY — INTEGRATION REQUIRED** · deployment PAUSED |
+
+## 131. Agency Governance & Architecture Reconciliation Gate — CLOSED WITH DECISION REQUIRED (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Instruction** | `acts/DIR-AIOS-AGENCY-GOVERNANCE-ARCHITECTURE-RECONCILIATION-GATE.md` (verbatim; content sha256 `b4d5cfc091d81c2834589acd5db230015ec1f4e2e4e14da228a77df158efb776`). No Act, Micro-Act or Founder Decision created |
+| **Output** | `docs/architecture/agency/AIOS-AGENCY-GOVERNANCE-ARCHITECTURE-RECONCILIATION-GATE.md`: evidence E-01…E-31, OUTPUTS 1–6, AD-01…AD-14, candidate mapping, exit conditions. Read-only |
+| **Role** | **ROLE = NON-CANONICAL DESCRIPTOR**. Not among the twelve entities. Role Group is PD-01 documentation only. Responsibility is carried per assignment by the Agent Definition and the W4 grant |
+| **ESD** | documentation construct inside PD-01 (FROZEN · NOT ACTIVATED · NOT ACTIVATION-ELIGIBLE):<br>• no authority assigned (A5 / C / D name no ESD);<br>• no resident capability;<br>• no runtime binding;<br>• G-10 open |
+| **Executive Agent** | ACT **BOUNDED** (W4 recipient only). DECIDE: governed matters **NOT AUTHORIZED**; operational rights **UNKNOWN**. DELEGATE **NOT AUTHORIZED** (`FD-P11-001 §4.1`; code-enforced). VERIFY: evidence only; accept / reject / rework neither resident nor authorized. ESCALATE: raise only. Accountability stays with the delegator, then the Founder |
+| **Architecture** | Three-tier agency (Founder → Co-Founder / CEO → Agent Instances) = activation / binding / integration on existing mechanisms. No new subsystem; no true architectural gap. The four-tier executive model is blocked on authority, not mechanism |
+| **Decisions required** | Founder:<br>• Q-1 executive actor;<br>• Q-2 decision rights;<br>• Q-3 non-CEO delegator;<br>• Q-4 agent accept / reject;<br>• Q-5 candidate model / governance expansion;<br>• Q-9 PD-01 activation.<br>Founder / Architect via ADR:<br>• Q-6 role / position binding;<br>• Q-7 G-10;<br>• Q-8 PD capability population |
+| **Candidates** | the 10 candidate executives are not created or registered. Six overlap PD-01 documentation; CFO, Creative, Client Relations and PR / Social are outside the current Platform Organization |
+| **State** | **GATE CLOSED WITH DECISION REQUIRED** · deployment PAUSED |
