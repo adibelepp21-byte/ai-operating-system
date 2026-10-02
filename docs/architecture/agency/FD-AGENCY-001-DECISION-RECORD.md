@@ -15,7 +15,7 @@
 | Q | Founder selection | Operative meaning |
 |---|---|---|
 | Q1 | **B** | Three tiers only: Founder → Co-Founder / CEO → Agent. No Executive-Agent tier; a separate hierarchy is deferred and needs separate authorization |
-| Q2 | **"B — Bounded decision rights only"** | See `§2` — label / text discrepancy **D-1**. Common floor applied |
+| Q2 | **A** (clarified; recorded as "B") | Bounded operational decision rights, **only when explicitly granted** by a Founder-authorized, P13-style envelope. **None today.** D-1 resolved by the Founder Q2 Clarification (`§2.1`) |
 | Q3 | **A** | Delegation stays with the Co-Founder / CEO office. No agent delegates. Agent-to-agent coordination only inside shared workflow / execution mechanisms |
 | Q4 | **A** | Agents produce verification evidence, findings, status and escalations. Formal accept / reject / send-back stays with the existing authorized authority |
 | Q5 | **C** | The ten-agent model is a deferred candidate direction: **CANDIDATE ONLY — NOT CANONICAL — NOT REGISTERED — NOT ACTIVATED**. Map functions first (`§4`). Luffy-as-CEO is not authorized |
@@ -37,7 +37,7 @@ Conditions 1–9 of the instrument are recorded as binding. In short:
 
 ---
 
-## 2. D-1 — Q2 label and text disagree (not resolved by this record)
+## 2. D-1 — Q2 label and text disagree (RESOLVED, see `§2.1`)
 
 In the gate as issued (`§132` instrument):
 
@@ -58,6 +58,24 @@ The decision rule says no decision may be inferred, so this record does not pick
 
 **Effect.** Nothing planned depends on D-1. No agent decision envelope will be prepared or proposed until the Founder states which reading is meant.
 
+### 2.1 Resolution — Founder Q2 Clarification (Register `§134`)
+
+`docs/governance/acts/FD-AGENCY-001-Q2-CLARIFICATION.md` (verbatim; content sha256 `e2a4486753d697c92edce30b98c2604dd0ad81adc6a454ed15c27674c700627b`): *"Q2 is to be interpreted as Q2-A, not Q2-B. No other Q1–Q9 decision is changed by this clarification."*
+
+The operative Q2 is:
+
+| # | Rule (Founder clarification items 1–9) |
+|---|---|
+| Q2.1 | No decision rights by default |
+| Q2.2 | Bounded **operational** decision rights may be granted in the future, only through an explicit **Founder-authorized** authority envelope |
+| Q2.3 | Any envelope is bounded, explicit, auditable, and follows the P13 envelope-gated decision pattern (proposal → `AuthorityGate` → recorded envelope → decision) |
+| Q2.4–Q2.6 | Excluded always: Founder-reserved matters; governed matters reserved to the Founder or CEO; non-sub-delegable approval authority |
+| Q2.7 | Decision authority does not imply delegation authority (Q3-A stands) |
+| Q2.8 | An Agent cannot delegate its decision authority to another Agent |
+| Q2.9 | Without a grant, an Agent is limited to analysis, proposal, execution within delegated work, verification evidence and escalation |
+
+**Today: agent decision rights NONE.** No envelope exists, and none is prepared or proposed by this record. The envelope issuer is the Founder; the CEO office cannot issue one.
+
 ---
 
 ## 3. Resulting authority envelope (`FD-AGENCY-001 §10` item 4)
@@ -71,7 +89,7 @@ CO-FOUNDER / DELEGATED CEO (Claude Code) — A01–A18 unchanged; sole delegator
    │                                        verifier (A11); accountable for delegated work
    ▼  W4 grant (bounded work; revocable)
 AGENT INSTANCE — ACT within one grant on permitted capabilities;
-                 DECIDE none (D-1 open for the future only); DELEGATE none;
+                 DECIDE none today (future: Founder envelope only, Q2-A); DELEGATE none;
                  VERIFY evidence only; ESCALATE raise only (closing needs HumanAuthority);
                  coordinates with other instances only through shared Workflow / Knowledge /
                  scoped Memory (Domain Model inv. 13)
@@ -169,7 +187,7 @@ Each item is within existing authority and consistent with Q1-B…Q9-A. **Nothin
 - RC-1 result model and RC-2 Trace instance identity, if they touch `native_core` (reserved `change.native_core`; ADR);
 - continuous operation on any deployed surface (deployment paused);
 - GAP-A…GAP-F;
-- anything that depends on D-1.
+- any agent decision envelope (Founder-issued only, Q2.2).
 
 ---
 
@@ -177,10 +195,10 @@ Each item is within existing authority and consistent with Q1-B…Q9-A. **Nothin
 
 | # | Condition | State |
 |---|---|---|
-| 1 | Q-1…Q-9 have explicit dispositions | YES. Q2 is explicit, but its label and text disagree (D-1) |
+| 1 | Q-1…Q-9 have explicit dispositions | YES. Q2 clarified as Q2-A (`§2.1`) |
 | 2 | Conditions recorded | YES — `§1` |
-| 3 | Nothing inferred from silence | YES. D-1 is not resolved by inference |
-| 4 | Resulting envelope unambiguous | **YES for today** (`§3`). The future reach of Q2 waits on D-1 |
+| 3 | Nothing inferred from silence | YES. D-1 was resolved by the Founder, not by inference |
+| 4 | Resulting envelope unambiguous | **YES** (`§3`, `§2.1`) |
 | 5 | Architecture questions handed to the proper process | YES. G-10 closed by Q7-A:<br>• the Register entry names it under **Closes**, so `tools/platform_organization_gate.py` reports *"CLOSED by FD-AGENCY-001"* and PD-01 no longer carries REQUIRES ARCHITECT DECISION;<br>• live-state tests updated to match;<br>• the NC-13 controls keep testing pre-decision logic on a fixture with this closure removed;<br>• `SYSTEMIC-GAP-MAP.md` is **not** edited: it is part of the FD-PO-004-certified Platform Organization baseline, and an edit fails certified-evidence integrity. The Register entry is the record of closure.<br>GAP-B…F routed to Founder Decision; GAP-A to an implementation decision first |
 | 6 | No implementation beyond approved scope | YES. None begun |
 
@@ -188,4 +206,4 @@ Each item is within existing authority and consistent with Q1-B…Q9-A. **Nothin
 
 - FD-AGENCY-001 is **REGISTERED · OPERATIVE**.
 - The gate is **CLOSED** for Q1, Q3–Q9.
-- Q2 is **OPERATIVE AT ITS COMMON FLOOR**, with the D-1 confirmation pending. This does not block anything on the implementation surface.
+- Q2 is **Q2-A**, clarified (Register `§134`). Agent decision rights today: **NONE**.

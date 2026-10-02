@@ -10394,3 +10394,15 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Record** | `docs/architecture/agency/FD-AGENCY-001-DECISION-RECORD.md`:<br>• dispositions;<br>• D-1;<br>• the resulting envelope;<br>• the PD-01 function mapping (Q5-C steps 1–4, Q8-B): 8 of 10 functions have an authority or mechanism counterpart, F-03 a partial Capability counterpart, risk management a genuine gap; CFO, Creative, Client Relations, PR / Social and Legal are genuine gaps outside the Platform Organization, routed to Founder Decision;<br>• implementation surface S-1…S-7, none started |
 | **Not changed** | no Agent, Role, Position, ESD, Department or Capability created; candidates CANDIDATE ONLY — NOT CANONICAL — NOT REGISTERED — NOT ACTIVATED; Co-Founder / CEO identity unchanged; PD-01 FROZEN, NOT ACTIVATION-ELIGIBLE; deployment PAUSED; FD-2, G-09 / ADR-0029, Constitution and Delegation Charter untouched |
 | **State** | **FD-AGENCY-001 REGISTERED · OPERATIVE** · Q2 at its common floor (D-1 pending) · gate CLOSED |
+
+## 134. FD-AGENCY-001 — Founder Q2 Clarification: Q2-A, Bounded Operational Decision Rights Only When Explicitly Granted; None Today (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `acts/FD-AGENCY-001-Q2-CLARIFICATION.md` (verbatim; content sha256 `e2a4486753d697c92edce30b98c2604dd0ad81adc6a454ed15c27674c700627b`). Founder (Moriarty), 2026-10-02, APPROVED |
+| **Resolves** | D-1 recorded at `§133`: Q2 is **Q2-A**, not Q2-B. No other Q1–Q9 disposition changed |
+| **Operative Q2** | • no decision rights by default;<br>• bounded **operational** decision rights may be granted later, only through an explicit **Founder-authorized** envelope that is bounded, auditable and P13 envelope-gated;<br>• always excluded: Founder-reserved matters, governed matters reserved to the Founder or CEO, and non-sub-delegable approval authority;<br>• decision authority does not imply delegation authority, and is never delegable agent → agent;<br>• without a grant, an agent is limited to analysis, proposal, execution within delegated work, verification evidence and escalation |
+| **Current state** | agent decision rights: **NONE**. No envelope exists or is proposed |
+| **Record** | `docs/architecture/agency/FD-AGENCY-001-DECISION-RECORD.md` `§1`, `§2.1`, `§3`, `§6` updated |
+| **Not changed** | no Agent created or activated; no decision authority granted; CEO authority unchanged; no agent delegation; no entity or capability; PD-01 FROZEN; deployment PAUSED |
+| **State** | **FD-AGENCY-001 REGISTERED · OPERATIVE · Q2 = Q2-A** · gate CLOSED |
