@@ -1,0 +1,42 @@
+{
+ "format": "fullstack.oa-b3-diagnosis/1",
+ "at": "2026-10-02T08:25Z",
+ "question": "does Authorization: Bearer <aios-operator> reach the AIOS application on the O-A credential hosts?",
+ "constraints": "read-only; no Production, X2, B3, credential or scope change; no write; neither credential printed or exposed",
+ "facts": [
+  {
+   "id": "F1",
+   "source": "fullstack/backend/api.py, security.py (unchanged since deployed commit d05261c)",
+   "finding": "B3 reads only the Authorization header; absent, malformed and unknown tokens all yield the same 401 'no authenticated principal'"
+  },
+  {
+   "id": "F2",
+   "source": "Vercel runtime logs 08:01-08:02Z (both deployments)",
+   "finding": "every bearer request answered by the application (request_id present) with 401; no AIOS_OPERATOR_TOKENS refusal line"
+  },
+  {
+   "id": "F3",
+   "source": "Vercel project env metadata (not decrypted)",
+   "finding": "Production AIOS_OPERATOR_TOKENS updatedAt 1790837003374, before dpl_76CYC and dpl_s8c6m were built"
+  },
+  {
+   "id": "F4",
+   "source": "private fingerprint check",
+   "finding": "the operator token matches the recorded sha256 prefix 0ccb723c"
+  },
+  {
+   "id": "F5",
+   "source": "evidence/FS-10-FDP-010-OPERATIONAL-ACCESS-ROLLBACK-2026-10-01.json",
+   "finding": "same token, same immutable dpl_76CYC, same client code, bypass sent by the client through the same agent proxy: GET /session -> 200, subject aios-operator"
+  },
+  {
+   "id": "F6",
+   "source": "dummy-header probe to postman-echo.com and httpbin.org (no credential attached)",
+   "finding": "a placeholder Authorization header arrives unchanged; x-vercel-protection-bypass is not attached to these hosts"
+  }
+ ],
+ "only_variable": "for the three O-A hosts the bypass is now attached by the environment's API credential instead of being sent by the client",
+ "classification": "B — the Authorization header does not reach the application intact on the credential hosts (stripped or replaced between client and app)",
+ "basis": "differential: F3-F5 rule out a token, configuration or deployment cause (C) and a B3 rejection of a correctly received token (A); F6 shows the proxy forwards Authorization on other hosts. Not directly observed at the application, which cannot report whether the header was present (F1)",
+ "consequence": "D — the provider credential path as configured is incompatible with a client-supplied Authorization header on the same hosts"
+}
