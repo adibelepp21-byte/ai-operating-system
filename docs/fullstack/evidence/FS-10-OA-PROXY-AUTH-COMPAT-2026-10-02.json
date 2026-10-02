@@ -1,0 +1,43 @@
+{
+ "format": "fullstack.oa-proxy-auth-compat/1",
+ "at": "2026-10-02",
+ "question": "Does an environment API credential of type Bearer, with custom header x-vercel-protection-bypass (prefix cleared) for the three O-A hosts, preserve a client-supplied Authorization: Bearer <token> header?",
+ "provider_evidence": [
+  {
+   "source": "code.claude.com/docs/en/cloud-environments, 'Add a credential' (read 2026-10-02)",
+   "quote": "Keep the default Credential type, Bearer, for an API key that travels in a request header ... Custom headers: one row for the header that carries the key. The row starts with Authorization as the header's Name and Bearer as its Prefix; paste the key itself as the Value. For a header like X-Api-Key that takes the bare value, change the name and clear the prefix",
+   "bears_on": "the key may be carried in a renamed header; nothing about a client's existing Authorization header"
+  },
+  {
+   "source": "code.claude.com/docs/en/cloud-environments, same section",
+   "quote": "For an API that authenticates another way, pick a different Credential type. The list is the same one Claude Tag ... offers",
+   "bears_on": "the environment credential types are the Claude Tag types"
+  },
+  {
+   "source": "claude.com/docs/claude-tag/admins/connections/custom, 'Credential types' (read 2026-10-02)",
+   "quote": "Bearer — An API key or token sent as Authorization: Bearer <token>.",
+   "bears_on": "the Bearer type is defined as an Authorization-header credential"
+  },
+  {
+   "source": "claude.com/docs/claude-tag/admins/connections/custom, 'Fill out the Custom tool form'",
+   "quote": "Custom headers — Any extra headers the API requires beyond the credential. Shown only for the Bearer credential type.",
+   "bears_on": "in this form, custom headers are extra headers beyond an Authorization credential"
+  },
+  {
+   "source": "claude.com/docs/claude-tag/admins/connections/custom, 'AWS SigV4'",
+   "quote": "Agent Proxy strips that signature and re-signs with the stored credential before the request leaves for AWS.",
+   "bears_on": "the proxy is documented to replace client authentication material for at least one credential type"
+  },
+  {
+   "source": "claude.com/docs/claude-tag/concepts/agent-identity, 'Agent Proxy'",
+   "quote": "The proxy attaches that connection's credential and forwards the request.",
+   "bears_on": "no statement on headers the client already sends"
+  }
+ ],
+ "provider_statement_on_client_authorization": "NOT DOCUMENTED — no page states whether a client-supplied Authorization header is preserved, replaced or removed when a Bearer credential with a renamed header is injected",
+ "project_evidence": "evidence/FS-10-OA-B3-DIAGNOSIS-2026-10-02.json (differential: same token and deployment authenticate when the client sends the bypass; 401 under the environment credential)",
+ "classification": "STRONGLY INDICATED — PROVIDER PROXY / AUTHORIZATION HEADER INTERACTION; mechanism (replace vs remove) not observed; provider behaviour undocumented",
+ "outcome": "D — PROVIDER BEHAVIOR UNKNOWN",
+ "support_question": "Claude Code cloud environment (Pro/Max), Anthropic-hosted. An API credential of type Bearer is configured with Allowed websites = three *.vercel.app hosts and one custom header row: Name x-vercel-protection-bypass, Prefix empty, Value = secret (no Authorization row). A command in the session sends its own 'Authorization: Bearer <app token>' to those hosts. Does the agent proxy (a) keep that client Authorization header unchanged, (b) replace it, or (c) remove it, when it injects the custom header? If (b) or (c), is there a credential type or setting that injects only a custom header and leaves the client's Authorization header untouched?",
+ "changes_made": "none"
+}
