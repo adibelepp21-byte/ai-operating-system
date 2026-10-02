@@ -1,0 +1,63 @@
+{
+ "checked_at": "2026-10-02T17:48:16.670453+00:00",
+ "script_sha256": "ae7324c8550965640bcf2d447b6a41d642e080feb1fb241babfb38ad5f898ee1",
+ "reconstructed": {
+  "instances": [
+   "engineering-intelligence-instance-001"
+  ],
+  "active_grants": [
+   "0a697039a63f4c17"
+  ],
+  "revoked_grants": [],
+  "open_escalations": [],
+  "unreadable_records": []
+ },
+ "grant": {
+  "delegation_id": "0a697039a63f4c17",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "recipient_instance": "engineering-intelligence-instance-001",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "objective": "Verify tools/w4_delegation.py against the seven rules in docs/architecture/agency/W4-OPERATIONAL-LEDGER.md \u00a73.",
+  "capability_scope": [
+   "engineering-intelligence"
+  ],
+  "work_scope": [
+   "verify-ledger-rules"
+  ],
+  "lifecycle_boundary": "one execution of plan agency-s2-ledger-rule-verification-plan-0",
+  "verification_requirement": "every one of the seven rules reported satisfied or not, each with the code location that establishes it",
+  "escalation_condition": "any step outside the delegated work scope, a revoked delegation, or a retired instance",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "termination_condition": "on completion of the bound plan, or revocation",
+  "status": "ACTIVE"
+ },
+ "plan_provenance": {
+  "plan": "agency-s2-ledger-rule-verification-plan-0",
+  "step": "verify-ledger-rules",
+  "faults": [],
+  "goal": "agency-s2-ledger-rule-verification",
+  "plan_authority": "FD-AGENCY-001 S-2 (docs/governance/acts/DIR-AIOS-AGENCY-S2-PLAN-TO-DELEGATION.md)",
+  "plan_current": true
+ },
+ "negative_controls": {
+  "agent_cannot_issue": "refused: DelegationError",
+  "unmarked_step_cannot_be_delegated": "refused: DelegationError",
+  "caller_cannot_widen_work_scope": "refused: TypeError",
+  "caller_cannot_rename_plan": "refused: TypeError",
+  "caller_cannot_move_accountability": "refused: TypeError",
+  "capability_beyond_recipient_refused": "refused: DelegationError",
+  "founder_reserved_instrument_refused": "refused: DelegationError",
+  "unregistered_recipient_refused": "refused: DelegationError",
+  "superseded_plan_refused": "refused: InvalidPlan",
+  "root_unchanged_by_controls": true
+ },
+ "boundary": {
+  "root_protected": false,
+  "root_in_p11_operation_roots": false,
+  "certified_p11_files_checked": 58,
+  "certified_mismatches": [],
+  "integrity_faults": [],
+  "git_status_certified_roots": "(clean)"
+ },
+ "all_ok": true
+}

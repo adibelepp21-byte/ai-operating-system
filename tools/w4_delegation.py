@@ -551,3 +551,102 @@ def read_dispositions(root: Path, ledger: Path = LIVE_LEDGER
         else:
             valid[gid] = item
     return valid, tuple(faults)
+
+
+# ---- plan → delegation (FD-AGENCY-001 · S-2) ---------------------------------
+#
+# Planning identifies work that needs delegating (`PlanningSurface.
+# delegation_requirements`) and, by design, can never turn it into a
+# delegation: its `DelegationRequirement` has no delegator field, and
+# `ACT-CC-P11-005 §11` forbids converting a plan into a delegation record. The
+# conversion therefore belongs to the **delegator**, here, and to no one else.
+#
+# This is the only new code S-2 needs. It adds no authority, contract field,
+# state or provenance store:
+#
+# * the requirement is re-derived from the surface, so it is genuine and its
+#   plan is current (a superseded plan, or a step Planning did not mark for
+#   delegation, yields nothing to issue);
+# * everything that carries provenance is fixed from the requirement and cannot
+#   be supplied by the caller: objective = the step statement; work scope =
+#   exactly that one step; lifecycle boundary = "one execution of plan <key>",
+#   the convention every W4 grant already uses (parsed by `_bound_plan`);
+# * accountability and termination are fixed (`FD-P11-001 §15`; the S-1
+#   completion semantics);
+# * issuance itself is `W4DelegationRegistry.issue`, unchanged: the delegator,
+#   the FD-P11-001 citation, the registered recipient and the capability bound
+#   are all enforced there.
+
+TERMINATION_ON_PLAN = "on completion of the bound plan, or revocation"
+
+
+def issue_from_plan(delegations: W4DelegationRegistry, surface, plan, step_key: str,
+                    *, delegator: str, recipient_instance: str,
+                    authority: AuthorityProvenance, capability_scope: Tuple[str, ...],
+                    resource_boundary: str, output_expectation: str,
+                    verification_requirement: str,
+                    escalation_condition: str) -> W4Delegation:
+    """The delegator issues one bounded grant for one step a plan marked.
+
+    Planning delegates nothing; this is the delegator acting on what Planning
+    identified. The caller cannot widen the work, rename the plan or move
+    accountability.
+    """
+    if delegator != AUTHORIZED_DELEGATOR:
+        raise DelegationError(
+            f"{delegator!r} is not the authorized W4 delegator (FD-P11-001 §4.1); "
+            "a plan does not make anyone a delegator")
+    requirements = {r.step_key: r for r in surface.delegation_requirements(plan)}
+    if step_key not in requirements:
+        raise DelegationError(
+            f"plan {plan.key!r} does not mark step {step_key!r} as requiring "
+            "delegation; only work Planning identified may be delegated from it")
+    requirement = requirements[step_key]
+    return delegations.issue(
+        delegator=delegator, recipient_instance=recipient_instance,
+        authority=authority, objective=requirement.scope_described,
+        capability_scope=tuple(capability_scope),
+        work_scope=(requirement.step_key,),
+        lifecycle_boundary=f"one execution of plan {requirement.plan_key}",
+        resource_boundary=resource_boundary,
+        output_expectation=output_expectation,
+        verification_requirement=verification_requirement,
+        escalation_condition=escalation_condition,
+        accountable_party=delegator,
+        termination_condition=TERMINATION_ON_PLAN)
+
+
+def plan_provenance(record: dict, surface) -> dict:
+    """Trace a persisted grant back to the plan step it was issued for.
+
+    Reads only existing fields: the lifecycle boundary names the plan, the work
+    scope names the step. Returns what was found and every mismatch; it does not
+    decide anything.
+    """
+    plan_key = _bound_plan(record)
+    found = {"plan": plan_key, "step": None, "faults": []}
+    scope = record.get("work_scope", [])
+    if plan_key is None:
+        found["faults"].append("the lifecycle boundary names no plan")
+        return found
+    plans = [p for goal in surface._goals for p in surface.history(goal)  # noqa: SLF001
+             if p.key == plan_key]
+    if len(plans) != 1:
+        found["faults"].append(f"{len(plans)} plans named {plan_key!r} on the surface")
+        return found
+    plan = plans[0]
+    found.update(goal=plan.goal_key, plan_authority=plan.authority.cited(),
+                 plan_current=not surface.is_superseded(plan))
+    if len(scope) != 1:
+        found["faults"].append(f"work scope {scope} is not exactly one plan step")
+        return found
+    step = next((s for s in plan.steps if s.key == scope[0]), None)
+    if step is None:
+        found["faults"].append(f"step {scope[0]!r} is not in plan {plan_key!r}")
+        return found
+    found["step"] = step.key
+    if not step.requires_delegation:
+        found["faults"].append(f"step {step.key!r} is not marked for delegation")
+    if record.get("objective") != step.statement:
+        found["faults"].append("the objective is not the step statement")
+    return found

@@ -1,0 +1,39 @@
+{
+  "goals": [
+    {
+      "key": "agency-s2-ledger-rule-verification",
+      "statement": "Verify that the delegation module enforces the operational-ledger rules documented for S-1.",
+      "authority_instrument": "FD-AGENCY-001 S-2",
+      "authority_record": "docs/governance/acts/DIR-AIOS-AGENCY-S2-PLAN-TO-DELEGATION.md",
+      "chain": [
+        {
+          "key": "agency-s2-ledger-rule-verification-plan-0",
+          "goal_key": "agency-s2-ledger-rule-verification",
+          "origin": "planned",
+          "revision": 0,
+          "supersedes": null,
+          "reason": null,
+          "evidence": [],
+          "authority_instrument": "FD-AGENCY-001 S-2",
+          "authority_record": "docs/governance/acts/DIR-AIOS-AGENCY-S2-PLAN-TO-DELEGATION.md",
+          "steps": [
+            {
+              "key": "verify-ledger-rules",
+              "statement": "Verify tools/w4_delegation.py against the seven rules in docs/architecture/agency/W4-OPERATIONAL-LEDGER.md \u00a73.",
+              "depends_on": [],
+              "requires_delegation": true
+            },
+            {
+              "key": "review-ledger-verification",
+              "statement": "Review the verification result and accept, reject or send it back (Co-Founder / CEO, A11).",
+              "depends_on": [
+                "verify-ledger-rules"
+              ],
+              "requires_delegation": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
