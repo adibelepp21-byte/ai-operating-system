@@ -10321,3 +10321,12 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Boundary** | Creating the bypass at Vercel and attaching it as an environment API credential are account-holder controls (`FDP-010` `§4.2`). The connector path that returns the value stays rejected (FDP-011 T5; FDP-012 `§8`). M1 is not substituted. The exact actions are in `docs/fullstack/FS-10-FDP012-EXECUTION-RECORD.md` `§6` and `§8` |
 | **Documents** | execution record `§8`; current authority (`.md` / `.json`); runbook `§15`; deployment head; Release Package `§24` (seven states kept distinct). ESC-03 resolution record (`§111`/`§112`) unchanged: ESC-03 is not resolved |
 | **State** | **FS-10 BLOCKED — O-A credential not installed (account-holder action)** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · FS-10 **NOT READY** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |
+
+## 127. FS-10 O-A Session Attempt — Bypass Reported Created; Preflight FAIL (No Injection, Also in a Fresh Session); FS-10 Still BLOCKED (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Instruction** | `acts/MI-FS10-CONTINUE-OA-CREDENTIAL-INSTALLED.md` (verbatim; content sha256 `82fe5b17900b05ba326892dcdb9021c101e4aa7cc3d2ddb6d2711de53460d1e3`). No Act, Micro-Act or Founder Decision created |
+| **Run** | `oa_session preflight` (evidence `docs/fullstack/evidence/FS-10-OA-ATTEMPT-2026-10-02.json`):<br>• no bypass in the environment: PASS;<br>• injection on the three T2 hosts: **FAIL** — stopped by X2;<br>• unlisted hosts stopped by X2: PASS.<br>A fresh session in the same environment (`session_01Xgb77efedtcyJycudWF2nv`, public health only) also saw no injection |
+| **Result** | the Vercel bypass is reported created, but the environment API credential (`AD-FS10-ESC03-R1` `§5` step 2) is not attached for the `§2` hosts. Verification, rollback re-verification and revocation have **not run**. Nothing revoked or changed; no credential exposed |
+| **State** | **FS-10 BLOCKED — O-A environment credential not effective (account-holder action)** · ESC-03 **NOT RESOLVED** · FDP-010 **NOT COMPLETE** · **RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE** |

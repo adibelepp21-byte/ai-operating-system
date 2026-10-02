@@ -153,3 +153,25 @@ It then completes FS-10 reconciliation and stops at the Founder Release Gate.
 The steps of `§6` remain the exact actions required. The P1–P8 run, ESC-03 resolution, FDP-010 completion and the FS-10 gate follow in the first session started after the account holder confirms *"O-A credential installed"*.
 
 **State:** FS-10 BLOCKED — O-A credential not installed (account-holder action). ESC-03 NOT RESOLVED · FDP-010 NOT COMPLETE · FS-10 NOT READY · RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE.
+
+## 9. O-A session attempt after the account holder's report (2026-10-02; Register `§127`)
+
+**Instruction:** `acts/MI-FS10-CONTINUE-OA-CREDENTIAL-INSTALLED.md` (verbatim; content sha256 `82fe5b17900b05ba326892dcdb9021c101e4aa7cc3d2ddb6d2711de53460d1e3`). The account holder reported the Vercel Protection Bypass for Automation **created**.
+
+**Window checks:** no enabled Routines; no other running session.
+
+**Preflight** (`evidence/FS-10-OA-ATTEMPT-2026-10-02.json`, no credential in it):
+
+| Check | Result |
+|---|---|
+| no bypass in the process environment | PASS |
+| injection on the three T2 hosts | **FAIL** — every host stopped by X2 (401 *"Protected deployment"*, no `X-Request-Id`) |
+| unlisted hosts stopped by X2 | PASS |
+
+**Fresh-session probe:** this session was resumed, not new (created 2026-09-16). A new session was therefore started in the same environment, `session_01Xgb77efedtcyJycudWF2nv`. It ran public health requests only, with no token. It reported 401 without `X-Request-Id` on every host, so no injection reaches a newly started session either.
+
+**Conclusion:** the environment API credential (`AD-…-R1` `§5` step 2) is not attached for these hosts. Either it was not added, or its hosts or header do not match `§2`. This is the account holder's side; the CEO cannot inspect it.
+
+The P1–P5 checks, the rollback-target verification through O-A and the revocation test have **not run**. Nothing was revoked, released or changed: Production, X2 and B3 are unchanged.
+
+**State:** O-A CREDENTIAL NOT EFFECTIVE (bypass created; environment credential not attached) · PREFLIGHT FAIL · ESC-03 NOT RESOLVED · FDP-010 NOT COMPLETE · FS-10 BLOCKED · RELEASE NOT AUTHORIZED · LIVE NOT ACTIVE.

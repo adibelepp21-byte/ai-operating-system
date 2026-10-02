@@ -1,0 +1,55 @@
+{
+ "format": "fullstack.oa-session-attempt/1",
+ "at": "2026-10-02T06:54:10Z",
+ "context": "account holder reported the Vercel Protection Bypass for Automation created; resumed session and a fresh child session probed",
+ "window_checks": {
+  "routines_enabled": 0,
+  "other_running_sessions": "none (this session only; the probe session below was created for the check)"
+ },
+ "preflight_this_session": {
+  "format": "fullstack.oa-session/1",
+  "phase": "preflight",
+  "t2_hosts": [
+   "aios-platform-adibelepp21-bytes-projects.vercel.app",
+   "aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app",
+   "aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app"
+  ],
+  "control_hosts": {
+   "unlisted Production deployment (dpl_CHV72…)": "aios-platform-p5o0g6or9-adibelepp21-bytes-projects.vercel.app",
+   "Preview deployment (dpl_HvyYh…)": "aios-platform-9ohavmco2-adibelepp21-bytes-projects.vercel.app"
+  },
+  "results": [
+   {
+    "check": "no bypass in the process environment",
+    "result": "PASS",
+    "evidence": "bypass-named variables []; header-carrying []",
+    "mutates": false
+   },
+   {
+    "check": "injection proven on every T2 host (health 200 through X2)",
+    "result": "FAIL",
+    "evidence": "{'aios-platform-adibelepp21-bytes-projects.vercel.app': 'x2 401', 'aios-platform-72l8flelz-adibelepp21-bytes-projects.vercel.app': 'x2 401', 'aios-platform-9dhc3bfal-adibelepp21-bytes-projects.vercel.app': 'x2 401'}",
+    "mutates": false
+   },
+   {
+    "check": "hosts not listed stay behind X2",
+    "result": "PASS",
+    "evidence": "{'unlisted Production deployment (dpl_CHV72…)': 'x2 401', 'Preview deployment (dpl_HvyYh…)': 'x2 401'}",
+    "mutates": false
+   }
+  ],
+  "smoke": {},
+  "ok": false,
+  "writes_made": false
+ },
+ "fresh_session_probe": {
+  "session": "session_01Xgb77efedtcyJycudWF2nv",
+  "environment": "env_01X4j1qVyxMRoTsGvotFpwue",
+  "created": "2026-10-02T06:54:49Z",
+  "command": "GET /api/v1/health with Accept: application/json on the three T2 hosts and dpl_CHV72's host; status and presence of X-Request-Id only",
+  "reported": "401 on every host; X-Request-Id absent (stopped by X2)",
+  "source": "the session's post-turn summary"
+ },
+ "interpretation": "no injection in this session or in a newly started one: the environment API credential (AD-FS10-ESC03-R1 §5 step 2) is not attached for these hosts",
+ "credential_handling": "no bypass value read, sent, printed or stored; client sent only the B3 bearer"
+}

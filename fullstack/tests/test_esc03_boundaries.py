@@ -344,11 +344,12 @@ class Fdp012IsCanonicalAndO_AIsNotClaimedImplemented(unittest.TestCase):
         self.assertIn("NOT RATIFIED", authority["fd2"])
         self.assertEqual({"Production Release", "LIVE", "Final System Acceptance"}, set(authority["founder_reserved"]))
 
-    def test_o_a_is_selected_but_not_implemented_and_no_bypass_exists(self):
+    def test_o_a_is_selected_but_not_implemented_and_nothing_is_injected(self):
         edge = CURRENT["operational_principal"]["edge_access"]
         self.assertIn("Implementation authorized, NOT YET OCCURRED", edge)
         self.assertIn("ESC-03 NOT RESOLVED", edge)
-        self.assertIn("No bypass exists.", edge)
+        self.assertIn("the CEO has never seen its value", edge)
+        self.assertIn("No environment credential is attached: no injection", edge)
         self.assertNotRegex(edge, r"(?i)ESC-03 (= )?RESOLVED|(?<!NOT yet )operationally accessible")
 
     def test_the_selection_is_made_under_fdp012_and_excludes_tool_output_delivery(self):
