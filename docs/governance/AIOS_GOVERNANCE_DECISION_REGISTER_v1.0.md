@@ -10365,3 +10365,14 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Decisions required** | Founder:<br>• Q-1 executive actor;<br>• Q-2 decision rights;<br>• Q-3 non-CEO delegator;<br>• Q-4 agent accept / reject;<br>• Q-5 candidate model / governance expansion;<br>• Q-9 PD-01 activation.<br>Founder / Architect via ADR:<br>• Q-6 role / position binding;<br>• Q-7 G-10;<br>• Q-8 PD capability population |
 | **Candidates** | the 10 candidate executives are not created or registered. Six overlap PD-01 documentation; CFO, Creative, Client Relations and PR / Social are outside the current Platform Organization |
 | **State** | **GATE CLOSED WITH DECISION REQUIRED** · deployment PAUSED |
+
+## 132. FD-AGENCY-001 — Founder Decision Gate Received; No Disposition Marked; PENDING FOUNDER DECISION (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Instrument** | `acts/FD-AGENCY-001-FOUNDER-DECISION-GATE-AS-RECEIVED.md` (verbatim; content sha256 `b1fdf0ebe368a87e491ab281d59dfefb790c942d29f5c661b4a8e0bc138a08af`). Predecessor `§131` |
+| **As received** | 33 decision boxes for Q-1…Q-9 and `§5`: **0 marked**. Signature, date, revision, condition and notes fields: blank. `§8` reads *"Founder Decision: APPROVE"* over *"the decisions explicitly selected in this document"* |
+| **Reading** | No question is decided. The instrument says:<br>• `§1`: *"Setiap pertanyaan harus diputuskan secara eksplisit"*;<br>• `§4`: *"Do not infer authorization from silence"*;<br>• `§10`: closure requires *"explicit Founder dispositions"*.<br>So the `§8` APPROVE covers an empty selection. Not read as approving any option, not read as approving the recommended or "safest" option |
+| **Effect** | none on authority, architecture, PD-01, capabilities, entities, delegations or deployment. `§131` Q-1…Q-9 remain open; the `§131` matrix stays in force |
+| **Next** | Founder marks one option per question (and fills conditions for any `-C`). Then a decision record, architecture/governance reconciliation, per `§7` |
+| **State** | **FD-AGENCY-001 PENDING FOUNDER DECISION** · gate not closed · deployment PAUSED |
