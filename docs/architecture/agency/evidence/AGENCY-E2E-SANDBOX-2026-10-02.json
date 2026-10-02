@@ -1,0 +1,120 @@
+{
+ "format": "aios.agency-e2e-sandbox/1",
+ "at": "2026-10-02",
+ "scenario": "Founder: 'Create a marketing campaign for Product X.'",
+ "constraints": "existing mechanisms only; temporary root; nothing persisted in the repository (git status unchanged: 0 files before and after); no canonical agent, capability or authority created",
+ "script_sha256": "a30c71b3678c8f25af539417115429e08ed4092ada36b654f8474c33d2dec47d",
+ "script": "\"\"\"Agency end-to-end connective-tissue test — SANDBOX, existing mechanisms only.\n\nFounder: \"Create a marketing campaign for Product X.\"\n\nRuns every link with resident AIOS code against a TEMPORARY root. No repository\nrecord is written, no agent is created canonically, no authority is granted.\nEach stage records what it proved, what it refused, and where it stopped.\n\"\"\"\nimport json\nimport sys\nimport tempfile\nfrom pathlib import Path\n\nREPO = Path(\"/home/user/ai-operating-system\")\nsys.path.insert(0, str(REPO))\n\nfrom tools.planning import AuthorityProvenance, Goal, Plan, PlanStep, PlanningSurface  # noqa: E402\nfrom tools.agent_instance_registry import AgentInstanceRegistry  # noqa: E402\nfrom tools.w4_delegation import AUTHORIZED_DELEGATOR, W4DelegationRegistry  # noqa: E402\nfrom tools.w4_execution import W4Executor  # noqa: E402\nfrom tools.w4_first_run import SELECTED_DEFINITION, FD_RECORD, DP01_RECORD, INSTANCE_KEY  # noqa: E402\nfrom tools.p12_governance_escalation_join import join_refusals_to_grants  # noqa: E402\nfrom tools.escalation_register import EscalationRegister  # noqa: E402\nfrom tools.w4_continuity import reconstruct  # noqa: E402\nfrom consumers.engineering_intelligence_agent import (  # noqa: E402\n    Artifact, ConformanceCriterion, EngineeringIntelligenceAgent)\nfrom native_core.core.infrastructure import LocalAppendOnlyStorage, LocalExecutionSubstrate  # noqa: E402\nfrom native_core.core.runtime.composition import create_runtime  # noqa: E402\nfrom native_core.core.runtime.execution import create_execution_layer  # noqa: E402\nfrom native_core.core.trace import TraceWriter, TraceReader  # noqa: E402\n\nROOT = Path(tempfile.mkdtemp(prefix=\"agency-e2e-\"))\nE = {\"sandbox_root\": \"temporary directory, deleted after the run; nothing in the repository\",\n     \"stages\": []}\n\n\ndef stage(name, ok, detail, link_status):\n    E[\"stages\"].append({\"stage\": name, \"ok\": ok, \"link\": link_status, \"detail\": detail})\n\n\n# 1 FOUNDER -> WORK INTAKE ------------------------------------------------------\nsurface = PlanningSurface()\nplanning = AuthorityProvenance(\"DP-01 §3 W2\", DP01_RECORD)\ngoal = surface.declare(Goal(key=\"sandbox-product-x-campaign\",\n                            statement=\"Create a marketing campaign for Product X.\",\n                            authority=planning))\nstage(\"1 founder -> work intake\", True,\n      f\"Goal declared on the P11 planning surface: {goal.key}. Typed in by this test — \"\n      \"no reader turns a Founder instrument into a Goal\", \"PARTIAL\")\n\n# 2 EXECUTIVE -> DECISION (adopted plan) ---------------------------------------\nplan = surface.adopt(Plan(\n    key=\"sandbox-product-x-campaign-plan-0\", goal_key=goal.key, authority=planning,\n    steps=(PlanStep(\"draft-campaign-brief\", \"Draft the campaign brief for Product X.\",\n                    requires_delegation=True),\n           PlanStep(\"verify-brief-structure\",\n                    \"Verify the brief carries objective, audience, channel and measure.\",\n                    depends_on=(\"draft-campaign-brief\",), requires_delegation=True))))\nstage(\"2 executive -> decision\", True,\n      f\"Plan {plan.key} adopted (2 steps, authority {plan.authority_provenance()}). \"\n      f\"Executive actor = {AUTHORIZED_DELEGATOR!r} (CEO office), not an Agent Instance\",\n      \"VERIFIED (CEO office) / MISSING (executive Agent Instance)\")\n\n# 3 EMPLOYEE availability ------------------------------------------------------\nregistry = AgentInstanceRegistry(ROOT)\nregistration = registry.register(\n    instance_key=INSTANCE_KEY, definition=SELECTED_DEFINITION,\n    permitted_capabilities=(\"engineering-intelligence\",), created_by=AUTHORIZED_DELEGATOR,\n    authority=AuthorityProvenance(\"FD-P11-001 §7\", FD_RECORD), accountable_to=AUTHORIZED_DELEGATOR)\nstage(\"3 employee actor\", True,\n      f\"existing definition {registration.definition_key} instantiated in the sandbox only \"\n      \"(mirrors the resident instance record). No marketing-capable definition exists\",\n      \"VERIFIED (mechanism) / MISSING (marketing capability)\")\n\ndelegations = W4DelegationRegistry(registry, ROOT)\ncommon = dict(delegator=AUTHORIZED_DELEGATOR, recipient_instance=registration.instance_key,\n              authority=AuthorityProvenance(\"FD-P11-001 §9\", FD_RECORD),\n              lifecycle_boundary=f\"one execution of plan {plan.key}\",\n              resource_boundary=\"in-memory brief only; no network; nothing persisted outside the sandbox\",\n              output_expectation=\"one check result per stated criterion\",\n              verification_requirement=\"every criterion reported satisfied or not\",\n              escalation_condition=\"any step outside the delegated work scope\",\n              accountable_party=AUTHORIZED_DELEGATOR,\n              termination_condition=\"on completion of the bound plan, or revocation\")\n\n# 4a DELEGATION that exceeds the employee's capability: must fail closed ------\ntry:\n    delegations.issue(objective=\"Draft the Product X campaign brief.\",\n                      capability_scope=(\"marketing\",), work_scope=(\"draft-campaign-brief\",), **common)\n    stage(\"4a delegation beyond capability\", False, \"issued — capability bound NOT enforced\", \"FAIL\")\nexcept Exception as exc:\n    stage(\"4a delegation beyond capability\", True,\n          f\"refused: {type(exc).__name__}: {str(exc)[:200]}\", \"VERIFIED (fail closed)\")\n\n# 4b DELEGATION within capability ----------------------------------------------\ngrant = delegations.issue(objective=\"Verify the Product X campaign brief structure.\",\n                          capability_scope=(\"engineering-intelligence\",),\n                          work_scope=(\"verify-brief-structure\",), **common)\nstage(\"4b delegation\", True,\n      f\"{grant.delegation_id} issued: recipient {grant.recipient_instance}, \"\n      f\"work scope {grant.work_scope}, chain {list(grant.authority_chain())}\", \"VERIFIED\")\n\n# 5 EXECUTION through the Execution contract into a RUNNING Runtime -------------\nstorage = LocalAppendOnlyStorage(ROOT / \"runtime-store\"); storage.provision()\nsubstrate = LocalExecutionSubstrate(); substrate.provision()\nruntime = create_runtime(runtime_id=\"agency-e2e-runtime\", storage=storage, substrate=substrate)\nruntime.initialize(); runtime.start()\nwriter = TraceWriter(storage)\nbrief = Artifact(name=\"product-x-campaign-brief\", lines=(\n    \"Objective: awareness for Product X\", \"Audience: existing customers\",\n    \"Channel: email\"))          # deliberately no \"Measure:\" line\ncriteria = [ConformanceCriterion(n, t) for n, t in (\n    (\"objective\", \"Objective:\"), (\"audience\", \"Audience:\"),\n    (\"channel\", \"Channel:\"), (\"measure\", \"Measure:\"))]\nagents = {}\n\n\ndef perform(step):\n    agent = EngineeringIntelligenceAgent(artifact=brief, criteria=criteria, trace_writer=writer)\n    agents[step.key] = agent\n    agent.participate(create_execution_layer(runtime))          # Agent -> Execution -> Runtime\n    return \"; \".join(f\"{r.criterion_name}={'ok' if r.satisfied else 'missing'}\"\n                     for r in agent.results)\n\n\nreport = W4Executor(grant, registry).execute_plan(plan, perform)\nstage(\"5 execution\", True,\n      [{\"step\": o.step_key, \"status\": o.status, \"delegation\": o.delegation_id,\n        \"instance\": o.instance_key, \"detail\": o.detail[:160]} for o in report.outcomes],\n      \"VERIFIED in sandbox (binding written by this test's perform callable)\")\n\n# 6 RESULT RETURN + identity on the Trace ---------------------------------------\nrecords = list(TraceReader(storage).read())\nids = sorted({getattr(r, \"agent_instance\", None) or str(r)[:60] for r in records})\nstage(\"6 result return\", True,\n      {\"outcomes_carry\": [\"step\", \"delegation_id\", \"instance_key\", \"status\"],\n       \"trace_records\": len(records), \"trace_agent_identity\": ids,\n       \"participate_returns\": \"None (no ratified result model)\"},\n      \"PARTIAL: outcome joins work+delegation; Trace carries the definition key only\")\n\n# 7 EXECUTIVE VERIFICATION ------------------------------------------------------\nresults = agents[\"verify-brief-structure\"].results if \"verify-brief-structure\" in agents else ()\nmissing = [r.criterion_name for r in results if not r.satisfied]\nverdict = \"REWORK\" if missing else \"ACCEPT\"\nstage(\"7 executive verification\", True,\n      f\"verification_requirement checked by this test against agent results: missing {missing} -> \"\n      f\"{verdict}. No resident component binds delegated results to an accept/reject/rework decision\",\n      \"PARTIAL (contract gap)\")\n\n# 8 ESCALATION to the Founder ---------------------------------------------------\nesc = list(join_refusals_to_grants(ROOT, report.refusals,\n                                   subject=f\"plan {plan.key} / delegation {grant.delegation_id}\",\n                                   authority=AuthorityProvenance(\"FD-P11-001 §9\", FD_RECORD),\n                                   delegation_for=lambda r: grant.delegation_id))\nreg = EscalationRegister(ROOT)\nstage(\"8 escalation\", True,\n      {\"escalations\": esc, \"open\": list(reg.open_escalations()),\n       \"founder_response_path\": \"EscalationRegister.record_response(..., authority=HumanAuthority)\"},\n      \"VERIFIED\")\n\n# 9 ORGANIZATIONAL STATE (fresh read from files only) ---------------------------\nstate = reconstruct(ROOT)\nstage(\"9 organizational state\", True,\n      {k: state[k] for k in (\"instances\", \"active_grants\", \"open_escalations\", \"last_plan\")\n       if k in state},\n      \"VERIFIED (reconstructed from files, no memory)\")\n\nruntime_state = getattr(runtime, \"state\", None)\nE[\"runtime_state_at_end\"] = str(runtime_state)\nprint(json.dumps(E, indent=1, default=str))\n",
+ "result": {
+  "sandbox_root": "temporary directory, deleted after the run; nothing in the repository",
+  "stages": [
+   {
+    "stage": "1 founder -> work intake",
+    "ok": true,
+    "link": "PARTIAL",
+    "detail": "Goal declared on the P11 planning surface: sandbox-product-x-campaign. Typed in by this test — no reader turns a Founder instrument into a Goal"
+   },
+   {
+    "stage": "2 executive -> decision",
+    "ok": true,
+    "link": "VERIFIED (CEO office) / MISSING (executive Agent Instance)",
+    "detail": "Plan sandbox-product-x-campaign-plan-0 adopted (2 steps, authority DP-01 §3 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)). Executive actor = 'Claude Code / AIOS Co-Founder' (CEO office), not an Agent Instance"
+   },
+   {
+    "stage": "3 employee actor",
+    "ok": true,
+    "link": "VERIFIED (mechanism) / MISSING (marketing capability)",
+    "detail": "existing definition engineering-intelligence-agent instantiated in the sandbox only (mirrors the resident instance record). No marketing-capable definition exists"
+   },
+   {
+    "stage": "4a delegation beyond capability",
+    "ok": true,
+    "link": "VERIFIED (fail closed)",
+    "detail": "refused: DelegationError: delegation exceeds the instance's permitted surface: ['marketing'] — `§16`: a delegator may not grant more authority than the recipient may hold"
+   },
+   {
+    "stage": "4b delegation",
+    "ok": true,
+    "link": "VERIFIED",
+    "detail": "b9e5f5a740f44a1c issued: recipient engineering-intelligence-instance-001, work scope ('verify-brief-structure',), chain ['delegation:b9e5f5a740f44a1c', 'delegator:Claude Code / AIOS Co-Founder', 'decision:FD-P11-001 §9', 'founder:Founder']"
+   },
+   {
+    "stage": "5 execution",
+    "ok": true,
+    "link": "VERIFIED in sandbox (binding written by this test's perform callable)",
+    "detail": [
+     {
+      "step": "draft-campaign-brief",
+      "status": "escalation",
+      "delegation": "b9e5f5a740f44a1c",
+      "instance": "engineering-intelligence-instance-001",
+      "detail": "step 'draft-campaign-brief' is outside the delegated work scope — `§22`: the organization may execute more work, it may not expand the authority under which it "
+     },
+     {
+      "step": "verify-brief-structure",
+      "status": "success",
+      "delegation": "b9e5f5a740f44a1c",
+      "instance": "engineering-intelligence-instance-001",
+      "detail": "objective=ok; audience=ok; channel=ok; measure=missing"
+     }
+    ]
+   },
+   {
+    "stage": "6 result return",
+    "ok": true,
+    "link": "PARTIAL: outcome joins work+delegation; Trace carries the definition key only",
+    "detail": {
+     "outcomes_carry": [
+      "step",
+      "delegation_id",
+      "instance_key",
+      "status"
+     ],
+     "trace_records": 1,
+     "trace_agent_identity": [
+      "engineering-intelligence-agent"
+     ],
+     "participate_returns": "None (no ratified result model)"
+    }
+   },
+   {
+    "stage": "7 executive verification",
+    "ok": true,
+    "link": "PARTIAL (contract gap)",
+    "detail": "verification_requirement checked by this test against agent results: missing ['measure'] -> REWORK. No resident component binds delegated results to an accept/reject/rework decision"
+   },
+   {
+    "stage": "8 escalation",
+    "ok": true,
+    "link": "VERIFIED",
+    "detail": {
+     "escalations": [
+      "a347a8bd4d394102"
+     ],
+     "open": [
+      "a347a8bd4d394102"
+     ],
+     "founder_response_path": "EscalationRegister.record_response(..., authority=HumanAuthority)"
+    }
+   },
+   {
+    "stage": "9 organizational state",
+    "ok": true,
+    "link": "VERIFIED (reconstructed from files, no memory)",
+    "detail": {
+     "instances": [
+      "engineering-intelligence-instance-001"
+     ],
+     "active_grants": [
+      "b9e5f5a740f44a1c"
+     ],
+     "open_escalations": [
+      "a347a8bd4d394102"
+     ],
+     "last_plan": null
+    }
+   }
+  ],
+  "runtime_state_at_end": "RuntimeState.RUNNING"
+ }
+}

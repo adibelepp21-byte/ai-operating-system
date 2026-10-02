@@ -10340,3 +10340,14 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **First output** | `docs/architecture/agency/AIOS-AGENCY-CURRENT-STATE-MAP.md`: 28 sections, evidence E-1…E-10, read-only |
 | **Finding** | The organizational loop (P11 W1/W4) and the executive loop (P13) are each implemented, executed and verified. Not living yet:<br>• G-1: CEO → delegation not connected (`issue.delegation` Founder-reserved);<br>• G-2: no Founder goal intake;<br>• G-3: the executive loop does not read organizational work state;<br>• continuous operation MISSING (manual triggers only).<br>No new subsystem is indicated |
 | **Candidates** | CC-1 (reconcile 4 ACTIVE delegations) and CC-7 (unified state view): in authority. CC-2 and CC-3: authority to be verified (U-2, U-3). CC-4, CC-5, CC-6: Founder decision required |
+
+## 130. Executive Agency + Workforce Actor Model — Current-State Integrity Test: MECHANISMALLY READY — INTEGRATION REQUIRED (2026-10-02)
+
+| Field | Value |
+|---|---|
+| **Instruction** | `acts/DIR-AIOS-EXECUTIVE-AGENCY-WORKFORCE-INTEGRITY-TEST.md` (verbatim; content sha256 `bbe4efab1be65aacc208f932d48ee2196af66cd977dd1828f403c7182b1c9ca4`). No Act, Micro-Act or Founder Decision created |
+| **Output** | `docs/architecture/agency/AIOS-EXECUTIVE-AGENCY-INTEGRITY-TEST.md`: matrix of 14 tests, mechanism map, connectivity graph, gap map, readiness state |
+| **End-to-end** | sandbox on resident code, temporary root, repository unchanged (`evidence/AGENCY-E2E-SANDBOX-2026-10-02.json`, script sha256 `a30c71b3…`). Steps: intake (typed) → decision → over-capability delegation refused → bounded delegation → Agent → Execution → RUNNING Runtime → outcome → escalation → state rebuilt from files |
+| **Finding** | Every mechanism exists. Bindings missing:<br>• runtime binder;<br>• result model;<br>• Trace identity;<br>• verification → decision;<br>• intake;<br>• unified view.<br>Governance: executive Agent as actor, decider and delegator not authorized (`FD-P11-001 §4.1`); P13 `issue.delegation` reserved; PD-01 ESD-01…ESD-10 exist as documentation, G-10 open. Architectural question: Role / Responsibility is not a ratified entity |
+| **Candidate executives** | not created, not registered. Six overlap ESD functions; CFO, Creative, Client Relations and PR/Social have no canonical counterpart |
+| **State** | **MECHANISMALLY READY — INTEGRATION REQUIRED** · deployment PAUSED |
