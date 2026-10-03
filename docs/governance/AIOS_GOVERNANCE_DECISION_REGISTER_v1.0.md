@@ -10598,3 +10598,27 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Conclusion** | • **MINIMAL REMEDIATION** for G-S4-1 and G-S4-2: MR-S5-1, structural `decision` / `successor_plan` / `replaced_by` on the delegator's disposition record, using existing semantics only. **Recommended, not implemented.**<br>• G-S4-3: **SEMANTICS SUFFICIENT**.<br>• No Founder decision required. Conditional and unraised: ending a plan or Founder Goal *unresolved* would be Founder-reserved |
 | **Negative controls** | N1–N10 held (refused or held; no byte changed) |
 | **State** | **S-5 EXHAUSTED → REPORTED → STOPPED** · nothing constructed · deployment PAUSED |
+
+## 151. MR-S5-1 Minimal Decision Provenance Remediation — Receipt (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-MR-S5-1-DECISION-PROVENANCE.md` (verbatim; content sha256 `809b7dfd342d5f9be0e9817222929b7ae93e116e6c9b3ef3ceb34aa222c95ec3`). Founder (Moriarty), 2026-10-03. Origin S-5 (`§150`); the only construction authorized from the S-5 frontier |
+| **Scope** | Persist the CEO decision (ACCEPT / REWORK / REJECT), the resulting plan and the rework target explicitly, using existing semantics only. No new disposition, plan state, lifecycle, subsystem, authority, capability or Agent. G-S4-3 stays CLOSED. No Act, Micro-Act or Founder Decision created |
+| **State** | RECEIVED · result recorded below when MR-S5-1 reaches its stop condition |
+
+## 152. MR-S5-1 — COMPLETE / VERIFIED: CEO Decision, Resulting Plan and Rework Target Explicit and Reconstructable Without Reason Text; G-S4-1, G-S4-2, G-S4-3 CLOSED (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-MR-S5-1-DECISION-PROVENANCE.md` (receipt `§151`) |
+| **Record** | `docs/architecture/agency/MR-S5-1-DECISION-PROVENANCE-RECORD.md` (outputs A–M) |
+| **Baseline** | `evidence/MR-S5-1-BASELINE-2026-10-03.json`, captured at `fa877e8` before any change. Certified digests: P11 `45e0a817…`, P12 `5be77e56…`, P13 `2025fe9b…`, platform-organization `982c3705…`, `docs/operations` `e0051b8f…`. Acts (146) and capability catalog hashed |
+| **Construction** | Existing mechanisms extended in `tools/w4_delegation.py` only. No new disposition, plan state, lifecycle, subsystem, store, ledger, authority, capability or Agent:<br>• `review_result` adds REJECT. The closed set is `DECISIONS = (ACCEPT, REWORK, REJECT)`; any other value is refused.<br>• `record_disposition` takes optional provenance: `decision`, `resulting_plan`, `rework_target`. It is validated before writing; a decided `REVOKED` binds the result evidence.<br>• `read_dispositions` validates provenance when present.<br>• `plan_outcome` reports `decision` / `decision_provenance` (EXPLICIT or LEGACY), `resulting_plan`, `rework_target`, `reworks` and `decision_faults`.<br>• Mapping: ACCEPT → `COMPLETED`; REWORK and REJECT → `REVOKED`, told apart structurally (REWORK names a delegated target in the revision; REJECT has none and its revision omits the step) |
+| **Execution** | Root `operations/w4-s4-plan-outcome/`. Existing `engineering-intelligence-instance-001`, registered **in memory** (on-disk record unchanged). Three verbatim Founder Goals:<br>• **P1 ACCEPT** `3cc612275a914c2c` (14/14): plan completed.<br>• **P2 REWORK** `d497e284f2c14aee` (3/14, genuine) → target `report-continuity-elements` in `…-rework-plan-0+1` → `86d74cf0b6d14856` ACCEPT: plan completed.<br>• **P3 REJECT** `c7e5e03a5a664230` (4/14, path refused, not redone) → `…-reject-plan-0+1` → `ef2fa9ef2c004955` ACCEPT: plan completed |
+| **Verification** | `evidence/MR-S5-1-VERIFICATION-2026-10-03.json` **all_ok** (fresh process):<br>• 5 explicit and 16 legacy decisions, read with `reason` removed; live paths equal the run log; one rework link; no decision faults;<br>• legacy ledger unchanged since `fa877e8`; live controls refused with nothing written;<br>• certified digests, acts, capability catalog and instance records unchanged; integrity no faults; certified roots git-clean.<br>Tests: `test_mr_s5_1_decision_provenance` 17 (P1–P3, N1–N12, legacy, fresh process, record mutations), seven code mutations caught. `test_w4_plan_outcome` adapted to the stricter contract |
+| **Regression** | 90 suites, 2313 tests. 88 OK. Only the pre-existing failures: `test_e11_measurement_currency` (4) and `test_p12_governance_evidence_verification` (1) |
+| **Legacy** | No historical record rewritten or given a fabricated decision. Legacy `COMPLETED` reads as ACCEPT (derived). Legacy `REVOKED` reads as *decision not recorded*, including S-4's REWORK `9925366405d44af8`, whose plan stays open |
+| **Authority** | Agents decide nothing (FD-AGENCY-001 Q2-A / Q4-A). CEO decisions are operational (FD-P11-001 §15.2; V2 A09 / A11). Founder acceptance (A19) is neither produced nor implied. No candidate, Agent, capability, delegation authority or deployment change |
+| **Remaining findings** | • A first run attempt in a new root wrote an instance record; it was withdrawn before commit and re-run per `§24`.<br>• Historical S-4 scripts describe the pre-MR API.<br>• S-4's REWORK remains open and legacy |
+| **State** | **MR-S5-1 COMPLETE / VERIFIED** · G-S4-1 → CLOSED · G-S4-2 → CLOSED · G-S4-3 → CLOSED / NO REMEDIATION REQUIRED · deployment PAUSED |

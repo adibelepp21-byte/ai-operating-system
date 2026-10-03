@@ -94,7 +94,8 @@ class Accept(_Loop):
         self.assertTrue(out["completed"])
         verify, review = out["versions"][0]["steps"]
         self.assertEqual((w4.COMPLETED, True), (verify["outcome"], verify["done"]))
-        self.assertTrue(verify["grants"][0]["decision"].startswith("CEO ACCEPT"))
+        self.assertEqual("ACCEPT", verify["grants"][0]["decision"])
+        self.assertTrue(verify["grants"][0]["reason"].startswith("CEO ACCEPT"))
         self.assertEqual(("CEO", True), (review["performed_by"], review["done"]))
 
     def test_n3_an_unverified_result_cannot_be_accepted(self):
@@ -115,27 +116,29 @@ class Rework(_Loop):
         evidence = self.execute(succeed=False)
         with self.assertRaisesRegex(w4.DelegationError, "not every plan step succeeded"):
             self.review(w4.ACCEPT)
-        result = self.review(w4.REWORK, rework_steps=(
+        result = self.review(w4.REWORK, rework_target="verify-again", rework_steps=(
             PlanStep("verify-again", "Verify the corrected artifact.", requires_delegation=True),
             PlanStep("review", "Review the result (CEO).", depends_on=("verify-again",))))
         out = self.outcome()
         self.assertFalse(out["completed"])
         self.assertEqual(["verify-again", "review"], out["open_steps"])
         old, new = out["versions"]
-        self.assertEqual(result["successor_plan"], old["superseded_by"])
+        self.assertEqual(result["resulting_plan"], old["superseded_by"])
         self.assertEqual("REVISED", new["origin"])
         self.assertIn(self.grant.delegation_id, new["reason"])
         self.assertIn("verification not met", new["evidence"][0])
         self.assertIn(evidence.name, new["evidence"][0])
         self.assertEqual(w4.REVOKED, old["steps"][0]["outcome"])
-        self.assertTrue(old["steps"][0]["grants"][0]["decision"].startswith("CEO REWORK"))
+        self.assertEqual("REWORK", old["steps"][0]["grants"][0]["decision"])
+        self.assertTrue(old["steps"][0]["grants"][0]["reason"].startswith("CEO REWORK"))
         self.assertEqual("DELEGATION REQUIRED", new["steps"][0]["outcome"])
         self.assertEqual(CEO, self.surface.current("g").authority)
 
     def test_n9_history_is_preserved_and_a_decision_is_final(self):
         evidence = self.execute(succeed=False)
         before = (_sha(evidence), _sha(self.root / f"{self.grant.delegation_id}.delegation.json"))
-        self.review(w4.REWORK, rework_steps=(PlanStep("x", "x", requires_delegation=True),))
+        self.review(w4.REWORK, rework_target="x",
+                    rework_steps=(PlanStep("x", "x", requires_delegation=True),))
         self.assertEqual(before, (_sha(evidence),
                                   _sha(self.root / f"{self.grant.delegation_id}.delegation.json")))
         self.assertEqual("g-plan-0", self.surface.history("g")[0].key)
@@ -143,7 +146,8 @@ class Rework(_Loop):
             self.review(w4.ACCEPT)
         from tools.planning.exceptions import InvalidPlan
         with self.assertRaisesRegex(InvalidPlan, "superseded"):
-            self.review(w4.REWORK, rework_steps=(PlanStep("y", "y", requires_delegation=True),))
+            self.review(w4.REWORK, rework_target="y",
+                        rework_steps=(PlanStep("y", "y", requires_delegation=True),))
         with self.assertRaisesRegex(w4.DelegationError, "append-only"):
             w4.record_disposition(self.root, self.grant.delegation_id, disposition=w4.REVOKED,
                                   delegator=DELEGATOR, reason="again", ledger=self.ledger,
@@ -162,10 +166,12 @@ class ReworkNeedsItsSuccessor(_Loop):
 
 
 class Reject(_Loop):
-    def test_there_is_no_reject_semantic(self):
+    def test_a_decision_outside_the_three_is_refused(self):
         self.execute()
-        with self.assertRaisesRegex(w4.DelegationError, "no REJECT semantic"):
-            self.review("REJECT")
+        # MR-S5-1 made REJECT explicit (tools/tests/test_mr_s5_1_decision_provenance.py);
+        # a decision outside the three existing meanings is still refused.
+        with self.assertRaisesRegex(w4.DelegationError, "not a delegator decision"):
+            self.review("CANCEL")
 
 
 class AuthorityBoundaries(_Loop):
@@ -175,6 +181,7 @@ class AuthorityBoundaries(_Loop):
             self.review(w4.ACCEPT, reviewer=INSTANCE)
         with self.assertRaisesRegex(w4.DelegationError, "may not review delegated results"):
             self.review(w4.REWORK, reviewer=INSTANCE,
+                        rework_target="x",
                         rework_steps=(PlanStep("x", "x", requires_delegation=True),))
         self.assertEqual(["g-plan-0"], [p.key for p in self.surface.history("g")])
         with self.assertRaisesRegex(w4.DelegationError, "only 'Claude Code"):

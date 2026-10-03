@@ -132,3 +132,31 @@ This changes no disposition: the Founder decided REVOKED for all ten.
 | REJECT | no semantic exists (S-4 gap G-S4-1) |
 
 **Plan outcome.** `w4_delegation.plan_outcome` derives each plan version's step outcomes from the dispositions and evidence. The decision word is carried in the disposition's recorded reason, and no state is added.
+
+## 9. Explicit decision provenance (MR-S5-1, Register `§151`–`§152`)
+
+**The record.** A disposition written by `review_result` carries three fields:
+- `decision`: ACCEPT, REWORK or REJECT;
+- `resulting_plan`;
+- `rework_target`: `{"plan", "step"}` for REWORK, null otherwise.
+
+They are validated by `decision_fault` before writing and again when read:
+
+| Decision | Disposition | Rule |
+|---|---|---|
+| ACCEPT | `COMPLETED` | the resulting plan is the bound plan; no target |
+| REWORK | `REVOKED` | the target belongs to the resulting plan |
+| REJECT | `REVOKED` | no target |
+
+**Evidence binding.** A decided `REVOKED` also binds the result's evidence by sha256.
+
+**Plan checks.** `plan_outcome` checks the plan relationships:
+- the resulting plan is on the goal;
+- a REWORK target is a delegated step of a revision;
+- a REJECT revision omits the step.
+
+It also links each rework step to the grant whose work it redoes (`reworks`).
+
+**Legacy records.** Records without the fields (S-1, CG-7, S-4) are **legacy**. They are read as before and never rewritten:
+- legacy `COMPLETED` reads as ACCEPT (derived);
+- legacy `REVOKED` reads as *decision not recorded*.

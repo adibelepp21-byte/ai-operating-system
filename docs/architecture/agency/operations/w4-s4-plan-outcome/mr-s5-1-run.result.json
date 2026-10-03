@@ -1,0 +1,355 @@
+{
+  "executed_at": "2026-10-03T12:49:57.249005+00:00",
+  "log": [
+    {
+      "goal": "founder-mr-s5-1-accept",
+      "plan": "founder-mr-s5-1-accept-plan-0",
+      "step": "verify-delegation-elements",
+      "grant": "3cc612275a914c2c",
+      "result": "success",
+      "detail": "14 of 14 elements carried"
+    },
+    {
+      "goal": "founder-mr-s5-1-accept",
+      "grant": "3cc612275a914c2c",
+      "decision": "ACCEPT",
+      "verification": "verification met",
+      "resulting_plan": "founder-mr-s5-1-accept-plan-0",
+      "rework_target": null
+    },
+    {
+      "goal": "founder-mr-s5-1-rework",
+      "plan": "founder-mr-s5-1-rework-plan-0",
+      "step": "verify-continuity-elements",
+      "grant": "d497e284f2c14aee",
+      "result": "failure",
+      "detail": "AssertionError: 3 of 14 elements carried; not carried: ['authority_provenance', 'capability_scope', 'delegator', 'escalation_condition', 'lifecycle_boundary', 'objective', 'output_expectation', 'resource_boundary', 'termination_condition', 'verification_requirement', 'work_scope']"
+    },
+    {
+      "goal": "founder-mr-s5-1-rework",
+      "grant": "d497e284f2c14aee",
+      "decision": "REWORK",
+      "verification": "verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']",
+      "resulting_plan": "founder-mr-s5-1-rework-plan-0+1",
+      "rework_target": {
+        "plan": "founder-mr-s5-1-rework-plan-0+1",
+        "step": "report-continuity-elements"
+      }
+    },
+    {
+      "goal": "founder-mr-s5-1-rework",
+      "plan": "founder-mr-s5-1-rework-plan-0+1",
+      "step": "report-continuity-elements",
+      "grant": "86d74cf0b6d14856",
+      "result": "success",
+      "detail": "3 of 14 elements carried (reported)"
+    },
+    {
+      "goal": "founder-mr-s5-1-rework",
+      "grant": "86d74cf0b6d14856",
+      "decision": "ACCEPT",
+      "verification": "verification met",
+      "resulting_plan": "founder-mr-s5-1-rework-plan-0+1",
+      "rework_target": null
+    },
+    {
+      "goal": "founder-mr-s5-1-reject",
+      "plan": "founder-mr-s5-1-reject-plan-0",
+      "step": "verify-execution-elements",
+      "grant": "c7e5e03a5a664230",
+      "result": "failure",
+      "detail": "AssertionError: 4 of 14 elements carried; not carried: ['accountable_party', 'authority_provenance', 'delegator', 'escalation_condition', 'lifecycle_boundary', 'objective', 'output_expectation', 'resource_boundary', 'termination_condition', 'verification_requirement']"
+    },
+    {
+      "goal": "founder-mr-s5-1-reject",
+      "grant": "c7e5e03a5a664230",
+      "decision": "REJECT",
+      "verification": "verification not met: not every plan step succeeded: [('verify-execution-elements', 'failure')]; work-scope steps without a success outcome: ['verify-execution-elements']",
+      "resulting_plan": "founder-mr-s5-1-reject-plan-0+1",
+      "rework_target": null
+    },
+    {
+      "goal": "founder-mr-s5-1-reject",
+      "plan": "founder-mr-s5-1-reject-plan-0+1",
+      "step": "verify-delegation-record-elements",
+      "grant": "ef2fa9ef2c004955",
+      "result": "success",
+      "detail": "14 of 14 elements carried"
+    },
+    {
+      "goal": "founder-mr-s5-1-reject",
+      "grant": "ef2fa9ef2c004955",
+      "decision": "ACCEPT",
+      "verification": "verification met",
+      "resulting_plan": "founder-mr-s5-1-reject-plan-0+1",
+      "rework_target": null
+    }
+  ],
+  "plan_outcomes": {
+    "P1": {
+      "goal": "founder-mr-s5-1-accept",
+      "current_plan": "founder-mr-s5-1-accept-plan-0",
+      "completed": true,
+      "open_steps": [],
+      "versions": [
+        {
+          "plan": "founder-mr-s5-1-accept-plan-0",
+          "origin": "PLANNED",
+          "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+          "current": true,
+          "superseded_by": null,
+          "reason": null,
+          "evidence": [],
+          "steps": [
+            {
+              "step": "verify-delegation-elements",
+              "performed_by": "delegated agent",
+              "grants": [
+                {
+                  "delegation_id": "3cc612275a914c2c",
+                  "recipient": "engineering-intelligence-instance-001",
+                  "historical_status": "ACTIVE",
+                  "operational_status": "COMPLETED",
+                  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/3cc612275a914c2c.evidence.json",
+                  "verification": "met",
+                  "decision": "ACCEPT",
+                  "decision_provenance": "EXPLICIT",
+                  "resulting_plan": "founder-mr-s5-1-accept-plan-0",
+                  "rework_target": null,
+                  "reason": "CEO ACCEPT (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): the evidence shows all fourteen elements carried [verification met]",
+                  "decided_under": "FD-P11-001 §15.2"
+                }
+              ],
+              "done": true,
+              "reworks": null,
+              "outcome": "COMPLETED"
+            },
+            {
+              "step": "ceo-review-verification",
+              "performed_by": "CEO",
+              "depends_on": [
+                "verify-delegation-elements"
+              ],
+              "done": true
+            }
+          ],
+          "completed": true
+        }
+      ],
+      "disposition_faults": [],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop"
+    },
+    "P2": {
+      "goal": "founder-mr-s5-1-rework",
+      "current_plan": "founder-mr-s5-1-rework-plan-0+1",
+      "completed": true,
+      "open_steps": [],
+      "versions": [
+        {
+          "plan": "founder-mr-s5-1-rework-plan-0",
+          "origin": "PLANNED",
+          "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+          "current": false,
+          "superseded_by": "founder-mr-s5-1-rework-plan-0+1",
+          "reason": null,
+          "evidence": [],
+          "steps": [
+            {
+              "step": "verify-continuity-elements",
+              "performed_by": "delegated agent",
+              "grants": [
+                {
+                  "delegation_id": "d497e284f2c14aee",
+                  "recipient": "engineering-intelligence-instance-001",
+                  "historical_status": "ACTIVE",
+                  "operational_status": "REVOKED",
+                  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/d497e284f2c14aee.evidence.json",
+                  "verification": [
+                    "not every plan step succeeded: [('verify-continuity-elements', 'failure')]",
+                    "work-scope steps without a success outcome: ['verify-continuity-elements']"
+                  ],
+                  "decision": "REWORK",
+                  "decision_provenance": "EXPLICIT",
+                  "resulting_plan": "founder-mr-s5-1-rework-plan-0+1",
+                  "rework_target": {
+                    "plan": "founder-mr-s5-1-rework-plan-0+1",
+                    "step": "report-continuity-elements"
+                  },
+                  "reason": "CEO REWORK (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): the result is a genuine finding: the continuity module does not carry the fourteen. The work is redone as a report of which elements it carries [verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']]",
+                  "decided_under": "FD-P11-001 §15.2"
+                }
+              ],
+              "done": false,
+              "reworks": null,
+              "outcome": "REVOKED"
+            },
+            {
+              "step": "ceo-review-verification",
+              "performed_by": "CEO",
+              "depends_on": [
+                "verify-continuity-elements"
+              ],
+              "done": true
+            }
+          ],
+          "completed": false
+        },
+        {
+          "plan": "founder-mr-s5-1-rework-plan-0+1",
+          "origin": "REVISED",
+          "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+          "current": true,
+          "superseded_by": null,
+          "reason": "CEO REWORK of grant d497e284f2c14aee: the result is a genuine finding: the continuity module does not carry the fourteen. The work is redone as a report of which elements it carries",
+          "evidence": [
+            "docs/architecture/agency/operations/w4-s4-plan-outcome/d497e284f2c14aee.evidence.json: verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']"
+          ],
+          "steps": [
+            {
+              "step": "report-continuity-elements",
+              "performed_by": "delegated agent",
+              "grants": [
+                {
+                  "delegation_id": "86d74cf0b6d14856",
+                  "recipient": "engineering-intelligence-instance-001",
+                  "historical_status": "ACTIVE",
+                  "operational_status": "COMPLETED",
+                  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/86d74cf0b6d14856.evidence.json",
+                  "verification": "met",
+                  "decision": "ACCEPT",
+                  "decision_provenance": "EXPLICIT",
+                  "resulting_plan": "founder-mr-s5-1-rework-plan-0+1",
+                  "rework_target": null,
+                  "reason": "CEO ACCEPT (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): the report covers all fourteen elements, each satisfied or not [verification met]",
+                  "decided_under": "FD-P11-001 §15.2"
+                }
+              ],
+              "done": true,
+              "reworks": {
+                "plan": "founder-mr-s5-1-rework-plan-0",
+                "step": "verify-continuity-elements",
+                "grant": "d497e284f2c14aee"
+              },
+              "outcome": "COMPLETED"
+            },
+            {
+              "step": "ceo-review-verification",
+              "performed_by": "CEO",
+              "depends_on": [
+                "report-continuity-elements"
+              ],
+              "done": true
+            }
+          ],
+          "completed": true
+        }
+      ],
+      "disposition_faults": [],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop"
+    },
+    "P3": {
+      "goal": "founder-mr-s5-1-reject",
+      "current_plan": "founder-mr-s5-1-reject-plan-0+1",
+      "completed": true,
+      "open_steps": [],
+      "versions": [
+        {
+          "plan": "founder-mr-s5-1-reject-plan-0",
+          "origin": "PLANNED",
+          "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+          "current": false,
+          "superseded_by": "founder-mr-s5-1-reject-plan-0+1",
+          "reason": null,
+          "evidence": [],
+          "steps": [
+            {
+              "step": "verify-execution-elements",
+              "performed_by": "delegated agent",
+              "grants": [
+                {
+                  "delegation_id": "c7e5e03a5a664230",
+                  "recipient": "engineering-intelligence-instance-001",
+                  "historical_status": "ACTIVE",
+                  "operational_status": "REVOKED",
+                  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/c7e5e03a5a664230.evidence.json",
+                  "verification": [
+                    "not every plan step succeeded: [('verify-execution-elements', 'failure')]",
+                    "work-scope steps without a success outcome: ['verify-execution-elements']"
+                  ],
+                  "decision": "REJECT",
+                  "decision_provenance": "EXPLICIT",
+                  "resulting_plan": "founder-mr-s5-1-reject-plan-0+1",
+                  "rework_target": null,
+                  "reason": "CEO REJECT (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): an execution module does not hold the delegation record, so this check's premise is wrong; it is not redone. The plan proceeds with the check of the module that holds the record [verification not met: not every plan step succeeded: [('verify-execution-elements', 'failure')]; work-scope steps without a success outcome: ['verify-execution-elements']]",
+                  "decided_under": "FD-P11-001 §15.2"
+                }
+              ],
+              "done": false,
+              "reworks": null,
+              "outcome": "REVOKED"
+            },
+            {
+              "step": "ceo-review-verification",
+              "performed_by": "CEO",
+              "depends_on": [
+                "verify-execution-elements"
+              ],
+              "done": true
+            }
+          ],
+          "completed": false
+        },
+        {
+          "plan": "founder-mr-s5-1-reject-plan-0+1",
+          "origin": "REVISED",
+          "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+          "current": true,
+          "superseded_by": null,
+          "reason": "CEO REJECT of grant c7e5e03a5a664230: an execution module does not hold the delegation record, so this check's premise is wrong; it is not redone. The plan proceeds with the check of the module that holds the record",
+          "evidence": [
+            "docs/architecture/agency/operations/w4-s4-plan-outcome/c7e5e03a5a664230.evidence.json: verification not met: not every plan step succeeded: [('verify-execution-elements', 'failure')]; work-scope steps without a success outcome: ['verify-execution-elements']"
+          ],
+          "steps": [
+            {
+              "step": "verify-delegation-record-elements",
+              "performed_by": "delegated agent",
+              "grants": [
+                {
+                  "delegation_id": "ef2fa9ef2c004955",
+                  "recipient": "engineering-intelligence-instance-001",
+                  "historical_status": "ACTIVE",
+                  "operational_status": "COMPLETED",
+                  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/ef2fa9ef2c004955.evidence.json",
+                  "verification": "met",
+                  "decision": "ACCEPT",
+                  "decision_provenance": "EXPLICIT",
+                  "resulting_plan": "founder-mr-s5-1-reject-plan-0+1",
+                  "rework_target": null,
+                  "reason": "CEO ACCEPT (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): the evidence shows all fourteen elements carried [verification met]",
+                  "decided_under": "FD-P11-001 §15.2"
+                }
+              ],
+              "done": true,
+              "reworks": null,
+              "outcome": "COMPLETED"
+            },
+            {
+              "step": "ceo-review-verification",
+              "performed_by": "CEO",
+              "depends_on": [
+                "verify-delegation-record-elements"
+              ],
+              "done": true
+            }
+          ],
+          "completed": true
+        }
+      ],
+      "disposition_faults": [],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop"
+    }
+  }
+}

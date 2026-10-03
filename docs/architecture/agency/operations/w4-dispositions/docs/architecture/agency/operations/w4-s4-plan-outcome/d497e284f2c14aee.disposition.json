@@ -1,0 +1,21 @@
+{
+  "delegation_id": "d497e284f2c14aee",
+  "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+  "disposition": "REVOKED",
+  "historical_status": "ACTIVE",
+  "record_sha256": "82487a95d43cbba4c3c25bf761d42357f4617ed20eba6ec9cf4d925e03ef8a94",
+  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/d497e284f2c14aee.evidence.json",
+  "evidence_sha256": "30cd3dd2def104cc0096124618f0239ce0b3fae69cf68132d25202975aa5422a",
+  "reason": "CEO REWORK (delegator review, FD-P11-001 \u00a715.2; Co-Founder V2 A09 / A11 \u2014 operational, not Founder acceptance): the result is a genuine finding: the continuity module does not carry the fourteen. The work is redone as a report of which elements it carries [verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']]",
+  "recorded_by": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-P11-001 \u00a715.2",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "recorded_at": "2026-10-03T12:49:50.719767+00:00",
+  "decision": "REWORK",
+  "resulting_plan": "founder-mr-s5-1-rework-plan-0+1",
+  "rework_target": {
+    "plan": "founder-mr-s5-1-rework-plan-0+1",
+    "step": "report-continuity-elements"
+  }
+}

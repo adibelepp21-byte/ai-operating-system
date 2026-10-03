@@ -1,0 +1,41 @@
+{
+  "subject": "tools/w4_execution.py",
+  "criteria": {
+    "delegation_id": true,
+    "delegator": false,
+    "recipient_instance": true,
+    "authority_provenance": false,
+    "objective": false,
+    "capability_scope": true,
+    "work_scope": true,
+    "lifecycle_boundary": false,
+    "resource_boundary": false,
+    "output_expectation": false,
+    "verification_requirement": false,
+    "escalation_condition": false,
+    "accountable_party": false,
+    "termination_condition": false
+  },
+  "performed_by": "consumers/engineering_intelligence_agent.py EngineeringIntelligenceAgent.verify",
+  "plan": "founder-mr-s5-1-reject-plan-0",
+  "delegation_id": "c7e5e03a5a664230",
+  "agent_instance": "engineering-intelligence-instance-001",
+  "authority_chain": [
+    "delegation:c7e5e03a5a664230",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ],
+  "executed_at": "2026-10-03T12:49:52.283318+00:00",
+  "outcomes": [
+    {
+      "step": "verify-execution-elements",
+      "status": "failure",
+      "detail": "AssertionError: 4 of 14 elements carried; not carried: ['accountable_party', 'authority_provenance', 'delegator', 'escalation_condition', 'lifecycle_boundary', 'objective', 'output_expectation', 'resource_boundary', 'termination_condition', 'verification_requirement']",
+      "instance": "engineering-intelligence-instance-001",
+      "delegation": "c7e5e03a5a664230",
+      "at": "2026-10-03T12:49:52.142518+00:00"
+    }
+  ],
+  "escalations": []
+}

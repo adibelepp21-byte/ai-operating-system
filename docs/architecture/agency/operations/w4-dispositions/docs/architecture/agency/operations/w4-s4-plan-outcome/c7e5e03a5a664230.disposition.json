@@ -1,0 +1,18 @@
+{
+  "delegation_id": "c7e5e03a5a664230",
+  "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+  "disposition": "REVOKED",
+  "historical_status": "ACTIVE",
+  "record_sha256": "17f739927cce9dc29a46e1a9a441f99337fa287bc58df36da89654e6a6441c82",
+  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/c7e5e03a5a664230.evidence.json",
+  "evidence_sha256": "5d787565f3dd6c4422ddb4f41e17e429273736c7bf87622779691423fc5ac345",
+  "reason": "CEO REJECT (delegator review, FD-P11-001 \u00a715.2; Co-Founder V2 A09 / A11 \u2014 operational, not Founder acceptance): an execution module does not hold the delegation record, so this check's premise is wrong; it is not redone. The plan proceeds with the check of the module that holds the record [verification not met: not every plan step succeeded: [('verify-execution-elements', 'failure')]; work-scope steps without a success outcome: ['verify-execution-elements']]",
+  "recorded_by": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-P11-001 \u00a715.2",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "recorded_at": "2026-10-03T12:49:52.705755+00:00",
+  "decision": "REJECT",
+  "resulting_plan": "founder-mr-s5-1-reject-plan-0+1",
+  "rework_target": null
+}
