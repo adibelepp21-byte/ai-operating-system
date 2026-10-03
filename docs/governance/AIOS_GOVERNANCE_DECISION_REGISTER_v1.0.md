@@ -10578,3 +10578,23 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Gaps** | • **G-S4-1** no REJECT semantic: not invented; not required by authority, but its plan semantics should be fixed by directive.<br>• G-S4-2: decision word lives in reason text only (structure distinguishes).<br>• G-S4-3: non-delegated CEO steps carry no execution record |
 | **Authority** | CEO decisions are operational (FD-P11-001 §15.2; V2 A09 / A11 / A15, *not final acceptance*). Founder acceptance (A19) is neither produced nor implied. No candidate, Agent, capability, delegation authority or deployment change |
 | **State** | **S-4 COMPLETE / VERIFIED** · REJECT open (G-S4-1) · S-2 / S-3 grants still live and unexecuted · deployment PAUSED |
+
+## 149. S-5 Disposition Semantics Discovery & Exhaustion Gate — Receipt (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S5-DISPOSITION-SEMANTICS-DISCOVERY.md` (verbatim; content sha256 `59983a317fb7518e2a32db394f4a3ee2668470acbf72dad5460e957752a42ee0`). Founder (Moriarty), 2026-10-03. Predecessor S-4 (`§148`). READ-ONLY discovery and reconciliation of G-S4-1, G-S4-2 and G-S4-3. Construction, schema, lifecycle, capability, Agent and authority changes are prohibited. No Act, Micro-Act or Founder Decision created |
+| **State** | RECEIVED · result recorded below when S-5 reaches its exhaustion condition |
+
+## 150. S-5 — EXHAUSTED: G-S4-1 Representation Gap, G-S4-2 Partially Deterministic, G-S4-3 Intentional Architecture; One Minimal Remediation (MR-S5-1) Recommended, No Founder Decision Required (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S5-DISPOSITION-SEMANTICS-DISCOVERY.md` (receipt `§149`) |
+| **Record** | `docs/architecture/agency/S5-DISPOSITION-SEMANTICS-DISCOVERY-RECORD.md` (outputs A–L) |
+| **Evidence** | `evidence/s5_semantics_discovery.py` (READ-ONLY) → `evidence/S5-SEMANTICS-DISCOVERY-2026-10-03.json`. 229 operational and certified files identical before and after; integrity no faults; certified roots git-clean |
+| **Findings** | • **ACCEPT:** deterministic. `COMPLETED` ⇔ verified completion recorded by the delegator; 4 / 4 resident completions read with no reason text.<br>• **REWORK:** partially deterministic. `REVOKED` + bound plan superseded is structural; the cause and the redo relation are textual, because Planning has no step lineage across versions and plan evidence persists as strings.<br>• **REJECT:** the meaning exists (`REVOKED` + `revise` omitting the step; escalation beyond authority), but rework-under-a-new-key and refusal-with-replacement are structurally identical (Case B).<br>• No plan or goal terminal status or operation exists.<br>• **CEO-owned steps:** intentional. W4 executes delegated work only; the review step's record is the disposition |
+| **Classification** | G-S4-1 **REPRESENTATION GAP** · G-S4-2 **PARTIALLY DETERMINISTIC** · G-S4-3 **INTENTIONAL ARCHITECTURE** |
+| **Conclusion** | • **MINIMAL REMEDIATION** for G-S4-1 and G-S4-2: MR-S5-1, structural `decision` / `successor_plan` / `replaced_by` on the delegator's disposition record, using existing semantics only. **Recommended, not implemented.**<br>• G-S4-3: **SEMANTICS SUFFICIENT**.<br>• No Founder decision required. Conditional and unraised: ending a plan or Founder Goal *unresolved* would be Founder-reserved |
+| **Negative controls** | N1–N10 held (refused or held; no byte changed) |
+| **State** | **S-5 EXHAUSTED → REPORTED → STOPPED** · nothing constructed · deployment PAUSED |

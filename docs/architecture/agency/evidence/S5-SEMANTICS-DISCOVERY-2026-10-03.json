@@ -1,0 +1,505 @@
+{
+ "tool": "READ-ONLY EVIDENCE TOOL — S-5",
+ "collected_at": "2026-10-03T12:08:24.573282+00:00",
+ "script_sha256": "8f8907fbbdeabb1eeb41e05f52e53c552435fddab5e727c90e7765d58d867909",
+ "head": "4f3750e1abe566ed4aec1dfa0f966f35e4b5eeea",
+ "A_inventory": {
+  "delegation_record_status": [
+   "ACTIVE",
+   "REVOKED"
+  ],
+  "operational_disposition": [
+   "COMPLETED",
+   "REVOKED"
+  ],
+  "disposition_instruments": [
+   "FD-AGENCY-001 S-1 Q-S1-A (A2)",
+   "FD-CG7-001 FQ-CG7-1",
+   "FD-CG7-001 FQ-CG7-2",
+   "FD-P11-001 §15.2"
+  ],
+  "execution_outcome_status": [
+   "success",
+   "failure",
+   "escalation"
+  ],
+  "instance_lifecycle": [
+   "REGISTERED",
+   "RETIRED"
+  ],
+  "escalation_state": [
+   "OPEN",
+   "ANSWERED"
+  ],
+  "plan_origin": [
+   "PLANNED",
+   "ADAPTED",
+   "REVISED"
+  ],
+  "adaptation_class": [
+   "WITHIN_AUTHORITY",
+   "REQUIRES_ESCALATION"
+  ],
+  "planning_surface_operations": [
+   "adapt",
+   "adopt",
+   "current",
+   "declare",
+   "delegation_requirements",
+   "goal",
+   "history",
+   "is_superseded",
+   "prepare_for_workflow",
+   "revise",
+   "superseded"
+  ],
+  "workflow_state": [
+   "DEFINED",
+   "READY",
+   "RUNNING",
+   "SUCCEEDED",
+   "FAILED"
+  ],
+  "native_review_decision": [
+   "approve",
+   "reject"
+  ],
+  "p12_s33_failure_states_measured": [
+   "RETRYABLE",
+   "BLOCKED",
+   "REFUSED",
+   "FAILED",
+   "ESCALATED",
+   "SUCCEEDED",
+   "VERIFIED"
+  ],
+  "s4_review_decisions": [
+   "ACCEPT",
+   "REWORK"
+  ]
+ },
+ "A_planning_operations_absent": {
+  "abandon": true,
+  "close": true,
+  "cancel": true,
+  "terminate": true,
+  "drop": true,
+  "reject": true,
+  "complete": true
+ },
+ "C_D_decisions": [
+  {
+   "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+   "grant": "4ff84423cadc48c8",
+   "structural": {
+    "disposition": "COMPLETED",
+    "verification_met": true,
+    "plan_on_a_surface": true,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-P11-001 §15.2"
+   },
+   "text_free_reading": "COMPLETED: verified completion recorded by the delegator (≡ ACCEPT)",
+   "decision_word_in_reason": "ACCEPT"
+  },
+  {
+   "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+   "grant": "9925366405d44af8",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": true,
+    "plan_superseded": true,
+    "successor_keeps_step_key": false,
+    "decided_under": "FD-P11-001 §15.2"
+   },
+   "text_free_reading": "REVOKED + bound plan revised (REWORK or refusal — not distinguishable)",
+   "decision_word_in_reason": "REWORK"
+  },
+  {
+   "root": "docs/architecture/p11/w1-operations",
+   "grant": "4daebea9012d4cc7",
+   "structural": {
+    "disposition": "COMPLETED",
+    "verification_met": true,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-AGENCY-001 S-1 Q-S1-A (A2)"
+   },
+   "text_free_reading": "COMPLETED: verified completion recorded by the delegator (≡ ACCEPT)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p11/w4-operations",
+   "grant": "4313bd2246124a94",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-AGENCY-001 S-1 Q-S1-A (A2)"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p11/x-department-operations",
+   "grant": "0f7ac0785bd8442b",
+   "structural": {
+    "disposition": "COMPLETED",
+    "verification_met": true,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-AGENCY-001 S-1 Q-S1-A (A2)"
+   },
+   "text_free_reading": "COMPLETED: verified completion recorded by the delegator (≡ ACCEPT)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p11/x-department-operations",
+   "grant": "a437cdbbd29940af",
+   "structural": {
+    "disposition": "COMPLETED",
+    "verification_met": true,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-AGENCY-001 S-1 Q-S1-A (A2)"
+   },
+   "text_free_reading": "COMPLETED: verified completion recorded by the delegator (≡ ACCEPT)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "08e14bd7aa584ea5",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "2494015de36246fd",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-2"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "332d42f021764ab6",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "522e84af52444890",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "632b256f8335434f",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "84e94ea2f001444d",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "aa591daf55ca4714",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "b304c7ecb1024454",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "e668a317fa494342",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": true,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "grant": "e6a3d622cfb54b4f",
+   "structural": {
+    "disposition": "REVOKED",
+    "verification_met": false,
+    "plan_on_a_surface": false,
+    "plan_superseded": false,
+    "successor_keeps_step_key": null,
+    "decided_under": "FD-CG7-001 FQ-CG7-1"
+   },
+   "text_free_reading": "REVOKED, plan on no surface (withdrawal of historical grant)",
+   "decision_word_in_reason": "(no decision word)"
+  }
+ ],
+ "E_rework_vs_refusal": {
+  "rework_same_key": {
+   "superseded": true,
+   "kept": [
+    "a",
+    "b"
+   ],
+   "dropped": [],
+   "added": []
+  },
+  "rework_new_key": {
+   "superseded": true,
+   "kept": [
+    "b"
+   ],
+   "dropped": [
+    "a"
+   ],
+   "added": [
+    "a-redo"
+   ]
+  },
+  "refusal_with_replacement_work": {
+   "superseded": true,
+   "kept": [
+    "b"
+   ],
+   "dropped": [
+    "a"
+   ],
+   "added": [
+    "c"
+   ]
+  },
+  "refusal_drop_only": {
+   "superseded": true,
+   "kept": [
+    "b"
+   ],
+   "dropped": [
+    "a"
+   ],
+   "added": []
+  },
+  "rework_new_key_vs_refusal_with_replacement_identical_up_to_names": true,
+  "rework_same_key_distinguishable_from_drop": true,
+  "same_key_means_redo_is_a_contract_rule": false
+ },
+ "G_provenance": {
+  "founder-s4-accept": {
+   "reverse_from_outcome": [
+    {
+     "plan_outcome": "founder-s4-accept-plan-0 completed=True",
+     "decision": "COMPLETED",
+     "verification": "met",
+     "result_evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/4ff84423cadc48c8.evidence.json",
+     "agent": "engineering-intelligence-instance-001",
+     "delegation": "4ff84423cadc48c8",
+     "plan": "founder-s4-accept-plan-0",
+     "goal": "founder-s4-accept",
+     "founder_goal": "VERIFIED",
+     "faults": []
+    }
+   ],
+   "open_steps": [],
+   "open_step_to_failed_step_link": null
+  },
+  "founder-s4-rework": {
+   "reverse_from_outcome": [
+    {
+     "plan_outcome": "founder-s4-rework-plan-0+1 completed=False",
+     "decision": "REVOKED",
+     "verification": [
+      "not every plan step succeeded: [('verify-continuity-elements', 'failure')]",
+      "work-scope steps without a success outcome: ['verify-continuity-elements']"
+     ],
+     "result_evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.evidence.json",
+     "agent": "engineering-intelligence-instance-001",
+     "delegation": "9925366405d44af8",
+     "plan": "founder-s4-rework-plan-0",
+     "goal": "founder-s4-rework",
+     "founder_goal": "VERIFIED",
+     "faults": []
+    }
+   ],
+   "open_steps": [
+    "report-continuity-elements",
+    "ceo-review-verification"
+   ],
+   "open_step_to_failed_step_link": "structural: plan supersedes → predecessor plan → its revoked grant; which predecessor step the open step replaces: reason text only"
+  }
+ },
+ "H_observability": [
+  {
+   "goal": "founder-s4-accept",
+   "plan": "founder-s4-accept-plan-0",
+   "step": "verify-delegation-elements",
+   "structural": [
+    "done=True",
+    "outcome=COMPLETED",
+    "grant 4ff84423cadc48c8 COMPLETED",
+    "verification=met",
+    "evidence=docs/architecture/agency/operations/w4-s4-plan-outcome/4ff84423cadc48c8.evidence.json",
+    "decided_under=FD-P11-001 §15.2"
+   ],
+   "textual_only": [
+    "decision word and rationale (disposition reason)"
+   ]
+  },
+  {
+   "goal": "founder-s4-accept",
+   "plan": "founder-s4-accept-plan-0",
+   "step": "ceo-review-verification",
+   "structural": [
+    "done=True",
+    "depends_on=['verify-delegation-elements'] (decided ⇒ done)"
+   ],
+   "textual_only": []
+  },
+  {
+   "goal": "founder-s4-rework",
+   "plan": "founder-s4-rework-plan-0",
+   "step": "verify-continuity-elements",
+   "structural": [
+    "done=False",
+    "outcome=REVOKED",
+    "grant 9925366405d44af8 REVOKED",
+    "verification=not met (computed reasons)",
+    "evidence=docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.evidence.json",
+    "decided_under=FD-P11-001 §15.2",
+    "plan superseded_by=founder-s4-rework-plan-0+1"
+   ],
+   "textual_only": [
+    "decision word and rationale (disposition reason)"
+   ]
+  },
+  {
+   "goal": "founder-s4-rework",
+   "plan": "founder-s4-rework-plan-0",
+   "step": "ceo-review-verification",
+   "structural": [
+    "done=True",
+    "depends_on=['verify-continuity-elements'] (decided ⇒ done)",
+    "plan superseded_by=founder-s4-rework-plan-0+1"
+   ],
+   "textual_only": []
+  },
+  {
+   "goal": "founder-s4-rework",
+   "plan": "founder-s4-rework-plan-0+1",
+   "step": "report-continuity-elements",
+   "structural": [
+    "done=False",
+    "outcome=DELEGATION REQUIRED"
+   ],
+   "textual_only": [
+    "why the plan was revised (plan reason, plan evidence strings)"
+   ]
+  },
+  {
+   "goal": "founder-s4-rework",
+   "plan": "founder-s4-rework-plan-0+1",
+   "step": "ceo-review-verification",
+   "structural": [
+    "done=False",
+    "depends_on=['report-continuity-elements'] (decided ⇒ done)"
+   ],
+   "textual_only": [
+    "why the plan was revised (plan reason, plan evidence strings)"
+   ]
+  }
+ ],
+ "J_negative_controls": {
+  "N1_agent_cannot_create_review_authority": "refused: DelegationError: 'AGENT REVIEW AUTHORITY' is not an instrument under which a disposition is recorded",
+  "N2_agent_cannot_self_accept": "refused: DelegationError: 'engineering-intelligence-instance-001' may not review delegated results: only 'Claude Code / AIOS C",
+  "N3_agent_cannot_self_reject": "refused: DelegationError: 'engineering-intelligence-instance-001' may not review delegated results: only 'Claude Code / AIOS C",
+  "N4_ceo_accept_is_not_founder_approve": "held",
+  "N5_failed_verification_cannot_complete": "refused: DelegationError: termination by completion is not established: not every plan step succeeded: [('verify-continuity-el",
+  "N6_revision_keeps_history": "held",
+  "N7_reading_does_not_make_history_current": "held",
+  "N8_escalation_is_not_authorization": "held",
+  "N9_N10_no_operational_or_certified_byte_changed": true
+ },
+ "integrity": {
+  "files_hashed": 229,
+  "unchanged": true,
+  "integrity_faults": [],
+  "git_status_certified": "(clean)"
+ }
+}
