@@ -268,3 +268,117 @@ def operational_state(root: Path = OPERATIONS) -> dict:
     from tools.w4_delegation import LIVE_LEDGER
     return reconstruct(root, operational_ledger=LIVE_LEDGER,
                        response_ledger=LIVE_RESPONSES)
+
+
+# ---- current state across every root (FD-CG7-001 R-2, R-3) --------------------
+#
+# A certified record that says `ACTIVE` is history. Whether the grant is
+# *current* — something that could execute today — is a separate fact, derived
+# here from what already exists and nothing else:
+#
+#   historical status   the record (`reconstruct(root)`)
+#   operational status  the record plus the live ledgers (`operational_state`):
+#                       ACTIVE, COMPLETED or REVOKED — the existing lifecycle
+#                       words; no new state is introduced
+#   executable          operationally ACTIVE **and** its recipient is a
+#                       REGISTERED instance persisted in the same root (the
+#                       registries are in-process, so a fresh process can
+#                       execute against nothing else)
+#
+# A grant is a CURRENT OPERATIONAL GRANT only if it is executable; every other
+# grant is a HISTORICAL RECORD, with the basis stated. An OPEN escalation blocks
+# current work only if the grant it was raised under is current; otherwise it
+# is OPEN — HISTORICAL. It is never reported answered unless a response exists.
+
+CURRENT = "CURRENT OPERATIONAL GRANT"
+HISTORICAL = "HISTORICAL RECORD"
+
+
+def _escalation_grant(root: Path, escalation_id: str) -> Tuple[Optional[str], str]:
+    """The grant an escalation was raised under, from structure, never prose."""
+    join = _load(root / f"{escalation_id}.governance-join.json") \
+        if (root / f"{escalation_id}.governance-join.json").is_file() else None
+    if join and join.get("delegation_id"):
+        return join["delegation_id"], f"{escalation_id}.governance-join.json"
+    for path in sorted(root.glob("*.evidence.json")):
+        evidence = _load(path)
+        if evidence and escalation_id in (evidence.get("escalations") or []) \
+                and evidence.get("delegation_id"):
+            return evidence["delegation_id"], path.name
+    return None, "no structural join"
+
+
+def operational_overview(roots=None) -> dict:
+    """Every operational root, read historically and operationally, with each
+    grant and escalation classified historical or current (R-2, R-3).
+
+    A reader over ``reconstruct`` / ``operational_state``; it writes nothing and
+    holds no state of its own.
+    """
+    from tools.delegation_catalog import all_operation_roots
+    from tools.p12_certified_evidence_guard import is_protected
+
+    roots = tuple(all_operation_roots() if roots is None else roots)
+    readings = {root: (reconstruct(root), operational_state(root)) for root in roots}
+    grants: Dict[str, dict] = {}
+    for root, (hist, oper) in readings.items():
+        dispositions = oper.get("operational_dispositions", {})
+        for path in sorted(root.glob("*.delegation.json")):
+            record = _load(path)
+            if record is None:
+                continue
+            gid = record["delegation_id"]
+            historical = record.get("status")
+            operational = dispositions.get(gid) or (
+                "ACTIVE" if gid in oper["active_grants"] else historical)
+            recipient = record.get("recipient_instance")
+            executable = operational == "ACTIVE" and recipient in oper["instances"]
+            if executable:
+                basis = f"operationally ACTIVE; recipient {recipient} REGISTERED in this root"
+            elif gid in dispositions:
+                basis = f"operational disposition {dispositions[gid]} in the live ledger"
+            elif operational != "ACTIVE":
+                basis = f"historical status {historical}"
+            else:
+                basis = (f"ACTIVE in the record, but recipient {recipient} is not a "
+                         "REGISTERED instance of this root: nothing can execute under it")
+            grants[f"{_describe(root)}/{gid}"] = {
+                "delegation_id": gid, "root": _describe(root),
+                "certified_record": is_protected(path),
+                "historical_status": historical, "operational_status": operational,
+                "recipient": recipient, "executable": executable,
+                "classification": CURRENT if executable else HISTORICAL, "basis": basis}
+    current_ids = {g["delegation_id"] for g in grants.values() if g["executable"]}
+    escalations: Dict[str, dict] = {}
+    for root, (hist, oper) in readings.items():
+        for eid, item in sorted(oper["escalations"].items()):
+            grant, joined_by = _escalation_grant(root, eid)
+            historical = hist["escalations"][eid]["state"]
+            state = item["state"]
+            if state == "ANSWERED":
+                classification = "ANSWERED"
+            elif grant is None or grant in current_ids:
+                classification = "OPEN — BLOCKING CURRENT WORK"
+            else:
+                classification = "OPEN — HISTORICAL (its grant is not current)"
+            escalations[f"{_describe(root)}/{eid}"] = {
+                "escalation_id": eid, "root": _describe(root),
+                "historical_state": historical, "operational_state": state,
+                "grant": grant, "joined_by": joined_by,
+                "classification": classification}
+    return {
+        "roots": {_describe(root): {
+            "certified": is_protected(root),
+            "historical_active": len(hist["active_grants"]),
+            "operational_active": len(oper["active_grants"]),
+            "historical_open": len(hist["open_escalations"]),
+            "operational_open": len(oper["open_escalations"]),
+            "disposition_faults": oper.get("disposition_faults", []),
+            "conditions": list(continuation_conditions(oper))}
+            for root, (hist, oper) in readings.items()},
+        "grants": grants,
+        "escalations": escalations,
+        "current_grants": sorted(current_ids),
+        "blocking_escalations": sorted(e["escalation_id"] for e in escalations.values()
+                                       if e["classification"].endswith("CURRENT WORK")),
+    }

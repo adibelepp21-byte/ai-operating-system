@@ -1,0 +1,15 @@
+{
+  "delegation_id": "2494015de36246fd",
+  "root": "docs/architecture/p12/w4-operations",
+  "disposition": "REVOKED",
+  "historical_status": "ACTIVE",
+  "record_sha256": "2243b40828caef46669f8b23b0fe1031a09410fcf4d301477ed20eaa72871be7",
+  "evidence": null,
+  "evidence_sha256": null,
+  "reason": "REVOKED / CLOSED \u2014 proof-run grant not continued (Founder FQ-CG7-2 = A, docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md, Register \u00a7145). Work scope verify-delegation-elements succeeded 14/14 (first-execution.evidence.json); plan step report-conformance was outside scope, escalated as 9cb90fa0787a478c, and closed by the Founder without execution, new authority or scope expansion. Not represented as COMPLETED.",
+  "recorded_by": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-CG7-001 FQ-CG7-2",
+  "authority_record": "docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md",
+  "recorded_at": "2026-10-03T08:13:59.575410+00:00"
+}

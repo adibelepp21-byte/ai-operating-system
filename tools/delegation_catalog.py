@@ -217,6 +217,24 @@ def operation_roots(base: Path = P11_OPERATIONS) -> Tuple[Path, ...]:
     return tuple(sorted(found))
 
 
+
+def all_operation_roots(base: Path = REPO_ROOT / "docs") -> Tuple[Path, ...]:
+    """Every directory under ``docs/`` holding W4 lifecycle records, any phase.
+
+    FD-CG7-001 R-2. ``operation_roots()`` stays P11-only: W3, E11 and the
+    certified P11 measurements read it, and their population must not move.
+    This is the wider population a current-state reader needs — P11, P12 and
+    the post-P13 agency roots — discovered the same way: a directory qualifies
+    by holding an instance, delegation or escalation record. The live ledgers
+    hold only dispositions and responses, so they never qualify.
+    """
+    if not base.is_dir():
+        return ()
+    found = {path.parent for pattern in ("*.instance.json", "*.delegation.json",
+                                         "*.escalation.json")
+             for path in base.rglob(pattern)}
+    return tuple(sorted(found))
+
 #: The discovered population, under its historical name. **Not a literal list.**
 #:
 #: It was retained as a hardcoded pair when `operation_roots()` replaced it, on

@@ -191,14 +191,14 @@ class AChangedBasisIsAFaultNotAClosure(_Roots):
         self.assert_faulted("evidence record changed")
 
     def test_a_forged_recorder(self):
-        path = self.ledger / "ops" / "g1.disposition.json"
+        path = w4._disposition_path(self.ledger, self.root, "g1")
         item = json.loads(path.read_text())
         item["recorded_by"] = "instance-001"
         path.write_text(json.dumps(item))
         self.assert_faulted("not recorded by the authorized delegator")
 
     def test_an_unreadable_disposition(self):
-        (self.ledger / "ops" / "g1.disposition.json").write_text("{")
+        w4._disposition_path(self.ledger, self.root, "g1").write_text("{")
         self.assert_faulted("unreadable")
 
 

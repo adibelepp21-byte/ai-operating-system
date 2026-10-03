@@ -240,9 +240,19 @@ class EscalationRegister:
         self._root.mkdir(parents=True, exist_ok=True)
 
     def _external_response(self, escalation_id: str) -> Optional[Path]:
+        """Where this root's response is filed: its full-path identity (R-1)."""
         if self._responses is None:
             return None
-        return self._responses / self._root.name / f"{escalation_id}.response.json"
+        from tools.w4_delegation import ledger_folder
+        return ledger_folder(self._responses, self._root) / f"{escalation_id}.response.json"
+
+    def _legacy_response(self, escalation_id: str) -> Optional[Path]:
+        """A response filed under the pre-R-1 basename folder, if it differs."""
+        if self._responses is None:
+            return None
+        from tools.w4_delegation import legacy_ledger_folder
+        folder = legacy_ledger_folder(self._responses, self._root)
+        return None if folder is None else folder / f"{escalation_id}.response.json"
 
     def _answered(self, escalation_id: str) -> bool:
         """A response beside the escalation, or a **valid** one in the ledger.
@@ -253,7 +263,12 @@ class EscalationRegister:
         """
         if (self._root / f"{escalation_id}.response.json").is_file():
             return True
-        external = self._external_response(escalation_id)
+        return any(self._valid_external(path, escalation_id)
+                   for path in (self._external_response(escalation_id),
+                                self._legacy_response(escalation_id)))
+
+    def _valid_external(self, external: Optional[Path], escalation_id: str) -> bool:
+        """An external response is this root's only if it records this root (R-1)."""
         if external is None or not external.is_file():
             return False
         from tools.p12_certified_evidence_guard import is_protected

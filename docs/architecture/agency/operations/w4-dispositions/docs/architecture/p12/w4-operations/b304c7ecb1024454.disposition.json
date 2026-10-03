@@ -1,0 +1,15 @@
+{
+  "delegation_id": "b304c7ecb1024454",
+  "root": "docs/architecture/p12/w4-operations",
+  "disposition": "REVOKED",
+  "historical_status": "ACTIVE",
+  "record_sha256": "bbf2c8c94a3032b6a02345f1efa659d761eea6445abc41b09fd34fc5e23220d3",
+  "evidence": null,
+  "evidence_sha256": null,
+  "reason": "REVOKED / CLOSED \u2014 historical P12 proof-run grant (Founder FQ-CG7-1 = B, docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md, Register \u00a7145); bound execution performed: manifest p12-w4-integrated-execution-002, failure 5/14. Its recipient was registered in-process only and no current execution path exists. Certified evidence unchanged; not represented as COMPLETED.",
+  "recorded_by": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-CG7-001 FQ-CG7-1",
+  "authority_record": "docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md",
+  "recorded_at": "2026-10-03T08:14:00.175131+00:00"
+}

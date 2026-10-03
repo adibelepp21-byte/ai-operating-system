@@ -1,0 +1,9 @@
+{
+  "escalation_id": "9cb90fa0787a478c",
+  "responded_by": "Moriarty (Founder)",
+  "response": "Acknowledge and close escalation 9cb90fa0.\nNo new authority is granted.\nNo scope expansion is authorized.\nThe associated proof-run grant 2494015d is not continued.",
+  "responded_at": "2026-10-03T08:13:59.067894+00:00",
+  "root": "docs/architecture/p12/w4-operations",
+  "escalation_record_sha256": "b57e2f58616245efd0a4cbe58b76c522ca4bd5a9ac9e1949d5a6804210a73612",
+  "basis": "docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md (file sha256 48a4c79d8e6d7d7f1f07282c584abaf5186607ba727831171df0c578efa29374), FQ-CG7-2 = A, Register \u00a7145; recorded by Claude Code / AIOS Co-Founder as a transcription of the Founder's decision"
+}

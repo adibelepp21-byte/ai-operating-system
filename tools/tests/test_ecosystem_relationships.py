@@ -38,7 +38,11 @@ class TheMeasuredChain(unittest.TestCase):
             ("Capability", "Workflow"): eco.MEDIATED,
             ("Workflow", "Organization"): eco.CONNECTED_CODE,
             ("Organization", "Governance"): eco.CONNECTED_CODE,
-            ("Governance", "FounderDecision"): eco.CONNECTED_DATA,
+            # FD-AGENCY-001 S-1 B1 (F-S1-4, commit 5be0a24): the escalation
+            # register routes a certified root's response through
+            # tools.p12_certified_evidence_guard — a code relationship was built.
+            # Missed by the S-1 regression set; repaired under FD-CG7-001.
+            ("Governance", "FounderDecision"): eco.CONNECTED_CODE,
         })
 
     def test_every_absence_carries_its_recorded_reason_and_none_is_stale(self):

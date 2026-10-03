@@ -1,0 +1,23 @@
+{
+ "recorded_at": "2026-10-03T08:14:02.407393+00:00",
+ "instrument": "docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md",
+ "instrument_file_sha256": "48a4c79d8e6d7d7f1f07282c584abaf5186607ba727831171df0c578efa29374",
+ "founder_response_transcribed": "Acknowledge and close escalation 9cb90fa0.\nNo new authority is granted.\nNo scope expansion is authorized.\nThe associated proof-run grant 2494015d is not continued.",
+ "response": "docs/architecture/agency/operations/escalation-responses/docs/architecture/p12/w4-operations/9cb90fa0787a478c.response.json",
+ "dispositions": {
+  "2494015de36246fd": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/2494015de36246fd.disposition.json",
+  "e668a317fa494342": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/e668a317fa494342.disposition.json",
+  "b304c7ecb1024454": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/b304c7ecb1024454.disposition.json",
+  "84e94ea2f001444d": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/84e94ea2f001444d.disposition.json",
+  "08e14bd7aa584ea5": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/08e14bd7aa584ea5.disposition.json",
+  "632b256f8335434f": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/632b256f8335434f.disposition.json",
+  "332d42f021764ab6": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/332d42f021764ab6.disposition.json",
+  "522e84af52444890": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/522e84af52444890.disposition.json",
+  "aa591daf55ca4714": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/aa591daf55ca4714.disposition.json",
+  "e6a3d622cfb54b4f": "docs/architecture/agency/operations/w4-dispositions/docs/architecture/p12/w4-operations/e6a3d622cfb54b4f.disposition.json"
+ },
+ "not_answered": [
+  "0991300404cf44d8",
+  "9d6bc0ad47294ef0"
+ ]
+}

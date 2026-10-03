@@ -1,0 +1,203 @@
+{
+ "verified_at": "2026-10-03T08:14:33.367239+00:00",
+ "head": "e59cc295c25e6f42a04a15947ca8a5c7f978567c",
+ "baseline_head": "e59cc295c25e6f42a04a15947ca8a5c7f978567c",
+ "A_certified_bytes": {
+  "p12_tree_digest_before": "5be77e5634d78b237fc7a5ab781c7e0d754f76ccb4e791284349efc0c7a15cf9",
+  "p12_tree_digest_after": "5be77e5634d78b237fc7a5ab781c7e0d754f76ccb4e791284349efc0c7a15cf9",
+  "equal": true,
+  "manifest_mismatches": [],
+  "state_records_equal": true,
+  "integrity_faults": [],
+  "git_status_certified": "(clean)"
+ },
+ "B_historical_reconstructable": {
+  "p12_historical_reading_unchanged": {
+   "docs/architecture/p12/w4-operations": true,
+   "docs/architecture/p12/w3-operations": true
+  },
+  "p12_w4_historical_active": 10,
+  "p12_historical_open": {
+   "docs/architecture/p12/w4-operations": [
+    "9cb90fa0787a478c"
+   ],
+   "docs/architecture/p12/w3-operations": [
+    "0991300404cf44d8",
+    "9d6bc0ad47294ef0"
+   ]
+  }
+ },
+ "C_operational": {
+  "nine_historical_REVOKED": true,
+  "2494015d_REVOKED": true,
+  "p12_w4_operational_active": [],
+  "9cb90fa0_ANSWERED": true,
+  "historical_escalations_OPEN_HISTORICAL": {
+   "0991300404cf44d8": [
+    "OPEN",
+    "OPEN — HISTORICAL (its grant is not current)"
+   ],
+   "9d6bc0ad47294ef0": [
+    "OPEN",
+    "OPEN — HISTORICAL (its grant is not current)"
+   ]
+  },
+  "disposition_faults": {
+   "docs/architecture/p11/w1-operations": [],
+   "docs/architecture/p11/w4-operations": [],
+   "docs/architecture/p11/x-department-operations": [],
+   "docs/architecture/p12/w4-operations": [],
+   "docs/architecture/p12/w3-operations": []
+  }
+ },
+ "D_identity": {
+  "p11_w4": "docs/architecture/p11/w4-operations",
+  "p12_w4": "docs/architecture/p12/w4-operations",
+  "distinct": true
+ },
+ "E_reader": {
+  "current_grants": [
+   "0a697039a63f4c17",
+   "50367d99c2dd4708"
+  ],
+  "blocking_escalations": [],
+  "escalations": {
+   "23f315ba9f504272": "ANSWERED",
+   "0991300404cf44d8": "OPEN — HISTORICAL (its grant is not current)",
+   "9d6bc0ad47294ef0": "OPEN — HISTORICAL (its grant is not current)",
+   "9cb90fa0787a478c": "ANSWERED"
+  }
+ },
+ "F_p11_and_agency_readers_unchanged": {
+  "p11": {
+   "docs/architecture/p11/w1-operations": {
+    "historical": true,
+    "operational": true,
+    "escalation_status": true,
+    "escalation_status_operational": true,
+    "plan_completion": true
+   },
+   "docs/architecture/p11/w4-operations": {
+    "historical": true,
+    "operational": true,
+    "escalation_status": true,
+    "escalation_status_operational": true,
+    "plan_completion": true
+   },
+   "docs/architecture/p11/x-department-operations": {
+    "historical": true,
+    "operational": true,
+    "escalation_status": true,
+    "escalation_status_operational": true,
+    "plan_completion": true
+   }
+  },
+  "agency": {
+   "docs/architecture/agency/operations/w4-s2-plan-delegation": {
+    "historical": true,
+    "operational": true
+   },
+   "docs/architecture/agency/operations/w4-s3-founder-goal": {
+    "historical": true,
+    "operational": true
+   }
+  }
+ },
+ "code_changed": {
+  "tools/w4_delegation.py": true,
+  "tools/w4_continuity.py": true,
+  "tools/escalation_register.py": true,
+  "tools/delegation_catalog.py": true,
+  "tools/p12_execution_provenance.py": false,
+  "tools/tests/test_w4_operational_ledger.py": true
+ },
+ "counts_before": {
+  "docs/architecture/p11/w1-operations": {
+   "historical_active": 1,
+   "operational_active": 0,
+   "historical_open": 0,
+   "operational_open": 0
+  },
+  "docs/architecture/p11/w4-operations": {
+   "historical_active": 1,
+   "operational_active": 0,
+   "historical_open": 1,
+   "operational_open": 0
+  },
+  "docs/architecture/p11/x-department-operations": {
+   "historical_active": 2,
+   "operational_active": 0,
+   "historical_open": 0,
+   "operational_open": 0
+  },
+  "docs/architecture/p12/w4-operations": {
+   "historical_active": 10,
+   "operational_active": 10,
+   "historical_open": 1,
+   "operational_open": 1
+  },
+  "docs/architecture/p12/w3-operations": {
+   "historical_active": 0,
+   "operational_active": 0,
+   "historical_open": 2,
+   "operational_open": 2
+  },
+  "docs/architecture/agency/operations/w4-s2-plan-delegation": {
+   "historical_active": 1,
+   "operational_active": 1,
+   "historical_open": 0,
+   "operational_open": 0
+  },
+  "docs/architecture/agency/operations/w4-s3-founder-goal": {
+   "historical_active": 1,
+   "operational_active": 1,
+   "historical_open": 0,
+   "operational_open": 0
+  }
+ },
+ "counts_after": {
+  "docs/architecture/p11/w1-operations": {
+   "historical_active": 1,
+   "operational_active": 0,
+   "historical_open": 0,
+   "operational_open": 0
+  },
+  "docs/architecture/p11/w4-operations": {
+   "historical_active": 1,
+   "operational_active": 0,
+   "historical_open": 1,
+   "operational_open": 0
+  },
+  "docs/architecture/p11/x-department-operations": {
+   "historical_active": 2,
+   "operational_active": 0,
+   "historical_open": 0,
+   "operational_open": 0
+  },
+  "docs/architecture/p12/w4-operations": {
+   "historical_active": 10,
+   "operational_active": 0,
+   "historical_open": 1,
+   "operational_open": 0
+  },
+  "docs/architecture/p12/w3-operations": {
+   "historical_active": 0,
+   "operational_active": 0,
+   "historical_open": 2,
+   "operational_open": 2
+  },
+  "docs/architecture/agency/operations/w4-s2-plan-delegation": {
+   "historical_active": 1,
+   "operational_active": 1,
+   "historical_open": 0,
+   "operational_open": 0
+  },
+  "docs/architecture/agency/operations/w4-s3-founder-goal": {
+   "historical_active": 1,
+   "operational_active": 1,
+   "historical_open": 0,
+   "operational_open": 0
+  }
+ },
+ "all_ok": true
+}

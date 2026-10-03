@@ -1,0 +1,15 @@
+{
+  "delegation_id": "e6a3d622cfb54b4f",
+  "root": "docs/architecture/p12/w4-operations",
+  "disposition": "REVOKED",
+  "historical_status": "ACTIVE",
+  "record_sha256": "301c1c90db8f65d90c2a9083d5794461c759464e84688e2f055b7a3109b8b530",
+  "evidence": null,
+  "evidence_sha256": null,
+  "reason": "REVOKED / CLOSED \u2014 historical P12 proof-run grant (Founder FQ-CG7-1 = B, docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md, Register \u00a7145); plan run with its out-of-scope step refused (escalation 9d6bc0ad47294ef0, left OPEN / HISTORICAL). Its recipient was registered in-process only and no current execution path exists. Certified evidence unchanged; not represented as COMPLETED.",
+  "recorded_by": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-CG7-001 FQ-CG7-1",
+  "authority_record": "docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md",
+  "recorded_at": "2026-10-03T08:14:02.266899+00:00"
+}
