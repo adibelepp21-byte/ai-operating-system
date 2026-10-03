@@ -1,0 +1,29 @@
+{
+  "delegation_id": "50367d99c2dd4708",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "recipient_instance": "engineering-intelligence-instance-001",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "objective": "Verify tools/authority_citation.py founder_goal_refusal against S-3 \u00a712 negative controls 1, 4 and 7, reporting each satisfied or not.",
+  "capability_scope": [
+    "engineering-intelligence"
+  ],
+  "work_scope": [
+    "verify-founder-goal-intake"
+  ],
+  "lifecycle_boundary": "one execution of plan founder-s3-connect-goal-to-planning-plan-0",
+  "resource_boundary": "read-only over tools/authority_citation.py and the S-3 directive; no network; no governance artifact is written",
+  "output_expectation": "one result per negative control, satisfied or not",
+  "verification_requirement": "controls 1, 4 and 7 each reported satisfied or not, with the code location that establishes it",
+  "escalation_condition": "any step outside the delegated work scope, a revoked delegation, or a retired instance",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "termination_condition": "on completion of the bound plan, or revocation",
+  "status": "ACTIVE",
+  "issued_at": "2026-10-03T06:04:18.728411+00:00",
+  "authority_chain": [
+    "delegation:50367d99c2dd4708",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ]
+}

@@ -88,9 +88,13 @@ class TheDelegatorIssuesFromThePlan(_Root):
         out = json.loads(subprocess.run([sys.executable, "-c", script], cwd=REPO,
                                         capture_output=True, text=True, check=True).stdout)
         self.assertEqual([grant.delegation_id], out["active"])
+        prov = out["prov"]
         self.assertEqual({"plan": "g-plan-0", "step": "verify", "faults": [],
-                          "goal": "g", "plan_current": True,
-                          "plan_authority": out["prov"]["plan_authority"]}, out["prov"])
+                          "goal": "g", "plan_current": True},
+                         {k: prov[k] for k in ("plan", "step", "faults", "goal", "plan_current")})
+        # S-3: the reader also reports whether the goal is a quoted Founder Goal.
+        # This test goal is not one, and is reported as such.
+        self.assertTrue(prov["founder_goal"].startswith("NOT VERIFIED"))
 
 
 class OnlyTheDelegatorAndOnlyWhatThePlanMarked(_Root):

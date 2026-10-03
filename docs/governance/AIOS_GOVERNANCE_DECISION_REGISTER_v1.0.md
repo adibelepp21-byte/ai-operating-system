@@ -10468,3 +10468,24 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Findings** | • S2-1: plan provenance is a text convention fixed by `issue_from_plan`, not a structured field (contract observation).<br>• S2-2: the registries are in-process (S-3 / S-7).<br>• S2-3: P11 operation-root discovery does not see post-P11 roots (S-6).<br>None blocks S-2 |
 | **Authority** | delegator unchanged (CEO); no agent decision or delegation authority; no new entity, subsystem or state machine; PD-01 frozen; deployment paused |
 | **State** | **S-2 COMPLETE / VERIFIED** · grant `0a697039a63f4c17` ACTIVE, unexecuted · S-3 **not started** |
+
+## 140. S-3 Founder Goal → CEO Planning Directive — Receipt (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING.md` (verbatim; content sha256 `b062955eabae1ae49ecf096d365cf8183b4315608da0bb93b8a3af60265714b6`). Founder (Moriarty), 2026-10-03. Authority `FD-AGENCY-001`; baselines `§138` (S-1), `§139` (S-2). No Act, Micro-Act or Founder Decision created |
+| **Candidates** | the ten names in the directive's `§2` are an organizational target vocabulary: **CANDIDATE ONLY — NOT CANONICAL — NOT REGISTERED — NOT ACTIVATED** (FD-AGENCY-001 Q5-C). None is created, registered or activated by this directive |
+| **State** | RECEIVED · result recorded below when S-3 reaches its exhaustion condition |
+
+## 141. S-3 Founder Goal → CEO Planning — COMPLETE / VERIFIED: Founder Goal → Plan → Requirement → CEO Delegation → Existing Agent, Traced Back to the Founder Instrument (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING.md` (receipt `§140`) |
+| **Record** | `docs/architecture/agency/S3-FOUNDER-GOAL-TO-PLANNING-RECORD.md` |
+| **Connection** | • `tools/authority_citation.py`, additions: `founder_goal_refusal` / `founder_text`, a reader. A Goal is the Founder's only if it quotes a registered, verbatim Founder instrument.<br>• `tools/w4_delegation.plan_provenance`, additive: goal statement, goal authority, `founder_goal` verdict.<br>`tools/planning` unchanged; no new subsystem, entity, field or store |
+| **Execution** | Root `docs/architecture/agency/operations/w4-s3-founder-goal/`:<br>• Founder Goal *"S-3 — Connect Founder Goal to the CEO Planning Surface"* (VERIFIED);<br>• CEO plan under V2 A01: 3 steps, 1 delegated;<br>• CEO delegation `50367d99c2dd4708` (FD-P11-001 §9) to existing `engineering-intelligence-instance-001`.<br>Persisted; re-run refused; not executed |
+| **Candidates** | Function target CTO / Engineering → **Franky: CANDIDATE — NO ACTIVE INSTANCE**; delegated to the existing instance instead. All ten: no instance; only CTO / Engineering has a resident capability; the other eight stop at the capability boundary. None created |
+| **Verification** | `evidence/S3-VERIFICATION-2026-10-03.json` (fresh process, **all_ok**):<br>• why-chain agent → delegation → step → plan → goal → Founder instrument, VERIFIED;<br>• 11 negative controls refused (directive `§12` 1–10, plus re-declaration), root unchanged;<br>• no instance named after a candidate;<br>• S-1 dispositions and S-2 grant unchanged;<br>• 58 certified P11 files identical, integrity no faults.<br>Tests: `test_w4_founder_goal` 16 (2 mutations caught); `test_w4_plan_delegation` 13 |
+| **Findings** | • S3-1 trust root is the persisting discipline.<br>• S3-2 two hash conventions; `GOAL-V2-002` / `-003` hashes unregistered.<br>• S3-3 no planning field for an executive target (consistent with Q6-A).<br>• S3-4 MINOR: the registry accepts any instance name; the candidate boundary is governance-enforced.<br>• S3-5 in-process registries.<br>• S3-6 eight functions lack a capability.<br>No BLOCKING finding, no true gap |
+| **State** | **S-3 COMPLETE / VERIFIED** · grant `50367d99c2dd4708` ACTIVE, unexecuted · candidates untouched · S-4 **not started** · deployment PAUSED |

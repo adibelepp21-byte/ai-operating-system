@@ -1,0 +1,47 @@
+{
+  "goals": [
+    {
+      "key": "founder-s3-connect-goal-to-planning",
+      "statement": "S-3 \u2014 Connect Founder Goal to the CEO Planning Surface",
+      "authority_instrument": "DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING",
+      "authority_record": "docs/governance/acts/DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING.md",
+      "chain": [
+        {
+          "key": "founder-s3-connect-goal-to-planning-plan-0",
+          "goal_key": "founder-s3-connect-goal-to-planning",
+          "origin": "planned",
+          "revision": 0,
+          "supersedes": null,
+          "reason": null,
+          "evidence": [],
+          "authority_instrument": "Co-Founder V2 A01 Executive Command",
+          "authority_record": "docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md",
+          "steps": [
+            {
+              "key": "verify-founder-goal-intake",
+              "statement": "Verify tools/authority_citation.py founder_goal_refusal against S-3 \u00a712 negative controls 1, 4 and 7, reporting each satisfied or not.",
+              "depends_on": [],
+              "requires_delegation": true
+            },
+            {
+              "key": "review-founder-goal-verification",
+              "statement": "Review the verification result and accept, reject or send it back (Co-Founder / CEO, A11).",
+              "depends_on": [
+                "verify-founder-goal-intake"
+              ],
+              "requires_delegation": false
+            },
+            {
+              "key": "report-to-founder",
+              "statement": "Report the S-3 result to the Founder (Co-Founder / CEO, A18).",
+              "depends_on": [
+                "review-founder-goal-verification"
+              ],
+              "requires_delegation": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

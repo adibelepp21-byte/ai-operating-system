@@ -635,8 +635,16 @@ def plan_provenance(record: dict, surface) -> dict:
         found["faults"].append(f"{len(plans)} plans named {plan_key!r} on the surface")
         return found
     plan = plans[0]
+    goal = surface.goal(plan.goal_key)
+    founder = authority_citation.founder_goal_refusal(
+        goal.authority.instrument, goal.authority.record, goal.statement)
     found.update(goal=plan.goal_key, plan_authority=plan.authority.cited(),
-                 plan_current=not surface.is_superseded(plan))
+                 plan_current=not surface.is_superseded(plan),
+                 goal_statement=goal.statement, goal_authority=goal.authority.cited(),
+                 # S-3: whether the goal is a verbatim, registered Founder Goal.
+                 # Reported, not required: a goal may legitimately rest on other
+                 # authority, and saying which is the reader's job.
+                 founder_goal="VERIFIED" if founder is None else f"NOT VERIFIED: {founder}")
     if len(scope) != 1:
         found["faults"].append(f"work scope {scope} is not exactly one plan step")
         return found

@@ -1,0 +1,162 @@
+{
+ "checked_at": "2026-10-03T06:05:03.853917+00:00",
+ "script_sha256": "fcb6b1469319461a967c46953cc63e747fb11a6f98bc0b4cc778587dd16fc027",
+ "reconstructed": {
+  "instances": [
+   "engineering-intelligence-instance-001"
+  ],
+  "active_grants": [
+   "50367d99c2dd4708"
+  ],
+  "unreadable": [],
+  "goal": {
+   "key": "founder-s3-connect-goal-to-planning",
+   "statement": "S-3 \u2014 Connect Founder Goal to the CEO Planning Surface",
+   "authority": "DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING (docs/governance/acts/DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING.md)"
+  },
+  "plan": {
+   "key": "founder-s3-connect-goal-to-planning-plan-0",
+   "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+   "goal_key": "founder-s3-connect-goal-to-planning"
+  },
+  "executive_target": {
+   "step": "verify-founder-goal-intake",
+   "function": "CTO / Engineering",
+   "candidate": "Franky",
+   "candidate_instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+   "required_capability": "engineering-intelligence",
+   "actual_recipient": "engineering-intelligence-instance-001",
+   "note": "delegated to an existing instance; the candidate is not an agent"
+  }
+ },
+ "why_does_this_agent_have_this_work": {
+  "agent": "engineering-intelligence-instance-001",
+  "agent_definition": "engineering-intelligence-agent v1.0 (department engineering)",
+  "work": [
+   "verify-founder-goal-intake"
+  ],
+  "delegation": "50367d99c2dd4708",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "delegation_authority": "FD-P11-001 \u00a79",
+  "plan_step": "verify-founder-goal-intake",
+  "delegation_requirement": [
+   "verify-founder-goal-intake"
+  ],
+  "plan": "founder-s3-connect-goal-to-planning-plan-0",
+  "plan_authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+  "goal": "founder-s3-connect-goal-to-planning",
+  "goal_statement": "S-3 \u2014 Connect Founder Goal to the CEO Planning Surface",
+  "goal_authority": "DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING (docs/governance/acts/DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING.md)",
+  "founder_goal": "VERIFIED"
+ },
+ "negative_controls": {
+  "1_agent_cannot_create_founder_goal": "refused: DelegationError",
+  "2_agent_cannot_convert_goal_to_delegation": "refused: DelegationError",
+  "3_planning_cannot_issue": "refused: NotImplementedError",
+  "5_candidate_name_cannot_create_instance_or_receive": "refused: DelegationError",
+  "6_candidate_label_cannot_exercise_authority": "refused: DelegationError",
+  "7_caller_cannot_alter_founder_intent": "refused: DelegationError",
+  "7b_goal_cannot_be_redeclared": "refused: InvalidPlan",
+  "8_caller_cannot_widen_scope": "refused: TypeError",
+  "9_candidate_without_instance_not_active": "refused: DelegationError",
+  "10_founder_reserved_not_delegation_authority": "refused: DelegationError",
+  "4_non_current_plan_cannot_issue": "refused: InvalidPlan",
+  "root_unchanged_by_controls": true
+ },
+ "candidates": {
+  "instances_named_after_candidates": [],
+  "all_instance_records": [
+   "engineering-intelligence-instance-001.instance.json",
+   "engineering-intelligence-instance-001.instance.json",
+   "engineering-intelligence-instance-001.instance.json",
+   "engineering-intelligence-instance-001.instance.json",
+   "engineering-intelligence-instance-p12w3-005-001.instance.json",
+   "governance-artifact-integrity-instance-001.instance.json",
+   "governance-artifact-integrity-instance-001.instance.json"
+  ],
+  "map": [
+   {
+    "candidate": "Monkey D. Luffy",
+    "function": "CEO / Executive Leadership",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   },
+   {
+    "candidate": "Nami",
+    "function": "CFO / Finance",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   },
+   {
+    "candidate": "Roronoa Zoro",
+    "function": "COO / Production",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   },
+   {
+    "candidate": "Usopp",
+    "function": "Creative Director / Copywriter & Storyteller",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   },
+   {
+    "candidate": "Nico Robin",
+    "function": "Research & Strategy / Legal",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   },
+   {
+    "candidate": "Franky",
+    "function": "CTO / Engineering",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": "engineering-intelligence"
+   },
+   {
+    "candidate": "Tony Tony Chopper",
+    "function": "HRD / People & Culture",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   },
+   {
+    "candidate": "Sanji",
+    "function": "Hospitality / Client Relations",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   },
+   {
+    "candidate": "Jinbe",
+    "function": "Project Management / Risk Management",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   },
+   {
+    "candidate": "Brook",
+    "function": "PR / Social Media",
+    "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "resident_capability": null
+   }
+  ]
+ },
+ "unchanged": {
+  "s2_root_active": [
+   "0a697039a63f4c17"
+  ],
+  "s1_dispositions": {
+   "w1-operations": {
+    "4daebea9012d4cc7": "COMPLETED"
+   },
+   "w4-operations": {
+    "4313bd2246124a94": "REVOKED"
+   },
+   "x-department-operations": {
+    "0f7ac0785bd8442b": "COMPLETED",
+    "a437cdbbd29940af": "COMPLETED"
+   }
+  },
+  "certified_p11_mismatches": [],
+  "integrity_faults": [],
+  "git_certified_roots": "(clean)",
+  "s3_root_in_p11_operation_roots": false
+ },
+ "all_ok": true
+}

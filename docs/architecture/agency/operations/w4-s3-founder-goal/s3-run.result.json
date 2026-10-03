@@ -1,0 +1,164 @@
+{
+  "executed_at": "2026-10-03T06:04:18.728865+00:00",
+  "root": "docs/architecture/agency/operations/w4-s3-founder-goal",
+  "founder_goal": {
+    "key": "founder-s3-connect-goal-to-planning",
+    "statement": "S-3 \u2014 Connect Founder Goal to the CEO Planning Surface",
+    "authority": "DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING (docs/governance/acts/DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING.md)",
+    "verified": "VERIFIED"
+  },
+  "ceo_plan": {
+    "key": "founder-s3-connect-goal-to-planning-plan-0",
+    "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+    "steps": [
+      {
+        "key": "verify-founder-goal-intake",
+        "delegated": true
+      },
+      {
+        "key": "review-founder-goal-verification",
+        "delegated": false
+      },
+      {
+        "key": "report-to-founder",
+        "delegated": false
+      }
+    ]
+  },
+  "delegation_requirements": [
+    {
+      "plan_key": "founder-s3-connect-goal-to-planning-plan-0",
+      "step_key": "verify-founder-goal-intake"
+    }
+  ],
+  "executive_target": {
+    "step": "verify-founder-goal-intake",
+    "function": "CTO / Engineering",
+    "candidate": "Franky",
+    "candidate_instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+    "required_capability": "engineering-intelligence",
+    "actual_recipient": "engineering-intelligence-instance-001",
+    "note": "delegated to an existing instance; the candidate is not an agent"
+  },
+  "candidate_map": [
+    {
+      "candidate": "Monkey D. Luffy",
+      "function": "CEO / Executive Leadership",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "held by the Co-Founder / CEO office; not available (FD-AGENCY-001)"
+    },
+    {
+      "candidate": "Nami",
+      "function": "CFO / Finance",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "no resident counterpart (FD-AGENCY-001 \u00a74.1)"
+    },
+    {
+      "candidate": "Roronoa Zoro",
+      "function": "COO / Production",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "no resident counterpart (FD-AGENCY-001 \u00a74.1)"
+    },
+    {
+      "candidate": "Usopp",
+      "function": "Creative Director / Copywriter & Storyteller",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "no resident counterpart (FD-AGENCY-001 \u00a74.1)"
+    },
+    {
+      "candidate": "Nico Robin",
+      "function": "Research & Strategy / Legal",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "no resident counterpart (FD-AGENCY-001 \u00a74.1)"
+    },
+    {
+      "candidate": "Franky",
+      "function": "CTO / Engineering",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": "engineering-intelligence",
+      "basis": "department engineering"
+    },
+    {
+      "candidate": "Tony Tony Chopper",
+      "function": "HRD / People & Culture",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "no resident counterpart (FD-AGENCY-001 \u00a74.1)"
+    },
+    {
+      "candidate": "Sanji",
+      "function": "Hospitality / Client Relations",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "no resident counterpart (FD-AGENCY-001 \u00a74.1)"
+    },
+    {
+      "candidate": "Jinbe",
+      "function": "Project Management / Risk Management",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "no resident counterpart (FD-AGENCY-001 \u00a74.1)"
+    },
+    {
+      "candidate": "Brook",
+      "function": "PR / Social Media",
+      "canonical_status": "CANDIDATE ONLY \u2014 NOT CANONICAL \u2014 NOT REGISTERED \u2014 NOT ACTIVATED",
+      "agent_instance_named_after_candidate": null,
+      "instance_status": "CANDIDATE \u2014 NO ACTIVE INSTANCE",
+      "resident_capability": null,
+      "basis": "no resident counterpart (FD-AGENCY-001 \u00a74.1)"
+    }
+  ],
+  "delegation": {
+    "delegation_id": "50367d99c2dd4708",
+    "delegator": "Claude Code / AIOS Co-Founder",
+    "recipient_instance": "engineering-intelligence-instance-001",
+    "authority_instrument": "FD-P11-001 \u00a79",
+    "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+    "objective": "Verify tools/authority_citation.py founder_goal_refusal against S-3 \u00a712 negative controls 1, 4 and 7, reporting each satisfied or not.",
+    "capability_scope": [
+      "engineering-intelligence"
+    ],
+    "work_scope": [
+      "verify-founder-goal-intake"
+    ],
+    "lifecycle_boundary": "one execution of plan founder-s3-connect-goal-to-planning-plan-0",
+    "resource_boundary": "read-only over tools/authority_citation.py and the S-3 directive; no network; no governance artifact is written",
+    "output_expectation": "one result per negative control, satisfied or not",
+    "verification_requirement": "controls 1, 4 and 7 each reported satisfied or not, with the code location that establishes it",
+    "escalation_condition": "any step outside the delegated work scope, a revoked delegation, or a retired instance",
+    "accountable_party": "Claude Code / AIOS Co-Founder",
+    "termination_condition": "on completion of the bound plan, or revocation",
+    "status": "ACTIVE",
+    "issued_at": "2026-10-03T06:04:18.728411+00:00",
+    "authority_chain": [
+      "delegation:50367d99c2dd4708",
+      "delegator:Claude Code / AIOS Co-Founder",
+      "decision:FD-P11-001 \u00a79",
+      "founder:Founder"
+    ]
+  }
+}
