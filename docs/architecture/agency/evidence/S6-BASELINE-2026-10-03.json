@@ -1,0 +1,84 @@
+{
+ "captured_at": "2026-10-03T13:23:40.145427+00:00",
+ "head": "8625d94dc4b186011a37ca7b62cee3d9128b7a1e",
+ "script_sha256": "1757476bbf747f4eede5429b78770e6695a096d8ce8cfff1eafff88fd2563159",
+ "surfaces": {
+  "certified:docs/architecture/p11": {
+   "files": 58,
+   "digest": "45e0a8177274a3facd4100ecfffe69c3a39e40585af5b36d33eb0df6adc8dfab"
+  },
+  "certified:docs/architecture/p12": {
+   "files": 122,
+   "digest": "5be77e5634d78b237fc7a5ab781c7e0d754f76ccb4e791284349efc0c7a15cf9"
+  },
+  "certified:docs/architecture/p13": {
+   "files": 1,
+   "digest": "2025fe9b16c48cdf9e598134fb7c7c6d9fd01c0e4aec5744d4a17ab94de3803e"
+  },
+  "certified:docs/architecture/platform-organization": {
+   "files": 36,
+   "digest": "982c3705ef2decdd159fcb83b7665ca00105d3d9890ff6fa84e51f95f228bddb"
+  },
+  "certified:docs/operations": {
+   "files": 16,
+   "digest": "e0051b8f91db7710c69ec9e51d41484fe3a276b97b1f45894a329da5c2088aa9"
+  },
+  "operational:agency/operations": {
+   "files": 49,
+   "digest": "dce792e56fb5425c5c461f2e322c78983df4392efde008504ef5effc0bd629b6"
+  },
+  "agent_registry:*.instance.json": {
+   "files": 8,
+   "digest": "086c0d2ed82b608a81687ba051cdbc4215c5f0d957f6959c2bc4fa28219c3ac2"
+  },
+  "capability_catalog:docs/architecture/organization": {
+   "files": 46,
+   "digest": "0a509a815e7644b7be7df997722db75e306e0c46e2d363e75c605430e35c1687"
+  },
+  "candidates:docs/architecture/candidates": {
+   "files": 6,
+   "digest": "0f8fe3f4adcee97894cf260d1d99ebd5475d49c4da52ec21ef855f7e6d1c1e0e"
+  },
+  "governance:docs/governance (except Register and S-6 act)": {
+   "files": 231,
+   "digest": "c1ece3f1e964920fc253dde49160167dba9793a9545fd8c14cc56e73126052e2"
+  },
+  "agency_records:docs/architecture/agency/*.md": {
+   "files": 16,
+   "digest": "1a5da5699e80c915173120cd49fe7cf471cdd04f3a2b632dac19e352dbfdf82c"
+  },
+  "code:tools": {
+   "files": 212,
+   "digest": "572f56508f30731c1178e5fdeba3ad0e7fe38d4785d40e76ba54b5b69111a649"
+  },
+  "code:native_core": {
+   "files": 122,
+   "digest": "054363201c0999afd07759c894c6196812bf1d94aa7b95b7de8c3c7a5cc6945f"
+  },
+  "code:consumers": {
+   "files": 24,
+   "digest": "424c0ee8b107994beb718e012f9e46ebf305681976d258f0a1d1f44072da7d3b"
+  },
+  "code:api": {
+   "files": 1,
+   "digest": "7d004003651d88ef2e77a821833a7b22c81e58fe489fcf44bb6f0060b381c00f"
+  },
+  "code:fullstack": {
+   "files": 51,
+   "digest": "76e165d2541ca5e043a1e22a96dd02b67731d0be4b257c59eb9b29b04b0de3c3"
+  },
+  "deployment:vercel.json": {
+   "files": 1,
+   "digest": "9d2763c8f6653814746c25bca3a07878186c771f0049611aa0dfe7415906b01e"
+  },
+  "root_entry_points:*.py": {
+   "files": 11,
+   "digest": "2706424d30a6f02e0915feed2f038bd9f49856291b193f23f8ba974a30e3bada"
+  }
+ },
+ "register": {
+  "bytes": 699847,
+  "sha256": "732b2103ef61c54a5ac070db94f9d483a589d7098cd8f71bc4b2d723b79b9765"
+ },
+ "s6_act_sha256": "f383eee10105a07bef0f37f9d9a79db4d6be2af93c7bcf8f81e896b09767d4a2"
+}

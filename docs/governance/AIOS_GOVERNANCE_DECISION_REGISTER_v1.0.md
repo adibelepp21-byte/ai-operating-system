@@ -10622,3 +10622,27 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Authority** | Agents decide nothing (FD-AGENCY-001 Q2-A / Q4-A). CEO decisions are operational (FD-P11-001 §15.2; V2 A09 / A11). Founder acceptance (A19) is neither produced nor implied. No candidate, Agent, capability, delegation authority or deployment change |
 | **Remaining findings** | • A first run attempt in a new root wrote an instance record; it was withdrawn before commit and re-run per `§24`.<br>• Historical S-4 scripts describe the pre-MR API.<br>• S-4's REWORK remains open and legacy |
 | **State** | **MR-S5-1 COMPLETE / VERIFIED** · G-S4-1 → CLOSED · G-S4-2 → CLOSED · G-S4-3 → CLOSED / NO REMEDIATION REQUIRED · deployment PAUSED |
+
+## 153. S-6 Systemic Agency Integration Frontier Discovery & Exhaustion Gate — Receipt (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S6-SYSTEMIC-INTEGRATION-FRONTIER-DISCOVERY.md` (verbatim; content sha256 `b5342ebe1e954cf60cc4d516bedd0e9db8fd184b662a9fd4a434d1762a2466e0`). Founder (Moriarty), 2026-10-03. Predecessor MR-S5-1 (`§152`). READ-ONLY discovery of the next material Agency integration frontier after S-1 … S-5. Construction prohibited; Founder decision prohibited unless discovery proves Founder-reserved authority is required. No Act, Micro-Act or Founder Decision created |
+| **Baseline** | `docs/architecture/agency/evidence/S6-BASELINE-2026-10-03.json` at `8625d94`, captured before discovery |
+| **State** | RECEIVED · result recorded below when S-6 reaches its exhaustion condition |
+
+## 154. S-6 — EXHAUSTED: Next Material Frontier FR-1 (Operational Truth → Canonical State → Executive Re-discovery) Disconnected; FR-2 (Governed Execution → Runtime / Trace) Reported Separately; TARGETED DISCOVERY REQUIRED (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S6-SYSTEMIC-INTEGRATION-FRONTIER-DISCOVERY.md` (receipt `§153`) |
+| **Record** | `docs/architecture/agency/S6-SYSTEMIC-AGENCY-INTEGRATION-FRONTIER-DISCOVERY-RECORD.md` (outputs A–O) |
+| **Evidence** | • Baseline: `evidence/S6-BASELINE-2026-10-03.json` (`8625d94`).<br>• Discovery: `evidence/s6_frontier_discovery.py` (READ-ONLY) → `evidence/S6-FRONTIER-DISCOVERY-2026-10-03.json` **all_ok**.<br>• 18 surfaces equal to baseline: certified, operational, Agent registry, capability catalog, candidates, governance, code, deployment. Register only appended. Integrity no faults; certified roots git-clean. Second-process reconstruction identical |
+| **Chain** | **Continuous from Founder Goal through Plan Outcome** (S-1 … MR-S5-1).<br>• **Plan → Capability:** PARTIAL.<br>• **Execution → Runtime:** DISCONNECTED for the Agency chain. The S-1 runtime finding is STILL OPEN for governed work; partially closed historically by W1 / P12-W4 on paths without a CEO decision.<br>• **Plan Outcome → State:** PARTIAL (no resident discovery of planning surfaces).<br>• **State → Observability:** DISCONNECTED.<br>• **Observability → Re-discovery:** DISCONNECTED.<br>• **Continuous operation:** MISSING (governance) |
+| **Key evidence** | • **P12-W2 Unified Operational State:** 34 grants / **14 active** "as stored" (P11 / P12 roots). Operationally **2 active**, both in Agency roots it does not read.<br>• **P13 StateUnderstanding:** 4 open escalations. Operationally 2 open-historical, 0 blocking. No Agency source; last cycle 2026-09-24.<br>• **W3 projection:** 4 CURRENT, all COMPLETED / REVOKED; the 2 live grants unprojected.<br>• **Agency grants:** 0 of 9 in any Trace, observation or P13 record.<br>• **Dormant work:** live grants `0a697039`, `50367d99` unexecuted and reported *"coherent"*.<br>• **FD-AGENCY-001 `§5` items** S-5 / S-6 / S-7 (P13 reads work state; unified view; runtime binding) unstarted under labels reused by later directives |
+| **Gap register** | SG-1 … SG-12. Primary classes: DISCONNECTED (SG-1, SG-2, SG-5), STATE (SG-3), OBSERVABILITY (SG-4), PROVENANCE (SG-6), GOVERNANCE (SG-7, SG-11), PARTIAL (SG-8, SG-9), INTEGRATION (SG-10), DRIFTED (SG-12). No missing capability for the engineering loop |
+| **Frontiers** | • **FR-1:** operational truth → canonical state → executive re-discovery. **Next by dependency**: FR-3 and any executive next action depend on it.<br>• **FR-2:** governed execution → Runtime / Trace. Independent.<br>• FR-3 continuous operation and FR-4 organizational scope: governance-gated |
+| **Governance** | No silent authority expansion, implied ownership, agent decision or delegation right, Founder-authority change, or CEO-decision / Founder-acceptance conflation found. **Open:**<br>• K-7: which surface is authoritative for current state (P12-W2 `§15`; FD-CG7-001 R-2 *"no second competing state model"*);<br>• K-8: whether a P13 Agency source is FDR-G2 `§9` maintenance or `§10` evolution |
+| **Next gate** | **TARGETED DISCOVERY REQUIRED** on FR-1's authority route (K-7, K-8, `§5` standing). Outcome: INTEGRATION CONSTRUCTION MAY BE AUTHORIZED, or FOUNDER DECISION REQUIRED. FR-2 is to follow separately |
+| **Negative controls** | N1–N12 held: in-memory refusals (agent reviewer, agent delegator, scope beyond instance, candidate recipient, decision outside the three) and digest equality |
+| **State** | **S-6 EXHAUSTED → REPORTED → STOPPED** · nothing constructed, delegated, revoked, answered or activated · deployment PAUSED |
