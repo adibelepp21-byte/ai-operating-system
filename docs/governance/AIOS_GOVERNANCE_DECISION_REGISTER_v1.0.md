@@ -10489,3 +10489,26 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Verification** | `evidence/S3-VERIFICATION-2026-10-03.json` (fresh process, **all_ok**):<br>• why-chain agent → delegation → step → plan → goal → Founder instrument, VERIFIED;<br>• 11 negative controls refused (directive `§12` 1–10, plus re-declaration), root unchanged;<br>• no instance named after a candidate;<br>• S-1 dispositions and S-2 grant unchanged;<br>• 58 certified P11 files identical, integrity no faults.<br>Tests: `test_w4_founder_goal` 16 (2 mutations caught); `test_w4_plan_delegation` 13 |
 | **Findings** | • S3-1 trust root is the persisting discipline.<br>• S3-2 two hash conventions; `GOAL-V2-002` / `-003` hashes unregistered.<br>• S3-3 no planning field for an executive target (consistent with Q6-A).<br>• S3-4 MINOR: the registry accepts any instance name; the candidate boundary is governance-enforced.<br>• S3-5 in-process registries.<br>• S3-6 eight functions lack a capability.<br>No BLOCKING finding, no true gap |
 | **State** | **S-3 COMPLETE / VERIFIED** · grant `50367d99c2dd4708` ACTIVE, unexecuted · candidates untouched · S-4 **not started** · deployment PAUSED |
+
+## 142. Capability Discovery & Reconciliation Gate — Receipt (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-CAPABILITY-DISCOVERY-RECONCILIATION-GATE.md` (verbatim; content sha256 `b7612a3fef0cbb5856f82f2b04c7121c0b1d3fa5635692c6c40e4a89a991102d`). Founder (Moriarty), 2026-10-03. Read-only discovery and reconciliation; no capability, entity, instance, authority or activation is created. No Act, Micro-Act or Founder Decision created |
+| **State** | RECEIVED · result recorded below when the gate reaches its exhaustion condition |
+
+## 143. Capability Discovery & Reconciliation Gate — EXHAUSTED / REPORTED / STOPPED: Integration, Observability and Founder Decisions, Not New Capabilities (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-CAPABILITY-DISCOVERY-RECONCILIATION-GATE.md` (receipt `§142`) |
+| **Record** | `docs/architecture/agency/CAPABILITY-DISCOVERY-RECONCILIATION-2026-10-03.md` (outputs A–G) |
+| **Evidence** | `docs/architecture/agency/evidence/capability_discovery.py` → `evidence/CAPABILITY-DISCOVERY-2026-10-03.json`:<br>• read-only;<br>• live probes on a temporary runtime;<br>• negative controls in memory;<br>• historical and operational readings of every W4 root.<br>Consumer suites: 276 tests OK |
+| **Inventory** | • 3 canonical Capabilities: `engineering-intelligence` **C6**; `cognitive-intelligence` **C4** (executable, never integrated); `governance-artifact-integrity` **C2** as realized Capability, with no consumer. Its governed path is C5 / C6, and its work is done by tooling.<br>• Agency mechanisms (planning, delegation, execution, continuity, escalation, Founder Goal verification): **C6**; they are platform mechanisms, not Capabilities.<br>• Execution catalog: 1 workflow and 2 skills C6; 1 workflow and 2 skills C5 (lifecycle only); 4 workflows, 7 skills, 5 tool interfaces and 3 substrates **C2** |
+| **PD-01** | Frozen; not activated. 8 of 10 functions have authority or mechanism counterparts (confirmed). F-03 / F-04 "partial capability" in the FD-AGENCY-001 record `§4` rests on C2 definitions (refined). Risk management is the only true capability gap candidate (CG-1) |
+| **Candidates** | All ten: CANDIDATE ONLY, no instance. Franky → `engineering-intelligence` (C6). Zoro and Chopper → mechanisms. Robin and Jinbe → partial. Nami, Usopp, Sanji, Brook → ORGANIZATIONAL. Luffy → not available |
+| **Correction** | The earlier "4 ACTIVE delegations" count (CC-1 / B-4, S-1 population) came from P11-only `operation_roots()`. **`p12/w4-operations` holds 10 ACTIVE grants** (P12 proof plans, 2026-09-12…18), and P12 holds 3 OPEN escalations, all in certified roots. Nothing changed; disposition **requires Founder authority** (CG-7). 9 of the 10 grants name instances without an instance record in that root (CG-8) |
+| **Gaps** | • TRUE CAPABILITY: CG-1 (risk).<br>• INTEGRATION: CG-2 (cognitive), CG-3 (governance-artifact-integrity consumer), CG-11 (outcome acceptance, S-4).<br>• EXECUTION: CG-4, CG-5.<br>• OBSERVABILITY: CG-6, CG-8.<br>• GOVERNANCE: CG-7, CG-9, CG-12.<br>• ORGANIZATIONAL: CG-10 |
+| **Negative controls** | 1–10 all held: refused, or catalog unchanged, or out-of-scope step escalated. Certified evidence integrity: no faults; certified roots git-clean |
+| **Authority** | No capability, entity, instance, Department, Role / Position, authority or delegation authority created. PD-01, candidates and deployment not activated. Governance unchanged |
+| **State** | **GATE EXHAUSTED → REPORTED → STOPPED** · result feeds S-4 · S-4 **not started** · deployment PAUSED |

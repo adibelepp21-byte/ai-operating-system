@@ -1,0 +1,487 @@
+{
+ "collected_at": "2026-10-03T06:22:50.125117+00:00",
+ "script_sha256": "818fa8343516d2ed164f1da66f7d270834acb3e6900fac1d69ece672364e9273",
+ "canonical_catalog": [
+  {
+   "department": "engineering",
+   "established_by": [
+    "ADR-0008"
+   ],
+   "capabilities": [
+    "cognitive-intelligence",
+    "engineering-intelligence"
+   ],
+   "agent_definitions": [
+    "cognitive-intelligence-agent",
+    "engineering-intelligence-agent"
+   ]
+  },
+  {
+   "department": "platform",
+   "established_by": [
+    "ADR-0003"
+   ],
+   "capabilities": [
+    "governance-artifact-integrity"
+   ],
+   "agent_definitions": [
+    "governance-artifact-integrity-agent"
+   ]
+  }
+ ],
+ "consumers": [
+  "consumers/cognitive_intelligence_agent.py",
+  "consumers/engineering_intelligence_agent.py",
+  "consumers/knowledge_agent.py",
+  "consumers/memory_agent.py",
+  "consumers/observation.py",
+  "consumers/reference_agent.py",
+  "consumers/tool_agent.py",
+  "consumers/workflow_agent.py"
+ ],
+ "consumers_by_capability": {
+  "cognitive-intelligence": [
+   "consumers/cognitive_intelligence_agent.py"
+  ],
+  "engineering-intelligence": [
+   "consumers/engineering_intelligence_agent.py"
+  ],
+  "governance-artifact-integrity": []
+ },
+ "live_probes": {
+  "engineering-intelligence": {
+   "path": "EngineeringIntelligenceAgent.participate(create_execution_layer(RUNNING runtime))",
+   "result": [
+    [
+     "objective",
+     true
+    ],
+    [
+     "measure",
+     false
+    ]
+   ]
+  },
+  "cognitive-intelligence": {
+   "path": "CognitiveIntelligenceAgent.participate(create_execution_layer(RUNNING runtime))",
+   "result": [
+    "SubStep(ordinal=1, description='draft the brief')",
+    "SubStep(ordinal=2, description='review the brief')",
+    "SubStep(ordinal=3, description='publish the brief')"
+   ]
+  },
+  "governance-artifact-integrity": {
+   "path": null,
+   "result": "no resident consumer realizes this capability"
+  }
+ },
+ "instances": [
+  {
+   "root": "docs/architecture/agency/operations/w4-s2-plan-delegation",
+   "instance": "engineering-intelligence-instance-001",
+   "definition": "engineering-intelligence-agent",
+   "capabilities": [
+    "engineering-intelligence"
+   ]
+  },
+  {
+   "root": "docs/architecture/agency/operations/w4-s3-founder-goal",
+   "instance": "engineering-intelligence-instance-001",
+   "definition": "engineering-intelligence-agent",
+   "capabilities": [
+    "engineering-intelligence"
+   ]
+  },
+  {
+   "root": "docs/architecture/p11/w1-operations",
+   "instance": "governance-artifact-integrity-instance-001",
+   "definition": "governance-artifact-integrity-agent",
+   "capabilities": [
+    "governance-artifact-integrity"
+   ]
+  },
+  {
+   "root": "docs/architecture/p11/w4-operations",
+   "instance": "engineering-intelligence-instance-001",
+   "definition": "engineering-intelligence-agent",
+   "capabilities": [
+    "engineering-intelligence"
+   ]
+  },
+  {
+   "root": "docs/architecture/p11/x-department-operations",
+   "instance": "engineering-intelligence-instance-001",
+   "definition": "engineering-intelligence-agent",
+   "capabilities": [
+    "engineering-intelligence"
+   ]
+  },
+  {
+   "root": "docs/architecture/p11/x-department-operations",
+   "instance": "governance-artifact-integrity-instance-001",
+   "definition": "governance-artifact-integrity-agent",
+   "capabilities": [
+    "governance-artifact-integrity"
+   ]
+  },
+  {
+   "root": "docs/architecture/p12/w4-operations",
+   "instance": "engineering-intelligence-instance-p12w3-005-001",
+   "definition": "engineering-intelligence-agent",
+   "capabilities": [
+    "engineering-intelligence"
+   ]
+  }
+ ],
+ "grants": {
+  "total": 36,
+  "active": 16,
+  "by_root": {
+   "docs/architecture/agency/operations/w4-s2-plan-delegation": 1,
+   "docs/architecture/agency/operations/w4-s3-founder-goal": 1,
+   "docs/architecture/p11/w1-operations": 8,
+   "docs/architecture/p11/w4-operations": 6,
+   "docs/architecture/p11/x-department-operations": 10,
+   "docs/architecture/p12/w4-operations": 10
+  }
+ },
+ "integration": {
+  "cognitive-intelligence": {
+   "instances": [],
+   "grants_total": 0,
+   "grants_active": 0,
+   "evidence_records_naming_capability": []
+  },
+  "engineering-intelligence": {
+   "instances": [
+    "engineering-intelligence-instance-001",
+    "engineering-intelligence-instance-p12w3-005-001"
+   ],
+   "grants_total": 23,
+   "grants_active": 14,
+   "evidence_records_naming_capability": [
+    "docs/architecture/p11/w4-operations/first-execution.evidence.json",
+    "docs/architecture/p11/x-department-operations/cross-department.evidence.json",
+    "docs/architecture/p12/w4-operations/first-execution.evidence.json"
+   ]
+  },
+  "governance-artifact-integrity": {
+   "instances": [
+    "governance-artifact-integrity-instance-001"
+   ],
+   "grants_total": 13,
+   "grants_active": 2,
+   "evidence_records_naming_capability": [
+    "docs/architecture/p11/w1-operations/w1-coordination.evidence.json",
+    "docs/architecture/p11/x-department-operations/cross-department.evidence.json"
+   ]
+  }
+ },
+ "execution_catalog": {
+  "workflow": {
+   "cross-department-artifact-conformance-review": {
+    "evidence_files": [
+     "docs/architecture/p11/x-department-operations/cross-department.evidence.json",
+     "docs/architecture/p11/x-department-operations/cross-department.evidence.json"
+    ],
+    "code_refs": [
+     "tools/w1_cross_department_run.py"
+    ]
+   },
+   "governance-corpus-health-check": {
+    "evidence_files": [
+     "docs/architecture/p11/w1-operations/w1-coordination.evidence.json"
+    ],
+    "code_refs": [
+     "tools/w1_coordination_run.py",
+     "w1_coordination_proof.py"
+    ]
+   },
+   "governance-synchronization-review": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "post-amendment-consistency-sweep": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "pre-ratification-validation": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "terminology-audit": {
+    "evidence_files": [],
+    "code_refs": []
+   }
+  },
+  "skill": {
+   "artifact-conformance-verification": {
+    "evidence_files": [
+     "docs/architecture/p11/x-department-operations/cross-department.evidence.json"
+    ],
+    "code_refs": [
+     "tools/w1_cross_department_run.py",
+     "p12_w4_integrated_execution.py",
+     "cross_department_coordination_proof.py",
+     "p12_trace_durability_proof.py"
+    ]
+   },
+   "authority-boundary-check": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "citation-discipline-verification": {
+    "evidence_files": [
+     "docs/architecture/p11/x-department-operations/cross-department.evidence.json"
+    ],
+    "code_refs": [
+     "tools/w1_cross_department_run.py"
+    ]
+   },
+   "correction-proposal-drafting": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "duplicate-content-detection": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "governance-artifact-diff-summary": {
+    "evidence_files": [
+     "docs/architecture/p11/w1-operations/w1-coordination.evidence.json"
+    ],
+    "code_refs": [
+     "tools/w1_coordination_run.py"
+    ]
+   },
+   "governance-cross-reference-scan": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "open-item-tracking-review": {
+    "evidence_files": [
+     "docs/architecture/p11/w1-operations/w1-coordination.evidence.json"
+    ],
+    "code_refs": [
+     "tools/w1_coordination_run.py"
+    ]
+   },
+   "section-numbering-consistency-check": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "staleness-detection": {
+    "evidence_files": [],
+    "code_refs": [
+     "tools/plan_to_workflow.py"
+    ]
+   },
+   "terminology-consistency-scan": {
+    "evidence_files": [],
+    "code_refs": []
+   }
+  },
+  "tool": {
+   "cross-reference-link-validator-interface": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "document-structure-parser-interface": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "repository-content-search-interface": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "text-similarity-comparison-interface": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "version-control-diff-interface": {
+    "evidence_files": [],
+    "code_refs": []
+   }
+  },
+  "runtime": {
+   "batch-governance-review-substrate": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "interactive-governance-session-substrate": {
+    "evidence_files": [],
+    "code_refs": []
+   },
+   "textual-reasoning-execution-substrate": {
+    "evidence_files": [],
+    "code_refs": []
+   }
+  }
+ },
+ "resident_external_tools": [
+  "fullstack/backend/docs_tool.py"
+ ],
+ "operational_state": {
+  "docs/architecture/agency/operations/w4-s2-plan-delegation": {
+   "active": 1,
+   "open_escalations": [],
+   "instances": [
+    "engineering-intelligence-instance-001"
+   ],
+   "conditions": [
+    "NO BLOCKING CONDITION \u2014 prior state is coherent"
+   ],
+   "operational": {
+    "active": [
+     "0a697039a63f4c17"
+    ],
+    "open_escalations": [],
+    "dispositions": {},
+    "conditions": [
+     "NO BLOCKING CONDITION \u2014 prior state is coherent"
+    ]
+   }
+  },
+  "docs/architecture/agency/operations/w4-s3-founder-goal": {
+   "active": 1,
+   "open_escalations": [],
+   "instances": [
+    "engineering-intelligence-instance-001"
+   ],
+   "conditions": [
+    "NO BLOCKING CONDITION \u2014 prior state is coherent"
+   ],
+   "operational": {
+    "active": [
+     "50367d99c2dd4708"
+    ],
+    "open_escalations": [],
+    "dispositions": {},
+    "conditions": [
+     "NO BLOCKING CONDITION \u2014 prior state is coherent"
+    ]
+   }
+  },
+  "docs/architecture/p11/w1-operations": {
+   "active": 1,
+   "open_escalations": [],
+   "instances": [
+    "governance-artifact-integrity-instance-001"
+   ],
+   "conditions": [
+    "NO BLOCKING CONDITION \u2014 prior state is coherent"
+   ],
+   "operational": {
+    "active": [],
+    "open_escalations": [],
+    "dispositions": {
+     "4daebea9012d4cc7": "COMPLETED"
+    },
+    "conditions": [
+     "NO BLOCKING CONDITION \u2014 prior state is coherent"
+    ]
+   }
+  },
+  "docs/architecture/p11/w4-operations": {
+   "active": 1,
+   "open_escalations": [
+    "23f315ba9f504272"
+   ],
+   "instances": [
+    "engineering-intelligence-instance-001"
+   ],
+   "conditions": [
+    "OPEN ESCALATIONS: ['23f315ba9f504272'] \u2014 blocked work remains blocked; an escalation is not resolved by re-running (\u00a716)"
+   ],
+   "operational": {
+    "active": [],
+    "open_escalations": [],
+    "dispositions": {
+     "4313bd2246124a94": "REVOKED"
+    },
+    "conditions": [
+     "NO BLOCKING CONDITION \u2014 prior state is coherent"
+    ]
+   }
+  },
+  "docs/architecture/p11/x-department-operations": {
+   "active": 2,
+   "open_escalations": [],
+   "instances": [
+    "engineering-intelligence-instance-001",
+    "governance-artifact-integrity-instance-001"
+   ],
+   "conditions": [
+    "NO BLOCKING CONDITION \u2014 prior state is coherent"
+   ],
+   "operational": {
+    "active": [],
+    "open_escalations": [],
+    "dispositions": {
+     "0f7ac0785bd8442b": "COMPLETED",
+     "a437cdbbd29940af": "COMPLETED"
+    },
+    "conditions": [
+     "NO BLOCKING CONDITION \u2014 prior state is coherent"
+    ]
+   }
+  },
+  "docs/architecture/p12/w4-operations": {
+   "active": 10,
+   "open_escalations": [
+    "9cb90fa0787a478c"
+   ],
+   "instances": [
+    "engineering-intelligence-instance-p12w3-005-001"
+   ],
+   "conditions": [
+    "MORE THAN ONE LIVE GRANT FOR ONE INSTANCE: {'engineering-intelligence-instance-001': ['08e14bd7aa584ea5', '332d42f021764ab6', '522e84af52444890', '632b256f8335434f', '84e94ea2f001444d', 'b304c7ecb1024454', 'e668a317fa494342'], 'engineering-intelligence-instance-p12w3-001': ['aa591daf55ca4714', 'e6a3d622cfb54b4f']} \u2014 a re-run must supersede rather than add to them (\u00a734)",
+    "OPEN ESCALATIONS: ['9cb90fa0787a478c'] \u2014 blocked work remains blocked; an escalation is not resolved by re-running (\u00a716)"
+   ],
+   "operational": {
+    "active": [
+     "08e14bd7aa584ea5",
+     "2494015de36246fd",
+     "332d42f021764ab6",
+     "522e84af52444890",
+     "632b256f8335434f",
+     "84e94ea2f001444d",
+     "aa591daf55ca4714",
+     "b304c7ecb1024454",
+     "e668a317fa494342",
+     "e6a3d622cfb54b4f"
+    ],
+    "open_escalations": [
+     "9cb90fa0787a478c"
+    ],
+    "dispositions": {},
+    "conditions": [
+     "MORE THAN ONE LIVE GRANT FOR ONE INSTANCE: {'engineering-intelligence-instance-001': ['08e14bd7aa584ea5', '332d42f021764ab6', '522e84af52444890', '632b256f8335434f', '84e94ea2f001444d', 'b304c7ecb1024454', 'e668a317fa494342'], 'engineering-intelligence-instance-p12w3-001': ['aa591daf55ca4714', 'e6a3d622cfb54b4f']} \u2014 a re-run must supersede rather than add to them (\u00a734)",
+     "DISPOSITION FAULTS: [\"4313bd2246124a94.disposition.json: recorded for root 'docs/architecture/p11/w4-operations'; its delegation record is missing\"] \u2014 a disposition whose basis changed is not honoured; the grant keeps its historical status until the fault is resolved",
+     "OPEN ESCALATIONS: ['9cb90fa0787a478c'] \u2014 blocked work remains blocked; an escalation is not resolved by re-running (\u00a716)"
+    ]
+   }
+  },
+  "docs/architecture/p12/w3-operations": {
+   "open_escalations": [
+    "0991300404cf44d8",
+    "9d6bc0ad47294ef0"
+   ]
+  }
+ },
+ "negative_controls": {
+  "1_agent_cannot_create_capability_beyond_definition": "refused: InstanceRegistrationError",
+  "2_capability_holder_gains_no_authority_to_delegate": "refused: DelegationError",
+  "3_candidate_name_not_canonical_or_recipient": "refused: DelegationError",
+  "4_capability_not_authorized_for_recipient": "refused: DelegationError",
+  "5_documented_only_capability_not_delegable": "refused: DelegationError",
+  "6_missing_capability_not_auto_created": true,
+  "7_capability_cannot_change_governance": "refused: EscalationRegisterError",
+  "8_luffy_is_not_the_ceo": "refused: DelegationError",
+  "9_agent_cannot_delegate_to_agent": "refused: DelegationError",
+  "10_capability_boundary_not_bypassed": {
+   "a": "success",
+   "b": "escalation"
+  }
+ }
+}
