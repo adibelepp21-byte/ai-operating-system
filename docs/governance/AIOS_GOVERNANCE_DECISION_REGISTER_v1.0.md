@@ -10556,3 +10556,25 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Tests** | • `test_cg7_p12_remediation`: 22 tests; five mutations caught.<br>• Two layout-bound lines in `test_w4_operational_ledger` now address the ledger through `_disposition_path`.<br>• `test_ecosystem_relationships` pin updated with evidence: Governance → FounderDecision has been **CODE** since my S-1 B1 commit `5be0a24`. That regression was missed by the S-1 regression set and is disclosed here |
 | **Remaining** | • Two historical escalations OPEN by decision.<br>• S-2 / S-3 grants live and unexecuted.<br>• W3 / E11 stay P11-only by design.<br>• CG-7 O-1 (producers never terminate grants) and O-3 (CLASS D) open.<br>• Pre-existing failures: `test_p12_governance_evidence_verification` (1), `test_e11_measurement_currency` (4) |
 | **State** | **CG-7 REMEDIATION COMPLETE / VERIFIED** · certified bytes intact · no new authority · **S-4 unblocked, not started** · deployment PAUSED |
+
+## 147. S-4 Agent Verification Evidence → CEO Decision → Plan Outcome Directive — Receipt (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME.md` (verbatim; content sha256 `0ca0b64598296a75ba1a5a7f633d886a2c3442d31e3a0675896bc350db07ff78`). Founder (Moriarty), 2026-10-03. Predecessors S-1, S-2, S-3, CG-7 (`§138`, `§139`, `§141`, `§146`). Mode: CONSTRUCTION + VERIFICATION under the existing CEO / Agent envelope; no new subsystem unless existing-system exhaustion proves one is needed. No Act, Micro-Act or Founder Decision created |
+| **Boundaries** | CEO acceptance ≠ Founder acceptance; Agent verification ≠ Founder acceptance. No candidate agent, new capability, new Agent, authority widening or deployment. Scheduler, Planner, multi-agent orchestration and organizational expansion are out of scope |
+| **State** | RECEIVED · result recorded below when S-4 reaches its exhaustion condition |
+
+## 148. S-4 — COMPLETE / VERIFIED: Agent Result → Verification Evidence → CEO Decision → Plan Outcome; ACCEPT and REWORK Proven, REJECT Classified as Gap G-S4-1 (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME.md` (receipt `§147`) |
+| **Record** | `docs/architecture/agency/S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME-RECORD.md` (outputs A–J) |
+| **Discovery** | All parts existed but were unconnected:<br>• execution outcomes (`W4Executor`);<br>• the evidence shape;<br>• `plan_completion`;<br>• the disposition ledger;<br>• Planning `revise`;<br>• `plan_provenance` / `founder_goal_refusal`.<br>Plans have no step-outcome state. No CEO review mechanism existed. No REJECT semantic exists for delegated results (the native `"reject"` is a human Memory-promotion review) |
+| **Connection** | No new subsystem, state, store or schema:<br>• `w4_execution.persist_evidence`: write-once, guarded, existing shape;<br>• `w4_delegation.review_result`: ACCEPT → `COMPLETED`, refused unless verification is met; REWORK → `REVOKED` + `revise` carrying the finding;<br>• `w4_delegation.plan_outcome`: derived reader;<br>• `DISPOSITION_SCOPES` entry `FD-P11-001 §15.2`: the delegator's review of its own grants, **uncertified roots only** |
+| **Execution** | Root `docs/architecture/agency/operations/w4-s4-plan-outcome/`. Two verbatim Founder Goals; CEO plans under V2 A01; grants under FD-P11-001 §9 to existing `engineering-intelligence-instance-001`.<br>• **ACCEPT:** `4ff84423cadc48c8`, `tools/w4_delegation.py` 14/14; `plan_completion` met; CEO re-derivation agrees; `COMPLETED`; plan **completed**.<br>• **REWORK:** `9925366405d44af8`, `tools/w4_continuity.py` 3/14, a genuine failure; ACCEPT refused; `REVOKED` and plan revised to `…-plan-0+1`; plan **not completed**, 2 open steps.<br>Accept-before-evidence refused on both |
+| **Verification** | `evidence/S4-VERIFICATION-2026-10-03.json` **all_ok**:<br>• forward and backward traces from file, `founder_goal VERIFIED`;<br>• outcomes equal the run's;<br>• N1–N10 refused / held;<br>• root and ledgers unchanged by the controls;<br>• P12 digest `5be77e56…` unchanged; integrity no faults; certified roots git-clean.<br>Tests: `test_w4_plan_outcome` 12, four mutations caught |
+| **Gaps** | • **G-S4-1** no REJECT semantic: not invented; not required by authority, but its plan semantics should be fixed by directive.<br>• G-S4-2: decision word lives in reason text only (structure distinguishes).<br>• G-S4-3: non-delegated CEO steps carry no execution record |
+| **Authority** | CEO decisions are operational (FD-P11-001 §15.2; V2 A09 / A11 / A15, *not final acceptance*). Founder acceptance (A19) is neither produced nor implied. No candidate, Agent, capability, delegation authority or deployment change |
+| **State** | **S-4 COMPLETE / VERIFIED** · REJECT open (G-S4-1) · S-2 / S-3 grants still live and unexecuted · deployment PAUSED |

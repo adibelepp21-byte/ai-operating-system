@@ -115,3 +115,20 @@ Anything outside the scope is refused when it is recorded, and reported as a fau
 
 This changes no disposition: the Founder decided REVOKED for all ten.
 
+
+## 8. Delegator review of uncertified grants (S-4, Register `§148`)
+
+**Scope.**
+- `FD-P11-001 §15.2` keeps the delegator accountable for a grant's verification requirements; Co-Founder V2 A09 / A11 authorize operational decisions and verification.
+- Under that instrument (`DELEGATOR_REVIEW`), the delegator records COMPLETED or REVOKED for its own grants, **only in roots that are not certified evidence**.
+- Certified roots stay reachable only through the Founder instruments in `§7`.
+
+**Decisions** (`w4_delegation.review_result`):
+
+| Decision | Recorded as |
+|---|---|
+| ACCEPT | COMPLETED; refused unless `plan_completion` is met |
+| REWORK | REVOKED, and the bound plan is revised with the verification finding as its evidence |
+| REJECT | no semantic exists (S-4 gap G-S4-1) |
+
+**Plan outcome.** `w4_delegation.plan_outcome` derives each plan version's step outcomes from the dispositions and evidence. The decision word is carried in the disposition's recorded reason, and no state is added.

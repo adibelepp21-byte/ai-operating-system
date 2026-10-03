@@ -1,0 +1,103 @@
+{
+  "goals": [
+    {
+      "key": "founder-s4-accept",
+      "statement": "Prove Agent \u2192 Verification Evidence \u2192 CEO Review/Decision \u2192 Plan Outcome integration",
+      "authority_instrument": "DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME",
+      "authority_record": "docs/governance/acts/DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME.md",
+      "chain": [
+        {
+          "key": "founder-s4-accept-plan-0",
+          "goal_key": "founder-s4-accept",
+          "origin": "planned",
+          "revision": 0,
+          "supersedes": null,
+          "reason": null,
+          "evidence": [],
+          "authority_instrument": "Co-Founder V2 A01 Executive Command",
+          "authority_record": "docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md",
+          "steps": [
+            {
+              "key": "verify-delegation-elements",
+              "statement": "Establish that tools/w4_delegation.py carries all fourteen FD-P11-001 \u00a713 delegation elements, reporting each criterion satisfied or not.",
+              "depends_on": [],
+              "requires_delegation": true
+            },
+            {
+              "key": "ceo-review-verification",
+              "statement": "Review the verification evidence and record the operational decision (Co-Founder / CEO, V2 A09 / A11; not Founder acceptance).",
+              "depends_on": [
+                "verify-delegation-elements"
+              ],
+              "requires_delegation": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "founder-s4-rework",
+      "statement": "Construct a controlled verification failure or insufficient-evidence case.",
+      "authority_instrument": "DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME",
+      "authority_record": "docs/governance/acts/DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME.md",
+      "chain": [
+        {
+          "key": "founder-s4-rework-plan-0",
+          "goal_key": "founder-s4-rework",
+          "origin": "planned",
+          "revision": 0,
+          "supersedes": null,
+          "reason": null,
+          "evidence": [],
+          "authority_instrument": "Co-Founder V2 A01 Executive Command",
+          "authority_record": "docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md",
+          "steps": [
+            {
+              "key": "verify-continuity-elements",
+              "statement": "Establish that tools/w4_continuity.py carries all fourteen FD-P11-001 \u00a713 delegation elements, reporting each criterion satisfied or not.",
+              "depends_on": [],
+              "requires_delegation": true
+            },
+            {
+              "key": "ceo-review-verification",
+              "statement": "Review the verification evidence and record the operational decision (Co-Founder / CEO, V2 A09 / A11; not Founder acceptance).",
+              "depends_on": [
+                "verify-continuity-elements"
+              ],
+              "requires_delegation": false
+            }
+          ]
+        },
+        {
+          "key": "founder-s4-rework-plan-0+1",
+          "goal_key": "founder-s4-rework",
+          "origin": "revised",
+          "revision": 1,
+          "supersedes": "founder-s4-rework-plan-0",
+          "reason": "CEO REWORK of grant 9925366405d44af8: tools/w4_continuity.py carries 3 of 14 elements (independently re-derived); the step's premise \u2014 that a continuity module carries every delegation element \u2014 is wrong. Sent back as a report of which elements it carries",
+          "evidence": [
+            "docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.evidence.json: verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']"
+          ],
+          "authority_instrument": "Co-Founder V2 A01 Executive Command",
+          "authority_record": "docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md",
+          "steps": [
+            {
+              "key": "report-continuity-elements",
+              "statement": "Report which of the fourteen FD-P11-001 \u00a713 delegation elements tools/w4_continuity.py carries, each satisfied or not.",
+              "depends_on": [],
+              "requires_delegation": true
+            },
+            {
+              "key": "ceo-review-verification",
+              "statement": "Review the verification evidence and record the operational decision (Co-Founder / CEO, V2 A09 / A11; not Founder acceptance).",
+              "depends_on": [
+                "report-continuity-elements"
+              ],
+              "requires_delegation": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

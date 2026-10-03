@@ -383,6 +383,7 @@ _COMPLETION_CLAUSE = "completion of the bound plan"
 # what its text reaches. A2 itself is unchanged (no scope was recorded for it,
 # and none is added here).
 FD_CG7_RECORD = "docs/governance/acts/FD-CG7-001-P12-OPERATIONAL-STATE-DISPOSITION-DECISION.md"
+FD_P11_001_RECORD = "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md"
 _P12_W4 = "docs/architecture/p12/w4-operations"
 DISPOSITION_SCOPES: Dict[Tuple[str, str], Optional[dict]] = {
     DISPOSITION_AUTHORITY: None,
@@ -393,6 +394,13 @@ DISPOSITION_SCOPES: Dict[Tuple[str, str], Optional[dict]] = {
                    "b304c7ecb1024454", "e668a317fa494342", "e6a3d622cfb54b4f")},
     ("FD-CG7-001 FQ-CG7-2", FD_CG7_RECORD): {
         "root": _P12_W4, "dispositions": (REVOKED,), "grants": ("2494015de36246fd",)},
+    # S-4: the delegator's own review of its own grants, in roots that are not
+    # certified evidence. `FD-P11-001 §15.2` keeps Claude Code accountable, as
+    # the authorized delegator, for "verification requirements"; Co-Founder V2
+    # A09 / A11 authorize operational decisions and verification. Certified
+    # roots stay reachable only through the Founder instruments above.
+    ("FD-P11-001 §15.2", FD_P11_001_RECORD): {
+        "uncertified_only": True, "dispositions": (COMPLETED, REVOKED)},
 }
 
 
@@ -582,6 +590,14 @@ def _scope_refusal(authority: Tuple[str, str], root: Path, delegation_id: str,
     scope = DISPOSITION_SCOPES[authority]
     if scope is None:
         return None
+    if scope.get("uncertified_only"):
+        from tools.p12_certified_evidence_guard import is_protected
+        if is_protected(Path(root)):
+            return (f"{authority[0]} reaches only roots outside certified evidence; "
+                    f"{_rel(Path(root))!r} is certified")
+        if disposition not in scope["dispositions"]:
+            return f"{authority[0]} authorizes {scope['dispositions']}, not {disposition!r}"
+        return None
     if _rel(Path(root)) != scope["root"]:
         return f"{authority[0]} does not reach root {_rel(Path(root))!r}"
     if delegation_id not in scope["grants"]:
@@ -615,7 +631,8 @@ def record_disposition(root: Path, delegation_id: str, *, disposition: str,
     if refused:
         raise DelegationError(refused)
     if DISPOSITION_SCOPES[tuple(authority)] is not None:
-        cited = authority_citation.refusal(authority[0], authority[1], "FD-CG7-001")
+        cited = authority_citation.refusal(authority[0], authority[1],
+                                           authority[0].split()[0])
         if cited:
             raise DelegationError(f"the disposition authority does not resolve: {cited}")
     source = Path(root) / f"{delegation_id}.delegation.json"
@@ -835,3 +852,173 @@ def plan_provenance(record: dict, surface) -> dict:
     if record.get("objective") != step.statement:
         found["faults"].append("the objective is not the step statement")
     return found
+
+
+# ---- result → CEO decision → plan outcome (FD-AGENCY-001 · S-4) ---------------
+#
+# What already existed, and what S-4 connects:
+#
+# * the agent's result is an `ExecutionOutcome` (`success` / `failure` /
+#   `escalation`), persisted in an evidence record beside the grant;
+# * verification against the grant is `plan_completion`: the bound plan's
+#   evidence names the grant, every outcome succeeded, nothing escalated, and
+#   the work scope is covered;
+# * the delegator's terminal disposition is the live ledger (`COMPLETED`, only
+#   when `plan_completion` is met; `REVOKED`, a withdrawal);
+# * sending work back is Planning's `revise`: a successor plan that carries
+#   the predecessor's authority unchanged and records why, with evidence.
+#
+# Nothing connected them. `review_result` is the delegator's review of one
+# result: ACCEPT records `COMPLETED` (refused unless verification is met);
+# REWORK records `REVOKED` and revises the plan, citing the verification
+# finding. No decision state is added: the persisted facts are the existing
+# dispositions and plan versions, and the decision word is carried in their
+# recorded reason. There is no REJECT (see the S-4 record, gap G-S4-1).
+#
+# CEO acceptance is **operational** (Co-Founder V2 A09 / A11 / A15, *"not final
+# acceptance"*). Founder acceptance is reserved (A19) and nothing here records
+# or implies it.
+
+ACCEPT, REWORK = "ACCEPT", "REWORK"
+DELEGATOR_REVIEW = ("FD-P11-001 §15.2", FD_P11_001_RECORD)
+FOUNDER_ACCEPTANCE = ("NOT RECORDED — CEO acceptance is operational (Co-Founder V2 "
+                      "A09 / A11 / A15, not final acceptance); Founder acceptance is "
+                      "reserved (A19) and is not produced by this loop")
+
+
+def _grant_record(root: Path, delegation_id: str) -> dict:
+    source = Path(root) / f"{delegation_id}.delegation.json"
+    if not source.is_file():
+        raise DelegationError(f"no such delegation record: {source}")
+    return json.loads(source.read_text(encoding="utf-8"))
+
+
+def review_result(root: Path, delegation_id: str, *, surface, decision: str,
+                  reviewer: str, reason: str, rework_steps=None,
+                  ledger: Path = LIVE_LEDGER,
+                  authority: Tuple[str, str] = DELEGATOR_REVIEW) -> dict:
+    """The delegator's operational decision on one delegated result.
+
+    ACCEPT  → `COMPLETED`, which the ledger records only when the result's
+              evidence verifies against the grant (`plan_completion`).
+    REWORK  → `REVOKED`, and the bound plan is revised: the successor holds
+              ``rework_steps``, carries the plan's authority unchanged, and
+              records the verification finding as its evidence. The caller
+              persists the surface (`planning_continuity.save`).
+
+    Only the grant's delegator reviews it (`FD-AGENCY-001` Q4-A: agents provide
+    verification evidence only).
+    """
+    if reviewer != AUTHORIZED_DELEGATOR:
+        raise DelegationError(
+            f"{reviewer!r} may not review delegated results: only "
+            f"{AUTHORIZED_DELEGATOR!r}, the delegator, decides (FD-AGENCY-001 Q4-A)")
+    if decision not in (ACCEPT, REWORK):
+        raise DelegationError(
+            f"{decision!r} is not a decision the delegator records here "
+            f"({ACCEPT}, {REWORK}); there is no REJECT semantic (S-4 G-S4-1)")
+    if not reason or not reason.strip():
+        raise DelegationError("a review must record its reason")
+    record = _grant_record(root, delegation_id)
+    met, evidence, reasons = plan_completion(root, record)
+    finding = ("verification met" if met
+               else "verification not met: " + "; ".join(reasons))
+    stated = (f"CEO {decision} (delegator review, {authority[0]}; Co-Founder V2 "
+              f"A09 / A11 — operational, not Founder acceptance): {reason.strip()} "
+              f"[{finding}]")
+    if decision == ACCEPT:
+        path = record_disposition(root, delegation_id, disposition=COMPLETED,
+                                  delegator=reviewer, reason=stated, ledger=ledger,
+                                  authority=authority)
+        return {"decision": ACCEPT, "disposition": str(path), "verification": finding}
+    from tools.planning import PlanningEvidence
+    plan_key = _bound_plan(record)
+    plans = [p for goal in surface._goals for p in surface.history(goal)  # noqa: SLF001
+             if p.key == plan_key]
+    if len(plans) != 1:
+        raise DelegationError(f"{len(plans)} plans named {plan_key!r} on the surface")
+    if not rework_steps:
+        raise DelegationError("REWORK must say what the work is sent back as")
+    source = (_rel(evidence) if evidence is not None
+              else f"no evidence record for grant {delegation_id}")
+    successor = surface.revise(
+        plans[0], steps=tuple(rework_steps),
+        reason=f"CEO REWORK of grant {delegation_id}: {reason.strip()}",
+        evidence=(PlanningEvidence(source=source, observation=finding),))
+    path = record_disposition(root, delegation_id, disposition=REVOKED,
+                              delegator=reviewer, reason=stated, ledger=ledger,
+                              authority=authority)
+    return {"decision": REWORK, "disposition": str(path), "verification": finding,
+            "superseded_plan": plan_key, "successor_plan": successor.key}
+
+
+def plan_outcome(surface, goal_key: str, root: Path,
+                 ledger: Path = LIVE_LEDGER) -> dict:
+    """The originating plan's outcome, derived from persisted facts only.
+
+    For every plan version: each delegated step's grants, their operational
+    status (`ACTIVE` / `COMPLETED` / `REVOKED`), their verification, and the
+    recorded decision; each CEO step, done once every step it depends on has a
+    recorded decision. The plan is complete only if its **current** version
+    has every delegated step `COMPLETED` and every CEO step done. Nothing is
+    stored by this function.
+    """
+    chain = surface.history(goal_key)
+    records = []
+    for path in sorted(Path(root).glob("*.delegation.json")):
+        records.append(json.loads(path.read_text(encoding="utf-8")))
+    dispositions, faults = read_dispositions(root, ledger)
+    versions = []
+    for index, plan in enumerate(chain):
+        done: Dict[str, bool] = {}
+        decided: Dict[str, bool] = {}
+        steps = []
+        for step in sequence_steps(plan):
+            if step.requires_delegation:
+                grants = []
+                for record in records:
+                    if _bound_plan(record) != plan.key or record.get("work_scope") != [step.key]:
+                        continue
+                    gid = record["delegation_id"]
+                    item = dispositions.get(gid)
+                    met, evidence, reasons = plan_completion(root, record)
+                    grants.append({
+                        "delegation_id": gid, "recipient": record.get("recipient_instance"),
+                        "historical_status": record.get("status"),
+                        "operational_status": item["disposition"] if item else record.get("status"),
+                        "evidence": None if evidence is None else _rel(evidence),
+                        "verification": "met" if met else list(reasons),
+                        "decision": None if item is None else item.get("reason"),
+                        "decided_under": None if item is None else item.get("authority_instrument")})
+                status = [g["operational_status"] for g in grants]
+                done[step.key] = COMPLETED in status
+                decided[step.key] = bool(grants) and all(s != ACTIVE for s in status)
+                steps.append({"step": step.key, "performed_by": "delegated agent",
+                              "grants": grants, "done": done[step.key],
+                              "outcome": (COMPLETED if COMPLETED in status else
+                                          ACTIVE if ACTIVE in status else
+                                          REVOKED if grants else "DELEGATION REQUIRED")})
+            else:
+                deps = step.depends_on
+                done[step.key] = decided[step.key] = bool(deps) and all(
+                    decided.get(d, False) for d in deps)
+                steps.append({"step": step.key, "performed_by": "CEO",
+                              "depends_on": list(deps), "done": done[step.key]})
+        versions.append({
+            "plan": plan.key, "origin": plan.origin.name, "authority": plan.authority.cited(),
+            "current": index == len(chain) - 1,
+            "superseded_by": chain[index + 1].key if index + 1 < len(chain) else None,
+            "reason": plan.reason, "evidence": list(plan.evidence),
+            "steps": steps, "completed": all(done.values())})
+    current = versions[-1]
+    return {"goal": goal_key, "current_plan": current["plan"],
+            "completed": current["completed"],
+            "open_steps": [s["step"] for s in current["steps"] if not s["done"]],
+            "versions": versions, "disposition_faults": list(faults),
+            "founder_acceptance": FOUNDER_ACCEPTANCE}
+
+
+def sequence_steps(plan):
+    """Plan steps in dependency order (`tools.planning.surface.sequence`)."""
+    from tools.planning.surface import sequence
+    return sequence(plan)

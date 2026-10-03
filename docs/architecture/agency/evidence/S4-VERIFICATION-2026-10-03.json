@@ -1,0 +1,249 @@
+{
+ "checked_at": "2026-10-03T09:27:16.566144+00:00",
+ "script_sha256": "44b0e07a3df233fddc7ae690f98b137fe0690959b21bc997fde63df580e19ed1",
+ "chains": {
+  "accept": {
+   "forward": {
+    "founder_goal": "'Prove Agent → Verification Evidence → CEO Review/Decision → Plan Outcome integration' — VERIFIED (DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME (docs/governance/acts/DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME.md))",
+    "plan": "founder-s4-accept-plan-0 (authority Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md))",
+    "plan_step": "verify-delegation-elements",
+    "delegation": "4ff84423cadc48c8 by Claude Code / AIOS Co-Founder under FD-P11-001 §9",
+    "agent": "engineering-intelligence-instance-001 (engineering-intelligence)",
+    "execution": [
+     [
+      "verify-delegation-elements",
+      "success"
+     ]
+    ],
+    "result": "14 of 14 elements carried",
+    "verification": "met",
+    "ceo_decision": "CEO ACCEPT (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): the evidence shows all 14 elements carried by tools/w4_delegation.py, and my independent re-derivation agrees [verification met]",
+    "decided_under": "FD-P11-001 §15.2",
+    "plan_outcome": {
+     "current_plan": "founder-s4-accept-plan-0",
+     "completed": true,
+     "open_steps": []
+    }
+   },
+   "backward": {
+    "agent": "engineering-intelligence-instance-001",
+    "delegation": "4ff84423cadc48c8",
+    "plan_step": "verify-delegation-elements",
+    "plan": "founder-s4-accept-plan-0",
+    "goal": "founder-s4-accept",
+    "founder_goal": "VERIFIED",
+    "faults": []
+   },
+   "outcome_matches_run": true
+  },
+  "rework": {
+   "forward": {
+    "founder_goal": "'Construct a controlled verification failure or insufficient-evidence case.' — VERIFIED (DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME (docs/governance/acts/DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME.md))",
+    "plan": "founder-s4-rework-plan-0 (authority Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md))",
+    "plan_step": "verify-continuity-elements",
+    "delegation": "9925366405d44af8 by Claude Code / AIOS Co-Founder under FD-P11-001 §9",
+    "agent": "engineering-intelligence-instance-001 (engineering-intelligence)",
+    "execution": [
+     [
+      "verify-continuity-elements",
+      "failure"
+     ]
+    ],
+    "result": "AssertionError: 3 of 14 elements carried; not carried: ['authority_provenance', 'capability_scope', 'delegator', 'escalation_condition', 'lifecycle_boundary', 'objective', 'output_expectation', 'resource_boundary', 'termination_condition', 'verification_requirement', 'work_scope']",
+    "verification": [
+     "not every plan step succeeded: [('verify-continuity-elements', 'failure')]",
+     "work-scope steps without a success outcome: ['verify-continuity-elements']"
+    ],
+    "ceo_decision": "CEO REWORK (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): tools/w4_continuity.py carries 3 of 14 elements (independently re-derived); the step's premise — that a continuity module carries every delegation element — is wrong. Sent back as a report of which elements it carries [verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']]",
+    "decided_under": "FD-P11-001 §15.2",
+    "plan_outcome": {
+     "current_plan": "founder-s4-rework-plan-0+1",
+     "completed": false,
+     "open_steps": [
+      "report-continuity-elements",
+      "ceo-review-verification"
+     ]
+    }
+   },
+   "backward": {
+    "agent": "engineering-intelligence-instance-001",
+    "delegation": "9925366405d44af8",
+    "plan_step": "verify-continuity-elements",
+    "plan": "founder-s4-rework-plan-0",
+    "goal": "founder-s4-rework",
+    "founder_goal": "VERIFIED",
+    "faults": []
+   },
+   "outcome_matches_run": true
+  }
+ },
+ "plan_outcomes": {
+  "accept": {
+   "goal": "founder-s4-accept",
+   "current_plan": "founder-s4-accept-plan-0",
+   "completed": true,
+   "open_steps": [],
+   "versions": [
+    {
+     "plan": "founder-s4-accept-plan-0",
+     "origin": "PLANNED",
+     "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+     "current": true,
+     "superseded_by": null,
+     "reason": null,
+     "evidence": [],
+     "steps": [
+      {
+       "step": "verify-delegation-elements",
+       "performed_by": "delegated agent",
+       "grants": [
+        {
+         "delegation_id": "4ff84423cadc48c8",
+         "recipient": "engineering-intelligence-instance-001",
+         "historical_status": "ACTIVE",
+         "operational_status": "COMPLETED",
+         "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/4ff84423cadc48c8.evidence.json",
+         "verification": "met",
+         "decision": "CEO ACCEPT (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): the evidence shows all 14 elements carried by tools/w4_delegation.py, and my independent re-derivation agrees [verification met]",
+         "decided_under": "FD-P11-001 §15.2"
+        }
+       ],
+       "done": true,
+       "outcome": "COMPLETED"
+      },
+      {
+       "step": "ceo-review-verification",
+       "performed_by": "CEO",
+       "depends_on": [
+        "verify-delegation-elements"
+       ],
+       "done": true
+      }
+     ],
+     "completed": true
+    }
+   ],
+   "disposition_faults": [],
+   "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop"
+  },
+  "rework": {
+   "goal": "founder-s4-rework",
+   "current_plan": "founder-s4-rework-plan-0+1",
+   "completed": false,
+   "open_steps": [
+    "report-continuity-elements",
+    "ceo-review-verification"
+   ],
+   "versions": [
+    {
+     "plan": "founder-s4-rework-plan-0",
+     "origin": "PLANNED",
+     "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+     "current": false,
+     "superseded_by": "founder-s4-rework-plan-0+1",
+     "reason": null,
+     "evidence": [],
+     "steps": [
+      {
+       "step": "verify-continuity-elements",
+       "performed_by": "delegated agent",
+       "grants": [
+        {
+         "delegation_id": "9925366405d44af8",
+         "recipient": "engineering-intelligence-instance-001",
+         "historical_status": "ACTIVE",
+         "operational_status": "REVOKED",
+         "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.evidence.json",
+         "verification": [
+          "not every plan step succeeded: [('verify-continuity-elements', 'failure')]",
+          "work-scope steps without a success outcome: ['verify-continuity-elements']"
+         ],
+         "decision": "CEO REWORK (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): tools/w4_continuity.py carries 3 of 14 elements (independently re-derived); the step's premise — that a continuity module carries every delegation element — is wrong. Sent back as a report of which elements it carries [verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']]",
+         "decided_under": "FD-P11-001 §15.2"
+        }
+       ],
+       "done": false,
+       "outcome": "REVOKED"
+      },
+      {
+       "step": "ceo-review-verification",
+       "performed_by": "CEO",
+       "depends_on": [
+        "verify-continuity-elements"
+       ],
+       "done": true
+      }
+     ],
+     "completed": false
+    },
+    {
+     "plan": "founder-s4-rework-plan-0+1",
+     "origin": "REVISED",
+     "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+     "current": true,
+     "superseded_by": null,
+     "reason": "CEO REWORK of grant 9925366405d44af8: tools/w4_continuity.py carries 3 of 14 elements (independently re-derived); the step's premise — that a continuity module carries every delegation element — is wrong. Sent back as a report of which elements it carries",
+     "evidence": [
+      "docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.evidence.json: verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']"
+     ],
+     "steps": [
+      {
+       "step": "report-continuity-elements",
+       "performed_by": "delegated agent",
+       "grants": [],
+       "done": false,
+       "outcome": "DELEGATION REQUIRED"
+      },
+      {
+       "step": "ceo-review-verification",
+       "performed_by": "CEO",
+       "depends_on": [
+        "report-continuity-elements"
+       ],
+       "done": false
+      }
+     ],
+     "completed": false
+    }
+   ],
+   "disposition_faults": [],
+   "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop"
+  }
+ },
+ "negative_controls": {
+  "N1_agent_cannot_self_accept": "refused: DelegationError: 'engineering-intelligence-instance-001' may not review delegated results: only 'Claude Code / AIOS Co-Founder'",
+  "N2_agent_cannot_record_ceo_acceptance": "refused: DelegationError: only 'Claude Code / AIOS Co-Founder' records a disposition (FD-P11-001 §4.1)",
+  "N3_unverified_result_cannot_be_accepted": "refused: termination by completion is not established: 0 evidence records name plan 'founder-s4-accept-plan-0' and grant '4ff84423cadc48c8'; exactly one is required",
+  "N4_failed_verification_cannot_complete": "refused: termination by completion is not established: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']",
+  "N4b_failed_result_still_not_acceptable_now": "refused: DelegationError: termination by completion is not established: not every plan step succeeded: [('verify-continuity-elements', '",
+  "N5_rework_leaves_the_plan_open": "held",
+  "N6_scope_cannot_widen": "refused: TypeError: issue_from_plan() got an unexpected keyword argument 'work_scope'",
+  "N6b_agent_cannot_execute_the_ceo_step": "refused: ExecutionRefused: step 'ceo-review-verification' is outside the delegated work scope — `§22`: the organization may execute more ",
+  "N7_agent_cannot_issue_a_delegation": "refused: DelegationError: 'engineering-intelligence-instance-001' is not the authorized W4 delegator (FD-P11-001 §4.1); a plan does not ",
+  "N8_ceo_accept_is_not_founder_accept": "held",
+  "N9_a_decision_cannot_be_redone": "refused: DelegationError: 4ff84423cadc48c8 already has a disposition; the ledger is append-only",
+  "N9b_superseded_plan_cannot_be_revised_again": "refused: InvalidPlan: plan 'founder-s4-rework-plan-0' is superseded by 'founder-s4-rework-plan-0+1' — a superseded version cannot be",
+  "root_and_ledgers_unchanged_by_controls": true
+ },
+ "state": {
+  "historical_active": [
+   "4ff84423cadc48c8",
+   "9925366405d44af8"
+  ],
+  "operational_active": [],
+  "dispositions": {
+   "4ff84423cadc48c8": "COMPLETED",
+   "9925366405d44af8": "REVOKED"
+  },
+  "disposition_faults": [],
+  "s4_grants_in_current_overview": [],
+  "blocking_escalations": []
+ },
+ "integrity": {
+  "p12_tree_digest": "5be77e5634d78b237fc7a5ab781c7e0d754f76ccb4e791284349efc0c7a15cf9",
+  "p12_digest_unchanged": true,
+  "integrity_faults": [],
+  "git_status_certified": "(clean)"
+ },
+ "all_ok": true
+}

@@ -44,6 +44,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 from typing import Callable, List, Optional, Tuple
 
 from tools.agent_instance_registry import AgentInstanceRegistry, REGISTERED
@@ -190,3 +191,38 @@ class W4Executor:
                     instance_key=self._delegation.recipient_instance,
                     at=datetime.now(timezone.utc).isoformat()))
         return report
+
+
+def persist_evidence(root: Path, plan_key: str, delegation: W4Delegation,
+                     report: ExecutionReport, *, escalations=(), **details) -> Path:
+    """Persist one execution's evidence beside its grant (S-4: RESULT → EVIDENCE).
+
+    The shape is the one the resident readers already consume
+    (`w4_delegation.plan_completion`, `w4_continuity.reconstruct`): the plan,
+    the grant, every outcome with its status, and the escalations. Written once
+    and never overwritten, through the certified-evidence guard. ``details`` are
+    the result's own facts (for example per-criterion findings); they add to the
+    record and change nothing the readers decide on.
+    """
+    import json
+    from tools.p12_certified_evidence_guard import guard
+    target = guard(Path(root) / f"{delegation.delegation_id}.evidence.json")
+    if target.exists():
+        raise FileExistsError(
+            f"{target.name} already exists: evidence is written once, never overwritten")
+    if report.refusals and not escalations:
+        raise ValueError("a run with refusals must name the escalations recording them")
+    payload = {
+        **details,
+        "plan": plan_key,
+        "delegation_id": delegation.delegation_id,
+        "agent_instance": delegation.recipient_instance,
+        "authority_chain": list(delegation.authority_chain()),
+        "executed_at": datetime.now(timezone.utc).isoformat(),
+        "outcomes": [{"step": o.step_key, "status": o.status, "detail": o.detail,
+                      "instance": o.instance_key, "delegation": o.delegation_id,
+                      "at": o.at} for o in report.outcomes],
+        "escalations": list(escalations),
+    }
+    guard(target).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    return target

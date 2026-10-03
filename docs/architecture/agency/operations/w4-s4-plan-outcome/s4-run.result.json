@@ -1,0 +1,188 @@
+{
+  "executed_at": "2026-10-03T09:26:13.910005+00:00",
+  "paths": {
+    "accept": {
+      "goal": "founder-s4-accept",
+      "statement": "Prove Agent → Verification Evidence → CEO Review/Decision → Plan Outcome integration",
+      "plan": "founder-s4-accept-plan-0",
+      "grant": "4ff84423cadc48c8",
+      "subject": "tools/w4_delegation.py",
+      "accept_without_evidence": "refused: termination by completion is not established: 0 evidence records name plan 'founder-s4-accept-plan-0' and grant '4ff84423cadc48c8'; exactly one is required",
+      "result": "success",
+      "detail": "14 of 14 elements carried",
+      "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/4ff84423cadc48c8.evidence.json",
+      "ceo_verification": {
+        "plan_completion": "met",
+        "independent_rederivation_agrees": true,
+        "carried": 14,
+        "of": 14
+      },
+      "decision": {
+        "decision": "ACCEPT",
+        "disposition": "/home/user/ai-operating-system/docs/architecture/agency/operations/w4-dispositions/docs/architecture/agency/operations/w4-s4-plan-outcome/4ff84423cadc48c8.disposition.json",
+        "verification": "verification met"
+      }
+    },
+    "rework": {
+      "goal": "founder-s4-rework",
+      "statement": "Construct a controlled verification failure or insufficient-evidence case.",
+      "plan": "founder-s4-rework-plan-0",
+      "grant": "9925366405d44af8",
+      "subject": "tools/w4_continuity.py",
+      "accept_without_evidence": "refused: termination by completion is not established: 0 evidence records name plan 'founder-s4-rework-plan-0' and grant '9925366405d44af8'; exactly one is required",
+      "result": "failure",
+      "detail": "AssertionError: 3 of 14 elements carried; not carried: ['authority_provenance', 'capability_scope', 'delegator', 'escalation_condition', 'lifecycle_boundary', 'objective', 'output_expectation', 'resource_boundary', 'termination_condition', 'verification_requirement', 'work_scope']",
+      "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.evidence.json",
+      "ceo_verification": {
+        "plan_completion": [
+          "not every plan step succeeded: [('verify-continuity-elements', 'failure')]",
+          "work-scope steps without a success outcome: ['verify-continuity-elements']"
+        ],
+        "independent_rederivation_agrees": true,
+        "carried": 3,
+        "of": 14
+      },
+      "accept_after_failure": "refused: termination by completion is not established: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']",
+      "decision": {
+        "decision": "REWORK",
+        "disposition": "/home/user/ai-operating-system/docs/architecture/agency/operations/w4-dispositions/docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.disposition.json",
+        "verification": "verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']",
+        "superseded_plan": "founder-s4-rework-plan-0",
+        "successor_plan": "founder-s4-rework-plan-0+1"
+      }
+    }
+  },
+  "plan_outcomes": {
+    "accept": {
+      "goal": "founder-s4-accept",
+      "current_plan": "founder-s4-accept-plan-0",
+      "completed": true,
+      "open_steps": [],
+      "versions": [
+        {
+          "plan": "founder-s4-accept-plan-0",
+          "origin": "PLANNED",
+          "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+          "current": true,
+          "superseded_by": null,
+          "reason": null,
+          "evidence": [],
+          "steps": [
+            {
+              "step": "verify-delegation-elements",
+              "performed_by": "delegated agent",
+              "grants": [
+                {
+                  "delegation_id": "4ff84423cadc48c8",
+                  "recipient": "engineering-intelligence-instance-001",
+                  "historical_status": "ACTIVE",
+                  "operational_status": "COMPLETED",
+                  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/4ff84423cadc48c8.evidence.json",
+                  "verification": "met",
+                  "decision": "CEO ACCEPT (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): the evidence shows all 14 elements carried by tools/w4_delegation.py, and my independent re-derivation agrees [verification met]",
+                  "decided_under": "FD-P11-001 §15.2"
+                }
+              ],
+              "done": true,
+              "outcome": "COMPLETED"
+            },
+            {
+              "step": "ceo-review-verification",
+              "performed_by": "CEO",
+              "depends_on": [
+                "verify-delegation-elements"
+              ],
+              "done": true
+            }
+          ],
+          "completed": true
+        }
+      ],
+      "disposition_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop"
+    },
+    "rework": {
+      "goal": "founder-s4-rework",
+      "current_plan": "founder-s4-rework-plan-0+1",
+      "completed": false,
+      "open_steps": [
+        "report-continuity-elements",
+        "ceo-review-verification"
+      ],
+      "versions": [
+        {
+          "plan": "founder-s4-rework-plan-0",
+          "origin": "PLANNED",
+          "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+          "current": false,
+          "superseded_by": "founder-s4-rework-plan-0+1",
+          "reason": null,
+          "evidence": [],
+          "steps": [
+            {
+              "step": "verify-continuity-elements",
+              "performed_by": "delegated agent",
+              "grants": [
+                {
+                  "delegation_id": "9925366405d44af8",
+                  "recipient": "engineering-intelligence-instance-001",
+                  "historical_status": "ACTIVE",
+                  "operational_status": "REVOKED",
+                  "evidence": "docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.evidence.json",
+                  "verification": [
+                    "not every plan step succeeded: [('verify-continuity-elements', 'failure')]",
+                    "work-scope steps without a success outcome: ['verify-continuity-elements']"
+                  ],
+                  "decision": "CEO REWORK (delegator review, FD-P11-001 §15.2; Co-Founder V2 A09 / A11 — operational, not Founder acceptance): tools/w4_continuity.py carries 3 of 14 elements (independently re-derived); the step's premise — that a continuity module carries every delegation element — is wrong. Sent back as a report of which elements it carries [verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']]",
+                  "decided_under": "FD-P11-001 §15.2"
+                }
+              ],
+              "done": false,
+              "outcome": "REVOKED"
+            },
+            {
+              "step": "ceo-review-verification",
+              "performed_by": "CEO",
+              "depends_on": [
+                "verify-continuity-elements"
+              ],
+              "done": true
+            }
+          ],
+          "completed": false
+        },
+        {
+          "plan": "founder-s4-rework-plan-0+1",
+          "origin": "REVISED",
+          "authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+          "current": true,
+          "superseded_by": null,
+          "reason": "CEO REWORK of grant 9925366405d44af8: tools/w4_continuity.py carries 3 of 14 elements (independently re-derived); the step's premise — that a continuity module carries every delegation element — is wrong. Sent back as a report of which elements it carries",
+          "evidence": [
+            "docs/architecture/agency/operations/w4-s4-plan-outcome/9925366405d44af8.evidence.json: verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']"
+          ],
+          "steps": [
+            {
+              "step": "report-continuity-elements",
+              "performed_by": "delegated agent",
+              "grants": [],
+              "done": false,
+              "outcome": "DELEGATION REQUIRED"
+            },
+            {
+              "step": "ceo-review-verification",
+              "performed_by": "CEO",
+              "depends_on": [
+                "report-continuity-elements"
+              ],
+              "done": false
+            }
+          ],
+          "completed": false
+        }
+      ],
+      "disposition_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop"
+    }
+  }
+}

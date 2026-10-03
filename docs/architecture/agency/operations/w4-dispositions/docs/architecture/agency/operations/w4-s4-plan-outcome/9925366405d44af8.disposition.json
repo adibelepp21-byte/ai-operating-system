@@ -1,0 +1,15 @@
+{
+  "delegation_id": "9925366405d44af8",
+  "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+  "disposition": "REVOKED",
+  "historical_status": "ACTIVE",
+  "record_sha256": "1a43639f9e7dce14e0addb1af25b464b91764a1a1ac4d42663c62c22a7bf052f",
+  "evidence": null,
+  "evidence_sha256": null,
+  "reason": "CEO REWORK (delegator review, FD-P11-001 \u00a715.2; Co-Founder V2 A09 / A11 \u2014 operational, not Founder acceptance): tools/w4_continuity.py carries 3 of 14 elements (independently re-derived); the step's premise \u2014 that a continuity module carries every delegation element \u2014 is wrong. Sent back as a report of which elements it carries [verification not met: not every plan step succeeded: [('verify-continuity-elements', 'failure')]; work-scope steps without a success outcome: ['verify-continuity-elements']]",
+  "recorded_by": "Claude Code / AIOS Co-Founder",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "authority_instrument": "FD-P11-001 \u00a715.2",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "recorded_at": "2026-10-03T09:26:16.533292+00:00"
+}
