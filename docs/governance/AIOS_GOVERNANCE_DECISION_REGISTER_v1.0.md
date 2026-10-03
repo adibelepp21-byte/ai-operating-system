@@ -10512,3 +10512,20 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Negative controls** | 1–10 all held: refused, or catalog unchanged, or out-of-scope step escalated. Certified evidence integrity: no faults; certified roots git-clean |
 | **Authority** | No capability, entity, instance, Department, Role / Position, authority or delegation authority created. PD-01, candidates and deployment not activated. Governance unchanged |
 | **State** | **GATE EXHAUSTED → REPORTED → STOPPED** · result feeds S-4 · S-4 **not started** · deployment PAUSED |
+
+## 144. CG-7 P12 Operational State Reconciliation Gate — Receipt and Result: One Live Pair, Nine Historical Proof Grants, Separation Possible Without Changing Certified Bytes (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-CG7-P12-OPERATIONAL-STATE-RECONCILIATION-GATE.md` (verbatim; content sha256 `083b9fb5dcb8c35e6a9aab3762ac03cbdce8a7dbcc89ced230b92eecd1d1d133`). Founder (Moriarty), 2026-10-03. READ-ONLY. No Act, Micro-Act or Founder Decision created |
+| **Record** | `docs/architecture/agency/CG7-P12-OPERATIONAL-STATE-RECONCILIATION-2026-10-03.md` (outputs A–G) |
+| **Evidence** | `evidence/cg7_p12_state_reconciliation.py` (READ-ONLY EVIDENCE TOOL) → `evidence/CG7-P12-STATE-RECONCILIATION-2026-10-03.json` |
+| **Integrity** | Baseline commit `ee7f6de`. Hashed before and after all readers: 122 P12 files (tree digest `5be77e56…`), 55 state records repository-wide, Register and P12 manifest. **BEFORE = AFTER**. P12 manifest 121 / 121 match. Integrity no faults. Certified roots git-clean |
+| **Grants** | All 10: CEO-issued under `FD-P11-001 §9` via `W4DelegationRegistry.issue`, by P12 construction proofs; `engineering-intelligence` (C6); valid; certified by FD-P12-006; never modified.<br>• **`2494015de36246fd` LIVE / VALID**: recipient persisted and REGISTERED; plan blocked by an open escalation.<br>• **Nine HISTORICAL ONLY**: recipients registered in-process only (Case B), and the single bound execution occurred (8 id-joined; `332d42f0…`, `522e84af…` joined by commit and description only, CLASS D) |
+| **Escalations** | All 3: deliberately provoked out-of-scope proof steps, refused for real by `W4Executor`, structurally joined.<br>• **`9cb90fa0787a478c` OPEN / LIVE**: blocks `2494015d`; the twin of the P11 pair settled under B1.<br>• `0991300404cf44d8`, `9d6bc0ad47294ef0`: **OPEN / HISTORICAL**, since no live recipient exists |
+| **Separation** | Mixed in `p12/w4-operations` and `p12/w3-operations`. Separable **without changing certified bytes**, via the existing S-1 A2 / B1 ledgers. Blocked by A2's P11-only scope and by R-1 |
+| **Readers** | • R-1 **DEFECT**: the live ledgers key folders by root basename, so `p11/w4-operations` and `p12/w4-operations` collide and produce a spurious disposition fault in the P12 reading (fails closed). This is the S-1 implementation.<br>• R-2: `operation_roots()` covers P11 only.<br>• R-3: the operational reader cannot tell a proof leftover from current state.<br>• R-4: `plan_completion` recognizes only the P11 format.<br>Not changed |
+| **Correction to `§143`** | "were not counted anywhere" is wrong. P12-011 / P12-74 counted them in aggregate ("31 grants, 11 active"). What was missing was per-grant classification |
+| **Founder queue** | • FQ-CG7-1: extend A2 disposition authority to P12 certified grants (and the dispositions).<br>• FQ-CG7-2: a human response to `9cb90fa0` (B1 precedent) and the disposition of `2494015d`.<br>The two historical escalations are not queued |
+| **Negative controls** | 1–10 held (hash-evidenced). Regression: 15 suites OK. `test_p12_governance_evidence_verification` fails 1 corpus-ratio assertion; the failure is identical on clean HEAD and on every commit back to before `§131` (pre-existing, not caused by this gate) |
+| **State** | **DISCOVERY EXHAUSTED → REPORTED → STOPPED** · nothing closed, revoked, answered, moved or registered · S-4 **not started** · deployment PAUSED |

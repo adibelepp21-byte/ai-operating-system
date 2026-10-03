@@ -1,0 +1,1190 @@
+{
+ "tool": "READ-ONLY EVIDENCE TOOL — CG-7",
+ "collected_at": "2026-10-03T07:06:19.115341+00:00",
+ "script_sha256": "4db498b4d8a4bbdc11b2da10d241a763f26ae5e9464e14fdb52599952a9ef0e5",
+ "baseline": {
+  "commit": "ee7f6de37d6ae8b9d55da365265a8f9b03c706eb",
+  "certified_root": "docs/architecture/p12",
+  "certified_root_protected": true,
+  "p12_tree_files": 122,
+  "p12_tree_digest": "5be77e5634d78b237fc7a5ab781c7e0d754f76ccb4e791284349efc0c7a15cf9",
+  "manifest": {
+   "entries": 121,
+   "mismatched": [],
+   "missing": [],
+   "in_tree_not_in_manifest": [
+    "docs/architecture/p12/AIOS-P12-FINAL-CERTIFICATION-AND-P13-TRANSITION-HANDOFF-RECORD.md"
+   ],
+   "certified_commit": "6968c6e1fda014ff4c07cd1f82762d3190918895",
+   "certifying_instrument": "docs/governance/acts/FD-P12-006-P12-CERTIFICATION-AND-LIVE-VERIFICATION.md"
+  },
+  "operational_folders_in_p12": [
+   "docs/architecture/p12/w3-operations",
+   "docs/architecture/p12/w4-operations"
+  ],
+  "active_grants_historical": [
+   "08e14bd7aa584ea5",
+   "2494015de36246fd",
+   "332d42f021764ab6",
+   "522e84af52444890",
+   "632b256f8335434f",
+   "84e94ea2f001444d",
+   "aa591daf55ca4714",
+   "b304c7ecb1024454",
+   "e668a317fa494342",
+   "e6a3d622cfb54b4f"
+  ],
+  "open_escalations": {
+   "docs/architecture/p12/w3-operations": [
+    "0991300404cf44d8",
+    "9d6bc0ad47294ef0"
+   ],
+   "docs/architecture/p12/w4-operations": [
+    "9cb90fa0787a478c"
+   ]
+  },
+  "git_status_certified_before": "(clean)"
+ },
+ "inventory": {
+  "grants": [
+   "08e14bd7aa584ea5",
+   "2494015de36246fd",
+   "332d42f021764ab6",
+   "522e84af52444890",
+   "632b256f8335434f",
+   "84e94ea2f001444d",
+   "aa591daf55ca4714",
+   "b304c7ecb1024454",
+   "e668a317fa494342",
+   "e6a3d622cfb54b4f"
+  ],
+  "escalations": [
+   "0991300404cf44d8",
+   "9d6bc0ad47294ef0",
+   "9cb90fa0787a478c"
+  ],
+  "governance_joins": {
+   "0991300404cf44d8": {
+    "escalation_id": "0991300404cf44d8",
+    "delegation_id": "aa591daf55ca4714",
+    "refusal_type": "ExecutionRefused",
+    "joined_at": "2026-09-16T17:11:53.445897+00:00"
+   },
+   "9d6bc0ad47294ef0": {
+    "escalation_id": "9d6bc0ad47294ef0",
+    "delegation_id": "e6a3d622cfb54b4f",
+    "refusal_type": "ExecutionRefused",
+    "joined_at": "2026-09-18T15:55:51.081065+00:00"
+   },
+   "9cb90fa0787a478c": {
+    "escalation_id": "9cb90fa0787a478c",
+    "delegation_id": "2494015de36246fd",
+    "refusal_type": "ExecutionRefused",
+    "joined_at": "2026-09-16T18:14:42.446576+00:00"
+   }
+  },
+  "execution_manifests": {
+   "e668a317fa494342": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-001.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-001",
+    "status": "success",
+    "trace_store": "p12-w4-integrated-execution",
+    "trace_ordinal": 1,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 14,
+     "unsatisfied": []
+    }
+   },
+   "b304c7ecb1024454": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-002.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-002",
+    "status": "failure",
+    "trace_store": "p12-w4-integrated-execution-failure",
+    "trace_ordinal": 0,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 5,
+     "unsatisfied": [
+      "recipient_instance",
+      "authority_provenance",
+      "objective",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "escalation_condition",
+      "accountable_party",
+      "termination_condition"
+     ]
+    }
+   },
+   "84e94ea2f001444d": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-003.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-003",
+    "status": "failure",
+    "trace_store": "p12-w2-state-transition",
+    "trace_ordinal": 0,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 4,
+     "unsatisfied": [
+      "delegator",
+      "authority_provenance",
+      "objective",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "verification_requirement",
+      "escalation_condition",
+      "accountable_party",
+      "termination_condition"
+     ]
+    }
+   },
+   "08e14bd7aa584ea5": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-004.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-004",
+    "status": "failure",
+    "trace_store": "p12-w1-integration-edge",
+    "trace_ordinal": 0,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 3,
+     "unsatisfied": [
+      "recipient_instance",
+      "authority_provenance",
+      "objective",
+      "capability_scope",
+      "work_scope",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "escalation_condition",
+      "accountable_party",
+      "termination_condition"
+     ]
+    }
+   },
+   "632b256f8335434f": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-005.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-005",
+    "status": "failure",
+    "trace_store": "p12-live-verification",
+    "trace_ordinal": 0,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 3,
+     "unsatisfied": [
+      "delegator",
+      "authority_provenance",
+      "objective",
+      "capability_scope",
+      "work_scope",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "verification_requirement",
+      "escalation_condition",
+      "termination_condition"
+     ]
+    }
+   }
+  },
+  "trace_stores": {
+   "aios-corpus-health": 7,
+   "p12-live-verification": 1,
+   "p12-w1-integration-edge": 1,
+   "p12-w2-state-transition": 1,
+   "p12-w4-integrated-execution": 3,
+   "p12-w4-integrated-execution-failure": 1,
+   "w4-conformance-verification": 2
+  },
+  "instance_records_in_p12": [
+   "docs/architecture/p12/w4-operations/engineering-intelligence-instance-p12w3-005-001.instance.json"
+  ],
+  "evidence_records_in_p12": [
+   "docs/architecture/p12/w4-operations/first-execution.evidence.json"
+  ],
+  "capability_levels": {
+   "engineering-intelligence": "C6",
+   "cognitive-intelligence": "C4",
+   "governance-artifact-integrity": "C2",
+   "_source": "docs/architecture/agency/evidence/CAPABILITY-DISCOVERY-2026-10-03.json",
+   "_engineering_probe": "EngineeringIntelligenceAgent.participate(create_execution_layer(RUNNING runtime))"
+  }
+ },
+ "grants": {
+  "08e14bd7aa584ea5": {
+   "record": "docs/architecture/p12/w4-operations/08e14bd7aa584ea5.delegation.json",
+   "sha256": "c93a5bd38418c31f4756ea29cb2eff9d9941987284a68c6cfc7b922e912f33b2",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:08e14bd7aa584ea5",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [
+    "docs/architecture/p11/x-department-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/p11/w4-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s2-plan-delegation/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s3-founder-goal/engineering-intelligence-instance-001.instance.json"
+   ],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Verify tools/w4_delegation.py against the FD-P11-001 §13 conformance criteria under an observable runtime.",
+   "plan": "p12-w1-integration-edge-plan-0",
+   "termination_condition": "on completion of plan p12-w1-integration-edge-plan-0",
+   "issued_at": "2026-09-12T13:57:25.054901+00:00",
+   "producer": [
+    "p12_w4_integrated_execution.py"
+   ],
+   "creating_commit": "a13cf95 2026-09-12 14:04:04 +0000 P12-W1: the label existed, the work package did not",
+   "commits_touching_record": [
+    "a13cf95"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-004.manifest.json",
+    "docs/architecture/p12/trace-stores/p12-w1-integration-edge/trace",
+    "docs/architecture/p12/w4-operations/08e14bd7aa584ea5.delegation.json"
+   ],
+   "execution_manifest": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-004.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-004",
+    "status": "failure",
+    "trace_store": "p12-w1-integration-edge",
+    "trace_ordinal": 0,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 3,
+     "unsatisfied": [
+      "recipient_instance",
+      "authority_provenance",
+      "objective",
+      "capability_scope",
+      "work_scope",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "escalation_condition",
+      "accountable_party",
+      "termination_condition"
+     ]
+    }
+   },
+   "escalations_joined": [],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-w1-integration-edge-plan-0' and grant '08e14bd7aa584ea5'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "2494015de36246fd": {
+   "record": "docs/architecture/p12/w4-operations/2494015de36246fd.delegation.json",
+   "sha256": "2243b40828caef46669f8b23b0fe1031a09410fcf4d301477ed20eaa72871be7",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:2494015de36246fd",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-p12w3-005-001",
+   "recipient_instance_record_in_root": true,
+   "recipient_instance_records_elsewhere": [
+    "docs/architecture/p12/w4-operations/engineering-intelligence-instance-p12w3-005-001.instance.json"
+   ],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Verify tools/w4_delegation.py against the FD-P11-001 §13 conformance criteria, and report the result.",
+   "plan": "w4-first-execution-proof-plan-0",
+   "termination_condition": "on completion of the bound plan, or on revocation by the authorized delegator",
+   "issued_at": "2026-09-16T18:14:42.446058+00:00",
+   "producer": [
+    "tools/w4_first_run.py"
+   ],
+   "creating_commit": "0f39339 2026-09-16 18:30:16 +0000 P12-005: wire the escalation-grant join into the three resident call sites",
+   "commits_touching_record": [
+    "0f39339"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/w4-operations/2494015de36246fd.delegation.json",
+    "docs/architecture/p12/w4-operations/9cb90fa0787a478c.escalation.json",
+    "docs/architecture/p12/w4-operations/9cb90fa0787a478c.governance-join.json",
+    "docs/architecture/p12/w4-operations/engineering-intelligence-instance-p12w3-005-001.instance.json",
+    "docs/architecture/p12/w4-operations/first-execution.evidence.json"
+   ],
+   "execution_manifest": null,
+   "escalations_joined": [
+    "9cb90fa0787a478c"
+   ],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": "docs/architecture/p12/w4-operations/first-execution.evidence.json",
+    "reasons": [
+     "not every plan step succeeded: [('report-conformance', 'escalation')]",
+     "the plan raised escalations ['9cb90fa0787a478c']"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "332d42f021764ab6": {
+   "record": "docs/architecture/p12/w4-operations/332d42f021764ab6.delegation.json",
+   "sha256": "5c235975d162b1d457488192f329719eb709ab4a5dc631d12d9ca65c86c0d685",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:332d42f021764ab6",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [
+    "docs/architecture/p11/x-department-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/p11/w4-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s2-plan-delegation/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s3-founder-goal/engineering-intelligence-instance-001.instance.json"
+   ],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Verify tools/w4_delegation.py against the FD-P11-001 §13 conformance criteria under an observable runtime.",
+   "plan": "p12-w4-integrated-execution-plan-0",
+   "termination_condition": "on completion of plan p12-w4-integrated-execution-plan-0",
+   "issued_at": "2026-09-12T12:03:51.023752+00:00",
+   "producer": [
+    "p12_w4_integrated_execution.py"
+   ],
+   "creating_commit": "a79ef24 2026-09-12 12:23:52 +0000 P12-W4: the finding I acted on was wrong, and the fix broke on its own test",
+   "commits_touching_record": [
+    "a79ef24"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-001.manifest.json",
+    "docs/architecture/p12/trace-stores/p12-w4-integrated-execution/trace",
+    "docs/architecture/p12/w4-operations/332d42f021764ab6.delegation.json",
+    "docs/architecture/p12/w4-operations/e668a317fa494342.delegation.json"
+   ],
+   "execution_manifest": null,
+   "escalations_joined": [],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-w4-integrated-execution-plan-0' and grant '332d42f021764ab6'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "522e84af52444890": {
+   "record": "docs/architecture/p12/w4-operations/522e84af52444890.delegation.json",
+   "sha256": "81e87eeb325b6e1807a9bd4d1d6c2b8d33dae9cb517592ce54f9491349a509a2",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:522e84af52444890",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [
+    "docs/architecture/p11/x-department-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/p11/w4-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s2-plan-delegation/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s3-founder-goal/engineering-intelligence-instance-001.instance.json"
+   ],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Verify tools/w4_delegation.py against the FD-P11-001 §13 conformance criteria under an observable runtime.",
+   "plan": "p12-w4-integrated-execution-plan-0",
+   "termination_condition": "on completion of plan p12-w4-integrated-execution-plan-0",
+   "issued_at": "2026-09-18T15:53:31.207251+00:00",
+   "producer": [
+    "p12_w4_integrated_execution.py"
+   ],
+   "creating_commit": "9d3ea4f 2026-09-18 16:05:14 +0000 FD-P12-006: execute the live P12 operational verification",
+   "commits_touching_record": [
+    "9d3ea4f"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-005.manifest.json",
+    "docs/architecture/p12/trace-stores/aios-corpus-health/trace",
+    "docs/architecture/p12/trace-stores/p12-live-verification/trace",
+    "docs/architecture/p12/trace-stores/p12-w4-integrated-execution/trace",
+    "docs/architecture/p12/w3-operations/9d6bc0ad47294ef0.escalation.json",
+    "docs/architecture/p12/w3-operations/9d6bc0ad47294ef0.governance-join.json",
+    "docs/architecture/p12/w4-operations/522e84af52444890.delegation.json",
+    "docs/architecture/p12/w4-operations/632b256f8335434f.delegation.json",
+    "docs/architecture/p12/w4-operations/e6a3d622cfb54b4f.delegation.json"
+   ],
+   "execution_manifest": null,
+   "escalations_joined": [],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-w4-integrated-execution-plan-0' and grant '522e84af52444890'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "632b256f8335434f": {
+   "record": "docs/architecture/p12/w4-operations/632b256f8335434f.delegation.json",
+   "sha256": "31b4bf62d88f463a09d0d76a2643b6bfe8061c711875ebb9ce4eba8c623d7eeb",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:632b256f8335434f",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [
+    "docs/architecture/p11/x-department-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/p11/w4-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s2-plan-delegation/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s3-founder-goal/engineering-intelligence-instance-001.instance.json"
+   ],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Verify tools/w4_delegation.py against the FD-P11-001 §13 conformance criteria under an observable runtime.",
+   "plan": "p12-live-verification-plan-0",
+   "termination_condition": "on completion of plan p12-live-verification-plan-0",
+   "issued_at": "2026-09-18T15:55:36.933102+00:00",
+   "producer": [
+    "p12_w4_integrated_execution.py"
+   ],
+   "creating_commit": "9d3ea4f 2026-09-18 16:05:14 +0000 FD-P12-006: execute the live P12 operational verification",
+   "commits_touching_record": [
+    "9d3ea4f"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-005.manifest.json",
+    "docs/architecture/p12/trace-stores/aios-corpus-health/trace",
+    "docs/architecture/p12/trace-stores/p12-live-verification/trace",
+    "docs/architecture/p12/trace-stores/p12-w4-integrated-execution/trace",
+    "docs/architecture/p12/w3-operations/9d6bc0ad47294ef0.escalation.json",
+    "docs/architecture/p12/w3-operations/9d6bc0ad47294ef0.governance-join.json",
+    "docs/architecture/p12/w4-operations/522e84af52444890.delegation.json",
+    "docs/architecture/p12/w4-operations/632b256f8335434f.delegation.json",
+    "docs/architecture/p12/w4-operations/e6a3d622cfb54b4f.delegation.json"
+   ],
+   "execution_manifest": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-005.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-005",
+    "status": "failure",
+    "trace_store": "p12-live-verification",
+    "trace_ordinal": 0,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 3,
+     "unsatisfied": [
+      "delegator",
+      "authority_provenance",
+      "objective",
+      "capability_scope",
+      "work_scope",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "verification_requirement",
+      "escalation_condition",
+      "termination_condition"
+     ]
+    }
+   },
+   "escalations_joined": [],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-live-verification-plan-0' and grant '632b256f8335434f'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "84e94ea2f001444d": {
+   "record": "docs/architecture/p12/w4-operations/84e94ea2f001444d.delegation.json",
+   "sha256": "70660e8fc7f9e1c4d2708fc4fe04f560ef1916e4ff3d50407dafe8b8904b25d9",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:84e94ea2f001444d",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [
+    "docs/architecture/p11/x-department-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/p11/w4-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s2-plan-delegation/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s3-founder-goal/engineering-intelligence-instance-001.instance.json"
+   ],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Verify tools/w4_delegation.py against the FD-P11-001 §13 conformance criteria under an observable runtime.",
+   "plan": "p12-w2-state-transition-plan-0",
+   "termination_condition": "on completion of plan p12-w2-state-transition-plan-0",
+   "issued_at": "2026-09-12T12:49:39.153254+00:00",
+   "producer": [
+    "p12_w4_integrated_execution.py"
+   ],
+   "creating_commit": "fcfcc1d 2026-09-12 13:08:00 +0000 P12-W2: a projection, and W6 refusing to call it operational",
+   "commits_touching_record": [
+    "fcfcc1d"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-003.manifest.json",
+    "docs/architecture/p12/trace-stores/p12-w2-state-transition/trace",
+    "docs/architecture/p12/w4-operations/84e94ea2f001444d.delegation.json"
+   ],
+   "execution_manifest": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-003.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-003",
+    "status": "failure",
+    "trace_store": "p12-w2-state-transition",
+    "trace_ordinal": 0,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 4,
+     "unsatisfied": [
+      "delegator",
+      "authority_provenance",
+      "objective",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "verification_requirement",
+      "escalation_condition",
+      "accountable_party",
+      "termination_condition"
+     ]
+    }
+   },
+   "escalations_joined": [],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-w2-state-transition-plan-0' and grant '84e94ea2f001444d'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "aa591daf55ca4714": {
+   "record": "docs/architecture/p12/w4-operations/aa591daf55ca4714.delegation.json",
+   "sha256": "f00ef96139fa9f69ce659010ea259050a4f739d996182aa222cc7951f7961ea4",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:aa591daf55ca4714",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-p12w3-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Prove one real refusal can be escalated and joined to its grant by structured reference (W4-GAP-008).",
+   "plan": "p12-w3-governance-escalation-plan-0",
+   "termination_condition": "on completion of plan p12-w3-governance-escalation-plan-0",
+   "issued_at": "2026-09-16T17:11:53.445494+00:00",
+   "producer": [
+    "p12_w3_governance_escalation.py"
+   ],
+   "creating_commit": "a094f2c 2026-09-16 17:27:25 +0000 P12-003: W4-GAP-008 closed - an escalation joins its grant beside the record",
+   "commits_touching_record": [
+    "a094f2c"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/w3-operations/0991300404cf44d8.escalation.json",
+    "docs/architecture/p12/w3-operations/0991300404cf44d8.governance-join.json",
+    "docs/architecture/p12/w4-operations/aa591daf55ca4714.delegation.json"
+   ],
+   "execution_manifest": null,
+   "escalations_joined": [
+    "0991300404cf44d8"
+   ],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-w3-governance-escalation-plan-0' and grant 'aa591daf55ca4714'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "b304c7ecb1024454": {
+   "record": "docs/architecture/p12/w4-operations/b304c7ecb1024454.delegation.json",
+   "sha256": "bbf2c8c94a3032b6a02345f1efa659d761eea6445abc41b09fd34fc5e23220d3",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:b304c7ecb1024454",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [
+    "docs/architecture/p11/x-department-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/p11/w4-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s2-plan-delegation/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s3-founder-goal/engineering-intelligence-instance-001.instance.json"
+   ],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Verify tools/w4_delegation.py against the FD-P11-001 §13 conformance criteria under an observable runtime.",
+   "plan": "p12-w4-integrated-execution-failure-plan-0",
+   "termination_condition": "on completion of plan p12-w4-integrated-execution-failure-plan-0",
+   "issued_at": "2026-09-12T12:24:27.231042+00:00",
+   "producer": [
+    "p12_w4_integrated_execution.py"
+   ],
+   "creating_commit": "e9a042b 2026-09-12 12:29:09 +0000 The execution chain carries a failure, and Test G runs against real records",
+   "commits_touching_record": [
+    "e9a042b"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-002.manifest.json",
+    "docs/architecture/p12/trace-stores/p12-w4-integrated-execution-failure/trace",
+    "docs/architecture/p12/w4-operations/b304c7ecb1024454.delegation.json"
+   ],
+   "execution_manifest": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-002.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-002",
+    "status": "failure",
+    "trace_store": "p12-w4-integrated-execution-failure",
+    "trace_ordinal": 0,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 5,
+     "unsatisfied": [
+      "recipient_instance",
+      "authority_provenance",
+      "objective",
+      "lifecycle_boundary",
+      "resource_boundary",
+      "output_expectation",
+      "escalation_condition",
+      "accountable_party",
+      "termination_condition"
+     ]
+    }
+   },
+   "escalations_joined": [],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-w4-integrated-execution-failure-plan-0' and grant 'b304c7ecb1024454'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "e668a317fa494342": {
+   "record": "docs/architecture/p12/w4-operations/e668a317fa494342.delegation.json",
+   "sha256": "c0d3bbe6b6bbb3a3c4cc19edf6b587f9c46e4352e1c29d474ac6ffc9e23e9351",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:e668a317fa494342",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [
+    "docs/architecture/p11/x-department-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/p11/w4-operations/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s2-plan-delegation/engineering-intelligence-instance-001.instance.json",
+    "docs/architecture/agency/operations/w4-s3-founder-goal/engineering-intelligence-instance-001.instance.json"
+   ],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Verify tools/w4_delegation.py against the FD-P11-001 §13 conformance criteria under an observable runtime.",
+   "plan": "p12-w4-integrated-execution-plan-0",
+   "termination_condition": "on completion of plan p12-w4-integrated-execution-plan-0",
+   "issued_at": "2026-09-12T12:04:15.612499+00:00",
+   "producer": [
+    "p12_w4_integrated_execution.py"
+   ],
+   "creating_commit": "a79ef24 2026-09-12 12:23:52 +0000 P12-W4: the finding I acted on was wrong, and the fix broke on its own test",
+   "commits_touching_record": [
+    "a79ef24"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-001.manifest.json",
+    "docs/architecture/p12/trace-stores/p12-w4-integrated-execution/trace",
+    "docs/architecture/p12/w4-operations/332d42f021764ab6.delegation.json",
+    "docs/architecture/p12/w4-operations/e668a317fa494342.delegation.json"
+   ],
+   "execution_manifest": {
+    "file": "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-001.manifest.json",
+    "execution_id": "p12-w4-integrated-execution-001",
+    "status": "success",
+    "trace_store": "p12-w4-integrated-execution",
+    "trace_ordinal": 1,
+    "delegation_status": "ACTIVE",
+    "outcome": {
+     "criteria": 14,
+     "satisfied": 14,
+     "unsatisfied": []
+    }
+   },
+   "escalations_joined": [],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-w4-integrated-execution-plan-0' and grant 'e668a317fa494342'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  },
+  "e6a3d622cfb54b4f": {
+   "record": "docs/architecture/p12/w4-operations/e6a3d622cfb54b4f.delegation.json",
+   "sha256": "301c1c90db8f65d90c2a9083d5794461c759464e84688e2f055b7a3109b8b530",
+   "status_in_record": "ACTIVE",
+   "revocation_fields": {},
+   "delegator": "Claude Code / AIOS Co-Founder",
+   "delegator_is_authorized_constant": true,
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "authority_citation_refusal": null,
+   "authority_chain": [
+    "delegation:e6a3d622cfb54b4f",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 §9",
+    "founder:Founder"
+   ],
+   "recipient": "engineering-intelligence-instance-p12w3-001",
+   "recipient_instance_record_in_root": false,
+   "recipient_instance_records_elsewhere": [],
+   "capability_scope": [
+    "engineering-intelligence"
+   ],
+   "capability_level": [
+    "C6"
+   ],
+   "work_scope": [
+    "verify-delegation-elements"
+   ],
+   "objective": "Prove one real refusal can be escalated and joined to its grant by structured reference (W4-GAP-008).",
+   "plan": "p12-w3-governance-escalation-plan-0",
+   "termination_condition": "on completion of plan p12-w3-governance-escalation-plan-0",
+   "issued_at": "2026-09-18T15:55:51.080517+00:00",
+   "producer": [
+    "p12_w3_governance_escalation.py"
+   ],
+   "creating_commit": "9d3ea4f 2026-09-18 16:05:14 +0000 FD-P12-006: execute the live P12 operational verification",
+   "commits_touching_record": [
+    "9d3ea4f"
+   ],
+   "co_created_in_commit": [
+    "docs/architecture/p12/execution-provenance/p12-w4-integrated-execution-005.manifest.json",
+    "docs/architecture/p12/trace-stores/aios-corpus-health/trace",
+    "docs/architecture/p12/trace-stores/p12-live-verification/trace",
+    "docs/architecture/p12/trace-stores/p12-w4-integrated-execution/trace",
+    "docs/architecture/p12/w3-operations/9d6bc0ad47294ef0.escalation.json",
+    "docs/architecture/p12/w3-operations/9d6bc0ad47294ef0.governance-join.json",
+    "docs/architecture/p12/w4-operations/522e84af52444890.delegation.json",
+    "docs/architecture/p12/w4-operations/632b256f8335434f.delegation.json",
+    "docs/architecture/p12/w4-operations/e6a3d622cfb54b4f.delegation.json"
+   ],
+   "execution_manifest": null,
+   "escalations_joined": [
+    "9d6bc0ad47294ef0"
+   ],
+   "plan_completion_reader": {
+    "met": false,
+    "evidence": null,
+    "reasons": [
+     "termination condition does not name completion of the bound plan",
+     "0 evidence records name plan 'p12-w3-governance-escalation-plan-0' and grant 'e6a3d622cfb54b4f'; exactly one is required"
+    ]
+   },
+   "record_keys_equal_issuer_payload": true,
+   "record_keys_diff": []
+  }
+ },
+ "escalations": {
+  "0991300404cf44d8": {
+   "record": "docs/architecture/p12/w3-operations/0991300404cf44d8.escalation.json",
+   "sha256": "0c496eb287cc4bd01234bd3b6c466079662367e8dc168910dd553a943f7529eb",
+   "root": "docs/architecture/p12/w3-operations",
+   "subject": "P12-W3 real refusal proof for FD-P11-001 conformance — structural join only, no parsed reference intended",
+   "required": "report-governance-join-proof",
+   "held": "('verify-delegation-elements',)",
+   "reason": "step 'report-governance-join-proof' is outside the delegated work scope — `§22`: the organization may execute more work, it may not expand the authority under which it operates",
+   "refusal_type": "ExecutionRefused",
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "raised_at": "2026-09-16T17:11:53.445766+00:00",
+   "governance_join": {
+    "escalation_id": "0991300404cf44d8",
+    "delegation_id": "aa591daf55ca4714",
+    "refusal_type": "ExecutionRefused",
+    "joined_at": "2026-09-16T17:11:53.445897+00:00"
+   },
+   "joined_grant_record": "docs/architecture/p12/w4-operations/aa591daf55ca4714.delegation.json",
+   "creating_commit": "a094f2c 2026-09-16 17:27:25 +0000 P12-003: W4-GAP-008 closed - an escalation joins its grant beside the record",
+   "commits_touching_record": [
+    "a094f2c"
+   ],
+   "response_beside_record": [],
+   "response_in_live_ledger": [],
+   "register_status": "OPEN"
+  },
+  "9d6bc0ad47294ef0": {
+   "record": "docs/architecture/p12/w3-operations/9d6bc0ad47294ef0.escalation.json",
+   "sha256": "f845a867e144a18b4ea9b3dc7dd370fcb0f41058e31187650b184116b65157d4",
+   "root": "docs/architecture/p12/w3-operations",
+   "subject": "P12-W3 real refusal proof for FD-P11-001 conformance — structural join only, no parsed reference intended",
+   "required": "report-governance-join-proof",
+   "held": "('verify-delegation-elements',)",
+   "reason": "step 'report-governance-join-proof' is outside the delegated work scope — `§22`: the organization may execute more work, it may not expand the authority under which it operates",
+   "refusal_type": "ExecutionRefused",
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "raised_at": "2026-09-18T15:55:51.080781+00:00",
+   "governance_join": {
+    "escalation_id": "9d6bc0ad47294ef0",
+    "delegation_id": "e6a3d622cfb54b4f",
+    "refusal_type": "ExecutionRefused",
+    "joined_at": "2026-09-18T15:55:51.081065+00:00"
+   },
+   "joined_grant_record": "docs/architecture/p12/w4-operations/e6a3d622cfb54b4f.delegation.json",
+   "creating_commit": "9d3ea4f 2026-09-18 16:05:14 +0000 FD-P12-006: execute the live P12 operational verification",
+   "commits_touching_record": [
+    "9d3ea4f"
+   ],
+   "response_beside_record": [],
+   "response_in_live_ledger": [],
+   "register_status": "OPEN"
+  },
+  "9cb90fa0787a478c": {
+   "record": "docs/architecture/p12/w4-operations/9cb90fa0787a478c.escalation.json",
+   "sha256": "b57e2f58616245efd0a4cbe58b76c522ca4bd5a9ac9e1949d5a6804210a73612",
+   "root": "docs/architecture/p12/w4-operations",
+   "subject": "plan w4-first-execution-proof-plan-0 / delegation 2494015de36246fd",
+   "required": "report-conformance",
+   "held": "('verify-delegation-elements',)",
+   "reason": "step 'report-conformance' is outside the delegated work scope — `§22`: the organization may execute more work, it may not expand the authority under which it operates",
+   "refusal_type": "ExecutionRefused",
+   "authority": "FD-P11-001 §9 (docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md)",
+   "raised_at": "2026-09-16T18:14:42.446442+00:00",
+   "governance_join": {
+    "escalation_id": "9cb90fa0787a478c",
+    "delegation_id": "2494015de36246fd",
+    "refusal_type": "ExecutionRefused",
+    "joined_at": "2026-09-16T18:14:42.446576+00:00"
+   },
+   "joined_grant_record": "docs/architecture/p12/w4-operations/2494015de36246fd.delegation.json",
+   "creating_commit": "0f39339 2026-09-16 18:30:16 +0000 P12-005: wire the escalation-grant join into the three resident call sites",
+   "commits_touching_record": [
+    "0f39339"
+   ],
+   "response_beside_record": [],
+   "response_in_live_ledger": [],
+   "register_status": "OPEN"
+  }
+ },
+ "readers": {
+  "docs/architecture/p12/w4-operations": {
+   "reconstruct (historical)": {
+    "active_grants": [
+     "08e14bd7aa584ea5",
+     "2494015de36246fd",
+     "332d42f021764ab6",
+     "522e84af52444890",
+     "632b256f8335434f",
+     "84e94ea2f001444d",
+     "aa591daf55ca4714",
+     "b304c7ecb1024454",
+     "e668a317fa494342",
+     "e6a3d622cfb54b4f"
+    ],
+    "open_escalations": [
+     "9cb90fa0787a478c"
+    ],
+    "conditions": [
+     "MORE THAN ONE LIVE GRANT FOR ONE INSTANCE: {'engineering-intelligence-instance-001': ['08e14bd7aa584ea5', '332d42f021764ab6', '522e84af52444890', '632b256f8335434f', '84e94ea2f001444d', 'b304c7ecb1024454', 'e668a317fa494342'], 'engineering-intelligence-instance-p12w3-001': ['aa591daf55ca4714', 'e6a3d622cfb54b4f']} — a re-run must supersede rather than add to them (§34)",
+     "OPEN ESCALATIONS: ['9cb90fa0787a478c'] — blocked work remains blocked; an escalation is not resolved by re-running (§16)"
+    ]
+   },
+   "operational_state (S-1 A2/B1)": {
+    "active_grants": [
+     "08e14bd7aa584ea5",
+     "2494015de36246fd",
+     "332d42f021764ab6",
+     "522e84af52444890",
+     "632b256f8335434f",
+     "84e94ea2f001444d",
+     "aa591daf55ca4714",
+     "b304c7ecb1024454",
+     "e668a317fa494342",
+     "e6a3d622cfb54b4f"
+    ],
+    "open_escalations": [
+     "9cb90fa0787a478c"
+    ],
+    "operational_dispositions": {},
+    "disposition_faults": [
+     "4313bd2246124a94.disposition.json: recorded for root 'docs/architecture/p11/w4-operations'; its delegation record is missing"
+    ],
+    "conditions": [
+     "MORE THAN ONE LIVE GRANT FOR ONE INSTANCE: {'engineering-intelligence-instance-001': ['08e14bd7aa584ea5', '332d42f021764ab6', '522e84af52444890', '632b256f8335434f', '84e94ea2f001444d', 'b304c7ecb1024454', 'e668a317fa494342'], 'engineering-intelligence-instance-p12w3-001': ['aa591daf55ca4714', 'e6a3d622cfb54b4f']} — a re-run must supersede rather than add to them (§34)",
+     "DISPOSITION FAULTS: [\"4313bd2246124a94.disposition.json: recorded for root 'docs/architecture/p11/w4-operations'; its delegation record is missing\"] — a disposition whose basis changed is not honoured; the grant keeps its historical status until the fault is resolved",
+     "OPEN ESCALATIONS: ['9cb90fa0787a478c'] — blocked work remains blocked; an escalation is not resolved by re-running (§16)"
+    ]
+   },
+   "read_dispositions": {
+    "valid": {},
+    "faults": [
+     "4313bd2246124a94.disposition.json: recorded for root 'docs/architecture/p11/w4-operations'; its delegation record is missing"
+    ],
+    "ledger_folder": "docs/architecture/agency/operations/w4-dispositions/w4-operations"
+   },
+   "EscalationRegister.open_escalations": [
+    "9cb90fa0787a478c"
+   ],
+   "in_delegation_catalog.operation_roots": false,
+   "is_protected (certified)": true
+  },
+  "docs/architecture/p12/w3-operations": {
+   "reconstruct (historical)": {
+    "active_grants": [],
+    "open_escalations": [
+     "0991300404cf44d8",
+     "9d6bc0ad47294ef0"
+    ],
+    "conditions": [
+     "OPEN ESCALATIONS: ['0991300404cf44d8', '9d6bc0ad47294ef0'] — blocked work remains blocked; an escalation is not resolved by re-running (§16)",
+     "NO LIVE AGENT INSTANCE — nothing may execute (§26)"
+    ]
+   },
+   "operational_state (S-1 A2/B1)": {
+    "active_grants": [],
+    "open_escalations": [
+     "0991300404cf44d8",
+     "9d6bc0ad47294ef0"
+    ],
+    "operational_dispositions": {},
+    "disposition_faults": [],
+    "conditions": [
+     "OPEN ESCALATIONS: ['0991300404cf44d8', '9d6bc0ad47294ef0'] — blocked work remains blocked; an escalation is not resolved by re-running (§16)",
+     "NO LIVE AGENT INSTANCE — nothing may execute (§26)"
+    ]
+   },
+   "read_dispositions": {
+    "valid": {},
+    "faults": [],
+    "ledger_folder": "docs/architecture/agency/operations/w4-dispositions/w3-operations"
+   },
+   "EscalationRegister.open_escalations": [
+    "0991300404cf44d8",
+    "9d6bc0ad47294ef0"
+   ],
+   "in_delegation_catalog.operation_roots": false,
+   "is_protected (certified)": true
+  },
+  "ledger_namespace": {
+   "live_ledger_keying": "LIVE_LEDGER / Path(root).name",
+   "p11_and_p12_share_basename": true,
+   "live_ledger_w4_operations": [
+    "4313bd2246124a94.disposition.json"
+   ],
+   "live_responses_w4_operations": [
+    "23f315ba9f504272.response.json"
+   ]
+  },
+  "operation_roots()": [
+   "docs/architecture/p11/w1-operations",
+   "docs/architecture/p11/w4-operations",
+   "docs/architecture/p11/x-department-operations"
+  ],
+  "p12_execution_chain_reader.summary": {
+   "manifests": 5,
+   "joined": 5,
+   "dangling": 0,
+   "unresolved": 0,
+   "edges_per_chain": 7,
+   "not_joined": []
+  },
+  "p12_provenance_verification.summary": {
+   "elements": 11,
+   "carried": 11,
+   "absent": 0,
+   "absent_elements": [],
+   "assembly": "NOT ASSEMBLABLE",
+   "executions": 19,
+   "executions_joined": 8,
+   "evidence_joined": "3/3",
+   "trace_joined": "5/16",
+   "manifests": 5
+  },
+  "p12_failure_verification.escalation_join": {
+   "records": 4,
+   "joined_by_structured_field": 0,
+   "joined_by_parsed_prose": 2,
+   "naming_the_refusal_type": 1,
+   "joined_by_governance_surface": 3
+  }
+ },
+ "integrity": {
+  "before_equals_after": true,
+  "changed": {
+   "p12_tree": [],
+   "state_records": [],
+   "governance": []
+  },
+  "files_hashed": {
+   "p12_tree": 122,
+   "state_records": 55,
+   "governance": 2
+  },
+  "certified_evidence_integrity_faults": [],
+  "git_status_certified_after": "(clean)"
+ }
+}
