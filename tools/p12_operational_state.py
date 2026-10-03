@@ -42,6 +42,7 @@ would resolve `F-17` by convention — exactly what `§17`/`§18` forbid.
 
 from __future__ import annotations
 
+from contextvars import ContextVar
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -172,7 +173,10 @@ SOURCES: Tuple[StateSource, ...] = (
         canonical_source="FD-P11-001 §9",
         read_path="docs/architecture/p11/w4-operations",
         authority="Founder Decision FD-P11-001",
-        freshness_model="ACTIVE / REVOKED / SUPERSEDED, derived from records",
+        # FD-TD-001: the record is history; the live operational ledger owns
+        # the current disposition, and W2 projects both without owning either.
+        freshness_model="ACTIVE / REVOKED / SUPERSEDED as recorded (history); "
+                        "current disposition from the live operational ledger",
         owns_within_class="operational grants and their lifecycle"),
     StateSource(
         state_id="escalation.raised",
@@ -181,7 +185,8 @@ SOURCES: Tuple[StateSource, ...] = (
         canonical_source="ACT-CC-P11-009 §13",
         read_path="docs/architecture/p11/w4-operations",
         authority="a refusal is not an approval",
-        freshness_model="OPEN unless a response record exists beside it",
+        freshness_model="OPEN unless a response is recorded beside it or in the "
+                        "live response ledger; OPEN blocks only a current grant",
         owns_within_class="refusals raised and awaiting a governance response"),
     StateSource(
         state_id="organization.declared",
@@ -259,17 +264,73 @@ def _project_provenance(source: StateSource) -> StateEntry:
         f"{len(found)} manifest(s)", "execution provenance manifests read back")
 
 
+#: One reading of the live ledger per `project()` pass, shared by the two
+#: projections that need it so both describe the same instant. It lives only for
+#: the pass: the next call re-derives everything, as `project()` promises.
+_PASS: "ContextVar[Optional[dict]]" = ContextVar("p12_w2_pass", default=None)
+
+
+def _operational_overview() -> dict:
+    """The live operational ledger, read through its owner's own reader.
+
+    `FD-TD-001`: the ledger (`A2`, `B1`, `FD-CG7-001`) owns the **current**
+    disposition of delegations and the responses to escalations. W2 projects
+    that reading next to the historical one and owns neither. The reader
+    (`w4_continuity.operational_overview`) is the one `FD-CG7-001` R-2 / R-3
+    authorized; W2 neither copies nor re-derives its rules.
+    """
+    from tools import w4_continuity
+    shared = _PASS.get()
+    if shared is not None and "overview" in shared:
+        return shared["overview"]
+    overview = w4_continuity.operational_overview()
+    if shared is not None:
+        shared["overview"] = overview
+    return overview
+
+
 def _project_delegation(source: StateSource) -> StateEntry:
-    from tools import p12_provenance_verification as prov
-    records = prov.delegation_records()
-    if not records:
+    """History from the grant records, the current disposition from the ledger.
+
+    `§14` / `§19`: a record's stored `ACTIVE` is history once the ledger has
+    disposed of the grant, and projecting it as current is *"historical state
+    presented as current"*. The population is every operational root
+    (`all_operation_roots`, `FD-CG7-001` R-2). The populations certified P11 /
+    P12 verifiers read (`DELEGATION_ROOTS`, `operation_roots()`) are untouched.
+    """
+    overview = _operational_overview()
+    grants = list(overview["grants"].values())
+    if not grants:
         return _entry(source, UNKNOWN, None, "no delegation record is resident",
                       "delegation record discovery")
-    active = [d for d in records if d.get("status") == "ACTIVE"]
+    current = sorted(g["delegation_id"] for g in grants if g["executable"])
+    value = {
+        "grants": len(grants),
+        "active": len(current),
+        "current": current,
+        "historical": {
+            "completed": sum(g["operational_status"] == "COMPLETED" for g in grants),
+            "revoked": sum(g["operational_status"] == "REVOKED" for g in grants),
+            "recorded_active_not_current": sorted(
+                g["delegation_id"] for g in grants
+                if g["historical_status"] == "ACTIVE" and not g["executable"]),
+        },
+    }
+    faults = {r: info["disposition_faults"] for r, info in overview["roots"].items()
+              if info["disposition_faults"]}
+    if faults:
+        # A disposition whose basis changed is not honoured by its owner, so the
+        # current reading is in dispute and is not presented as CURRENT.
+        value["disposition_faults"] = faults
+        return _entry(source, CONFLICTING, value, f"{len(grants)} record(s)",
+                      "grant records joined with the live operational ledger; "
+                      "disposition faults present")
     return _entry(
-        source, CURRENT,
-        {"grants": len(records), "active": len(active)},
-        f"{len(records)} record(s)", "delegation records read as stored")
+        source, CURRENT, value,
+        f"{len(grants)} record(s) in {len(overview['roots'])} root(s); current "
+        "disposition from the live operational ledger",
+        "grant records (history) joined with the live operational ledger "
+        "(current) through w4_continuity.operational_overview — FD-TD-001")
 
 
 def _project_escalation(source: StateSource) -> StateEntry:
@@ -279,9 +340,23 @@ def _project_escalation(source: StateSource) -> StateEntry:
         # No escalation is not "nothing was refused". It is no evidence.
         return _entry(source, UNKNOWN, None, "no escalation record is resident",
                       "escalation record discovery")
+    # `FD-TD-001`: a response recorded in the live response ledger (`B1`,
+    # `FQ-CG7-2`) answers an escalation, and an open one blocks only work under
+    # a current grant. Both readings come from the ledger's own reader.
+    overview = _operational_overview()
+    escalations = overview["escalations"].values()
+    value = dict(join)
+    value.update({
+        "blocking": sorted(overview["blocking_escalations"]),
+        "open_historical": sorted(e["escalation_id"] for e in escalations
+                                  if e["classification"].startswith("OPEN — HISTORICAL")),
+        "answered": sorted(e["escalation_id"] for e in escalations
+                           if e["operational_state"] == "ANSWERED"),
+    })
     return _entry(
-        source, CURRENT, dict(join), f"{join['records']} record(s)",
-        "escalation records read as stored")
+        source, CURRENT, value, f"{join['records']} record(s)",
+        "escalation records joined with the live response ledger "
+        "(blocking / historical / answered) — FD-TD-001")
 
 
 def _project_organization(source: StateSource) -> StateEntry:
@@ -343,7 +418,15 @@ def _entry(source: StateSource, status: str, value, origin: str,
 
 
 def project() -> Tuple[StateEntry, ...]:
-    """Re-derive every declared source. Nothing is cached."""
+    """Re-derive every declared source. Nothing is cached across calls."""
+    token = _PASS.set({})
+    try:
+        return _project_all()
+    finally:
+        _PASS.reset(token)
+
+
+def _project_all() -> Tuple[StateEntry, ...]:
     entries = []
     for source in SOURCES:
         projector = _PROJECTIONS.get(source.state_id)

@@ -1,0 +1,148 @@
+{
+ "checked_at": "2026-10-03T18:18:26.052197+00:00",
+ "script_sha256": "eecc73945a0e230827945ac909883356ca231cdd8a5e9b6254582d1ae3e629f0",
+ "head": "a046f9cb182ae983516467e86093a34c86dcee1c",
+ "baseline_head": "a046f9cb182ae983516467e86093a34c86dcee1c",
+ "p12_w2_before": {
+  "delegation.granted": {
+   "status": "CURRENT",
+   "value": {
+    "grants": 34,
+    "active": 14
+   }
+  },
+  "escalation.raised": {
+   "status": "CURRENT",
+   "value": {
+    "records": 4,
+    "joined_by_structured_field": 0,
+    "joined_by_parsed_prose": 2,
+    "naming_the_refusal_type": 1,
+    "joined_by_governance_surface": 3
+   }
+  }
+ },
+ "p12_w2_after": {
+  "delegation.granted": {
+   "status": "CURRENT",
+   "value": {
+    "grants": 43,
+    "active": 2,
+    "current": [
+     "0a697039a63f4c17",
+     "50367d99c2dd4708"
+    ],
+    "historical": {
+     "completed": 7,
+     "revoked": 34,
+     "recorded_active_not_current": [
+      "08e14bd7aa584ea5",
+      "0f7ac0785bd8442b",
+      "2494015de36246fd",
+      "332d42f021764ab6",
+      "3cc612275a914c2c",
+      "4313bd2246124a94",
+      "4daebea9012d4cc7",
+      "4ff84423cadc48c8",
+      "522e84af52444890",
+      "632b256f8335434f",
+      "84e94ea2f001444d",
+      "86d74cf0b6d14856",
+      "9925366405d44af8",
+      "a437cdbbd29940af",
+      "aa591daf55ca4714",
+      "b304c7ecb1024454",
+      "c7e5e03a5a664230",
+      "d497e284f2c14aee",
+      "e668a317fa494342",
+      "e6a3d622cfb54b4f",
+      "ef2fa9ef2c004955"
+     ]
+    }
+   }
+  },
+  "escalation.raised": {
+   "status": "CURRENT",
+   "value": {
+    "records": 4,
+    "joined_by_structured_field": 0,
+    "joined_by_parsed_prose": 2,
+    "naming_the_refusal_type": 1,
+    "joined_by_governance_surface": 3,
+    "blocking": [],
+    "open_historical": [
+     "0991300404cf44d8",
+     "9d6bc0ad47294ef0"
+    ],
+    "answered": [
+     "23f315ba9f504272",
+     "9cb90fa0787a478c"
+    ]
+   }
+  }
+ },
+ "item_6_p13_receives_state_through_p12_w2": {
+  "status": "BLOCKED — not constructed (FD-TD-001 §4 / §8 stop)",
+  "p13_unchanged": true,
+  "p13_imports_p12_w2": false,
+  "why": "a P13 import of P12-W2 is measured as a consumer that the certified independent consumer verifier cannot observe (DISAGREES) unless its CANDIDATES population and the two pinned certified-consumer tests are changed"
+ },
+ "consumer_measurement": {
+  "consumers": [
+   "tools/p12_e12_measurement.py",
+   "tools/p12_negative_control_verification.py",
+   "tools/p12_self_model_contract.py"
+  ],
+  "importers": [
+   "tools/p12_e12_measurement.py",
+   "tools/p12_mutation_verification.py",
+   "tools/p12_negative_control_verification.py",
+   "tools/p12_self_model_contract.py"
+  ],
+  "independent_verifier": {
+   "checks": 4,
+   "agrees": 4,
+   "disagrees": 0,
+   "unobservable": 0,
+   "observed_consumers": [
+    "tools/p12_e12_measurement.py",
+    "tools/p12_negative_control_verification.py",
+    "tools/p12_self_model_contract.py"
+   ],
+   "not_agreeing": []
+  }
+ },
+ "p13_escalations_open_unchanged": [
+  "0991300404cf44d8",
+  "23f315ba9f504272",
+  "9cb90fa0787a478c",
+  "9d6bc0ad47294ef0"
+ ],
+ "changed_code": [
+  "tools/p12_operational_state.py",
+  "tools/tests/test_fr1_operational_state_integration.py"
+ ],
+ "section_7": {
+  "1_the_14_stale_no_longer_current": true,
+  "2_the_2_live_grants_represented": true,
+  "3_historical_stays_historical": true,
+  "4_escalation_semantics_correct": true,
+  "5_certified_evidence_byte_identical": true,
+  "7_fresh_process_reconstruction_identical": true,
+  "8_existing_behaviour_intact": true,
+  "9_no_second_current_state_authority": true,
+  "10_authority_and_delegation_unchanged": true
+ },
+ "section_3_must_not": {
+  "F-17_untouched": true,
+  "ownership_unchanged": true,
+  "verifier_populations_unchanged": true,
+  "no_agent_capability_store_or_subsystem": true,
+  "no_direct_agency_to_p13": true,
+  "certified_consumer_measurement_agrees": true,
+  "p13_certified_root_unchanged": true
+ },
+ "run_changed_nothing": true,
+ "git_status_certified": "(clean)",
+ "all_ok": true
+}

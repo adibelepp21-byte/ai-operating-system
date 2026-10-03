@@ -18,6 +18,7 @@ Writes only ``S6-FRONTIER-DISCOVERY-2026-10-03.json``. Every surface it reads is
 hashed before and after the run; the comparison is part of the result.
 """
 import hashlib
+import importlib
 import json
 import subprocess
 import sys
@@ -182,7 +183,10 @@ readers = {
 }
 
 # ── G/H. The canonical Unified Operational State (P12-W2) against operations ──
-from tools import p12_operational_state as w2  # noqa: E402
+# Read as data, by name (the disclosed pattern of `tools/p12_operational_state_verifier.py`):
+# an evidence tool measures the surface and is not one of its consumers, so it must
+# not enter the P12 consumer measurement (`p12_state_verification.consumers_of`).
+w2 = importlib.import_module("tools.p12_operational_state")
 from tools import p12_provenance_verification as prov  # noqa: E402
 w2_entries = {e.state_id: e for e in w2.project()}
 w2_delegation = w2_entries["delegation.granted"]

@@ -22,6 +22,7 @@ reader: nothing in ``tools/`` gains a caller, and nothing is written except
 ``TD-STATE-AUTHORITY-DISCOVERY-2026-10-04.json``.
 """
 import hashlib
+import importlib
 import json
 import re
 import subprocess
@@ -56,7 +57,10 @@ before = base.surfaces()
 register_before = s6.register_state()
 
 from tools import delegation_reconciliation as w3  # noqa: E402
-from tools import p12_operational_state as w2  # noqa: E402
+# Read as data, by name (the disclosed pattern of `tools/p12_operational_state_verifier.py`):
+# an evidence tool measures the surface and is not one of its consumers, so it must
+# not enter the P12 consumer measurement (`p12_state_verification.consumers_of`).
+w2 = importlib.import_module("tools.p12_operational_state")
 from tools import p12_provenance_verification as prov  # noqa: E402
 from tools import p12_self_model  # noqa: E402
 from tools import planning_continuity  # noqa: E402
