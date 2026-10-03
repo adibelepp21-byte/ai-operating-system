@@ -217,7 +217,6 @@ def operation_roots(base: Path = P11_OPERATIONS) -> Tuple[Path, ...]:
     return tuple(sorted(found))
 
 
-
 def all_operation_roots(base: Path = REPO_ROOT / "docs") -> Tuple[Path, ...]:
     """Every directory under ``docs/`` holding W4 lifecycle records, any phase.
 
@@ -234,6 +233,7 @@ def all_operation_roots(base: Path = REPO_ROOT / "docs") -> Tuple[Path, ...]:
                                          "*.escalation.json")
              for path in base.rglob(pattern)}
     return tuple(sorted(found))
+
 
 #: The discovered population, under its historical name. **Not a literal list.**
 #:
