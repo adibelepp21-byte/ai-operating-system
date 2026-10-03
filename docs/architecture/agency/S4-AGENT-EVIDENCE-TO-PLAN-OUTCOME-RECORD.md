@@ -131,7 +131,7 @@ PLAN OUTCOME  founder-s4-accept-plan-0: completed = true, open steps = []
 | Certified evidence integrity | no faults |
 | Certified roots (P11, P12, P13, platform-organization) | git-clean |
 | Founder Decision records and canonical governance | untouched (the Register gained only `§147` / `§148`) |
-| Regression | Register `§148` |
+| Regression | `tools/tests`: 89 suites, 2,296 tests; consumer suites: 276 tests OK.<br>• **One regression found and fixed:** `test_certified_write_closure` flagged `evidence/cg7_remediation_evidence.py`, my CG-7 script, which imported `tools` only inside functions and so did not install the certified-write barrier on every route. It now imports `tools` at module level. The fix is verified, and the CG-7 verification still passes.<br>• Remaining failures are pre-existing: `test_e11_measurement_currency` (4) and `test_p12_governance_evidence_verification` (1) |
 
 ## I. Gap register
 

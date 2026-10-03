@@ -18,6 +18,8 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(REPO))
 
+import tools  # noqa: E402,F401  -- installs the certified-write barrier before anything runs
+
 HERE = Path(__file__).parent
 BASELINE = HERE / "CG7-REMEDIATION-BASELINE-2026-10-03.json"
 VERIFICATION = HERE / "CG7-REMEDIATION-VERIFICATION-2026-10-03.json"
