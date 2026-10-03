@@ -10694,3 +10694,28 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Regression** | 91 suites, 2326 tests. 89 OK. Only the pre-existing failures: `test_e11_measurement_currency` (4) and `test_p12_governance_evidence_verification` (1) |
 | **Founder decision required** | **FQ-FR1-1:** may the CEO register `tools.p13.state` as an observed P12-W2 consumer in the certified consumer-evidence harness (and update the two pinned controls and the STATE consumer classification), then wire P13 → P12-W2?<br>• Option **A** (CEO recommendation): authorize under FD-TD-001.<br>• B: a certified P12 change, with successor and certification.<br>• C: leave P13 unwired |
 | **State** | **FR-1 PARTIAL · STOPPED AT BOUNDARY · FOUNDER DECISION REQUIRED** · P13, W3, P12 self-model, certified evidence, authority unchanged · deployment PAUSED |
+
+## 159. FD-FR1-001 — Founder Decision: FQ-FR1-1 = Option A (P13 Registered as an Observed P12-W2 Consumer; FR-1 Continues); Evidence-Chain Correction Ordered (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Decision** | `acts/FD-FR1-001-P13-CONSUMER-REGISTRATION-AND-P12-W2-INTEGRATION.md` (verbatim; content sha256 `85edece762972c74eea5a80935b26eda8a12b7534996684a6cc7038fa1c88a96`). Founder (Moriarty). Answers FQ-FR1-1 (`§158`). **APPROVED — OPTION A** |
+| **Authorized** | `§2`, limited to:<br>• registering P13 as an observed consumer in the existing P12 consumer-evidence harness;<br>• updating the corresponding pinned consumer tests and the existing STATE consumer classification;<br>• wiring P13 to `tools.p12_operational_state.project()`;<br>• verifying the independent measurement recognizes it.<br>The ACT-CC-P12-019 precedent applies. Not a redesign of P12-W2 or P13 |
+| **Must not** | `§4`:<br>• hide P13 from the scanner (no indirect import to evade measurement);<br>• modify the scanner;<br>• weaken the verifier;<br>• create a parallel measurement.<br>`§5` / `§9` stops: P12-W2 semantics, ownership or source population; verifier semantics; P12 architecture beyond registration; F-17; the certified P13 Blueprint; a new interface; authority expansion |
+| **Evidence correction** | `§7`: reconcile the S-6 / TD `script_sha256` discrepancy (`§158`) explicitly. Corrected outputs and a correction record may be added; the originals are preserved; findings are not altered unless fresh verification shows a material effect |
+| **State** | **REGISTERED · OPERATIVE.** Result to be recorded below |
+
+## 160. FR-1 — COMPLETE / VERIFIED: Live Operational Ledger → P12-W2 → P13; P13 Registered and Observed as a P12-W2 Consumer; Evidence-Chain Correction Applied (2026-10-03)
+
+| Field | Value |
+|---|---|
+| **Authority** | FD-TD-001 (`§157`), FD-FR1-001 (`§159`) |
+| **Record** | `docs/architecture/agency/FR1-OPERATIONAL-STATE-INTEGRATION-RECORD.md` `§K` (the stop at `§158` is kept above it as history) |
+| **Built (`§2` scope only)** | • `tools/p12_consumer_evidence_verifier.py`: one `CANDIDATES` line, `("tools.p13.state", "_operational_state")` (`ACT-CC-P12-019` precedent).<br>• Pinned consumer tests: `test_p12_state_verification` set 3 → 4; `test_p12_consumer_measurement` importers 4 → 5.<br>• STATE consumer classification: computed (`_link_consumer`), 3 / 4 → 4 / 5, SATISFIED.<br>• `tools/p13/state.py`: source `operational_state` over `tools.p12_operational_state.project()` (certified Blueprint `§4` interface; static import), facts `operational_state.delegations` / `.escalations`.<br>• P13 fast test sets exclude the slow source, like `self_model` / `corpus` |
+| **Honest measurement** | • P13 is a measured importer and consumer, and the independent verifier **observes** it: 4 / 4 AGREE.<br>• Scanner byte-identical; verifier checks unchanged; no parallel measurement.<br>• Tests fail if P13 is hidden by name or left unregistered |
+| **Verification** | `evidence/FR1-COMPLETION-VERIFICATION-2026-10-03.json` **all_ok** (fresh process, against `evidence/FR1-COMPLETION-BASELINE-2026-10-03.json`).<br>• FD-FR1-001 `§6` items 1–10 PASS. P13 observes `operational_state.delegations` VERIFIED, current `[0a697039…, 50367d99…]`, *"P12-W2 delegation.granted"*.<br>• **Data changes:** consumers 3 → 4, importers 4 → 5, one candidate, CONSUMER detail, two P13 facts.<br>• **Certified semantics unchanged:** certified roots (incl. the P13 Blueprint) byte-identical; scanner, verifier checks, link statuses, P12-W2 contract, populations, verdicts, governance and envelopes the same |
+| **Tests** | `test_fr1_operational_state_integration` 19. Seven code mutations caught, including *hide the import by name* and *leave the consumer unregistered* |
+| **Regression** | 91 suites, 2332 tests. 89 OK. Only the pre-existing failures: `test_e11_measurement_currency` (4) and `test_p12_governance_evidence_verification` (1) |
+| **Evidence correction (`§7`)** | `evidence/EVIDENCE-CORRECTION-2026-10-03-SCRIPT-HASHES.md`. The S-6, TD and FR-1-baseline outputs were reproduced by the current scripts in worktrees at their original states (`a7a0860`; `a046f9c`; `a046f9c` + FD-TD-001 act + Register through `§157`).<br>• **0 differences** in any finding.<br>• Originals preserved; corrected outputs added as `*.CORRECTED.json`.<br>• Also found: `AGENCY-E2E-SANDBOX-2026-10-02.json` names a script never in the repository (pre-existing provenance limit; reported, not altered) |
+| **Unchanged** | P12-W2 ownership, semantics and source population; F-17; P13 Blueprint; W3; P12 self-model; authority; deployment PAUSED. No P13 cycle was run (`docs/operations/p13` untouched) |
+| **State** | **FR-1 COMPLETE / VERIFIED** · live ledger → P12-W2 → P13 connected and independently measured |

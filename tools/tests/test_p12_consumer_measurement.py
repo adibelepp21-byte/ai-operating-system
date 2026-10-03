@@ -81,8 +81,12 @@ class NC01ThePreviouslyMissedImportShape(unittest.TestCase):
         a real importer appeared, not because the shape recogniser changed —
         every one is still bound through `from tools import … as …`, which is
         the form the superseded implementation could not see.
+
+        Five since `FD-FR1-001`: P13 (`tools/p13/state.py`) reads the surface
+        through its certified Blueprint `§4` interface, bound the same way, and
+        is registered with the independent consumer verifier.
         """
-        self.assertEqual(4, len(sv.importers_of(SURFACE)))
+        self.assertEqual(5, len(sv.importers_of(SURFACE)))
 
 
 class NC02AnIrrelevantTextualReference(unittest.TestCase):

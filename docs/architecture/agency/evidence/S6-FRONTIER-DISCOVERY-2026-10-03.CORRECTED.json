@@ -1,0 +1,471 @@
+{
+ "checked_at": "2026-10-03T20:19:32.765184+00:00",
+ "script_sha256": "23d1a1c4c33d16b3099238de881e539f90ae965d8ef1b71126dfd355ae7ebeb0",
+ "head": "a7a0860296497e221cff14e8312279d1a18151b3",
+ "baseline_head": "8625d94dc4b186011a37ca7b62cee3d9128b7a1e",
+ "chain": {
+  "planning_surfaces": {
+   "docs/architecture/agency/operations/w4-s2-plan-delegation/planning.state.json": {
+    "certified": false,
+    "goals": {
+     "agency-s2-ledger-rule-verification": {
+      "authority": "FD-AGENCY-001 S-2",
+      "plans": [
+       "agency-s2-ledger-rule-verification-plan-0"
+      ],
+      "current_plan": "agency-s2-ledger-rule-verification-plan-0",
+      "completed": false,
+      "open_steps": [
+       "verify-ledger-rules",
+       "review-ledger-verification"
+      ],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop",
+      "grants": [
+       "0a697039a63f4c17"
+      ]
+     }
+    }
+   },
+   "docs/architecture/agency/operations/w4-s3-founder-goal/planning.state.json": {
+    "certified": false,
+    "goals": {
+     "founder-s3-connect-goal-to-planning": {
+      "authority": "DIR-AIOS-AGENCY-S3-FOUNDER-GOAL-TO-PLANNING",
+      "plans": [
+       "founder-s3-connect-goal-to-planning-plan-0"
+      ],
+      "current_plan": "founder-s3-connect-goal-to-planning-plan-0",
+      "completed": false,
+      "open_steps": [
+       "verify-founder-goal-intake",
+       "review-founder-goal-verification",
+       "report-to-founder"
+      ],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop",
+      "grants": [
+       "50367d99c2dd4708"
+      ]
+     }
+    }
+   },
+   "docs/architecture/agency/operations/w4-s4-plan-outcome/planning.state.json": {
+    "certified": false,
+    "goals": {
+     "founder-mr-s5-1-accept": {
+      "authority": "DIR-AIOS-AGENCY-MR-S5-1-DECISION-PROVENANCE",
+      "plans": [
+       "founder-mr-s5-1-accept-plan-0"
+      ],
+      "current_plan": "founder-mr-s5-1-accept-plan-0",
+      "completed": true,
+      "open_steps": [],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop",
+      "grants": [
+       "3cc612275a914c2c"
+      ]
+     },
+     "founder-mr-s5-1-reject": {
+      "authority": "DIR-AIOS-AGENCY-MR-S5-1-DECISION-PROVENANCE",
+      "plans": [
+       "founder-mr-s5-1-reject-plan-0",
+       "founder-mr-s5-1-reject-plan-0+1"
+      ],
+      "current_plan": "founder-mr-s5-1-reject-plan-0+1",
+      "completed": true,
+      "open_steps": [],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop",
+      "grants": [
+       "c7e5e03a5a664230",
+       "ef2fa9ef2c004955"
+      ]
+     },
+     "founder-mr-s5-1-rework": {
+      "authority": "DIR-AIOS-AGENCY-MR-S5-1-DECISION-PROVENANCE",
+      "plans": [
+       "founder-mr-s5-1-rework-plan-0",
+       "founder-mr-s5-1-rework-plan-0+1"
+      ],
+      "current_plan": "founder-mr-s5-1-rework-plan-0+1",
+      "completed": true,
+      "open_steps": [],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop",
+      "grants": [
+       "86d74cf0b6d14856",
+       "d497e284f2c14aee"
+      ]
+     },
+     "founder-s4-accept": {
+      "authority": "DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME",
+      "plans": [
+       "founder-s4-accept-plan-0"
+      ],
+      "current_plan": "founder-s4-accept-plan-0",
+      "completed": true,
+      "open_steps": [],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop",
+      "grants": [
+       "4ff84423cadc48c8"
+      ]
+     },
+     "founder-s4-rework": {
+      "authority": "DIR-AIOS-AGENCY-S4-AGENT-EVIDENCE-TO-PLAN-OUTCOME",
+      "plans": [
+       "founder-s4-rework-plan-0",
+       "founder-s4-rework-plan-0+1"
+      ],
+      "current_plan": "founder-s4-rework-plan-0+1",
+      "completed": false,
+      "open_steps": [
+       "report-continuity-elements",
+       "ceo-review-verification"
+      ],
+      "decision_faults": [],
+      "founder_acceptance": "NOT RECORDED — CEO acceptance is operational (Co-Founder V2 A09 / A11 / A15, not final acceptance); Founder acceptance is reserved (A19) and is not produced by this loop",
+      "grants": [
+       "9925366405d44af8"
+      ]
+     }
+    }
+   }
+  },
+  "decisions_by_provenance": {
+   "explicit": 5,
+   "legacy": 16
+  },
+  "open_goals": {
+   "docs/architecture/agency/operations/w4-s2-plan-delegation/planning.state.json::agency-s2-ledger-rule-verification": [
+    "verify-ledger-rules",
+    "review-ledger-verification"
+   ],
+   "docs/architecture/agency/operations/w4-s3-founder-goal/planning.state.json::founder-s3-connect-goal-to-planning": [
+    "verify-founder-goal-intake",
+    "review-founder-goal-verification",
+    "report-to-founder"
+   ],
+   "docs/architecture/agency/operations/w4-s4-plan-outcome/planning.state.json::founder-s4-rework": [
+    "report-continuity-elements",
+    "ceo-review-verification"
+   ]
+  },
+  "grants_on_open_goals": {
+   "docs/architecture/agency/operations/w4-s2-plan-delegation/planning.state.json::agency-s2-ledger-rule-verification": [
+    "0a697039a63f4c17"
+   ],
+   "docs/architecture/agency/operations/w4-s3-founder-goal/planning.state.json::founder-s3-connect-goal-to-planning": [
+    "50367d99c2dd4708"
+   ],
+   "docs/architecture/agency/operations/w4-s4-plan-outcome/planning.state.json::founder-s4-rework": [
+    "9925366405d44af8"
+   ]
+  },
+  "current_grants": [
+   "0a697039a63f4c17",
+   "50367d99c2dd4708"
+  ],
+  "roots": {
+   "docs/architecture/agency/operations/w4-s2-plan-delegation": {
+    "certified": false,
+    "historical_active": 1,
+    "operational_active": 1,
+    "historical_open": 0,
+    "operational_open": 0,
+    "disposition_faults": [],
+    "conditions": [
+     "NO BLOCKING CONDITION — prior state is coherent"
+    ]
+   },
+   "docs/architecture/agency/operations/w4-s3-founder-goal": {
+    "certified": false,
+    "historical_active": 1,
+    "operational_active": 1,
+    "historical_open": 0,
+    "operational_open": 0,
+    "disposition_faults": [],
+    "conditions": [
+     "NO BLOCKING CONDITION — prior state is coherent"
+    ]
+   },
+   "docs/architecture/agency/operations/w4-s4-plan-outcome": {
+    "certified": false,
+    "historical_active": 7,
+    "operational_active": 0,
+    "historical_open": 0,
+    "operational_open": 0,
+    "disposition_faults": [],
+    "conditions": [
+     "NO BLOCKING CONDITION — prior state is coherent"
+    ]
+   },
+   "docs/architecture/p11/w1-operations": {
+    "certified": true,
+    "historical_active": 1,
+    "operational_active": 0,
+    "historical_open": 0,
+    "operational_open": 0,
+    "disposition_faults": [],
+    "conditions": [
+     "NO BLOCKING CONDITION — prior state is coherent"
+    ]
+   },
+   "docs/architecture/p11/w4-operations": {
+    "certified": true,
+    "historical_active": 1,
+    "operational_active": 0,
+    "historical_open": 1,
+    "operational_open": 0,
+    "disposition_faults": [],
+    "conditions": [
+     "NO BLOCKING CONDITION — prior state is coherent"
+    ]
+   },
+   "docs/architecture/p11/x-department-operations": {
+    "certified": true,
+    "historical_active": 2,
+    "operational_active": 0,
+    "historical_open": 0,
+    "operational_open": 0,
+    "disposition_faults": [],
+    "conditions": [
+     "NO BLOCKING CONDITION — prior state is coherent"
+    ]
+   },
+   "docs/architecture/p12/w3-operations": {
+    "certified": true,
+    "historical_active": 0,
+    "operational_active": 0,
+    "historical_open": 2,
+    "operational_open": 2,
+    "disposition_faults": [],
+    "conditions": [
+     "OPEN ESCALATIONS: ['0991300404cf44d8', '9d6bc0ad47294ef0'] — blocked work remains blocked; an escalation is not resolved by re-running (§16)",
+     "NO LIVE AGENT INSTANCE — nothing may execute (§26)"
+    ]
+   },
+   "docs/architecture/p12/w4-operations": {
+    "certified": true,
+    "historical_active": 10,
+    "operational_active": 0,
+    "historical_open": 1,
+    "operational_open": 0,
+    "disposition_faults": [],
+    "conditions": [
+     "NO BLOCKING CONDITION — prior state is coherent"
+    ]
+   }
+  },
+  "escalations": {
+   "docs/architecture/p11/w4-operations/23f315ba9f504272": {
+    "historical_state": "OPEN",
+    "operational_state": "ANSWERED",
+    "classification": "ANSWERED"
+   },
+   "docs/architecture/p12/w3-operations/0991300404cf44d8": {
+    "historical_state": "OPEN",
+    "operational_state": "OPEN",
+    "classification": "OPEN — HISTORICAL (its grant is not current)"
+   },
+   "docs/architecture/p12/w3-operations/9d6bc0ad47294ef0": {
+    "historical_state": "OPEN",
+    "operational_state": "OPEN",
+    "classification": "OPEN — HISTORICAL (its grant is not current)"
+   },
+   "docs/architecture/p12/w4-operations/9cb90fa0787a478c": {
+    "historical_state": "OPEN",
+    "operational_state": "ANSWERED",
+    "classification": "ANSWERED"
+   }
+  },
+  "roots_with_live_grants_reported_coherent": {
+   "docs/architecture/agency/operations/w4-s2-plan-delegation": [
+    "NO BLOCKING CONDITION — prior state is coherent"
+   ],
+   "docs/architecture/agency/operations/w4-s3-founder-goal": [
+    "NO BLOCKING CONDITION — prior state is coherent"
+   ]
+  }
+ },
+ "runtime_trace": {
+  "agency_evidence_records": 7,
+  "agency_evidence_keys": [
+   "agent_instance",
+   "authority_chain",
+   "criteria",
+   "delegation_id",
+   "escalations",
+   "executed_at",
+   "outcomes",
+   "performed_by",
+   "plan",
+   "subject"
+  ],
+  "agency_evidence_carries_runtime_or_trace": false,
+  "agency_grants": 9,
+  "agency_grants_in_any_trace_observation_or_p13_record": {},
+  "trace_store_root_certified": true,
+  "w4_executor_callers_using_runtime": {
+   "docs/architecture/agency/evidence/capability_discovery.py": true,
+   "docs/architecture/agency/evidence/mr_s5_1_decisions_run.py": false,
+   "docs/architecture/agency/evidence/s4_plan_outcome_run.py": false,
+   "docs/architecture/agency/evidence/s4_verification.py": false,
+   "p12_w3_governance_escalation.py": false,
+   "tools/w1_coordination_run.py": true,
+   "tools/w1_cross_department_run.py": false,
+   "tools/w4_first_run.py": false
+  },
+  "resident_binder_w4_to_execution_layer": {},
+  "trace_identity_in_participate": true
+ },
+ "p13": {
+  "sources": [
+   "memory",
+   "self_model",
+   "integrity",
+   "native_core",
+   "corpus",
+   "knowledge",
+   "authority",
+   "remembered",
+   "s_ops"
+  ],
+  "source_reads_agency_state": {
+   "w4_continuity": false,
+   "w4_delegation": false,
+   "plan_outcome": false,
+   "operational_overview": false,
+   "planning_continuity": false,
+   "read_dispositions": false
+  },
+  "cycles": 11,
+  "latest_cycle": "20260924T164519-b7456bbc.json",
+  "escalations_open_executive_view": [
+   "0991300404cf44d8",
+   "23f315ba9f504272",
+   "9cb90fa0787a478c",
+   "9d6bc0ad47294ef0"
+  ],
+  "escalations_open_operational_view": [
+   "0991300404cf44d8",
+   "9d6bc0ad47294ef0"
+  ],
+  "escalations_blocking_operational_view": [],
+  "issue_delegation_reserved": true
+ },
+ "readers": {
+  "planning_surface_discovery_in_tools": {},
+  "plan_outcome_callers_in_tools": {},
+  "operational_overview_callers_in_tools": {}
+ },
+ "w3": {
+  "roots_read": [
+   "docs/architecture/p11/w1-operations",
+   "docs/architecture/p11/w4-operations",
+   "docs/architecture/p11/x-department-operations"
+  ],
+  "projected_current": {
+   "0f7ac0785bd8442b": "COMPLETED",
+   "4313bd2246124a94": "REVOKED",
+   "4daebea9012d4cc7": "COMPLETED",
+   "a437cdbbd29940af": "COMPLETED"
+  },
+  "current_grants_not_projected": [
+   "0a697039a63f4c17",
+   "50367d99c2dd4708"
+  ]
+ },
+ "canonical_state": {
+  "delegation_granted": {
+   "status": "CURRENT",
+   "value": {
+    "grants": 34,
+    "active": 14
+   },
+   "source": "docs/architecture/p11/w4-operations (34 record(s))"
+  },
+  "delegation_roots_read": [
+   "docs/architecture/p11/w1-operations",
+   "docs/architecture/p11/w4-operations",
+   "docs/architecture/p11/x-department-operations",
+   "docs/architecture/p12/w4-operations"
+  ],
+  "agency_roots_read": false,
+  "operational_active": [
+   "0a697039a63f4c17",
+   "50367d99c2dd4708"
+  ],
+  "operational_active_visible_to_canonical": [],
+  "canonical_reads_live_ledger": false,
+  "consumers": [
+   "tools/p12_consumer_evidence_verifier.py",
+   "tools/p12_e12_measurement.py",
+   "tools/p12_mutation_verification.py",
+   "tools/p12_negative_control_verification.py",
+   "tools/p12_operational_state_verifier.py",
+   "tools/p12_self_model_contract.py",
+   "tools/p12_state_verification.py"
+  ]
+ },
+ "fd_agency_001_section_5_items_not_started": {
+  "S-5 (§5): P13 reads organizational work state": true,
+  "S-6 (§5): unified agency state view": true,
+  "S-7 (§5): resident runtime binding": true
+ },
+ "fresh_process": {
+  "overview_sha256_this_process": "4cb43f27bd13950e195e587467c01e9052e7168aaca6fda2e6cab76607680f45",
+  "overview_sha256_second_process": "4cb43f27bd13950e195e587467c01e9052e7168aaca6fda2e6cab76607680f45",
+  "equal": true
+ },
+ "negative_controls": {
+  "N8_agent_cannot_decide": "refused: DelegationError: 'engineering-intelligence-instance-001' may not review delegated results: only 'Claude Code / AIOS Co-Founder'",
+  "N9_agent_cannot_delegate": "refused: DelegationError: 'engineering-intelligence-instance-001' is not the authorized W4 delegator (FD-P11-001 §4.1); a plan does not ",
+  "N2_capability_not_created_by_delegation": "refused: DelegationError: delegation exceeds the instance's permitted surface: ['risk-management'] — `§16`: a delegator may not grant mo",
+  "N7_candidate_not_a_recipient": "refused: DelegationError: 'monkey-d-luffy' is not a registered Agent Instance — `§6.1`: an Agent Definition alone is insufficient",
+  "N10_decision_outside_the_three": "refused: DelegationError: 'APPROVE_AS_FOUNDER' is not a delegator decision ('ACCEPT', 'REWORK', 'REJECT')",
+  "N7_no_instance_named_after_a_candidate": true,
+  "N12_gaps_named_against_existing_mechanisms": true,
+  "N1_no_new_agent": true,
+  "N2_no_new_capability": true,
+  "N3_no_new_canonical_entity": true,
+  "N4_no_delegation_issued": true,
+  "N5_no_operational_state_change": true,
+  "N6_no_certified_change": true,
+  "N7_candidates_unchanged": true,
+  "N10_authority_unchanged": true,
+  "N11_deployment_unchanged": true,
+  "code_unchanged": true
+ },
+ "integrity": {
+  "run_changed_nothing": true,
+  "surfaces_equal_baseline": {
+   "certified:docs/architecture/p11": true,
+   "certified:docs/architecture/p12": true,
+   "certified:docs/architecture/p13": true,
+   "certified:docs/architecture/platform-organization": true,
+   "certified:docs/operations": true,
+   "operational:agency/operations": true,
+   "agent_registry:*.instance.json": true,
+   "capability_catalog:docs/architecture/organization": true,
+   "candidates:docs/architecture/candidates": true,
+   "governance:docs/governance (except Register and S-6 act)": true,
+   "agency_records:docs/architecture/agency/*.md": false,
+   "code:tools": true,
+   "code:native_core": true,
+   "code:consumers": true,
+   "code:api": true,
+   "code:fullstack": true,
+   "deployment:vercel.json": true,
+   "root_entry_points:*.py": true
+  },
+  "register_only_appended": true,
+  "s6_act_unchanged": true,
+  "integrity_faults": [],
+  "git_status_certified": "(clean)"
+ },
+ "surfaces_changed_vs_baseline": [],
+ "all_ok": true
+}

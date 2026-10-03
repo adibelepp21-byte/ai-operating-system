@@ -57,6 +57,11 @@ CANDIDATES: Tuple[Tuple[str, str], ...] = (
     # would otherwise show up as a permanent DISAGREES, which would say more
     # about the harness's reach than about the consumer.
     ("tools.p12_e12_measurement", "_e12_02"),
+    # Added under `FD-FR1-001` (FQ-FR1-1 = A), on the `ACT-CC-P12-019`
+    # precedent: P13 reads the surface through the interface its certified
+    # Blueprint `§4` names (live ledger → P12-W2 → P13, `FD-TD-001`). Registered
+    # so the new consumer is observed, not merely claimed and not hidden.
+    ("tools.p13.state", "_operational_state"),
 )
 
 #: The surface's projection API, named here independently of the measurement

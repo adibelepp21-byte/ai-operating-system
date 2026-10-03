@@ -6,6 +6,7 @@
 | **Result** | **FR-1 PARTIALLY CONSTRUCTED → STOPPED AT A CERTIFIED BOUNDARY → FOUNDER DECISION REQUIRED** (FQ-FR1-1, `§I`).<br>• **Live ledger → P12-W2:** built and verified.<br>• **P12-W2 → P13:** not constructed. Wiring it requires changing a certified P12 verifier population, a `§4` / `§8` stop the CEO may not classify |
 | **Evidence** | • Baseline: `evidence/fr1_baseline.py` → `evidence/FR1-BASELINE-2026-10-03.json`, captured before any code changed (`a046f9c`).<br>• Verification: `evidence/fr1_verification.py` → `evidence/FR1-VERIFICATION-2026-10-03.json`, **all_ok**, fresh process.<br>• Tests: `tools/tests/test_fr1_operational_state_integration.py` (13; 4 code mutations caught) |
 | **Code changed** | `tools/p12_operational_state.py` only, plus the new test file. No other module, store, source, capability, Agent or authority |
+| **Completion (FD-FR1-001)** | **FR-1 COMPLETE / VERIFIED** (`§K`; Register `§159` decision, `§160` result).<br>• FQ-FR1-1 = Option A: P13 is wired to P12-W2 and registered as an observed consumer in the certified consumer-evidence harness.<br>• The record above `§K` is kept as the history of the stop |
 
 ---
 
@@ -144,3 +145,71 @@ Full run after the revert: **91 suites, 2326 tests, 89 suites OK.** The only fai
 - **P13 escalation fact:** P13's own `escalations.open` fact (P12 self-model, certified W5) still uses the register's historical rule. It is unchanged by design. With Option A, P13 would also carry P12-W2's blocking / historical / answered split.
 - **Cost:** `project()` now costs about 9 s, mostly the operational overview (about 7.6 s per reading).
 - **Other readers:** W3 and the P13 self-model keep their historical scope, as decided (FD-CG7-001 R-2; S-1 M-2).
+
+---
+
+## K. Completion under FD-FR1-001 (FQ-FR1-1 = A)
+
+**Authority:** `docs/governance/acts/FD-FR1-001-P13-CONSUMER-REGISTRATION-AND-P12-W2-INTEGRATION.md` (verbatim; content sha256 `85edece762972c74eea5a80935b26eda8a12b7534996684a6cc7038fa1c88a96`), Register `§159`.
+
+**Built, exactly the `§2` scope:**
+
+| # | `§2` item | Change |
+|---|---|---|
+| 1 | register P13 as an observed consumer | `tools/p12_consumer_evidence_verifier.py`: one line added to `CANDIDATES`, `("tools.p13.state", "_operational_state")`, with a comment citing FD-FR1-001 and the `ACT-CC-P12-019` precedent. No check, scanner or meaning changed |
+| 2 | update the pinned consumer tests | • `test_p12_state_verification`: consumer set 3 → 4 (`tools/p13/state.py`).<br>• `test_p12_consumer_measurement`: importer count 4 → 5.<br>Both docstrings say why the pin moved |
+| 3 | update the STATE consumer classification | It is **computed**, not declared: `p12_state_verification._link_consumer`. It moves by itself from *"3 evidenced consumer(s) of 4 importer(s)"* to *"4 … of 5"* and stays **SATISFIED**. No separate declared classification exists to edit |
+| 4 | wire P13 to the certified P12-W2 interface | `tools/p13/state.py`: source `operational_state` calls `tools.p12_operational_state.project()`, the interface the certified Blueprint `§4` names, with a static `from tools import p12_operational_state as w2`.<br>• Facts: `operational_state.delegations` / `operational_state.escalations`. Only a CURRENT W2 entry is VERIFIED; anything else is INFERRED; absence is UNKNOWN.<br>• The entry takes defaults so the harness can drive it with no arguments.<br>• Three P13 test files exclude this slow source from their fast source sets, as they already exclude `self_model` and `corpus` |
+| 5 | verify the independent measurement recognizes P13 | AST measurement: P13 is a consumer and importer. The independent dynamic verifier **observes** P13 reading the resident sources: 4 / 4 checks AGREE, 0 DISAGREE |
+
+**Honest measurement (`§4`).**
+- P13's import is static and visible.
+- The scanner (`p12_state_verification.py`) is byte-identical.
+- No check of the independent verifier changed.
+- No parallel measurement exists.
+
+These tests would fail if P13 were hidden or unregistered:
+
+| Test | Catches |
+|---|---|
+| `test_p13_binds_the_surface_statically_not_by_name` | P13's import replaced with a by-name load |
+| `test_p13_is_an_importer_and_an_evidenced_consumer` | P13 dropped from the AST measurement |
+| `test_the_independent_verifier_agrees_with_the_measurement` | an unregistered consumer (verifier DISAGREES) |
+
+**Verification (`§6` / `§8`).** `evidence/fr1_completion_verification.py` → `evidence/FR1-COMPLETION-VERIFICATION-2026-10-03.json`, **all_ok**, fresh process, against `evidence/FR1-COMPLETION-BASELINE-2026-10-03.json` (captured before P13 was wired).
+
+| # | `§6` item | Result |
+|---|---|---|
+| 1 | W2 current vs historical delegation | PASS: 2 current; the 14 stale in history |
+| 2 | W2 blocking vs historical / answered | PASS |
+| 3 | P13 receives state through P12-W2 | **PASS**: `operational_state.delegations` VERIFIED, current `[0a697039…, 50367d99…]`, source *"P12-W2 delegation.granted"* |
+| 4 | the certified measurement recognizes P13 | **PASS**: consumer and importer; independent verifier observed; CONSUMER link SATISFIED |
+| 5 | existing certified verifiers valid | PASS: the P12-W2 verifier, state-chain link statuses and verdicts equal the baseline |
+| 6 | source populations unchanged | PASS: `DELEGATION_ROOTS`, `operation_roots()`, W3, escalation join equal |
+| 7 | no direct Agency → P13 | PASS: no Agency reader name in `tools/p13` |
+| 8 | fresh-process reproduction | PASS |
+| 9 | S-1 … MR-S5-1 intact | PASS: operational-overview digest equal; P13's `escalations.open` unchanged |
+| 10 | no new current-state authority | PASS: the changed code is exactly the eight files listed; 0 conflicts; authority unchanged |
+
+**Data change vs certified semantic change (`§8`).**
+
+| Data changes (expected, by the authorized wiring) | Certified semantics (all unchanged) |
+|---|---|
+| • consumers 3 → 4<br>• importers 4 → 5<br>• one harness candidate added<br>• CONSUMER link detail 3 / 4 → 4 / 5 (status SATISFIED both)<br>• two P13 facts added | • certified roots byte-identical, including the P13 Blueprint<br>• the scanner unchanged<br>• the verifier's diff is the one added registration<br>• its checks the same<br>• state-chain link statuses the same<br>• the P12-W2 contract and code unchanged since FR-1<br>• populations and verdicts the same<br>• governance and envelopes the same |
+
+**Tests.**
+- `test_fr1_operational_state_integration`: 19 tests.
+- Seven code mutations, each caught:
+  - W2: current read from stored status; answered unfiltered; faults ignored;
+  - P13: everything VERIFIED; reads an Agency reader directly; hides the import by name;
+  - the consumer left unregistered.
+- The regression is recorded at Register `§160`.
+
+**Evidence correction (`§7`).** `evidence/EVIDENCE-CORRECTION-2026-10-03-SCRIPT-HASHES.md`.
+- **How:** the S-6, TD and FR-1-baseline outputs were reproduced by the current scripts in worktrees at their original states.
+- **Result:** 0 differences in any finding. The originals are preserved; the corrected outputs sit beside them as `.CORRECTED.json`.
+
+**Residuals.**
+- P13's own `escalations.open` (P12 self-model, certified W5 semantics) still uses the historical rule. P13 now *also* observes P12-W2's blocking / historical / answered split, from the system-wide layer.
+- No P13 cycle was run, so nothing was written to `docs/operations/p13`. P13 observation was verified by `StateUnderstanding.observe()`, which is read-only.
+- `project()` costs about 9 s per call.

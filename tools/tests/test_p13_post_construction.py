@@ -410,7 +410,7 @@ class CaseDVerifiedStateChange(Fixture):
 
     def _cycle_parts(self):
         sandbox = self.sandbox
-        sources = tuple(s for s in SOURCES if s.name not in ("self_model", "corpus")) + (
+        sources = tuple(s for s in SOURCES if s.name not in ("self_model", "corpus", "operational_state")) + (
             Source("sandbox", "tests: sandbox marker", ("sandbox.marker",),
                    lambda p, c: {"sandbox.marker": (sandbox.marker(), VERIFIED)}),)
         criterion = Criterion(

@@ -42,7 +42,7 @@ P13_018 = "docs/governance/acts/P13-018-FOUNDER-CONSTRUCTION-AUTHORITY-GATE-DECI
 ENVELOPE = REPO_ROOT / "docs/governance/p13-envelopes/P13-ENV-01.json"
 REGISTER = REPO_ROOT / "docs/governance/AIOS_DELEGATION_REGISTER_v1.0.md"
 T = "2026-09-24T00:00:00+00:00"
-FAST = tuple(s for s in SOURCES if s.name not in ("self_model", "corpus"))
+FAST = tuple(s for s in SOURCES if s.name not in ("self_model", "corpus", "operational_state"))
 FAST_CRITERIA = tuple(c for c in CRITERIA if not c.id.startswith("CR-CORPUS"))
 
 

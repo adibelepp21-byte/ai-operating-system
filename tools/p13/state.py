@@ -31,7 +31,7 @@ from typing import Any, Callable, Dict, Iterable, Optional, Tuple
 
 from tools.p12_self_model import QUESTIONS
 from tools.p13.model import (INFERRED, UNKNOWN, VERIFIED, Fact, StateSnapshot)
-from tools.p13.paths import Paths
+from tools.p13.paths import LIVE, Paths
 
 P13_INSTANCE = "aios-p13-ecosystem"
 KNOWLEDGE_KEY = "corpus-health.criteria"
@@ -197,6 +197,31 @@ def _s_ops(paths: Paths, context: Context) -> Reading:
     return {key: (seen[field], VERIFIED) for field, key in S_OPS_KEYS.items()}
 
 
+def _operational_state(paths: Paths = LIVE, _: Optional["Context"] = None) -> Reading:
+    """P12-W2, the system-wide integration layer, read through its interface.
+
+    The certified Blueprint `§4` names it: *"P12 self-model / operational state
+    → P13 … `tools.p12_operational_state.project()`"*. `FD-TD-001` fixes the
+    route — live operational ledger → P12-W2 → P13 — and `FD-FR1-001` registers
+    this function with the certified P12 consumer-evidence harness, so the
+    consumption is observed rather than claimed. P13 reads no Agency reader of
+    its own: W2 stays the one system-wide view and the ledger its owner.
+    Only a CURRENT entry is VERIFIED; any other W2 status is carried as INFERRED
+    with that status named; UNKNOWN stays UNKNOWN.
+    """
+    from tools import p12_operational_state as w2
+    entries = {e.state_id: e for e in w2.project()}
+    reading = {}
+    for state_id, key in OPERATIONAL_STATE_KEYS.items():
+        entry = entries.get(state_id)
+        if entry is None or entry.status == w2.UNKNOWN:
+            continue
+        origin = f"P12-W2 {state_id} ({entry.status}): {entry.source}"
+        reading[key] = (entry.value,
+                        VERIFIED if entry.status == w2.CURRENT else INFERRED, origin)
+    return reading
+
+
 def _remembered_verifications(paths: Paths, context: Context) -> Reading:
     """What earlier cycles verified, as INFERRED evidence (Memory is history).
 
@@ -223,6 +248,11 @@ SELF_MODEL_KEYS = tuple(f"self_model.{_slug(q)}" for q in QUESTIONS)
 S_OPS_KEYS = {"state": "s_ops.S-OPS-01.state", "phase": "s_ops.S-OPS-01.phase",
               "window": "s_ops.S-OPS-01.window"}
 
+#: The P12-W2 entries P13 observes: the delegation lifecycle and escalations,
+#: each carrying both the historical and the current reading (`FD-TD-001`).
+OPERATIONAL_STATE_KEYS = {"delegation.granted": "operational_state.delegations",
+                          "escalation.raised": "operational_state.escalations"}
+
 SOURCES: Tuple[Source, ...] = (
     Source("memory", "Memory via MemoryReader over Trace (P12 stores + P13 store)",
            ("memory.stores", "memory.p13.previous", "memory.corpus_health.last"),
@@ -247,6 +277,9 @@ SOURCES: Tuple[Source, ...] = (
     Source("s_ops", "tools.s_ops.surface.observe(): S-OPS-01 read from disk, its "
            "window phase at the observation instant (FDR-3)",
            tuple(S_OPS_KEYS.values()), _s_ops),
+    Source("operational_state", "tools.p12_operational_state.project(): P12-W2 "
+           "Unified Operational State (Blueprint §4; FD-TD-001)",
+           tuple(OPERATIONAL_STATE_KEYS.values()), _operational_state),
 )
 
 

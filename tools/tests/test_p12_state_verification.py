@@ -66,12 +66,18 @@ class AConformanceSuiteIsNotAConsumer(unittest.TestCase):
         surface in its `E12-02` clause. It was **registered with the
         independent consumer verifier** at the same time, so the consumption is
         observed rather than merely claimed — a static importer the dynamic
-        harness cannot drive would otherwise read as a permanent DISAGREES."""
+        harness cannot drive would otherwise read as a permanent DISAGREES.
+
+        `FD-FR1-001` added the fourth: P13 (`tools/p13/state.py`) reads the
+        surface through the interface its certified Blueprint `§4` names, and
+        was registered with the independent verifier in the same change. The
+        STATE chain's CONSUMER link moved with it, 3 of 4 → 4 of 5, SATISFIED."""
         self.assertEqual(
             sv.consumers_of("tools.p12_operational_state"),
             ("tools/p12_e12_measurement.py",
              "tools/p12_negative_control_verification.py",
-             "tools/p12_self_model_contract.py"))
+             "tools/p12_self_model_contract.py",
+             "tools/p13/state.py"))
 
     def test_an_importer_that_never_reads_is_not_counted(self):
         """`§16`: *"Each claimed consumer requires evidence that it actually

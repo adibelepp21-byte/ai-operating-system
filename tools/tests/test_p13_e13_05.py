@@ -141,7 +141,7 @@ class Fixture(unittest.TestCase):
         (self.envelope_dir / "P13-ENV-01.json").write_bytes(ENVELOPE.read_bytes())
 
     def run_cycle(self, intent="E13-05 fixture"):
-        sources = tuple(s for s in SOURCES if s.name not in ("self_model", "corpus")) + (
+        sources = tuple(s for s in SOURCES if s.name not in ("self_model", "corpus", "operational_state")) + (
             self.world.source(),)
         return cycle.run_cycle(self.paths, intent=intent, invoker="tools/tests/test_p13_e13_05.py",
                                sources=sources, criteria=criteria(),

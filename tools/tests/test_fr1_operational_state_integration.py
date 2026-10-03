@@ -1,11 +1,11 @@
-"""FR-1 (FD-TD-001): live operational ledger → P12-W2 (→ P13, not yet wired).
+"""FR-1 (FD-TD-001, FD-FR1-001): live operational ledger → P12-W2 → P13.
 
 The live ledger owns the current disposition of delegations and the responses to
 escalations (A2, B1, FD-CG7-001). P12-W2 projects that reading next to the
-historical one and owns neither. These tests pin that projection and the
-boundaries FD-TD-001 `§3` sets. The P12-W2 → P13 edge stopped at a certified
-boundary (`FR1-OPERATIONAL-STATE-INTEGRATION-RECORD.md`): P13 must still read no
-Agency reader of its own.
+historical one and owns neither; P13 receives it only through P12-W2's
+`project()` — the interface its certified Blueprint `§4` names — and is an
+observed, registered consumer of it in the certified P12 consumer measurement
+(FD-FR1-001). These tests pin that route and the boundaries both decisions set.
 """
 
 import ast
@@ -21,6 +21,10 @@ from tools import delegation_catalog
 from tools import p12_operational_state as w2
 from tools import p12_provenance_verification as prov
 from tools import w4_continuity
+from tools.p13 import state as p13_state
+from tools.p13.model import INFERRED, UNKNOWN, VERIFIED
+from tools.p13.paths import LIVE
+from tools.p13.state import StateUnderstanding
 
 REPO = Path(__file__).resolve().parents[2]
 
@@ -88,6 +92,47 @@ class TheProjectionFollowsTheLedger(unittest.TestCase):
         self.assertEqual(set(value["answered"]), {"23f315ba9f504272", "9cb90fa0787a478c"})
         for key in ("records", "joined_by_structured_field", "joined_by_parsed_prose"):
             self.assertIn(key, value)       # the historical join is still carried
+
+    def test_p13_receives_the_state_through_p12_w2(self):
+        source = next(s for s in p13_state.SOURCES if s.name == "operational_state")
+        with mock.patch.object(w2, "project", return_value=tuple(self.entries.values())) as called:
+            snapshot = StateUnderstanding(LIVE, sources=(source,)).observe()
+        called.assert_called_once()
+        delegations = snapshot.get("operational_state.delegations")
+        self.assertEqual(delegations.status, VERIFIED)
+        self.assertEqual(delegations.value["current"], sorted(LIVE_2))
+        self.assertIn("P12-W2 delegation.granted", delegations.source)
+        self.assertEqual(snapshot.get("operational_state.escalations").value["blocking"], [])
+
+
+class TheConsumerIsMeasuredHonestly(unittest.TestCase):
+    """FD-FR1-001 `§4`: P13 is visible to the certified scanner and observed by
+    the independent verifier — never hidden, never merely claimed."""
+
+    def test_p13_is_an_importer_and_an_evidenced_consumer(self):
+        from tools import p12_state_verification as sv
+        self.assertIn("tools/p13/state.py", sv.importers_of("tools.p12_operational_state"))
+        self.assertIn("tools/p13/state.py", sv.consumers_of("tools.p12_operational_state"))
+
+    def test_the_independent_verifier_agrees_with_the_measurement(self):
+        from tools import p12_consumer_evidence_verifier as cv
+        from tools import p12_state_verification as sv
+        surface = "tools.p12_operational_state"
+        summary = cv.summary(sv.consumers_of(surface), sv.importers_of(surface))
+        self.assertEqual(summary["disagrees"], 0, summary["not_agreeing"])
+        self.assertIn("tools/p13/state.py", summary["observed_consumers"])
+
+    def test_p13_binds_the_surface_statically_not_by_name(self):
+        text = (REPO / "tools/p13/state.py").read_text(encoding="utf-8")
+        self.assertIn("from tools import p12_operational_state as w2", text)
+        self.assertNotIn("import_module", text)
+
+    def test_the_independent_verifier_observes_p13_reading_resident_sources(self):
+        from tools import p12_consumer_evidence_verifier as cv
+        observation = cv.observe("tools.p13.state", "_operational_state")
+        self.assertIsNone(observation.error)
+        self.assertTrue(observation.consumes)
+        self.assertIn("project", observation.resident_reads)
 
 class OwnershipAndPopulationsAreUnchanged(unittest.TestCase):
     """FD-TD-001 `§3`: no ownership transfer, no verifier population moved, no F-17."""
@@ -167,6 +212,20 @@ class TheProjectionIsHonestUnderChange(unittest.TestCase):
             w2.project()
             w2.project()
         self.assertEqual(read.call_count, 2)
+
+    def test_p13_carries_a_non_current_entry_as_inferred_and_absence_as_unknown(self):
+        source = next(s for s in p13_state.SOURCES if s.name == "operational_state")
+        conflicting = w2.StateEntry(
+            state_id="delegation.granted", state_class="AUTHORITY", status=w2.CONFLICTING,
+            value={"current": []}, source="s", observed_at="t", transformation="x",
+            authority="a", provider=w2.UNRESOLVED_PROVIDER, semantics=w2.SOURCE_OF_TRUTH)
+        with mock.patch.object(w2, "project", return_value=(conflicting,)):
+            snapshot = StateUnderstanding(LIVE, sources=(source,)).observe()
+        self.assertEqual(snapshot.get("operational_state.delegations").status, INFERRED)
+        self.assertEqual(snapshot.get("operational_state.escalations").status, UNKNOWN)
+        with mock.patch.object(w2, "project", side_effect=RuntimeError("down")):
+            snapshot = StateUnderstanding(LIVE, sources=(source,)).observe()
+        self.assertEqual(snapshot.get("operational_state.delegations").status, UNKNOWN)
 
 class FreshProcess(unittest.TestCase):
     def test_a_second_interpreter_reconstructs_the_same_projection(self):

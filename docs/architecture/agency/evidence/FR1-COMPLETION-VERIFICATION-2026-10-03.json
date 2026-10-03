@@ -1,0 +1,155 @@
+{
+ "checked_at": "2026-10-03T20:30:06.371929+00:00",
+ "script_sha256": "c40a174d38f388d0bd0c582fd37b26f60d6b3137db16e79d9e1df4a213a1980a",
+ "head": "8600e12f65071297a5a5c0cddd16057ff4030200",
+ "baseline_head": "8600e12f65071297a5a5c0cddd16057ff4030200",
+ "section_6": {
+  "1_w2_current_vs_historical": true,
+  "2_w2_blocking_vs_historical_answered": true,
+  "3_p13_receives_through_p12_w2": true,
+  "4_certified_measurement_recognizes_p13": true,
+  "5_existing_certified_verifiers_valid": true,
+  "6_source_populations_unchanged": true,
+  "7_no_direct_agency_to_p13": true,
+  "8_fresh_process_reproduces": true,
+  "9_s1_to_mr_s5_1_intact": true,
+  "10_no_new_current_state_authority": true
+ },
+ "data_changes": {
+  "consumers": [
+   [
+    "tools/p12_e12_measurement.py",
+    "tools/p12_negative_control_verification.py",
+    "tools/p12_self_model_contract.py"
+   ],
+   [
+    "tools/p12_e12_measurement.py",
+    "tools/p12_negative_control_verification.py",
+    "tools/p12_self_model_contract.py",
+    "tools/p13/state.py"
+   ]
+  ],
+  "importers": [
+   [
+    "tools/p12_e12_measurement.py",
+    "tools/p12_mutation_verification.py",
+    "tools/p12_negative_control_verification.py",
+    "tools/p12_self_model_contract.py"
+   ],
+   [
+    "tools/p12_e12_measurement.py",
+    "tools/p12_mutation_verification.py",
+    "tools/p12_negative_control_verification.py",
+    "tools/p12_self_model_contract.py",
+    "tools/p13/state.py"
+   ]
+  ],
+  "registered_candidates_added": [
+   [
+    "tools.p13.state",
+    "_operational_state"
+   ]
+  ],
+  "consumer_link": [
+   [
+    "SATISFIED",
+    "3 evidenced consumer(s) of 4 importer(s): tools/p12_e12_measurement.py reads ['summary'], tools/p12_negative_control_verification.py reads ['summary'], tools/p12_self_model_contract.py reads ['project']; not counted: ['tools/p12_mutation_verification.py'] (reads the projection only over a substituted source set)"
+   ],
+   [
+    "SATISFIED",
+    "4 evidenced consumer(s) of 5 importer(s): tools/p12_e12_measurement.py reads ['summary'], tools/p12_negative_control_verification.py reads ['summary'], tools/p12_self_model_contract.py reads ['project'], tools/p13/state.py reads ['project']; not counted: ['tools/p12_mutation_verification.py'] (reads the projection only over a substituted source set)"
+   ]
+  ],
+  "p13_facts_added": [
+   "operational_state.delegations",
+   "operational_state.escalations"
+  ]
+ },
+ "certified_semantics_unchanged": {
+  "certified_roots_byte_identical": true,
+  "p13_certified_blueprint_unchanged": true,
+  "consumer_scanner_unchanged": true,
+  "independent_verifier_change_is_one_registration": true,
+  "independent_verifier_checks_same": true,
+  "state_chain_link_statuses_same": true,
+  "p12_w2_contract_same": true,
+  "verifier_populations_same": true,
+  "verifier_verdicts_same": true,
+  "governance_and_envelopes_same": true
+ },
+ "p13_observed": {
+  "operational_state.delegations": {
+   "status": "VERIFIED",
+   "source": "P12-W2 delegation.granted (CURRENT): docs/architecture/p11/w4-operations (43 record(s) in 8 root(s); current disposition from the live operational ledger)",
+   "value": {
+    "active": 2,
+    "current": [
+     "0a697039a63f4c17",
+     "50367d99c2dd4708"
+    ],
+    "grants": 43,
+    "historical": {
+     "completed": 7,
+     "recorded_active_not_current": [
+      "08e14bd7aa584ea5",
+      "0f7ac0785bd8442b",
+      "2494015de36246fd",
+      "332d42f021764ab6",
+      "3cc612275a914c2c",
+      "4313bd2246124a94",
+      "4daebea9012d4cc7",
+      "4ff84423cadc48c8",
+      "522e84af52444890",
+      "632b256f8335434f",
+      "84e94ea2f001444d",
+      "86d74cf0b6d14856",
+      "9925366405d44af8",
+      "a437cdbbd29940af",
+      "aa591daf55ca4714",
+      "b304c7ecb1024454",
+      "c7e5e03a5a664230",
+      "d497e284f2c14aee",
+      "e668a317fa494342",
+      "e6a3d622cfb54b4f",
+      "ef2fa9ef2c004955"
+     ],
+     "revoked": 34
+    }
+   }
+  },
+  "operational_state.escalations": {
+   "status": "VERIFIED",
+   "source": "P12-W2 escalation.raised (CURRENT): docs/architecture/p11/w4-operations (4 record(s))",
+   "value": {
+    "answered": [
+     "23f315ba9f504272",
+     "9cb90fa0787a478c"
+    ],
+    "blocking": [],
+    "joined_by_governance_surface": 3,
+    "joined_by_parsed_prose": 2,
+    "joined_by_structured_field": 0,
+    "naming_the_refusal_type": 1,
+    "open_historical": [
+     "0991300404cf44d8",
+     "9d6bc0ad47294ef0"
+    ],
+    "records": 4
+   }
+  }
+ },
+ "changed_code": [
+  "tools/p12_consumer_evidence_verifier.py",
+  "tools/p13/state.py",
+  "tools/tests/test_fr1_operational_state_integration.py",
+  "tools/tests/test_p12_consumer_measurement.py",
+  "tools/tests/test_p12_state_verification.py",
+  "tools/tests/test_p13.py",
+  "tools/tests/test_p13_e13_05.py",
+  "tools/tests/test_p13_post_construction.py"
+ ],
+ "run_changed_nothing": true,
+ "integrity_faults": [],
+ "git_status_certified": "(clean)",
+ "all_ok": true
+}

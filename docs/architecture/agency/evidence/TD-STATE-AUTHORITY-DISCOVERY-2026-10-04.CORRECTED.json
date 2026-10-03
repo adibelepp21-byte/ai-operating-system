@@ -1,0 +1,743 @@
+{
+ "checked_at": "2026-10-03T20:19:57.230010+00:00",
+ "script_sha256": "c46f71599331db074ffb5b00c3d2c6b40c510409bea94befc739dc630297b491",
+ "head": "a046f9cb182ae983516467e86093a34c86dcee1c",
+ "baseline_head": "a7a0860296497e221cff14e8312279d1a18151b3",
+ "k7": {
+  "p12_w2": {
+   "delegation_entry": {
+    "status": "CURRENT",
+    "value": {
+     "grants": 34,
+     "active": 14
+    },
+    "transformation": "delegation records read as stored"
+   },
+   "delegation_source_contract": {
+    "owner": "FD-P11-001 authorized delegator",
+    "canonical_source": "FD-P11-001 §9",
+    "read_path": "docs/architecture/p11/w4-operations",
+    "freshness_model": "ACTIVE / REVOKED / SUPERSEDED, derived from records",
+    "owns_within_class": "operational grants and their lifecycle",
+    "provider": "UNRESOLVED (F-17)"
+   },
+   "escalation_entry_value": {
+    "records": 4,
+    "joined_by_structured_field": 0,
+    "joined_by_parsed_prose": 2,
+    "naming_the_refusal_type": 1,
+    "joined_by_governance_surface": 3
+   },
+   "providers": [
+    "UNRESOLVED (F-17)"
+   ],
+   "delegation_roots": [
+    "docs/architecture/p11/w1-operations",
+    "docs/architecture/p11/w4-operations",
+    "docs/architecture/p11/x-department-operations",
+    "docs/architecture/p12/w4-operations"
+   ],
+   "reads_live_ledger_or_dispositions": false,
+   "reads_live_responses": false,
+   "conflicts_detected_now": 0,
+   "resident_non_verifier_consumers": []
+  },
+  "grants": {
+   "0a697039a63f4c17": {
+    "root": "docs/architecture/agency/operations/w4-s2-plan-delegation",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "ACTIVE",
+    "classification": "CURRENT OPERATIONAL GRANT",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "50367d99c2dd4708": {
+    "root": "docs/architecture/agency/operations/w4-s3-founder-goal",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "ACTIVE",
+    "classification": "CURRENT OPERATIONAL GRANT",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "3cc612275a914c2c": {
+    "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "COMPLETED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "4ff84423cadc48c8": {
+    "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "COMPLETED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "86d74cf0b6d14856": {
+    "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "COMPLETED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "9925366405d44af8": {
+    "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "c7e5e03a5a664230": {
+    "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "d497e284f2c14aee": {
+    "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "ef2fa9ef2c004955": {
+    "root": "docs/architecture/agency/operations/w4-s4-plan-outcome",
+    "certified_record": false,
+    "historical": "ACTIVE",
+    "operational": "COMPLETED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": false,
+    "p12_w2_reads_it_as": null,
+    "w3_role": null
+   },
+   "1700394c2fea4a88": {
+    "root": "docs/architecture/p11/w1-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "47eec2b87a284417": {
+    "root": "docs/architecture/p11/w1-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "4daebea9012d4cc7": {
+    "root": "docs/architecture/p11/w1-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "COMPLETED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": "CURRENT"
+   },
+   "4ff9f617a3e84bba": {
+    "root": "docs/architecture/p11/w1-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "607b57255bb544d8": {
+    "root": "docs/architecture/p11/w1-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "94a4df7aca4543ef": {
+    "root": "docs/architecture/p11/w1-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "ef07645a652f45b5": {
+    "root": "docs/architecture/p11/w1-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "f24d8954e64b40df": {
+    "root": "docs/architecture/p11/w1-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "125968154a7d4c06": {
+    "root": "docs/architecture/p11/w4-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "16af1ba6664e4ed6": {
+    "root": "docs/architecture/p11/w4-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "4313bd2246124a94": {
+    "root": "docs/architecture/p11/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": "CURRENT"
+   },
+   "5a05e6649c5c4f9c": {
+    "root": "docs/architecture/p11/w4-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "ea1020f6d95e46ce": {
+    "root": "docs/architecture/p11/w4-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "fd1f1302b0224b97": {
+    "root": "docs/architecture/p11/w4-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": "HISTORICAL"
+   },
+   "0f7ac0785bd8442b": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "COMPLETED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": "CURRENT"
+   },
+   "3cbeb212bca3466c": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "6196a1e345454118": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "6de2c35304324f75": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "93fa0b6c9a2a4b85": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "a437cdbbd29940af": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "COMPLETED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": "CURRENT"
+   },
+   "af65a6c45db54612": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "b280559b3d3c4e63": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "c1af49aaba24439d": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "c83585a21ab94cdf": {
+    "root": "docs/architecture/p11/x-department-operations",
+    "certified_record": true,
+    "historical": "REVOKED",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "REVOKED",
+    "w3_role": null
+   },
+   "08e14bd7aa584ea5": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "2494015de36246fd": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "332d42f021764ab6": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "522e84af52444890": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "632b256f8335434f": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "84e94ea2f001444d": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "aa591daf55ca4714": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "b304c7ecb1024454": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "e668a317fa494342": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   },
+   "e6a3d622cfb54b4f": {
+    "root": "docs/architecture/p12/w4-operations",
+    "certified_record": true,
+    "historical": "ACTIVE",
+    "operational": "REVOKED",
+    "classification": "HISTORICAL RECORD",
+    "p12_w2_counts_it": true,
+    "p12_w2_reads_it_as": "ACTIVE",
+    "w3_role": null
+   }
+  },
+  "counts": {
+   "p12_w2_active": 14,
+   "operational_active": [
+    "0a697039a63f4c17",
+    "50367d99c2dd4708"
+   ],
+   "operational_active_counted_by_p12_w2": [],
+   "p12_w2_active_that_are_operationally_closed": [
+    "08e14bd7aa584ea5",
+    "0f7ac0785bd8442b",
+    "2494015de36246fd",
+    "332d42f021764ab6",
+    "4313bd2246124a94",
+    "4daebea9012d4cc7",
+    "522e84af52444890",
+    "632b256f8335434f",
+    "84e94ea2f001444d",
+    "a437cdbbd29940af",
+    "aa591daf55ca4714",
+    "b304c7ecb1024454",
+    "e668a317fa494342",
+    "e6a3d622cfb54b4f"
+   ],
+   "w3_current_and_their_operational_status": {
+    "4daebea9012d4cc7": "COMPLETED",
+    "4313bd2246124a94": "REVOKED",
+    "0f7ac0785bd8442b": "COMPLETED",
+    "a437cdbbd29940af": "COMPLETED"
+   }
+  },
+  "escalations": {
+   "23f315ba9f504272": {
+    "historical": "OPEN",
+    "operational": "ANSWERED",
+    "classification": "ANSWERED",
+    "p13_reads_open": true
+   },
+   "0991300404cf44d8": {
+    "historical": "OPEN",
+    "operational": "OPEN",
+    "classification": "OPEN — HISTORICAL (its grant is not current)",
+    "p13_reads_open": true
+   },
+   "9d6bc0ad47294ef0": {
+    "historical": "OPEN",
+    "operational": "OPEN",
+    "classification": "OPEN — HISTORICAL (its grant is not current)",
+    "p13_reads_open": true
+   },
+   "9cb90fa0787a478c": {
+    "historical": "OPEN",
+    "operational": "ANSWERED",
+    "classification": "ANSWERED",
+    "p13_reads_open": true
+   }
+  },
+  "operational_overview_claims": {
+   "docstring_says_reader_not_store": false
+  },
+  "authority_texts": {
+   "A2_current_terminal_disposition": true,
+   "A2_reader_may_honor": true,
+   "P12_D7_no_two_competing": true,
+   "P12_D7_no_takeover_of_domain_ownership": true,
+   "P12_blueprint_s17_conflict_rule": true,
+   "P12_blueprint_s19_historical_as_current": true,
+   "FD_CG7_R2_no_second_model": true,
+   "delegation_catalog_R2_population_fixed": true
+  }
+ },
+ "k8": {
+  "certified_manifest_files": [
+   "docs/architecture/p13/AIOS_P13_CANONICAL_BLUEPRINT_v1.0.md"
+  ],
+  "certified_root": "docs/architecture/p13",
+  "tools_p13_in_any_certified_manifest": false,
+  "fdr7_certified_root_excludes_implementation": true,
+  "blueprint_integration_map_names_p12_w2": true,
+  "blueprint_integration_map_excludes_org_beyond_delegations": true,
+  "blueprint_state_understanding_names_operational_state": true,
+  "p13_sources": [
+   "memory",
+   "self_model",
+   "integrity",
+   "native_core",
+   "corpus",
+   "knowledge",
+   "authority",
+   "remembered",
+   "s_ops"
+  ],
+  "p13_code_imports_p12_operational_state": false,
+  "p13_code_reads_agency_state": {
+   "w4_continuity": false,
+   "plan_outcome": false,
+   "operational_overview": false,
+   "LIVE_LEDGER": false,
+   "LIVE_RESPONSES": false
+  },
+  "fdr_g1_escalate_if_uncertain": true,
+  "fdr_g1_interfaces_presumed_material": true,
+  "fdr_g2_maintenance_must_not_alter_p13_scope": true,
+  "issue_delegation_reserved_for_p13": true
+ },
+ "labels": {
+  "section5_items": {
+   "S-1": "Close the 4 W4 grants ACTIVE since 2026-09-11 (complete or revoke, with evidence)",
+   "S-2": "Connect CEO plan → W4 grant issuance (`§129` G-1)",
+   "S-3": "Founder goal intake: a Founder instrument becomes a Goal on the P11 surface (G-2). The Founder supplies the goal; the reader does not invent one",
+   "S-4": "Verification evidence → **CEO** accept / reject / rework, reusing the W4 outcomes and the escalation register, with no new state machine (RC-3)",
+   "S-5": "P13 reads organizational work state (G-3)",
+   "S-6": "Unified agency state view (read-only)",
+   "S-7": "Make the sandbox runtime binding resident (instance → Execution → Runtime), Execution contract only"
+  },
+  "founder_instrument_defines_s_items": false,
+  "s1_directive_cites_s2_to_s7": true,
+  "s2_directive_cites_s3_to_s7": true,
+  "later_directive_titles": {
+   "S-1": "AIOS Agency — S-1 Delegation Closure Execution Directive (as received)",
+   "S-2": "AIOS Agency — S-2 Plan-to-Delegation Execution Directive (as received)",
+   "S-3": "AIOS Agency — S-3 Founder Goal → CEO Planning Execution Directive (as received)",
+   "S-4": "AIOS — S-4: Agent Verification Evidence → CEO Decision → Plan Outcome (as received)",
+   "S-5": "AIOS — S-5: Disposition Semantics Discovery & Exhaustion Gate (as received)",
+   "S-6": "AIOS — S-6: Systemic Agency Integration Frontier Discovery & Exhaustion Gate (as received)"
+  },
+  "s7_directive_exists": false,
+  "register_133_lists_surface": true,
+  "explicit_supersession_or_rename_in_register": false
+ },
+ "fr3": {
+  "derived_states": {
+   "0a697039a63f4c17": "PENDING (live, not executed)",
+   "50367d99c2dd4708": "PENDING (live, not executed)",
+   "3cc612275a914c2c": "COMPLETED",
+   "4ff84423cadc48c8": "COMPLETED",
+   "86d74cf0b6d14856": "COMPLETED",
+   "9925366405d44af8": "REVOKED",
+   "c7e5e03a5a664230": "REVOKED",
+   "d497e284f2c14aee": "REVOKED",
+   "ef2fa9ef2c004955": "COMPLETED",
+   "1700394c2fea4a88": "REVOKED",
+   "47eec2b87a284417": "REVOKED",
+   "4daebea9012d4cc7": "COMPLETED",
+   "4ff9f617a3e84bba": "REVOKED",
+   "607b57255bb544d8": "REVOKED",
+   "94a4df7aca4543ef": "REVOKED",
+   "ef07645a652f45b5": "REVOKED",
+   "f24d8954e64b40df": "REVOKED",
+   "125968154a7d4c06": "REVOKED",
+   "16af1ba6664e4ed6": "REVOKED",
+   "4313bd2246124a94": "REVOKED",
+   "5a05e6649c5c4f9c": "REVOKED",
+   "ea1020f6d95e46ce": "REVOKED",
+   "fd1f1302b0224b97": "REVOKED",
+   "0f7ac0785bd8442b": "COMPLETED",
+   "3cbeb212bca3466c": "REVOKED",
+   "6196a1e345454118": "REVOKED",
+   "6de2c35304324f75": "REVOKED",
+   "93fa0b6c9a2a4b85": "REVOKED",
+   "a437cdbbd29940af": "COMPLETED",
+   "af65a6c45db54612": "REVOKED",
+   "b280559b3d3c4e63": "REVOKED",
+   "c1af49aaba24439d": "REVOKED",
+   "c83585a21ab94cdf": "REVOKED",
+   "08e14bd7aa584ea5": "REVOKED",
+   "2494015de36246fd": "REVOKED",
+   "332d42f021764ab6": "REVOKED",
+   "522e84af52444890": "REVOKED",
+   "632b256f8335434f": "REVOKED",
+   "84e94ea2f001444d": "REVOKED",
+   "aa591daf55ca4714": "REVOKED",
+   "b304c7ecb1024454": "REVOKED",
+   "e668a317fa494342": "REVOKED",
+   "e6a3d622cfb54b4f": "REVOKED"
+  },
+  "waiting_steps": [
+   "founder-s4-rework / report-continuity-elements (open delegated step, no grant)"
+  ],
+  "state_words_in_resident_readers": {
+   "PENDING": [],
+   "WAITING": []
+  },
+  "roots_reporting_coherent_with_pending_grants": [
+   "docs/architecture/agency/operations/w4-s2-plan-delegation",
+   "docs/architecture/agency/operations/w4-s3-founder-goal"
+  ]
+ },
+ "fr4": [
+  {
+   "department": "engineering",
+   "capability": "cognitive-intelligence",
+   "definition": "cognitive-intelligence-agent",
+   "instances": [],
+   "operationally_active_grants": []
+  },
+  {
+   "department": "engineering",
+   "capability": "engineering-intelligence",
+   "definition": "engineering-intelligence-agent",
+   "instances": [
+    "engineering-intelligence-instance-001",
+    "engineering-intelligence-instance-p12w3-005-001"
+   ],
+   "operationally_active_grants": [
+    "0a697039a63f4c17",
+    "50367d99c2dd4708"
+   ]
+  },
+  {
+   "department": "platform",
+   "capability": "governance-artifact-integrity",
+   "definition": "governance-artifact-integrity-agent",
+   "instances": [
+    "governance-artifact-integrity-instance-001"
+   ],
+   "operationally_active_grants": []
+  }
+ ],
+ "negative_controls": {
+  "N1_no_p13_modification": true,
+  "N2_no_p12_w2_modification": true,
+  "N3_no_w3_modification": true,
+  "N4_no_agency_state_mutation": true,
+  "N5_no_delegation_mutation": true,
+  "N6_no_plan_mutation": true,
+  "N7_no_agent_creation": true,
+  "N8_no_capability_creation": true,
+  "N9_no_authority_expansion": true,
+  "N10_no_founder_decision_inferred": true,
+  "N11_no_deployment_activation": true,
+  "N12_no_competing_state_model": true
+ },
+ "integrity": {
+  "run_changed_nothing": true,
+  "surfaces_equal_baseline": {
+   "certified:docs/architecture/p11": true,
+   "certified:docs/architecture/p12": true,
+   "certified:docs/architecture/p13": true,
+   "certified:docs/architecture/platform-organization": true,
+   "certified:docs/operations": true,
+   "operational:agency/operations": true,
+   "agent_registry:*.instance.json": true,
+   "capability_catalog:docs/architecture/organization": true,
+   "candidates:docs/architecture/candidates": true,
+   "agency_records:docs/architecture/agency/*.md": false,
+   "code:tools": true,
+   "code:native_core": true,
+   "code:consumers": true,
+   "code:api": true,
+   "code:fullstack": true,
+   "deployment:vercel.json": true,
+   "root_entry_points:*.py": true,
+   "governance:docs/governance (except Register and the S-6 / TD acts)": true,
+   "p13:tools/p13": true,
+   "p13:envelopes": true,
+   "state_readers": true,
+   "p12_state:tools/p12_*.py": true
+  },
+  "register_only_appended": true,
+  "td_act_unchanged": true,
+  "integrity_faults": [],
+  "git_status_certified": "(clean)",
+  "fresh_process_equal": true
+ },
+ "surfaces_changed_vs_baseline": [],
+ "all_ok": true
+}
