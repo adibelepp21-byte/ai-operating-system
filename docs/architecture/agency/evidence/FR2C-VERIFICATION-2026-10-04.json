@@ -1,7 +1,7 @@
 {
- "checked_at": "2026-10-04T06:27:33.498228+00:00",
- "script_sha256": "29315029793d703b8f71a5ef7a755403df91de7c6583c848e9309bb30f478dc9",
- "head": "257108967f7c249e06f9234834da724f52d64e78",
+ "checked_at": "2026-10-04T07:35:45.745881+00:00",
+ "script_sha256": "08089195d6b8d5864612ddf805618e2488036c5bec052667ca3b0d9ad792d96e",
+ "head": "237a928f05f86e58a03f293b8781897ee9f810fb",
  "baseline_head": "f18ceea18c1042b2fcbb80f17e2400dd71aa5930",
  "grant": "2adef08b8efa4549",
  "execution_id": "agency-2adef08b8efa4549-verify-runtime-path-mechanisms",
@@ -108,10 +108,13 @@
   }
  },
  "surfaces_changed_vs_baseline": [
+  "agency_records:docs/architecture/agency/*.md",
   "certified:docs/operations",
+  "code:consumers",
   "code:tools",
   "operational:agency/operations",
   "p12_state:tools/p12_*.py",
+  "root_entry_points:*.py",
   "runtime_trace_code:tools+consumers",
   "store:docs/operations/runtime-observations"
  ],
@@ -119,7 +122,9 @@
   "tools/p12_execution_chain_reader.py",
   "tools/p12_execution_provenance.py",
   "tools/p12_trace_registry.py",
+  "tools/tests/test_escalation_subject_integrity.py",
   "tools/tests/test_fr2_runtime_trace_integration.py",
+  "tools/tests/test_p11_governance_boundary.py",
   "tools/w4_runtime_execution.py"
  ],
  "certified_readers_now": {
@@ -173,5 +178,9 @@
  "integrity_faults": [],
  "git_status_certified": "(clean)",
  "unexpected_surface_changes": [],
+ "existing_core_and_consumers_unchanged": true,
+ "root_entry_points_added": [
+  "agency_runtime_execution.py"
+ ],
  "all_ok": true
 }

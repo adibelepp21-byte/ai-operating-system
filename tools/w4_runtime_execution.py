@@ -10,7 +10,8 @@ Agent Instance ── Delegation ── W4Executor (grant + instance re-checked 
                                      │
 Runtime (RUNNING) ─► create_execution_layer ─► Execution (runtime_id, sequence)
                                      │
-               DelegatedStep.participate(execution)        ← Agent / ExecutionConsumer
+          participant.participate(execution)               ← Agent / ExecutionConsumer
+          (consumers/delegated_step.py DelegatedStep, injected)
                                      │
                       TracedAction(writer, agent_instance=<grant recipient>,
                                    runtime=<the Execution's runtime>)
@@ -18,21 +19,31 @@ Runtime (RUNNING) ─► create_execution_layer ─► Execution (runtime_id, se
                                   perform(step)            ← the delegated work
 ```
 
+**Two regions, one wiring.** `tools/` may not import `consumers/`, and the
+consumer region may not import `tools/` (both asserted by AST). So this module
+holds the authority side and takes the participant **by injection**: a factory
+returning a native-core `Agent`. The resident one is
+`consumers.delegated_step.DelegatedStep`, bound at the repository root by
+`agency_runtime_execution.py`, the way `w4_first_execution.py` binds W4's
+performer. This module never names the implementation that does the work.
+
 **The boundary (`§3`).** The step enters as an `Agent`, which is an
 `ExecutionConsumer`, through the `Execution` the Runtime issued. Nothing here
 reaches Runtime internals: the runtime identity and execution sequence are read
 from the `Execution`'s context, and the Runtime is driven only through its
 public lifecycle and the composition roots.
 
-**No bypass (`§12`).** `perform` is called in exactly one place, inside
-`DelegatedStep.participate`, and that accepts only a real `Execution` whose
-Runtime is RUNNING. `RuntimeHostedExecutor` builds a fresh `Execution` for every
-step through `create_execution_layer`, which refuses a Runtime that is not
-RUNNING, so a step can neither run outside a Runtime nor be traced as if it had.
+**No bypass (`§12`).** This module never calls `perform`: it only hands it to
+the participant, which must be a native-core `Agent` and is called only through
+`participate(execution)`. `RuntimeHostedExecutor` builds a fresh `Execution` for
+every step through `create_execution_layer`, which refuses a Runtime that is not
+RUNNING, and the resident participant refuses anything that is not a real
+`Execution` of a RUNNING Runtime. A step can neither run outside a Runtime nor
+be traced as if it had.
 
-**Identity (`§6`).** The Trace actor is the grant's `recipient_instance`, the
-Agent Instance the delegation names, never the definition key or a capability
-name. FR-2 found `EngineeringIntelligenceAgent.participate` tracing its
+**Identity (`§6`).** The participant is built with the grant's
+`recipient_instance` as its actor: the Agent Instance the delegation names,
+never the definition key or a capability name. FR-2 found `EngineeringIntelligenceAgent.participate` tracing its
 definition key (G4); the existing `TracedAction` takes the instance as an
 argument, so the Agency path supplies the right one and that consumer is not
 changed.
@@ -67,12 +78,10 @@ from typing import Callable, Iterator, Optional, Tuple
 from native_core.core.agent import Agent
 from native_core.core.infrastructure import (
     LocalAppendOnlyStorage, build_default_infrastructure)
-from native_core.core.runtime import RuntimeNotRunning, RuntimeState
 from native_core.core.runtime.composition import create_runtime
-from native_core.core.runtime.execution import Execution, create_execution_layer
+from native_core.core.runtime.execution import create_execution_layer
 from native_core.core.trace import TraceWriter
 
-from consumers.observation import TracedAction
 from tools import p12_runtime_observation as observation
 from tools.agent_instance_registry import AgentInstanceRegistry
 from tools.p12_certified_evidence_guard import guard
@@ -111,53 +120,11 @@ class HostedStep:
                 "trace_ordinal": self.trace_ordinal}
 
 
-class DelegatedStep(Agent):
-    """One delegated plan step, taking part in one bound Execution.
-
-    The Agent Instance's action under its delegation. It owns nothing: the
-    executor holds the grant and re-checks it, the Execution carries the
-    runtime identity, and `TracedAction` writes the single record.
-    """
-
-    def __init__(self, executor: W4Executor, instance_key: str, step: PlanStep,
-                 perform: Callable[[PlanStep], str], writer: TraceWriter,
-                 agent_definition_version: str) -> None:
-        if not isinstance(writer, TraceWriter):
-            raise TypeError("a delegated step is traced: it requires a TraceWriter")
-        self._executor = executor
-        self._instance_key = instance_key
-        self._step = step
-        self._perform = perform
-        self._writer = writer
-        self._version = agent_definition_version
-        self.outcome: Optional[ExecutionOutcome] = None
-        self.traced = False
-
-    def participate(self, execution: Execution) -> None:
-        if not isinstance(execution, Execution):
-            raise TypeError("a delegated step enters only through an Execution "
-                            "issued by a Runtime")
-        if execution.runtime.state is not RuntimeState.RUNNING:
-            raise RuntimeNotRunning(
-                f"runtime {execution.context.runtime_id!r} is "
-                f"{execution.runtime.state}; a delegated step runs only while "
-                "its Runtime is RUNNING")
-        runtime_id = execution.context.runtime_id
-        actions = []
-
-        def traced(step: PlanStep) -> str:
-            with TracedAction(self._writer, agent_instance=self._instance_key,
-                              runtime=runtime_id,
-                              agent_definition_version=self._version) as action:
-                actions.append(action)
-                detail = self._perform(step)
-                action.produced({"step": step.key, "detail": detail})
-            return detail
-
-        try:
-            self.outcome = self._executor.execute_step(self._step, traced)
-        finally:
-            self.traced = any(a.written for a in actions)
+#: Builds the participant for one step: ``(run_step, instance_key, perform,
+#: writer, agent_definition_version) -> Agent``. ``run_step(action)`` re-checks
+#: the delegation and calls ``action(step)``; the participant decides nothing
+#: about authority.
+Participant = Callable[..., Agent]
 
 
 class RuntimeHostedExecutor:
@@ -169,10 +136,11 @@ class RuntimeHostedExecutor:
     """
 
     def __init__(self, delegation: W4Delegation, registry: AgentInstanceRegistry,
-                 runtime, writer: TraceWriter, *,
+                 runtime, writer: TraceWriter, *, participant: Participant,
                  trace_store: str = AGENCY_TRACE_STORE,
                  store_path: Optional[Path] = None) -> None:
         self._executor = W4Executor(delegation, registry)
+        self._participant = participant
         self._delegation = delegation
         self._registry = registry
         self._runtime = runtime
@@ -184,10 +152,13 @@ class RuntimeHostedExecutor:
                      perform: Callable[[PlanStep], str]) -> HostedStep:
         execution = create_execution_layer(self._runtime)   # RUNNING-only
         registration = self._registry.get(self._delegation.recipient_instance)
-        participant = DelegatedStep(
-            self._executor, self._delegation.recipient_instance, step, perform,
-            self._writer,
+        participant = self._participant(
+            lambda action: self._executor.execute_step(step, action),
+            self._delegation.recipient_instance, perform, self._writer,
             registration.instance.agent_definition.agent_definition_version)
+        if not isinstance(participant, Agent):
+            raise TypeError("a delegated step is taken by an Agent, which enters the "
+                            "Runtime only through participate(execution)")
         participant.participate(execution)
         return HostedStep(
             outcome=participant.outcome,
@@ -219,7 +190,7 @@ class RuntimeHostedExecutor:
 
 def run_hosted_plan(delegation: W4Delegation, registry: AgentInstanceRegistry, runtime,
                     writer: TraceWriter, plan: Plan, perform: Callable[[PlanStep], str], *,
-                    root: Optional[Path], authority_record: str,
+                    participant: Participant, root: Optional[Path], authority_record: str,
                     store_path: Optional[Path] = None
                     ) -> Tuple[ExecutionReport, Tuple[HostedStep, ...], Tuple[str, ...]]:
     """The hosted **run path**: a plan executed inside the Runtime, its
@@ -233,7 +204,7 @@ def run_hosted_plan(delegation: W4Delegation, registry: AgentInstanceRegistry, r
     ``root`` None nothing is recorded, matching that wiring's own convention.
     """
     executor = RuntimeHostedExecutor(delegation, registry, runtime, writer,
-                                     store_path=store_path)
+                                     participant=participant, store_path=store_path)
     report, hosted = executor.execute_plan(plan, perform)
     escalations = join_refusals_to_grants(
         root, report.refusals,

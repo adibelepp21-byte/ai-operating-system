@@ -57,6 +57,7 @@ from tools import w4_runtime_execution as rx  # noqa: E402
 from tools.agent_instance_registry import AgentInstanceRegistry  # noqa: E402
 from tools.planning import AuthorityProvenance, PlanStep  # noqa: E402
 from tools.w4_first_run import FD_RECORD, SELECTED_DEFINITION  # noqa: E402
+import agency_runtime_execution as arx  # noqa: E402  -- the root binding of both regions
 
 grant = json.loads((S4 / f"{GRANT}.delegation.json").read_text(encoding="utf-8"))
 evidence = json.loads((S4 / f"{GRANT}.evidence.json").read_text(encoding="utf-8"))
@@ -106,17 +107,19 @@ def bypass_probe():
             termination_condition="on completion of plan probe-0")
         store = tmp / "store"
         with rx.hosted_runtime("probe-runtime", observation_root=tmp / "obs") as rt:
-            executor = rx.RuntimeHostedExecutor(sandbox, registry, rt, rx.trace_writer(store),
-                                                store_path=store)
+            executor = arx.hosted_executor(sandbox, registry, rt, rx.trace_writer(store),
+                                           store_path=store)
         try:
             executor.execute_step(PlanStep("s1", "x", requires_delegation=True),
                                   lambda s: calls.append(s) or "x")
             stopped = "executed"
         except RuntimeNotRunning:
             stopped = "refused: RuntimeNotRunning"
-        step = rx.DelegatedStep(rx.W4Executor(sandbox, registry), grant["recipient_instance"],
-                                PlanStep("s1", "x", requires_delegation=True),
-                                lambda s: calls.append(s) or "x", rx.trace_writer(store), "1.0")
+        w4x = rx.W4Executor(sandbox, registry)
+        one = PlanStep("s1", "x", requires_delegation=True)
+        step = arx.PARTICIPANT(lambda action: w4x.execute_step(one, action),
+                               grant["recipient_instance"], lambda s: calls.append(s) or "x",
+                               rx.trace_writer(store), "1.0")
         try:
             step.participate(object())
             imitation = "accepted"
@@ -126,9 +129,12 @@ def bypass_probe():
                 "perform_calls": len(calls)}
 
 
-source = (REPO / "tools/w4_runtime_execution.py").read_text(encoding="utf-8")
+source = (REPO / "consumers/delegated_step.py").read_text(encoding="utf-8")
+authority_side = (REPO / "tools/w4_runtime_execution.py").read_text(encoding="utf-8")
 perform_sites = sum(1 for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call)
-                    and isinstance(n.func, ast.Attribute) and n.func.attr == "_perform")
+                    and isinstance(n.func, ast.Attribute) and n.func.attr == "_perform") \
+    + sum(1 for n in ast.walk(ast.parse(authority_side)) if isinstance(n, ast.Call)
+          and isinstance(n.func, ast.Name) and n.func.id == "perform")
 probe = bypass_probe()
 readers_now = base.certified_readers()
 before = BASE["certified_readers"]
@@ -269,7 +275,7 @@ residual = {
                                 .relative_to(REPO)),
         "agency_execution_visible_to_p13": False},
     "G6_native_participate_status": "consumers/engineering_intelligence_agent.py unchanged: "
-    + str(git("diff", BASE["head"], "--", "consumers") == ""),
+    + str(git("diff", BASE["head"], "--", "consumers/engineering_intelligence_agent.py") == ""),
     "G7_escalation_producer": {
         "traced_action_unchanged": git("diff", BASE["head"], "--", "consumers/observation.py") == "",
         "status_is_success_or_failure_only": 'status = "failure" if (exc_type is not None or '
@@ -278,7 +284,8 @@ residual = {
 }
 changed_code = sorted(set(git("diff", "--name-only", BASE["head"], "--", "tools", "native_core",
                               "consumers", "api", "fullstack").splitlines()
-                          + git("ls-files", "--others", "--exclude-standard", "tools").splitlines()))
+                          + git("ls-files", "--others", "--exclude-standard", "tools", "consumers",
+                                "native_core", "agency_runtime_execution.py").splitlines()))
 surfaces_after = fr2.surfaces()
 data_changes = sorted(k for k in BASE["surfaces"] if surfaces_before[k] != BASE["surfaces"][k])
 result = {
@@ -305,15 +312,30 @@ result = {
 }
 expected_changes = {"agency_records:docs/architecture/agency/*.md", "operational:agency/operations",
                     "code:tools", "p12_state:tools/p12_*.py",
+                    # The Agent side (`consumers/delegated_step.py`) and the root
+                    # binding (`agency_runtime_execution.py`): new files only.
+                    "code:consumers", "root_entry_points:*.py",
                     "runtime_trace_code:tools+consumers", "store:docs/operations/runtime-observations",
                     "certified:docs/operations"}
 result["unexpected_surface_changes"] = sorted(set(data_changes) - expected_changes)
+# New code is added, never substituted: no existing native_core / consumers file
+# changed, and the only root entry point added is the binding.
+result["existing_core_and_consumers_unchanged"] = git(
+    "diff", "--diff-filter=MDR", "--name-only", BASE["head"], "--", "native_core", "consumers") == ""
+result["root_entry_points_added"] = sorted(set(
+    git("ls-files", "--others", "--exclude-standard", "--", "*.py").splitlines()
+    + git("diff", "--diff-filter=A", "--name-only", BASE["head"], "--", ".").splitlines())
+    & {p.name for p in REPO.glob("*.py")})
 result["all_ok"] = (all(all(v.values()) for v in section_12.values())
                     and not result["unexpected_surface_changes"]
+                    and result["existing_core_and_consumers_unchanged"]
+                    and result["root_entry_points_added"] == ["agency_runtime_execution.py"]
                     and result["run_changed_nothing"] and not result["integrity_faults"]
                     and result["git_status_certified"] == "(clean)")
 OUT.write_text(json.dumps(result, indent=1, ensure_ascii=False, default=str) + "\n", encoding="utf-8")
 print(json.dumps({k: result[k] for k in ("section_12", "surfaces_changed_vs_baseline",
                                           "unexpected_surface_changes", "changed_code",
+                                          "existing_core_and_consumers_unchanged",
+                                          "root_entry_points_added",
                                           "run_changed_nothing", "integrity_faults",
                                           "git_status_certified", "all_ok")}, indent=1, default=str))

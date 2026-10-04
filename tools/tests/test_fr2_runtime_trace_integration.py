@@ -32,6 +32,11 @@ from tools import p12_trace_registry as traces
 from tools import planning_continuity
 from tools import w4_delegation as w4
 from tools import w4_runtime_execution as rx
+# The root composition module binds the Agent side (`consumers/`) to the
+# authority side (`tools/`); neither region may import the other, and this
+# suite, under `tools/`, reaches the participant only through the binding, as
+# the corpus-health suites reach `aios_corpus_health_run`.
+import agency_runtime_execution as arx
 from tools.agent_instance_registry import AgentInstanceRegistry
 from tools.planning import AuthorityProvenance, Plan, PlanStep
 from tools.w4_execution import ESCALATION, FAILURE, SUCCESS, ExecutionRefused
@@ -92,7 +97,7 @@ class _Sandbox(unittest.TestCase):
             termination_condition="on completion of plan fr2-plan-0")
 
     def host(self, runtime, grant=None):
-        return rx.RuntimeHostedExecutor(grant or self.grant, self.registry, runtime,
+        return arx.hosted_executor(grant or self.grant, self.registry, runtime,
                                         rx.trace_writer(self.store), store_path=self.store)
 
     def runtime(self, runtime_id="fr2-sandbox-runtime"):
@@ -160,23 +165,55 @@ class NoBypass(_Sandbox):
 
     def test_the_participant_accepts_only_a_real_execution(self):
         calls = []
-        step = rx.DelegatedStep(rx.W4Executor(self.grant, self.registry), INSTANCE,
-                                PlanStep("s1", "x", requires_delegation=True),
-                                lambda s: calls.append(s) or "x", rx.trace_writer(self.store),
-                                "1.0")
+        executor = rx.W4Executor(self.grant, self.registry)
+        step = PlanStep("s1", "x", requires_delegation=True)
+        participant = arx.PARTICIPANT(lambda action: executor.execute_step(step, action),
+                                      INSTANCE, lambda s: calls.append(s) or "x",
+                                      rx.trace_writer(self.store), "1.0")
 
         class Imitation:
             context = type("C", (), {"runtime_id": "fake", "execution_sequence": 0})()
         with self.assertRaises(TypeError):
-            step.participate(Imitation())
+            participant.participate(Imitation())
         self.assertEqual(calls, [])
 
-    def test_perform_is_called_only_inside_participate(self):
-        """Static: the one call site of `perform` is the traced action."""
-        source = (REPO / "tools/w4_runtime_execution.py").read_text(encoding="utf-8")
-        calls = [n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call)
+    def test_a_participant_that_is_not_an_agent_is_refused(self):
+        calls = []
+
+        def impostor(run_step, *args):
+            class Direct:
+                def participate(self, execution):
+                    run_step(lambda s: calls.append(s) or "x")
+            return Direct()
+        with self.runtime() as runtime, self.assertRaises(TypeError):
+            rx.RuntimeHostedExecutor(self.grant, self.registry, runtime,
+                                     rx.trace_writer(self.store), participant=impostor,
+                                     store_path=self.store).execute_step(
+                PlanStep("s1", "x", requires_delegation=True), lambda s: "x")
+        self.assertEqual(calls, [])
+
+    def test_perform_is_called_only_inside_the_traced_action(self):
+        """Static: the authority side never calls the work; the Agent calls it
+        once, inside its `TracedAction`."""
+        tools_tree = ast.parse((REPO / "tools/w4_runtime_execution.py").read_text(encoding="utf-8"))
+        self.assertFalse([n for n in ast.walk(tools_tree) if isinstance(n, ast.Call)
+                          and isinstance(n.func, ast.Name) and n.func.id == "perform"])
+        agent_tree = ast.parse((REPO / "consumers/delegated_step.py").read_text(encoding="utf-8"))
+        calls = [n for n in ast.walk(agent_tree) if isinstance(n, ast.Call)
                  and isinstance(n.func, ast.Attribute) and n.func.attr == "_perform"]
         self.assertEqual(len(calls), 1)
+        withs = [n for n in ast.walk(agent_tree) if isinstance(n, ast.With)
+                 and "TracedAction" in ast.unparse(n.items[0].context_expr)]
+        self.assertEqual(len(withs), 1)
+        self.assertIn(calls[0], list(ast.walk(withs[0])))
+
+    def test_the_two_regions_do_not_import_each_other(self):
+        for relative, forbidden in (("tools/w4_runtime_execution.py", "consumers"),
+                                    ("consumers/delegated_step.py", "tools")):
+            tree = ast.parse((REPO / relative).read_text(encoding="utf-8"))
+            modules = {n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)} \
+                | {a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
+            self.assertFalse([m for m in modules if m and m.startswith(forbidden)], relative)
 
     def test_a_direct_run_leaves_nothing_a_chain_can_join(self):
         """A plain `W4Executor` call writes no Trace, so no manifest of it can join."""
@@ -231,7 +268,7 @@ class TraceIdentity(_Sandbox):
                            PlanStep("outside", "out of scope", requires_delegation=True,
                                     depends_on=("s1",))))
         with self.runtime() as runtime:
-            report, hosted, escalations = rx.run_hosted_plan(
+            report, hosted, escalations = arx.run_hosted_plan(
                 self.grant, self.registry, runtime, rx.trace_writer(self.store), plan,
                 lambda s: "done", root=self.ops, authority_record=FD_RECORD,
                 store_path=self.store)
@@ -352,7 +389,8 @@ class LiveCertifiedSeparation(unittest.TestCase):
 class NoHiddenConsumer(unittest.TestCase):
     """`§10` / `§12`: no hidden P12-W2 or P13 dependency, no second state authority."""
 
-    MODULES = ("tools/w4_runtime_execution.py",
+    MODULES = ("tools/w4_runtime_execution.py", "consumers/delegated_step.py",
+               "agency_runtime_execution.py",
                "docs/architecture/agency/evidence/fr2_runtime_execution_run.py")
 
     def test_the_integration_imports_nothing_from_p12_w2_or_p13(self):
