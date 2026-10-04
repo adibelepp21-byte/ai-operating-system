@@ -1,0 +1,955 @@
+{
+ "captured_at": "2026-10-04T06:02:42.834151+00:00",
+ "head": "f18ceea18c1042b2fcbb80f17e2400dd71aa5930",
+ "script_sha256": "eb0f60f371e4738e30080e8972c197ecee6c93b3ef09b9f4c8fc59facb934315",
+ "surfaces": {
+  "certified:docs/architecture/p11": {
+   "files": 58,
+   "digest": "45e0a8177274a3facd4100ecfffe69c3a39e40585af5b36d33eb0df6adc8dfab"
+  },
+  "certified:docs/architecture/p12": {
+   "files": 122,
+   "digest": "5be77e5634d78b237fc7a5ab781c7e0d754f76ccb4e791284349efc0c7a15cf9"
+  },
+  "certified:docs/architecture/p13": {
+   "files": 1,
+   "digest": "2025fe9b16c48cdf9e598134fb7c7c6d9fd01c0e4aec5744d4a17ab94de3803e"
+  },
+  "certified:docs/architecture/platform-organization": {
+   "files": 36,
+   "digest": "982c3705ef2decdd159fcb83b7665ca00105d3d9890ff6fa84e51f95f228bddb"
+  },
+  "certified:docs/operations": {
+   "files": 16,
+   "digest": "e0051b8f91db7710c69ec9e51d41484fe3a276b97b1f45894a329da5c2088aa9"
+  },
+  "operational:agency/operations": {
+   "files": 49,
+   "digest": "dce792e56fb5425c5c461f2e322c78983df4392efde008504ef5effc0bd629b6"
+  },
+  "agent_registry:*.instance.json": {
+   "files": 8,
+   "digest": "086c0d2ed82b608a81687ba051cdbc4215c5f0d957f6959c2bc4fa28219c3ac2"
+  },
+  "capability_catalog:docs/architecture/organization": {
+   "files": 46,
+   "digest": "0a509a815e7644b7be7df997722db75e306e0c46e2d363e75c605430e35c1687"
+  },
+  "candidates:docs/architecture/candidates": {
+   "files": 6,
+   "digest": "0f8fe3f4adcee97894cf260d1d99ebd5475d49c4da52ec21ef855f7e6d1c1e0e"
+  },
+  "agency_records:docs/architecture/agency/*.md": {
+   "files": 20,
+   "digest": "de4defa43590b5ec3fbea16d291b61dc371af04f34c1321923a91d8015db6c2a"
+  },
+  "code:tools": {
+   "files": 213,
+   "digest": "60964c5bb7a1f2344edba735280594c3af58f0bf7a3a59c54a6dbff43a774f61"
+  },
+  "code:native_core": {
+   "files": 122,
+   "digest": "054363201c0999afd07759c894c6196812bf1d94aa7b95b7de8c3c7a5cc6945f"
+  },
+  "code:consumers": {
+   "files": 24,
+   "digest": "424c0ee8b107994beb718e012f9e46ebf305681976d258f0a1d1f44072da7d3b"
+  },
+  "code:api": {
+   "files": 1,
+   "digest": "7d004003651d88ef2e77a821833a7b22c81e58fe489fcf44bb6f0060b381c00f"
+  },
+  "code:fullstack": {
+   "files": 51,
+   "digest": "76e165d2541ca5e043a1e22a96dd02b67731d0be4b257c59eb9b29b04b0de3c3"
+  },
+  "deployment:vercel.json": {
+   "files": 1,
+   "digest": "9d2763c8f6653814746c25bca3a07878186c771f0049611aa0dfe7415906b01e"
+  },
+  "root_entry_points:*.py": {
+   "files": 11,
+   "digest": "2706424d30a6f02e0915feed2f038bd9f49856291b193f23f8ba974a30e3bada"
+  },
+  "governance:docs/governance (except Register and the S-6 / TD acts)": {
+   "files": 235,
+   "digest": "8ed9720c4969b61099c643d720a9a49e4f32b1f13a3eb7abab4b8ea2e6a6ee8b"
+  },
+  "p13:tools/p13": {
+   "files": 14,
+   "digest": "9dcf6f9fca8092377a9dc2643db08ff2694df36655e88893d16592f619755d2d"
+  },
+  "p13:envelopes": {
+   "files": 2,
+   "digest": "acbaf451b060679330c6f1424d691cfbd3b419d9d6976f0ad6bd4aede89e4413"
+  },
+  "state_readers": {
+   "files": 10,
+   "digest": "04c3018e29c648b016dacc9efa6ab8f6a43bcd97fdf79fe215857c77cf40d671"
+  },
+  "p12_state:tools/p12_*.py": {
+   "files": 37,
+   "digest": "d813da83f42922d766ac4cd7c146de0d47b0159b407ff52c64f381d31146a28f"
+  },
+  "runtime_trace_code:native_core/core/runtime": {
+   "files": 20,
+   "digest": "10e0ce68a94585417e67506ba9be0577ecdc33ef296ba589fcb5dd51631256da"
+  },
+  "runtime_trace_code:native_core/core/trace": {
+   "files": 6,
+   "digest": "f0e24508c4494b7779d7ec3c499fccfaca0fcf9d90e516b74b647e9e4ce659b8"
+  },
+  "runtime_trace_code:native_core/core/agent": {
+   "files": 7,
+   "digest": "1f1c147dd4000501e2b6e60cea9481ecf062f7dc3a69f68aa8fbdf10f127468b"
+  },
+  "runtime_trace_code:native_core/core/workflow": {
+   "files": 12,
+   "digest": "2ecb4711132ffa0c9b4bfc0d9e549dc9869d423ec66c467847e7fa5e12e57ca1"
+  },
+  "runtime_trace_code:native_core/core/memory": {
+   "files": 15,
+   "digest": "8eed14ab1cb36601dc95a2be9999f0561e7cff56f36b4165e9d12573015c3267"
+  },
+  "runtime_trace_code:tools+consumers": {
+   "files": 7,
+   "digest": "180d1c9de12962d4ff3fed1a0fa63acaab57c4077d75e46028162a0bec3a4a8e"
+  },
+  "store:docs/architecture/p12/trace-stores": {
+   "files": 7,
+   "digest": "a6b71e4d95e07de71e219254c1c91a4bf0dabc9ea36e2ec29d201fde23cf8ef7"
+  },
+  "store:docs/architecture/p12/execution-provenance": {
+   "files": 5,
+   "digest": "83bd87d86b99f7ac1c0f51b0489e13d3abe8bfe540b6147a53af5800496bc1a7"
+  },
+  "store:docs/operations/runtime-observations": {
+   "files": 1,
+   "digest": "84fd59acea7cae7d79d97d5e6319df32e0e626690d167ff6ab0a8c8d4e361356"
+  },
+  "store:docs/operations/p13/trace": {
+   "files": 1,
+   "digest": "672470ce3b30f4e90fc32fb24b0744dc1af9e14eb8f7e12e8c4f0cb03389235d"
+  }
+ },
+ "register": {
+  "bytes": 725868,
+  "sha256": "033d5628204021d92ddfc48f55e40ea005b7b5768bd17055f1643c09b7131acf"
+ },
+ "populations": {
+  "p12_delegation_roots": [
+   "docs/architecture/p11/w1-operations",
+   "docs/architecture/p11/w4-operations",
+   "docs/architecture/p11/x-department-operations",
+   "docs/architecture/p12/w4-operations"
+  ],
+  "p12_delegation_records": [
+   "08e14bd7aa584ea5",
+   "0f7ac0785bd8442b",
+   "125968154a7d4c06",
+   "16af1ba6664e4ed6",
+   "1700394c2fea4a88",
+   "2494015de36246fd",
+   "332d42f021764ab6",
+   "3cbeb212bca3466c",
+   "4313bd2246124a94",
+   "47eec2b87a284417",
+   "4daebea9012d4cc7",
+   "4ff9f617a3e84bba",
+   "522e84af52444890",
+   "5a05e6649c5c4f9c",
+   "607b57255bb544d8",
+   "6196a1e345454118",
+   "632b256f8335434f",
+   "6de2c35304324f75",
+   "84e94ea2f001444d",
+   "93fa0b6c9a2a4b85",
+   "94a4df7aca4543ef",
+   "a437cdbbd29940af",
+   "aa591daf55ca4714",
+   "af65a6c45db54612",
+   "b280559b3d3c4e63",
+   "b304c7ecb1024454",
+   "c1af49aaba24439d",
+   "c83585a21ab94cdf",
+   "e668a317fa494342",
+   "e6a3d622cfb54b4f",
+   "ea1020f6d95e46ce",
+   "ef07645a652f45b5",
+   "f24d8954e64b40df",
+   "fd1f1302b0224b97"
+  ],
+  "p11_operation_roots": [
+   "docs/architecture/p11/w1-operations",
+   "docs/architecture/p11/w4-operations",
+   "docs/architecture/p11/x-department-operations"
+  ],
+  "w3_projections": [
+   [
+    "0f7ac0785bd8442b",
+    "CURRENT"
+   ],
+   [
+    "4313bd2246124a94",
+    "CURRENT"
+   ],
+   [
+    "4daebea9012d4cc7",
+    "CURRENT"
+   ],
+   [
+    "a437cdbbd29940af",
+    "CURRENT"
+   ],
+   [
+    "fd1f1302b0224b97",
+    "HISTORICAL"
+   ]
+  ],
+  "p12_escalation_join": {
+   "records": 4,
+   "joined_by_structured_field": 0,
+   "joined_by_parsed_prose": 2,
+   "naming_the_refusal_type": 1,
+   "joined_by_governance_surface": 3
+  }
+ },
+ "verdicts": {
+  "w2_verifier": [
+   [
+    "declared read paths resolve",
+    "VERIFIED"
+   ],
+   [
+    "every source states what it owns",
+    "VERIFIED"
+   ],
+   [
+    "no two sources claim one portion",
+    "VERIFIED"
+   ],
+   [
+    "every entry carries provenance",
+    "VERIFIED"
+   ],
+   [
+    "projection is re-derived, not cached",
+    "VERIFIED"
+   ],
+   [
+    "status vocabulary is the declared one",
+    "VERIFIED"
+   ],
+   [
+    "absence yields UNKNOWN, not a negative",
+    "VERIFIED"
+   ],
+   [
+    "no projected value reads as a permission",
+    "VERIFIED"
+   ],
+   [
+    "F-17 is not resolved by this surface",
+    "VERIFIED"
+   ]
+  ],
+  "w2_summary": {
+   "sources": 8,
+   "projected": 8,
+   "current": 8,
+   "stale": 0,
+   "unknown": 0,
+   "unknown_states": [],
+   "conflicts": 0,
+   "undeclared_claims": 0,
+   "class_collisions": true,
+   "providers_unresolved": 8
+  },
+  "state_chain": {
+   "links": 4,
+   "satisfied": 4,
+   "unsatisfied": 0,
+   "unavailable": 0,
+   "chain_complete": true,
+   "broken_links": [],
+   "authority_conflicts": 0,
+   "undeclared_claims": 0
+  }
+ },
+ "readings": {
+  "w2": {
+   "runtime.observed": {
+    "status": "CURRENT",
+    "value": {
+     "live": [],
+     "terminated": [
+      "aios-corpus-health-runtime",
+      "aios-corpus-health",
+      "p11-w1-runtime",
+      "p12-f11-workflow-observation",
+      "p12-f4-runtime-observation",
+      "p12-live-verification-runtime",
+      "p12-w1-integration-edge-runtime",
+      "p12-w2-state-transition-runtime",
+      "p12-w4-integrated-execution-failure-runtime",
+      "p12-w4-integrated-execution-runtime"
+     ],
+     "observations": 10
+    }
+   },
+   "execution.recorded": {
+    "status": "CURRENT",
+    "value": {
+     "records": 16,
+     "stores": 7,
+     "failures": 7
+    }
+   },
+   "execution.provenance": {
+    "status": "CURRENT",
+    "value": {
+     "manifests": 5,
+     "statuses": [
+      "failure",
+      "success"
+     ]
+    }
+   },
+   "delegation.granted": {
+    "status": "CURRENT",
+    "value": {
+     "grants": 43,
+     "active": 2,
+     "current": [
+      "0a697039a63f4c17",
+      "50367d99c2dd4708"
+     ],
+     "historical": {
+      "completed": 7,
+      "revoked": 34,
+      "recorded_active_not_current": [
+       "08e14bd7aa584ea5",
+       "0f7ac0785bd8442b",
+       "2494015de36246fd",
+       "332d42f021764ab6",
+       "3cc612275a914c2c",
+       "4313bd2246124a94",
+       "4daebea9012d4cc7",
+       "4ff84423cadc48c8",
+       "522e84af52444890",
+       "632b256f8335434f",
+       "84e94ea2f001444d",
+       "86d74cf0b6d14856",
+       "9925366405d44af8",
+       "a437cdbbd29940af",
+       "aa591daf55ca4714",
+       "b304c7ecb1024454",
+       "c7e5e03a5a664230",
+       "d497e284f2c14aee",
+       "e668a317fa494342",
+       "e6a3d622cfb54b4f",
+       "ef2fa9ef2c004955"
+      ]
+     }
+    }
+   },
+   "escalation.raised": {
+    "status": "CURRENT",
+    "value": {
+     "records": 4,
+     "joined_by_structured_field": 0,
+     "joined_by_parsed_prose": 2,
+     "naming_the_refusal_type": 1,
+     "joined_by_governance_surface": 3,
+     "blocking": [],
+     "open_historical": [
+      "0991300404cf44d8",
+      "9d6bc0ad47294ef0"
+     ],
+     "answered": [
+      "23f315ba9f504272",
+      "9cb90fa0787a478c"
+     ]
+    }
+   },
+   "organization.declared": {
+    "status": "CURRENT",
+    "value": {
+     "departments": 2,
+     "capabilities": 3
+    }
+   },
+   "governance.declared": {
+    "status": "CURRENT",
+    "value": {
+     "records": 797,
+     "sources": 857,
+     "stale_sources": 0
+    }
+   },
+   "architecture.boundaries": {
+    "status": "CURRENT",
+    "value": {
+     "boundaries": 11,
+     "names": [
+      "agent",
+      "capability",
+      "governance",
+      "infrastructure",
+      "knowledge",
+      "memory",
+      "optimization",
+      "runtime",
+      "skill",
+      "trace",
+      "workflow"
+     ]
+    }
+   }
+  },
+  "p13_fact_keys": [
+   "authority.anomalies",
+   "authority.dimensions",
+   "authority.envelopes",
+   "corpus.citation_errors",
+   "corpus.live_stale_assertions",
+   "corpus.stale_governance_sources",
+   "escalations.open",
+   "integrity.holds",
+   "integrity.phases",
+   "knowledge.corpus_health_criteria",
+   "memory.corpus_health.last",
+   "memory.p13.previous",
+   "memory.stores",
+   "native_core.boundaries",
+   "operational_state.delegations",
+   "operational_state.escalations",
+   "s_ops.S-OPS-01.phase",
+   "s_ops.S-OPS-01.state",
+   "s_ops.S-OPS-01.window",
+   "self_model.what_am_i",
+   "self_model.what_authority_do_i_have",
+   "self_model.what_capabilities_exist",
+   "self_model.what_changed",
+   "self_model.what_decisions_are_recorded",
+   "self_model.what_do_i_not_know",
+   "self_model.what_do_i_own",
+   "self_model.what_failed",
+   "self_model.what_is_authoritative",
+   "self_model.what_is_incomplete",
+   "self_model.what_is_running",
+   "self_model.what_is_stale",
+   "verification.ecosystem_relationships",
+   "verification.foundational_question_reconciliation",
+   "verification.p13_evidence"
+  ],
+  "p13_escalations_open": [
+   "0991300404cf44d8",
+   "23f315ba9f504272",
+   "9cb90fa0787a478c",
+   "9d6bc0ad47294ef0"
+  ],
+  "operational_overview_sha256": "4cb43f27bd13950e195e587467c01e9052e7168aaca6fda2e6cab76607680f45"
+ },
+ "consumer_measurement": {
+  "consumers": [
+   "tools/p12_e12_measurement.py",
+   "tools/p12_negative_control_verification.py",
+   "tools/p12_self_model_contract.py",
+   "tools/p13/state.py"
+  ],
+  "importers": [
+   "tools/p12_e12_measurement.py",
+   "tools/p12_mutation_verification.py",
+   "tools/p12_negative_control_verification.py",
+   "tools/p12_self_model_contract.py",
+   "tools/p13/state.py"
+  ],
+  "candidates": [
+   [
+    "tools.p12_self_model_contract",
+    "projection_freshness_is_not_source_freshness"
+   ],
+   [
+    "tools.p12_negative_control_verification",
+    "_operational_state_projection"
+   ],
+   [
+    "tools.p12_mutation_verification",
+    "_alter_state_authority"
+   ],
+   [
+    "tools.p12_e12_measurement",
+    "_e12_02"
+   ],
+   [
+    "tools.p13.state",
+    "_operational_state"
+   ]
+  ],
+  "independent_verifier": {
+   "checks": 4,
+   "agrees": 4,
+   "disagrees": 0,
+   "unobservable": 0,
+   "observed_consumers": [
+    "tools/p12_e12_measurement.py",
+    "tools/p12_negative_control_verification.py",
+    "tools/p12_self_model_contract.py",
+    "tools/p13/state.py"
+   ],
+   "not_agreeing": []
+  },
+  "state_chain_links": {
+   "STATE": [
+    "SATISFIED",
+    "8 declared source(s) across 7 state class(es): ['ARCHITECTURE', 'AUTHORITY', 'EVIDENCE', 'EXECUTION', 'GOVERNANCE', 'ORGANIZATION', 'RUNTIME']"
+   ],
+   "AUTHORITATIVE SOURCE": [
+    "SATISFIED",
+    "all 8 sources name a canonical source and an authority, and every read path resolves"
+   ],
+   "PROJECTION": [
+    "SATISFIED",
+    "8 projection(s), each carrying source, observation time and transformation"
+   ],
+   "CONSUMER": [
+    "SATISFIED",
+    "4 evidenced consumer(s) of 5 importer(s): tools/p12_e12_measurement.py reads ['summary'], tools/p12_negative_control_verification.py reads ['summary'], tools/p12_self_model_contract.py reads ['project'], tools/p13/state.py reads ['project']; not counted: ['tools/p12_mutation_verification.py'] (reads the projection only over a substituted source set)"
+   ]
+  }
+ },
+ "certified_readers": {
+  "chain_delegation_dirs": [
+   "docs/architecture/p11/w1-operations",
+   "docs/architecture/p11/w4-operations",
+   "docs/architecture/p11/x-department-operations",
+   "docs/architecture/p12/w4-operations"
+  ],
+  "chain_roots": {
+   "MANIFESTS": "docs/architecture/p12/execution-provenance",
+   "OBSERVATIONS": "docs/architecture/p12/runtime-observations",
+   "TRACE_STORES": "docs/architecture/p12/trace-stores"
+  },
+  "chain_summary": {
+   "dangling": 0,
+   "edges_per_chain": 7,
+   "joined": 5,
+   "manifests": 5,
+   "not_joined": [],
+   "unresolved": 0
+  },
+  "chain_verdicts": {
+   "p12-w4-integrated-execution-001": [
+    "JOINED",
+    [
+     [
+      "INTENT",
+      "DECISION",
+      "JOINED",
+      "goal 'p12-w4-integrated-execution' decided by plan 'p12-w4-integrated-execution-plan-0' under 'DP-01 \u00a73 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)'"
+     ],
+     [
+      "DECISION",
+      "WORK",
+      "JOINED",
+      "plan 'p12-w4-integrated-execution-plan-0' carries work scope ['verify-delegation-elements']"
+     ],
+     [
+      "WORK",
+      "DELEGATION",
+      "JOINED",
+      "delegation e668a317fa494342 grants ['verify-delegation-elements'] bound to 'one execution of plan p12-w4-integrated-execution-plan-0'; manifest claims ['verify-delegation-elements'] under plan 'p12-w4-integrated-execution-plan-0'"
+     ],
+     [
+      "DELEGATION",
+      "EXECUTION",
+      "JOINED",
+      "trace actor 'engineering-intelligence-instance-001' against grant recipient 'engineering-intelligence-instance-001'"
+     ],
+     [
+      "EXECUTION",
+      "OBSERVATION",
+      "JOINED",
+      "trace runtime 'p12-w4-integrated-execution-runtime' against observed subject 'p12-w4-integrated-execution-runtime'"
+     ],
+     [
+      "OBSERVATION",
+      "VERIFICATION",
+      "JOINED",
+      "requirement 'every criterion reported satisfied or no' with outcome recorded"
+     ],
+     [
+      "VERIFICATION",
+      "EVIDENCE",
+      "JOINED",
+      "evidence persisted at p12-w4-integrated-execution-001.manifest.json"
+     ]
+    ]
+   ],
+   "p12-w4-integrated-execution-002": [
+    "JOINED",
+    [
+     [
+      "INTENT",
+      "DECISION",
+      "JOINED",
+      "goal 'p12-w4-integrated-execution-failure' decided by plan 'p12-w4-integrated-execution-failure-plan-0' under 'DP-01 \u00a73 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)'"
+     ],
+     [
+      "DECISION",
+      "WORK",
+      "JOINED",
+      "plan 'p12-w4-integrated-execution-failure-plan-0' carries work scope ['verify-delegation-elements']"
+     ],
+     [
+      "WORK",
+      "DELEGATION",
+      "JOINED",
+      "delegation b304c7ecb1024454 grants ['verify-delegation-elements'] bound to 'one execution of plan p12-w4-integrated-execution-failure-plan-0'; manifest claims ['verify-delegation-elements'] under plan 'p12-w4-integrated-execution-failure-plan-0'"
+     ],
+     [
+      "DELEGATION",
+      "EXECUTION",
+      "JOINED",
+      "trace actor 'engineering-intelligence-instance-001' against grant recipient 'engineering-intelligence-instance-001'"
+     ],
+     [
+      "EXECUTION",
+      "OBSERVATION",
+      "JOINED",
+      "trace runtime 'p12-w4-integrated-execution-failure-runtime' against observed subject 'p12-w4-integrated-execution-failure-runtime'"
+     ],
+     [
+      "OBSERVATION",
+      "VERIFICATION",
+      "JOINED",
+      "requirement 'every criterion reported satisfied or no' with outcome recorded"
+     ],
+     [
+      "VERIFICATION",
+      "EVIDENCE",
+      "JOINED",
+      "evidence persisted at p12-w4-integrated-execution-002.manifest.json"
+     ]
+    ]
+   ],
+   "p12-w4-integrated-execution-003": [
+    "JOINED",
+    [
+     [
+      "INTENT",
+      "DECISION",
+      "JOINED",
+      "goal 'p12-w2-state-transition' decided by plan 'p12-w2-state-transition-plan-0' under 'DP-01 \u00a73 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)'"
+     ],
+     [
+      "DECISION",
+      "WORK",
+      "JOINED",
+      "plan 'p12-w2-state-transition-plan-0' carries work scope ['verify-delegation-elements']"
+     ],
+     [
+      "WORK",
+      "DELEGATION",
+      "JOINED",
+      "delegation 84e94ea2f001444d grants ['verify-delegation-elements'] bound to 'one execution of plan p12-w2-state-transition-plan-0'; manifest claims ['verify-delegation-elements'] under plan 'p12-w2-state-transition-plan-0'"
+     ],
+     [
+      "DELEGATION",
+      "EXECUTION",
+      "JOINED",
+      "trace actor 'engineering-intelligence-instance-001' against grant recipient 'engineering-intelligence-instance-001'"
+     ],
+     [
+      "EXECUTION",
+      "OBSERVATION",
+      "JOINED",
+      "trace runtime 'p12-w2-state-transition-runtime' against observed subject 'p12-w2-state-transition-runtime'"
+     ],
+     [
+      "OBSERVATION",
+      "VERIFICATION",
+      "JOINED",
+      "requirement 'every criterion reported satisfied or no' with outcome recorded"
+     ],
+     [
+      "VERIFICATION",
+      "EVIDENCE",
+      "JOINED",
+      "evidence persisted at p12-w4-integrated-execution-003.manifest.json"
+     ]
+    ]
+   ],
+   "p12-w4-integrated-execution-004": [
+    "JOINED",
+    [
+     [
+      "INTENT",
+      "DECISION",
+      "JOINED",
+      "goal 'p12-w1-integration-edge' decided by plan 'p12-w1-integration-edge-plan-0' under 'DP-01 \u00a73 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)'"
+     ],
+     [
+      "DECISION",
+      "WORK",
+      "JOINED",
+      "plan 'p12-w1-integration-edge-plan-0' carries work scope ['verify-delegation-elements']"
+     ],
+     [
+      "WORK",
+      "DELEGATION",
+      "JOINED",
+      "delegation 08e14bd7aa584ea5 grants ['verify-delegation-elements'] bound to 'one execution of plan p12-w1-integration-edge-plan-0'; manifest claims ['verify-delegation-elements'] under plan 'p12-w1-integration-edge-plan-0'"
+     ],
+     [
+      "DELEGATION",
+      "EXECUTION",
+      "JOINED",
+      "trace actor 'engineering-intelligence-instance-001' against grant recipient 'engineering-intelligence-instance-001'"
+     ],
+     [
+      "EXECUTION",
+      "OBSERVATION",
+      "JOINED",
+      "trace runtime 'p12-w1-integration-edge-runtime' against observed subject 'p12-w1-integration-edge-runtime'"
+     ],
+     [
+      "OBSERVATION",
+      "VERIFICATION",
+      "JOINED",
+      "requirement 'every criterion reported satisfied or no' with outcome recorded"
+     ],
+     [
+      "VERIFICATION",
+      "EVIDENCE",
+      "JOINED",
+      "evidence persisted at p12-w4-integrated-execution-004.manifest.json"
+     ]
+    ]
+   ],
+   "p12-w4-integrated-execution-005": [
+    "JOINED",
+    [
+     [
+      "INTENT",
+      "DECISION",
+      "JOINED",
+      "goal 'p12-live-verification' decided by plan 'p12-live-verification-plan-0' under 'DP-01 \u00a73 W2 (docs/governance/acts/DP-01-P11-FOUNDER-AUTHORIZATION.md)'"
+     ],
+     [
+      "DECISION",
+      "WORK",
+      "JOINED",
+      "plan 'p12-live-verification-plan-0' carries work scope ['verify-delegation-elements']"
+     ],
+     [
+      "WORK",
+      "DELEGATION",
+      "JOINED",
+      "delegation 632b256f8335434f grants ['verify-delegation-elements'] bound to 'one execution of plan p12-live-verification-plan-0'; manifest claims ['verify-delegation-elements'] under plan 'p12-live-verification-plan-0'"
+     ],
+     [
+      "DELEGATION",
+      "EXECUTION",
+      "JOINED",
+      "trace actor 'engineering-intelligence-instance-001' against grant recipient 'engineering-intelligence-instance-001'"
+     ],
+     [
+      "EXECUTION",
+      "OBSERVATION",
+      "JOINED",
+      "trace runtime 'p12-live-verification-runtime' against observed subject 'p12-live-verification-runtime'"
+     ],
+     [
+      "OBSERVATION",
+      "VERIFICATION",
+      "JOINED",
+      "requirement 'every criterion reported satisfied or no' with outcome recorded"
+     ],
+     [
+      "VERIFICATION",
+      "EVIDENCE",
+      "JOINED",
+      "evidence persisted at p12-w4-integrated-execution-005.manifest.json"
+     ]
+    ]
+   ]
+  },
+  "live_roots_present": {
+   "docs/operations/execution-provenance": false,
+   "docs/operations/trace-stores": false
+  },
+  "manifests_certified": [
+   "p12-w4-integrated-execution-001",
+   "p12-w4-integrated-execution-002",
+   "p12-w4-integrated-execution-003",
+   "p12-w4-integrated-execution-004",
+   "p12-w4-integrated-execution-005"
+  ],
+  "observations": [
+   [
+    "aios-corpus-health",
+    "certified-p12",
+    "WorkflowState.SUCCEEDED"
+   ],
+   [
+    "aios-corpus-health-runtime",
+    "certified-p12",
+    "RuntimeState.STOPPED"
+   ],
+   [
+    "p11-w1-runtime",
+    "certified-p12",
+    "RuntimeState.STOPPED"
+   ],
+   [
+    "p12-f11-workflow-observation",
+    "certified-p12",
+    "WorkflowState.SUCCEEDED"
+   ],
+   [
+    "p12-f4-runtime-observation",
+    "certified-p12",
+    "RuntimeState.STOPPED"
+   ],
+   [
+    "p12-live-verification-runtime",
+    "certified-p12",
+    "RuntimeState.STOPPED"
+   ],
+   [
+    "p12-w1-integration-edge-runtime",
+    "certified-p12",
+    "RuntimeState.STOPPED"
+   ],
+   [
+    "p12-w2-state-transition-runtime",
+    "certified-p12",
+    "RuntimeState.STOPPED"
+   ],
+   [
+    "p12-w4-integrated-execution-failure-runtime",
+    "certified-p12",
+    "RuntimeState.STOPPED"
+   ],
+   [
+    "p12-w4-integrated-execution-runtime",
+    "certified-p12",
+    "RuntimeState.STOPPED"
+   ]
+  ],
+  "p12_w2": {
+   "execution.provenance": [
+    "CURRENT",
+    {
+     "manifests": 5,
+     "statuses": [
+      "failure",
+      "success"
+     ]
+    }
+   ],
+   "execution.recorded": [
+    "CURRENT",
+    {
+     "failures": 7,
+     "records": 16,
+     "stores": 7
+    }
+   ],
+   "runtime.observed": [
+    "CURRENT",
+    {
+     "live": [],
+     "observations": 10,
+     "terminated": [
+      "aios-corpus-health-runtime",
+      "aios-corpus-health",
+      "p11-w1-runtime",
+      "p12-f11-workflow-observation",
+      "p12-f4-runtime-observation",
+      "p12-live-verification-runtime",
+      "p12-w1-integration-edge-runtime",
+      "p12-w2-state-transition-runtime",
+      "p12-w4-integrated-execution-failure-runtime",
+      "p12-w4-integrated-execution-runtime"
+     ]
+    }
+   ]
+  },
+  "p12_w2_sources": [
+   [
+    "runtime.observed",
+    "docs/operations/runtime-observations",
+    "P12-W4 runtime observation",
+    "UNRESOLVED (F-17)"
+   ],
+   [
+    "execution.recorded",
+    "docs/architecture/p12/trace-stores",
+    "Native Core Trace boundary",
+    "UNRESOLVED (F-17)"
+   ],
+   [
+    "execution.provenance",
+    "docs/architecture/p12/execution-provenance",
+    "P12-W4 execution provenance",
+    "UNRESOLVED (F-17)"
+   ],
+   [
+    "delegation.granted",
+    "docs/architecture/p11/w4-operations",
+    "FD-P11-001 authorized delegator",
+    "UNRESOLVED (F-17)"
+   ],
+   [
+    "escalation.raised",
+    "docs/architecture/p11/w4-operations",
+    "escalation register",
+    "UNRESOLVED (F-17)"
+   ],
+   [
+    "organization.declared",
+    "docs/architecture/organization",
+    "P11 organization",
+    "UNRESOLVED (F-17)"
+   ],
+   [
+    "governance.declared",
+    "docs/governance",
+    "governance instruments",
+    "UNRESOLVED (F-17)"
+   ],
+   [
+    "architecture.boundaries",
+    "native_core/core",
+    "Native Core",
+    "UNRESOLVED (F-17)"
+   ]
+  ],
+  "trace_registry_certified": {
+   "by_status": {
+    "failure": 7,
+    "success": 9
+   },
+   "records": 16,
+   "store_names": [
+    "aios-corpus-health",
+    "p12-live-verification",
+    "p12-w1-integration-edge",
+    "p12-w2-state-transition",
+    "p12-w4-integrated-execution",
+    "p12-w4-integrated-execution-failure",
+    "w4-conformance-verification"
+   ],
+   "stores": 7
+  },
+  "trace_registry_failures": 7
+ },
+ "operational_overview_sha256": "4cb43f27bd13950e195e587467c01e9052e7168aaca6fda2e6cab76607680f45",
+ "known_preexisting_failures": {
+  "test_e11_measurement_currency": 4,
+  "test_p12_governance_evidence_verification": 1
+ }
+}
