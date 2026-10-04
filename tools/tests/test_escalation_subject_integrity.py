@@ -342,7 +342,10 @@ class E2_BothCanonicalPathsAreWired(unittest.TestCase):
     #: place, so `test_the_list_covers_every_production_execution_path` derives
     #: the real set from source and fails if this one is narrower.
     PATHS = ("tools/w4_first_run.py", "tools/w1_coordination_run.py",
-             "tools/w1_cross_department_run.py")
+             "tools/w1_cross_department_run.py",
+             # `FD-FR2-001`: the Runtime-hosted Agency path. Its run path
+             # (`run_hosted_plan`) wires refusals like the three above.
+             "tools/w4_runtime_execution.py")
 
     def _execution_paths(self):
         """Modules that construct a `W4Executor`, discovered — not listed."""

@@ -222,6 +222,26 @@ class TraceIdentity(_Sandbox):
         self.assertEqual(hosted, ())
         self.assertFalse((self.store / "trace").is_file() and _records(self.store))
 
+    def test_the_hosted_run_path_makes_refusals_organizational_escalations(self):
+        """`ACT-CC-P11-015` / `ACT-CC-P12-005`: through the one existing wiring."""
+        from tools.escalation_register import EscalationRegister
+        plan = Plan(key="fr2-plan-0", goal_key="g",
+                    authority=AuthorityProvenance("FD-P11-001 §9", FD_RECORD),
+                    steps=(PlanStep("s1", "in scope", requires_delegation=True),
+                           PlanStep("outside", "out of scope", requires_delegation=True,
+                                    depends_on=("s1",))))
+        with self.runtime() as runtime:
+            report, hosted, escalations = rx.run_hosted_plan(
+                self.grant, self.registry, runtime, rx.trace_writer(self.store), plan,
+                lambda s: "done", root=self.ops, authority_record=FD_RECORD,
+                store_path=self.store)
+        self.assertEqual([o.status for o in report.outcomes], [SUCCESS, ESCALATION])
+        self.assertEqual(len(hosted), 1)
+        self.assertEqual(len(escalations), 1)
+        recorded = EscalationRegister(self.ops).load(escalations[0])
+        self.assertIn(self.grant.delegation_id, json.dumps(recorded))
+        self.assertEqual(len(_records(self.store)), 1)
+
     def test_failure_uses_the_existing_mapping(self):
         def fails(step):
             raise AssertionError("criteria unsatisfied")

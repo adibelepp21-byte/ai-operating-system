@@ -78,8 +78,9 @@ from tools.agent_instance_registry import AgentInstanceRegistry
 from tools.p12_certified_evidence_guard import guard
 from tools.p12_execution_provenance import (
     LIVE_MANIFEST_ROOT, ExecutionManifest, record)
+from tools.p12_governance_escalation_join import join_refusals_to_grants
 from tools.p12_trace_registry import LIVE_STORE_ROOT
-from tools.planning import Plan, PlanStep, sequence
+from tools.planning import AuthorityProvenance, Plan, PlanStep, sequence
 from tools.w4_delegation import W4Delegation
 from tools.w4_execution import (
     ESCALATION, ExecutionOutcome, ExecutionRefused, ExecutionReport, W4Executor)
@@ -214,6 +215,32 @@ class RuntimeHostedExecutor:
                     instance_key=self._delegation.recipient_instance,
                     at=_now()))
         return report, tuple(hosted)
+
+
+def run_hosted_plan(delegation: W4Delegation, registry: AgentInstanceRegistry, runtime,
+                    writer: TraceWriter, plan: Plan, perform: Callable[[PlanStep], str], *,
+                    root: Optional[Path], authority_record: str,
+                    store_path: Optional[Path] = None
+                    ) -> Tuple[ExecutionReport, Tuple[HostedStep, ...], Tuple[str, ...]]:
+    """The hosted **run path**: a plan executed inside the Runtime, its
+    refusals made organizational escalations.
+
+    `RuntimeHostedExecutor`, like `W4Executor`, keeps no handle on persistence.
+    The run path is where refusals reach organizational state, through the one
+    existing wiring (`join_refusals_to_grants`, `ACT-CC-P12-005`), exactly as
+    `tools/w4_first_run.py` and the `tools/w1_*_run.py` paths do. Every refusal
+    here was raised under the one delegation the plan executes under. With
+    ``root`` None nothing is recorded, matching that wiring's own convention.
+    """
+    executor = RuntimeHostedExecutor(delegation, registry, runtime, writer,
+                                     store_path=store_path)
+    report, hosted = executor.execute_plan(plan, perform)
+    escalations = join_refusals_to_grants(
+        root, report.refusals,
+        subject=f"plan {plan.key} / delegation {delegation.delegation_id}",
+        authority=AuthorityProvenance("FD-P11-001 §9", authority_record),
+        delegation_for=lambda refusal: delegation.delegation_id)
+    return report, hosted, tuple(escalations)
 
 
 def trace_ordinal(store_path: Path) -> int:

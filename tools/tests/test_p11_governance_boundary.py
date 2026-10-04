@@ -471,6 +471,11 @@ P11_SURFACES = (
     # place P13 decides whether authority exists. A gate that could hold an
     # unverified citation could escalate on, or execute under, a string.
     REPO_ROOT / "tools" / "p13" / "authority.py",
+    # The Runtime-hosted Agency execution path, added under `FD-FR2-001`.
+    # **Declared because the completeness guard below failed the run that
+    # created it.** It executes delegated plan steps and cites `FD-P11-001 §9`
+    # when it routes refusals to escalations, so authority crosses it.
+    REPO_ROOT / "tools" / "w4_runtime_execution.py",
 )
 
 

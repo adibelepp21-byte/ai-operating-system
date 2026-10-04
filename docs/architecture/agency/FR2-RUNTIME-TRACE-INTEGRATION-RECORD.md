@@ -4,7 +4,7 @@
 |---|---|
 | **Authority** | `docs/governance/acts/FD-FR2-001-AGENCY-RUNTIME-TRACE-INTEGRATION-AUTHORIZATION.md` (verbatim; content sha256 `054fb8a2a33add3724c365087309da61be137247832d8c17f0ba5d0cbb2ac38d`): FQ-FR2-1 = **Option A**, bounded FDR-G1 maintenance on the GOAL-V2-002 live / certified precedent. Register `§163` (decision), `§164` (this result). Predecessor: FR-2 discovery (`FR2-RUNTIME-TRACE-DISCOVERY-RECORD-2026-10-04.md`, `§161`–`§162`) |
 | **Result** | **FR-2 CONSTRUCTED / VERIFIED.** Delegated Agency work now runs through the existing path: Agent Instance → Delegation → `W4Executor` → Execution Contract (`Agent` / `ExecutionConsumer`) → Execution Layer → Runtime → `TracedAction` Trace + `ExecutionManifest` → Result → Verification → CEO Decision → Plan Outcome.<br>• One real execution (`2adef08b8efa4549`) took that path. The independent chain reader joins **7 / 7** edges for it from persisted bytes, in a fresh process.<br>• Every `FD-FR2-001 §12` item holds.<br>• No `§13` stop condition was reached |
-| **Evidence** | • Baseline: `evidence/fr2c_baseline.py` → `evidence/FR2C-BASELINE-2026-10-04.json`, captured at `2571089` before any code changed.<br>• The execution: `evidence/fr2_runtime_execution_run.py`; its result `operations/w4-s4-plan-outcome/fr2-runtime-run.result.json`.<br>• Verification: `evidence/fr2c_verification.py` → `evidence/FR2C-VERIFICATION-2026-10-04.json`, **all_ok**, fresh process.<br>• Tests: `tools/tests/test_fr2_runtime_trace_integration.py` (32; 8 code mutations, all caught) |
+| **Evidence** | • Baseline: `evidence/fr2c_baseline.py` → `evidence/FR2C-BASELINE-2026-10-04.json`, captured at `2571089` before any code changed.<br>• The execution: `evidence/fr2_runtime_execution_run.py`; its result `operations/w4-s4-plan-outcome/fr2-runtime-run.result.json`.<br>• Verification: `evidence/fr2c_verification.py` → `evidence/FR2C-VERIFICATION-2026-10-04.json`, **all_ok**, fresh process.<br>• Tests: `tools/tests/test_fr2_runtime_trace_integration.py` (33; 8 code mutations, all caught) |
 | **Code changed** | • New: `tools/w4_runtime_execution.py` (the integration; no new subsystem).<br>• Extended, certified answers unchanged: `tools/p12_execution_chain_reader.py`, `tools/p12_trace_registry.py`, `tools/p12_execution_provenance.py`.<br>• `native_core`, `consumers`, P12-W2 and P13 are **unchanged** |
 
 ---
@@ -23,13 +23,14 @@ Runtime (RUNNING) ─► create_execution_layer ─► Execution (runtime_id, ex
                                   perform(step)                    ← the delegated work
 ```
 
-`tools/w4_runtime_execution.py` holds four parts. Each is a use of an existing mechanism:
+`tools/w4_runtime_execution.py` holds five parts. Each is a use of an existing mechanism:
 
 | Part | What it does | Existing mechanisms used |
 |---|---|---|
 | `DelegatedStep(Agent)` | Takes part in one `Execution`. Refuses anything that is not a real `Execution` whose Runtime is RUNNING. Runs `perform` inside a `TracedAction` under the grant's recipient instance and the Execution's runtime id | `Agent` (an `ExecutionConsumer`), `Execution` / `ExecutionContext`, `TracedAction`, `W4Executor.execute_step` |
 | `RuntimeHostedExecutor` | Builds a **fresh** `Execution` for each step, then lets the step participate. `execute_plan` keeps W4's rule: a refused step is recorded as an escalation and the remaining authorized work continues | `create_execution_layer` (RUNNING-only), `W4Executor` |
 | `hosted_runtime` | Starts a real Runtime through the composition roots. Publishes its observation at RUNNING and at STOPPED, under its own id | `build_default_infrastructure`, `create_runtime`, the Runtime lifecycle, `p12_runtime_observation.publish` |
+| `run_hosted_plan` | The hosted **run path**. It executes a plan through `RuntimeHostedExecutor`, then routes `report.refusals` through the one existing wiring, so each refusal becomes an organizational escalation joined to its grant. Like `W4Executor`, the executor itself keeps no handle on persistence | `join_refusals_to_grants` (`ACT-CC-P12-005`), the same call `tools/w4_first_run.py` and the `tools/w1_*_run.py` paths make |
 | `record_manifest` / `trace_writer` | Writes the existing `ExecutionManifest` (no new field) to the live root; opens a live Trace store. Both refuse a certified root through the guard | `ExecutionManifest`, `record()`, `TraceWriter`, `LocalAppendOnlyStorage`, `p12_certified_evidence_guard.guard` |
 
 **Boundary (`§3`).** The delegated step reaches the Runtime only through the `Execution` it is handed. It reads the runtime id and execution sequence from the Execution's context. The Runtime is driven only through its public lifecycle and the composition roots.
@@ -176,9 +177,24 @@ No reader merges live and certified authority. Domain ownership is unchanged. Th
 
 | Suite | Result |
 |---|---|
-| `test_fr2_runtime_trace_integration` | 32 OK: Runtime participation, no bypass, Trace identity, manifest and chain, live / certified separation, no hidden consumer, the authorized execution read back (including fresh process) |
+| `test_fr2_runtime_trace_integration` | 33 OK: Runtime participation, no bypass, Trace identity, manifest and chain, live / certified separation, no hidden consumer, the authorized execution read back (including fresh process) |
 | Neighbouring suites (P12 chain, trace registry, certification integrity, certified-write closure, FR-1, MR-S5-1, W4 plan outcome, Founder goal, E12 measurement, integration graph, state verification, consumer measurement, CG7, guard, self-model) | OK |
+| `test_escalation_subject_integrity` | 41 OK, with its population extended by one (`§I.1`) |
+| `test_p11_governance_boundary` | 26 OK, with its declared surface set extended by one (`§I.1`) |
 | Full regression | see Register `§164` |
+
+### I.1 What the regression caught
+
+The first full regression found one new failure: `test_escalation_subject_integrity` → `test_the_list_covers_every_production_execution_path`. That control (`ACT-CC-P11-015 §19`) discovers, from source, every production module that constructs a `W4Executor`. It requires each one's refusals to reach organizational state through `join_refusals_to_grants`, and it found `tools/w4_runtime_execution.py`.
+
+The control was right. The hosted path is now the authorized Agency execution path, and its refusals were reaching only the W4 report.
+- **Fix:** `run_hosted_plan`, the hosted run path, routes `report.refusals` through the existing wiring.
+- **Control:** the module was added to the control's population, so every one of the control's checks now applies to it. The population was extended, not narrowed. The module was not hidden from the scan, and no check was weakened.
+- **Test:** `test_the_hosted_run_path_makes_refusals_organizational_escalations` covers it.
+
+The same regression found a second one: `test_p11_governance_boundary` → `test_the_declared_p11_surface_set_is_complete`. Every module under `tools/` that imports the planning package is a P11 handoff surface and must be declared. `tools/w4_runtime_execution.py` imports it, and authority crosses it (it cites `FD-P11-001 §9` when it routes refusals). It was declared in `P11_SURFACES`, as the guard's earlier catches were. The boundary's other checks over declared surfaces now run on it and pass, including *"every authority field crossing a boundary is a verified citation"*.
+
+The one authorized execution (`§C`) ran a single in-scope step through `execute_step`, as MR-S5-1 did, and raised no refusal. Its records are unchanged.
 
 ## J. Next frontier
 
