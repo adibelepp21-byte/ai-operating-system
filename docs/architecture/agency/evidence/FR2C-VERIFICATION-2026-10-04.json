@@ -1,0 +1,177 @@
+{
+ "checked_at": "2026-10-04T06:27:33.498228+00:00",
+ "script_sha256": "29315029793d703b8f71a5ef7a755403df91de7c6583c848e9309bb30f478dc9",
+ "head": "257108967f7c249e06f9234834da724f52d64e78",
+ "baseline_head": "f18ceea18c1042b2fcbb80f17e2400dd71aa5930",
+ "grant": "2adef08b8efa4549",
+ "execution_id": "agency-2adef08b8efa4549-verify-runtime-path-mechanisms",
+ "section_12": {
+  "runtime": {
+   "agency_work_entered_runtime": true,
+   "runtime_participation_evidenced": true,
+   "direct_bypass_prevented": true
+  },
+  "trace": {
+   "produced_by_existing_mechanism": true,
+   "identifies_actual_agent_instance": true,
+   "associated_with_execution": true,
+   "associated_with_runtime_observation": true
+  },
+  "manifest": {
+   "produced_by_existing_mechanism": true,
+   "relationships_reconstructable": true
+  },
+  "provenance": {
+   "founder_goal": true,
+   "plan": true,
+   "plan_step": true,
+   "delegation": true,
+   "agent_instance": true,
+   "execution": true,
+   "runtime": true,
+   "trace": true,
+   "result": true,
+   "verification": true,
+   "ceo_decision": true,
+   "plan_outcome": true,
+   "fresh_process_chain": true
+  },
+  "observability": {
+   "existing_readers_observe_live_agency_execution": true,
+   "certified_historical_distinguishable": true,
+   "p13_no_second_state_authority": true,
+   "p12_w2_runtime_observed_change_is_data_only": true
+  },
+  "negative_controls": {
+   "direct_execution_cannot_masquerade": true,
+   "fabricated_instance_fails_provenance": true,
+   "definition_cannot_substitute_for_instance": true,
+   "no_hidden_p13_or_reader_dependency": true,
+   "certified_evidence_not_mutated": true,
+   "live_cannot_silently_become_certified": true
+  }
+ },
+ "live_edges": [
+  [
+   "INTENT",
+   "DECISION",
+   "JOINED"
+  ],
+  [
+   "DECISION",
+   "WORK",
+   "JOINED"
+  ],
+  [
+   "WORK",
+   "DELEGATION",
+   "JOINED"
+  ],
+  [
+   "DELEGATION",
+   "EXECUTION",
+   "JOINED"
+  ],
+  [
+   "EXECUTION",
+   "OBSERVATION",
+   "JOINED"
+  ],
+  [
+   "OBSERVATION",
+   "VERIFICATION",
+   "JOINED"
+  ],
+  [
+   "VERIFICATION",
+   "EVIDENCE",
+   "JOINED"
+  ]
+ ],
+ "bypass_probe": {
+  "stopped_runtime": "refused: RuntimeNotRunning",
+  "imitation_execution": "refused: TypeError",
+  "perform_calls": 0
+ },
+ "residual_gaps": {
+  "G3_runtime_state_process_local": "the Runtime object is not reconstructable after the process; what persists is its observation (state, origin live) and, in the evidence and manifest, its id and the execution sequence. Runtime persistence was not redesigned",
+  "G5_p13_execution_visibility": {
+   "p12_w2_execution_recorded_read_path": "docs/architecture/p12/trace-stores",
+   "p13_trace_stores": "docs/architecture/p12/trace-stores",
+   "agency_execution_visible_to_p13": false
+  },
+  "G6_native_participate_status": "consumers/engineering_intelligence_agent.py unchanged: True",
+  "G7_escalation_producer": {
+   "traced_action_unchanged": true,
+   "status_is_success_or_failure_only": true,
+   "escalation_produced": false
+  }
+ },
+ "surfaces_changed_vs_baseline": [
+  "certified:docs/operations",
+  "code:tools",
+  "operational:agency/operations",
+  "p12_state:tools/p12_*.py",
+  "runtime_trace_code:tools+consumers",
+  "store:docs/operations/runtime-observations"
+ ],
+ "changed_code": [
+  "tools/p12_execution_chain_reader.py",
+  "tools/p12_execution_provenance.py",
+  "tools/p12_trace_registry.py",
+  "tools/tests/test_fr2_runtime_trace_integration.py",
+  "tools/w4_runtime_execution.py"
+ ],
+ "certified_readers_now": {
+  "chain_summary": {
+   "dangling": 0,
+   "edges_per_chain": 7,
+   "joined": 5,
+   "manifests": 5,
+   "not_joined": [],
+   "unresolved": 0
+  },
+  "trace_registry_certified": {
+   "by_status": {
+    "failure": 7,
+    "success": 9
+   },
+   "records": 16,
+   "store_names": [
+    "aios-corpus-health",
+    "p12-live-verification",
+    "p12-w1-integration-edge",
+    "p12-w2-state-transition",
+    "p12-w4-integrated-execution",
+    "p12-w4-integrated-execution-failure",
+    "w4-conformance-verification"
+   ],
+   "stores": 7
+  },
+  "manifests_certified": [
+   "p12-w4-integrated-execution-001",
+   "p12-w4-integrated-execution-002",
+   "p12-w4-integrated-execution-003",
+   "p12-w4-integrated-execution-004",
+   "p12-w4-integrated-execution-005"
+  ],
+  "live_roots_present": {
+   "docs/operations/execution-provenance": true,
+   "docs/operations/trace-stores": true
+  }
+ },
+ "live_summary": {
+  "dangling": 0,
+  "edges_per_chain": 7,
+  "joined": 1,
+  "manifests": 1,
+  "not_joined": [],
+  "origin": "live",
+  "unresolved": 0
+ },
+ "run_changed_nothing": true,
+ "integrity_faults": [],
+ "git_status_certified": "(clean)",
+ "unexpected_surface_changes": [],
+ "all_ok": true
+}
