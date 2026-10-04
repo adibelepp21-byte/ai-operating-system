@@ -1,0 +1,441 @@
+{
+ "checked_at": "2026-10-04T05:35:48.709934+00:00",
+ "script_sha256": "c861146f7f50697ddd54006c68e75ba485fdcf1055f4ae77bc956522d6025295",
+ "head": "eae77bc20669c71368156145bc41455baf10a8a5",
+ "baseline_head": "eae77bc20669c71368156145bc41455baf10a8a5",
+ "inventory": {
+  "execution_context_fields": [
+   "runtime_id",
+   "execution_sequence"
+  ],
+  "execution_id_ratified": false,
+  "trace_record_fields": [
+   "agent_definition_version",
+   "agent_instance",
+   "runtime",
+   "skills_used",
+   "tools_used",
+   "knowledge_consumed",
+   "memory_consumed",
+   "outputs",
+   "cost_resource_metadata",
+   "status"
+  ],
+  "trace_statuses": [
+   "escalation",
+   "failure",
+   "success"
+  ],
+  "trace_has_delegation_field": false,
+  "manifest_fields": [
+   "execution_id",
+   "goal",
+   "plan",
+   "plan_authority",
+   "work_scope",
+   "agent_instance",
+   "agent_definition_version",
+   "delegation_id",
+   "delegator",
+   "authority_instrument",
+   "authority_record",
+   "authority_chain",
+   "capability_scope",
+   "trace_store",
+   "trace_ordinal",
+   "runtime_id",
+   "status",
+   "observation_subject",
+   "observation_kind",
+   "verification_requirement",
+   "outcome",
+   "delegation_status",
+   "recorded_at"
+  ],
+  "manifest_contract_elements": [
+   "intent",
+   "decision",
+   "work",
+   "actor",
+   "authority",
+   "scope",
+   "execution",
+   "observation",
+   "verification",
+   "evidence",
+   "provenance",
+   "lifecycle"
+  ],
+  "participate_returns": "None — no execution-result model is ratified (consumer.py)",
+  "callers": {
+   "W4Executor(": [
+    "docs/architecture/agency/evidence/capability_discovery.py",
+    "docs/architecture/agency/evidence/mr_s5_1_decisions_run.py",
+    "docs/architecture/agency/evidence/s4_plan_outcome_run.py",
+    "docs/architecture/agency/evidence/s4_verification.py",
+    "docs/architecture/agency/evidence/s6_frontier_discovery.py",
+    "p12_w3_governance_escalation.py",
+    "tools/w1_coordination_run.py",
+    "tools/w1_cross_department_run.py",
+    "tools/w4_first_run.py"
+   ],
+   "create_execution_layer(": [
+    "aios_corpus_health_run.py",
+    "cross_department_coordination_proof.py",
+    "docs/architecture/agency/evidence/capability_discovery.py",
+    "fullstack/backend/aios.py",
+    "native_core/core/runtime/execution/composition.py",
+    "w1_coordination_proof.py"
+   ],
+   "TracedAction(": [
+    "aios_corpus_health_run.py",
+    "consumers/cognitive_intelligence_agent.py",
+    "consumers/engineering_intelligence_agent.py",
+    "consumers/knowledge_agent.py",
+    "consumers/memory_agent.py",
+    "consumers/reference_agent.py",
+    "consumers/tool_agent.py",
+    "consumers/workflow_agent.py",
+    "p12_trace_durability_proof.py",
+    "p12_w4_integrated_execution.py"
+   ],
+   "ExecutionManifest(": [
+    "p12_w4_integrated_execution.py",
+    "tools/p12_negative_control_verification.py"
+   ],
+   "persist_evidence(": [
+    "docs/architecture/agency/evidence/mr_s5_1_decisions_run.py",
+    "docs/architecture/agency/evidence/s4_plan_outcome_run.py",
+    "tools/w4_execution.py"
+   ]
+  },
+  "engineering_agent_participate_traces_as": "engineering-intelligence-agent",
+  "roots": {
+   "trace_registry_STORE_ROOT": "docs/architecture/p12/trace-stores",
+   "manifest_MANIFEST_ROOT": "docs/architecture/p12/execution-provenance",
+   "observation_live_root": "docs/operations/runtime-observations",
+   "observation_certified_root": "docs/architecture/p12/runtime-observations",
+   "chain_reader_roots": {
+    "MANIFESTS": "docs/architecture/p12/execution-provenance",
+    "TRACE_STORES": "docs/architecture/p12/trace-stores",
+    "OBSERVATIONS": "docs/architecture/p12/runtime-observations"
+   },
+   "chain_reader_delegation_dirs": [
+    "docs/architecture/p11/w1-operations",
+    "docs/architecture/p11/w4-operations",
+    "docs/architecture/p11/x-department-operations",
+    "docs/architecture/p12/w4-operations"
+   ],
+   "p13_trace_stores": "docs/architecture/p12/trace-stores"
+  },
+  "roots_certified": {
+   "trace_registry_STORE_ROOT": true,
+   "manifest_MANIFEST_ROOT": true,
+   "observation_live_root": false,
+   "observation_certified_root": true,
+   "p13_trace_stores": true
+  }
+ },
+ "chains": {
+  "3cc612275a914c2c": {
+   "label": "MR-S5-1 P1 ACCEPT (executed, success)",
+   "founder_goal": [
+    "founder-mr-s5-1-accept",
+    "PERSISTED (planning.state.json; goal cites its act)"
+   ],
+   "plan": [
+    "founder-mr-s5-1-accept-plan-0",
+    "TEXTUAL (parsed from the grant's lifecycle_boundary by _bound_plan)"
+   ],
+   "plan_step": [
+    [
+     "verify-delegation-elements"
+    ],
+    "DIRECT (grant work_scope)"
+   ],
+   "agent_instance": [
+    "engineering-intelligence-instance-001",
+    "DIRECT (grant recipient); instance record PERSISTED in root"
+   ],
+   "execution": [
+    "2026-10-03T12:49:49.171925+00:00",
+    "DIRECT (evidence names delegation_id; no execution id)"
+   ],
+   "evidence_keys": [
+    "agent_instance",
+    "authority_chain",
+    "criteria",
+    "delegation_id",
+    "escalations",
+    "executed_at",
+    "outcomes",
+    "performed_by",
+    "plan",
+    "subject"
+   ],
+   "runtime": [
+    null,
+    "MISSING (no runtime id, execution sequence or observation in any record)"
+   ],
+   "trace": [
+    null,
+    "MISSING (grant id in no Trace store, manifest or observation)"
+   ],
+   "result": [
+    "success",
+    "14 of 14 elements carried"
+   ],
+   "result_producer": "caller-supplied `perform` → W4Executor ExecutionOutcome → persist_evidence",
+   "verification": "DERIVED (plan_completion over the evidence)",
+   "ceo_decision": [
+    "ACCEPT",
+    "DIRECT (live ledger)"
+   ]
+  },
+  "d497e284f2c14aee": {
+   "label": "MR-S5-1 P2 REWORK (executed, failure)",
+   "founder_goal": [
+    "founder-mr-s5-1-rework",
+    "PERSISTED (planning.state.json; goal cites its act)"
+   ],
+   "plan": [
+    "founder-mr-s5-1-rework-plan-0",
+    "TEXTUAL (parsed from the grant's lifecycle_boundary by _bound_plan)"
+   ],
+   "plan_step": [
+    [
+     "verify-continuity-elements"
+    ],
+    "DIRECT (grant work_scope)"
+   ],
+   "agent_instance": [
+    "engineering-intelligence-instance-001",
+    "DIRECT (grant recipient); instance record PERSISTED in root"
+   ],
+   "execution": [
+    "2026-10-03T12:49:50.298333+00:00",
+    "DIRECT (evidence names delegation_id; no execution id)"
+   ],
+   "evidence_keys": [
+    "agent_instance",
+    "authority_chain",
+    "criteria",
+    "delegation_id",
+    "escalations",
+    "executed_at",
+    "outcomes",
+    "performed_by",
+    "plan",
+    "subject"
+   ],
+   "runtime": [
+    null,
+    "MISSING (no runtime id, execution sequence or observation in any record)"
+   ],
+   "trace": [
+    null,
+    "MISSING (grant id in no Trace store, manifest or observation)"
+   ],
+   "result": [
+    "failure",
+    "AssertionError: 3 of 14 elements carried; not carried: ['authority_provenance', "
+   ],
+   "result_producer": "caller-supplied `perform` → W4Executor ExecutionOutcome → persist_evidence",
+   "verification": "DERIVED (plan_completion over the evidence)",
+   "ceo_decision": [
+    "REWORK",
+    "DIRECT (live ledger)"
+   ]
+  },
+  "0a697039a63f4c17": {
+   "label": "S-2 (live, never executed)",
+   "founder_goal": [
+    "agency-s2-ledger-rule-verification",
+    "PERSISTED (planning.state.json; goal cites its act)"
+   ],
+   "plan": [
+    "agency-s2-ledger-rule-verification-plan-0",
+    "TEXTUAL (parsed from the grant's lifecycle_boundary by _bound_plan)"
+   ],
+   "plan_step": [
+    [
+     "verify-ledger-rules"
+    ],
+    "DIRECT (grant work_scope)"
+   ],
+   "agent_instance": [
+    "engineering-intelligence-instance-001",
+    "DIRECT (grant recipient); instance record PERSISTED in root"
+   ],
+   "execution": [
+    null,
+    "MISSING (never executed)"
+   ],
+   "evidence_keys": [],
+   "runtime": [
+    null,
+    "MISSING (no runtime id, execution sequence or observation in any record)"
+   ],
+   "trace": [
+    null,
+    "MISSING (grant id in no Trace store, manifest or observation)"
+   ],
+   "result": [
+    null,
+    "MISSING"
+   ],
+   "result_producer": null,
+   "verification": "MISSING",
+   "ceo_decision": [
+    null,
+    "MISSING (no decision yet)"
+   ]
+  }
+ },
+ "probe": {
+  "path_a_runtime_hosted": {
+   "runtime_state_during": "RuntimeState.RUNNING",
+   "execution_context": {
+    "runtime_id": "fr2-probe-runtime",
+    "execution_sequence": 0
+   },
+   "participate_returned": "None",
+   "trace_records": 1,
+   "trace_agent_instance": "engineering-intelligence-agent",
+   "trace_runtime": "fr2-probe-runtime",
+   "trace_status": "success",
+   "trace_outputs": null,
+   "verification_results_held_in_memory_only": 14
+  },
+  "path_a_unsatisfied_verification_trace_status": "success",
+  "runtime_state_after_stop": "RuntimeState.STOPPED",
+  "execution_after_stop": "refused: RuntimeNotRunning",
+  "path_b_direct_call": {
+   "results": 14,
+   "trace_records_written": 0,
+   "runtime_involved": false
+  },
+  "path_a_prime_traced_action": {
+   "actors_recorded": [
+    "engineering-intelligence-instance-001",
+    "fabricated-instance-999"
+   ],
+   "fabricated_actor_accepted_by_trace_layer": true
+  },
+  "manifest_contract_complete": true,
+  "chain_reader_on_agency_grant": {
+   "with_resident_delegation_dirs": {
+    "INTENT→DECISION": "JOINED",
+    "DECISION→WORK": "JOINED",
+    "WORK→DELEGATION": "DANGLING",
+    "DELEGATION→EXECUTION": "DANGLING",
+    "EXECUTION→OBSERVATION": "JOINED",
+    "OBSERVATION→VERIFICATION": "JOINED",
+    "VERIFICATION→EVIDENCE": "JOINED"
+   },
+   "counterfactual_with_agency_root_added": {
+    "INTENT→DECISION": "JOINED",
+    "DECISION→WORK": "JOINED",
+    "WORK→DELEGATION": "JOINED",
+    "DELEGATION→EXECUTION": "JOINED",
+    "EXECUTION→OBSERVATION": "JOINED",
+    "OBSERVATION→VERIFICATION": "JOINED",
+    "VERIFICATION→EVIDENCE": "JOINED"
+   },
+   "counterfactual_fabricated_actor": {
+    "INTENT→DECISION": "JOINED",
+    "DECISION→WORK": "JOINED",
+    "WORK→DELEGATION": "JOINED",
+    "DELEGATION→EXECUTION": "DANGLING",
+    "EXECUTION→OBSERVATION": "JOINED",
+    "OBSERVATION→VERIFICATION": "JOINED",
+    "VERIFICATION→EVIDENCE": "JOINED"
+   }
+  },
+  "fresh_process": {
+   "trace_records_survive": true,
+   "runtime_state_survives": "PROCESS-LOCAL (no observation published, nothing persisted)",
+   "execution_sequence_in_trace": false
+  }
+ },
+ "p13": {
+  "memory_trace_stores_seen": {
+   "aios-corpus-health": 7,
+   "p12-live-verification": 1,
+   "p12-w1-integration-edge": 1,
+   "p12-w2-state-transition": 1,
+   "p12-w4-integrated-execution": 3,
+   "p12-w4-integrated-execution-failure": 1,
+   "p13": 11,
+   "w4-conformance-verification": 2
+  },
+  "trace_store_names": [
+   "aios-corpus-health",
+   "p12-live-verification",
+   "p12-w1-integration-edge",
+   "p12-w2-state-transition",
+   "p12-w4-integrated-execution",
+   "p12-w4-integrated-execution-failure",
+   "w4-conformance-verification"
+  ],
+  "agency_grants_in_any_trace_manifest_or_observation": [],
+  "operational_state_source_present": true,
+  "live_observations": []
+ },
+ "negative_controls": {
+  "N1_no_runtime_claim_without_runtime_evidence": true,
+  "N2_direct_call_not_labelled_runtime": true,
+  "N3_capability_or_definition_name_is_not_instance": true,
+  "N4_delegation_not_inferred_from_agent_identity": true,
+  "N5_execution_not_inferred_from_result": true,
+  "N6_result_is_not_trace": true,
+  "N7_trace_not_authoritative_state": true,
+  "N8_historical_not_presented_as_current": true,
+  "N9_p13_claims_no_runtime_observation_of_agency": true,
+  "N10_fabricated_actor_rejected_at_the_join": true,
+  "N11_process_local_not_persistent": true,
+  "N12_no_certified_boundary_changed": true
+ },
+ "integrity": {
+  "run_changed_nothing": true,
+  "surfaces_equal_baseline": {
+   "certified:docs/architecture/p11": true,
+   "certified:docs/architecture/p12": true,
+   "certified:docs/architecture/p13": true,
+   "certified:docs/architecture/platform-organization": true,
+   "certified:docs/operations": true,
+   "operational:agency/operations": true,
+   "agent_registry:*.instance.json": true,
+   "capability_catalog:docs/architecture/organization": true,
+   "candidates:docs/architecture/candidates": true,
+   "agency_records:docs/architecture/agency/*.md": false,
+   "code:tools": true,
+   "code:native_core": true,
+   "code:consumers": true,
+   "code:api": true,
+   "code:fullstack": true,
+   "deployment:vercel.json": true,
+   "root_entry_points:*.py": true,
+   "governance:docs/governance (except Register and the S-6 / TD acts)": true,
+   "p13:tools/p13": true,
+   "p13:envelopes": true,
+   "state_readers": true,
+   "p12_state:tools/p12_*.py": true,
+   "runtime_trace_code:native_core/core/runtime": true,
+   "runtime_trace_code:native_core/core/trace": true,
+   "runtime_trace_code:native_core/core/agent": true,
+   "runtime_trace_code:native_core/core/workflow": true,
+   "runtime_trace_code:native_core/core/memory": true,
+   "runtime_trace_code:tools+consumers": true,
+   "store:docs/architecture/p12/trace-stores": true,
+   "store:docs/architecture/p12/execution-provenance": true,
+   "store:docs/operations/runtime-observations": true,
+   "store:docs/operations/p13/trace": true
+  },
+  "register_only_appended": true,
+  "integrity_faults": [],
+  "git_status_certified": "(clean)"
+ },
+ "surfaces_changed_vs_baseline": [],
+ "all_ok": true
+}

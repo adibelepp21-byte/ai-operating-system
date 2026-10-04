@@ -10719,3 +10719,25 @@ Recorded by Claude Code under the Submission & S4 Resume Instruction (`§117`).
 | **Evidence correction (`§7`)** | `evidence/EVIDENCE-CORRECTION-2026-10-03-SCRIPT-HASHES.md`. The S-6, TD and FR-1-baseline outputs were reproduced by the current scripts in worktrees at their original states (`a7a0860`; `a046f9c`; `a046f9c` + FD-TD-001 act + Register through `§157`).<br>• **0 differences** in any finding.<br>• Originals preserved; corrected outputs added as `*.CORRECTED.json`.<br>• Also found: `AGENCY-E2E-SANDBOX-2026-10-02.json` names a script never in the repository (pre-existing provenance limit; reported, not altered) |
 | **Unchanged** | P12-W2 ownership, semantics and source population; F-17; P13 Blueprint; W3; P12 self-model; authority; deployment PAUSED. No P13 cycle was run (`docs/operations/p13` untouched) |
 | **State** | **FR-1 COMPLETE / VERIFIED** · live ledger → P12-W2 → P13 connected and independently measured |
+
+## 161. FR-2 Governed Execution → Runtime / Trace Discovery Gate — Receipt (2026-10-04)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-FR2-RUNTIME-TRACE-DISCOVERY.md` (verbatim; content sha256 `ddacbde606f47007f0dbc7d0385b2306715e5095fcbd36a4bb7fdfbed8e64853`). Founder (Moriarty), 2026-10-04. Predecessor FR-1 (`§160`). READ-ONLY discovery of whether governed Agency execution enters the Runtime and produces a reconstructable Trace. Construction prohibited; no Founder decision required to begin. No Act, Micro-Act or Founder Decision created |
+| **Baseline** | `docs/architecture/agency/evidence/FR2-BASELINE-2026-10-04.json` at `eae77bc`, captured before discovery |
+| **State** | RECEIVED · result recorded below when the gate reaches its exhaustion condition |
+
+## 162. FR-2 Governed Execution → Runtime / Trace Discovery Gate — Result (2026-10-04)
+
+| Field | Value |
+|---|---|
+| **Directive** | `acts/DIR-AIOS-AGENCY-FR2-RUNTIME-TRACE-DISCOVERY.md` (`§161`) |
+| **Record** | `docs/architecture/agency/FR2-RUNTIME-TRACE-DISCOVERY-RECORD-2026-10-04.md` (sections A–U) |
+| **Evidence** | `evidence/fr2_baseline.py` → `FR2-BASELINE-2026-10-04.json` (captured before discovery at `eae77bc`).<br>`evidence/fr2_runtime_trace_discovery.py` (sha256 `c861146f…`) → `FR2-RUNTIME-TRACE-DISCOVERY-2026-10-04.json` (**all_ok**; integrity faults 0; certified git status clean; only the declared `agency_records` surface changed, which is this record). P12-W2 is loaded by `importlib`, so the evidence tool is not a consumer |
+| **Finding** | • Agency W4 execution (`W4Executor` → caller `perform` → `persist_evidence`) does **not** enter the Runtime and produces **no** Trace: 0 records, no `runtime_id` in any record.<br>• Runtime, Execution Layer, `TracedAction`, `ExecutionManifest` and the chain reader exist and suffice. On a real Agency grant, a temp-only counterfactual gives **7 / 7 JOINED**. The resident reader gives WORK→DELEGATION and DELEGATION→EXECUTION **DANGLING**, because `DELEGATION_DIRS` and every trace / manifest root are certified-only.<br>• Instance, delegation, result, verification and CEO decision are bound DIRECT by the evidence file. Runtime and Trace links are MISSING |
+| **Gap register** | • G1 R3: Agency bypasses Runtime / Trace.<br>• G2 **R8**: certified-only reader roots and populations.<br>• G3 R5: process-local runtime state, `execution_sequence` lost.<br>• G4 R4: `participate` traces the definition key.<br>• G5 R6: P13 sees certified traces only.<br>• G6 R4: Trace status reflects participation, not outcome.<br>• G7 R4: escalation status has no producer.<br>• G8 R4: fabricated actor accepted at write, rejected at join.<br>**No R9 (no true gap).** Unknowns U1 (P13 trace-source reading) and U2 (hosting cost) stated |
+| **Negative controls** | N1–N12 PASS |
+| **Disposition** | **FR-2 — FOUNDER DECISION REQUIRED.** The smallest integration frontier is defined (record `§R`). It extends certified readers and populations, which is a `§28` certified boundary, Founder-reserved under FDR-G1 `§9`. **FQ-FR2-1** (record `§U.3`): A *(recommended)* live + certified reader extension on the GOAL-V2-002 precedent, with Agency W4 Runtime-hosted and Trace / manifest-bound through existing mechanisms; B certified successor change; C write-only traces; D defer |
+| **Unchanged** | Nothing constructed or wired. No Agent Instance, delegation or production execution. `native_core`, the Execution Contract, P12 / P13 certified semantics, governance authority, deployment (PAUSED) and certified evidence are all byte-identical. No Act, Micro-Act or Founder Decision created |
+| **State** | **FR-2 DISCOVERY EXHAUSTED → FOUNDER DECISION REQUIRED (FQ-FR2-1)** |
