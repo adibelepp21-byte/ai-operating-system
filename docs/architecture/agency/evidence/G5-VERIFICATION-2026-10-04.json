@@ -1,0 +1,142 @@
+{
+ "checked_at": "2026-10-04T10:31:01.421991+00:00",
+ "script_sha256": "f169be515250786da6291d71b2f92e092d6825851b5c9af89c25a42e1f32cc3e",
+ "head": "82ebe1777ebd7142d3ee412cf11d1299c838b94c",
+ "baseline_head": "f1014b96f0a47802d188475f0f06b5b64d723310",
+ "section_8": {
+  "1_runtime_execution_intact": true,
+  "2_trace_intact": true,
+  "3_manifest_intact": true,
+  "4_p12_w2_observes_through_its_projection": true,
+  "5_p13_receives_through_p12_w2": true,
+  "6_p13_reads_no_agency_store": true,
+  "7_live_and_certified_distinguishable": true,
+  "8_historical_not_current": true,
+  "9_certified_populations_intact": true,
+  "10_fr1_state_observation_unchanged": true,
+  "11_provenance_seven_of_seven": true,
+  "12_fresh_process": true,
+  "13_consumer_measurement_recognizes_p13": true,
+  "14_no_second_execution_state_authority": true
+ },
+ "negative_controls": {
+  "N1_p13_no_direct_trace": true,
+  "N2_p13_no_direct_runtime_store": true,
+  "N3_no_fabrication": true,
+  "N4_historical_not_current": true,
+  "N5_result_without_runtime_not_runtime_execution": true,
+  "N6_runtime_without_provenance_not_agency": true,
+  "N7_certified_not_mutated": true,
+  "N8_live_not_in_certified": true,
+  "N9_no_second_authority": true,
+  "N10_fr1_unchanged": true
+ },
+ "projection": {
+  "execution.provenance": {
+   "live": {
+    "active": [],
+    "completed": [
+     "agency-2adef08b8efa4549-verify-runtime-path-mechanisms"
+    ],
+    "executions": [
+     {
+      "agent_instance": "engineering-intelligence-instance-001",
+      "completed": true,
+      "delegation_id": "2adef08b8efa4549",
+      "edges": {
+       "DECISION→WORK": "JOINED",
+       "DELEGATION→EXECUTION": "JOINED",
+       "EXECUTION→OBSERVATION": "JOINED",
+       "INTENT→DECISION": "JOINED",
+       "OBSERVATION→VERIFICATION": "JOINED",
+       "VERIFICATION→EVIDENCE": "JOINED",
+       "WORK→DELEGATION": "JOINED"
+      },
+      "execution_id": "agency-2adef08b8efa4549-verify-runtime-path-mechanisms",
+      "manifest": "agency-2adef08b8efa4549-verify-runtime-path-mechanisms.manifest.json",
+      "origin": "live",
+      "provenance": "JOINED",
+      "result": {
+       "available": true,
+       "status": "success"
+      },
+      "runtime": {
+       "classification": "TERMINATED",
+       "observed": true,
+       "runtime_id": "agency-runtime-2adef08b8efa4549",
+       "state": "RuntimeState.STOPPED"
+      },
+      "temporal": "HISTORICAL",
+      "trace": {
+       "joined": true,
+       "ordinal": 0,
+       "store": "agency-w4-execution"
+      },
+      "valid_agency_execution": true
+     }
+    ],
+    "origin": "live",
+    "read_paths": [
+     "docs/operations/execution-provenance",
+     "docs/operations/trace-stores",
+     "docs/operations/runtime-observations"
+    ],
+    "unbound_live_runtimes": []
+   },
+   "manifests": 5,
+   "origin": "certified-p12",
+   "statuses": [
+    "failure",
+    "success"
+   ]
+  },
+  "execution.recorded": {
+   "failures": 7,
+   "live": {
+    "failures": 0,
+    "origin": "live",
+    "read_path": "docs/operations/trace-stores",
+    "records": 1,
+    "store_names": [
+     "agency-w4-execution"
+    ],
+    "stores": 1
+   },
+   "origin": "certified-p12",
+   "records": 16,
+   "stores": 7
+  }
+ },
+ "p13_fact": {
+  "status": "VERIFIED",
+  "source": "P12-W2 execution.provenance (CURRENT): docs/architecture/p12/execution-provenance (5 certified manifest(s); 1 live execution(s))"
+ },
+ "fresh_process": [
+  "VERIFIED",
+  "P12-W2 execution.provenance (CURRENT): docs/architecture/p12/execution-provenance (5 certified manifest(s); 1 live execution(s))",
+  "JOINED",
+  "HISTORICAL",
+  true
+ ],
+ "changed_code": [
+  "tools/p12_operational_state.py",
+  "tools/p13/state.py",
+  "tools/tests/test_g5_execution_observability.py"
+ ],
+ "surfaces_changed_vs_baseline": [
+  "code:tools",
+  "p12_state:tools/p12_*.py",
+  "p13:tools/p13",
+  "state_readers"
+ ],
+ "unexpected_surface_changes": [],
+ "run_changed_nothing": true,
+ "integrity_faults": [],
+ "git_status_certified": "(clean)",
+ "residual_open": [
+  "G3 Runtime state persistence",
+  "G6 Trace status semantics",
+  "G7 Trace escalation production"
+ ],
+ "all_ok": true
+}
