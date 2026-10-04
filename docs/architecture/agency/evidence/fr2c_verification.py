@@ -129,7 +129,7 @@ def bypass_probe():
                 "perform_calls": len(calls)}
 
 
-source = (REPO / "consumers/delegated_step.py").read_text(encoding="utf-8")
+source = (REPO / "agency_runtime_execution.py").read_text(encoding="utf-8")
 authority_side = (REPO / "tools/w4_runtime_execution.py").read_text(encoding="utf-8")
 perform_sites = sum(1 for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call)
                     and isinstance(n.func, ast.Attribute) and n.func.attr == "_perform") \
@@ -312,9 +312,9 @@ result = {
 }
 expected_changes = {"agency_records:docs/architecture/agency/*.md", "operational:agency/operations",
                     "code:tools", "p12_state:tools/p12_*.py",
-                    # The Agent side (`consumers/delegated_step.py`) and the root
-                    # binding (`agency_runtime_execution.py`): new files only.
-                    "code:consumers", "root_entry_points:*.py",
+                    # The Agent side and its binding: one new root module,
+                    # `agency_runtime_execution.py`, outside the served tree.
+                    "root_entry_points:*.py",
                     "runtime_trace_code:tools+consumers", "store:docs/operations/runtime-observations",
                     "certified:docs/operations"}
 result["unexpected_surface_changes"] = sorted(set(data_changes) - expected_changes)

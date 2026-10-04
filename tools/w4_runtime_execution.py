@@ -11,7 +11,7 @@ Agent Instance ── Delegation ── W4Executor (grant + instance re-checked 
 Runtime (RUNNING) ─► create_execution_layer ─► Execution (runtime_id, sequence)
                                      │
           participant.participate(execution)               ← Agent / ExecutionConsumer
-          (consumers/delegated_step.py DelegatedStep, injected)
+          (agency_runtime_execution.py DelegatedStep, injected)
                                      │
                       TracedAction(writer, agent_instance=<grant recipient>,
                                    runtime=<the Execution's runtime>)
@@ -22,10 +22,10 @@ Runtime (RUNNING) ─► create_execution_layer ─► Execution (runtime_id, se
 **Two regions, one wiring.** `tools/` may not import `consumers/`, and the
 consumer region may not import `tools/` (both asserted by AST). So this module
 holds the authority side and takes the participant **by injection**: a factory
-returning a native-core `Agent`. The resident one is
-`consumers.delegated_step.DelegatedStep`, bound at the repository root by
-`agency_runtime_execution.py`, the way `w4_first_execution.py` binds W4's
-performer. This module never names the implementation that does the work.
+returning a native-core `Agent`. The resident one, `DelegatedStep`, is defined
+and bound at the repository root in `agency_runtime_execution.py` (it uses
+`consumers.observation.TracedAction`), the way `w4_first_execution.py` binds
+W4's performer. This module never names the implementation that does the work.
 
 **The boundary (`§3`).** The step enters as an `Agent`, which is an
 `ExecutionConsumer`, through the `Execution` the Runtime issued. Nothing here

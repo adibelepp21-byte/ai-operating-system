@@ -198,7 +198,7 @@ class NoBypass(_Sandbox):
         tools_tree = ast.parse((REPO / "tools/w4_runtime_execution.py").read_text(encoding="utf-8"))
         self.assertFalse([n for n in ast.walk(tools_tree) if isinstance(n, ast.Call)
                           and isinstance(n.func, ast.Name) and n.func.id == "perform"])
-        agent_tree = ast.parse((REPO / "consumers/delegated_step.py").read_text(encoding="utf-8"))
+        agent_tree = ast.parse((REPO / "agency_runtime_execution.py").read_text(encoding="utf-8"))
         calls = [n for n in ast.walk(agent_tree) if isinstance(n, ast.Call)
                  and isinstance(n.func, ast.Attribute) and n.func.attr == "_perform"]
         self.assertEqual(len(calls), 1)
@@ -207,9 +207,22 @@ class NoBypass(_Sandbox):
         self.assertEqual(len(withs), 1)
         self.assertIn(calls[0], list(ast.walk(withs[0])))
 
+    def test_the_served_tree_is_unchanged(self):
+        """`FD-FR2-001 §11`: deployment stays paused, so FR-2 adds nothing the
+        deployment serves (`fullstack/readiness.py` `SERVED_PATHS`)."""
+        from fullstack.readiness import SERVED_PATHS
+        added = subprocess.run(["git", "ls-files", "--others", "--exclude-standard", "--",
+                                *SERVED_PATHS], cwd=REPO, capture_output=True,
+                               text=True).stdout.split()
+        self.assertEqual(added, [])
+        changed = subprocess.run(["git", "diff", "--name-only", "2571089", "--",
+                                  *SERVED_PATHS], cwd=REPO, capture_output=True,
+                                 text=True).stdout.split()
+        self.assertEqual(changed, [])
+        self.assertNotIn("agency_runtime_execution.py", " ".join(SERVED_PATHS))
+
     def test_the_two_regions_do_not_import_each_other(self):
-        for relative, forbidden in (("tools/w4_runtime_execution.py", "consumers"),
-                                    ("consumers/delegated_step.py", "tools")):
+        for relative, forbidden in (("tools/w4_runtime_execution.py", "consumers"),):
             tree = ast.parse((REPO / relative).read_text(encoding="utf-8"))
             modules = {n.module for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)} \
                 | {a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
@@ -389,8 +402,7 @@ class LiveCertifiedSeparation(unittest.TestCase):
 class NoHiddenConsumer(unittest.TestCase):
     """`§10` / `§12`: no hidden P12-W2 or P13 dependency, no second state authority."""
 
-    MODULES = ("tools/w4_runtime_execution.py", "consumers/delegated_step.py",
-               "agency_runtime_execution.py",
+    MODULES = ("tools/w4_runtime_execution.py", "agency_runtime_execution.py",
                "docs/architecture/agency/evidence/fr2_runtime_execution_run.py")
 
     def test_the_integration_imports_nothing_from_p12_w2_or_p13(self):
