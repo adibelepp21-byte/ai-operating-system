@@ -52,6 +52,14 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 
 # `§14` — the distinctions state must preserve. Absence is never a negative.
 CURRENT = "CURRENT"
+#: `FD-FR2-002 §5`: an execution that ran and whose Runtime is no longer live.
+#: A per-execution qualifier inside the execution projections, not an entry
+#: status: the entry is still CURRENT as a reading.
+HISTORICAL = "HISTORICAL"
+#: Where a population was read from (`FD-FR2-002 §5`), named as the runtime
+#: observation surface names them.
+CERTIFIED_ORIGIN = "certified-p12"
+LIVE_ORIGIN = "live"
 STALE = "STALE"
 UNKNOWN = "UNKNOWN"
 CONFLICTING = "CONFLICTING"
@@ -238,30 +246,141 @@ def _project_runtime(source: StateSource) -> StateEntry:
 
 
 def _project_execution(source: StateSource) -> StateEntry:
+    """Durable Trace records: P12's certified population, and the live one beside it.
+
+    The top-level counts are the certified stores, exactly as certified.
+    `FD-FR2-002` adds the live stores (`docs/operations/trace-stores`) under
+    ``live``, read through the same registry and labelled with their origin;
+    the two populations are never summed.
+    """
     from tools import p12_trace_registry as traces
     summary = traces.what_has_run(traces.STORE_ROOT)
     if summary["stores"] == 0:
         return _entry(source, UNKNOWN, None, "no durable Trace store exists",
                       "trace registry discovery")
     failures = traces.what_has_failed(traces.STORE_ROOT)
+    live = traces.what_has_run(traces.LIVE_STORE_ROOT)
     return _entry(
         source, CURRENT,
         {"records": summary["records"], "stores": summary["stores"],
-         "failures": len(failures)},
-        f"{summary['stores']} store(s)", "durable Trace records read back")
+         "failures": len(failures), "origin": CERTIFIED_ORIGIN,
+         "live": {"origin": LIVE_ORIGIN,
+                  "read_path": _relative(traces.LIVE_STORE_ROOT),
+                  "records": live["records"], "stores": live["stores"],
+                  "failures": len(traces.what_has_failed(traces.LIVE_STORE_ROOT)),
+                  "store_names": list(live["store_names"])}},
+        f"{summary['stores']} certified store(s); {live['stores']} live",
+        "durable Trace records read back, per origin")
 
 
 def _project_provenance(source: StateSource) -> StateEntry:
+    """Execution provenance: P12's certified manifests, and live Agency executions.
+
+    The top-level counts are the certified manifests, exactly as certified.
+    `FD-FR2-002` adds ``live``: each Agency execution recorded since P12 was
+    certified, assembled from what its owners already persist and read through
+    their own readers (`§2`: P12-W2 integrates; it owns neither Runtime nor
+    Trace). See `_live_executions`.
+    """
     from tools import p12_execution_provenance as prov
     found = prov.manifests()
     if not found:
         return _entry(source, UNKNOWN, None, "no manifest is persisted",
                       "manifest discovery")
+    live = _live_executions()
     return _entry(
         source, CURRENT,
         {"manifests": len(found),
-         "statuses": sorted({m.get("status") for m in found})},
-        f"{len(found)} manifest(s)", "execution provenance manifests read back")
+         "statuses": sorted({m.get("status") for m in found}),
+         "origin": CERTIFIED_ORIGIN, "live": live},
+        f"{len(found)} certified manifest(s); {len(live['executions'])} live execution(s)",
+        "execution provenance manifests read back, per origin; live executions "
+        "joined by the independent chain reader")
+
+
+def _relative(path: Path) -> str:
+    """A read path as the declarations write them: repository-relative."""
+    path = Path(path)
+    return path.relative_to(REPO_ROOT).as_posix() if path.is_relative_to(REPO_ROOT) \
+        else path.as_posix()
+
+
+def _live_executions() -> dict:
+    """`FD-FR2-002 §4` — what is observable about live Agency execution.
+
+    **Nothing is asserted that its owner has not persisted.** An execution is
+    listed only if a live `ExecutionManifest` records it (N3: no manifest, no
+    execution). Each one is then qualified by three readers this surface does
+    not own:
+
+    * the **independent chain reader** (`verify_live`) decides whether its
+      provenance joins — instance, grant, Trace, Runtime observation, evidence.
+      A chain that does not join is listed as such and is **not** a valid
+      Agency execution (N5, N6);
+    * the **runtime observation reader** gives the Runtime's last observed state
+      and its liveness classification;
+    * the manifest itself gives identity, instance, grant, Trace position,
+      result and outcome.
+
+    **Current versus historical** follows the Runtime's own classification: an
+    execution whose Runtime is observed LIVE is CURRENT; any other is
+    HISTORICAL, and it is COMPLETED only when its Runtime is TERMINATED and
+    its chain joins. A live Runtime that no manifest names is reported apart, as
+    an unbound Runtime, never as an Agency execution (N6).
+
+    The delegation's current disposition is not repeated here: it belongs to
+    ``delegation.granted`` (`FD-TD-001`), and two readings of it would be two
+    authorities.
+    """
+    from tools import p12_execution_chain_reader as chain
+    from tools import p12_execution_provenance as prov
+    from tools import p12_runtime_observation as obs
+    manifests = {m.get("execution_id"): m
+                 for m in prov.manifests(prov.LIVE_MANIFEST_ROOT)}
+    verdicts = {v.execution_id: v for v in chain.verify_live()}
+    observed = {o.runtime_id: o for o in obs.observations(obs.OBSERVATION_ROOT)
+                if o.origin == obs.LIVE_ORIGIN}
+    executions = []
+    for execution_id, manifest in sorted(manifests.items()):
+        verdict = verdicts.get(execution_id)
+        edges = ({f"{e.source}→{e.target}": e.status for e in verdict.edges}
+                 if verdict else {})
+        joined = bool(verdict and verdict.joined)
+        runtime = observed.get(manifest.get("runtime_id"))
+        classification = runtime.classification if runtime else None
+        executions.append({
+            "execution_id": execution_id,
+            "origin": LIVE_ORIGIN,
+            "agent_instance": manifest.get("agent_instance"),
+            "delegation_id": manifest.get("delegation_id"),
+            "runtime": {"runtime_id": manifest.get("runtime_id"),
+                        "observed": runtime is not None,
+                        "state": runtime.state if runtime else None,
+                        "classification": classification},
+            "trace": {"store": manifest.get("trace_store"),
+                      "ordinal": manifest.get("trace_ordinal"),
+                      "joined": edges.get("DELEGATION→EXECUTION") == chain.JOINED},
+            "manifest": f"{execution_id}{prov.MANIFEST_SUFFIX}",
+            "result": {"available": manifest.get("outcome") is not None,
+                       "status": manifest.get("status")},
+            "provenance": chain.JOINED if joined else chain.DANGLING,
+            "edges": edges,
+            "valid_agency_execution": joined,
+            "temporal": CURRENT if classification == obs.LIVE else HISTORICAL,
+            "completed": joined and classification == obs.TERMINATED,
+        })
+    bound = {m.get("runtime_id") for m in manifests.values()}
+    return {
+        "origin": LIVE_ORIGIN,
+        "read_paths": [_relative(prov.LIVE_MANIFEST_ROOT), _relative(chain.LIVE_TRACE_STORES),
+                       _relative(obs.OBSERVATION_ROOT)],
+        "executions": executions,
+        "active": [e["execution_id"] for e in executions
+                   if e["temporal"] == CURRENT and e["valid_agency_execution"]],
+        "completed": [e["execution_id"] for e in executions if e["completed"]],
+        "unbound_live_runtimes": sorted(rid for rid, o in observed.items()
+                                        if rid not in bound and o.classification == obs.LIVE),
+    }
 
 
 #: One reading of the live ledger per `project()` pass, shared by the two

@@ -249,9 +249,13 @@ S_OPS_KEYS = {"state": "s_ops.S-OPS-01.state", "phase": "s_ops.S-OPS-01.phase",
               "window": "s_ops.S-OPS-01.window"}
 
 #: The P12-W2 entries P13 observes: the delegation lifecycle and escalations,
-#: each carrying both the historical and the current reading (`FD-TD-001`).
+#: each carrying both the historical and the current reading (`FD-TD-001`),
+#: and execution provenance, which carries P12's certified manifests and the
+#: live Agency executions beside them (`FD-FR2-002`). P13 reads Agency
+#: execution only here, through P12-W2; it never opens a Trace or Runtime store.
 OPERATIONAL_STATE_KEYS = {"delegation.granted": "operational_state.delegations",
-                          "escalation.raised": "operational_state.escalations"}
+                          "escalation.raised": "operational_state.escalations",
+                          "execution.provenance": "operational_state.executions"}
 
 SOURCES: Tuple[Source, ...] = (
     Source("memory", "Memory via MemoryReader over Trace (P12 stores + P13 store)",
