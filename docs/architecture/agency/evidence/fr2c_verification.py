@@ -57,7 +57,10 @@ from tools import w4_runtime_execution as rx  # noqa: E402
 from tools.agent_instance_registry import AgentInstanceRegistry  # noqa: E402
 from tools.planning import AuthorityProvenance, PlanStep  # noqa: E402
 from tools.w4_first_run import FD_RECORD, SELECTED_DEFINITION  # noqa: E402
-import agency_runtime_execution as arx  # noqa: E402  -- the root binding of both regions
+# The root binding of both regions, read by name (the disclosed verifier
+# pattern): a static import from here would count this evidence tool as the
+# system reaching a runtime in `p12_runtime_verification.reachability()`.
+arx = importlib.import_module("agency_runtime_execution")
 
 grant = json.loads((S4 / f"{GRANT}.delegation.json").read_text(encoding="utf-8"))
 evidence = json.loads((S4 / f"{GRANT}.evidence.json").read_text(encoding="utf-8"))
