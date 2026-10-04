@@ -184,7 +184,8 @@ No reader merges live and certified authority. Domain ownership is unchanged. Th
 | Neighbouring suites (P12 chain, trace registry, certification integrity, certified-write closure, FR-1, MR-S5-1, W4 plan outcome, Founder goal, E12 measurement, integration graph, state verification, consumer measurement, CG7, guard, self-model) | OK |
 | `test_escalation_subject_integrity` | 41 OK, with its population extended by one (`§I.1`) |
 | `test_p11_governance_boundary` | 26 OK, with its declared surface set extended by one (`§I.1`) |
-| Full regression | see Register `§164` |
+| `test_e11_measurement_currency`, `test_p12_runtime_verification` | at HEAD: 2 pre-existing failures (`aios_corpus_health_run.py` symbol check); OK (`§I.1` items 5–6) |
+| **Complete regression** | **95 suites, 3582 tests**: `tools/tests` 91 / 2092; `consumers/tests` 276 OK; `tools/bounded_exception/tests` 29 OK; `fullstack/tests` 384; `native_core` 801 OK.<br>• Comparable to FR-1's figure (`tools` + `consumers`, 2332): **2368 = 2332 + 36 FR-2 tests**.<br>• The only failures at HEAD are pre-existing, each also failing at the construction baseline `2571089`:<br>  – `test_e11_measurement_currency`: 2. There were 4 at baseline; two are masked by import order, not fixed;<br>  – `test_p12_governance_evidence_verification`: 1;<br>  – `fullstack` NC-04, NC-05, NC-19: 3 |
 
 ### I.1 What the regression caught
 
@@ -204,7 +205,15 @@ The complete regression, run across `consumers/tests` and `fullstack/tests` as w
    - the Agent side (`DelegatedStep`, which uses `TracedAction`) lives outside both regions, at the repository root (`agency_runtime_execution.py`), as `w4_first_execution.py` and `p12_w4_integrated_execution.py` do.
 2. **The served tree.** The first placement of `DelegatedStep` was `consumers/delegated_step.py`. `fullstack/readiness.py` counts every module under `consumers/` as served code, so that file made the paused deployment's recorded Preview verification stale. The release gate then reported BLOCKED pending live re-verification (`fullstack` NC-16 / 18 / 20). `FD-FR2-001 §11` keeps deployment paused, and FR-2 changes nothing the deployment serves. The file was removed, the class moved to the root binding, and a test now asserts that the served tree is unchanged since the construction baseline.
 
-After all four fixes, every control named here passes. The only failures left are the pre-existing ones (`§I`).
+Two more came from the root binding:
+
+5. **Entry-point currency.** `test_e11_measurement_currency` treats every root `*.py` as a region-joining entry point, so it must define `main()`, and its imports from `tools` / `consumers` must still resolve.
+   - `agency_runtime_execution.py` now has a read-only `main()`: it reports the live Agency execution chains and executes nothing.
+   - It imports `from tools.w4_runtime_execution import …`, the form the check can verify.
+   - The suite's remaining failures are its pre-existing ones. There are 2 now against 4 at the baseline only because importing this module happens to load `tools.p12_runtime_observation` first. That masks two of the four; it does not fix them.
+6. **Reachability.** `p12_runtime_verification.reachability()` counts any non-test, non-root importer of a root entry point as *the system reaching a runtime*. My verification script imported the binding statically and moved that count from 1 to 2. An evidence tool must not enter the measurement it reads (the FR-1 lesson), so it now loads the binding by name. The count is 1 again.
+
+After all six fixes, every control named here passes. The only failures left are the pre-existing ones (`§I`).
 
 The one authorized execution (`§C`) ran a single in-scope step through `execute_step`, as MR-S5-1 did, and raised no refusal. It ran with the first layout (`tools/w4_runtime_execution.py` at `521a976`, holding `DelegatedStep` itself). The relayout moved that class unchanged in behaviour, and the mutation suite and verification were re-run on the final layout. The run's records are unchanged. Its script is kept byte-identical as the executed artifact. It refuses a second run before reaching any API it calls, so it is never run against the new layout.
 
