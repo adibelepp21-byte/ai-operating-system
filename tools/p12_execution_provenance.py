@@ -48,6 +48,12 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 #: a manifest is not a Trace record.
 MANIFEST_ROOT = REPO_ROOT / "docs/architecture/p12/execution-provenance"
 
+#: Where a manifest of a **new** execution is written (`FD-FR2-001`;
+#: `GOAL-V2-002` W-1): the live root, outside every phase directory. Callers
+#: name it; `record()` and `manifests()` keep the certified default, so the
+#: certified population is unchanged and `record()` still refuses it.
+LIVE_MANIFEST_ROOT = REPO_ROOT / "docs/operations/execution-provenance"
+
 MANIFEST_SUFFIX = ".manifest.json"
 
 #: `§29`'s twelve, in its order. Every manifest must resolve all twelve or fail

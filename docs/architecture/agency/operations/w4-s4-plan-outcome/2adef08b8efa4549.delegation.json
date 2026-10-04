@@ -1,0 +1,29 @@
+{
+  "delegation_id": "2adef08b8efa4549",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "recipient_instance": "engineering-intelligence-instance-001",
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "objective": "Establish that tools/w4_runtime_execution.py routes delegated work through the existing Execution Contract, Execution Layer, Runtime, runtime observation, TracedAction and ExecutionManifest, reporting each mechanism satisfied or not.",
+  "capability_scope": [
+    "engineering-intelligence"
+  ],
+  "work_scope": [
+    "verify-runtime-path-mechanisms"
+  ],
+  "lifecycle_boundary": "one execution of plan founder-fr2-runtime-trace-plan-0",
+  "resource_boundary": "read-only access to tools/w4_runtime_execution.py; nothing written but the evidence",
+  "output_expectation": "one conformance result per named mechanism",
+  "verification_requirement": "every named mechanism reported, each satisfied",
+  "escalation_condition": "any step outside the delegated work scope, a revoked delegation, or a retired instance",
+  "accountable_party": "Claude Code / AIOS Co-Founder",
+  "termination_condition": "on completion of the bound plan, or revocation",
+  "status": "ACTIVE",
+  "issued_at": "2026-10-04T06:10:09.029550+00:00",
+  "authority_chain": [
+    "delegation:2adef08b8efa4549",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ]
+}

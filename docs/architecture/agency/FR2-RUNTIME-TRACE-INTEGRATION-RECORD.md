@@ -1,0 +1,189 @@
+# FR-2 — Agency Runtime & Trace Integration (FD-FR2-001): Record
+
+| Field | Value |
+|---|---|
+| **Authority** | `docs/governance/acts/FD-FR2-001-AGENCY-RUNTIME-TRACE-INTEGRATION-AUTHORIZATION.md` (verbatim; content sha256 `054fb8a2a33add3724c365087309da61be137247832d8c17f0ba5d0cbb2ac38d`): FQ-FR2-1 = **Option A**, bounded FDR-G1 maintenance on the GOAL-V2-002 live / certified precedent. Register `§163` (decision), `§164` (this result). Predecessor: FR-2 discovery (`FR2-RUNTIME-TRACE-DISCOVERY-RECORD-2026-10-04.md`, `§161`–`§162`) |
+| **Result** | **FR-2 CONSTRUCTED / VERIFIED.** Delegated Agency work now runs through the existing path: Agent Instance → Delegation → `W4Executor` → Execution Contract (`Agent` / `ExecutionConsumer`) → Execution Layer → Runtime → `TracedAction` Trace + `ExecutionManifest` → Result → Verification → CEO Decision → Plan Outcome.<br>• One real execution (`2adef08b8efa4549`) took that path. The independent chain reader joins **7 / 7** edges for it from persisted bytes, in a fresh process.<br>• Every `FD-FR2-001 §12` item holds.<br>• No `§13` stop condition was reached |
+| **Evidence** | • Baseline: `evidence/fr2c_baseline.py` → `evidence/FR2C-BASELINE-2026-10-04.json`, captured at `2571089` before any code changed.<br>• The execution: `evidence/fr2_runtime_execution_run.py`; its result `operations/w4-s4-plan-outcome/fr2-runtime-run.result.json`.<br>• Verification: `evidence/fr2c_verification.py` → `evidence/FR2C-VERIFICATION-2026-10-04.json`, **all_ok**, fresh process.<br>• Tests: `tools/tests/test_fr2_runtime_trace_integration.py` (32; 8 code mutations, all caught) |
+| **Code changed** | • New: `tools/w4_runtime_execution.py` (the integration; no new subsystem).<br>• Extended, certified answers unchanged: `tools/p12_execution_chain_reader.py`, `tools/p12_trace_registry.py`, `tools/p12_execution_provenance.py`.<br>• `native_core`, `consumers`, P12-W2 and P13 are **unchanged** |
+
+---
+
+## A. What was built
+
+```text
+Agent Instance ── Delegation ── W4Executor (grant, instance and scope re-checked per step)
+                                     │
+Runtime (RUNNING) ─► create_execution_layer ─► Execution (runtime_id, execution_sequence)
+                                     │
+               DelegatedStep(Agent).participate(execution)        ← the Execution Contract
+                                     │
+                 TracedAction(writer, agent_instance=<grant recipient>, runtime=<Execution's runtime>)
+                                     │
+                                  perform(step)                    ← the delegated work
+```
+
+`tools/w4_runtime_execution.py` holds four parts. Each is a use of an existing mechanism:
+
+| Part | What it does | Existing mechanisms used |
+|---|---|---|
+| `DelegatedStep(Agent)` | Takes part in one `Execution`. Refuses anything that is not a real `Execution` whose Runtime is RUNNING. Runs `perform` inside a `TracedAction` under the grant's recipient instance and the Execution's runtime id | `Agent` (an `ExecutionConsumer`), `Execution` / `ExecutionContext`, `TracedAction`, `W4Executor.execute_step` |
+| `RuntimeHostedExecutor` | Builds a **fresh** `Execution` for each step, then lets the step participate. `execute_plan` keeps W4's rule: a refused step is recorded as an escalation and the remaining authorized work continues | `create_execution_layer` (RUNNING-only), `W4Executor` |
+| `hosted_runtime` | Starts a real Runtime through the composition roots. Publishes its observation at RUNNING and at STOPPED, under its own id | `build_default_infrastructure`, `create_runtime`, the Runtime lifecycle, `p12_runtime_observation.publish` |
+| `record_manifest` / `trace_writer` | Writes the existing `ExecutionManifest` (no new field) to the live root; opens a live Trace store. Both refuse a certified root through the guard | `ExecutionManifest`, `record()`, `TraceWriter`, `LocalAppendOnlyStorage`, `p12_certified_evidence_guard.guard` |
+
+**Boundary (`§3`).** The delegated step reaches the Runtime only through the `Execution` it is handed. It reads the runtime id and execution sequence from the Execution's context. The Runtime is driven only through its public lifecycle and the composition roots.
+
+**Identity (`§6`; G4).** The Trace actor is the grant's `recipient_instance`. `TracedAction` already takes the instance as an argument, so G4 is resolved **within the existing mechanism**. `EngineeringIntelligenceAgent.participate`, which traces its definition key, is not used on this path and was not changed. No Trace Domain Model field changed.
+
+**What is traced, and when.**
+- Authorization comes first. `W4Executor.execute_step` re-checks the grant, the instance and the scope. A refusal raises before any work is done, so work that did not happen writes no Trace.
+- Only `perform` runs inside the `TracedAction`, so the Trace record is the action itself.
+- Status uses the existing mapping: `perform` returns → `success`; `perform` raises → `failure`, and W4 records the same FAILURE.
+
+## B. Readers extended (`§5`)
+
+| Reader | Extension | Certified semantics |
+|---|---|---|
+| `p12_execution_chain_reader` | Adds a **live** population:<br>• `LIVE_MANIFESTS` / `LIVE_TRACE_STORES` / `LIVE_OBSERVATIONS` (`docs/operations/…`);<br>• the Agency grants, found by shape beneath `docs/architecture/agency/operations`.<br>`verify_manifest(payload, origin)` resolves each reference against **that population's roots only**. `verify_live()` / `live_summary()` are new, and every `ChainVerdict` carries its `origin` | `verify_all()` / `summary()` still read P12's certified manifests against certified records. They return the same verdicts as at baseline: 5 / 5 JOINED, edge details identical. A live manifest cannot be completed by certified records, nor a certified one by live records (both tested) |
+| `p12_trace_registry` | `LIVE_STORE_ROOT` (`docs/operations/trace-stores`); `discover_by_origin()` keeps both populations under their origins | Every function still defaults to `STORE_ROOT`. `what_has_run()` is identical to baseline (16 records); the live store is absent from it |
+| `p12_execution_provenance` | `LIVE_MANIFEST_ROOT` (`docs/operations/execution-provenance`) | `record()` and `manifests()` keep the certified default. `record()` still refuses the certified root |
+
+No reader merges live and certified authority. Domain ownership is unchanged. The chain reader still imports nothing from the writer, and the independent consumer verifier is untouched.
+
+## C. The authorized execution (`§2`, `§12` Provenance)
+
+`evidence/fr2_runtime_execution_run.py` runs once, in the S-4 operational root (as MR-S5-1 did). It runs under existing authority only:
+- the instance is registered in memory, and its record on disk is not written;
+- the grant is issued by the authorized delegator under `FD-P11-001 §9`;
+- the CEO decides under FD-AGENCY-001 Q4-A.
+
+| Link | Value | Persisted in |
+|---|---|---|
+| Founder Goal | `founder-fr2-runtime-trace`: *"The existing provenance model must be used rather than replaced."* A verbatim line of `FD-FR2-001 §2`, accepted by `founder_goal_refusal` | `planning.state.json` |
+| Plan | `founder-fr2-runtime-trace-plan-0` (CEO, V2 A01): the delegated step, then the CEO review | `planning.state.json` |
+| Plan Step | `verify-runtime-path-mechanisms` | the plan; the grant's `work_scope` |
+| Delegation | **`2adef08b8efa4549`**: delegator Claude Code / AIOS Co-Founder, `FD-P11-001 §9`, bound to the plan | `2adef08b8efa4549.delegation.json` |
+| Agent Instance | `engineering-intelligence-instance-001` (REGISTERED; definition `engineering-intelligence-agent` 1.0) | the root's instance record (unchanged) |
+| Execution | outcome `success`, *"8 of 8 mechanisms used"* | `2adef08b8efa4549.evidence.json` |
+| Runtime | `agency-runtime-2adef08b8efa4549`, `execution_sequence` 0. Observed RUNNING, then STOPPED (origin `live`) | evidence `runtime`; `docs/operations/runtime-observations/` |
+| Trace | `agency-w4-execution#0`: actor `engineering-intelligence-instance-001`, runtime `agency-runtime-2adef08b8efa4549`, status `success` | `docs/operations/trace-stores/agency-w4-execution/trace` |
+| Manifest | `agency-2adef08b8efa4549-verify-runtime-path-mechanisms`: goal, plan, grant, instance, Trace position, runtime, outcome | `docs/operations/execution-provenance/` |
+| Result | `EngineeringIntelligenceAgent.verify` against `tools/w4_runtime_execution.py`: 8 of 8 named mechanisms present | evidence `criteria`; manifest `outcome` |
+| Verification | `plan_completion` **met** | derived from the evidence |
+| CEO Decision | **ACCEPT** → COMPLETED (`FD-P11-001 §15.2`; V2 A09 / A11; operational, not Founder acceptance) | live ledger `w4-dispositions/…/2adef08b8efa4549.disposition.json` |
+| Plan Outcome | **completed**; decision faults none | `plan_outcome`; `fr2-runtime-run.result.json` |
+
+**The work was real.** The Engineering Intelligence instance checked that the integration module uses each existing mechanism the Goal names. The result was whatever the module carries; nothing chose it.
+
+**Dry run.** Before the real run, the whole script ran once in a throwaway git worktree, which was then removed. The repository was not touched.
+
+## D. `FD-FR2-001 §12` verification
+
+`evidence/FR2C-VERIFICATION-2026-10-04.json` (fresh process): **all_ok**.
+
+| `§12` area | Item | Result |
+|---|---|---|
+| Runtime | Agency work actually enters Runtime | ✔ runtime id + execution sequence in the evidence; live observation present |
+| | Runtime participation evidenced | ✔ Trace runtime = manifest runtime = observation subject |
+| | Direct function-call bypass prevented | ✔ exactly one `perform` call site, inside `participate`. A stopped Runtime refuses (`RuntimeNotRunning`); an imitation Execution is refused (`TypeError`); 0 `perform` calls |
+| Trace | Produced by the existing mechanism | ✔ `TracedAction` → `TraceWriter` |
+| | Identifies the actual Agent Instance | ✔ the grant recipient = the instance record; ≠ definition key |
+| | Associated with the execution | ✔ manifest and evidence name the same `store#ordinal` |
+| | Associated with the Runtime observation | ✔ |
+| Manifest | Produced by the existing mechanism | ✔ existing schema only, live root |
+| | Goal / Plan / Delegation / Instance / Execution / Trace reconstructable | ✔ chain reader JOINED |
+| Provenance | Founder Goal → Plan → Plan Step → Delegation → Agent Instance → Execution → Runtime → Trace → Result → Verification → CEO Decision → Plan Outcome | ✔ each link (`§C`), and the 7-edge chain in a **fresh process** |
+| Observability | Existing readers observe live Agency execution | ✔ `verify_live()`; `discover_by_origin()[live]` |
+| | Certified historical evidence remains distinguishable | ✔ certified chain verdicts, trace population and manifests identical to baseline; every certified verdict carries origin `certified-p12` |
+| | P13 does not acquire a second state authority | ✔ P13 and P12-W2 code unchanged; P12-W2 contract identical; its execution projections unchanged |
+
+## E. Negative controls (`§12`) and mutations
+
+| Control | Established by |
+|---|---|
+| Direct function execution cannot masquerade as Runtime execution | A plain `W4Executor` call writes no Trace. A manifest pointing at a Trace or observation that is not there DANGLES at EXECUTION and OBSERVATION |
+| A fabricated Agent Instance cannot pass provenance verification | A grant to an unregistered instance is refused at issue. The real chain with only the Trace actor replaced by `fabricated-instance-999` → DELEGATION→EXECUTION **DANGLING** |
+| An Agent Definition cannot substitute for the Agent Instance | The same, with the definition key `engineering-intelligence-agent` → **DANGLING** |
+| Hidden P13 / reader dependencies cannot bypass consumer measurement | The integration and the run script import nothing from P12-W2 or P13 (AST). Consumer measurement identical to baseline: 4 consumers, 5 importers, independent verifier 4 / 4 AGREE |
+| Certified historical evidence cannot be mutated | Certified surfaces byte-identical; integrity faults 0; certified git status clean. The trace writer and `record()` refuse certified roots, and the trace writer refuses **before** touching storage. The process-wide barrier also refuses independently |
+| Live data cannot silently become certified data | A live manifest verified as certified does not join. It is absent from `verify_all()`; `record()` refuses to write it as certified |
+
+**Mutations** (each applied in a throwaway worktree, then the FR-2 suite run):
+
+| # | Mutation | Result |
+|---|---|---|
+| M1 | Trace the definition key | 2 failures |
+| M2 | Call `perform` directly (bypass the Execution) | 6 errors |
+| M3 | Accept any object as the Execution | 1 error |
+| M4 | Resolve the live chain on certified roots | 3 failures |
+| M5 | Merge live into the certified population | 1 failure |
+| M6 | Trace writer without the guard | 1 failure, caught by the guard-order test. The first pass survived because the process-wide barrier refused the same write; the test was added so the guard itself is held |
+| M7 | Hidden P12-W2 import in the integration | 2 failures |
+| M8 | Trace refused steps too | 3 failures |
+
+## F. Data changes, separated from certified semantics
+
+| Changed (data, expected) | Detail |
+|---|---|
+| `docs/operations/trace-stores/`, `docs/operations/execution-provenance/` | new live roots, one record each |
+| `docs/operations/runtime-observations/` | one observation (`agency-runtime-2adef08b8efa4549`, STOPPED) |
+| `docs/operations/README.md` | the two live roots and the two-population rule, documented |
+| Agency S-4 root | the grant, the evidence, `planning.state.json` (the FR-2 goal and plan), `fr2-runtime-run.result.json`; the live-ledger disposition |
+| P12-W2 `runtime.observed` | Reads the live observation root since GOAL-V2-002. It now lists 11 observations, adding the Agency runtime as TERMINATED; nothing is LIVE and every earlier entry is unchanged. This is existing observability seeing the Agency runtime, through an existing interface |
+
+**Unchanged (certified semantics):**
+- certified roots `p10`, `p11`, `p12`, `p13`, `platform-organization`, byte-identical;
+- the chain reader's certified verdicts;
+- the trace registry's certified population;
+- certified manifests;
+- the P12-W2 contract (8 sources, provider `UNRESOLVED (F-17)`) and its execution projections;
+- P13;
+- consumer measurement;
+- `native_core`, `consumers`, the Execution Contract, `TraceRecord`, the `ExecutionManifest` schema, the chain-edge rules;
+- authority; deployment PAUSED.
+
+## G. Boundaries and stop conditions (`§11`, `§13`)
+
+| `§13` stop condition | Reached? |
+|---|---|
+| New Runtime / Trace subsystem | No: existing Runtime, Execution Layer, `TracedAction`, `TraceWriter` |
+| Execution Contract semantics change | No: `participate(execution) -> None`, unchanged |
+| Trace Domain Model field change | No |
+| Certified verifier semantics change | No: certified functions return the same answers; new answers are new functions with origin `live` |
+| Certified architecture or P13 certified architecture change | No |
+| Runtime ownership change | No: central; driven through its own lifecycle |
+| New authority | No: FD-P11-001 §9, FD-AGENCY-001 Q4-A, the existing instance |
+| Persistent execution identity needing a new mechanism | No. Persisted through existing writers: evidence `details`, manifest, observation |
+| Live / certified separation needing a certified-semantic change | No: two populations, separately resolved |
+
+`§11`: no new subsystem, capability, Agent or delegation authority. One grant was issued under the existing authority, for the Founder Goal quoted from this decision. Deployment remains PAUSED.
+
+## H. Gap register after construction
+
+| Gap | Before | Now |
+|---|---|---|
+| G1 (R3) Agency bypasses Runtime / Trace | open | **Closed for the authorized path.** `RuntimeHostedExecutor` is that path. The plain `W4Executor` remains for existing callers, and its runs cannot join a chain (`§E`) |
+| G2 (R8) certified-only readers | open | **Closed:** live population read beside the certified one, never merged |
+| G4 (R4) definition key traced | open | **Closed for the Agency path** within the existing mechanism. The native consumer is unchanged |
+| G8 fabricated actor accepted at write | open | The Agency path never writes for an unregistered or retired instance: W4 refuses first. `TracedAction` itself still accepts any actor; the join rejects it |
+| **G3** (R5) Runtime state / execution sequence | acknowledged | **Residual (`§14`).** The Runtime object is not reconstructable after its process. What persists is its observation and, in the evidence, its id and execution sequence, through existing writers. Runtime persistence was not redesigned |
+| **G5** (R6) P13 execution visibility | acknowledged | **Residual.** P13 sees Agency *state* (FR-1) but not Agency *execution*:<br>• P12-W2 `execution.recorded` / `execution.provenance` read the certified roots by their declared contract;<br>• P13's trace source reads the certified store.<br>Reaching P13 would change the P12-W2 declared read paths or the P13 source model, which `§10` / `§13` reserve. Not required by `§12`; returned as the next frontier |
+| **G6** (R4) Trace status vs verification | acknowledged | **Residual for the native consumer** (unchanged). On the Agency path the Trace status equals the W4 outcome by the existing mapping. The CEO's verification remains separate (`plan_completion`), as it should |
+| **G7** escalation status has no producer | acknowledged | **Residual.** `TracedAction` unchanged; a refused step is not traced and is recorded as an escalation in W4 evidence |
+
+## I. Tests and regression
+
+| Suite | Result |
+|---|---|
+| `test_fr2_runtime_trace_integration` | 32 OK: Runtime participation, no bypass, Trace identity, manifest and chain, live / certified separation, no hidden consumer, the authorized execution read back (including fresh process) |
+| Neighbouring suites (P12 chain, trace registry, certification integrity, certified-write closure, FR-1, MR-S5-1, W4 plan outcome, Founder goal, E12 measurement, integration graph, state verification, consumer measurement, CG7, guard, self-model) | OK |
+| Full regression | see Register `§164` |
+
+## J. Next frontier
+
+**FR-2 is complete within its authorization.** The frontier it leaves is G5: P13 observation of Agency **execution**. It would mean either:
+- (a) P12-W2's execution projections reading the live population beside the certified one, labelled, and P13 mapping them; or
+- (b) P13's trace source reading live stores.
+
+Both change a certified P12-W2 declared contract or the P13 source model. That is a Founder decision under `FD-FR2-001 §10` / `§13`; it was not taken here.

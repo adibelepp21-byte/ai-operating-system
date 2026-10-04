@@ -41,7 +41,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator, Tuple
+from typing import Dict, Iterator, Tuple
 
 from native_core.core.infrastructure import LocalAppendOnlyStorage
 from native_core.core.trace import TRACE_PARTITION, TraceReader, TraceRecord
@@ -53,6 +53,16 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 #: integration decision, not a Native Core one: the facility resolves nothing
 #: outside the `base_dir` it is handed.
 STORE_ROOT = REPO_ROOT / "docs/architecture/p12/trace-stores"
+
+#: Live trace stores (`FD-FR2-001`; `GOAL-V2-002` W-1). `FD-P12-006` certified
+#: `STORE_ROOT`, so an execution run since then is traced here, outside every
+#: phase directory. Every function below still defaults to `STORE_ROOT`, so the
+#: certified population each resident verifier counts is unchanged; the live one
+#: is read by passing this root, or through `discover_by_origin`.
+LIVE_STORE_ROOT = REPO_ROOT / "docs/operations/trace-stores"
+
+CERTIFIED_ORIGIN = "certified-p12"
+LIVE_ORIGIN = "live"
 
 
 @dataclass(frozen=True)
@@ -91,6 +101,17 @@ def discover(root: Path = STORE_ROOT) -> Tuple[TraceStore, ...]:
         if child.is_dir() and (child / TRACE_PARTITION).is_file()
     ]
     return tuple(found)
+
+
+def discover_by_origin() -> Dict[str, Tuple[TraceStore, ...]]:
+    """Both populations, each under its origin and never merged into one.
+
+    A store name may exist in both roots. They are different stores, and
+    keeping the origin is what stops a live record from reading as certified
+    history, or a certified record as a live execution.
+    """
+    return {CERTIFIED_ORIGIN: discover(STORE_ROOT),
+            LIVE_ORIGIN: discover(LIVE_STORE_ROOT)}
 
 
 def all_records(root: Path = STORE_ROOT) -> Iterator[Tuple[str, TraceRecord]]:

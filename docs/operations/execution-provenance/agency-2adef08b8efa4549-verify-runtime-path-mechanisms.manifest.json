@@ -1,0 +1,55 @@
+{
+  "agent_definition_version": "1.0",
+  "agent_instance": "engineering-intelligence-instance-001",
+  "authority_chain": [
+    "delegation:2adef08b8efa4549",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ],
+  "authority_instrument": "FD-P11-001 \u00a79",
+  "authority_record": "docs/governance/acts/FD-P11-001-W4-DELEGATION-AND-AGENT-INSTANCE-AUTHORIZATION.md",
+  "capability_scope": [
+    "engineering-intelligence"
+  ],
+  "contract_elements": [
+    "intent",
+    "decision",
+    "work",
+    "actor",
+    "authority",
+    "scope",
+    "execution",
+    "observation",
+    "verification",
+    "evidence",
+    "provenance",
+    "lifecycle"
+  ],
+  "delegation_id": "2adef08b8efa4549",
+  "delegation_status": "ACTIVE",
+  "delegator": "Claude Code / AIOS Co-Founder",
+  "execution_id": "agency-2adef08b8efa4549-verify-runtime-path-mechanisms",
+  "goal": "founder-fr2-runtime-trace",
+  "observation_kind": "runtime",
+  "observation_subject": "agency-runtime-2adef08b8efa4549",
+  "outcome": {
+    "criteria": 8,
+    "detail": "8 of 8 mechanisms used",
+    "satisfied": 8,
+    "status": "success",
+    "step": "verify-runtime-path-mechanisms",
+    "unsatisfied": []
+  },
+  "plan": "founder-fr2-runtime-trace-plan-0",
+  "plan_authority": "Co-Founder V2 A01 Executive Command (docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md)",
+  "recorded_at": "2026-10-04T06:10:09.795306+00:00",
+  "runtime_id": "agency-runtime-2adef08b8efa4549",
+  "status": "success",
+  "trace_ordinal": 0,
+  "trace_store": "agency-w4-execution",
+  "verification_requirement": "every named mechanism reported, each satisfied",
+  "work_scope": [
+    "verify-runtime-path-mechanisms"
+  ]
+}

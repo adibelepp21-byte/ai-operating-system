@@ -1,0 +1,42 @@
+{
+  "subject": "tools/w4_runtime_execution.py",
+  "criteria": {
+    "agent-enters-through-the-execution-contract": true,
+    "execution-layer-issues-each-step": true,
+    "runtime-built-by-the-composition-root": true,
+    "w4-executor-re-checks-the-grant": true,
+    "trace-written-by-traced-action-under-the-instance": true,
+    "runtime-observation-published": true,
+    "existing-execution-manifest": true,
+    "manifest-written-by-the-existing-writer": true
+  },
+  "performed_by": "consumers/engineering_intelligence_agent.py EngineeringIntelligenceAgent.verify, hosted by tools/w4_runtime_execution.py DelegatedStep",
+  "runtime": {
+    "runtime_id": "agency-runtime-2adef08b8efa4549",
+    "execution_sequence": 0,
+    "trace_store": "agency-w4-execution",
+    "trace_ordinal": 0,
+    "execution_manifest": "docs/operations/execution-provenance/agency-2adef08b8efa4549-verify-runtime-path-mechanisms.manifest.json"
+  },
+  "plan": "founder-fr2-runtime-trace-plan-0",
+  "delegation_id": "2adef08b8efa4549",
+  "agent_instance": "engineering-intelligence-instance-001",
+  "authority_chain": [
+    "delegation:2adef08b8efa4549",
+    "delegator:Claude Code / AIOS Co-Founder",
+    "decision:FD-P11-001 \u00a79",
+    "founder:Founder"
+  ],
+  "executed_at": "2026-10-04T06:10:10.057304+00:00",
+  "outcomes": [
+    {
+      "step": "verify-runtime-path-mechanisms",
+      "status": "success",
+      "detail": "8 of 8 mechanisms used",
+      "instance": "engineering-intelligence-instance-001",
+      "delegation": "2adef08b8efa4549",
+      "at": "2026-10-04T06:10:09.666266+00:00"
+    }
+  ],
+  "escalations": []
+}

@@ -45,6 +45,25 @@ DELEGATION_DIRS = (
     REPO_ROOT / "docs/architecture/p12/w4-operations",
 )
 
+#: The same chain's **live** roots (`FD-FR2-001`; `GOAL-V2-002` W-1). P12 is
+#: certified, so a new execution's trace, manifest and observation can only be
+#: written outside it. These are read as their own population, origin `live`,
+#: and never merged into the certified one: `verify_all()` and `summary()` still
+#: answer for P12's certified evidence alone, exactly as certified, and a live
+#: manifest is resolved only against live records. A certified chain therefore
+#: cannot be completed by a live record, nor a live chain by a certified one.
+LIVE_MANIFESTS = REPO_ROOT / "docs/operations/execution-provenance"
+LIVE_TRACE_STORES = REPO_ROOT / "docs/operations/trace-stores"
+LIVE_OBSERVATIONS = REPO_ROOT / "docs/operations/runtime-observations"
+#: Where the Agency's grants live. Read as a path and **discovered** beneath it
+#: by shape (a directory holding a grant record), as the operational readers
+#: find their roots, so a grant in a new Agency root is found by existing
+#: rather than by someone remembering to list it.
+AGENCY_OPERATIONS = REPO_ROOT / "docs/architecture/agency/operations"
+
+CERTIFIED = "certified-p12"
+LIVE = "live"
+
 JOINED = "JOINED"
 DANGLING = "DANGLING"
 UNRESOLVED = "UNRESOLVED"
@@ -74,6 +93,8 @@ class ChainVerdict:
     execution_id: str
     status: str
     edges: Tuple[EdgeVerdict, ...]
+    #: Which population the manifest was read from. Certified unless read live.
+    origin: str = CERTIFIED
 
     @property
     def joined(self) -> bool:
@@ -87,16 +108,43 @@ def _read_json(path: Path) -> Optional[dict]:
         return None
 
 
-def _delegation(delegation_id: str) -> Optional[dict]:
-    for directory in DELEGATION_DIRS:
+@dataclass(frozen=True)
+class _Roots:
+    manifests: Path
+    trace_stores: Path
+    observations: Path
+    delegation_dirs: Tuple[Path, ...]
+
+
+def _agency_delegation_dirs() -> Tuple[Path, ...]:
+    if not AGENCY_OPERATIONS.is_dir():
+        return ()
+    return tuple(sorted({path.parent for path in
+                         AGENCY_OPERATIONS.rglob("*.delegation.json")}))
+
+
+def _roots(origin: str) -> _Roots:
+    """The roots one population is resolved against. Read at call time."""
+    if origin == CERTIFIED:
+        return _Roots(MANIFESTS, TRACE_STORES, OBSERVATIONS, DELEGATION_DIRS)
+    if origin == LIVE:
+        return _Roots(LIVE_MANIFESTS, LIVE_TRACE_STORES, LIVE_OBSERVATIONS,
+                      _agency_delegation_dirs())
+    raise ValueError(f"unknown origin {origin!r}")
+
+
+def _delegation(delegation_id: str,
+                dirs: Optional[Tuple[Path, ...]] = None) -> Optional[dict]:
+    for directory in (DELEGATION_DIRS if dirs is None else dirs):
         candidate = directory / f"{delegation_id}.delegation.json"
         if candidate.is_file():
             return _read_json(candidate)
     return None
 
 
-def _trace_line(store: str, ordinal: int) -> Optional[dict]:
-    directory = TRACE_STORES / store
+def _trace_line(store: str, ordinal: int,
+                root: Optional[Path] = None) -> Optional[dict]:
+    directory = (TRACE_STORES if root is None else root) / store
     if not directory.is_dir():
         return None
     lines = []
@@ -114,10 +162,11 @@ def _trace_line(store: str, ordinal: int) -> Optional[dict]:
         return None
 
 
-def _observation(subject: str) -> Optional[dict]:
-    if not OBSERVATIONS.is_dir():
+def _observation(subject: str, root: Optional[Path] = None) -> Optional[dict]:
+    root = OBSERVATIONS if root is None else root
+    if not root.is_dir():
         return None
-    for path in sorted(OBSERVATIONS.rglob("*.json")):
+    for path in sorted(root.rglob("*.json")):
         payload = _read_json(path)
         if payload and payload.get("runtime_id") == subject:
             return payload
@@ -128,8 +177,13 @@ def _edge(source: str, target: str, ok: bool, detail: str) -> EdgeVerdict:
     return EdgeVerdict(source, target, JOINED if ok else DANGLING, detail)
 
 
-def verify_manifest(payload: dict) -> ChainVerdict:
-    """Re-derive the chain from this manifest's references. Resolve every one."""
+def verify_manifest(payload: dict, origin: str = CERTIFIED) -> ChainVerdict:
+    """Re-derive the chain from this manifest's references. Resolve every one.
+
+    ``origin`` names the population the manifest belongs to, and every reference
+    is resolved against that population's roots only (`FD-FR2-001 §5`).
+    """
+    roots = _roots(origin)
     execution_id = payload.get("execution_id", "<unnamed>")
     edges = []
 
@@ -146,7 +200,8 @@ def verify_manifest(payload: dict) -> ChainVerdict:
         f"plan {plan!r} carries work scope {list(work)}"))
 
     delegation_id = payload.get("delegation_id")
-    delegation = _delegation(delegation_id) if delegation_id else None
+    delegation = (_delegation(delegation_id, roots.delegation_dirs)
+                  if delegation_id else None)
     if delegation is None:
         edges.append(EdgeVerdict(
             "WORK", "DELEGATION", DANGLING,
@@ -171,8 +226,8 @@ def verify_manifest(payload: dict) -> ChainVerdict:
 
     store = payload.get("trace_store")
     ordinal = payload.get("trace_ordinal")
-    trace = _trace_line(store, ordinal) if store is not None and \
-        isinstance(ordinal, int) else None
+    trace = _trace_line(store, ordinal, roots.trace_stores) \
+        if store is not None and isinstance(ordinal, int) else None
     if trace is None:
         edges.append(EdgeVerdict(
             "DELEGATION", "EXECUTION", DANGLING,
@@ -189,7 +244,8 @@ def verify_manifest(payload: dict) -> ChainVerdict:
             f"trace actor {actor!r} against grant recipient {recipient!r}"))
 
     subject = payload.get("observation_subject")
-    observation = _observation(subject) if subject else None
+    observation = _observation(subject, roots.observations) if subject \
+        else None
     if observation is None:
         edges.append(EdgeVerdict(
             "EXECUTION", "OBSERVATION", DANGLING,
@@ -207,30 +263,40 @@ def verify_manifest(payload: dict) -> ChainVerdict:
         bool(observation) and bool(requirement) and outcome is not None,
         f"requirement {str(requirement)[:40]!r} with outcome recorded"))
 
-    manifest_path = MANIFESTS / f"{execution_id}.manifest.json"
+    manifest_path = roots.manifests / f"{execution_id}.manifest.json"
     edges.append(_edge(
         "VERIFICATION", "EVIDENCE", manifest_path.is_file(),
         f"evidence persisted at {manifest_path.name}"))
 
     status = JOINED if all(e.status == JOINED for e in edges) else DANGLING
-    return ChainVerdict(execution_id, status, tuple(edges))
+    return ChainVerdict(execution_id, status, tuple(edges), origin)
 
 
-def verify_all() -> Tuple[ChainVerdict, ...]:
-    if not MANIFESTS.is_dir():
+def _verify_root(directory: Path, origin: str) -> Tuple[ChainVerdict, ...]:
+    if not directory.is_dir():
         return ()
     verdicts = []
-    for path in sorted(MANIFESTS.glob("*.manifest.json")):
+    for path in sorted(directory.glob("*.manifest.json")):
         payload = _read_json(path)
         if payload is None:
-            verdicts.append(ChainVerdict(path.stem, UNRESOLVED, ()))
+            verdicts.append(ChainVerdict(path.stem, UNRESOLVED, (), origin))
             continue
-        verdicts.append(verify_manifest(payload))
+        verdicts.append(verify_manifest(payload, origin))
     return tuple(verdicts)
 
 
-def summary() -> dict:
-    verdicts = verify_all()
+def verify_all() -> Tuple[ChainVerdict, ...]:
+    """P12's certified population, as certified. Live manifests are not in it."""
+    return _verify_root(MANIFESTS, CERTIFIED)
+
+
+def verify_live() -> Tuple[ChainVerdict, ...]:
+    """The live population (`FD-FR2-001`): manifests of executions run since
+    P12 was certified, resolved against live records only."""
+    return _verify_root(LIVE_MANIFESTS, LIVE)
+
+
+def _summarize(verdicts: Tuple[ChainVerdict, ...]) -> dict:
     return {
         "manifests": len(verdicts),
         "joined": sum(1 for v in verdicts if v.status == JOINED),
@@ -240,6 +306,14 @@ def summary() -> dict:
         "not_joined": tuple(v.execution_id for v in verdicts
                             if v.status != JOINED),
     }
+
+
+def summary() -> dict:
+    return _summarize(verify_all())
+
+
+def live_summary() -> dict:
+    return dict(_summarize(verify_live()), origin=LIVE)
 
 
 def main(argv=None) -> int:
@@ -255,6 +329,14 @@ def main(argv=None) -> int:
                   f"{edge.status:<9} {edge.detail[:58]}")
         print()
     print("summary:", summary())
+    print()
+    for verdict in verify_live():
+        print(f"{verdict.execution_id}  [{verdict.status}] (live)")
+        for edge in verdict.edges:
+            print(f"  {edge.source:>12} → {edge.target:<13} "
+                  f"{edge.status:<9} {edge.detail[:58]}")
+        print()
+    print("live summary:", live_summary())
     print()
     print("Read from persisted bytes by code that did not write them.")
     return 0

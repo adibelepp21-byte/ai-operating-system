@@ -1,0 +1,1 @@
+{"agent_definition_version":"1.0","agent_instance":"engineering-intelligence-instance-001","cost_resource_metadata":{},"knowledge_consumed":[],"memory_consumed":[],"outputs":{"detail":"8 of 8 mechanisms used","step":"verify-runtime-path-mechanisms"},"runtime":"agency-runtime-2adef08b8efa4549","skills_used":[],"status":"success","tools_used":[]}

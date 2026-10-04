@@ -1,6 +1,41 @@
 {
   "goals": [
     {
+      "key": "founder-fr2-runtime-trace",
+      "statement": "The existing provenance model must be used rather than replaced.",
+      "authority_instrument": "FD-FR2-001-AGENCY-RUNTIME-TRACE-INTEGRATION-AUTHORIZATION",
+      "authority_record": "docs/governance/acts/FD-FR2-001-AGENCY-RUNTIME-TRACE-INTEGRATION-AUTHORIZATION.md",
+      "chain": [
+        {
+          "key": "founder-fr2-runtime-trace-plan-0",
+          "goal_key": "founder-fr2-runtime-trace",
+          "origin": "planned",
+          "revision": 0,
+          "supersedes": null,
+          "reason": null,
+          "evidence": [],
+          "authority_instrument": "Co-Founder V2 A01 Executive Command",
+          "authority_record": "docs/governance/AIOS_COFOUNDER_V2_REGISTRATION_AND_ACTIVATION_RECORD_v1.0.md",
+          "steps": [
+            {
+              "key": "verify-runtime-path-mechanisms",
+              "statement": "Establish that tools/w4_runtime_execution.py routes delegated work through the existing Execution Contract, Execution Layer, Runtime, runtime observation, TracedAction and ExecutionManifest, reporting each mechanism satisfied or not.",
+              "depends_on": [],
+              "requires_delegation": true
+            },
+            {
+              "key": "ceo-review-verification",
+              "statement": "Review the verification evidence and record the operational decision (Co-Founder / CEO, V2 A09 / A11; not Founder acceptance).",
+              "depends_on": [
+                "verify-runtime-path-mechanisms"
+              ],
+              "requires_delegation": false
+            }
+          ]
+        }
+      ]
+    },
+    {
       "key": "founder-mr-s5-1-accept",
       "statement": "Use an existing valid Agent \u2192 Result \u2192 Verification path.",
       "authority_instrument": "DIR-AIOS-AGENCY-MR-S5-1-DECISION-PROVENANCE",
