@@ -34,7 +34,9 @@ handed.
   producer (G7), as before.
 
 `hosted_executor` and `run_hosted_plan` are the `tools/` functions of the same
-name with this participant supplied; they bind and decide nothing.
+name with this participant supplied; they bind and decide nothing. Run as a
+script (`python3 agency_runtime_execution.py`), it executes nothing and reports
+the live Agency execution chains.
 """
 from __future__ import annotations
 
@@ -50,7 +52,8 @@ from native_core.core.runtime.execution import Execution  # noqa: E402
 from native_core.core.trace import TraceWriter  # noqa: E402
 
 from consumers.observation import TracedAction  # noqa: E402
-from tools import w4_runtime_execution as _hosted  # noqa: E402
+from tools.w4_runtime_execution import (  # noqa: E402
+    RuntimeHostedExecutor, run_hosted_plan as _run_hosted_plan)
 
 
 class DelegatedStep(Agent):
@@ -109,11 +112,31 @@ PARTICIPANT = DelegatedStep
 
 def hosted_executor(delegation, registry, runtime, writer, **options):
     """`RuntimeHostedExecutor` with the resident participant."""
-    return _hosted.RuntimeHostedExecutor(delegation, registry, runtime, writer,
-                                         participant=PARTICIPANT, **options)
+    return RuntimeHostedExecutor(delegation, registry, runtime, writer,
+                                 participant=PARTICIPANT, **options)
 
 
 def run_hosted_plan(delegation, registry, runtime, writer, plan, perform, **options):
     """`run_hosted_plan` (the hosted run path) with the resident participant."""
-    return _hosted.run_hosted_plan(delegation, registry, runtime, writer, plan, perform,
-                                   participant=PARTICIPANT, **options)
+    return _run_hosted_plan(delegation, registry, runtime, writer, plan, perform,
+                            participant=PARTICIPANT, **options)
+
+
+def main() -> int:
+    """Report the live Agency executions and their chains. Read-only.
+
+    Running this file executes nothing: delegated work enters only through a
+    run path that holds a grant. What it shows is what the independent chain
+    reader re-derives from the live roots, each verdict with its origin.
+    """
+    from tools.p12_execution_chain_reader import live_summary, verify_live
+    for verdict in verify_live():
+        print(f"{verdict.execution_id}  [{verdict.status}] ({verdict.origin})")
+        for edge in verdict.edges:
+            print(f"  {edge.source:>12} → {edge.target:<13} {edge.status}")
+    print("live summary:", live_summary())
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
