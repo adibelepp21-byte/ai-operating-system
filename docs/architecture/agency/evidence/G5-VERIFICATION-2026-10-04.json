@@ -1,7 +1,7 @@
 {
- "checked_at": "2026-10-04T10:31:01.421991+00:00",
- "script_sha256": "f169be515250786da6291d71b2f92e092d6825851b5c9af89c25a42e1f32cc3e",
- "head": "82ebe1777ebd7142d3ee412cf11d1299c838b94c",
+ "checked_at": "2026-10-04T11:41:34.017451+00:00",
+ "script_sha256": "0c534189a4002d7604063aa7b1783219fd76a2316976e24ce7a0d06e986bf103",
+ "head": "c05f7deb00b18d16df5a7809e91e53e4ae157cc6",
  "baseline_head": "f1014b96f0a47802d188475f0f06b5b64d723310",
  "section_8": {
   "1_runtime_execution_intact": true,
@@ -124,6 +124,8 @@
   "tools/tests/test_g5_execution_observability.py"
  ],
  "surfaces_changed_vs_baseline": [
+  "agency_records:docs/architecture/agency/*.md",
+  "certified:docs/operations",
   "code:tools",
   "p12_state:tools/p12_*.py",
   "p13:tools/p13",

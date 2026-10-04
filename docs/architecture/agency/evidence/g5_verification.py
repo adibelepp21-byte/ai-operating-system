@@ -166,7 +166,11 @@ changed_code = sorted(set(git("diff", "--name-only", BASE["head"], "--", "tools"
 surfaces_after = fr2.surfaces()
 data_changes = sorted(k for k in BASE["surfaces"] if surfaces_before[k] != BASE["surfaces"][k])
 expected_changes = {"code:tools", "p12_state:tools/p12_*.py", "p13:tools/p13", "state_readers",
-                    "agency_records:docs/architecture/agency/*.md"}
+                    "agency_records:docs/architecture/agency/*.md",
+                    # `docs/operations/README.md` names P12-W2 as a reader of the
+                    # live roots. The TD baseline groups `docs/operations` with the
+                    # certified roots for change detection; it is the live root.
+                    "certified:docs/operations"}
 result = {
     "checked_at": datetime.now(timezone.utc).isoformat(),
     "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),

@@ -123,4 +123,4 @@ These are not FR-2 failures (`§11`). FR-2 Runtime / Trace integration and G5 ob
 |---|---|
 | `test_g5_execution_observability` | 20 OK |
 | P12-W2, FR-1, P13 (×3), state verification, consumer measurement, self-model, E12, negative control, integration graph, FR-2 | OK |
-| Complete regression | see Register `§166` |
+| **Complete regression** | **96 suites, 3602 tests** (= FR-2's 3582 + 20 G5): `tools/tests` 92 / 2112; `consumers` 276 OK; `bounded_exception` 29 OK; `fullstack` 384; `native_core` 801 OK.<br>The only failures are pre-existing and unchanged since FR-2: `test_e11_measurement_currency` 2; `test_p12_governance_evidence_verification` 1; `fullstack` NC-04, NC-05, NC-19 |
